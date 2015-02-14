@@ -1,0 +1,59 @@
+<%= simple_form_for(@lead) do |f| %>
+<%= f.error_notification %>
+
+<div class="col-xs-6">
+
+  <table class="table table-lead-form">
+    <tbody><tr><td style="vertical-align:middle;"><label>ФИО</label></td><td><%= f.input :fio, label: false %></td></tr>
+    <tr><td style="vertical-align:middle;">Телефон</td><td><%= f.input :phone, label: false %></td></tr>
+    <tr><td style="vertical-align:middle;">E-mail</td><td><%= f.input :email, label: false %></td></tr>
+    <tr><td style="vertical-align:middle;">Информация о запросе</td><td><%= f.input :info, label: false %></td></tr>
+    <tr><td style="vertical-align:middle;">Метраж</td><td><%= f.input :footage, label: false %></td></tr>
+    <tr><td style="vertical-align:middle;">Дата для статуса</td><td><%= f.text_field :status_date , :id => "datepicker" %></td></tr>
+    <tr><td style="vertical-align:middle;">Дата создания</td><td><%= f.text_field :created_at , :id => "datepicker" %></td></tr>
+    <tr><td style="vertical-align:middle;">Канал</td>
+      <td><%= f.select 'channel_id', options_for_select(@channels.collect{ |u| [u.name, u.id] }) %></td></tr>
+    <tr><td style="vertical-align:middle;">Статус</td>
+      <td><%= f.select 'status_id', options_for_select(@statuses.collect{ |u| [u.name, u.id] }) %></td></tr>
+    
+    <%= f.hidden_field :user_id, value: current_user.id   %>
+
+  </tbody></table>
+<div class="form-actions">
+  <%= f.button :submit, value: 'Записать', :class => 'btn btn-success' %>
+</div>
+</div>
+
+<div class="col-xs-5">
+<div class="panel panel-primary">
+    <div class="panel-heading">
+      <span class="glyphicon glyphicon-comment"></span> Комментарии 
+    </div>
+    <div class="panel-body">
+
+  <ul class="microposts">
+    <%= render 'comments' %>
+  </ul>
+
+
+</div>         
+
+<div class="panel-footer">
+<div class="input-group">                    
+    <%= text_area "comment","comment", placeholder: "Новый комментарий...", class: "comment_area" %>
+    <span class="input-group-btn">
+    <span class="btn btn-warning btn-sm" id="btn-chat" leadid=<%= @lead.id %>> Отправить</span>
+    </span>
+</div>
+
+</div>
+  
+
+
+
+</div>
+
+
+<% end %>
+
+

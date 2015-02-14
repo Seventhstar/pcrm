@@ -1,0 +1,34 @@
+<div class="col-xs-6">
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Канал</th>
+      <th></th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @channels.each do |channel| %>
+      <tr>
+        <td><%= channel.name %></td>
+
+        <td><%= link_to image_tag('edit.png'), edit_channel_path(channel) %>
+        <%= link_to image_tag('delete.png'), channel, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<%= form_for(@channel) do |f| %>
+  
+
+    <%= f.label 'Новый канал:' %>
+    <%= f.text_field :name, :class => 'text_input' %>
+
+
+    <%= f.button 'Добавить',:class => 'btn btn-warning btn-sm' %>
+
+<% end %> 
+</div>

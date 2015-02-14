@@ -1,0 +1,25 @@
+class AjaxController < ApplicationController
+
+  def channels
+    if params[:term]
+      like= "%".concat(params[:term].concat("%"))
+      channels = Channel.where("name like ? ", like)
+    else
+      channels = Channel.all
+    end
+    list = channels.map {|u| Hash[ id: u.id, label: u.name, name: u.name]}
+    render json: list
+  end
+
+  def add_comment
+   if params[:lead_id] 
+      leadcomment = LeadsComment.new
+      leadcomment.lead_id = params[:lead_id]
+      leadcomment.comment = params[:comment]
+      leadcomment.user_id = current_user.id
+      leadcomment.save	
+   end
+	render :nothing => true
+   end
+
+end

@@ -1,0 +1,21 @@
+<% provide(:title, 'Sign up') %>
+<div class="signin">
+<h2>Новый пользователь</h2>
+    <%= form_for(@user) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+    
+      <%= f.label "Имя" %>
+      <%= f.text_field :name, class: 'form-control' %>
+      
+      <%= f.label :email %>
+      <%= f.email_field :email, class: 'form-control' %>
+      
+      <%= f.label "Пароль" %>
+      <%= f.password_field :password, class: 'form-control' %>
+      
+      <%= f.label "Подтверждение" %>
+      <%= f.password_field :password_confirmation, class: 'form-control' %>
+      </br>
+      <%= f.submit "Регистрация", class: "btn btn-primary" %>
+    <% end %>
+</div>

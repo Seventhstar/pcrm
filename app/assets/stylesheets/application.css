@@ -1,0 +1,199 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ *= require jquery-ui
+ *= require jquery-ui/core
+ *= require jquery-ui/theme
+ */
+ 
+
+
+.container {
+max-width: 1200px;
+}
+
+.user_menu{
+	float: right;
+}
+
+.company{
+	height: 50px;
+}
+
+.call_button{
+	height: 128px;
+	width: 128px;
+	margin: 10px 0 0 0;
+	float: left;
+}
+
+.nav_container{
+	float: right;
+	width: 980px;
+	margin-top: 10px;
+}
+
+li .selected {
+color: #555;
+background-color: #e7e7e7;
+}
+
+.tr_green {
+border: 5px solid #dff2ee;
+}
+
+table.tleads {
+
+	border: 1px solid #dff2ee;
+	font-family: Georgia,serif;
+	font-size: 18px;
+	//margin: 0 auto 8px auto;
+	width: 1140px;
+	padding: 50px 15px 50px 10px;
+	//color: #7d7d7d;
+}
+
+.lead_comments{
+	width: 500px;
+	float: right;
+}
+
+
+.table-lead-form{
+	width: 500px;
+	border: 1px solid #ddd;
+	float: left;
+}
+
+.col-lg-9 {
+	width: 43%;
+}
+
+.col-md-8 {
+	width: 60%;
+	float: left;
+}
+
+.signin {
+max-width: 500px;
+padding: 20px 50px;
+margin: 0px auto;
+background: #F9F9F9;
+border-radius: 5px;
+margin-top: 30px;
+}
+
+.comment_area {
+height: 30px;
+
+border: 1px solid #bbb;
+border-radius: 3px;
+width: 100%;
+position: relative;
+z-index: 2;
+float: left;
+width: 100%;
+margin-bottom: 0;
+}
+
+.glyphicon {
+position: relative;
+top: 1px;
+display: inline-block;
+font-family: 'Glyphicons Halflings';
+src: url('/assets/glyphicons-halflings-regular.eot');
+font-style: normal;
+font-weight: 400;
+line-height: 1;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+}
+
+.glyphicon-comment:before {
+content: "\e111";
+}
+
+ul.microposts{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+.microposts li {
+padding: 10px 0;
+//border-top: 1px solid #e8e8e8;
+border-bottom: 1px dotted #B3A9A9;
+}
+
+.microposts .gravatar {
+float: left;
+margin-right: 10px;
+margin-top: 5px;
+}
+
+.microposts .timestamp {
+color: #777777;
+display: block;
+margin-left: 60px;
+}
+
+.microposts .header, .microposts p{
+	margin-left: 60px;
+}
+
+.panel-body {
+overflow-y: scroll;
+height: 365px;
+}
+
+footer {
+margin-top: 45px;
+padding-top: 5px;
+border-top: 1px solid #eaeaea;
+color: #777777;
+}
+
+.panel ::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background:#FBFBFB;
+    box-shadow: 3px 3px 10px rgba(0,0,0,.25) inset;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #84C4FF;
+    border-radius: 10px;
+    border:1px solid rgba(0,0,0,0.3);
+    box-shadow: -3px -3px 6px rgba(66,137,224,1) inset,3px 3px 3px rgba(158,226,225,1) inset;
+}
+
+.text_input{
+
+width: 220px;
+height: 30px;
+padding: 6px 12px;
+font-size: 14px;
+line-height: 1.42857143;
+color: #555;
+background-color: #fff;
+background-image: none;
+border: 1px solid #ccc;
+border-radius: 4px;
+-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+-webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+-o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}

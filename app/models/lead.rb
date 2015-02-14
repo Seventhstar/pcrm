@@ -1,0 +1,34 @@
+class Lead < ActiveRecord::Base
+  belongs_to :channel
+  belongs_to :status
+  belongs_to :user
+  has_many :leads_comments
+
+
+  def channel_name
+    channel.try(:name)
+  end
+
+  def channel_name=(name)
+    self.channel = Channel.find_or_create_by_name(name) if name.present?
+  end
+
+
+  def status_name
+    status.try(:name)
+  end
+
+  def status_name=(name)
+    self.status = Status.find_or_create_by_name(name) if name.present?
+  end
+
+
+  def user_name
+    user.try(:name)
+  end
+
+  def user_name=(name)
+    self.users = User.find_or_create_by_name(name) if name.present?
+  end
+
+end

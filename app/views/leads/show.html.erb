@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Info:</strong>
+  <%= @lead.info %>
+</p>
+
+<p>
+  <strong>Fio:</strong>
+  <%= @lead.fio %>
+</p>
+
+<p>
+  <strong>Footage:</strong>
+  <%= @lead.footage %>
+</p>
+
+<p>
+  <strong>Phone:</strong>
+  <%= @lead.phone %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @lead.email %>
+</p>
+
+<p>
+  <strong>Channel:</strong>
+  <%= @lead.channel_id %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @lead.status_id %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @lead.user_id %>
+</p>
+
+<p>
+  <strong>Status date:</strong>
+  <%= @lead.status_date %>
+</p>
+
+<%= link_to 'Edit', edit_lead_path(@lead) %> |
+<%= link_to 'Back', leads_path %>

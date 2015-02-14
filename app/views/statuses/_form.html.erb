@@ -1,0 +1,14 @@
+
+<div class="input-group">
+<%= form_for(@status) do |f| %>
+  
+
+	<%= f.label 'Статус' %>
+    <%= f.text_field :name, :class => 'text_input' %>
+    <%= f.check_box :actual%>
+    <%= f.label 'Актуальный' %>
+
+    <%= f.button 'Записать',:class => 'btn btn-warning btn-sm' %>
+
+<% end %>
+</div>

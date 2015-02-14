@@ -1,0 +1,33 @@
+<%= render "submenu"%>
+
+<div class="col-xs-6">
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Пользователь</th>
+      <th>Активирован</th>
+      <th>Админ</th>      
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+  <!-- %= render @users %> -->
+<% @users.each do |user| %>
+<tr >
+  <td width="60"><%= link_to gravatar_for(user, size: 50), user %></td>
+  <td>  <%= link_to user.name, user %></td>
+  <td><%= check_box_tag user.activated, user.activated, user.activated %></td>
+  <td><%= check_box_tag user.admin, user.admin, user.admin %></td>
+  <% if current_user.admin? && !current_user?(user) %>
+    <td> <%= link_to image_tag('delete.png'), user, method: :delete,data: { confirm: "You sure?" } %></td>
+  <% end %>
+</td>
+</tr>
+<% end %>
+
+</tbody>
+</table>

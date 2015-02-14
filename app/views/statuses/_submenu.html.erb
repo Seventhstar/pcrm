@@ -1,0 +1,7 @@
+<div class="nav nav-pills">
+<li <%= activeClassIfModel( "Status" )%>><%= link_to "Статусы", '/statuses/new' %></li>
+<li <%= activeClassIfModel( "Channel" )%>><%= link_to "Каналы", '/channels/new' %></li>   
+<% if current_user.admin %>
+<li <%= activeClassIfModel( "User" )%>><%= link_to "Пользователи", '/users' %></li>   
+<% end %>
+</div> 

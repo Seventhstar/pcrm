@@ -1,0 +1,51 @@
+<%= hidden_field_tag :sort, params[:sort] %>
+
+<table class="tleads">
+  <thead>
+    <tr>
+      <th>Статус</th>
+      <th>Дата для статуса</th>
+      <th>Канал запроса</th>
+      <th>ФИО</th>
+      <th>Телефон </br>E-mail</th>
+      
+      <th>Информация о запросе</th>
+      <th>Метраж</th>
+      <th>Status date</th>
+    </tr>
+  </thead>
+
+  <% cur_month  = nil %>
+  <% cur_user   = nil %>
+  <% cur_status = nil %>
+  <tbody>
+    <% @leads.each do |lead| %>
+
+      <% if cur_month != lead.status_date.month && (params[:sort] == "status_date" || params[:sort] == nil)%>
+      <% cur_month = lead.status_date.month %>
+      <tr><td colspan="8" class="Month"><%= t lead.status_date.strftime("%B") %></td></tr><tr>
+      <% elsif cur_user != lead.user.name && (params[:sort] == "user_id")%>
+        <% cur_user = lead.user.name %>
+        <tr><td colspan="8" class="Month"><%= t lead.user.name %></td></tr><tr>
+      <% elsif cur_status != lead.status.name && (params[:sort] == "status_id")%>
+        <% cur_status = lead.status.name %>
+        <tr><td colspan="8" class="Month"><%= t lead.status.name %></td></tr><tr>
+      <% end %>
+        <td><%= lead.status_name %></td>
+        <td><%= lead.status_date %></td>
+        <td><%= lead.channel_name %></td>
+        <td><%= lead.fio %></td>
+        <td><%= lead.phone %></br>
+        <%= lead.email %></td>
+        <td><%= lead.info %></td>
+        <td><%= lead.footage %></td>
+        <td><%= lead.user_name %>
+        <%= link_to image_tag('edit.png'), edit_lead_path(lead) %>
+        <%= link_to image_tag('delete.png'), lead, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
