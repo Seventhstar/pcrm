@@ -44,7 +44,7 @@ $(function() {
 	 beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},	 
 	  success: function(){
 	   $("#comment_comment").val("");
-	   $.get('/leads/4/edit', "", null, "script");
+	   $.get('/leads/'+lead_id+'/edit', "", null, "script");
 	   $('.panel-body').scrollTop(-9999);
 	  }
 	 });
