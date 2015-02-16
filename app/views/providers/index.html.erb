@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<%= hidden_field_tag :sort, params[:sort] %>
+<%= hidden_field_tag :direction, params[:direction] %>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= sortable "name", "Название"%></th>
+      <th><%= sortable "spec", "Специализация"%></th>
+      <th><%= sortable "manager", "Менеджер"%></th>
+      <th><%= sortable "phone", "Телефон"%></th>
+      <th><%= sortable "email", "E-mail"%></th>
+      <th><%= sortable "url", "Сайт"%></th>
+      <th><%= sortable "address", "Адрес"%></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @providers.each do |provider| %>
+      <tr>
+        <td><%= provider.name %></td>
+        <td><%= provider.spec %></td>
+        <td><%= provider.manager %></td>
+        <td><%= provider.phone %></td>
+        <td><%= provider.email %></td>
+        <td><%= provider.url %></td>
+        <td><%= provider.address %></td>
+
+        
+        
+        
+        <td><%= link_to 'Edit', edit_provider_path(provider) %>
+        <%= link_to 'Destroy', provider, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Добавить поставщика', new_provider_path, class: "btn btn-default btn btn-success" %>
+

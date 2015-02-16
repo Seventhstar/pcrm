@@ -1,0 +1,12 @@
+<%= simple_form_for(@develop) do |f| %>
+
+  <div class="form-inputs">
+    <%= f.input :name %>
+    <%= f.input :coder %>
+    <%= f.input :boss %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, "Записать", class: "btn btn-success" %>
+  </div>
+<% end %>

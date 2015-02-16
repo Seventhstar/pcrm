@@ -57,6 +57,8 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :leads, 'Лиды', leads_path
     primary.item :leads, 'Тарифы', statuses_path
     primary.item :leads, 'Проекты', statuses_path
+    primary.item :providers, 'Поставщики', providers_path
+    primary.item :develops, 'Разработка сайта', develops_path
     primary.item :statuses, 'Настройки', '/statuses/new' do |sub_nav|
       sub_nav.item :statuses, 'statuses', '/statuses'
       sub_nav.item :channels, 'channels', '/channels'

@@ -1,0 +1,35 @@
+<%= simple_form_for(@provider) do |f| %>
+
+  <div class="form-inputs">
+  
+  <div class="input-group gr-btm_margin">
+    <span class="label-group-addon addon120">Название:</span><%= f.input :name, label: false %>
+  </div>
+
+  <div class="input-group gr-btm_margin">
+    <span class="label-group-addon addon120">Менеджер:</span><%= f.input :manager, label: false %>
+  </div>
+  <div class="input-group gr-btm_margin">
+    <span class="label-group-addon addon120">Телефон:</span><%= f.input :phone, label: false %>
+  </div>
+  <div class="input-group gr-btm_margin">
+    <span class="label-group-addon addon120">Примечание:</span><%= f.input :komment, label: false %>
+  </div>
+  <div class="input-group gr-btm_margin">
+    <span class="label-group-addon addon120">Адрес:</span><%= f.input :address, label: false %>
+  </div>
+  <div class="input-group gr-btm_margin">
+    <span class="label-group-addon addon120">E-mail:</span><%= f.input :email, label: false %>
+  </div>
+  <div class="input-group gr-btm_margin">
+    <span class="label-group-addon addon120">Сайт:</span><%= f.input :url, label: false %>
+  </div>
+  <div class="input-group gr-btm_margin">
+    <span class="label-group-addon addon120">Специализация:</span><%= f.input :spec, label: false %>
+  </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, "Записать", class: "btn btn-default btn-success" %>
+  </div>
+<% end %>

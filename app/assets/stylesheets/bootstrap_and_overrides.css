@@ -211,3 +211,36 @@ color: #fff;
   font-weight: normal;
   font-style: normal;
 }
+
+.gr-btm_margin{
+	margin-bottom: 7px;
+}
+
+.addon120{
+	width: 120px;
+}
+
+.label-group-addon {
+padding: 6px 12px;
+font-size: 14px;
+font-weight: 400;
+line-height: 1;
+color: #555;
+//text-align: center;
+background-color: #eee;
+border: 1px solid #ccc;
+border-radius: 4px;
+vertical-align: middle;
+display: table-cell;
+//width: 1%;
+white-space: nowrap;
+vertical-align: middle;
+border-top-right-radius: 0;
+border-bottom-right-radius: 0;
+border-right: 0;
+}
+
+a.btn:visited{
+	color: white;
+}
+}

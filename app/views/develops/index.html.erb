@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<h2>Описание, выполнение и проверка разработок</h2>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Что нужно сделать?</th>
+      <th>Coder</th>
+      <th>Boss</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @develops.each do |develop| %>
+      <tr>
+        <td><%= develop.name %></td>
+        <td><%= develop.coder %></td>
+        <td><%= develop.boss %></td>
+        <td><%= link_to 'Edit', edit_develop_path(develop) %>
+        <%= link_to 'Destroy', develop, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Добавить', new_develop_path, class: "btn btn-success" %>
