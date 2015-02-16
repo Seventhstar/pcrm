@@ -26,7 +26,30 @@ window.setTimeout(function() {
   });
 }, 3000);
 
+function checkTime(i){
+	if (i<10){i="0" + i;}
+	return i;
+}
+
+function startTime(){
+	var tm=new Date();
+	var h=tm.getHours();
+	var m=tm.getMinutes();
+	var s=tm.getSeconds();
+	
+	m=checkTime(m);
+	s=checkTime(s);
+	document.getElementById('date_txt').innerHTML=h+":"+m+":"+s;
+	t=setTimeout('startTime()',500);
+}
+
 $(function() {
+
+
+  startTime();
+
+
+
   $("#datepicker").datepicker({"format": "yyyy-mm-dd", "weekStart": 1, "autoclose": true});
 
 

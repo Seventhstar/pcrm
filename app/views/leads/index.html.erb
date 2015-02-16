@@ -1,9 +1,11 @@
+<%= render "sortmenu"%>
+
 <%= hidden_field_tag :sort, params[:sort] %>
 
 <table class="tleads">
   <thead>
     <tr>
-      <th>Статус</th>
+      <th><%= sortable "status_id","Статус" %></th>
       <th>Дата для статуса</th>
       <th>Канал запроса</th>
       <th>ФИО</th>

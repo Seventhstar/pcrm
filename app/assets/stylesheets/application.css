@@ -15,6 +15,7 @@
  *= require jquery-ui
  *= require jquery-ui/core
  *= require jquery-ui/theme
+ *= require font-kit-rails
  */
  
 
@@ -34,7 +35,7 @@ max-width: 1200px;
 .call_button{
 	height: 128px;
 	width: 128px;
-	margin: 10px 0 0 0;
+	margin: 30px 0 0 0;
 	float: left;
 }
 
@@ -53,16 +54,6 @@ background-color: #e7e7e7;
 border: 5px solid #dff2ee;
 }
 
-table.tleads {
-
-	border: 1px solid #dff2ee;
-	font-family: Georgia,serif;
-	font-size: 18px;
-	//margin: 0 auto 8px auto;
-	width: 1140px;
-	padding: 50px 15px 50px 10px;
-	//color: #7d7d7d;
-}
 
 .lead_comments{
 	width: 500px;
@@ -196,4 +187,25 @@ box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
 -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+.sortnav{
+	float: left;
+	width: 980px;
+	margin-left: 148px;
+	margin-bottom: 20px;
+}
+
+th .asc {
+background-image: url(arrow_up.gif);
+padding-right: 12px;
+background-repeat: no-repeat;
+background-position: right center;
+}
+
+th .desc {
+background-image: url(arrow_down.gif);
+padding-right: 12px;
+background-repeat: no-repeat;
+background-position: right center;
 }
