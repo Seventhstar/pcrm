@@ -8,18 +8,19 @@ class LeadsController < ApplicationController
   def index
 
     if current_user.admin? 
-      @leads_ = Lead.all 
+      @leads = Lead.all
     else
-      @leads_ = current_user.leads 
+      @leads = current_user.leads
     end
 
 
     if params[:only_active] == "true"
       @s_status_ids = Status.where(:actual => true) 
-      @leads = @leads_.where(:status => @s_status_ids).order(sort_column)
-    else
-      @leads = @leads_.order(sort_column)
+      @leads = @leads.where(:status => @s_status_ids)
     end
+
+      @leads =@leads.order(sort_column + " " + sort_direction)
+
     @channels = Channel.all
   end
 
@@ -100,7 +101,7 @@ class LeadsController < ApplicationController
   end
 
   def sort_direction
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
   end
 
   def only_active

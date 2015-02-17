@@ -23,7 +23,6 @@ class AjaxController < ApplicationController
    end
 
   def dev_check
-    logger.info params[:develop_id]
    if params[:develop_id]
       develop = Develop.find(params[:develop_id])
       if params[:field] = "boss"
