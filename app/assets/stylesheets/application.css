@@ -16,6 +16,7 @@
  *= require jquery-ui/core
  *= require jquery-ui/theme
  *= require font-kit-rails
+ *= require bootstrap-datepicker3
  */
 
 .container {
