@@ -57,8 +57,8 @@ $(function() {
     var isWordcharacter = c.match(/\w/);
     
     if (isWordcharacter || event.keyCode ==8){
-    s=1;
-    setTimeout( function(){ if (s==1){
+    	s=1;
+    	setTimeout( function(){ if (s==1){
           $.get($("#develops_search").attr("action"), $("#develops_search").serialize(), null, "script");
           s=0;}
           return false;},400);
