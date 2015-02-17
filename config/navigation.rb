@@ -58,13 +58,14 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :leads, 'Тарифы', statuses_path
     primary.item :leads, 'Проекты', statuses_path
     primary.item :providers, 'Поставщики', providers_path
-    primary.item :develops, 'Разработка сайта', develops_path
+    
     primary.item :statuses, 'Настройки', '/statuses/new' do |sub_nav|
       sub_nav.item :statuses, 'statuses', '/statuses'
       sub_nav.item :channels, 'channels', '/channels'
       sub_nav.item :users, 'users', '/users', if: -> { current_user.admin? }
 
     end
+    primary.item :develops, image_tag('089.png'), develops_path
 
     # Add an item which has a sub navigation (same params, but with block)
     #primary.item :key_2, 'name', url, options do |sub_nav|

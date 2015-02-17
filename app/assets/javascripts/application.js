@@ -15,10 +15,10 @@
 //= require jquery-ui/datepicker
 //= require jquery_ujs
 //= require twitter/bootstrap
+//= require bootstrap
 //= require bootstrap-datepicker
-
-
-
+//= require bootstrap-datepicker/core
+//= require bootstrap-datepicker/locales/bootstrap-datepicker.ru.js
 
 window.setTimeout(function() {
   $(".fade").fadeTo(500, 0).slideUp(500, function(){
@@ -43,14 +43,32 @@ function startTime(){
 	t=setTimeout('startTime()',500);
 }
 
-$(function() {
 
+$(function() {
 
   startTime();
 
+  $("#datepicker").datepicker({format: "yyyy-mm-dd", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});
+  $("#datepicker2").datepicker({format: "yyyy-mm-dd", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});
 
+  $("#develops_search input").keyup(function() {
 
-  $("#datepicker").datepicker({"format": "yyyy-mm-dd", "weekStart": 1, "autoclose": true});
+    var c= String.fromCharCode(event.keyCode);
+    var isWordcharacter = c.match(/\w/);
+    
+    if (isWordcharacter || event.keyCode ==8){
+    s=1;
+    setTimeout( function(){ if (s==1){
+          $.get($("#develops_search").attr("action"), $("#develops_search").serialize(), null, "script");
+          s=0;}
+          return false;},400);
+    }
+  
+    
+    return false;
+
+    
+  });
 
 
   $('span.btn-sm').click(function(){

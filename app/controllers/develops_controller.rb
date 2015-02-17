@@ -4,7 +4,7 @@ class DevelopsController < ApplicationController
   # GET /develops
   # GET /develops.json
   def index
-    @develops = Develop.all
+    @develops = Develop.search(params[:search])
   end
 
   # GET /develops/1

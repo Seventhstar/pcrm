@@ -9,8 +9,8 @@
     <tr><td style="vertical-align:middle;">E-mail</td><td><%= f.input :email, label: false %></td></tr>
     <tr><td style="vertical-align:middle;">Информация о запросе</td><td><%= f.input :info, label: false %></td></tr>
     <tr><td style="vertical-align:middle;">Метраж</td><td><%= f.input :footage, label: false %></td></tr>
-    <tr><td style="vertical-align:middle;">Дата для статуса</td><td><%= f.text_field :status_date , :id => "datepicker" %></td></tr>
-    <tr><td style="vertical-align:middle;">Дата создания</td><td><%= f.text_field :created_at , :id => "datepicker" %></td></tr>
+    <tr><td style="vertical-align:middle;">Дата для статуса</td><td><%= f.text_field :status_date, :id => "datepicker" %></td></tr>
+    <tr><td style="vertical-align:middle;">Дата создания</td><td><%= f.text_field :created_at , :id => "datepicker2" %></td></tr>
     <tr><td style="vertical-align:middle;">Канал</td>
       <td><%= f.select 'channel_id', options_for_select(@channels.collect{ |u| [u.name, u.id] }) %></td></tr>
     <tr><td style="vertical-align:middle;">Статус</td>
