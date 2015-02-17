@@ -25,7 +25,7 @@ class AjaxController < ApplicationController
   def dev_check
    if params[:develop_id]
       develop = Develop.find(params[:develop_id])
-      if params[:field] = "boss"
+      if params[:field] == "boss"
         develop.boss = params[:checked]
       else
         develop.coder = params[:checked]
