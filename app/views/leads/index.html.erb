@@ -7,13 +7,13 @@
     <tr>
       <th><%= sortable "status_id","Статус" %></th>
       <th><%= sortable "status_date","Дата для статуса" %></th>
-      <th><%= sortable "channel_id","Канал запроса" %></th>
       <th><%= sortable "fio", "ФИО" %></th>
       <th>Телефон </br>E-mail</th>
       
       <th>Информация о запросе</th>
-      <th>Метраж</th>
-      <th>Status date</th>
+      <th><%= sortable "footage","Метраж" %></th>
+      <th><%= sortable "start_date","Дата" %></th>
+      <th>Менеджер</th>
     </tr>
   </thead>
 
@@ -35,12 +35,12 @@
       <% end %>
         <td><%= lead.status_name %></td>
         <td><%= lead.status_date %></td>
-        <td><%= lead.channel_name %></td>
         <td><%= lead.fio %></td>
         <td><%= lead.phone %></br>
         <%= lead.email %></td>
         <td><%= lead.info %></td>
         <td><%= lead.footage %></td>
+        <td><%= lead.start_date %></td>
         <td><%= lead.user_name %>
         <%= link_to image_tag('edit.png'), edit_lead_path(lead) %>
         <%= link_to image_tag('delete.png'), lead, method: :delete, data: { confirm: 'Are you sure?' } %></td>

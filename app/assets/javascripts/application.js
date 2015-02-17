@@ -48,9 +48,15 @@ $(function() {
 
   startTime();
 
+
+  // форматы календарей
   $("#datepicker").datepicker({format: "yyyy-mm-dd", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});
   $("#datepicker2").datepicker({format: "yyyy-mm-dd", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});
 
+  // дата по умолчанию для нового лида - сегодня
+  if (!$("#datepicker2").val()){
+	$("#datepicker2").val($.datepicker.formatDate('yy-mm-dd', new Date()));
+  }
 
 
   $("#develops_search input").keyup(function() {
@@ -65,14 +71,11 @@ $(function() {
           s=0;}
           return false;},400);
     }
-  
-    
     return false;
-
-    
   });
 
 
+// меняем отметки coder и boss непосредственно в index
     $('span.check_img').click(function(){
 		if ($(this).hasClass("checked")){
         	$(this).removeClass("checked");

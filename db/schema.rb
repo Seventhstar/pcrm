@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150216194236) do
+ActiveRecord::Schema.define(version: 20150217202749) do
 
   create_table "channels", force: :cascade do |t|
     t.string   "name"
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20150216194236) do
   create_table "leads", force: :cascade do |t|
     t.string   "info"
     t.string   "fio"
-    t.string   "footage"
+    t.integer  "footage"
     t.string   "phone"
     t.string   "email"
     t.integer  "channel_id"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 20150216194236) do
     t.date     "status_date"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.date     "start_date"
   end
 
   create_table "leads_comments", force: :cascade do |t|

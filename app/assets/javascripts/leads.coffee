@@ -2,6 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+
 $(document).ready ->
   $('#lead_channel_name').autocomplete
     source: "/ajax/channels"
@@ -18,3 +19,4 @@ function change_store(select_tag){
     data: {data1: value1}
   })
  }
+

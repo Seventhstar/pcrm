@@ -93,7 +93,7 @@ class LeadsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def lead_params
-      params.require(:lead).permit(:info, :fio, :footage, :phone, :email, :channel_id, :status_id, :user_id, :status_date)
+      params.require(:lead).permit(:info, :fio, :footage, :phone, :email, :channel_id, :status_id, :user_id, :status_date,:start_date)
     end
 
   def sort_column
