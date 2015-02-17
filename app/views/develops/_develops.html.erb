@@ -12,11 +12,13 @@
     <% @develops.each do |develop| %>
       <tr>
         <td><%= develop.name %></td>
-        <td><%= check_box_tag develop.coder, develop.coder, develop.coder %></td>
-        <td><%= check_box_tag develop.boss, develop.boss, develop.boss %></td>
+        <td><span class="check_img <%= develop.coder ? "checked" :"" %>" developid="<%=develop.id%>" chk="coder"></span></td>
+        <td><span class="check_img <%= develop.boss ? "checked" :"" %>" developid="<%=develop.id%>" chk="boss"></span></td>
         <td><%= link_to link_to image_tag('edit.png'), edit_develop_path(develop) %>
         <%= link_to link_to image_tag('delete.png'), develop, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<%= will_paginate @collection, renderer: BootstrapPagination::Rails %>

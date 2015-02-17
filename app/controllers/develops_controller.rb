@@ -4,7 +4,7 @@ class DevelopsController < ApplicationController
   # GET /develops
   # GET /develops.json
   def index
-    @develops = Develop.search(params[:search])
+    @develops = Develop.search(params[:search]).paginate(:page => params[:page], :per_page => 15)
   end
 
   # GET /develops/1

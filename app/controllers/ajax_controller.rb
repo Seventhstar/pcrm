@@ -22,4 +22,18 @@ class AjaxController < ApplicationController
 	render :nothing => true
    end
 
+  def dev_check
+    logger.info params[:develop_id]
+   if params[:develop_id]
+      develop = Develop.find(params[:develop_id])
+      if params[:field] = "boss"
+        develop.boss = params[:checked]
+      else
+        develop.coder = params[:checked]
+      end
+      develop.save  
+   end
+   render :nothing => true
+  end
+
 end

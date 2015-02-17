@@ -49,7 +49,9 @@ $(function() {
   startTime();
 
   $("#datepicker").datepicker({format: "yyyy-mm-dd", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});
-  $("#datepicker2").datepicker({format: "yyyy-mm-dd", weekStart: 1, autoclose: true, language: "ru", todayHighlight: false});
+  $("#datepicker2").datepicker({format: "yyyy-mm-dd", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});
+
+
 
   $("#develops_search input").keyup(function() {
 
@@ -71,6 +73,30 @@ $(function() {
   });
 
 
+    $('span.check_img').click(function(){
+		if ($(this).hasClass("checked")){
+        	$(this).removeClass("checked");
+			checked = false;
+     	}else{
+        	checked = true;
+			$(this).addClass("checked");
+     	};
+
+     	dev_id  = $(this).attr('developid');
+     	chk 	= $(this).attr('chk');
+
+
+     	 $.ajax({
+	 		url: "/ajax/dev_check",
+	 		data: {'develop_id':dev_id,'field':chk, 'checked': checked},
+	 		type: "POST",
+	 		beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},	 
+	  		success: function(){
+	   			$(this).addClass("done");
+	  		}
+	 	});
+  	});
+
   $('span.btn-sm').click(function(){
   	comment = $("#comment_comment").val();
   	lead_id = $(this).attr('leadid');
@@ -91,8 +117,10 @@ $(function() {
 	 });
 
 
-  })
-});
+  });
 
+
+
+});
 
 

@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   root :to => "leads#index"
   get "ajax/channels"
   post "ajax/add_comment"
+  post "ajax/dev_check" 
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

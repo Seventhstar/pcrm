@@ -1,4 +1,7 @@
 ru:
+  will_paginate:
+    next_label: "вперед"
+    previous_label: "назад"
   Status: "статус"
   January: "Январь"
   February: "Февраль"
