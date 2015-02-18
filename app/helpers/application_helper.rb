@@ -58,6 +58,18 @@ module ApplicationHelper
 		link_to title, params.merge(:only_active => p_active) , {:class => css_class}
 	end
 
+  def class_for_lead( lead )
+
+    if (!lead.status.actual)
+      "nonactual"
+    elsif (lead.status_date <= Date.today )
+      ""
+      #"hotlead"
+
+      #(lead.status_date > Now().)
+    end
+    
+  end
 
 	def avatar_url(user, size)
     	gravatar_id = Digest::MD5.hexdigest(user.email.downcase)

@@ -7668,13 +7668,21 @@ a.li-right, a.li-right:visited{
 
 }
 
-.active, .active:hover, .active:visited {
+.nav-pills a.active, #leads_search a.active:hover, #leads_search a.active:visited {
 	background-color: #428bca;
 	color: #fff;
 }
+
 .passive {
 	background-color: #f5f5f5;
-	color: #03f;
+}
+
+.nonactual{
+	color: #ccc;
+}
+
+.hotlead{
+	background-color: #ffeefe;
 }
 
 input[type="text"],input[type="number"], input[type="password"],input[type="email"],textarea,.comment_area {
@@ -7807,6 +7815,11 @@ list-style: none;
 	font-size: 18px;
 	margin-left: 10px;
 	padding-top: 8px;
+}
+
+.flash{
+	min-height: 20px;
+	position: relative;
 }
 /* line 5, h:/www/railsprj/pcrm/app/assets/stylesheets/develops.scss */
 .check_img {
@@ -8164,10 +8177,7 @@ background-color: #e7e7e7;
 border: 5px solid #dff2ee;
 }
 
-.flash{
-	min-height: 20px;
-	position: relative;
-}
+
 
 .lead_comments{
 	width: 500px;

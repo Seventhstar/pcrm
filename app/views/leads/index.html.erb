@@ -31,8 +31,9 @@
         <tr><td colspan="8" class="Month"><%= t lead.user.name %></td></tr><tr>
       <% elsif cur_status != lead.status.name && (params[:sort] == "status_id")%>
         <% cur_status = lead.status.name %>
-        <tr><td colspan="8" class="Month"><%= t lead.status.name %></td></tr><tr>
+        <tr><td colspan="8" class="Month"><%= t lead.status.name %></td></tr>
       <% end %>
+        <tr class="<%= class_for_lead(lead) %>" >      
         <td><%= lead.status_name %></td>
         <td><%= lead.status_date %></td>
         <td><%= lead.fio %></td>

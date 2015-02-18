@@ -37,21 +37,22 @@
             <div class="subnav"><%= render :partial => "submenu" rescue nil %></div>
             <div class="subnav"><%= render :partial => "sortnav" rescue nil %></div>
           </div>
-
-
-          
-        </div> <!-- nav_container -->
+        </div> 
+  </div><!-- nav_container -->
 <% end %>      
 
-<div class="flash">
-    <%= bootstrap_flash %>
+
+  
+
+<div class="container">
+  <div class="flash">
+      <%= bootstrap_flash %>
+  </div>
 </div>
 
- <div class="container">
+<div class="container">
           <%= yield %>
-      </div>
-  </div>
-
+</div>
 
 
 <div class="page-buffer"></div>
