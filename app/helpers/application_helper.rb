@@ -48,7 +48,7 @@ module ApplicationHelper
   def switch_active(show)
 
     active = show == show_dev ? "active" : nil
-    css_class = "btn btn-default"
+    css_class = "btn btn-default #{active}" 
   end
 
 	def set_only_active(active,title = nil)  

@@ -43,11 +43,18 @@ function startTime(){
 	t=setTimeout('startTime()',500);
 }
 
+function updateDev(){
+
+  //alert($(".active").attr('show'));
+  $.get( "develops/", {'search':$("#search").val(),'show':$(".active").attr('show')},null,"script");
+          
+}
 
 $(function() {
 
   startTime();
 
+  //alert(23);
 
   // форматы календарей
   $("#datepicker").datepicker({format: "yyyy-mm-dd", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});
@@ -59,6 +66,15 @@ $(function() {
   }
 
 
+
+
+  $('#develops_search .btn').click(function(){
+
+    //updateDev();
+    setTimeout( 'updateDev()' ,400);
+    
+  });
+
   $("#develops_search input").keyup(function() {
 
     var c= String.fromCharCode(event.keyCode);
@@ -66,10 +82,8 @@ $(function() {
     
     if (isWordcharacter || event.keyCode ==8){
     	s=1;
-    	setTimeout( function(){ if (s==1){
-          $.get($("#develops_search").attr("action"), $("#develops_search").serialize(), null, "script");
-          s=0;}
-          return false;},400);
+      //alert(229);
+    	setTimeout( 'updateDev()' ,400);
     }
     return false;
   });

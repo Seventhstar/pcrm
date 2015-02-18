@@ -6,6 +6,16 @@ class DevelopsController < ApplicationController
   # GET /develops.json
   def index
     @develops = Develop.search(params[:search]).paginate(:page => params[:page], :per_page => 15)
+
+    view = show_dev
+    
+    case view
+    when "check"
+      @develops = @develops.where(:boss => false, :coder =>true)      
+    when "new"
+      @develops = @develops.where(:boss => false, :coder =>false)      
+    end
+      
   end
 
   # GET /develops/1
@@ -76,4 +86,4 @@ class DevelopsController < ApplicationController
     def show_dev
       %w[check new all].include?(params[:show]) ? params[:show] : "check"
     end
-end
+end 

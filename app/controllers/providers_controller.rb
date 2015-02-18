@@ -35,7 +35,7 @@ class ProvidersController < ApplicationController
         format.html { render :new }
         format.json { render json: @provider.errors, status: :unprocessable_entity }
       end
-    end
+    end 
   end
 
   # PATCH/PUT /providers/1
