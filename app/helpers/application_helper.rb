@@ -37,6 +37,20 @@ module ApplicationHelper
   end
 
 
+  def switchable(show, title)
+      css_class = show == show_dev ? "focus" : nil
+      #input title, {:class => "btn btn-default #{css_class}", :type => "button", :id => show}
+      button_tag title, {:class => "btn btn-default #{css_class}", :type => "button", :id => show}
+      #<button type="button" class="btn btn-default #{css_class}">title</button>
+      #link_to title, params.merge(:show => show), {:class => "btn btn-default", :role => "group", :autofocus => css_class}
+  end
+
+  def switch_active(show)
+
+    active = show == show_dev ? "active" : nil
+    css_class = "btn btn-default"
+  end
+
 	def set_only_active(active,title = nil)  
 		css_class = active == "true" ? "active" : "passive"
 		css_class.concat(" li-right")

@@ -1,5 +1,6 @@
 class DevelopsController < ApplicationController
   before_action :set_develop, only: [:show, :edit, :update, :destroy]
+  helper_method :show_dev
 
   # GET /develops
   # GET /develops.json
@@ -70,5 +71,9 @@ class DevelopsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def develop_params
       params.require(:develop).permit(:name, :coder, :boss)
+    end
+
+    def show_dev
+      %w[check new all].include?(params[:show]) ? params[:show] : "check"
     end
 end

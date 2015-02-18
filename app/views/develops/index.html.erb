@@ -4,10 +4,29 @@
 
 
 <%= form_tag develops_path, :method => 'get', :id => "develops_search" do %>
-  <div class="input-group"> 
+  <div class="input-group left"> 
     <%= text_field_tag :search, params[:search], :class => "search_area" %>
    
   </div>
+  
+  <div class="btn-group btn-group-xs right"  data-toggle="buttons-radio">
+      <%= switchable "check","К проверке" %>
+      <%= switchable "new","Новые" %>
+      <%= switchable "all","Все" %>
+  </div>
+
+  <div class="btn-group btn-group-xs right" data-toggle="buttons">
+  <label class=<%= switch_active "check"%>>
+    <input type="radio" name="options" id="option1" autocomplete="off" checked> К проверке
+  </label>
+  <label class="btn btn-default">
+    <input type="radio" name="options" id="option2" autocomplete="off"> Новые
+  </label>
+  <label class="btn btn-default">
+    <input type="radio" name="options" id="option3" autocomplete="off"> Все
+  </label>
+</div>
+
   <div id="develops_list"><%= render 'develops' %></div>
 <% end %>
 
