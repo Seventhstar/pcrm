@@ -7529,22 +7529,19 @@ html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:1
 
 table.tleads {
 
-	border: 1px solid #dff2ee;
+	//border: 1px solid #dff2ee;
 	//font-family: Georgia,serif;
-	font-family: 'Open Sans';
-	src: font-url('open-sans/OpenSans-Regular-webfont.eot');
-  	src: font-url('open-sans/OpenSans-Regular-webfont.eot?#iefix') format('embedded-opentype'),
-     font-url('open-sans/OpenSans-Regular-webfont.woff') format('woff'),
-     font-url('open-sans/OpenSans-Regular-webfont.ttf') format('truetype'),
-     font-url('open-sans/OpenSans-Regular-webfont.svg#OpenSansRegular') format('svg');
+	//	font-family: 'Open Sans';
+	//src: font-url('open-sans/OpenSans-Regular-webfont.eot');
+  	//src: font-url('open-sans/OpenSans-Regular-webfont.eot?#iefix') format('embedded-opentype'),
 	font-size: 18px;
-	//margin: 0 auto 8px auto;
-	width: 1140px;
-	padding: 50px 15px 50px 10px;
-	//color: #7d7d7d;
+	
+	width: 100%;
+	//padding: 50px 15px 50px 10px;
+	
 	border-radius: 4px;
--webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+	-webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+	box-shadow: 0 1px 1px rgba(0,0,0,.05);
 }
 
 .tleads thead{
@@ -7563,15 +7560,12 @@ border-top-right-radius: 3px;
 }
 
 .tleads td {
-border-top: 1px solid #ebebeb;
-border-right: 1px solid #ebebeb;
-border-bottom: 1px solid #ebebeb;
+border: 1px solid #ebebeb;
 padding: 5px;
 }
 
-.tleads tr:hover {
+.tleads tr:hover:not(.month) {
 	background-color: #f5f5f5;
-	//	color: #03f;
 	border-radius: 4px;
 }
 
@@ -7615,18 +7609,7 @@ padding: 5px;
 
 
 
-.tleads td.Month{
-	padding: 20px 0 15px 15px;
-	font-size: 28px;
-	margin-top: 25px;
-	margin-bottom: 15px;
-	height: 30px;
-	
-}
-.tleads td.Month:hover{
-	background-color: white;
-	///color: #7d7d7d;
-}
+
 
 .navbar-inner {
 	min-height: 40px;
@@ -7779,6 +7762,51 @@ list-style: none;
 
 .right{
 	float: right;
+}
+
+
+.tleads tr.month{
+	border-right-color: white; 
+	border-left-color: white; 
+	vertical-align: bottom;
+	margin-bottom: 0;
+}
+
+.tleads td.Month{
+	padding: 20px 0 0 15px;
+	font-size: 20px;
+	margin-top: 25px;
+	
+	height: 40px;
+	vertical-align: bottom;
+	
+	border-right-color: white; 
+	border-left-color: white; 
+}
+
+.tleads td.Month:hover{
+	//background-color: white;
+	///color: #7d7d7d;
+}
+.greenMonth {
+	color: #3c763d;
+	background-color: #dff0d8;
+	border-color: #d6e9c6;
+	float: right;
+    width: 250px;
+	padding: 8px 15px;
+	border-bottom: 1px solid transparent;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	margin-bottom: 0;
+	text-align: right;
+}
+
+#date_txt{
+	color:#0a0;
+	font-size: 18px;
+	margin-left: 10px;
+	padding-top: 8px;
 }
 /* line 5, h:/www/railsprj/pcrm/app/assets/stylesheets/develops.scss */
 .check_img {
@@ -8001,14 +8029,12 @@ list-style: none;
 body {
   background-color: #fff;
   color: #333;
-  font-family: verdana, arial, helvetica, sans-serif;
   font-size: 13px;
   line-height: 18px;
 }
 
 /* line 9, h:/www/railsprj/pcrm/app/assets/stylesheets/scaffolds.scss */
 p, ol, ul, td {
-  font-family: verdana, arial, helvetica, sans-serif;
   font-size: 13px;
   line-height: 18px;
 }
@@ -8090,7 +8116,8 @@ div.field, div.actions {
 
 
 .container {
-max-width: 1200px;
+	max-width: 1200px;
+	padding: 0;
 }
 
 .user_menu{
@@ -8104,7 +8131,7 @@ max-width: 1200px;
 .call_button{
 	height: 128px;
 	width: 128px;
-	margin: 30px 0 0 0;
+	margin: 10px 0 4px 0;
 	float: left;
 }
 
@@ -8112,6 +8139,20 @@ max-width: 1200px;
 	float: right;
 	width: 980px;
 	margin-top: 10px;
+	margin-right: 0;
+}
+
+.sortnav{
+	//float: left;
+	//width: 980px;
+	//margin-left: 148px;
+	margin-bottom: 20px;
+}
+
+.navsearch{
+	margin-top: 7px;
+	margin-left: 210px;
+	float: left;
 }
 
 li .selected {
@@ -8123,6 +8164,10 @@ background-color: #e7e7e7;
 border: 5px solid #dff2ee;
 }
 
+.flash{
+	min-height: 20px;
+	position: relative;
+}
 
 .lead_comments{
 	width: 500px;
@@ -8271,12 +8316,7 @@ box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
 transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
 
-.sortnav{
-	float: left;
-	width: 980px;
-	margin-left: 148px;
-	margin-bottom: 20px;
-}
+
 
 th .asc {
 background-image: url(arrow_up.gif);
@@ -8290,6 +8330,26 @@ background-image: url(arrow_down.gif);
 padding-right: 12px;
 background-repeat: no-repeat;
 background-position: right center;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    
+    //font-family: 'Open-Sans';
+	//src: url('open-sans/OpenSans-Regular-webfont.eot');
+
+}
+.page-wrapper {
+    min-height: 95%;
+    margin-bottom: -50px;
+}
+* html .page-wrapper {
+    height: 95%;
+}
+.page-buffer {
+    height: 50px;
 }
 /*!
  * jQuery UI CSS Framework 1.11.2

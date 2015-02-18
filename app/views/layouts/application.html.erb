@@ -18,56 +18,48 @@
 
   </head>
   <body>
-    <% if current_user %>
-    <div class="container">
+    
+<div class="page-wrapper">
 
-      <div class="call_button">
-        <a href="/leads/new"><%= image_tag("call1.png") %></a>
-      </div>
+<% if current_user %>
+  <div class="container">
+        <div class="call_button"><a href="/leads/new"><%= image_tag("call1.png") %></a></div>
+        <div class="nav_container">
+           <div class="company"><%= image_tag("crm3.png") %><span class="date_txt" id="date_txt">13:50:41</span>
+                <div id="user_nav" class="user_menu"><%= current_user.name %> ( <%= link_to "Выйти", logout_path, method: :delete %> )</div>
+           </div>
+
+           <div class="navbar">
+              <div class="navbar-inner">
+                <%= render_navigation :level => 1 %>
+              </div>
+
+            <div class="subnav"><%= render :partial => "submenu" rescue nil %></div>
+            <div class="subnav"><%= render :partial => "sortnav" rescue nil %></div>
+          </div>
 
 
-      <div class="nav_container">
-        <div class="company">
-          <!-- <a class="navbar-brand" href="#">Polynov CRM</a> -->
-          <%= image_tag("crm3.png") %> 
           
-          <span class="date_txt" id="date_txt" style="color:#0a0; font-size:14px">13:50:41</span>
-          <div id="user_nav" class="user_menu">
+        </div> <!-- nav_container -->
+<% end %>      
 
-            <%= current_user.name %>.
-            <%= link_to "Выйти", logout_path, method: :delete %>
-
-          </div>
-        </div>
-
-        <div class="navbar">
-
-          <div class="navbar-inner">
-            <%= render_navigation :level => 1 %>
-          </div>
-          <div class="subnav">
-            <%= render "submenu" %>
-            <% end %>
-          </div>
-        </div>
-      </div>
-      <div class="container">
-        <div class="sortnav">
-          <div class="flash">
-            <%= bootstrap_flash %>
-          </div>
-          </div>
-          
-        </div><!--/row-->
-        <div class="container">
-        <%= yield %>
-        </div>
-
-
-      </br>
-    </br>
- 
+<div class="flash">
+    <%= bootstrap_flash %>
 </div>
-<footer class="footer"><p>pasca</p></footer>
+
+ <div class="container">
+          <%= yield %>
+      </div>
+  </div>
+
+
+
+<div class="page-buffer"></div>
+</div>
+
+<div class="page-footer">
+      <footer class="footer"><p>pasca</p></footer>
+</div>
+
 </body>
 </html>

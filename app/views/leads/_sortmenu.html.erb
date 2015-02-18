@@ -3,14 +3,18 @@
 	<li><%= sortable_pil "status_date", "По месяцам" %></li>
 	<li><%= sortable_pil "user_id", "По сотрудникам" %></li>   
 	<li><%= sortable_pil "status_id", "По статусам" %></li>
-	<%= set_only_active only_active, "Актуальные" %>
-	<!--<div class="toggle btn btn-default off" data-toggle="toggle" style="width: 66px; height: 34px;">
-	<input type="checkbox" data-toggle="toggle"><div class="toggle-group">
-	<label class="btn btn-primary toggle-on">On</label>
-	<label class="btn btn-default active toggle-off">Off</label>
-	<span class="toggle-handle btn btn-default"></span>
+
+	<%= form_tag leads_path, :method => 'get', :id => "leads_search" do %>
+  	<div class="navsearch"> 
+    	<%= text_field_tag :search, params[:search], :class => "search_area" %>
 	</div>
-	</div>-->
+	<% end %>
+
+	<%= set_only_active only_active, "Актуальные" %>
+
+
+
+	
 	
 </div> 
 </div>
