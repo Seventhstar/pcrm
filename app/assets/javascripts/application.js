@@ -54,7 +54,7 @@ $(function() {
 
   startTime();
 
-  //alert(23);
+//  alert(24);
 
   // форматы календарей
   $("#datepicker").datepicker({format: "yyyy-mm-dd", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});
@@ -90,7 +90,8 @@ $(function() {
 
 
 // меняем отметки coder и boss непосредственно в index
-    $('span.check_img').click(function(){
+    $('#develops_list').on('click','span.check_img', function(){
+//      alert(228);
 		if ($(this).hasClass("checked")){
         	$(this).removeClass("checked");
 			checked = false;
@@ -112,7 +113,8 @@ $(function() {
 	   			$(this).addClass("done");
 	  		}
 	 	});
-  	});
+  });
+
 
   $('span.btn-sm').click(function(){
   	comment = $("#comment_comment").val();
