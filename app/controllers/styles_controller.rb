@@ -21,10 +21,12 @@ class StylesController < ApplicationController
   # GET /styles/new
   def new
     @style = Style.new
+    @styles = Style.order(:name)
   end
 
   # GET /styles/1/edit
   def edit
+    @styles = Style.order(:name)
   end
 
   # POST /styles

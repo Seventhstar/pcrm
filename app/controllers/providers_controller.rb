@@ -46,7 +46,7 @@ class ProvidersController < ApplicationController
       if @provider.update(provider_params)
       #@provider = Provider.find(params[:id])
       #if @provider.update_attributes(params[:provider])
-        format.html { redirect_to edit_provider_path, notice: 'Provider was successfully updated.' }
+        format.html { redirect_to providers_path, notice: 'Provider was successfully updated.' }
         format.json { render :show, status: :ok, location: @provider }
       else
         format.html { render :edit }
