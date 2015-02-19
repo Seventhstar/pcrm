@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  resources :styles
+
   resources :develops
 
   resources :providers

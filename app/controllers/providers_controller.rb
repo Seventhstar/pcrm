@@ -20,6 +20,7 @@ class ProvidersController < ApplicationController
 
   # GET /providers/1/edit
   def edit
+    @provider = Provider.find(params[:id])
   end
 
   # POST /providers
@@ -70,7 +71,7 @@ class ProvidersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def provider_params
-      params.require(:provider).permit(:name, :manager, :phone, :komment, :address, :email, :url, :spec)
+      params.require(:provider).permit(:name, :manager, :phone, :komment, :address, :email, :url, :spec, :style_tokens)
     end
 
   def sort_column

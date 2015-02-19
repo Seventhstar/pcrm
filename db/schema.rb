@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150217201280) do
+ActiveRecord::Schema.define(version: 20150218185430) do
 
   create_table "channels", force: :cascade do |t|
     t.string   "name"
@@ -23,6 +23,12 @@ ActiveRecord::Schema.define(version: 20150217201280) do
     t.string   "name"
     t.boolean  "coder"
     t.boolean  "boss"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "lead_styles", force: :cascade do |t|
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -63,9 +69,25 @@ ActiveRecord::Schema.define(version: 20150217201280) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "providerstyles", force: :cascade do |t|
+    t.integer  "provider_id"
+    t.integer  "style_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "providerstyles", ["provider_id"], name: "index_providerstyles_on_provider_id"
+  add_index "providerstyles", ["style_id"], name: "index_providerstyles_on_style_id"
+
   create_table "statuses", force: :cascade do |t|
     t.string   "name"
     t.boolean  "actual"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "styles", force: :cascade do |t|
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

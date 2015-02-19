@@ -17,8 +17,11 @@
  *= require jquery-ui/theme
  *= require font-kit-rails
  *= require bootstrap-datepicker3
- */
+ *= require bootstrap-tokenfield
+ *= require chosen
+  */
 
+ 
 .container {
 	max-width: 1200px;
 	padding: 0;

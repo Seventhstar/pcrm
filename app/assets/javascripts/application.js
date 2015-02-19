@@ -15,7 +15,9 @@
 //= require jquery-ui/datepicker
 //= require jquery_ujs
 //= require twitter/bootstrap
+//= require bootstrap-tokenfield
 //= require bootstrap
+//= require chosen.jquery
 //= require bootstrap-datepicker
 //= require bootstrap-datepicker/core
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.ru.js
@@ -44,17 +46,15 @@ function startTime(){
 }
 
 function updateDev(){
-
-  //alert($(".active").attr('show'));
   $.get( "develops/", {'search':$("#search").val(),'show':$(".active").attr('show')},null,"script");
-          
 }
 
 $(function() {
 
+  //alert(21);
   startTime();
-
-//  alert(24);
+  $(".chosen-select").chosen({ width: '400px' });
+  //alert(24);
 
   // форматы календарей
   $("#datepicker").datepicker({format: "yyyy-mm-dd", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});
@@ -62,18 +62,10 @@ $(function() {
 
   // дата по умолчанию для нового лида - сегодня
   if (!$("#datepicker2").val()){
-	$("#datepicker2").val($.datepicker.formatDate('yy-mm-dd', new Date()));
+	    $("#datepicker2").val($.datepicker.formatDate('yy-mm-dd', new Date()));
   }
 
-
-
-
-  $('#develops_search .btn').click(function(){
-
-    //updateDev();
-    setTimeout( 'updateDev()' ,400);
-    
-  });
+  $('#develops_search .btn').click(function(){setTimeout( 'updateDev()' ,400);});
 
   $("#develops_search input").keyup(function() {
 
@@ -82,7 +74,6 @@ $(function() {
     
     if (isWordcharacter || event.keyCode ==8){
     	s=1;
-      //alert(229);
     	setTimeout( 'updateDev()' ,400);
     }
     return false;

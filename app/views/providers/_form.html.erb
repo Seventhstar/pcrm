@@ -27,7 +27,14 @@
   <div class="input-group gr-btm_margin">
     <span class="label-group-addon addon120">Специализация:</span><%= f.input :spec, label: false %>
   </div>
+  
+  <div class="input-group gr-btm_margin">
+    <span class="label-group-addon addon120">Стиль:</span>
+    <%= f.collection_select(:style_ids, Style.all, :id, :name, {}, {multiple: true,  class: "chosen-select"}) %>  
   </div>
+  </div>
+
+  
 
   <div class="form-actions">
     <%= f.button :submit, "Записать", class: "btn btn-default btn-success" %>
