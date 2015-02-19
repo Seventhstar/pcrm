@@ -1,42 +1,55 @@
 <%= simple_form_for(@provider) do |f| %>
 
-  <div class="form-inputs">
+<div class="form-inputs">
   
-  <div class="input-group gr-btm_margin">
-    <span class="label-group-addon addon120">Название:</span><%= f.input :name, label: false %>
+  <div class="col-md-6">
+      <div class="input-group gr-btm_margin">
+        <span class="label-group-addon addon120">Название:</span><%= f.input :name, label: false %>
+      </div>
+
+      <div class="input-group gr-btm_margin">
+        <span class="label-group-addon addon120">Менеджер:</span><%= f.input :manager, label: false %>
+      </div>
+      <div class="input-group gr-btm_margin">
+        <span class="label-group-addon addon120">Телефон:</span><%= f.input :phone, label: false %>
+      </div>
+      
+      <div class="input-group gr-btm_margin">
+        <span class="label-group-addon addon120">Адрес:</span><%= f.input :address, label: false %>
+      </div>
+      <div class="input-group gr-btm_margin">
+        <span class="label-group-addon addon120">E-mail:</span><%= f.input :email, label: false %>
+      </div>
+      <div class="input-group gr-btm_margin">
+        <span class="label-group-addon addon120">Сайт:</span><%= f.input :url, label: false %>
+      </div>
+      <div class="form-actions">
+        <%= f.button :submit, "Записать", class: "btn btn-default btn-success" %>
+      </div>
   </div>
 
-  <div class="input-group gr-btm_margin">
-    <span class="label-group-addon addon120">Менеджер:</span><%= f.input :manager, label: false %>
-  </div>
-  <div class="input-group gr-btm_margin">
-    <span class="label-group-addon addon120">Телефон:</span><%= f.input :phone, label: false %>
-  </div>
-  <div class="input-group gr-btm_margin">
-    <span class="label-group-addon addon120">Примечание:</span><%= f.input :komment, label: false %>
-  </div>
-  <div class="input-group gr-btm_margin">
-    <span class="label-group-addon addon120">Адрес:</span><%= f.input :address, label: false %>
-  </div>
-  <div class="input-group gr-btm_margin">
-    <span class="label-group-addon addon120">E-mail:</span><%= f.input :email, label: false %>
-  </div>
-  <div class="input-group gr-btm_margin">
-    <span class="label-group-addon addon120">Сайт:</span><%= f.input :url, label: false %>
-  </div>
-  <div class="input-group gr-btm_margin">
-    <span class="label-group-addon addon120">Специализация:</span><%= f.input :spec, label: false %>
-  </div>
-  
-  <div class="input-group gr-btm_margin">
-    <span class="label-group-addon addon120">Стиль:</span>
-    <%= f.collection_select(:style_ids, Style.all, :id, :name, {}, {multiple: true,  class: "chosen-select"}) %>  
-  </div>
-  </div>
+  <div class="col-md-6">
 
-  
+    <div class="input-group gr-btm_margin">
+      <span class="label-group-addon addon140">Примечание:</span><%= f.input :komment, label: false %>
+    </div>
 
-  <div class="form-actions">
-    <%= f.button :submit, "Записать", class: "btn btn-default btn-success" %>
+    <div class="input-group gr-btm_margin">
+      <span class="label-group-addon addon140">Специализация:</span><%= f.input :spec, label: false %>
+    </div>
+    
+    <div class="input-group gr-btm_margin">
+      <span class="label-group-addon addon140">Стили:</span>
+        <%= f.collection_select(:style_ids, Style.all, :id, :name, {}, {multiple: true,  class: "chosen-select"}) %>  
+      </div>
+    
+
+      <div class="input-group gr-btm_margin">
+        <span class="label-group-addon addon140">Бюджеты:</span>
+          <%= f.collection_select(:budget_ids, Budget.all, :id, :name, {}, {multiple: true,  class: "chosen-select", :include_blank => 'None'}) %>  
+      </div>
+    
   </div>
+</div>
+
 <% end %>

@@ -44,7 +44,9 @@ class ProvidersController < ApplicationController
   def update
     respond_to do |format|
       if @provider.update(provider_params)
-        format.html { redirect_to providers_path, notice: 'Provider was successfully updated.' }
+      #@provider = Provider.find(params[:id])
+      #if @provider.update_attributes(params[:provider])
+        format.html { redirect_to edit_provider_path, notice: 'Provider was successfully updated.' }
         format.json { render :show, status: :ok, location: @provider }
       else
         format.html { render :edit }
@@ -71,7 +73,7 @@ class ProvidersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def provider_params
-      params.require(:provider).permit(:name, :manager, :phone, :komment, :address, :email, :url, :spec, :style_tokens)
+      params.require(:provider).permit(:name, :manager, :phone, :komment, :address, :email, :url, :spec, :budget_ids =>[], :style_ids=>[] )
     end
 
   def sort_column

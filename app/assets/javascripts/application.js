@@ -53,7 +53,7 @@ $(function() {
 
   //alert(21);
   startTime();
-  $(".chosen-select").chosen({ width: '400px' });
+  $(".chosen-select").chosen({ width: '350px' });
   //alert(24);
 
   // форматы календарей

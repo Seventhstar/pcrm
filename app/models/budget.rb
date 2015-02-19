@@ -1,13 +1,13 @@
-class Style < ActiveRecord::Base
-  has_many :provider_styles
-  has_many :providers, through: :provider_styles
+class Budget < ActiveRecord::Base
+  has_many :provider_budgets
+  has_many :providers, through: :provider_budgets
 
   def self.tokens(query)
-    styles = where("name like ?", "%#{query}%")
+    budgets = where("name like ?", "%#{query}%")
     if styles.empty?
       [{id: "<<<#{query}>>>", name: "Новый: \"#{query}\""}]
     else
-      styles
+      budgets
     end
   end
 
@@ -15,5 +15,6 @@ class Style < ActiveRecord::Base
     tokens.gsub!(/<<<(.+?)>>>/) { create!(name: $1).id }
     tokens.split(',')
   end
+
 
 end

@@ -11,7 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150218185430) do
+ActiveRecord::Schema.define(version: 20150219085420) do
+
+  create_table "budgets", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "channels", force: :cascade do |t|
     t.string   "name"
@@ -56,6 +62,23 @@ ActiveRecord::Schema.define(version: 20150218185430) do
     t.integer  "lead_id"
   end
 
+  create_table "provider_budgets", force: :cascade do |t|
+    t.integer  "provider_id"
+    t.integer  "budget_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "provider_budgets", ["budget_id"], name: "index_provider_budgets_on_budget_id"
+  add_index "provider_budgets", ["provider_id"], name: "index_provider_budgets_on_provider_id"
+
+  create_table "provider_styles", force: :cascade do |t|
+    t.integer  "provider_id"
+    t.integer  "style_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "providers", force: :cascade do |t|
     t.string   "name"
     t.string   "manager"
@@ -68,16 +91,6 @@ ActiveRecord::Schema.define(version: 20150218185430) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
-
-  create_table "providerstyles", force: :cascade do |t|
-    t.integer  "provider_id"
-    t.integer  "style_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "providerstyles", ["provider_id"], name: "index_providerstyles_on_provider_id"
-  add_index "providerstyles", ["style_id"], name: "index_providerstyles_on_style_id"
 
   create_table "statuses", force: :cascade do |t|
     t.string   "name"

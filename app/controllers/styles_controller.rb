@@ -34,7 +34,7 @@ class StylesController < ApplicationController
 
     respond_to do |format|
       if @style.save
-        format.html { redirect_to @style, notice: 'Style was successfully created.' }
+        format.html { redirect_to new_style_path, notice: 'Style was successfully created.' }
         format.json { render :show, status: :created, location: @style }
       else
         format.html { render :new }
@@ -48,7 +48,7 @@ class StylesController < ApplicationController
   def update
     respond_to do |format|
       if @style.update(style_params)
-        format.html { redirect_to @style, notice: 'Style was successfully updated.' }
+        format.html { redirect_to new_style_path, notice: 'Style was successfully updated.' }
         format.json { render :show, status: :ok, location: @style }
       else
         format.html { render :edit }
@@ -62,7 +62,7 @@ class StylesController < ApplicationController
   def destroy
     @style.destroy
     respond_to do |format|
-      format.html { redirect_to styles_url, notice: 'Style was successfully destroyed.' }
+      format.html { redirect_to new_style_path, notice: 'Style was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

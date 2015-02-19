@@ -262,203 +262,6 @@ hr{margin-top:20px;margin-bottom:20px;border:0;border-top:1px solid #eeeeee;}
 .glyphicon-bookmark:before{content:"\1f516";}
 .glyphicon-fire:before{content:"\1f525";}
 .glyphicon-wrench:before{content:"\1f527";}
-/* ========================================================================
- * bootstrap-switch - v3.3.2
- * http://www.bootstrap-switch.org
- * ========================================================================
- * Copyright 2012-2013 Mattia Larentis
- *
- * ========================================================================
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * ========================================================================
- */
-
-
-.bootstrap-switch {
-  display: inline-block;
-  direction: ltr;
-  cursor: pointer;
-  border-radius: 4px;
-  border: 1px solid;
-  border-color: #cccccc;
-  position: relative;
-  text-align: left;
-  overflow: hidden;
-  line-height: 8px;
-  z-index: 0;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  vertical-align: middle;
-  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-}
-.bootstrap-switch .bootstrap-switch-container {
-  display: inline-block;
-  top: 0;
-  border-radius: 4px;
-  -webkit-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
-}
-.bootstrap-switch .bootstrap-switch-handle-on,
-.bootstrap-switch .bootstrap-switch-handle-off,
-.bootstrap-switch .bootstrap-switch-label {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  cursor: pointer;
-  display: inline-block !important;
-  height: 100%;
-  padding: 6px 12px;
-  font-size: 14px;
-  line-height: 20px;
-}
-.bootstrap-switch .bootstrap-switch-handle-on,
-.bootstrap-switch .bootstrap-switch-handle-off {
-  text-align: center;
-  z-index: 1;
-}
-.bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-primary,
-.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-primary {
-  color: #fff;
-  background: #428bca;
-}
-.bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-info,
-.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-info {
-  color: #fff;
-  background: #5bc0de;
-}
-.bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-success,
-.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-success {
-  color: #fff;
-  background: #5cb85c;
-}
-.bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-warning,
-.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-warning {
-  background: #f0ad4e;
-  color: #fff;
-}
-.bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-danger,
-.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-danger {
-  color: #fff;
-  background: #d9534f;
-}
-.bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-default,
-.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-default {
-  color: #000;
-  background: #eeeeee;
-}
-.bootstrap-switch .bootstrap-switch-label {
-  text-align: center;
-  margin-top: -1px;
-  margin-bottom: -1px;
-  z-index: 100;
-  color: #333333;
-  background: #ffffff;
-}
-.bootstrap-switch .bootstrap-switch-handle-on {
-  border-bottom-left-radius: 3px;
-  border-top-left-radius: 3px;
-}
-.bootstrap-switch .bootstrap-switch-handle-off {
-  border-bottom-right-radius: 3px;
-  border-top-right-radius: 3px;
-}
-.bootstrap-switch input[type='radio'],
-.bootstrap-switch input[type='checkbox'] {
-  position: absolute !important;
-  top: 0;
-  left: 0;
-  opacity: 0;
-  filter: alpha(opacity=0);
-  z-index: -1;
-}
-.bootstrap-switch input[type='radio'].form-control,
-.bootstrap-switch input[type='checkbox'].form-control {
-  height: auto;
-}
-.bootstrap-switch.bootstrap-switch-mini .bootstrap-switch-handle-on,
-.bootstrap-switch.bootstrap-switch-mini .bootstrap-switch-handle-off,
-.bootstrap-switch.bootstrap-switch-mini .bootstrap-switch-label {
-  padding: 1px 5px;
-  font-size: 12px;
-  line-height: 1.5;
-}
-.bootstrap-switch.bootstrap-switch-small .bootstrap-switch-handle-on,
-.bootstrap-switch.bootstrap-switch-small .bootstrap-switch-handle-off,
-.bootstrap-switch.bootstrap-switch-small .bootstrap-switch-label {
-  padding: 5px 10px;
-  font-size: 12px;
-  line-height: 1.5;
-}
-.bootstrap-switch.bootstrap-switch-large .bootstrap-switch-handle-on,
-.bootstrap-switch.bootstrap-switch-large .bootstrap-switch-handle-off,
-.bootstrap-switch.bootstrap-switch-large .bootstrap-switch-label {
-  padding: 6px 16px;
-  font-size: 18px;
-  line-height: 1.33;
-}
-.bootstrap-switch.bootstrap-switch-disabled,
-.bootstrap-switch.bootstrap-switch-readonly,
-.bootstrap-switch.bootstrap-switch-indeterminate {
-  cursor: default !important;
-}
-.bootstrap-switch.bootstrap-switch-disabled .bootstrap-switch-handle-on,
-.bootstrap-switch.bootstrap-switch-readonly .bootstrap-switch-handle-on,
-.bootstrap-switch.bootstrap-switch-indeterminate .bootstrap-switch-handle-on,
-.bootstrap-switch.bootstrap-switch-disabled .bootstrap-switch-handle-off,
-.bootstrap-switch.bootstrap-switch-readonly .bootstrap-switch-handle-off,
-.bootstrap-switch.bootstrap-switch-indeterminate .bootstrap-switch-handle-off,
-.bootstrap-switch.bootstrap-switch-disabled .bootstrap-switch-label,
-.bootstrap-switch.bootstrap-switch-readonly .bootstrap-switch-label,
-.bootstrap-switch.bootstrap-switch-indeterminate .bootstrap-switch-label {
-  opacity: 0.5;
-  filter: alpha(opacity=50);
-  cursor: default !important;
-}
-.bootstrap-switch.bootstrap-switch-animate .bootstrap-switch-container {
-  -webkit-transition: margin-left 0.5s;
-  transition: margin-left 0.5s;
-}
-.bootstrap-switch.bootstrap-switch-inverse .bootstrap-switch-handle-on {
-  border-bottom-left-radius: 0;
-  border-top-left-radius: 0;
-  border-bottom-right-radius: 3px;
-  border-top-right-radius: 3px;
-}
-.bootstrap-switch.bootstrap-switch-inverse .bootstrap-switch-handle-off {
-  border-bottom-right-radius: 0;
-  border-top-right-radius: 0;
-  border-bottom-left-radius: 3px;
-  border-top-left-radius: 3px;
-}
-.bootstrap-switch.bootstrap-switch-focused {
-  border-color: #66afe9;
-  outline: 0;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
-  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
-}
-.bootstrap-switch.bootstrap-switch-on .bootstrap-switch-label,
-.bootstrap-switch.bootstrap-switch-inverse.bootstrap-switch-off .bootstrap-switch-label {
-  border-bottom-right-radius: 3px;
-  border-top-right-radius: 3px;
-}
-.bootstrap-switch.bootstrap-switch-off .bootstrap-switch-label,
-.bootstrap-switch.bootstrap-switch-inverse.bootstrap-switch-on .bootstrap-switch-label {
-  border-bottom-left-radius: 3px;
-  border-top-left-radius: 3px;
-}
 /*!
  * Bootstrap v3.3.2 (http://getbootstrap.com)
  * Copyright 2011-2015 Twitter, Inc.
@@ -7726,10 +7529,15 @@ color: #fff;
 
 .gr-btm_margin{
 	margin-bottom: 7px;
+	width:80%;
 }
 
 .addon120{
 	width: 120px;
+}
+
+.addon140{
+	width: 140px;
 }
 
 .label-group-addon {
@@ -7821,7 +7629,490 @@ list-style: none;
 	min-height: 20px;
 	position: relative;
 }
-/* line 5, h:/www/railsprj/pcrm/app/assets/stylesheets/develops.scss */
+
+label.btn{
+	display: inline-block;
+padding: 4px 12px;
+margin-bottom: 0;
+font-size: 14px;
+line-height: 20px;
+color: #333333;
+text-align: center;
+text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+vertical-align: middle;
+cursor: pointer;
+background-color: #f5f5f5;
+background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
+background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
+background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
+background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
+background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
+background-repeat: repeat-x;
+border: 1px solid #cccccc;
+border-color: #e6e6e6 #e6e6e6 #bfbfbf;
+border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+border-bottom-color: #b3b3b3;
+-webkit-border-radius: 4px;
+-moz-border-radius: 4px;
+border-radius: 4px;
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);
+filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+label.btn:hover,
+label.btn:focus {
+  color: #333333;
+  background-color: #e6e6e6;
+  z-index: 2;
+  text-decoration: none;
+  background-position: 0 -15px;
+  -webkit-transition: background-position 0.1s linear;
+     -moz-transition: background-position 0.1s linear;
+       -o-transition: background-position 0.1s linear;
+          transition: background-position 0.1s linear;
+}
+/*!
+Chosen, a Select Box Enhancer for jQuery and Prototype
+by Patrick Filler for Harvest, http://getharvest.com
+
+Version 1.3.0
+Full source at https://github.com/harvesthq/chosen
+Copyright (c) 2011-2014 Harvest http://getharvest.com
+
+MIT License, https://github.com/harvesthq/chosen/blob/master/LICENSE.md
+This file is generated by `grunt build`, do not edit it by hand.
+*/
+
+/* @group Base */
+
+.chosen-container {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 13px;
+  zoom: 1;
+  *display: inline;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+.chosen-container * {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.chosen-container .chosen-drop {
+  position: absolute;
+  top: 100%;
+  left: -9999px;
+  z-index: 1010;
+  width: 100%;
+  border: 1px solid #aaa;
+  border-top: 0;
+  background: #fff;
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
+}
+.chosen-container.chosen-with-drop .chosen-drop {
+  left: 0;
+}
+.chosen-container a {
+  cursor: pointer;
+}
+
+/* @end */
+/* @group Single Chosen */
+.chosen-container-single .chosen-single {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  padding: 0 0 0 8px;
+  height: 25px;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  background-color: #fff;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(20%, #ffffff), color-stop(50%, #f6f6f6), color-stop(52%, #eeeeee), color-stop(100%, #f4f4f4));
+  background: -webkit-linear-gradient(top, #ffffff 20%, #f6f6f6 50%, #eeeeee 52%, #f4f4f4 100%);
+  background: -moz-linear-gradient(top, #ffffff 20%, #f6f6f6 50%, #eeeeee 52%, #f4f4f4 100%);
+  background: -o-linear-gradient(top, #ffffff 20%, #f6f6f6 50%, #eeeeee 52%, #f4f4f4 100%);
+  background: linear-gradient(top, #ffffff 20%, #f6f6f6 50%, #eeeeee 52%, #f4f4f4 100%);
+  background-clip: padding-box;
+  box-shadow: 0 0 3px white inset, 0 1px 1px rgba(0, 0, 0, 0.1);
+  color: #444;
+  text-decoration: none;
+  white-space: nowrap;
+  line-height: 24px;
+}
+.chosen-container-single .chosen-default {
+  color: #999;
+}
+.chosen-container-single .chosen-single span {
+  display: block;
+  overflow: hidden;
+  margin-right: 26px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.chosen-container-single .chosen-single-with-deselect span {
+  margin-right: 38px;
+}
+.chosen-container-single .chosen-single abbr {
+  position: absolute;
+  top: 6px;
+  right: 26px;
+  display: block;
+  width: 12px;
+  height: 12px;
+  background: url('chosen-sprite.png') -42px 1px no-repeat;
+  font-size: 1px;
+}
+.chosen-container-single .chosen-single abbr:hover {
+  background-position: -42px -10px;
+}
+.chosen-container-single.chosen-disabled .chosen-single abbr:hover {
+  background-position: -42px -10px;
+}
+.chosen-container-single .chosen-single div {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: block;
+  width: 18px;
+  height: 100%;
+}
+.chosen-container-single .chosen-single div b {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: url('chosen-sprite.png') no-repeat 0px 2px;
+}
+.chosen-container-single .chosen-search {
+  position: relative;
+  z-index: 1010;
+  margin: 0;
+  padding: 3px 4px;
+  white-space: nowrap;
+}
+.chosen-container-single .chosen-search input[type="text"] {
+  margin: 1px 0;
+  padding: 4px 20px 4px 5px;
+  width: 100%;
+  height: auto;
+  outline: 0;
+  border: 1px solid #aaa;
+  background: white url('chosen-sprite.png') no-repeat 100% -20px;
+  background: url('chosen-sprite.png') no-repeat 100% -20px;
+  font-size: 1em;
+  font-family: sans-serif;
+  line-height: normal;
+  border-radius: 0;
+}
+.chosen-container-single .chosen-drop {
+  margin-top: -1px;
+  border-radius: 0 0 4px 4px;
+  background-clip: padding-box;
+}
+.chosen-container-single.chosen-container-single-nosearch .chosen-search {
+  position: absolute;
+  left: -9999px;
+}
+
+/* @end */
+/* @group Results */
+.chosen-container .chosen-results {
+  color: #444;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin: 0 4px 4px 0;
+  padding: 0 0 0 4px;
+  max-height: 240px;
+  -webkit-overflow-scrolling: touch;
+}
+.chosen-container .chosen-results li {
+  display: none;
+  margin: 0;
+  padding: 5px 6px;
+  list-style: none;
+  line-height: 15px;
+  word-wrap: break-word;
+  -webkit-touch-callout: none;
+}
+.chosen-container .chosen-results li.active-result {
+  display: list-item;
+  cursor: pointer;
+}
+.chosen-container .chosen-results li.disabled-result {
+  display: list-item;
+  color: #ccc;
+  cursor: default;
+}
+.chosen-container .chosen-results li.highlighted {
+  background-color: #3875d7;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(20%, #3875d7), color-stop(90%, #2a62bc));
+  background-image: -webkit-linear-gradient(#3875d7 20%, #2a62bc 90%);
+  background-image: -moz-linear-gradient(#3875d7 20%, #2a62bc 90%);
+  background-image: -o-linear-gradient(#3875d7 20%, #2a62bc 90%);
+  background-image: linear-gradient(#3875d7 20%, #2a62bc 90%);
+  color: #fff;
+}
+.chosen-container .chosen-results li.no-results {
+  color: #777;
+  display: list-item;
+  background: #f4f4f4;
+}
+.chosen-container .chosen-results li.group-result {
+  display: list-item;
+  font-weight: bold;
+  cursor: default;
+}
+.chosen-container .chosen-results li.group-option {
+  padding-left: 15px;
+}
+.chosen-container .chosen-results li em {
+  font-style: normal;
+  text-decoration: underline;
+}
+
+/* @end */
+/* @group Multi Chosen */
+.chosen-container-multi .chosen-choices {
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  padding: 0 5px;
+  width: 100%;
+  height: auto !important;
+  height: 1%;
+  border: 1px solid #aaa;
+  background-color: #fff;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(1%, #eeeeee), color-stop(15%, #ffffff));
+  background-image: -webkit-linear-gradient(#eeeeee 1%, #ffffff 15%);
+  background-image: -moz-linear-gradient(#eeeeee 1%, #ffffff 15%);
+  background-image: -o-linear-gradient(#eeeeee 1%, #ffffff 15%);
+  background-image: linear-gradient(#eeeeee 1%, #ffffff 15%);
+  cursor: text;
+}
+.chosen-container-multi .chosen-choices li {
+  float: left;
+  list-style: none;
+}
+.chosen-container-multi .chosen-choices li.search-field {
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+}
+.chosen-container-multi .chosen-choices li.search-field input[type="text"] {
+  margin: 1px 0;
+  padding: 0;
+  height: 25px;
+  outline: 0;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none;
+  color: #999;
+  font-size: 100%;
+  font-family: sans-serif;
+  line-height: normal;
+  border-radius: 0;
+}
+.chosen-container-multi .chosen-choices li.search-choice {
+  position: relative;
+  margin: 3px 5px 3px 0;
+  padding: 3px 20px 3px 5px;
+  border: 1px solid #aaa;
+  max-width: 100%;
+  border-radius: 3px;
+  background-color: #eeeeee;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(20%, #f4f4f4), color-stop(50%, #f0f0f0), color-stop(52%, #e8e8e8), color-stop(100%, #eeeeee));
+  background-image: -webkit-linear-gradient(#f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
+  background-image: -moz-linear-gradient(#f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
+  background-image: -o-linear-gradient(#f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
+  background-image: linear-gradient(#f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
+  background-size: 100% 19px;
+  background-repeat: repeat-x;
+  background-clip: padding-box;
+  box-shadow: 0 0 2px white inset, 0 1px 0 rgba(0, 0, 0, 0.05);
+  color: #333;
+  line-height: 13px;
+  cursor: default;
+}
+.chosen-container-multi .chosen-choices li.search-choice span {
+  word-wrap: break-word;
+}
+.chosen-container-multi .chosen-choices li.search-choice .search-choice-close {
+  position: absolute;
+  top: 4px;
+  right: 3px;
+  display: block;
+  width: 12px;
+  height: 12px;
+  background: url('chosen-sprite.png') -42px 1px no-repeat;
+  font-size: 1px;
+}
+.chosen-container-multi .chosen-choices li.search-choice .search-choice-close:hover {
+  background-position: -42px -10px;
+}
+.chosen-container-multi .chosen-choices li.search-choice-disabled {
+  padding-right: 5px;
+  border: 1px solid #ccc;
+  background-color: #e4e4e4;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(20%, #f4f4f4), color-stop(50%, #f0f0f0), color-stop(52%, #e8e8e8), color-stop(100%, #eeeeee));
+  background-image: -webkit-linear-gradient(top, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
+  background-image: -moz-linear-gradient(top, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
+  background-image: -o-linear-gradient(top, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
+  background-image: linear-gradient(top, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
+  color: #666;
+}
+.chosen-container-multi .chosen-choices li.search-choice-focus {
+  background: #d4d4d4;
+}
+.chosen-container-multi .chosen-choices li.search-choice-focus .search-choice-close {
+  background-position: -42px -10px;
+}
+.chosen-container-multi .chosen-results {
+  margin: 0;
+  padding: 0;
+}
+.chosen-container-multi .chosen-drop .result-selected {
+  display: list-item;
+  color: #ccc;
+  cursor: default;
+}
+
+/* @end */
+/* @group Active  */
+.chosen-container-active .chosen-single {
+  border: 1px solid #5897fb;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+.chosen-container-active.chosen-with-drop .chosen-single {
+  border: 1px solid #aaa;
+  -moz-border-radius-bottomright: 0;
+  border-bottom-right-radius: 0;
+  -moz-border-radius-bottomleft: 0;
+  border-bottom-left-radius: 0;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(20%, #eeeeee), color-stop(80%, #ffffff));
+  background-image: -webkit-linear-gradient(#eeeeee 20%, #ffffff 80%);
+  background-image: -moz-linear-gradient(#eeeeee 20%, #ffffff 80%);
+  background-image: -o-linear-gradient(#eeeeee 20%, #ffffff 80%);
+  background-image: linear-gradient(#eeeeee 20%, #ffffff 80%);
+  box-shadow: 0 1px 0 #fff inset;
+}
+.chosen-container-active.chosen-with-drop .chosen-single div {
+  border-left: none;
+  background: transparent;
+}
+.chosen-container-active.chosen-with-drop .chosen-single div b {
+  background-position: -18px 2px;
+}
+.chosen-container-active .chosen-choices {
+  border: 1px solid #5897fb;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+.chosen-container-active .chosen-choices li.search-field input[type="text"] {
+  color: #222 !important;
+}
+
+/* @end */
+/* @group Disabled Support */
+.chosen-disabled {
+  opacity: 0.5 !important;
+  cursor: default;
+}
+.chosen-disabled .chosen-single {
+  cursor: default;
+}
+.chosen-disabled .chosen-choices .search-choice .search-choice-close {
+  cursor: default;
+}
+
+/* @end */
+/* @group Right to Left */
+.chosen-rtl {
+  text-align: right;
+}
+.chosen-rtl .chosen-single {
+  overflow: visible;
+  padding: 0 8px 0 0;
+}
+.chosen-rtl .chosen-single span {
+  margin-right: 0;
+  margin-left: 26px;
+  direction: rtl;
+}
+.chosen-rtl .chosen-single-with-deselect span {
+  margin-left: 38px;
+}
+.chosen-rtl .chosen-single div {
+  right: auto;
+  left: 3px;
+}
+.chosen-rtl .chosen-single abbr {
+  right: auto;
+  left: 26px;
+}
+.chosen-rtl .chosen-choices li {
+  float: right;
+}
+.chosen-rtl .chosen-choices li.search-field input[type="text"] {
+  direction: rtl;
+}
+.chosen-rtl .chosen-choices li.search-choice {
+  margin: 3px 5px 3px 0;
+  padding: 3px 5px 3px 19px;
+}
+.chosen-rtl .chosen-choices li.search-choice .search-choice-close {
+  right: auto;
+  left: 4px;
+}
+.chosen-rtl.chosen-container-single-nosearch .chosen-search,
+.chosen-rtl .chosen-drop {
+  left: 9999px;
+}
+.chosen-rtl.chosen-container-single .chosen-results {
+  margin: 0 0 4px 4px;
+  padding: 0 4px 0 0;
+}
+.chosen-rtl .chosen-results li.group-option {
+  padding-right: 15px;
+  padding-left: 0;
+}
+.chosen-rtl.chosen-container-active.chosen-with-drop .chosen-single div {
+  border-right: none;
+}
+.chosen-rtl .chosen-search input[type="text"] {
+  padding: 4px 5px 4px 20px;
+  background: white url('chosen-sprite.png') no-repeat -30px -20px;
+  background: url('chosen-sprite.png') no-repeat -30px -20px;
+  direction: rtl;
+}
+.chosen-rtl.chosen-container-single .chosen-single div b {
+  background-position: 6px 2px;
+}
+.chosen-rtl.chosen-container-single.chosen-with-drop .chosen-single div b {
+  background-position: -12px 2px;
+}
+
+/* @end */
+/* @group Retina compatibility */
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-resolution: 144dpi) {
+  .chosen-rtl .chosen-search input[type="text"],
+  .chosen-container-single .chosen-single abbr,
+  .chosen-container-single .chosen-single div b,
+  .chosen-container-single .chosen-search input[type="text"],
+  .chosen-container-multi .chosen-choices .search-choice .search-choice-close,
+  .chosen-container .chosen-results-scroll-down span,
+  .chosen-container .chosen-results-scroll-up span {
+    background-image: url('chosen-sprite@2x.png') !important;
+    background-size: 52px 37px !important;
+    background-repeat: no-repeat !important;
+  }
+}
+/* @end */
+/* line 5, d:/www/railsprj/pcrm/app/assets/stylesheets/develops.scss */
 .check_img {
   padding: 1px 1px 1px 1px;
   display: block;
@@ -7839,12 +8130,12 @@ list-style: none;
   -ms-border-radius: 2px;
   -khtml-border-radius: 2px;
 }
-/* line 22, h:/www/railsprj/pcrm/app/assets/stylesheets/develops.scss */
+/* line 22, d:/www/railsprj/pcrm/app/assets/stylesheets/develops.scss */
 .check_img:hover {
   border: 1px solid #BBB;
   background-color: #d9e8ff;
 }
-/* line 26, h:/www/railsprj/pcrm/app/assets/stylesheets/develops.scss */
+/* line 26, d:/www/railsprj/pcrm/app/assets/stylesheets/develops.scss */
 .check_img.checked {
   background-image: url("check.png");
 }
@@ -8036,9 +8327,7 @@ list-style: none;
 
 
  */
-/*! normalize.css 2012-03-11T12:53 UTC - http://github.com/necolas/normalize.css *//* =============================================================================   HTML5 display definitions   ========================================================================== *//* * Corrects block display not defined in IE6/7/8/9 & FF3 */
-article,aside,details,figcaption,figure,footer,header,hgroup,nav,section,summary {    display: block;}/* * Corrects inline-block display not defined in IE6/7/8/9 & FF3 */audio,canvas,video {    display: inline-block;    *display: inline;    *zoom: 1;}/* * Prevents modern browsers from displaying 'audio' without controls * Remove excess height in iOS5 devices */audio:not([controls]) {    display: none;    height: 0;}/* * Addresses styling for 'hidden' attribute not present in IE7/8/9, FF3, S4 * Known issue: no IE6 support */[hidden] {    display: none;}/* =============================================================================   Base   ========================================================================== *//* * 1. Corrects text resizing oddly in IE6/7 when body font-size is set using em units *    http://clagnut.com/blog/348/#c790 * 2. Prevents iOS text size adjust after orientation change, without disabling user zoom *    www.456bereastreet.com/archive/201012/controlling_text_size_in_safari_for_ios_without_disabling_user_zoom/ */html {    font-size: 100%; /* 1 */    -webkit-text-size-adjust: 100%; /* 2 */    -ms-text-size-adjust: 100%; /* 2 */}/* * Addresses font-family inconsistency between 'textarea' and other form elements. */html,button,input,select,textarea {    font-family: sans-serif;}/* * Addresses margins handled incorrectly in IE6/7 */body {    margin: 0;}/* =============================================================================   Links   ========================================================================== *//* * Addresses outline displayed oddly in Chrome */a:focus {    outline: thin dotted;}/* * Improves readability when focused and also mouse hovered in all browsers * people.opera.com/patrickl/experiments/keyboard/test */a:hover,a:active {    outline: 0;}/* =============================================================================   Typography   ========================================================================== *//* * Addresses font sizes and margins set differently in IE6/7 * Addresses font sizes within 'section' and 'article' in FF4+, Chrome, S5 */h1 {    font-size: 2em;    margin: 0.67em 0;}h2 {    font-size: 1.5em;    margin: 0.83em 0;}h3 {    font-size: 1.17em;    margin: 1em 0;}h4 {    font-size: 1em;    margin: 1.33em 0;}h5 {    font-size: 0.83em;    margin: 1.67em 0;}h6 {    font-size: 0.75em;    margin: 2.33em 0;}/* * Addresses styling not present in IE7/8/9, S5, Chrome */abbr[title] {    border-bottom: 1px dotted;}/* * Addresses style set to 'bolder' in FF3+, S4/5, Chrome*/b,strong {    font-weight: bold;}blockquote {    margin: 1em 40px;}/* * Addresses styling not present in S5, Chrome */dfn {    font-style: italic;}/* * Addresses styling not present in IE6/7/8/9 */mark {    background: #ff0;    color: #000;}/* * Addresses margins set differently in IE6/7 */p,pre {    margin: 1em 0;}/* * Corrects font family set oddly in IE6, S4/5, Chrome * en.wikipedia.org/wiki/User:Davidgothberg/Test59 */pre,code,kbd,samp {    font-family: monospace, serif;    _font-family: 'courier new', monospace;    font-size: 1em;}/* * Improves readability of pre-formatted text in all browsers */pre {    white-space: pre;    white-space: pre-wrap;    word-wrap: break-word;}/* * 1. Addresses CSS quotes not supported in IE6/7 * 2. Addresses quote property not supported in S4 *//* 1 */q {    quotes: none;}/* 2 */q:before,q:after {    content: '';    content: none;}small {    font-size: 75%;}/* * Prevents sub and sup affecting line-height in all browsers * gist.github.com/413930 */sub,sup {    font-size: 75%;    line-height: 0;    position: relative;    vertical-align: baseline;}sup {    top: -0.5em;}sub {    bottom: -0.25em;}/* =============================================================================   Lists   ========================================================================== *//* * Addresses margins set differently in IE6/7 */dl,menu,ol,ul {    margin: 1em 0;}dd {    margin: 0 0 0 40px;}/* * Addresses paddings set differently in IE6/7 */menu,ol,ul {    padding: 0 0 0 40px;}/* * Corrects list images handled incorrectly in IE7 */nav ul,nav ol {    list-style: none;    list-style-image: none;}/* =============================================================================   Embedded content   ========================================================================== *//* * 1. Removes border when inside 'a' element in IE6/7/8/9, FF3 * 2. Improves image quality when scaled in IE7 *    code.flickr.com/blog/2008/11/12/on-ui-quality-the-little-things-client-side-image-resizing/ */img {    border: 0; /* 1 */    -ms-interpolation-mode: bicubic; /* 2 */}/* * Corrects overflow displayed oddly in IE9 */svg:not(:root) {    overflow: hidden;}/* =============================================================================   Figures   ========================================================================== *//* * Addresses margin not present in IE6/7/8/9, S5, O11 */figure {    margin: 0;}/* =============================================================================   Forms   ========================================================================== *//* * Corrects margin displayed oddly in IE6/7 */form {    margin: 0;}/* * Define consistent border, margin, and padding */fieldset {    border: 1px solid #c0c0c0;    margin: 0 2px;    padding: 0.35em 0.625em 0.75em;}/* * 1. Corrects color not being inherited in IE6/7/8/9 * 2. Corrects text not wrapping in FF3 * 3. Corrects alignment displayed oddly in IE6/7 */legend {    border: 0; /* 1 */    padding: 0;    white-space: normal; /* 2 */    *margin-left: -7px; /* 3 */}/* * 1. Corrects font size not being inherited in all browsers * 2. Addresses margins set differently in IE6/7, FF3+, S5, Chrome * 3. Improves appearance and consistency in all browsers */button,input,select,textarea {    font-size: 100%; /* 1 */    margin: 0; /* 2 */    vertical-align: baseline; /* 3 */    *vertical-align: middle; /* 3 */}/* * Addresses FF3/4 setting line-height on 'input' using !important in the UA stylesheet */button,input {    line-height: normal; /* 1 */}/* * 1. Improves usability and consistency of cursor style between image-type 'input' and others * 2. Corrects inability to style clickable 'input' types in iOS * 3. Removes inner spacing in IE7 without affecting normal text inputs *    Known issue: inner spacing remains in IE6 */button,input[type="button"],input[type="reset"],input[type="submit"] {    cursor: pointer; /* 1 */    -webkit-appearance: button; /* 2 */    *overflow: visible;  /* 3 */}/* * Re-set default cursor for disabled elements */button[disabled],input[disabled] {    cursor: default;}/* * 1. Addresses box sizing set to content-box in IE8/9 * 2. Removes excess padding in IE8/9 * 3. Removes excess padding in IE7      Known issue: excess padding remains in IE6 */input[type="checkbox"],input[type="radio"] {    box-sizing: border-box; /* 1 */    padding: 0; /* 2 */    *height: 13px; /* 3 */    *width: 13px; /* 3 */}/* * 1. Addresses appearance set to searchfield in S5, Chrome * 2. Addresses box-sizing set to border-box in S5, Chrome (include -moz to future-proof) */input[type="search"] {    -webkit-appearance: textfield; /* 1 */    -moz-box-sizing: content-box;    -webkit-box-sizing: content-box; /* 2 */    box-sizing: content-box;}/* * Removes inner padding and search cancel button in S5, Chrome on OS X */input[type="search"]::-webkit-search-decoration,input[type="search"]::-webkit-search-cancel-button {    -webkit-appearance: none;}/* * Removes inner padding and border in FF3+ * www.sitepen.com/blog/2008/05/14/the-devils-in-the-details-fixing-dojos-toolbar-buttons/ */button::-moz-focus-inner,input::-moz-focus-inner {    border: 0;    padding: 0;}/* * 1. Removes default vertical scrollbar in IE6/7/8/9 * 2. Improves readability and alignment in all browsers */textarea {    overflow: auto; /* 1 */    vertical-align: top; /* 2 */}/* =============================================================================   Tables   ========================================================================== *//* * Remove most spacing between table cells */table {    border-collapse: collapse;    border-spacing: 0;}
-/* line 1, h:/www/railsprj/pcrm/app/assets/stylesheets/scaffolds.scss */
+/* line 1, d:/www/railsprj/pcrm/app/assets/stylesheets/scaffolds.scss */
 body {
   background-color: #fff;
   color: #333;
@@ -8046,42 +8335,42 @@ body {
   line-height: 18px;
 }
 
-/* line 9, h:/www/railsprj/pcrm/app/assets/stylesheets/scaffolds.scss */
+/* line 9, d:/www/railsprj/pcrm/app/assets/stylesheets/scaffolds.scss */
 p, ol, ul, td {
   font-size: 13px;
   line-height: 18px;
 }
 
-/* line 15, h:/www/railsprj/pcrm/app/assets/stylesheets/scaffolds.scss */
+/* line 15, d:/www/railsprj/pcrm/app/assets/stylesheets/scaffolds.scss */
 pre {
   background-color: #eee;
   padding: 10px;
   font-size: 11px;
 }
 
-/* line 21, h:/www/railsprj/pcrm/app/assets/stylesheets/scaffolds.scss */
+/* line 21, d:/www/railsprj/pcrm/app/assets/stylesheets/scaffolds.scss */
 a {
   color: #000;
 }
 
-/* line 26, h:/www/railsprj/pcrm/app/assets/stylesheets/scaffolds.scss */
+/* line 26, d:/www/railsprj/pcrm/app/assets/stylesheets/scaffolds.scss */
 div.field, div.actions {
   margin-bottom: 10px;
 }
 
-/* line 31, h:/www/railsprj/pcrm/app/assets/stylesheets/scaffolds.scss */
+/* line 31, d:/www/railsprj/pcrm/app/assets/stylesheets/scaffolds.scss */
 #notice {
   color: green;
 }
 
-/* line 35, h:/www/railsprj/pcrm/app/assets/stylesheets/scaffolds.scss */
+/* line 35, d:/www/railsprj/pcrm/app/assets/stylesheets/scaffolds.scss */
 .field_with_errors {
   padding: 2px;
   background-color: red;
   display: table;
 }
 
-/* line 41, h:/www/railsprj/pcrm/app/assets/stylesheets/scaffolds.scss */
+/* line 41, d:/www/railsprj/pcrm/app/assets/stylesheets/scaffolds.scss */
 #error_explanation {
   width: 450px;
   border: 2px solid red;
@@ -8090,7 +8379,7 @@ div.field, div.actions {
   margin-bottom: 20px;
   background-color: #f0f0f0;
 }
-/* line 48, h:/www/railsprj/pcrm/app/assets/stylesheets/scaffolds.scss */
+/* line 48, d:/www/railsprj/pcrm/app/assets/stylesheets/scaffolds.scss */
 #error_explanation h2 {
   text-align: left;
   font-weight: bold;
@@ -8101,7 +8390,7 @@ div.field, div.actions {
   background-color: #c00;
   color: #fff;
 }
-/* line 58, h:/www/railsprj/pcrm/app/assets/stylesheets/scaffolds.scss */
+/* line 58, d:/www/railsprj/pcrm/app/assets/stylesheets/scaffolds.scss */
 #error_explanation ul li {
   font-size: 12px;
   list-style: square;
@@ -8125,9 +8414,12 @@ div.field, div.actions {
 
 
 
- */
 
 
+  */
+
+
+ 
 .container {
 	max-width: 1200px;
 	padding: 0;
@@ -10696,4 +10988,214 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
 .datepicker.dropdown-menu td,
 .datepicker.datepicker-inline td {
   padding: 0px 5px;
+}
+/*!
+ * bootstrap-tokenfield
+ * https://github.com/sliptree/bootstrap-tokenfield
+ * Copyright 2013-2014 Sliptree and other contributors; Licensed MIT
+ */
+
+@-webkit-keyframes blink {
+  0% {
+    border-color: #ededed;
+  }
+  100% {
+    border-color: #b94a48;
+  }
+}
+@-moz-keyframes blink {
+  0% {
+    border-color: #ededed;
+  }
+  100% {
+    border-color: #b94a48;
+  }
+}
+@keyframes blink {
+  0% {
+    border-color: #ededed;
+  }
+  100% {
+    border-color: #b94a48;
+  }
+}
+.tokenfield {
+  height: auto;
+  min-height: 34px;
+  padding-bottom: 0px;
+}
+.tokenfield.focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+.tokenfield .token {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  display: inline-block;
+  border: 1px solid #d9d9d9;
+  background-color: #ededed;
+  white-space: nowrap;
+  margin: -1px 5px 5px 0;
+  height: 22px;
+  vertical-align: top;
+  cursor: default;
+}
+.tokenfield .token:hover {
+  border-color: #b9b9b9;
+}
+.tokenfield .token.active {
+  border-color: #52a8ec;
+  border-color: rgba(82, 168, 236, 0.8);
+}
+.tokenfield .token.duplicate {
+  border-color: #ebccd1;
+  -webkit-animation-name: blink;
+  animation-name: blink;
+  -webkit-animation-duration: 0.1s;
+  animation-duration: 0.1s;
+  -webkit-animation-direction: normal;
+  animation-direction: normal;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+.tokenfield .token.invalid {
+  background: none;
+  border: 1px solid transparent;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  border-bottom: 1px dotted #d9534f;
+}
+.tokenfield .token.invalid.active {
+  background: #ededed;
+  border: 1px solid #ededed;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+.tokenfield .token .token-label {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-left: 4px;
+  vertical-align: top;
+}
+.tokenfield .token .close {
+  font-family: Arial;
+  display: inline-block;
+  line-height: 100%;
+  font-size: 1.1em;
+  line-height: 1.49em;
+  margin-left: 5px;
+  float: none;
+  height: 100%;
+  vertical-align: top;
+  padding-right: 4px;
+}
+.tokenfield .token-input {
+  background: none;
+  width: 60px;
+  min-width: 60px;
+  border: 0;
+  height: 20px;
+  padding: 0;
+  margin-bottom: 6px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.tokenfield .token-input:focus {
+  border-color: transparent;
+  outline: 0;
+  /* IE6-9 */
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.tokenfield.disabled {
+  cursor: not-allowed;
+  background-color: #eeeeee;
+}
+.tokenfield.disabled .token-input {
+  cursor: not-allowed;
+}
+.tokenfield.disabled .token:hover {
+  cursor: not-allowed;
+  border-color: #d9d9d9;
+}
+.tokenfield.disabled .token:hover .close {
+  cursor: not-allowed;
+  opacity: 0.2;
+  filter: alpha(opacity=20);
+}
+.has-warning .tokenfield.focus {
+  border-color: #66512c;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #c0a16b;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #c0a16b;
+}
+.has-error .tokenfield.focus {
+  border-color: #843534;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #ce8483;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #ce8483;
+}
+.has-success .tokenfield.focus {
+  border-color: #2b542c;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #67b168;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #67b168;
+}
+.tokenfield.input-sm,
+.input-group-sm .tokenfield {
+  min-height: 30px;
+  padding-bottom: 0px;
+}
+.input-group-sm .token,
+.tokenfield.input-sm .token {
+  height: 20px;
+  margin-bottom: 4px;
+}
+.input-group-sm .token-input,
+.tokenfield.input-sm .token-input {
+  height: 18px;
+  margin-bottom: 5px;
+}
+.tokenfield.input-lg,
+.input-group-lg .tokenfield {
+  min-height: 45px;
+  padding-bottom: 4px;
+}
+.input-group-lg .token,
+.tokenfield.input-lg .token {
+  height: 25px;
+}
+.input-group-lg .token-label,
+.tokenfield.input-lg .token-label {
+  line-height: 23px;
+}
+.input-group-lg .token .close,
+.tokenfield.input-lg .token .close {
+  line-height: 1.3em;
+}
+.input-group-lg .token-input,
+.tokenfield.input-lg .token-input {
+  height: 23px;
+  line-height: 23px;
+  margin-bottom: 6px;
+  vertical-align: top;
+}
+.tokenfield.rtl {
+  direction: rtl;
+  text-align: right;
+}
+.tokenfield.rtl .token {
+  margin: -1px 0 5px 5px;
+}
+.tokenfield.rtl .token .token-label {
+  padding-left: 0px;
+  padding-right: 4px;
 }
