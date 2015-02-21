@@ -113,13 +113,17 @@ padding: 5px;
 }
 
 .navbar .nav > li {
-float: left;
+float: left; 
 }
 
 .li-right {
-	float: right;
+	float: right !important;
 }
 
+.nav-images a{
+	padding: 3px 5px 3px 5px !important;
+	
+}
 
 .navbar .nav > .active > a, .navbar .nav > .active > a:hover, .navbar .nav > .active > a:focus {
 color: #555555;
@@ -349,4 +353,20 @@ label.btn:focus {
      -moz-transition: background-position 0.1s linear;
        -o-transition: background-position 0.1s linear;
           transition: background-position 0.1s linear;
+}
+
+
+.list-group > li:hover,
+.list-group > li:focus {
+  color: #262626;
+  text-decoration: none;
+  background-color: #f5f5f5;
+}
+
+
+.active {
+  transition: display .5s ease;
+  -webkit-transition: display .5s ease;
+  -moz-transition: display .5s ease;
+  -o-transition: display .5s ease;
 }

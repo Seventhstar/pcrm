@@ -55,17 +55,17 @@ SimpleNavigation::Configuration.run do |navigation|
     #                            against the current URI.  You may also use a proc, or the symbol <tt>:subpath</tt>.
     #
     primary.item :leads, 'Лиды', leads_path
-    primary.item :leads, 'Тарифы', statuses_path
-    primary.item :leads, 'Проекты', statuses_path
+    primary.item :leads, 'Тарифы', '#', {:class => 'disabled'}
+    primary.item :leads, 'Проекты', '#', {:class => 'disabled'}
     primary.item :providers, 'Поставщики', providers_path
     
-    primary.item :statuses, 'Настройки', '/statuses/new' do |sub_nav|
-      sub_nav.item :statuses, 'statuses', '/statuses'
-      sub_nav.item :channels, 'channels', '/channels'
-      sub_nav.item :users, 'users', '/users', if: -> { current_user.admin? }
+    primary.item :statuses, image_tag('run32.png'), '/options', {:class => 'nav-images li-right'} #do |sub_nav|
+      #sub_nav.item :statuses, 'statuses', '/statuses'
+#      sub_nav.item :channels, 'channels', '/channels'
+ #     sub_nav.item :users, 'users', '/users', if: -> { current_user.admin? }
 
-    end
-    primary.item :develops, image_tag('089.png'), develops_path
+  #  end
+    primary.item :develops, image_tag('089.png'), develops_path, {:class => 'li-right'}
 
     # Add an item which has a sub navigation (same params, but with block)
     #primary.item :key_2, 'name', url, options do |sub_nav|

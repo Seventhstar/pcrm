@@ -106,6 +106,16 @@ $(function() {
 	 	});
   });
 
+  $('.options-menu a').click(function(){ 
+      $('.options-menu a.active').removeClass("active", 150, "easeInQuint");
+      //$(this).addClass("active", 500, "easeInCubic");
+      $(this).addClass("active");
+      var c = "/" + $(this).attr("controller");
+      //alert(c);
+      $.get(c, null, null, "script");
+  });
+    
+
 
   $('span.btn-sm').click(function(){
   	comment = $("#comment_comment").val();

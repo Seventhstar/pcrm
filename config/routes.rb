@@ -1,31 +1,26 @@
 Rails.application.routes.draw do
   
   resources :budgets
-
   resources :styles
-
   resources :develops
-
   resources :providers
 
+  get    'options'  => 'options#edit'
+  get    'options/:options_page'  => 'options#edit'
   get    'signup'  => 'users#new'
   get    'login'   => 'sessions#new'                                   
   post   'login'   => 'sessions#create'
   delete 'logout'  => 'sessions#destroy'
 
 
+
   resources :account_activations, only: [:edit]
   resources :password_resets,     only: [:new, :create, :edit, :update]
 
-
   resources :leads_comments
-
   resources :leads
-
   resources :channels
-
   resources :statuses
-
   resources :users
 
   root :to => "leads#index"

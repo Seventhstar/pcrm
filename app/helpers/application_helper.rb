@@ -75,4 +75,10 @@ module ApplicationHelper
     	gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
     		"http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}"
   end
+
+  def option_link( page,title )
+    css_class = @page_data == page ? "active" : nil
+    link_to title, '#',{:class =>"list-group-item #{css_class}", :controller => page}
+  end
+
 end

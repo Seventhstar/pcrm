@@ -1,0 +1,33 @@
+
+
+
+<div class="container options-menu">
+
+	<div class="col-md-2">
+
+		<div class="panel panel-default">
+			<div class="panel-heading">Настройки лидов:</div>
+			<div class="list-group">
+			  <%= option_link("statuses","Статусы") %>
+			  <%= option_link("channels","Каналы") %>
+			</div>
+			
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">Настройки поставшиков:</div>
+			<div class="list-group">
+			    <%= option_link("budgets","Бюджеты") %>
+			    <%= option_link("goodstypes","Виды товаров") %>
+			    <%= option_link("styles","Стили") %>
+			</div>
+		</div>
+	</div>
+
+	
+
+	<div class="col-md-8">
+		<%= render @page_render %>
+	</div>
+
+</div>

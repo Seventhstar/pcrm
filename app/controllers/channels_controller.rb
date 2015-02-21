@@ -5,6 +5,7 @@ class ChannelsController < ApplicationController
   # GET /channels.json
   def index
     @channels = Channel.all
+    @channel = Channel.new
   end
 
   # GET /channels/1

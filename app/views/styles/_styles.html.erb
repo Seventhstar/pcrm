@@ -1,0 +1,35 @@
+<div class="panel panel-default">
+<div class="panel-heading">Каналы</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Канал</th>
+      <th width="60px"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @styles.each do |style| %>
+      <tr>
+        <td><%= style.name %></td>
+        
+        <td><%= link_to image_tag('edit.png'), edit_style_path(style) %>
+        <%= link_to image_tag('delete.png'), style, method: :delete, data: { confirm: 'Подтвердите удаление?' } %></td>
+      </tr>
+    <% end %>
+
+   <tr>
+   <td colspan="2">
+  <%= form_for(@style) do |f| %>
+    <%= f.label 'Новый стиль:' %>
+    <%= f.text_field :name, :class => 'text_input' %>
+    <%= button_tag 'Добавить',:class => 'btn btn-warning btn-sm' %>
+  <% end %>
+  </td>
+  </tr>
+
+  </tbody>
+
+
+</table>
+</div>
