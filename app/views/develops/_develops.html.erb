@@ -1,10 +1,16 @@
+<div class="panel panel-default">
+
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>Что нужно сделать?</th>
-      <th>Coder</th>
-      <th>Boss</th>
-      <th></th>
+      <th>Что нужно сделать?
+</th>
+      <th width="60px" class="center">Coder</th>
+      <th width="60px" class="center">Boss</th>
+      <th class="edit_delete"></th>
+</div>
+
+</th>
     </tr>
   </thead>
 
@@ -14,11 +20,11 @@
         <td><%= develop.name %></td>
         <td><span class="check_img <%= develop.coder ? "checked" :"" %>" developid="<%=develop.id%>" chk="coder"></span></td>
         <td><span class="check_img <%= develop.boss ? "checked" :"" %>" developid="<%=develop.id%>" chk="boss"></span></td>
-        <td><%= link_to link_to image_tag('edit.png'), edit_develop_path(develop) %>
-        <%= link_to link_to image_tag('delete.png'), develop, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <%= render "shared/td_edit_delete", :element => develop %>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <%= will_paginate @collection, renderer: BootstrapPagination::Rails %>
+</div>

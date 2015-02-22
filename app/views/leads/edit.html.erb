@@ -1,1 +1,22 @@
 <%= render 'form' %>
+
+<div class="col-xs-5">
+  <div class="panel panel-primary">
+    <div class="panel-heading"><span class="glyphicon glyphicon-comment"></span> Комментарии </div>
+    <div class="panel-body">
+      <ul class="microposts">
+        <%= render 'comments' %>
+      </ul>
+    </div>         
+
+    <div class="panel-footer">
+      <div class="input-group">                    
+        <%= text_area "comment","comment", placeholder: "Новый комментарий...", class: "comment_area" %>
+        <span class="input-group-btn">
+          <span class="btn btn-warning btn-sm" id="btn-chat" leadid=<%= @lead.id %>> Отправить</span>
+        </span>
+      </div>
+
+    </div>
+  </div>
+</div>
