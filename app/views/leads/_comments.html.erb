@@ -1,15 +1,17 @@
 <% if @comments != nil %>
 <% @comments.each do |leads_comment| %>
-      <li class="left clearfix">
+      <li class="clearfix">
       <div class="chat-body clearfix">
       <span class="chat-img pull-left">
       <%= image_tag avatar_url(leads_comment.user, 50) %>
       </span>
       <div class="header">
         <strong class="primary-font"><%= leads_comment.user.name %></strong> <small class="pull-right text-muted">
-        <span class="glyphicon glyphicon-time"></span><%= leads_comment.created_at %></small>
+        <span class="glyphicon glyphicon-time"></span><%= leads_comment.created_at %>
+        <span class="glyphicon glyphicon-remove" leadcommentid=<%= leads_comment.id %>  leadid=<%= leads_comment.lead.id %> ></span>
+                </small>
       </div>
-      <p leadid=<%= leads_comment.id %>><%= leads_comment.comment %></p>
+      <span leadid=<%= leads_comment.lead.id %>><%= simple_format(leads_comment.comment) %></span>
       </div>
       </li>
 

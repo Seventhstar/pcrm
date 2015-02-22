@@ -37396,6 +37396,8 @@ $(function() {
   });
 
 
+
+
 // меняем отметки coder и boss непосредственно в index
     $('#develops_list').on('click','span.check_img', function(){
 //      alert(228);
@@ -37409,9 +37411,7 @@ $(function() {
 
      	dev_id  = $(this).attr('developid');
      	chk 	= $(this).attr('chk');
-
-
-     	 $.ajax({
+    	 $.ajax({
 	 		url: "/ajax/dev_check",
 	 		data: {'develop_id':dev_id,'field':chk, 'checked': checked},
 	 		type: "POST",
@@ -37422,6 +37422,49 @@ $(function() {
 	 	});
   });
 
+  $('.options-menu a').click(function(){ 
+      $('.options-menu a.active').removeClass("active", 150, "easeInQuint");
+      //$(this).addClass("active", 500, "easeInCubic");
+      $(this).addClass("active");
+      var c = "/" + $(this).attr("controller");
+      //alert(c);
+      $.get(c, null, null, "script");
+  });
+    
+
+$('td').on('submit','form',function() {  
+    var valuesToSubmit = $(this).serialize();
+    alert(33);
+    /*$.ajax({
+        type: "POST"
+        url: $(this).attr('action'), //sumbits it to the given url of the form
+        data: valuesToSubmit,
+        dataType: "JSON" // you want a difference between normal and ajax-calls, and json is standard
+    }).success(function(json){
+        //act on result.
+    });*/
+    return false; // prevents normal behaviour
+});
+
+  
+  $('.microposts').on('click','span.glyphicon-remove', function(){
+        //alert('del');
+        var del = confirm("Действительно удалить?");
+        if (!del) return;
+
+        lead_id = $(this).attr('leadid');
+        leadcomm_id = $(this).attr('leadcommentid');
+        $.ajax({
+           url: "/ajax/del_comment",
+           data: {'lead_comment_id':leadcomm_id},
+           type: "POST",
+           beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},   
+            success: function(){
+             $.get('/leads/'+lead_id+'/edit', "", null, "script");
+             //$('.panel-body').scrollTop(-9999);
+            }
+            });
+  });
 
   $('span.btn-sm').click(function(){
   	comment = $("#comment_comment").val();
@@ -37431,18 +37474,16 @@ $(function() {
 	if (comment=='') return;
   	//return;
   	$.ajax({
-	 url: "/ajax/add_comment",
-	 data: {'comment':comment,'lead_id':lead_id},
-	 type: "POST",
-	 beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},	 
-	  success: function(){
-	   $("#comment_comment").val("");
-	   $.get('/leads/'+lead_id+'/edit', "", null, "script");
-	   $('.panel-body').scrollTop(-9999);
-	  }
-	 });
-
-
+    	 url: "/ajax/add_comment",
+    	 data: {'comment':comment,'lead_id':lead_id},
+    	 type: "POST",
+    	 beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},	 
+    	  success: function(){
+    	   $("#comment_comment").val("");
+    	   $.get('/leads/'+lead_id+'/edit', "", null, "script");
+    	   //$('.panel-body').scrollTop(-9999);
+    	  }
+    	 });
   });
 
 

@@ -12,9 +12,7 @@
     <% @channels.each do |channel| %>
       <tr>
         <td><%= channel.name %></td>
-        
-        <td><%= link_to image_tag('edit.png'), edit_channel_path(channel) %>
-        <%= link_to image_tag('delete.png'), channel, method: :delete, data: { confirm: 'Подтвердите удаление?' } %></td>
+        <%= render "shared/td_edit_delete", :element => channel %>
       </tr>
     <% end %>
 
@@ -23,7 +21,7 @@
   <%= form_for(@channel) do |f| %>
     <%= f.label 'Новый канал:' %>
     <%= f.text_field :name, :class => 'text_input' %>
-    <%= button_tag 'Добавить',:class => 'btn btn-warning btn-sm' %>
+    <%= f.submit 'Добавить',:class => 'btn btn-warning btn-sm' %>
   <% end %>
   </td>
   </tr>

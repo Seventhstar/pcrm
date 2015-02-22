@@ -2,18 +2,20 @@
 
 <%= hidden_field_tag :sort, params[:sort] %>
 
+<div class="panel panel-default">
 <table class="tleads">
   <thead>
     <tr>
       <th><%= sortable "status_id","Статус" %></th>
       <th><%= sortable "status_date","Дата для статуса" %></th>
       <th><%= sortable "fio", "ФИО" %></th>
-      <th>Телефон </br>E-mail</th>
+      <th>Телефон</th>
       
       <th>Информация о запросе</th>
-      <th><%= sortable "footage","Метраж" %></th>
-      <th><%= sortable "start_date","Дата" %></th>
-      <th>Менеджер</th>
+      <th class="center"><%= sortable "footage","Метраж" %></th>
+      <th class="center"><%= sortable "start_date","Дата" %></th>
+      
+      <th class="edit_delete"></th>
     </tr>
   </thead>
 
@@ -25,30 +27,28 @@
 
       <% if cur_month != lead.status_date.month && (params[:sort] == "status_date" || params[:sort] == nil)%>
       <% cur_month = lead.status_date.month %>
-      <tr class="month" ><td colspan="8" class="Month"><span class="greenMonth"><%= t lead.status_date.strftime("%B") %>  <%= lead.status_date.strftime("%Y") %></span></td></tr><tr>
+      <tr class="month"><td colspan="8" class="month"><%= t lead.status_date.strftime("%B") %>  <%= lead.status_date.strftime("%Y") %></td></tr><tr>
       <% elsif cur_user != lead.user.name && (params[:sort] == "user_id")%>
         <% cur_user = lead.user.name %>
-        <tr><td colspan="8" class="Month"><%= t lead.user.name %></td></tr><tr>
+        <tr class="month"><td colspan="8" class="month"><%= t lead.user.name %></td></tr><tr>
       <% elsif cur_status != lead.status.name && (params[:sort] == "status_id")%>
         <% cur_status = lead.status.name %>
-        <tr><td colspan="8" class="Month"><%= t lead.status.name %></td></tr>
+        <tr class="month"><td colspan="8" class="month"><%= t lead.status.name %></td></tr>
       <% end %>
         <tr class="<%= class_for_lead(lead) %>" >      
         <td><%= lead.status_name %></td>
         <td><%= lead.status_date %></td>
         <td><%= lead.fio %></td>
-        <td><%= lead.phone %></br>
-        <%= lead.email %></td>
+        <td><%= lead.phone %></td>
         <td><%= lead.info %></td>
-        <td><%= lead.footage %></td>
-        <td><%= lead.start_date %></td>
-        <td><%= lead.user_name %>
-        <%= link_to image_tag('edit.png'), edit_lead_path(lead) %>
-        <%= link_to image_tag('delete.png'), lead, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td class="center"><%= lead.footage %></td>
+        <td class="center"><%= lead.start_date %></td>
+        <%= render "shared/td_edit_delete", :element => lead %>
+
       </tr>
     <% end %>
   </tbody>
 </table>
-
+</div>
 <br>
 

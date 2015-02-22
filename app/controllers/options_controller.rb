@@ -9,9 +9,6 @@ class OptionsController < ApplicationController
 		@page_render = "statuses/statuses"
 		@page_data = "statuses"
 	end
-	
-
-   	
 
     @statuses = Status.all
     @channels = Channel.all

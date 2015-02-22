@@ -5,7 +5,8 @@
     <tr>
       <th>Статус</th>
       <th>Актуальный</th>
-      <th width="60px"></th>
+      <th></th>
+      <th class="edit_delete"></th>
     </tr>
   </thead>
 
@@ -14,16 +15,16 @@
       <tr >
         <td><%= status.name %></td>
         <td><%= check_box_tag status.actual, status.actual, status.actual %></td>
+        <td></td>
+        <%= render "shared/td_edit_delete", :element => status %>
         
-        <td><%= link_to image_tag('edit.png'), edit_status_path(status) %>
-        <%= link_to image_tag('delete.png'), status, method: :delete, data: { confirm: 'Подтвердите удаление?' } %></td>
       </tr>
     <% end %>
 
     <tr>
-     <td><%= text_field :name, :name, {:class => 'text_input'} %></td>
+    <td><%= text_field :name, :name, {:class => 'text_input'} %></td>
     <td><%= check_box :actual, :actual %></td>
-    <td><span class='btn btn-warning btn-sm'> Записать </span></td>
+    <td colspan="2"><span class='btn btn-warning btn-sm'> Записать </span></td>
     </tr>
   </tbody>
 </table>

@@ -1,7 +1,7 @@
 class LeadsController < ApplicationController
   before_action :set_lead, only: [:show, :edit, :update, :destroy]
   before_action :logged_in_user
-  helper_method :sort_column, :sort_direction, :only_active
+  helper_method :sort_column, :sort_direction, :only_actual
 
   # GET /leads
   # GET /leads.json
@@ -14,12 +14,12 @@ class LeadsController < ApplicationController
     end
 
 
-    if params[:only_active] == "true"
+    if !params[:only_actual] || params[:only_actual] == "true"
       @s_status_ids = Status.where(:actual => true) 
       @leads = @leads.where(:status => @s_status_ids)
     end
 
-      @leads =@leads.order(sort_column + " " + sort_direction)
+    @leads = @leads.order(sort_column + " " + sort_direction + ", status_date desc")
 
     @channels = Channel.all
   end
@@ -40,7 +40,7 @@ class LeadsController < ApplicationController
   def edit
     @channels = Channel.all
     @statuses = Status.all
-    @comments = @lead.leads_comments.order('created_at desc')
+    @comments = @lead.leads_comments.order('created_at asc')
     
   end
 
@@ -52,7 +52,7 @@ class LeadsController < ApplicationController
 
     respond_to do |format|
       if @lead.save
-        format.html { redirect_to leads_url, notice: 'Lead was successfully created.' }
+        format.html { redirect_to leads_url, notice: 'Лид успешно создан.' }
         format.json { render :show, status: :created, location: @lead }
       else
         format.html { render :new }
@@ -66,7 +66,7 @@ class LeadsController < ApplicationController
   def update
     respond_to do |format|
       if @lead.update(lead_params)
-        format.html { redirect_to leads_url, notice: 'Lead was successfully updated.' }
+        format.html { redirect_to leads_url, notice: 'Лид успешно обновлен.' }
         format.json { render :show, status: :ok, location: @lead }
       else
         format.html { render :edit }
@@ -80,7 +80,7 @@ class LeadsController < ApplicationController
   def destroy
     @lead.destroy
     respond_to do |format|
-      format.html { redirect_to leads_url, notice: 'Lead was successfully destroyed.' }
+      format.html { redirect_to leads_url, notice: 'Лид удален.' }
       format.json { head :no_content }
     end
   end
@@ -104,7 +104,7 @@ class LeadsController < ApplicationController
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
   end
 
-  def only_active
-    %w[true nil].include?(params[:only_active]) ? params[:only_active] : "all"
+  def only_actual
+    %w[true false nil].include?(params[:only_actual]) ? params[:only_actual] : "all"
   end
 end

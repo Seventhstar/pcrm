@@ -14,7 +14,7 @@
     <tr><td style="vertical-align:middle;">Канал</td>
       <td><%= f.select 'channel_id', options_for_select(@channels.collect{ |u| [u.name, u.id] }) %></td></tr>
     <tr><td style="vertical-align:middle;">Статус</td>
-      <td><%= f.select 'status_id', options_for_select(@statuses.collect{ |u| [u.name, u.id] }) %></td></tr>
+      <td><%= f.select 'status_id', options_for_select(@statuses.collect{ |u| [u.name, u.id] },@lead.status_id) %></td></tr>
     
     <%= f.hidden_field :user_id, value: current_user.id   %>
 

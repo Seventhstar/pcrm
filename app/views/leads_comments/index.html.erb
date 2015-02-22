@@ -14,7 +14,7 @@
   <tbody>
     <% @leads_comments.each do |leads_comment| %>
       <tr>
-        <td><%= leads_comment.comment %></td>
+        <td><%= simple_format(leads_comment.comment) %></td>
         <td><%= leads_comment.user_id %></td>
         <td><%= leads_comment.lead_id %></td>
         <td><%= link_to 'Show', leads_comment %></td>

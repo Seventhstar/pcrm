@@ -21,6 +21,7 @@ class ChannelsController < ApplicationController
 
   # GET /channels/1/edit
   def edit
+    @channels = Channel.all
   end
 
   # POST /channels

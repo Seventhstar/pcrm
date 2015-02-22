@@ -51,11 +51,12 @@ module ApplicationHelper
     css_class = "btn #{active}" 
   end
 
-	def set_only_active(active,title = nil)  
-		css_class = active == "true" ? "active" : "passive"
-		css_class.concat(" li-right")
-		p_active = only_active != "true"
-		link_to title, params.merge(:only_active => p_active) , {:class => css_class}
+  def set_only_actual(actual,title = nil)  
+		css_class = actual == "false" ? "passive" : "active"
+		css_class.concat(" only_actual li-right")
+		p_active = only_actual == "false"
+    p_title  = only_actual == "false" ? "Все" : "Актуальные"
+		link_to p_title, params.merge(:only_actual => p_active) , {:class => css_class}
 	end
 
   def class_for_lead( lead )
@@ -71,7 +72,7 @@ module ApplicationHelper
     
   end
 
-	def avatar_url(user, size)
+  def avatar_url(user, size)
     	gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
     		"http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}"
   end

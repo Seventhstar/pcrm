@@ -22,6 +22,14 @@ class AjaxController < ApplicationController
 	render :nothing => true
    end
 
+  def del_comment
+   if params[:lead_comment_id] 
+      leadcomment = LeadsComment.find(params[:lead_comment_id]).destroy
+   end
+  	render :nothing => true
+   end
+
+
   def dev_check
    if params[:develop_id]
       develop = Develop.find(params[:develop_id])
