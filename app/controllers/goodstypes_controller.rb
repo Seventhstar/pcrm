@@ -4,7 +4,8 @@ class GoodstypesController < ApplicationController
   # GET /goodstypes
   # GET /goodstypes.json
   def index
-    @goodstypes = Goodstype.all
+    @goodstypes = Goodstype.order(:name)
+    @goodstype = Goodstype.new
   end
 
   # GET /goodstypes/1

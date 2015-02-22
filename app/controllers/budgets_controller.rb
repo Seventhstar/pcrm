@@ -5,11 +5,7 @@ class BudgetsController < ApplicationController
   # GET /budgets.json
   def index
     @budgets = Budget.order(:name)
-    respond_to do |format|  
-      format.html
-      format.json { render json: @budgets.tokens(params[:q]) }
-    end
-
+    @budget =  Budget.new
   end
 
   # GET /budgets/1

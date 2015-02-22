@@ -24,14 +24,10 @@
 
 
 <%= form_for(@status) do |f| %>
-  
-
     <%= f.label 'Новый статус:' %>
     <%= f.text_field :name, :class => 'text_input' %>
     <%= f.check_box :actual %>
     <%= f.label 'Актуальный' %>
-
     <%= f.button 'Добавить',:class => 'btn btn-warning btn-sm' %>
-
 <% end %>   
 </div>

@@ -354,6 +354,11 @@ label.btn:focus {
 }
 
 
+.btn-white{
+	color: black !important;
+	min-width: 86px;
+}
+
 .list-group > li:hover,
 .list-group > li:focus {
   color: #262626;

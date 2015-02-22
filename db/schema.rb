@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150222172140) do
+ActiveRecord::Schema.define(version: 20150222172542) do
 
   create_table "budgets", force: :cascade do |t|
     t.string   "name"
@@ -77,6 +77,16 @@ ActiveRecord::Schema.define(version: 20150222172140) do
 
   add_index "provider_budgets", ["budget_id"], name: "index_provider_budgets_on_budget_id"
   add_index "provider_budgets", ["provider_id"], name: "index_provider_budgets_on_provider_id"
+
+  create_table "provider_goodstypes", force: :cascade do |t|
+    t.integer  "provider_id"
+    t.integer  "goodstype_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "provider_goodstypes", ["goodstype_id"], name: "index_provider_goodstypes_on_goodstype_id"
+  add_index "provider_goodstypes", ["provider_id"], name: "index_provider_goodstypes_on_provider_id"
 
   create_table "provider_styles", force: :cascade do |t|
     t.integer  "provider_id"

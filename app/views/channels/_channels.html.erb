@@ -17,11 +17,12 @@
     <% end %>
 
    <tr>
-   <td colspan="2">
+   <td>
   <%= form_for(@channel) do |f| %>
     <%= f.label 'Новый канал:' %>
-    <%= f.text_field :name, :class => 'text_input' %>
-    <%= f.submit 'Добавить',:class => 'btn btn-warning btn-sm' %>
+    <%= f.text_field :name, :class => 'text_input' %></td>
+
+    <td><%= f.submit 'Добавить',:class => 'btn btn-warning btn-sm' %></td>
   <% end %>
   </td>
   </tr>

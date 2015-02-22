@@ -45,6 +45,12 @@ function startTime(){
 	t=setTimeout('startTime()',500);
 }
 
+
+var show_ajax_message = function(msg, type) {
+    $(".flash").html('<div class="flash'+type+'">'+msg+'</div>');
+    fade_flash();
+};
+
 function updateDev(){
   $.get( "develops/", {'search':$("#search").val(),'show':$(".active").attr('show')},null,"script");
 }
@@ -86,11 +92,11 @@ $(function() {
     $('#develops_list').on('click','span.check_img', function(){
 //      alert(228);
 		if ($(this).hasClass("checked")){
-        	$(this).removeClass("checked");
-			checked = false;
+         $(this).removeClass("checked");
+			   checked = false;
      	}else{
-        	checked = true;
-			$(this).addClass("checked");
+         checked = true;
+			   $(this).addClass("checked");
      	};
 
      	dev_id  = $(this).attr('developid');
@@ -116,17 +122,20 @@ $(function() {
   });
     
 
-$('td').on('submit','form',function() {  
+  $(document).on('submit','form',function() {  
     var valuesToSubmit = $(this).serialize();
-    alert(33);
-    /*$.ajax({
-        type: "POST"
-        url: $(this).attr('action'), //sumbits it to the given url of the form
+    var url = $(this).attr('action');
+    //alert(valuesToSubmit);
+    //alert( $('meta[name="csrf-token"]').attr('content'));
+    $.ajax({
+        type: "POST",
+        url: url, //sumbits it to the given url of the form
         data: valuesToSubmit,
-        dataType: "JSON" // you want a difference between normal and ajax-calls, and json is standard
-    }).success(function(json){
-        //act on result.
-    });*/
+        dataType: 'JSON',  
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},         
+        success: function(){$.get(url, null, null, "script");}
+    });
+    
     return false; // prevents normal behaviour
 });
 

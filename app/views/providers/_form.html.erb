@@ -24,6 +24,7 @@
         <span class="label-group-addon addon120">Сайт:</span><%= f.input :url, label: false %>
       </div>
       <div class="form-actions">
+        <%= link_to 'Отмена', providers_path, class: "btn btn-default btn-white" %> 
         <%= f.button :submit, "Записать", class: "btn btn-default btn-success" %>
       </div>
   </div>
@@ -49,6 +50,11 @@
           <%= f.collection_select(:budget_ids, Budget.all, :id, :name, {}, {multiple: true,  class: "chosen-select", :include_blank => 'None'}) %>  
       </div>
     
+      <div class="input-group gr-btm_margin">
+        <span class="label-group-addon addon140">Виды товаров:</span>
+          <%= f.collection_select(:goodstype_ids, Goodstype.all, :id, :name, {}, {multiple: true,  class: "chosen-select", :include_blank => 'None'}) %>  
+      </div>
+
   </div>
 </div>
 

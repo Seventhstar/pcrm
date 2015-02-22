@@ -1,0 +1,33 @@
+<div class="panel panel-default">
+<div class="panel-heading">Виды товаров</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Вид товара</th>
+      <th width="60px"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @goodstypes.each do |goodstype| %>
+      <tr>
+        <td><%= goodstype.name %></td>
+        <%= render "shared/td_edit_delete", :element => goodstype %>
+      </tr>
+    <% end %>
+
+   <tr>
+   <td colspan="2">
+  <%= form_for(@goodstype) do |f| %>
+    <%= f.label 'Новый вид товара:' %>
+    <%= f.text_field :name, :class => 'text_input' %>
+    <%= f.submit 'Добавить',:class => 'btn btn-warning btn-sm' %>
+  <% end %>
+  </td>
+  </tr>
+
+  </tbody>
+
+
+</table>
+</div>

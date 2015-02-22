@@ -21,11 +21,16 @@
       </tr>
     <% end %>
 
+
     <tr>
-    <td><%= text_field :name, :name, {:class => 'text_input'} %></td>
-    <td><%= check_box :actual, :actual %></td>
-    <td colspan="2"><span class='btn btn-warning btn-sm'> Записать </span></td>
+    <td><%= form_for(@status) do |f| %>
+	<%= f.text_field :name, :class => 'text_input' %></td>
+    <td><%= f.check_box :actual %></td>
+    <td colspan="2"><%= f.submit 'Добавить',:class => 'btn btn-warning btn-sm' %><% end %>
+    </td>
+  
     </tr>
   </tbody>
 </table>
 </div>
+

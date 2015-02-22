@@ -1,0 +1,33 @@
+<div class="panel panel-default">
+<div class="panel-heading">Список бюджетов</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Канал</th>
+      <th width="60px"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @budgets.each do |budget| %>
+      <tr>
+        <td><%= budget.name %></td>
+        <%= render "shared/td_edit_delete", :element => budget %>
+      </tr>
+    <% end %>
+
+   <tr>
+   <td colspan="2">
+  <%= form_for(@budget) do |f| %>
+    <%= f.label 'Новый бюджет:' %>
+    <%= f.text_field :name, :class => 'text_input' %>
+    <%= f.submit 'Добавить',:class => 'btn btn-warning btn-sm' %>
+  <% end %>
+  </td>
+  </tr>
+
+  </tbody>
+
+
+</table>
+</div>

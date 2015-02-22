@@ -6,10 +6,7 @@ class StylesController < ApplicationController
   def index
     #@styles = Style.all
     @styles = Style.order(:name)
-    respond_to do |format|	
-      format.html
-      format.json { render json: @styles.tokens(params[:q]) }
-    end
+    @style = Style.new
   end
 
   # GET /styles/1

@@ -30,7 +30,7 @@ class ProvidersController < ApplicationController
 
     respond_to do |format|
       if @provider.save
-        format.html { redirect_to providers_path, notice: 'Provider was successfully created.' }
+        format.html { redirect_to providers_path, notice: 'Поставщик успешно создан.' }
         format.json { render :show, status: :created, location: @provider }
       else
         format.html { render :new }
@@ -46,7 +46,7 @@ class ProvidersController < ApplicationController
       if @provider.update(provider_params)
       #@provider = Provider.find(params[:id])
       #if @provider.update_attributes(params[:provider])
-        format.html { redirect_to providers_path, notice: 'Provider was successfully updated.' }
+        format.html { redirect_to providers_path, notice: 'Поставщик успешно обновлен.' }
         format.json { render :show, status: :ok, location: @provider }
       else
         format.html { render :edit }
@@ -60,7 +60,7 @@ class ProvidersController < ApplicationController
   def destroy
     @provider.destroy
     respond_to do |format|
-      format.html { redirect_to providers_url, notice: 'Provider was successfully destroyed.' }
+      format.html { redirect_to providers_url, notice: 'Поставщик успешно удален.' }
       format.json { head :no_content }
     end
   end
@@ -73,7 +73,7 @@ class ProvidersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def provider_params
-      params.require(:provider).permit(:name, :manager, :phone, :komment, :address, :email, :url, :spec, :budget_ids =>[], :style_ids=>[] )
+      params.require(:provider).permit(:name, :manager, :phone, :komment, :address, :email, :url, :spec, :budget_ids =>[], :style_ids=>[], :goodstype_ids =>[] )
     end
 
   def sort_column

@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   
   resources :goodstypes
-
   resources :budgets
   resources :styles
   resources :develops
@@ -14,8 +13,6 @@ Rails.application.routes.draw do
   post   'login'   => 'sessions#create'
   delete 'logout'  => 'sessions#destroy'
 
-
-
   resources :account_activations, only: [:edit]
   resources :password_resets,     only: [:new, :create, :edit, :update]
 
@@ -26,10 +23,14 @@ Rails.application.routes.draw do
   resources :users
 
   root :to => "leads#index"
+  
   get "ajax/channels"
+
   post "ajax/add_comment"
   post "ajax/del_comment"
   post "ajax/dev_check" 
+
+  post "channels/new"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
