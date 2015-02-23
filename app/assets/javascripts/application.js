@@ -53,6 +53,36 @@ var show_ajax_message = function(msg, type) {
     fade_flash();
 };
 
+  var fixEncode = function(loc) {
+    var h = loc.split('#');
+    var l = h[0].split('?');
+    return l[0] + (l[1] ? ('?' + ajx2q(q2ajx(l[1]))) : '') + (h[1] ? ('#' + h[1]) : '');
+  }
+
+
+var setLoc = function(loc) {
+  //curLoc = fixEncode(loc.replace(/#(\/|!)?/, ''));
+  navPrefix ="";
+  curLoc = fixEncode(loc);
+  var l = (location.toString().match(/#(.*)/) || {})[1] || '';
+  if (!l ) { l = (location.pathname || '') + (location.search || '');  }
+  
+  l = fixEncode(l);
+  if (l.replace(/^(\/|!)/, '') != curLoc) {
+      try {
+        //alert(l);
+      history.pushState({}, '', '/' + curLoc);
+      return;
+    } catch(e) {}
+  window.chHashFlag = true;
+  //location.hash = '#' + navPrefix + curLoc;
+  location.hash = navPrefix + curLoc;
+  if (withFrame && getLoc() != curLoc) {
+  setFrameContent(curLoc);
+  }
+  }
+}
+
 //function updateDev(){
 //  $.get( "develops/", {'search':$("#search").val(),'show':$(".active").attr('show')},null,"script");
 //}
@@ -77,8 +107,10 @@ $(function() {
   $('.options-menu a').click(function(){ 
       $('.options-menu a.active').removeClass("active", 150, "easeInQuint");
       $(this).addClass("active");
-      var c = "/" + $(this).attr("controller");
-      $.get(c, null, null, "script");
+      var url = "/" + $(this).attr("controller");
+      $.get(url, null, null, "script");
+      //alert(url);
+      setLoc("options"+url);
   });
     
 
@@ -92,7 +124,13 @@ $(function() {
         data: valuesToSubmit,
         dataType: 'JSON',  
         beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},         
-        success: function(){$.get(url, null, null, "script");}
+        success: function(){
+
+          $.get(url, null, null, "script");
+          
+
+          
+      }
     });
     
     return false; // prevents normal behaviour
