@@ -10,6 +10,7 @@ gem 'rails', '4.2.0'
 
 group :development, :test do
   gem 'sqlite3',     '1.3.10'
+  gem 'coffee-script-source', '1.8.0'
 end
           
 group :production do
@@ -66,4 +67,3 @@ gem 'font-kit-rails'
 gem 'will_paginate-bootstrap'
 gem 'chosen-rails'
 gem 'bootstrap_tokenfield_rails'
-gem 'coffee-script-source', '1.8.0'
