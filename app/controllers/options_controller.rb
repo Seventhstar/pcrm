@@ -10,15 +10,18 @@ class OptionsController < ApplicationController
       @page_data = "statuses"
     end
 
-    @statuses = Status.all
-    @channels = Channel.all
-    @styles   = Style.all
-    @budgets  = Budget.all
+    @statuses = Status.order(:name)
+    @channels = Channel.order(:name)
+    @styles   = Style.order(:name)
+    @budgets  = Budget.order(:name)
+    @goodstypes  = Goodstype.order(:name)
 
     @status = Status.new
     @channel = Channel.new
     @style = Style.new
     @budget = Budget.new
+    @goodstype  = Goodstype.new
   end
+
 
 end

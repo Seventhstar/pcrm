@@ -1,15 +1,14 @@
-<%= render "submenu"%>
-
 <div class="col-xs-6">
 
+<div class="panel panel-default">
 <table class="table table-striped">
   <thead>
     <tr>
       <th></th>
       <th>Пользователь</th>
-      <th>Активирован</th>
-      <th>Админ</th>      
-      <th></th>
+      <th width="60px" class="center">Активирован</th>
+      <th width="60px" class="center">Админ</th>      
+      <th width="30px"></th>
     </tr>
   </thead>
 
@@ -19,15 +18,20 @@
 <% @users.each do |user| %>
 <tr >
   <td width="60"><%= link_to gravatar_for(user, size: 50), user %></td>
-  <td>  <%= link_to user.name, user %></td>
-  <td><%= check_box_tag user.activated, user.activated, user.activated %></td>
-  <td><%= check_box_tag user.admin, user.admin, user.admin %></td>
-  <% if current_user.admin? && !current_user?(user) %>
-    <td> <%= link_to image_tag('delete.png'), user, method: :delete,data: { confirm: "You sure?" } %></td>
+  <td>  <%= link_to user.name, user %> </br> <%= user.email %> </td>
+  <td><span class="check_img <%= user.activated ? "checked" :"" %>" userid="<%=user.id%>" chk="activated"></span></td>
+  <td><span class="check_img <%= user.admin ? "checked" :"" %>" userid="<%=user.id%>" chk="admin"></span></td>
+  
+  <% if current_user.admin? %>
+     <%= render "shared/td_edit_delete", {:element => user, :subcount => current_user?(user) ? 1:nil } %>
+  <% else %>
+    <td></td>
   <% end %>
+  
 </td>
 </tr>
 <% end %>
 
 </tbody>
 </table>
+</div>

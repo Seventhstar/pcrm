@@ -196,7 +196,8 @@ a.li-right, a.li-right:visited{
 }
 
 .hotlead{
-	background-color: #ffeefe;
+	//background-color: #ffeefe;
+	color: red;
 }
 
 input[type="text"],input[type="number"], input[type="password"],input[type="email"],textarea,.comment_area {

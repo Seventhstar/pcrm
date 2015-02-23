@@ -29,7 +29,7 @@ class GoodstypesController < ApplicationController
 
     respond_to do |format|
       if @goodstype.save
-        format.html { redirect_to @goodstype, notice: 'Goodstype was successfully created.' }
+        format.html { redirect_to '/options/goodstypes', notice: 'Goodstype was successfully created.' }
         format.json { render :show, status: :created, location: @goodstype }
       else
         format.html { render :new }
@@ -43,7 +43,7 @@ class GoodstypesController < ApplicationController
   def update
     respond_to do |format|
       if @goodstype.update(goodstype_params)
-        format.html { redirect_to @goodstype, notice: 'Goodstype was successfully updated.' }
+        format.html { redirect_to '/options/goodstypes', notice: 'Goodstype was successfully updated.' }
         format.json { render :show, status: :ok, location: @goodstype }
       else
         format.html { render :edit }
@@ -57,7 +57,7 @@ class GoodstypesController < ApplicationController
   def destroy
     @goodstype.destroy
     respond_to do |format|
-      format.html { redirect_to goodstypes_url, notice: 'Goodstype was successfully destroyed.' }
+      format.html { redirect_to '/options/goodstypes', notice: 'Goodstype was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

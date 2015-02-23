@@ -1,10 +1,10 @@
 <div class="panel panel-default">
-<div class="panel-heading">Статусы</div>
+<div class="panel-heading table-heading">Список статусов</div>
 <table class="table table-striped">
   <thead>
     <tr>
       <th>Статус</th>
-      <th>Актуальный</th>
+      <th class="center">Актуальный</th>
       <th></th>
       <th class="edit_delete"></th>
     </tr>
@@ -14,7 +14,7 @@
     <% @statuses.each do |status| %>
       <tr >
         <td><%= status.name %></td>
-        <td><%= check_box_tag status.actual, status.actual, status.actual %></td>
+        <td class="center"><%= check_box_tag status.actual, status.actual, status.actual %></td>
         <td></td>
         <%= render "shared/td_edit_delete", {:element => status, :subcount => status.leads.count }%>
         
@@ -26,7 +26,7 @@
     <td><%= form_for(@status) do |f| %>
 	<%= f.label 'Новый статус:' %>
 	<%= f.text_field :name, :class => 'text_input' %></td>
-    <td><%= f.check_box :actual %></td>
+    <td class="center"><%= f.check_box :actual %></td>
     <td colspan="2">
        <span class="btn btn-warning btn-sm" id="btn-send"> Добавить</span>
        <% end %>

@@ -1,29 +1,27 @@
 <div class="panel panel-default">
-<div class="panel-heading">Список бюджетов</div>
+<div class="panel-heading table-heading">Список бюджетов</div>
 <table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Канал</th>
-      <th width="60px"></th>
-    </tr>
-  </thead>
-
   <tbody>
     <% @budgets.each do |budget| %>
       <tr>
         <td><%= budget.name %></td>
+        <td></td>
         <%= render "shared/td_edit_delete", {:element => budget, :subcount => budget.providers.count }%>
       </tr>
     <% end %>
 
    <tr>
-   <td colspan="2">
+   <td>
   <%= form_for(@budget) do |f| %>
     <%= f.label 'Новый бюджет:' %>
     <%= f.text_field :name, :class => 'text_input' %>
-    <%= f.submit 'Добавить',:class => 'btn btn-warning btn-sm' %>
+    
   <% end %>
   </td>
+    <td colspan="2">
+       <span class="btn btn-warning btn-sm" id="btn-send"> Добавить</span>
+    </td>
+
   </tr>
 
   </tbody>
