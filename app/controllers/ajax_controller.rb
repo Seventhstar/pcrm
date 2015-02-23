@@ -11,6 +11,18 @@ class AjaxController < ApplicationController
     render json: list
   end
 
+  def leads
+    if params[:term]
+      like= "%".concat(params[:term].concat("%"))
+      leads = Lead.where("name like ? ", like)
+    else
+      leads = Lead.all
+    end
+    list = leads.map {|u| Hash[ id: u.id, label: u.name, name: u.name]}
+    render json: list
+  end
+
+
   def add_comment
    if params[:lead_id] 
       leadcomment = LeadsComment.new

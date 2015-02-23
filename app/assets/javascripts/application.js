@@ -60,6 +60,15 @@ var show_ajax_message = function(msg, type) {
   }
 
 
+
+
+//function updateDev(){
+//  $.get( "develops/", {'search':$("#search").val(),'show':$(".active").attr('show')},null,"script");
+//}
+
+$(function() {
+
+
 var setLoc = function(loc) {
   //curLoc = fixEncode(loc.replace(/#(\/|!)?/, ''));
   navPrefix ="";
@@ -82,13 +91,6 @@ var setLoc = function(loc) {
   }
   }
 }
-
-//function updateDev(){
-//  $.get( "develops/", {'search':$("#search").val(),'show':$(".active").attr('show')},null,"script");
-//}
-
-$(function() {
-
   //alert(21);
   startTime();
   $(".chosen-select").chosen({ width: '350px' });
@@ -134,11 +136,27 @@ $(function() {
     });
     
     return false; // prevents normal behaviour
-});
+  });
+
+
+/*  $('.container').on('click', 'span.only_actual', function() {  
+    if ($(this).hasClass('active')){
+      var actual = false;
+    }
+    else{
+      actual = true;
+    }
+  
+  $.ajax({
+      type: 'GET',
+      url: '/leads',
+      cache: false,
+      data: {'only_actual': actual}
+    });
+
+  });*/
 
   
-
-
   $('span.btn-sm').click(function(){
   	var comment = $("#comment_comment").val();
   	var lead_id = $(this).attr('leadid');

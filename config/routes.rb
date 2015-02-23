@@ -24,7 +24,9 @@ Rails.application.routes.draw do
 
   root :to => "leads#index"
   
+
   get "ajax/channels"
+  get "ajax/leads"
 
   post "ajax/add_comment"
   post "ajax/del_comment"

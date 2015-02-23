@@ -21,10 +21,12 @@ module ApplicationHelper
 
 	def sortable_pil(column, title = nil)
 		title ||= column.titleize
-		css_class = column == sort_column ? "active #{sort_direction}" : nil
+		css_class = column == sort_column ? "active #{sort_direction}" : ""
+    css_class.concat(" sort-span")
     direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
     #direction = "asc"
-    link_to title, params.merge(:sort => column, :direction => direction, :page => nil) , {:class => css_class}
+    #link_to title, params.merge(:sort => column, :direction => direction, :page => nil) , {:class => css_class}
+    content_tag :span, title, {:class => css_class, :sort => column, :direction => direction }
 	end
 
   
@@ -34,6 +36,7 @@ module ApplicationHelper
     
     direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
     link_to title, params.merge(:sort => column, :direction => direction, :page => nil), {:class => css_class}
+
   end
 
 
@@ -56,7 +59,10 @@ module ApplicationHelper
 		css_class.concat(" only_actual li-right")
 		p_active = only_actual == "false"
     p_title  = only_actual == "false" ? "Все" : "Актуальные"
-		link_to p_title, params.merge(:only_actual => p_active) , {:class => css_class}
+		#link_to p_title, params.merge(:only_actual => p_active) , {:class => css_class}
+    #content_tag :span, p_title, {:class => css_class, :pamams => params.merge(:only_actual => p_active)}
+    content_tag :span, p_title, {:class => css_class}
+    #<span class="btn btn-warning btn-sm only_actual" id="btn-send"> </span>
 	end
 
   def class_for_lead( lead )

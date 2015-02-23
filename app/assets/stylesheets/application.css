@@ -96,7 +96,7 @@ margin-top: -25px;
 
 
 .navsearch{
-	margin-top: 7px;
+	//margin-top: 7px;
 	margin-left: 210px;
 	float: left;
 }
@@ -306,7 +306,3 @@ html, body {
     height: 50px;
 }
 
-.only_actual{
-	min-width: 100px;
-	text-align: center;
-}

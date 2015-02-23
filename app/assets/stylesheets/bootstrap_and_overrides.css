@@ -6,7 +6,7 @@
   =require twitter-bootstrap-static/fontawesome
   */
 
-table.tleads {
+.tleads table{
 
 	//border: 1px solid #dff2ee;
 	//font-family: Georgia,serif;
