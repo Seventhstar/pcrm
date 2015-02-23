@@ -48,7 +48,7 @@ function startTime(){
 
 
 var show_ajax_message = function(msg, type) {
-     if (!type) {type = "success"};
+    if (!type) {type = "success"};
     $(".flash").html('<div class="alert fade in alert-'+type+'">'+msg+'</div>');    
     fade_flash();
 };
@@ -102,8 +102,8 @@ $(function() {
 
 
   $('span.btn-sm').click(function(){
-  	comment = $("#comment_comment").val();
-  	lead_id = $(this).attr('leadid');
+  	var comment = $("#comment_comment").val();
+  	var lead_id = $(this).attr('leadid');
 
 	comment_id = $(".microposts p:first").attr('leadid');
 	if (comment=='') return;
