@@ -21,6 +21,7 @@
 //= require bootstrap-datepicker
 //= require bootstrap-datepicker/core
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.ru.js
+//= require_tree .
 
 window.setTimeout(function() {
   $(".fade").fadeTo(500, 0).slideUp(500, function(){
@@ -47,13 +48,14 @@ function startTime(){
 
 
 var show_ajax_message = function(msg, type) {
-    $(".flash").html('<div class="flash'+type+'">'+msg+'</div>');
+     if (!type) {type = "success"};
+    $(".flash").html('<div class="alert fade in alert-'+type+'">'+msg+'</div>');    
     fade_flash();
 };
 
-function updateDev(){
-  $.get( "develops/", {'search':$("#search").val(),'show':$(".active").attr('show')},null,"script");
-}
+//function updateDev(){
+//  $.get( "develops/", {'search':$("#search").val(),'show':$(".active").attr('show')},null,"script");
+//}
 
 $(function() {
 
@@ -71,62 +73,19 @@ $(function() {
 	    $("#datepicker2").val($.datepicker.formatDate('yy-mm-dd', new Date()));
   }
 
-  $('#develops_search .btn').click(function(){setTimeout( 'updateDev()' ,400);});
-
-  $("#develops_search input").keyup(function() {
-
-    var c= String.fromCharCode(event.keyCode);
-    var isWordcharacter = c.match(/\w/);
-    
-    if (isWordcharacter || event.keyCode ==8){
-    	s=1;
-    	setTimeout( 'updateDev()' ,400);
-    }
-    return false;
-  });
-
-
-
-
-// меняем отметки coder и boss непосредственно в index
-    $('#develops_list').on('click','span.check_img', function(){
-//      alert(228);
-		if ($(this).hasClass("checked")){
-         $(this).removeClass("checked");
-			   checked = false;
-     	}else{
-         checked = true;
-			   $(this).addClass("checked");
-     	};
-
-     	dev_id  = $(this).attr('developid');
-     	chk 	= $(this).attr('chk');
-    	 $.ajax({
-	 		url: "/ajax/dev_check",
-	 		data: {'develop_id':dev_id,'field':chk, 'checked': checked},
-	 		type: "POST",
-	 		beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},	 
-	  		success: function(){
-	   			$(this).addClass("done");
-	  		}
-	 	});
-  });
 
   $('.options-menu a').click(function(){ 
       $('.options-menu a.active').removeClass("active", 150, "easeInQuint");
-      //$(this).addClass("active", 500, "easeInCubic");
       $(this).addClass("active");
       var c = "/" + $(this).attr("controller");
-      //alert(c);
       $.get(c, null, null, "script");
   });
     
 
-  $(document).on('submit','form',function() {  
-    var valuesToSubmit = $(this).serialize();
-    var url = $(this).attr('action');
-    //alert(valuesToSubmit);
-    //alert( $('meta[name="csrf-token"]').attr('content'));
+  $(document).on('click','#btn-send',function(e) {  
+     
+    var valuesToSubmit = $('form').serialize();
+    var url = $('form').attr('action');
     $.ajax({
         type: "POST",
         url: url, //sumbits it to the given url of the form
@@ -140,24 +99,7 @@ $(function() {
 });
 
   
-  $('.microposts').on('click','span.glyphicon-remove', function(){
-        //alert('del');
-        var del = confirm("Действительно удалить?");
-        if (!del) return;
 
-        lead_id = $(this).attr('leadid');
-        leadcomm_id = $(this).attr('leadcommentid');
-        $.ajax({
-           url: "/ajax/del_comment",
-           data: {'lead_comment_id':leadcomm_id},
-           type: "POST",
-           beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},   
-            success: function(){
-             $.get('/leads/'+lead_id+'/edit', "", null, "script");
-             //$('.panel-body').scrollTop(-9999);
-            }
-            });
-  });
 
   $('span.btn-sm').click(function(){
   	comment = $("#comment_comment").val();

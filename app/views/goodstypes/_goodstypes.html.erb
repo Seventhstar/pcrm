@@ -12,7 +12,7 @@
     <% @goodstypes.each do |goodstype| %>
       <tr>
         <td><%= goodstype.name %></td>
-        <%= render "shared/td_edit_delete", :element => goodstype %>
+        <%= render "shared/td_edit_delete", {:element => goodstype, :subcount => goodstype.providers.count }%>
       </tr>
     <% end %>
 

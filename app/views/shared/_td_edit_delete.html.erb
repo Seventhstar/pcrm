@@ -1,4 +1,10 @@
 <td class="edit_delete">
 <%= link_to image_tag('edit.png'), edit_polymorphic_path(element) %>
-<%= link_to image_tag('delete.png'), element, method: :delete, data: { confirm: 'Действительно удалить?' } %>
+
+<% subcount ||= 0 %>
+<% if subcount>0 %>
+  <%= image_tag('delete-disabled.png') %>
+<% else %>
+  <%= link_to image_tag('delete.png'), element, method: :delete, data: { confirm: 'Действительно удалить?' } %>
+<% end %>
 </td>

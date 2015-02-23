@@ -13,8 +13,7 @@
       <tr>
         <td><%= style.name %></td>
         
-        <td><%= link_to image_tag('edit.png'), edit_style_path(style) %>
-        <%= link_to image_tag('delete.png'), style, method: :delete, data: { confirm: 'Подтвердите удаление?' } %></td>
+        <%= render "shared/td_edit_delete", {:element => style, :subcount => style.providers.count }%>
       </tr>
     <% end %>
 

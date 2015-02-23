@@ -16,7 +16,7 @@
         <td><%= status.name %></td>
         <td><%= check_box_tag status.actual, status.actual, status.actual %></td>
         <td></td>
-        <%= render "shared/td_edit_delete", :element => status %>
+        <%= render "shared/td_edit_delete", {:element => status, :subcount => status.leads.count }%>
         
       </tr>
     <% end %>
@@ -24,9 +24,12 @@
 
     <tr>
     <td><%= form_for(@status) do |f| %>
+	<%= f.label 'Новый статус:' %>
 	<%= f.text_field :name, :class => 'text_input' %></td>
     <td><%= f.check_box :actual %></td>
-    <td colspan="2"><%= f.submit 'Добавить',:class => 'btn btn-warning btn-sm' %><% end %>
+    <td colspan="2">
+       <span class="btn btn-warning btn-sm" id="btn-send"> Добавить</span>
+       <% end %>
     </td>
   
     </tr>

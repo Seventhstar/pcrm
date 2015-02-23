@@ -12,7 +12,7 @@
     <% @budgets.each do |budget| %>
       <tr>
         <td><%= budget.name %></td>
-        <%= render "shared/td_edit_delete", :element => budget %>
+        <%= render "shared/td_edit_delete", {:element => budget, :subcount => budget.providers.count }%>
       </tr>
     <% end %>
 

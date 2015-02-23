@@ -4,7 +4,8 @@
   <thead>
     <tr>
       <th>Канал</th>
-      <th width="60px"></th>
+      <th></th>
+      <th class="edit_delete"></th>
     </tr>
   </thead>
 
@@ -12,19 +13,21 @@
     <% @channels.each do |channel| %>
       <tr>
         <td><%= channel.name %></td>
-        <%= render "shared/td_edit_delete", :element => channel %>
+	<td></td>
+        <%= render "shared/td_edit_delete", {:element => channel, :subcount => channel.leads.count }%>
       </tr>
     <% end %>
 
    <tr>
    <td>
-  <%= form_for(@channel) do |f| %>
+    <%= form_for(@channel) do |f| %>
     <%= f.label 'Новый канал:' %>
     <%= f.text_field :name, :class => 'text_input' %></td>
 
-    <td><%= f.submit 'Добавить',:class => 'btn btn-warning btn-sm' %></td>
-  <% end %>
-  </td>
+     <td colspan="2">
+       <span class="btn btn-warning btn-sm" id="btn-send"> Добавить</span>
+       <% end %>
+    </td>
   </tr>
 
   </tbody>
