@@ -19,15 +19,19 @@ module ApplicationHelper
 		end
 	end
 
-	def sortable_pil(column, title = nil)
-		title ||= column.titleize
-		css_class = column == sort_column ? "active #{sort_direction}" : ""
+  def sortable_pil(column, title = nil)
+    title ||= column.titleize
+    css_class = column == sort_column ? "active #{sort_direction}" : ""
     css_class.concat(" sort-span")
+
     direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
+    if (column == "status_date" && column != sort_column)
+      direction = "desc"
+    end  
     #direction = "asc"
     #link_to title, params.merge(:sort => column, :direction => direction, :page => nil) , {:class => css_class}
     content_tag :span, title, {:class => css_class, :sort => column, :direction => direction }
-	end
+  end
 
   
   def sortable(column, title = nil)

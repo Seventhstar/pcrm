@@ -34,3 +34,83 @@
 	
 
 }
+
+.lead_comments{
+	width: 500px;
+	float: right;
+}
+
+.table-lead-form{
+	width: 500px;
+	border: 1px solid #ddd;
+	float: left;
+}
+
+.tleads{
+
+	//border: 1px solid #dff2ee;
+	//font-family: Georgia,serif;
+	//	font-family: 'Open Sans';
+	//src: font-url('open-sans/OpenSans-Regular-webfont.eot');
+  	//src: font-url('open-sans/OpenSans-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+	//font-size: 18px;
+	
+	width: 100%;
+	//padding: 50px 15px 50px 10px;
+	
+	border-radius: 4px;
+	-webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+	box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+
+.tleads thead{
+border-top-left-radius: 3px;
+border-top-right-radius: 3px;
+}
+
+
+.tleads th{
+	padding: 8px;
+	//font-size: 14px;
+	//background-color: #efe;
+	//color: #7d7d7d;
+	background-color: #f5f5f5;
+	border-bottom: 1px solid #ddd;
+}
+
+.tleads td {
+border-top: 1px solid #ebebeb;
+padding: 8px;
+}
+
+td.edit_delete, th.edit_delete{
+	width: 45px;
+	padding-right: 4px !important;
+	padding-left: 4px !important;
+}
+
+.tleads tr.month, .month{
+	border-right-color: white; 
+	border-left-color: white; 
+	vertical-align: bottom;
+	margin-bottom: 0;
+	font-size: 20px !important;
+	font-weight: normal !important;
+	background-color: #fafafa;
+	
+
+}
+
+.tleads tr.month td{
+	padding: 10px;
+}
+
+.tleads tr:hover:not(.month) {
+	background-color: #f5f5f5;
+	border-radius: 4px;
+}
+
+.hotlead{
+	//background-color: #ffeefe;
+	color: red;
+}

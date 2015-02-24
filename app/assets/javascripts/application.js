@@ -139,6 +139,12 @@ var setLoc = function(loc) {
   });
 
 
+  $( document ).ajaxStop(function() {
+    $('table.tableSorter').tableSort();
+    //alert('ajaxStop')
+  });
+  $('table.tableSorter').tableSort();
+
 /*  $('.container').on('click', 'span.only_actual', function() {  
     if ($(this).hasClass('active')){
       var actual = false;
