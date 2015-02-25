@@ -21,6 +21,7 @@
 //= require bootstrap-datepicker
 //= require bootstrap-datepicker/core
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.ru.js
+//= require select2
 //= require_tree .
 
 window.setTimeout(function() {
@@ -145,6 +146,14 @@ var setLoc = function(loc) {
   });
   $('table.tableSorter').tableSort();
 
+
+  $("ac-select2").select2();
+
+  $("#style").select2({width: '200px'});
+  $("#budget").select2({width: '200px'});
+  $("#goodstype").select2({width: '200px', height: '28px'});
+
+  //alert(99);
 /*  $('.container').on('click', 'span.only_actual', function() {  
     if ($(this).hasClass('active')){
       var actual = false;

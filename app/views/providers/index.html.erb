@@ -1,6 +1,12 @@
 <%= hidden_field_tag :sort, params[:sort] %>
 <%= hidden_field_tag :direction, params[:direction] %>
 
+<%= simple_form_for :p do |f| %>
+<%= select_tag "style", content_tag(:option,'Стиль...',:value=>"")+options_from_collection_for_select(@styles, "id", "name") %>
+<%= select_tag "budget", content_tag(:option,'Бюджет...',:value=>"")+options_from_collection_for_select(@budgets, "id", "name") %>
+<%= select_tag "goodstype", content_tag(:option,'Вид товара...',:value=>"")+options_from_collection_for_select(@goodstypes, "id", "name") %>
+<% end %>
+
 <div class="panel panel-default">
 <table class="table table-striped">
   <thead>

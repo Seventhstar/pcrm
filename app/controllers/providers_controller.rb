@@ -5,6 +5,9 @@ class ProvidersController < ApplicationController
   # GET /providers
   # GET /providers.json
   def index
+    @styles = Style.all
+    @budgets = Budget.order(:name)
+    @goodstypes = Goodstype.order(:name)
     @providers = Provider.order(sort_column + " " + sort_direction)
   end
 
