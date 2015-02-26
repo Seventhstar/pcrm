@@ -41,16 +41,12 @@ $(document).ready ->
     srt = $(this).attr('sort')
     dir = $(this).attr('direction')
     actual = $('.only_actual').hasClass('active')
-
- 
-    
-
     $.get 'leads', {
         only_actual: actual
         direction: dir
         sort: srt
     }, null, 'script'
-    $('table.tableSorter').tableSort();
+    
 
   $('.container').on 'click', 'span.only_actual', ->
     srt = $('.subnav .active').attr('sort')
@@ -64,7 +60,7 @@ $(document).ready ->
         direction: dir
         sort: srt
     }, null, 'script'
-    $('table.tableSorter').tableSort();
+    
 
   
     

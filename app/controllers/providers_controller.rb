@@ -8,7 +8,13 @@ class ProvidersController < ApplicationController
     @styles = Style.all
     @budgets = Budget.order(:name)
     @goodstypes = Goodstype.order(:name)
-    @providers = Provider.order(sort_column + " " + sort_direction)
+
+    @p = Provider.all
+    if params[:style]
+       @p = Style.find(params[:style]).providers
+
+    end
+    @providers = @p.order(sort_column + " " + sort_direction)
   end
 
   # GET /providers/1

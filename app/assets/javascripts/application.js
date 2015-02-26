@@ -149,8 +149,10 @@ var setLoc = function(loc) {
 
   $("ac-select2").select2();
 
-  $("#style").select2({width: '200px'});
-  $("#budget").select2({width: '200px'});
+  $("#budget").select2({width: '200px'}).on("change", function(e) {
+          // mostly used event, fired to the original element when the value changes
+          log("change val=" + e.val);
+        })
   $("#goodstype").select2({width: '200px', height: '28px'});
 
   //alert(99);
