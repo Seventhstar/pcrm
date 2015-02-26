@@ -2,7 +2,11 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 $(document).ready ->
-  $('#style').select2(width: '200px').on 'change', ->
-    #$alert(12);
+  $('#style').chosen().on 'change', ->
+    $.get 'providers', $("#p_search").serialize(), null, 'script'
+  $('#budget').chosen(width: '200px').on 'change', ->
+    $.get 'providers', $("#p_search").serialize(), null, 'script'
+  $('#goodstype').chosen(width: '200px').on 'change', ->
     $.get 'providers', $("#p_search").serialize(), null, 'script'
     
+  $(".chosen-select").chosen({ width: '350px', placeholder_text_multiple: 'Выберите...' });

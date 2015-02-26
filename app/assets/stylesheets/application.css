@@ -19,14 +19,14 @@
  *= require bootstrap-datepicker3
  *= require bootstrap-tokenfield
  *= require chosen
- *= require select2
- *= require select2-bootstrap
   */
 
 
-  .select2-container .select2-choice, .select2-input {
-  	 height: 28px !important;
-  }
+li.disabled a{
+	color: #ccc !important;	
+}
+
+
 
 .container-fluid {
 max-width: 1200px;

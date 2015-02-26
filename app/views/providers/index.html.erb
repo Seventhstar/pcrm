@@ -1,11 +1,16 @@
 
+
 <%= form_tag providers_path, :method => 'get', :id => "p_search" do %>
 <%= select_tag "style", content_tag(:option,'Стиль...',:value=>"")+options_from_collection_for_select(@styles, "id", "name") %>
 <%= select_tag "budget", content_tag(:option,'Бюджет...',:value=>"")+options_from_collection_for_select(@budgets, "id", "name") %>
 <%= select_tag "goodstype", content_tag(:option,'Вид товара...',:value=>"")+options_from_collection_for_select(@goodstypes, "id", "name") %>
 
+
 <% end %>
 
+<%= link_to 'Добавить поставщика', new_provider_path, class: "btn btn-sm btn-success right" %>
+</div>
+<div class ="container">
 
 <div id="div_tproviders">
  <%= render "providers" %>

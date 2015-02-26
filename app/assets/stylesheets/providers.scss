@@ -1,3 +1,19 @@
 // Place all the styles related to the Providers controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#p_search{
+	float: left;
+}
+
+.style_chosen, select, .chosen-container-single {
+	width: 200px;
+	margin-right:15px;
+	margin-bottom:15px;
+	//float: left;
+}
+
+.gr-btm_mg{
+	margin-bottom: 7px;
+	width:88%
+}

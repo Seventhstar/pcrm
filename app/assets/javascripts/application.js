@@ -21,7 +21,6 @@
 //= require bootstrap-datepicker
 //= require bootstrap-datepicker/core
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.ru.js
-//= require select2
 //= require_tree .
 
 window.setTimeout(function() {
@@ -92,10 +91,7 @@ var setLoc = function(loc) {
   }
   }
 }
-  //alert(21);
   startTime();
-  $(".chosen-select").chosen({ width: '350px' });
-  //alert(24);
 
   // форматы календарей
   $("#datepicker").datepicker({format: "yyyy-mm-dd", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});
@@ -142,36 +138,8 @@ var setLoc = function(loc) {
 
   $( document ).ajaxStop(function() {
     $('table.tableSorter').tableSort();
-    //alert('ajaxStop')
   });
   $('table.tableSorter').tableSort();
-
-
-  $("ac-select2").select2();
-
-  $("#budget").select2({width: '200px'}).on("change", function(e) {
-          // mostly used event, fired to the original element when the value changes
-          log("change val=" + e.val);
-        })
-  $("#goodstype").select2({width: '200px', height: '28px'});
-
-  //alert(99);
-/*  $('.container').on('click', 'span.only_actual', function() {  
-    if ($(this).hasClass('active')){
-      var actual = false;
-    }
-    else{
-      actual = true;
-    }
-  
-  $.ajax({
-      type: 'GET',
-      url: '/leads',
-      cache: false,
-      data: {'only_actual': actual}
-    });
-
-  });*/
 
   
   $('span.btn-sm').click(function(){

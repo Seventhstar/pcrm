@@ -9,12 +9,33 @@ class ProvidersController < ApplicationController
     @budgets = Budget.order(:name)
     @goodstypes = Goodstype.order(:name)
 
-    @p = Provider.all
-    if params[:style]
-       @p = Style.find(params[:style]).providers
+    all_ids = Provider.ids
+    sp = all_ids
+    bp = all_ids
+    gtp = all_ids
 
+    
+    if params[:style] && params[:style]!=""
+        sp = Style.find(params[:style]).providers.ids
     end
-    @providers = @p.order(sort_column + " " + sort_direction)
+
+    if params[:budget] && params[:budget]!=""
+        bp = Budget.find(params[:budget]).providers.ids
+    end
+
+    if params[:goodstype] && params[:goodstype]!=""
+        gtp = Goodstype.find(params[:goodstype]).providers.ids
+    end
+
+    ids = sp & bp & gtp
+    #if ids.empty?
+    #  @providers = @p.order(sort_column + " " + sort_direction) 
+    #else 
+      
+    @providers = Provider.find(ids)
+    #end
+    #
+    
   end
 
   # GET /providers/1
