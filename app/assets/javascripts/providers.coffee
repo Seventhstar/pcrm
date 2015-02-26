@@ -9,4 +9,6 @@ $(document).ready ->
   $('#goodstype').chosen(width: '200px').on 'change', ->
     $.get 'providers', $("#p_search").serialize(), null, 'script'
     
-  $(".chosen-select").chosen({ width: '350px', placeholder_text_multiple: 'Выберите...' });
+  $('.chosen-select').chosen
+  	width: '350px'
+  	placeholder_text_multiple: 'Выберите...'
