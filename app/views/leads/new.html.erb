@@ -1,2 +1,55 @@
-<%= render 'form' %>
+<%= simple_form_for(@lead) do |f| %>
+<%= f.error_notification %>
+
+<div class="col-6">
+
+      <div class="input-group gr-btm_mg">
+        <span class="label-group-addon addon182">ФИО</span><%= f.input :fio, label: false %>
+      </div>
+      <div class="input-group gr-btm_mg">
+        <span class="label-group-addon addon182">Телефон</span><%= f.input :phone, label: false %>
+      </div>
+      <div class="input-group gr-btm_mg">
+        <span class="label-group-addon addon182">E-mail</span><%= f.input :email, label: false %>
+      </div>
+      <div class="input-group gr-btm_mg">
+        <span class="label-group-addon addon182">Информация о запросе</span><%= f.input :info, label: false %>
+      </div>
+      <div class="input-group gr-btm_mg">
+        <span class="label-group-addon addon182">Метраж</span><%= f.input :footage, label: false %>
+      </div>
+      <div class="input-group gr-btm_mg">
+        <span class="label-group-addon addon182">Адрес</span><%= f.input :address, label: false %>
+      </div>
+</div>
+
+<div class="col-xs-6">
+
+      <div class="input-group gr-btm_mg">
+        <span class="label-group-addon addon182">Дата для статуса</span><%= f.text_field :status_date, label: false %>
+      </div>
+      <div class="input-group gr-btm_mg">
+        <span class="label-group-addon addon182">Дата создания</span><%= f.text_field :start_date, label: false %>
+      </div>
+      <div class="input-group gr-btm_mg">
+        <span class="label-group-addon addon182">Канал</span><%= f.select 'channel_id', options_for_select(@channels.collect{ |u| [u.name, u.id] }) %>
+      </div>
+      <div class="input-group gr-btm_mg">
+        <span class="label-group-addon addon182">Статус</span><%= f.select 'status_id', options_for_select(@statuses.collect{ |u| [u.name, u.id] },@lead.status_id) %>
+      </div>
+      <div class="input-group gr-btm_mg">
+        <span class="label-group-addon addon182">Примечание</span><%= f.text_area :first_comment, as: :text, label: false %>
+      </div>
+
+</div>
+    
+    <%= f.hidden_field :user_id, value: current_user.id   %>
+
+
+<div class="form-actions">
+  <%= f.button :submit, value: 'Сохранить', :class => 'btn btn-success' %>
+</div>
+</div>
+<% end %>
+
 

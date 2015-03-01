@@ -3,7 +3,7 @@ class Lead < ActiveRecord::Base
   belongs_to :status
   belongs_to :user
   has_many :leads_comments
-
+  attr_accessor :first_comment
 
   def channel_name
     channel.try(:name)

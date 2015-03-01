@@ -52,7 +52,16 @@ class LeadsController < ApplicationController
 
     respond_to do |format|
       if @lead.save
-        format.html { redirect_to leads_url, notice: 'Лид успешно создан.' }
+         if params[:lead][:first_comment]
+            comm = @lead.leads_comments.new
+	    comm.comment = params[:lead][:first_comment]
+	    comm.user_id = current_user.id
+            comm.save
+	 end
+	STDERR.puts "params"
+	STDERR.puts params[:phone]
+	STDERR.puts params[:lead][:first_comment]
+        format.html { redirect_to leads_url, notice: 'Лид успешно создан.'}
         format.json { render :show, status: :created, location: @lead }
       else
         format.html { render :new }
@@ -93,7 +102,7 @@ class LeadsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def lead_params
-      params.require(:lead).permit(:info, :fio, :footage, :phone, :email, :channel_id, :status_id, :user_id, :status_date,:start_date)
+      params.require(:lead).permit(:info, :fio, :footage, :phone, :email, :address, :channel_id, :status_id, :user_id, :status_date,:start_date, :first_comment)
     end
 
   def sort_column

@@ -16,7 +16,14 @@
   a.search = (if a.search.substring(0, 1) == '?' then '' else '?') + str.join('&')
   a.href
 
+
+
 $(document).ready ->
+
+  $('#lead_channel_id').chosen()
+  $('#lead_status_id').chosen()
+  
+
   $('.microposts').on 'click', 'span.glyphicon-remove', ->
     # alert('del');
     del = confirm('Действительно удалить?')

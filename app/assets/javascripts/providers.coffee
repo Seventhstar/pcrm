@@ -10,5 +10,5 @@ $(document).ready ->
     $.get 'providers', $("#p_search").serialize(), null, 'script'
     
   $('.chosen-select').chosen
-  	width: '350px'
+  	width: '348px'
   	placeholder_text_multiple: 'Выберите...'

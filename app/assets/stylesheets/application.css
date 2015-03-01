@@ -118,10 +118,6 @@ border: 5px solid #dff2ee;
 }
 
 
-
-
-
-
 .table-lead-form{
 	width: 500px;
 	border: 1px solid #ddd;
@@ -261,6 +257,8 @@ background-color: #fff;
 background-image: none;
 border: 1px solid #ccc;
 border-radius: 4px;
+border-bottom-left-radius: 0;
+border-top-left-radius: 0;
 -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
 box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
 -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
@@ -310,3 +308,7 @@ html, body {
     height: 50px;
 }
 
+.col-6{
+	width: 50%;
+	float: left;
+}

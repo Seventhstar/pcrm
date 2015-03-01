@@ -94,14 +94,15 @@ var setLoc = function(loc) {
   startTime();
 
   // форматы календарей
-  $("#datepicker").datepicker({format: "yyyy-mm-dd", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});
-  $("#datepicker2").datepicker({format: "yyyy-mm-dd", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});
+  $("#lead_status_date").datepicker({format: "yyyy-mm-dd", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});
+  $("#lead_start_date").datepicker({format: "yyyy-mm-dd", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});
 
   // дата по умолчанию для нового лида - сегодня
-  if (!$("#datepicker2").val()){
-	    $("#datepicker2").val($.datepicker.formatDate('yy-mm-dd', new Date()));
+  if (!$("#lead_start_date").val()){
+	    $("#lead_start_date").val($.datepicker.formatDate('yy-mm-dd', new Date()));
   }
 
+  //$('#lead_channel_id').chosen();
 
   $('.options-menu a').click(function(){ 
       $('.options-menu a.active').removeClass("active", 150, "easeInQuint");
