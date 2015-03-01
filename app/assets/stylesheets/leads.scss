@@ -116,7 +116,7 @@ td.edit_delete, th.edit_delete{
 }
 
 .input-group select,.input-group .chosen-container-single, .input-group .chosen-container-single .chosen-single{
-	width: 100% ;	
+	width: 100% !important;	
 	border-bottom-left-radius: 0;
 	border-top-left-radius: 0;
 	height: 28px;
