@@ -18,6 +18,16 @@
 	margin-right:15px;
 	margin-bottom:15px;
 	float: left;
+	border-color: #CCC ;
+}
+
+#p_search .chosen-single{
+	border-color: #CCC !important;	
+}
+
+li.search-choice{
+	border-color: #CCC !important;
+	margin: 2px 3px 3px 0 !important;
 }
 
 .gr-btm_mg{
@@ -31,3 +41,4 @@
 	border-radius: 0px 3px 3px 0px;
 	border-color: #CCC !important;
 }
+

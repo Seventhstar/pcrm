@@ -44,6 +44,10 @@ $(document).ready ->
         return
     return
 
+#  $('.container').on 'keyup', '#search', ->
+    #search = $('#lead_search search').val()
+    #alert(11)
+
   $('.container').on 'click', 'span.sort-span', ->
     srt = $(this).attr('sort')
     dir = $(this).attr('direction')
