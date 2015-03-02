@@ -15,6 +15,18 @@ ru:
   October: "Октябрь"
   November: "Ноябрь"
   December: "Декабрь"
+  Channel: Канал
+  Status: Статус
+  status_id: Статус
+  channel_id: Канал
+  info: Информация о запросе
+  status_date: Дата для статуса
+  start_date: Дата создания
+  fio: ФИО
+  phone: Телефон
+  footage: Метраж
+  address: Адрес
+
   date:
     formats:
       default: "%d-%m-%Y"

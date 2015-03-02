@@ -20,3 +20,31 @@
     </div>
   </div>
 </div>
+
+<div class="container">
+ <div class="col-6">
+   <h3>История изменений (<%= @lead.versions.count %>)</h3>
+
+   <%- @lead.versions.reverse.each do |version| %>
+
+   <p><b><%= find_version_author_name(version) %></b> <span class="helptext"><%= version.created_at.localtime.strftime("%d-%m-%Y %H:%M:%S") %></span>
+
+    <ul>
+      <% changeset = version.changeset %>
+      <% changeset.keys.each do |k| %>
+
+        <% if k=="updated_at" %>
+        <% elsif k=="channel_id" %>
+          <li>Изменено поле <b><%= t(k) %></b> c «<%= Channel.find(changeset[k][0]).name %>» на «<%= Channel.find(changeset[k][1]).name %>»</li>
+        <% elsif k=="status_id" %>
+          <li>Изменено поле <b><%= t(k) %></b> c «<%= Status.find(changeset[k][0]).name %>» на «<%= Status.find(changeset[k][1]).name %>»</li>
+        <% else %>
+          <li>Изменено поле <b><%= t(k) %></b> c «<%= changeset[k][0] %>» на «<%= changeset[k][1] %>»</li>
+        <% end %>
+      <% end %>
+    </ul> 
+  </p>    
+  <% end %>
+
+ </div>
+</div>
