@@ -39,6 +39,7 @@
 
    <h3>История изменений (<%= @lead.versions.count %>)</h3>
 
+   <% if @lead.versions.count %>
    <%- @lead.versions.reverse.each do |version| %>
 
    <p><b><%= find_version_author_name(version) %></b> <span class="helptext"><%= version.created_at.localtime.strftime("%d-%m-%Y %H:%M:%S") %></span>
@@ -49,15 +50,16 @@
 
         <% if k=="updated_at" %>
         <% elsif k=="channel_id" %>
-          <li>Изменено поле <b><%= t(k) %></b> c «<%= Channel.find(changeset[k][0]).name %>» на «<%= Channel.find(changeset[k][1]).name %>»</li>
+          <li>Изменено поле <b><%= t(k) %></b> c «<%= channel_name(changeset[k][0]) %>» на «<%= channel_name(changeset[k][1]) %>»</li>
         <% elsif k=="status_id" %>
-          <li>Изменено поле <b><%= t(k) %></b> c «<%= Status.find(changeset[k][0]).name %>» на «<%= Status.find(changeset[k][1]).name %>»</li>
+          <li>Изменено поле <b><%= t(k) %></b> c «<%= status_name(changeset[k][0]).name %>» на «<%= status_name(changeset[k][1]) %>»</li>
         <% else %>
           <li>Изменено поле <b><%= t(k) %></b> c «<%= changeset[k][0] %>» на «<%= changeset[k][1] %>»</li>
         <% end %>
       <% end %>
     </ul> 
   </p>    
+  <% end %>
   <% end %>
 
  </div>
