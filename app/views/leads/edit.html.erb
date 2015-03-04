@@ -24,23 +24,25 @@
 <div class="container">
  <div class="col-6">
 
-<div class="progress">
-              <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-                <span class="sr-only">20% Complete</span>
-              </div>
-            </div>
+  <div class="progress">
+    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+      <span class="sr-only">20% Complete</span>
+    </div>
+  </div>
 
-<table class="files"><tbody></tbody></table>
+<table class="files"><tbody><%= render "lead_files" %></tbody></table>
 
 
   <p><label for="file"> <a>+ Добавить файл</a> </label></p>
-  <input id="file" type="file" name="file" data-url="/file" multiple="">
+  <input id="file" type="file" leadid="<%= @lead.id %>" name="file" data-url="/file" multiple="">
+
+   <% if @lead.versions.count >1 %>
+   <h3>История изменений (<%= @lead.versions.count-1 %>)</h3>
 
 
-   <h3>История изменений (<%= @lead.versions.count %>)</h3>
-
-   <% if @lead.versions.count %>
-   <%- @lead.versions.reverse.each do |version| %>
+   <%- @lead.versions.where('event <> "create"').reverse.each do |version| %>
+   <% if version[:event]=="create" %> 
+   <% end %>
 
    <p><b><%= find_version_author_name(version) %></b> <span class="helptext"><%= version.created_at.localtime.strftime("%d-%m-%Y %H:%M:%S") %></span>
 
@@ -48,14 +50,15 @@
       <% changeset = version.changeset %>
       <% changeset.keys.each do |k| %>
 
-        <% if k=="updated_at" %>
-        <% elsif k=="channel_id" %>
-          <li>Изменено поле <b><%= t(k) %></b> c «<%= channel_name(changeset[k][0]) %>» на «<%= channel_name(changeset[k][1]) %>»</li>
-        <% elsif k=="status_id" %>
-          <li>Изменено поле <b><%= t(k) %></b> c «<%= status_name(changeset[k][0]).name %>» на «<%= status_name(changeset[k][1]) %>»</li>
-        <% else %>
-          <li>Изменено поле <b><%= t(k) %></b> c «<%= changeset[k][0] %>» на «<%= changeset[k][1] %>»</li>
-        <% end %>
+
+      <% if k=="updated_at" %>
+      <% elsif k=="channel_id" %>
+      <li>Изменено поле <b><%= t(k) %></b> c «<%= channel_name(changeset[k][0]) %>» на «<%= channel_name(changeset[k][1]) %>»</li>
+      <% elsif k=="status_id" %>
+      <li>Изменено поле <b><%= t(k) %></b> c «<%= status_name(changeset[k][0]) %>» на «<%= status_name(changeset[k][1]) %>»</li>
+      <% else %>
+      <li>Изменено поле <b><%= t(k) %></b> c «<%= changeset[k][0] %>» на «<%= changeset[k][1] %>»</li>
+      <% end %>
       <% end %>
     </ul> 
   </p>    

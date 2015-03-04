@@ -3,6 +3,7 @@ class Lead < ActiveRecord::Base
   belongs_to :status
   belongs_to :user
   has_many :leads_comments
+  has_many :leads_files
   has_paper_trail
   attr_accessor :first_comment
 

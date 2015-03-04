@@ -16,13 +16,47 @@ class ApplicationController < ActionController::Base
     if params[:file] || params[:files]
       puts params[:file].original_filename
       uploaded_io = params[:file]
-      File.open(Rails.root.join('public', 'uploads','leads', uploaded_io.original_filename), 'wb') do |file|
+
+      name = check_file_name(uploaded_io.original_filename,params[:leadid])
+      File.open(Rails.root.join('public', 'uploads','leads', name), 'wb') do |file|
          file.write(uploaded_io.read)
       end
+      append_file(name,params[:leadid])
 
     end
     #render :nothing => true
     render layout: false, content_type: "text/html"
+  end
+
+  def check_file_name(filename,lead_id)
+     extn = File.extname filename
+     name = File.basename filename, extn
+     f = LeadsFile.where('lead_id = ? and name like ? ' ,lead_id, name+"%" ).order('created_at desc').first
+     puts f.name
+     if f
+
+        extn = File.extname f.name
+        name = File.basename f.name, extn
+        if name.split('(').count>1 
+           s = name.split('(').last.split(')').first.to_i
+           name = name.split("("+s.to_s+")").first
+           name = name+"("+(s+1).to_s + ")"+extn
+        end 
+        newname = name
+     else
+        filename
+     end
+     
+  end
+
+  def append_file(filename,lead_id)
+
+     f = LeadsFile.new
+     f.lead_id = lead_id
+     f.user_id = current_user.id
+     f.name = filename
+     f.save
+
   end
 
 

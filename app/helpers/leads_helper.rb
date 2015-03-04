@@ -5,7 +5,7 @@ module LeadsHelper
  end
 
  def channel_name(ch_id)
-    if ch_id?
+    if ch_id.present?
        channel=Channel.find(ch_id)
        channel.name 
     else 
@@ -14,7 +14,7 @@ module LeadsHelper
  end
 
  def status_name(st_id)
-   	if st_id?
+   	if st_id.present?
    		status = Status.find(st_id)
    		status.name
    	else

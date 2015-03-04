@@ -41,7 +41,7 @@ class LeadsController < ApplicationController
     @channels = Channel.all
     @statuses = Status.all
     @comments = @lead.leads_comments.order('created_at asc')
-    
+    @lead_files = @lead.leads_files
   end
 
   # POST /leads
@@ -58,9 +58,9 @@ class LeadsController < ApplicationController
 	    comm.user_id = current_user.id
             comm.save
 	 end
-	STDERR.puts "params"
-	STDERR.puts params[:phone]
-	STDERR.puts params[:lead][:first_comment]
+	   STDERR.puts "params"
+	   STDERR.puts params[:phone]
+	   STDERR.puts params[:lead][:first_comment]
         format.html { redirect_to leads_url, notice: 'Лид успешно создан.'}
         format.json { render :show, status: :created, location: @lead }
       else

@@ -114,6 +114,7 @@ $('#file').hide();
 $("#mulitplefileuploader").uploadFile(settings);
 
 $('#file').fileupload({
+		    formData: {leadid: $('#file').attr('leadid')},
                     url: this.importUrl,
                     pasteZone: null,
 
@@ -123,6 +124,7 @@ $('#file').fileupload({
                         
 			$(".files").append(data.result);
 			$('.progress').hide();
+			//alert($(this).attr('leadid'));
                     },
 
                     progressall: function (e, data) {

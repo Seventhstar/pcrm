@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   post '/file' => 'application#create_file'
 
+
   get    'options'  => 'options#edit'
   get    'options/:options_page'  => 'options#edit'
   get    'signup'  => 'users#new'
