@@ -40,7 +40,7 @@
    <h3>История изменений (<%= @lead.versions.count-1 %>)</h3>
 
 
-   <%- @lead.versions.where('event <> "create"').reverse.each do |version| %>
+   <%- @lead.versions.where('"event" <> ''create''').reverse.each do |version| %>
    <% if version[:event]=="create" %> 
    <% end %>
 
