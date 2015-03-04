@@ -140,6 +140,7 @@ $('#file').fileupload({
   // дата по умолчанию для нового лида - сегодня
   if (!$("#lead_start_date").val()){
 	    $("#lead_start_date").val($.datepicker.formatDate('yy-mm-dd', new Date()));
+      $("#lead_status_date").val($.datepicker.formatDate('yy-mm-dd', new Date()));
   }
 
   //$('#lead_channel_id').chosen();
