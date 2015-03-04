@@ -28,7 +28,7 @@
         <span class="label-group-addon addon182">Дата создания</span><%= f.text_field :start_date, label: false %>
       </div>
       <div class="input-group gr-btm_mg">
-        <span class="label-group-addon addon182">Канал</span><%= f.select 'channel_id', options_for_select(@channels.collect{ |u| [u.name, u.id] }) %>
+        <span class="label-group-addon addon182">Канал</span><%= f.select 'channel_id', options_for_select(@channels.collect{ |u| [u.name, u.id] },@lead.channel_id) %>
       </div>
       <div class="input-group gr-btm_mg">
         <span class="label-group-addon addon182">Статус</span><%= f.select 'status_id', options_for_select(@statuses.collect{ |u| [u.name, u.id] },@lead.status_id) %>
