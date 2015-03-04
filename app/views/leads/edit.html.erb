@@ -40,9 +40,9 @@
    <h3>История изменений (<%= @lead.versions.count-1 %>)</h3>
 
 
-   <%- @lead.versions.where('"event" <> ''create''').reverse.each do |version| %>
-   <% if version[:event]=="create" %> 
-   <% end %>
+   <%- @lead.versions.reverse.each do |version| %>
+   <% if version[:event]!="create" %> 
+   
 
    <p><b><%= find_version_author_name(version) %></b> <span class="helptext"><%= version.created_at.localtime.strftime("%d-%m-%Y %H:%M:%S") %></span>
 
@@ -62,6 +62,7 @@
       <% end %>
     </ul> 
   </p>    
+  <% end %>
   <% end %>
   <% end %>
 
