@@ -19,8 +19,7 @@ class LeadsController < ApplicationController
       @leads = @leads.where(:status => @s_status_ids)
     end
 
-    addNullSort = Rails.env.production? " NULLS FIRST ":""
-    @leads = @leads.order(sort_column + " " + sort_direction + ", status_date desc "+addNullSort)
+    @leads = @leads.order(sort_column + " " + sort_direction + ", status_date desc ")
 
     @channels = Channel.all
   end
