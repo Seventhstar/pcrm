@@ -22,6 +22,8 @@
 //= require bootstrap-datepicker/core
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.ru.js
 //= require_tree .
+//= require jquery.fileupload
+
 
 window.setTimeout(function() {
   $(".fade").fadeTo(500, 0).slideUp(500, function(){
@@ -92,6 +94,44 @@ var setLoc = function(loc) {
   }
 }
   startTime();
+
+var settings = {
+    url: "/",
+    method: "POST",
+    fileName: "myfile",
+    onSuccess:function(files,data,xhr)
+    {
+        alert("Upload success");
+    },
+    onError: function(files,status,errMsg)
+    {       
+        alert("Upload Failed");
+    }
+}
+$('.progress').hide();
+$('#file').hide();
+ 
+$("#mulitplefileuploader").uploadFile(settings);
+
+$('#file').fileupload({
+                    url: this.importUrl,
+                    pasteZone: null,
+
+                    done: function(e, data){
+                        //model = new fileModel(data.result)
+                        //view = new fileView({model: model})
+                        
+			$(".files").append(data.result);
+			$('.progress').hide();
+                    },
+
+                    progressall: function (e, data) {
+                        var progress = parseInt(data.loaded / data.total * 100, 10);
+                        $('.progress').show()
+                        $('.progress-bar').css({width: progress + '%'})
+                    },
+                })
+//alert(29);
 
   // форматы календарей
   $("#lead_status_date").datepicker({format: "yyyy-mm-dd", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});

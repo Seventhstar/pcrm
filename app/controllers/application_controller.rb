@@ -12,5 +12,18 @@ class ApplicationController < ActionController::Base
       end
   end
 
+  def create_file
+    if params[:file] || params[:files]
+      puts params[:file].original_filename
+      uploaded_io = params[:file]
+      File.open(Rails.root.join('public', 'uploads','leads', uploaded_io.original_filename), 'wb') do |file|
+         file.write(uploaded_io.read)
+      end
+
+    end
+    #render :nothing => true
+    render layout: false, content_type: "text/html"
+  end
+
 
 end

@@ -22,6 +22,11 @@ $(document).ready ->
 
   $('#lead_channel_id').chosen()
   $('#lead_status_id').chosen()
+
+  $('#basic1').fileupload
+    done: (e, data)->
+      console.log "Done", data.result
+      $("body").append(data.result)
   
 
   $('.microposts').on 'click', 'span.glyphicon-remove', ->

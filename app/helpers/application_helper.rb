@@ -70,9 +70,11 @@ module ApplicationHelper
 	end
 
   def class_for_lead( lead )
+
+    st_date  = lead.status_date? ? lead.status_date : DateTime.now
     if (!lead.status.actual)
       "nonactual"
-    elsif (lead.status_date <= Date.today+1 )
+    elsif (st_date <= Date.today+1 )
       
       "hotlead"
 

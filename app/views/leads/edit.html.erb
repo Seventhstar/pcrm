@@ -23,6 +23,20 @@
 
 <div class="container">
  <div class="col-6">
+
+<div class="progress">
+              <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+                <span class="sr-only">20% Complete</span>
+              </div>
+            </div>
+
+<table class="files"><tbody></tbody></table>
+
+
+  <p><label for="file"> <a>+ Добавить файл</a> </label></p>
+  <input id="file" type="file" name="file" data-url="/file" multiple="">
+
+
    <h3>История изменений (<%= @lead.versions.count %>)</h3>
 
    <%- @lead.versions.reverse.each do |version| %>
