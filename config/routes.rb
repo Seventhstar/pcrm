@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   resources :leads
   resources :channels
   resources :statuses
+
   resources :users
 
   root :to => "leads#index"

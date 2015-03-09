@@ -138,6 +138,7 @@ $('#file').fileupload({
   // форматы календарей
   $("#lead_status_date").datepicker({format: "yyyy-mm-dd", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});
   $("#lead_start_date").datepicker({format: "yyyy-mm-dd", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});
+  $("#user_date_birth").datepicker({format: "yyyy-mm-dd", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});
 
   // дата по умолчанию для нового лида - сегодня
   if (!$("#lead_start_date").val()){

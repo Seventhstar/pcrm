@@ -6,6 +6,7 @@
     <tr>
       <th></th>
       <th>Пользователь</th>
+      <th>День рождения</th>
       <th width="60px" class="center">Активирован</th>
       <th width="60px" class="center">Админ</th>      
       <th width="30px"></th>
@@ -19,6 +20,7 @@
 <tr >
   <td width="60"><%= link_to gravatar_for(user, size: 50), user %></td>
   <td>  <%= link_to user.name, user %> </br> <%= user.email %> </td>
+  <td>  <%= date_of_birth user %> </td>
   <td><span class="check_img <%= user.activated ? "checked" :"" %>" userid="<%=user.id%>" chk="activated"></span></td>
   <td><span class="check_img <%= user.admin ? "checked" :"" %>" userid="<%=user.id%>" chk="admin"></span></td>
   
