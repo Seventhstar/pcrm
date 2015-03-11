@@ -113,26 +113,7 @@ $('#file').hide();
  
 $("#mulitplefileuploader").uploadFile(settings);
 
-$('#file').fileupload({
-		    formData: {leadid: $('#file').attr('leadid')},
-                    url: this.importUrl,
-                    pasteZone: null,
 
-                    done: function(e, data){
-                        //model = new fileModel(data.result)
-                        //view = new fileView({model: model})
-                        
-			$(".files").append(data.result);
-			$('.progress').hide();
-			//alert($(this).attr('leadid'));
-                    },
-
-                    progressall: function (e, data) {
-                        var progress = parseInt(data.loaded / data.total * 100, 10);
-                        $('.progress').show()
-                        $('.progress-bar').css({width: progress + '%'})
-                    },
-                })
 //alert(29);
 
   // форматы календарей

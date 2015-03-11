@@ -1,7 +1,7 @@
 <% @lead_files.each do |lead_file| %>
 <tr>
-<td width="30px"><a href="/public/uploads/<%= @lead.id %>/<%= lead_file.name %>" target="_blank"><span class="glyphicon glyphicon-download-alt"></span></a></td>
-<td width="300px"> <a href="/public/uploads/<%= @lead.id %>/<%= lead_file.name %>" target="_blank"><%= lead_file.name %></a> </td>
-<td><a><span class="glyphicon glyphicon-remove-circle"></span> </a></td>
+<td width="30px"><a href="/download/<%= @lead.id %>/<%= lead_file.name %>" target="_blank"><span class="glyphicon glyphicon-download-alt"></span></a></td>
+<td width="300px"> <a href="/download/<%= @lead.id %>/<%= lead_file.name %>" target="_blank"><%= lead_file.name %></a> </td>
+<td><a><span class="glyphicon glyphicon-remove" file_id=<%= lead_file.id %>></span> </a></td>
 </tr>
 <% end %>

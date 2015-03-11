@@ -16,6 +16,9 @@
   a.search = (if a.search.substring(0, 1) == '?' then '' else '?') + str.join('&')
   a.href
 
+@update_lead = (lead_id)->
+#  alert 'leadid'+lead_id
+  $.get '/leads/'+lead_id+'/edit', "", null, "script"
 
 
 $(document).ready ->
@@ -25,9 +28,45 @@ $(document).ready ->
 
   $('#basic1').fileupload
     done: (e, data)->
-      console.log "Done", data.result
-      $("body").append(data.result)
-  
+      #console.log "Done", data.result
+      #$("body").append(data.result)
+      #$('.files').
+      #$.get('/leads/'+lead_id+'/edit', "", null, "script");
+
+  $('#file').fileupload
+
+    formData: leadid: $('#file').attr('leadid')
+    url: @importUrl
+    pasteZone: null
+    done: (e, data) ->
+      lead_id = $('#file').attr('leadid')
+      setTimeout 'update_lead('+lead_id+')',200
+      $('.progress').hide()
+      return
+    progressall: (e, data) ->
+      progress = parseInt(data.loaded / data.total * 100, 10)
+      $('.progress').show()
+      $('.progress-bar').css width: progress + '%'
+      return
+
+  $('.files').on 'click', 'span.glyphicon-remove', ->
+    file_id = $(this).attr('file_id')
+    del = confirm('Действительно удалить?')
+    if !del
+       return
+    $.ajax
+      url: '/ajax/del_file'
+      data: 'file_id': file_id
+      type: 'POST'
+      beforeSend: (xhr) ->
+        xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
+        return
+      success: ->
+        lead_id = $('#file').attr('leadid')
+        setTimeout 'update_lead('+lead_id+')',200
+        show_ajax_message "Успешно удален"
+        return
+    return
 
   $('.microposts').on 'click', 'span.glyphicon-remove', ->
     # alert('del');

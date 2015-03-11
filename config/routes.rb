@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :providers
 
   post '/file' => 'application#create_file'
+  get    '/download/:lead/:basename.:extension'  => 'application#download'
 
 
   get    'options'  => 'options#edit'
@@ -34,6 +35,7 @@ Rails.application.routes.draw do
 
   post "ajax/add_comment"
   post "ajax/del_comment"
+  post "ajax/del_file"
   post "ajax/dev_check" 
 
   post "channels/new"

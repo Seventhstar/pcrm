@@ -4,6 +4,20 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   include SessionsHelper
 
+
+	def download
+		puts params[:filename]
+		dir = Rails.root.join('public', 'uploads','leads',params[:lead],params[:basename]+"."+params[:extension])
+		#filename = params[:basename]+"."+params[:extension]
+		#upload = Upload.find(params[:id])
+		send_file dir,
+	            #:filename => filename,
+#	            :type => upload.uploaded_content_type,
+	            :disposition => 'attachment'
+		flash[:notice] = "Your file has been downloaded"
+	   #render :nothing => true
+	end
+
   def logged_in_user
       unless logged_in?
         store_location
@@ -18,7 +32,14 @@ class ApplicationController < ActionController::Base
       uploaded_io = params[:file]
 
       name = check_file_name(uploaded_io.original_filename,params[:leadid])
-      File.open(Rails.root.join('public', 'uploads','leads', name), 'wb') do |file|
+      dir = Rails.root.join('public', 'uploads','leads',params[:leadid])
+
+      FileUtils.mkdir_p(dir) unless File.exists?(dir)
+      #if dir.directory? 
+
+      #end
+
+      File.open(dir + name, 'wb') do |file|
          file.write(uploaded_io.read)
       end
       append_file(name,params[:leadid])
@@ -32,15 +53,17 @@ class ApplicationController < ActionController::Base
      extn = File.extname filename
      name = File.basename filename, extn
      f = LeadsFile.where('lead_id = ? and name like ? ' ,lead_id, name+"%" ).order('created_at desc').first
-     puts f.name
+     
      if f
-
+		puts f.name
         extn = File.extname f.name
         name = File.basename f.name, extn
         if name.split('(').count>1 
            s = name.split('(').last.split(')').first.to_i
            name = name.split("("+s.to_s+")").first
            name = name+"("+(s+1).to_s + ")"+extn
+        else
+           name = name+"(1)"+extn
         end 
         newname = name
      else
