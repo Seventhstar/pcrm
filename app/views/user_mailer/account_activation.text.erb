@@ -1,5 +1,5 @@
-Hi <%= @user.name %>,
+Привет, <%= @user.name %>,
 
-Welcome to the Sample App! Click on the link below to activate your account:
+Дла активации аккаунта перейдите по ссылке ниже:
 
 <%= edit_account_activation_url(@user.activation_token, email: @user.email) %>
