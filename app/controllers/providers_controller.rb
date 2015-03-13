@@ -1,7 +1,7 @@
 class ProvidersController < ApplicationController
   before_action :set_provider, only: [:show, :edit, :update, :destroy]
   helper_method :sort_column, :sort_direction
-
+  before_action :logged_in_user
   # GET /providers
   # GET /providers.json
   def index

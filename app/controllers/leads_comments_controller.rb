@@ -1,5 +1,6 @@
 class LeadsCommentsController < ApplicationController
   before_action :set_leads_comment, only: [:show, :edit, :update, :destroy]
+  before_action :logged_in_user
 
   # GET /leads_comments
   # GET /leads_comments.json
@@ -28,7 +29,7 @@ class LeadsCommentsController < ApplicationController
 
     respond_to do |format|
       if @leads_comment.save
-        format.html { redirect_to @leads_comment, notice: 'Leads comment was successfully created.' }
+        format.html { redirect_to @leads_comment, notice: 'Комментарий успешно создан.' }
         format.json { render :show, status: :created, location: @leads_comment }
       else
         format.html { render :new }
@@ -42,7 +43,7 @@ class LeadsCommentsController < ApplicationController
   def update
     respond_to do |format|
       if @leads_comment.update(leads_comment_params)
-        format.html { redirect_to @leads_comment, notice: 'Leads comment was successfully updated.' }
+        format.html { redirect_to @leads_comment, notice: 'Комментарий успешно обновлен.' }
         format.json { render :show, status: :ok, location: @leads_comment }
       else
         format.html { render :edit }
@@ -56,7 +57,7 @@ class LeadsCommentsController < ApplicationController
   def destroy
     @leads_comment.destroy
     respond_to do |format|
-      format.html { redirect_to leads_comments_url, notice: 'Leads comment was successfully destroyed.' }
+      format.html { redirect_to leads_comments_url, notice: 'Комментарий успешно удален.' }
       format.json { head :no_content }
     end
   end

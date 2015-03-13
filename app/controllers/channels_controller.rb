@@ -1,5 +1,6 @@
 class ChannelsController < ApplicationController
   before_action :set_channel, only: [:show, :edit, :update, :destroy]
+  before_action :logged_in_user
 
   # GET /channels
   # GET /channels.json
@@ -31,7 +32,7 @@ class ChannelsController < ApplicationController
 
     respond_to do |format|
       if @channel.save
-        format.html { redirect_to '/options/channels', notice: 'Channel was successfully created.' }
+        format.html { redirect_to '/options/channels', notice: 'Канал успешно создан' }
         format.json { render :show, status: :created, location: @channel }
       else
         format.html { render :new }
@@ -45,7 +46,7 @@ class ChannelsController < ApplicationController
   def update
     respond_to do |format|
       if @channel.update(channel_params)
-        format.html { redirect_to '/options/channels', notice: 'Channel was successfully updated.' }
+        format.html { redirect_to '/options/channels', notice: 'Канал успешно обновлен' }
         format.json { render :show, status: :ok, location: @channel }
       else
         format.html { render :edit }
@@ -59,7 +60,7 @@ class ChannelsController < ApplicationController
   def destroy
     @channel.destroy
     respond_to do |format|
-      format.html { redirect_to '/options/channels', notice: 'Channel was successfully destroyed.' }
+      format.html { redirect_to '/options/channels', notice: 'Канал успешно удален.' }
       format.json { head :no_content }
     end
   end

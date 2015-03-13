@@ -134,8 +134,7 @@ $("#mulitplefileuploader").uploadFile(settings);
       $(this).addClass("active");
       var url = "/" + $(this).attr("controller");
       $.get(url, null, null, "script");
-      //alert(url);
-      setLoc("options"+url);
+      if (url!="/undefined") setLoc("options"+url);
   });
     
 

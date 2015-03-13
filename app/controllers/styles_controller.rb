@@ -1,6 +1,6 @@
 class StylesController < ApplicationController
   before_action :set_style, only: [:show, :edit, :update, :destroy]
-
+  before_action :logged_in_user
   # GET /styles
   # GET /styles.json
   def index
@@ -33,7 +33,7 @@ class StylesController < ApplicationController
 
     respond_to do |format|
       if @style.save
-        format.html { redirect_to '/options/styles', notice: 'Style was successfully created.' }
+        format.html { redirect_to '/options/styles', notice: 'Стиль успешно создан.' }
         format.json { render :show, status: :created, location: @style }
       else
         format.html { render :new }
@@ -47,7 +47,7 @@ class StylesController < ApplicationController
   def update
     respond_to do |format|
       if @style.update(style_params)
-        format.html { redirect_to '/options/styles', notice: 'Style was successfully updated.' }
+        format.html { redirect_to '/options/styles', notice: 'Стиль успешно обновлен.' }
         format.json { render :show, status: :ok, location: @style }
       else
         format.html { render :edit }
@@ -61,7 +61,7 @@ class StylesController < ApplicationController
   def destroy
     @style.destroy
     respond_to do |format|
-      format.html { redirect_to '/options/styles', notice: 'Style was successfully destroyed.' }
+      format.html { redirect_to '/options/styles', notice: 'Стиль успешно удален.' }
       format.json { head :no_content }
     end
   end

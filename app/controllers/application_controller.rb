@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
+	
   include SessionsHelper
 
 
@@ -14,7 +15,7 @@ class ApplicationController < ActionController::Base
 	            #:filename => filename,
 #	            :type => upload.uploaded_content_type,
 	            :disposition => 'attachment'
-		flash[:notice] = "Your file has been downloaded"
+		flash[:notice] = "Файл успешно загружен"
 	   #render :nothing => true
 	end
 

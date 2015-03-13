@@ -2,7 +2,15 @@ Rails.application.routes.draw do
   
   resources :goodstypes
   resources :budgets
-  resources :styles
+
+  resources :styles, only: [:edit, :update]
+  get 'styles' => redirect('options/styles'), only: [:index, :new, :create]
+  get 'styles/new' => redirect('options/styles')
+
+#  namespace :options do
+#     resources :styles, :budgets, only: [:index, :new, :create]
+#  end
+
   resources :develops
   resources :providers
 

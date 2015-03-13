@@ -1,6 +1,7 @@
 class DevelopsController < ApplicationController
   before_action :set_develop, only: [:show, :edit, :update, :destroy]
   helper_method :show_dev
+  before_action :logged_in_user
 
   # GET /develops
   # GET /develops.json
@@ -39,7 +40,7 @@ class DevelopsController < ApplicationController
 
     respond_to do |format|
       if @develop.save
-        format.html { redirect_to develops_path, notice: 'Develop was successfully created.' }
+        format.html { redirect_to develops_path, notice: 'Задание на разработку успешно создано' }
         format.json { render :show, status: :created, location: @develop }
       else
         format.html { render :new }
@@ -53,7 +54,7 @@ class DevelopsController < ApplicationController
   def update
     respond_to do |format|
       if @develop.update(develop_params)
-        format.html { redirect_to develops_path, notice: 'Develop was successfully updated.' }
+        format.html { redirect_to develops_path, notice: 'Задание на разработку успешно обновлено.' }
         format.json { render :show, status: :ok, location: @develop }
       else
         format.html { render :edit }
@@ -67,7 +68,7 @@ class DevelopsController < ApplicationController
   def destroy
     @develop.destroy
     respond_to do |format|
-      format.html { redirect_to develops_url, notice: 'Develop was successfully destroyed.' }
+      format.html { redirect_to develops_url, notice: 'Задание на разработку успешно удалено.' }
       format.json { head :no_content }
     end
   end
