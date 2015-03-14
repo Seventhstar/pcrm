@@ -333,3 +333,24 @@ float: left;
   -o-transition: display .5s ease;
 }
 
+.navsearch .search_area:focus{
+	width: 200px;
+	
+	 -webkit-transition: width 0.3s ease-in-out;
+    -moz-transition: width 0.3s ease-in-out;
+    -o-transition: width 0.3s ease-in-out;
+    transition: width 0.3s ease-in-out;
+}
+
+
+
+div.sortArrow div.sortArrowAscending, div.sortArrow div.sortArrowDescending {
+  position: absolute;
+  float: left;
+  width: 11px;
+  height: 6px;
+}
+
+div.sortArrow div.sortArrowDescending {
+  background: url('arrow_asc.png') !important; 
+ }

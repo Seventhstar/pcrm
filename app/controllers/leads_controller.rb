@@ -13,6 +13,9 @@ class LeadsController < ApplicationController
       @leads = current_user.leads
     end
 
+    if params[:search]
+      @leads = @leads.where('info like ?','%'+params[:search]+'%')
+    end
 
     if !params[:only_actual] || params[:only_actual] == "true"
       @s_status_ids = Status.where(:actual => true) 

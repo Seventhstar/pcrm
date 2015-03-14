@@ -88,32 +88,56 @@ $(document).ready ->
         return
     return
 
-#  $('.container').on 'keyup', '#search', ->
-    #search = $('#lead_search search').val()
-    #alert(11)
+  $('.container').on 'keyup', '#search', ->
+    search = $('.container #search').val()
+    srt = $('.subnav .active').attr('sort')
+    dir = $('.subnav .active').attr('direction')
+    actual = $('.only_actual').hasClass('active')
+    #alert(search)
+    $.get 'leads', {
+        only_actual: actual
+        direction: dir
+        sort: srt
+        search: search
+    }, null, 'script'
 
   $('.container').on 'click', 'span.sort-span', ->
     srt = $(this).attr('sort')
     dir = $(this).attr('direction')
     actual = $('.only_actual').hasClass('active')
+    search = $('.container #search').val()
+
+    if $(this).hasClass('active')
+      dir = if dir == 'asc' then 'desc' else 'asc'
+      $(this).attr('direction',dir)
+    else
+      $('.sort-span').removeClass('active')
+      $(this).addClass('active')
     $.get 'leads', {
         only_actual: actual
         direction: dir
         sort: srt
+        search: search
     }, null, 'script'
-    
+    return
 
   $('.container').on 'click', 'span.only_actual', ->
     srt = $('.subnav .active').attr('sort')
     dir = $('.subnav .active').attr('direction')
+    search = $('.container #search').val()
     if $(this).hasClass('active')
       actual = false
+      $(this).removeClass('active')
+      $(this).text('Все')
     else 
       actual = true
+      $(this).addClass('active')
+      $(this).text('Актуальные')
     $.get 'leads', {
         only_actual: actual
         direction: dir
         sort: srt
+        search: search
     }, null, 'script'
     
 

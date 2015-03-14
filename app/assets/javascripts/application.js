@@ -18,7 +18,7 @@
 //= require bootstrap-tokenfield
 //= require bootstrap
 //= require chosen.jquery
-//= require bootstrap-datepicker
+
 //= require bootstrap-datepicker/core
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.ru.js
 //= require_tree .

@@ -24,13 +24,23 @@ module ApplicationHelper
     css_class = column == sort_column ? "active #{sort_direction}" : ""
     css_class.concat(" sort-span")
 
-    direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
+    #direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
+    
+    direction = column == sort_column && sort_direction
+    
+
+    #puts direction
     if (column == "status_date" && column != sort_column)
       direction = "desc"
     end  
+
+    add_text = ""
+    #if column == sort_column 
+    #   add_text = sort_direction == "asc" ? " ▲" : " ▼"
+    #end
     #direction = "asc"
     #link_to title, params.merge(:sort => column, :direction => direction, :page => nil) , {:class => css_class}
-    content_tag :span, title, {:class => css_class, :sort => column, :direction => direction }
+    content_tag :span, title + add_text,{ :class => css_class, :sort => column, :direction => direction } 
   end
 
   
