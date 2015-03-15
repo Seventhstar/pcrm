@@ -1,6 +1,3 @@
-<h1>Editing Channel</h1>
+<h1>Редактирование канала</h1>
 
-<%= render 'form' %>
-
-<%= link_to 'Show', @channel %> |
-<%= link_to 'Back', channels_path %>
+<%= render 'shared/name_edit_form',:model =>@channel %>

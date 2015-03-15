@@ -10,14 +10,20 @@ module ApplicationHelper
     super *[collection_or_options, options].compact
   end
 
+  def calls_color
+      if params[:controller] && params[:controller]=="leads" && params[:action] && params[:action]=="new"
+         "btn-danger"
+      else
+         "btn-success"
+      end
+  end
 
-	def activeClassIfModel( model )
-		if model && model == self.controller_name.classify
-			"class=""active_li"""
-		else ""
-
-		end
-	end
+  def activeClassIfModel( model )
+    if model && model == self.controller_name.classify
+	"class=""active_li"""
+    else ""
+    end
+  end
 
   def sortable_pil(column, title = nil)
     title ||= column.titleize
@@ -25,10 +31,7 @@ module ApplicationHelper
     css_class.concat(" sort-span")
 
     #direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
-    
     direction = column == sort_column && sort_direction
-    
-
     #puts direction
     if (column == "status_date" && column != sort_column)
       direction = "desc"
@@ -77,7 +80,7 @@ module ApplicationHelper
     #content_tag :span, p_title, {:class => css_class, :pamams => params.merge(:only_actual => p_active)}
     content_tag :span, p_title, {:class => css_class}
     #<span class="btn btn-warning btn-sm only_actual" id="btn-send"> </span>
-	end
+  end
 
   def class_for_lead( lead )
 
@@ -85,9 +88,7 @@ module ApplicationHelper
     if (!lead.status.actual)
       "nonactual"
     elsif (st_date <= Date.today+1 )
-      
       "hotlead"
-
       #(lead.status_date > Now().)
     end
     
@@ -102,5 +103,19 @@ module ApplicationHelper
     css_class = @page_data == page ? "active" : nil
     link_to title, '#',{:class =>"list-group-item #{css_class}", :controller => page}
   end
+
+  def edit_delete(element,subcount = nil)
+      content_tag :td,{:class=>"edit_delete"} do
+	ed = link_to image_tag('edit.png'), edit_polymorphic_path(element) 
+	subcount ||= 0
+        if subcount>0 
+  	   de = image_tag('delete-disabled.png')
+	else
+  	   de = link_to image_tag('delete.png'), element, method: :delete, data: { confirm: 'Действительно удалить?' }
+	end 
+	ed + de
+      end
+  end
+
 
 end

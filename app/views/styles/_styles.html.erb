@@ -7,7 +7,7 @@
       <tr>
         <td><%= style.name %></td>
         <td></td>
-        <%= render "shared/td_edit_delete", {:element => style, :subcount => style.providers.count }%>
+        <%= edit_delete(style, style.providers.count )%>
       </tr>
     <% end %>
 

@@ -1,0 +1,9 @@
+<%= form_for(model) do |f| %>
+
+    <div class="input-group gr-btm_mg">
+    <span class="label-group-addon addon120"><%= t self.controller_name.classify %></span>
+    <%= f.text_field :name, :class => 'text_input' %>
+    <%= f.button 'Записать',:class => 'btn btn-warning btn-sm2' %>
+    </div>
+
+<% end %>

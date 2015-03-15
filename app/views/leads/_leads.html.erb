@@ -35,8 +35,7 @@
         <td><%= lead.info %></td>
         <td class="center"><%= lead.footage %></td>
         <td class="center"><%= lead.start_date %></td>
-        <%= render "shared/td_edit_delete", :element => lead %>
-
+        <%= edit_delete(lead)%>
       </tr>
 <% end %>
 </tbody></table></div>

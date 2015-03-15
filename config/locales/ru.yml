@@ -27,6 +27,10 @@ ru:
   footage: Метраж
   address: Адрес
 
+  Style: Стиль
+  Budget: Бюджет
+  Goodstype: Вид товара
+
   date:
     formats:
       default: "%d-%m-%Y"

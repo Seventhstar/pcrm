@@ -8,7 +8,7 @@
       <tr>
         <td><%= channel.name %></td>
 	<td></td>
-        <%= render "shared/td_edit_delete", {:element => channel, :subcount => channel.leads.count }%>
+        <%= edit_delete(channel, channel.leads.count )%>
       </tr>
     <% end %>
 

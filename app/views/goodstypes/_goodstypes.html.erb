@@ -6,7 +6,7 @@
       <tr>
         <td><%= goodstype.name %></td>
         <td></td>
-        <%= render "shared/td_edit_delete", {:element => goodstype, :subcount => goodstype.providers.count }%>
+        <%= edit_delete(goodstype, goodstype.providers.count )%>
       </tr>
     <% end %>
 

@@ -20,7 +20,7 @@
         <td><%= develop.name %></td>
         <td><span class="check_img <%= develop.coder ? "checked" :"" %>" developid="<%=develop.id%>" chk="coder"></span></td>
         <td><span class="check_img <%= develop.boss ? "checked" :"" %>" developid="<%=develop.id%>" chk="boss"></span></td>
-        <%= render "shared/td_edit_delete", :element => develop %>
+        <%= edit_delete(develop) %>
       </tr>
     <% end %>
   </tbody>

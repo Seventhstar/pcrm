@@ -16,7 +16,7 @@
         <td><%= status.name %></td>
         <td class="center"><%= check_box_tag status.actual, status.actual, status.actual %></td>
         <td></td>
-        <%= render "shared/td_edit_delete", {:element => status, :subcount => status.leads.count }%>
+        <%= edit_delete(status, status.leads.count )%>
         
       </tr>
     <% end %>

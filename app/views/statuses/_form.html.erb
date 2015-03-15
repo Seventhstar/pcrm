@@ -1,14 +1,11 @@
-
-<div class="input-group">
 <%= form_for(@status) do |f| %>
-  
 
-	<%= f.label 'Статус' %>
-    <%= f.text_field :name, :class => 'text_input' %>
+    <div class="input-group gr-btm_mg">
+    <span class="label-group-addon addon120">Статус</span>
+    <%= f.text_field :name, :class => 'text_input' %><span>&nbsp;&nbsp;&nbsp;</span>
     <%= f.check_box :actual%>
-    <%= f.label 'Актуальный' %>
-
-    <%= f.button 'Записать',:class => 'btn btn-warning btn-sm' %>
+    <span>Актуальный</span>
+    <%= f.button 'Записать',:class => 'btn btn-warning btn-sm2' %>
+    </div>
 
 <% end %>
-</div>

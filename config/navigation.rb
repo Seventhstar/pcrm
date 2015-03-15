@@ -1,5 +1,14 @@
 # -*- coding: utf-8 -*-
 # Configures your navigation
+
+def opt_page
+   if self.controller_name =='leads' 
+      'statuses'
+   else
+      'budgets'
+   end
+end
+
 SimpleNavigation::Configuration.run do |navigation|
   # Specify a custom renderer if needed.
   # The default renderer is SimpleNavigation::Renderer::List which renders HTML lists.
@@ -59,7 +68,7 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :leads, 'Проекты', '#', {:class => 'disabled'}
     primary.item :providers, 'Поставщики', providers_path
     
-    primary.item :statuses, image_tag('run32.png'), '/options', :class => 'nav-images li-right', if: -> { current_user.admin? } #do |sub_nav|
+    primary.item :statuses, image_tag('run32.png'), '/options/'+opt_page, :class => 'nav-images li-right', if: -> { current_user.admin? } #do |sub_nav|
     
       #sub_nav.item :statuses, 'statuses', '/statuses'
 #      sub_nav.item :channels, 'channels', '/channels'

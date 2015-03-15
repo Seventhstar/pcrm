@@ -11,6 +11,7 @@
 		
 		</div>
 
+		<% if ['leads','statuses','channels'].include?(params['options_page']) %>
 		<div class="panel panel-default">
 			<div class="panel-heading">Настройки лидов:</div>
 			<div class="list-group">
@@ -19,7 +20,9 @@
 			</div>
 			
 		</div>
+		<% end %>
 
+		<% if ['providers','budgets','goodstypes','styles'].include?(params['options_page']) %>		    
 		<div class="panel panel-default">
 			<div class="panel-heading">Настройки поставшиков:</div>
 			<div class="list-group">
@@ -28,6 +31,7 @@
 			    <%= option_link("styles","Стили") %>
 			</div>
 		</div>
+                <% end %> 
 	</div>
 
 	

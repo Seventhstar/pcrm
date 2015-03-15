@@ -27,7 +27,7 @@
         <td><%= provider.email %></td>
         <td><%= provider.url %></td>
         <td><%= provider.address %></td>
-        <%= render "shared/td_edit_delete", :element => provider %>
+        <%= edit_delete(provider) %>
       </tr>
     <% end %>
   </tbody>
