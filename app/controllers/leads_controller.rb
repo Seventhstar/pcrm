@@ -8,13 +8,9 @@ class LeadsController < ApplicationController
   def index
 
     if current_user.admin? 
-       if Rails.env.production?
-          @leads = Lead.select("*, date_trunc('month', status_date) AS month")
-       else
-          @leads = Lead.select("*, datetime(status_date, 'start of month') AS month")
-       end
+      @leads = Lead.all
     else
-      @leads = current_user.leads.select("*, date_trunc('month', status_date) AS month")
+      @leads = current_user.leads #.select("*, date_trunc('month', status_date) AS month")
     end
 
     if params[:search]
@@ -27,8 +23,7 @@ class LeadsController < ApplicationController
       @leads = @leads.where(:status => @s_status_ids)
     end
 
-    #@leads = @leads.order(sort_column + " " + sort_direction + ", month desc, status_date asc ")
-     @leads = @leads.order("month desc, status_date asc ")
+    @leads = @leads.order(sort_column + " " + sort_direction + ", status_date desc ") #month desc
 
     @channels = Channel.all
   end
