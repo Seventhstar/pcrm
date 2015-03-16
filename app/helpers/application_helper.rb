@@ -11,8 +11,14 @@ module ApplicationHelper
   end
 
   def calls_color
-      if params[:controller] && params[:controller]=="leads" && params[:action] && params[:action]=="new"
-         "btn-danger"
+      if params[:controller] && params[:controller]=="leads" && params[:action] 
+         if params[:action]=="new"
+            "btn-danger"
+	 elsif params[:action]=="edit"
+	    "btn-warning"
+         else
+	    "btn-success"
+         end
       else
          "btn-success"
       end

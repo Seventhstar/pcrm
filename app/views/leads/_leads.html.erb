@@ -10,20 +10,13 @@
     <% new_date = lead.status_date? ? lead.status_date : Date.today %>
     <% if cur_month != new_date.month && (params[:sort] == "status_date" || params[:sort] == nil)%>
           <% cur_month = new_date.month %>
-          
           <%= render "head", {:first_table => first_table, :heading => t(new_date.strftime("%B"))+" "+new_date.strftime("%Y") } %>
-        
       <% elsif cur_user != lead.user.name && (params[:sort] == "user_id")%>
         <% cur_user = lead.user.name %>
-
           <%= render "head", {:first_table => first_table, :heading => t(lead.user.name) } %>
-
       <% elsif cur_status != lead.status.name && (params[:sort] == "status_id")%>
         <% cur_status = lead.status.name %>
-        
         <%= render "head", {:first_table => first_table, :heading => t(lead.status.name) } %>
-        
-
       <% end %>
         <% first_table = false %>        
 
