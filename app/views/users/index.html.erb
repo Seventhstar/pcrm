@@ -25,7 +25,7 @@
   <td><span class="check_img <%= user.admin ? "checked" :"" %>" userid="<%=user.id%>" chk="admin"></span></td>
   
   <% if current_user.admin? %>
-     <%= edit_delete(user, :subcount => current_user?(user) ? 1:nil ) %>
+     <%= edit_delete(user, current_user?(user) ? 1:nil ) %>
   <% else %>
     <td></td>
   <% end %>

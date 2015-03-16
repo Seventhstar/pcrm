@@ -14,7 +14,8 @@ class LeadsController < ApplicationController
     end
 
     if params[:search]
-      @leads = @leads.where('info like ?','%'+params[:search]+'%')
+      info =params[:search]
+      @leads = @leads.where('LOWER(info) like LOWER(?)','%'+info+'%')
     end
 
     if !params[:only_actual] || params[:only_actual] == "true"
