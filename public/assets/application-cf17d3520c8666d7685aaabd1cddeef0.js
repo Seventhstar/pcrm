@@ -38270,7 +38270,35 @@ b.distance}).appendTo(c).delay(d*b.delay).animate({right:"0px",opacity:1},b.spee
 left:"",right:"-"+b.distance}).animate({right:"0px",opacity:1},b.speed,function(){a(this).css("right","auto");d==h.length-1&&(l=!1)});g+=e[d].height})})}k=j[j.length-1].direction;a(c).find("tr:first-child th div.sortArrow div").stop(!0,!0).fadeOut(b.speed,"swing");switch(k){case "ascending":a(c).find("tr:first-child th div.sortArrow div.sortArrowAscending").eq(f).fadeIn(b.speed,"swing");break;case "descending":a(c).find("tr:first-child th div.sortArrow div.sortArrowDescending").eq(f).fadeIn(b.speed,
 "swing")}}})})}})(jQuery);
 (function() {
-
+  $(document).ready(function() {
+    return $('.user-table').on('click', 'span.check_img', function() {
+      var checked, chk, user_id;
+      if ($(this).hasClass('checked')) {
+        $(this).removeClass('checked');
+        checked = false;
+      } else {
+        checked = true;
+        $(this).addClass('checked');
+      }
+      user_id = $(this).attr('userid');
+      chk = $(this).attr('chk');
+      $.ajax({
+        url: '/ajax/user_upd',
+        data: {
+          'user_id': user_id,
+          'field': chk,
+          'checked': checked
+        },
+        type: 'POST',
+        beforeSend: function(xhr) {
+          xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+        },
+        success: function() {
+          $(this).addClass('done');
+        }
+      });
+    });
+  });
 
 }).call(this);
 // This is a manifest file that'll be compiled into application.js, which will include all the files

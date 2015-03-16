@@ -59,7 +59,7 @@ class LeadsController < ApplicationController
          if params[:lead][:first_comment]
             comm = @lead.leads_comments.new
 	    comm.comment = params[:lead][:first_comment]
-	    comm.user_id = current_user.id
+	    comm.user_id = params[:lead][:user_id]
             comm.save
 	 end
 	   STDERR.puts "params"

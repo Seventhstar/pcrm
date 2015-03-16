@@ -65,4 +65,18 @@ class AjaxController < ApplicationController
    render :nothing => true
   end
 
+  def user_upd
+   if params[:user_id]
+      u = User.find(params[:user_id])
+      if params[:field] == "admin"
+        u.admin = params[:checked]
+      else
+        u.activated = params[:checked]
+      end
+      u.save  
+   end
+   render :nothing => true
+  end
+
+
 end
