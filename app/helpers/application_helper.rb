@@ -1,4 +1,12 @@
 module ApplicationHelper
+  
+  def opt_page
+     if self.controller_name =='leads' 
+        'statuses'
+     else
+        'budgets'
+     end
+  end
 
   def will_paginate(collection_or_options = nil, options = {})
     if collection_or_options.is_a? Hash
@@ -13,7 +21,7 @@ module ApplicationHelper
   def calls_color
       if params[:controller] && params[:controller]=="leads" && params[:action] 
          if params[:action]=="new"
-            "btn-danger"
+            "orange"
 	 elsif params[:action]=="edit"
 	    "btn-warning"
          else
@@ -112,12 +120,12 @@ module ApplicationHelper
 
   def edit_delete(element,subcount = nil)
       content_tag :td,{:class=>"edit_delete"} do
-	ed = link_to image_tag('edit.png'), edit_polymorphic_path(element) 
+	ed = link_to "", edit_polymorphic_path(element), :class=>"icon icon_edit" 
 	subcount ||= 0
         if subcount>0 
   	   de = image_tag('delete-disabled.png')
 	else
-  	   de = link_to image_tag('delete.png'), element, method: :delete, data: { confirm: 'Действительно удалить?' }
+  	   de = link_to "", element, method: :delete, data: { confirm: 'Действительно удалить?' }, :class=>"icon icon_remove" 
 	end 
 	ed + de
       end

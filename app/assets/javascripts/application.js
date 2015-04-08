@@ -44,7 +44,8 @@ function startTime(){
 	
 	m=checkTime(m);
 	s=checkTime(s);
-	document.getElementById('date_txt').innerHTML=h+":"+m+":"+s;
+  //alert(h+":"+m+":"+s);
+	$(".time_h").html(h+":"+m+":"+s);
 	t=setTimeout('startTime()',500);
 }
 
@@ -161,10 +162,10 @@ $("#mulitplefileuploader").uploadFile(settings);
   });
 
 
-  $( document ).ajaxStop(function() {
-    $('table.tableSorter').tableSort();
-  });
-  $('table.tableSorter').tableSort();
+  /*$( document ).ajaxStop(function() {
+    $('table.tleads ').tableSort();
+  });*/
+  //$('table.tleads ').tableSort({width: 1100px;});
 
   
   $('span.btn-sm').click(function(){

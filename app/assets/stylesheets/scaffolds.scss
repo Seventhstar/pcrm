@@ -1,71 +1,37 @@
-body {
-  background-color: #fff;
-  color: #333;
-//  font-family: verdana, arial, helvetica, sans-serif;
-   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-  //font-size: 13px;
-  font-size: 12px;
-  line-height: 18px;
+.page-wrapper {
+    min-height: 95%;
+    margin-bottom: -50px;
+}
+* html .page-wrapper {
+    height: 95%;
+}
+.page-buffer {
+    height: 50px;
 }
 
-p, ol, ul, td {
-//  font-family: verdana, arial, helvetica, sans-serif;
-  //font-size: 13px;
-  //line-height: 18px;
+
+input[type="text"],input[type="number"], input[type="password"],input[type="email"],textarea,.comment_area, .txt {
+-webkit-transition: border linear 0.2s,box-shadow linear 0.2s;
+-moz-transition: border linear 0.2s,box-shadow linear 0.2s;
+-ms-transition: border linear 0.2s,box-shadow linear 0.2s;
+-o-transition: border linear 0.2s,box-shadow linear 0.2s;
+transition: border linear 0.3s,box-shadow linear 0.3s;
+-webkit-box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+-moz-box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+
 }
 
-pre {
-  background-color: #eee;
-  padding: 10px;
-  font-size: 11px;
-}
+input[type="text"]:focus,#datepicker:focus,textarea:focus,.txt:focus{
+ outline:0;
+ //border-color: #ff8411;
+border-color:rgba(255,132,17,0.8);
+//-webkit-box-shadow: inset 0 1px 3px rgba(0,0,0,0.1),0 0 8px rgba(82,168,236,0.6);
+//-moz-box-shadow:inset 0 1px 3px rgba(0,0,0,0.1),0 0 8px rgba(82,168,236,0.6);
+// box-shadow:inset 0 1px 3px rgba(0,0,0,0.1), 0 0 8px rgba(82,168,236,0.6)
+//box-shadow: inset 0 3px 0 #ffe6cf, 0 0 0 3px rgba(255,230,207,0.6);
+-webkit-box-shadow: inset 0 1px 3px rgba(0,0,0,0.1),0 0 1px 3px rgba(255,232,215,0.6);
+-moz-box-shadow:inset 0 1px 3px rgba(0,0,0,0.1),0 0 1px 3px rgba(255,232,215,0.6);
+ box-shadow:inset 0 1px 3px rgba(0,0,0,0.1),0 0 1px 3px rgba(255,232,215,0.7);
 
-a {
-  color: #000;
-}
-
-div {
-  &.field, &.actions {
-    margin-bottom: 10px;
-  }
-}
-
-#notice {
-  color: green;
-}
-
-.field_with_errors {
-  padding: 2px;
-  background-color: red;
-  display: table;
-}
-
-#error_explanation {
-  width: 450px;
-  border: 2px solid red;
-  padding: 7px;
-  padding-bottom: 0;
-  margin-bottom: 20px;
-  background-color: #f0f0f0;
-  h2 {
-    text-align: left;
-    font-weight: bold;
-    padding: 5px 5px 5px 15px;
-    font-size: 12px;
-    margin: -7px;
-    margin-bottom: 0px;
-    background-color: #c00;
-    color: #fff;
-  }
-  ul li {
-    font-size: 12px;
-    list-style: square;
-  }
-}
-
-.btn-sm2{
-  height: 26px !important;
-  padding: 0 8px !important; 
-  margin-top: -4px !important;
-  margin-left: 10px;
 }

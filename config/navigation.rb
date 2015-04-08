@@ -1,14 +1,5 @@
 # -*- coding: utf-8 -*-
 # Configures your navigation
-
-def opt_page
-   if self.controller_name =='leads' 
-      'statuses'
-   else
-      'budgets'
-   end
-end
-
 SimpleNavigation::Configuration.run do |navigation|
   # Specify a custom renderer if needed.
   # The default renderer is SimpleNavigation::Renderer::List which renders HTML lists.
@@ -20,7 +11,7 @@ SimpleNavigation::Configuration.run do |navigation|
 
   # Specify the class that will be applied to the current leaf of
   # active navigation items. Defaults to 'simple-navigation-active-leaf'
-  # navigation.active_leaf_class = 'active'
+  navigation.active_leaf_class = 'active'
   # navigation.active_leaf_class = 'active1'
 
   # Item keys are normally added to list items as id.
@@ -68,7 +59,7 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :leads, 'Проекты', '#', {:class => 'disabled'}
     primary.item :providers, 'Поставщики', providers_path
     
-    primary.item :statuses, image_tag('run32.png'), '/options/'+opt_page, :class => 'nav-images li-right', if: -> { current_user.admin? } #do |sub_nav|
+    #primary.item :statuses,"", '/options/'+opt_page, :class => 'icon icon_options', if: -> { current_user.admin? } #do |sub_nav|
     
       #sub_nav.item :statuses, 'statuses', '/statuses'
 #      sub_nav.item :channels, 'channels', '/channels'

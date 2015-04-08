@@ -1,0 +1,71 @@
+@font-face {
+	font-family:'Pragmatica';
+	src: url('pragmatica/Pragmatica_gdi.eot');
+	src: url('pragmatica/Pragmatica_gdi.eot?#iefix') format('embedded-opentype'),
+		url('pragmatica/Pragmatica_gdi.woff') format('woff'),
+		url('pragmatica/Pragmatica_gdi.ttf') format('truetype'),
+		url('pragmatica/Pragmatica_gdi.svg#Pragmatica-Regular') format('svg');
+	font-weight: normal;
+	font-style: normal;
+	font-stretch: normal;
+}
+
+@font-face {
+	font-family:'Pragmatica';
+	src: url('pragmatica/Pragmatica-Oblique_gdi.eot');
+	src: url('pragmatica/Pragmatica-Oblique_gdi.eot?#iefix') format('embedded-opentype'),
+		url('pragmatica/Pragmatica-Oblique_gdi.woff') format('woff'),
+		url('pragmatica/Pragmatica-Oblique_gdi.ttf') format('truetype'),
+		url('pragmatica/Pragmatica-Oblique_gdi.svg#Pragmatica-Oblique') format('svg');
+	font-weight: normal;
+	font-style: oblique;
+	font-stretch: normal;
+}
+
+@font-face {
+	font-family:'Pragmatica';
+	src: url('pragmatica/Pragmatica-Medium_gdi.eot');
+	src: url('pragmatica/Pragmatica-Medium_gdi.eot?#iefix') format('embedded-opentype'),
+		url('pragmatica/Pragmatica-Medium_gdi.woff') format('woff'),
+		url('pragmatica/Pragmatica-Medium_gdi.ttf') format('truetype'),
+		url('pragmatica/Pragmatica-Medium_gdi.svg#Pragmatica-Medium') format('svg');
+	font-weight: 500;
+	font-style: normal;
+	font-stretch: normal;
+}
+
+@font-face {
+	font-family:'Pragmatica';
+	src: url('pragmatica/Pragmatica-MediumOblique_gdi.eot');
+	src: url('pragmatica/Pragmatica-MediumOblique_gdi.eot?#iefix') format('embedded-opentype'),
+		url('pragmatica/Pragmatica-MediumOblique_gdi.woff') format('woff'),
+		url('pragmatica/Pragmatica-MediumOblique_gdi.ttf') format('truetype'),
+		url('pragmatica/Pragmatica-MediumOblique_gdi.svg#Pragmatica-MediumOblique') format('svg');
+	font-weight: 500;
+	font-style: oblique;
+	font-stretch: normal;
+}
+
+@font-face {
+	font-family:'Pragmatica';
+	src: url('pragmatica/Pragmatica-Bold_gdi.eot');
+	src: url('pragmatica/Pragmatica-Bold_gdi.eot?#iefix') format('embedded-opentype'),
+		url('pragmatica/Pragmatica-Bold_gdi.woff') format('woff'),
+		url('pragmatica/Pragmatica-Bold_gdi.ttf') format('truetype'),
+		url('pragmatica/Pragmatica-Bold_gdi.svg#Pragmatica-Bold') format('svg');
+	font-weight: bold;
+	font-style: normal;
+	font-stretch: normal;
+}
+
+@font-face {
+	font-family:'Pragmatica';
+	src: url('pragmatica/Pragmatica-BoldOblique_gdi.eot');
+	src: url('pragmatica/Pragmatica-BoldOblique_gdi.eot?#iefix') format('embedded-opentype'),
+		url('pragmatica/Pragmatica-BoldOblique_gdi.woff') format('woff'),
+		url('pragmatica/Pragmatica-BoldOblique_gdi.ttf') format('truetype'),
+		url('pragmatica/Pragmatica-BoldOblique_gdi.svg#Pragmatica-BoldOblique') format('svg');
+	font-weight: bold;
+	font-style: oblique;
+	font-stretch: normal;
+}

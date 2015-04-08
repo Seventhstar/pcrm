@@ -1,12 +1,11 @@
 <div class="subnav">
-
 	<%= sortable_pil "status_date", "По месяцам" %>
 	<%= sortable_pil "user_id", "По сотрудникам" %>
 	<%= sortable_pil "status_id", "По статусам" %>
 
 	<%= form_tag leads_path, :method => 'get', :id => "leads_search" do %>	
   	<div class="navsearch"> 
-    	<%= text_field_tag :search, params[:search], :class => "search_area" %>
+    	<%= text_field_tag :search, params[:search], :class => "search_area txt", :placeholder=>"Искать в таблице..." %>
 	</div>
 	<% end %>
 

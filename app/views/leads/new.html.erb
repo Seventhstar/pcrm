@@ -1,55 +1,51 @@
+<div class="hl hl_a bd">Новый лид</div>
+
 <%= simple_form_for(@lead) do |f| %>
 <%= f.error_notification %>
 
-<div class="col-6">
+<div class="box_wrap box_wrap_1">
+	<div class="left">
+		<table class="tbl_fc tbl_fc_1">
+		<tr><td class="caption">Фио:</td>
+		    <td><div class="inp_w"><%= f.input :fio, label: false %></div></td></tr>
+		<tr><td class="caption">Телефон:</td>
+		    <td><div class="inp_w"><%= f.input :phone, label: false, class: :txt %></div></td></tr>
+		<tr><td class="caption">E-Mail:</td>
+			<td><div class="inp_w"><%= f.input :email, label: false %></div></td></tr>    
+		<tr><td class="caption">Информация о запросе:</td>
+			<td><div class="inp_w"><%= f.input :info, label: false %></div></td></tr>
+		<tr><td class="caption">Метраж:</td>
+			<td><div class="inp_w"><%= f.input :footage, label: false %></div></td></tr>
+		<tr><td class="caption">Адрес объекта:</td>
+			<td><div class="inp_w"><%= f.input :address, label: false %></div></td></tr>
+		<tr><td class="caption"></td>
+			<td><%= link_to 'Отмена', leads_path, :class => "sub btn_a btn_reset"%>
+				<%= f.button :submit, value: 'Сохранить', :class => 'sub btn_a' %></td></tr>
+		</table>
+	</div>
 
-      <div class="input-group gr-btm_mg">
-        <span class="label-group-addon addon182">ФИО</span><%= f.input :fio, label: false %>
-      </div>
-      <div class="input-group gr-btm_mg">
-        <span class="label-group-addon addon182">Телефон</span><%= f.input :phone, label: false %>
-      </div>
-      <div class="input-group gr-btm_mg">
-        <span class="label-group-addon addon182">E-mail</span><%= f.input :email, label: false %>
-      </div>
-      <div class="input-group gr-btm_mg">
-        <span class="label-group-addon addon182">Информация о запросе</span><%= f.input :info, label: false %>
-      </div>
-      <div class="input-group gr-btm_mg">
-        <span class="label-group-addon addon182">Метраж</span><%= f.input :footage, label: false %>
-      </div>
-      <div class="input-group gr-btm_mg">
-        <span class="label-group-addon addon182">Адрес</span><%= f.input :address, label: false %>
-      </div>
-</div>
-
-<div class="col-xs-6">
-
-      <div class="input-group gr-btm_mg">
-        <span class="label-group-addon addon182">Дата для статуса</span><%= f.text_field :status_date, label: false %>
-      </div>
-      <div class="input-group gr-btm_mg">
-        <span class="label-group-addon addon182">Дата создания</span><%= f.text_field :start_date, label: false %>
-      </div>
-      <div class="input-group gr-btm_mg">
-        <span class="label-group-addon addon182">Канал</span><%= f.select 'channel_id', options_for_select(@channels.collect{ |u| [u.name, u.id] }) %>
-      </div>
-      <div class="input-group gr-btm_mg">
-        <span class="label-group-addon addon182">Статус</span><%= f.select 'status_id', options_for_select(@statuses.collect{ |u| [u.name, u.id] },@lead.status_id) %>
-      </div>
-      <div class="input-group gr-btm_mg">
-        <span class="label-group-addon addon182">Примечание</span><%= f.text_area :first_comment, as: :text, label: false %>
-      </div>
-
-</div>
-    
-    <%= f.hidden_field :user_id, value: current_user.id    %>
-
-
-<div class="form-actions">
-  <%= link_to 'Отмена', leads_path, class: "btn btn-default btn-white" %> 
-  <%= f.button :submit, value: 'Сохранить', :class => 'btn btn-success' %>
-</div>
+	<div class="right">
+		<table class="tbl_fc"><tbody>
+		<tr><td class="caption">Дата статуса:</td>
+			<td><div class="inp_w"><%= f.text_field :status_date, class: :txt %></div></td>	</tr>
+		<tr><td class="caption">Дата создания:</td>
+			<td><div class="inp_w"><%= f.text_field :start_date, class: :txt %></div></td></tr>
+		<tr><td class="caption">Канал:</td>
+			<td><div class="select_custom select"><%= f.select 'channel_id', options_for_select(@channels.collect{ |u| [u.name, u.id] }) %>
+					<div class="sel_val"><div class="sv_text"><span class="svt_i">Телефон...</span></div><div class="mark"><span></span></div></div><div class="down_list">
+					<div class="dl_i"><div class="dl_ii scrollPane_v"><ul><li class="checked">Телефон...</li><li>Телефон 1</li><li class="last">Телефон 2</li></ul>
+					</div></div></div></div>
+			</td></tr>
+		<tr><td class="caption">Статус:</td>
+			<td><div class="select_custom select"><%= f.select 'status_id', options_for_select(@statuses.collect{ |u| [u.name, u.id] },@lead.status_id) %><div class="sel_val">
+				<div class="sv_text"><span class="svt_i">Дорого...</span></div><div class="mark"><span></span></div></div><div class="down_list"><div class="dl_i"><div class="dl_ii scrollPane_v"><ul><li class="checked">Дорого...</li><li>Дешево 1</li><li class="last">Средне 2</li></ul></div></div></div></div>
+				</td></tr>
+		<tr><td class="caption">Примечание:</td>
+			<td><div class="inp_w"><%= f.text_area :first_comment, class: :txt, label: false %></div></td></tr>
+		</tbody></table>
+	</div>
+   
+<%= f.hidden_field :user_id, value: current_user.id    %>
 </div>
 <% end %>
 
