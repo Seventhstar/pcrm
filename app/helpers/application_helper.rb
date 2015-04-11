@@ -118,12 +118,20 @@ module ApplicationHelper
     link_to title, '#',{:class =>"list-group-item #{css_class}", :controller => page}
   end
 
+  def option_li( page,title )
+    css_class = @page_data == page ? "active" : nil
+    content_tag :li, {:class =>css_class } do
+      link_to title, '#',{:class =>"list-group-item #{css_class}", :controller => page}
+    end
+  end
+
+
   def edit_delete(element,subcount = nil)
       content_tag :td,{:class=>"edit_delete"} do
 	ed = link_to "", edit_polymorphic_path(element), :class=>"icon icon_edit" 
 	subcount ||= 0
         if subcount>0 
-  	   de = image_tag('delete-disabled.png')
+  	   de = content_tag("span","",{:class=>'icon icon_remove disabled'})
 	else
   	   de = link_to "", element, method: :delete, data: { confirm: 'Действительно удалить?' }, :class=>"icon icon_remove" 
 	end 

@@ -1,43 +1,32 @@
-<div class="container options-menu">
-
-
-
-	<div class="col-menu">
-
-		<div class="user-link">
-		
-		<span class="glyphicon glyphicon-user"></span>
-		<%= link_to "Пользователи",:users %>
-		
-		</div>
-
-		<% if ['leads','statuses','channels'].include?(params['options_page']) %>
-		<div class="panel panel-default">
-			<div class="panel-heading">Настройки лидов:</div>
-			<div class="list-group">
-			  <%= option_link("statuses","Статусы") %>
-			  <%= option_link("channels","Каналы") %>
-			</div>
-			
-		</div>
-		<% end %>
-
-		<% if ['providers','budgets','goodstypes','styles'].include?(params['options_page']) %>		    
-		<div class="panel panel-default">
-			<div class="panel-heading">Настройки поставшиков:</div>
-			<div class="list-group">
-			    <%= option_link("budgets","Бюджеты") %>
-			    <%= option_link("goodstypes","Виды товаров") %>
-			    <%= option_link("styles","Стили") %>
-			</div>
-		</div>
-                <% end %> 
+<div class="sidebar">
+	<div class="menu_sb">
+	  <ul>
+		<li><%= link_to :users do %><span class="pict"><span class="icon icon_user"></span></span>Пользователи<% end %></li>
+	  </ul>
 	</div>
+		
+	<div class="menu_sb menu_sb_a">	
+	<% if ['leads','statuses','channels'].include?(params['options_page']) %>
+		  <div class="head">Настройки лидов:</div>
+		  <ul>
+			<%= option_li("statuses","Статусы") %>
+			<%= option_li("channels","Каналы") %>
+		  </ul>	
+	<% end %>
 
-	
+	<% if ['providers','budgets','goodstypes','styles'].include?(params['options_page']) %>		    
+			<div class="head">Настройки поставшиков:</div>
+			<ul>
+			    <%= option_li("budgets","Бюджеты") %>
+			    <%= option_li("goodstypes","Виды товаров") %>
+			    <%= option_li("styles","Стили") %>
+			</ul>
+	<% end %> 
+  </div>
+</div>
 
-	<div class="col-md-8">
-		<%= render @page_render %>
-	</div>
+<div class="content">
+	<%= render @page_render %>
+</div>
 
 </div>

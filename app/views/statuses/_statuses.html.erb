@@ -1,6 +1,6 @@
-<div class="panel panel-default">
-<div class="panel-heading table-heading">Список статусов</div>
-<table class="table table-striped">
+<div class="items_box_cont tbl_a">
+<div class="head">Список статусов</div>
+<table class="tleads">
   <thead>
     <tr>
       <th>Статус</th>
@@ -22,18 +22,21 @@
     <% end %>
 
 
-    <tr>
-    <td><%= form_for(@status) do |f| %>
-	<%= f.label 'Новый статус:' %>
-	<%= f.text_field :name, :class => 'text_input' %></td>
-    <td class="center"><%= f.check_box :actual %></td>
-    <td colspan="2">
-       <span class="btn btn-warning btn-sm" id="btn-send"> Добавить</span>
-       <% end %>
-    </td>
-  
-    </tr>
+    
   </tbody>
 </table>
 </div>
 
+
+<%= form_for(@status) do |f| %>
+<div class="itemAdd_form">
+  <table><tbody>
+  <tr><td class="caption">Новый статус:</td>
+      <td><label class="inp_btn_label"><div class="inp_btn checkbox"><input type="checkbox"></div>Актуальный</label></td>
+      <td><div class="inp">
+          <%= f.text_field :name, :class => 'txt' %>
+          <input type="submit" class="sub btn_a" value="Добавить"></div>
+      </td></tr>
+  </tbody></table>
+</div>
+<% end %>

@@ -7,6 +7,9 @@ class ChannelsController < ApplicationController
   def index
     @channels = Channel.all
     @channel = Channel.new
+
+    @items = Channel.all
+    @item = Channel.new
   end
 
   # GET /channels/1

@@ -130,13 +130,22 @@ $("#mulitplefileuploader").uploadFile(settings);
 
   //$('#lead_channel_id').chosen();
 
-  $('.options-menu a').click(function(){ 
+/*  $('.options-menu a').click(function(){ 
       $('.options-menu a.active').removeClass("active", 150, "easeInQuint");
       $(this).addClass("active");
       var url = "/" + $(this).attr("controller");
       $.get(url, null, null, "script");
       if (url!="/undefined") setLoc("options"+url);
+  });*/
+
+  $('.menu_sb li a').click(function(){ 
+      $('.menu_sb li.active').removeClass("active", 150, "easeInQuint");
+      $(this).parent().addClass("active");
+      var url = "/" + $(this).attr("controller");
+      $.get(url, null, null, "script");
+      if (url!="/undefined") setLoc("options"+url);
   });
+
     
 
   $(document).on('click','#btn-send',function(e) {  

@@ -2,18 +2,18 @@
 <div class="head">Список бюджетов</div>
 <table class="tleads">
   <tbody>
-    <% @budgets.each do |budget| %>
+    <% @items.each do |item| %>
       <tr>
-        <td><%= budget.name %></td>
+        <td><%= item.name %></td>
         <td></td>
-        <%= edit_delete(budget, budget.providers.count )%>
+        <%= edit_delete(item, item.parents_count )%>
       </tr>
     <% end %>
   </tbody>
 </table>
 </div>
 
-<%= form_for(@budget) do |f| %>
+<%= form_for(@item) do |f| %>
 <div class="itemAdd_form">
   <table><tbody>
   <tr><td class="caption">Новый бюджет:</td>

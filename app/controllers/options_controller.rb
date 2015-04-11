@@ -10,6 +10,19 @@ class OptionsController < ApplicationController
       @page_data = "statuses"
     end
 
+    puts params[:options_page]
+    case params[:options_page]
+    when "channels"
+      @items = Channel.order(:name)
+      @item = Channel.new
+    when 6
+      puts "It's 6"
+    when String
+      puts "You passed a string"
+    else
+      puts "You gave me #{a} -- I have no idea what to do with that."
+    end
+
     @statuses = Status.order(:name)
     @channels = Channel.order(:name)
     @styles   = Style.order(:name)
