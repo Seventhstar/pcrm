@@ -16,5 +16,11 @@ class Budget < ActiveRecord::Base
     tokens.split(',')
   end
 
+  attr_accessor :parents_count
+  
+  def parents_count
+    self.try(:providers).count
+  end
+
 
 end

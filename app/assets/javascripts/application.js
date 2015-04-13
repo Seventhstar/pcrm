@@ -152,6 +152,7 @@ $("#mulitplefileuploader").uploadFile(settings);
      
     var valuesToSubmit = $('form').serialize();
     var url = $('form').attr('action');
+    
     $.ajax({
         type: "POST",
         url: url, //sumbits it to the given url of the form

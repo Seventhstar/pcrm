@@ -14,11 +14,18 @@ class OptionsController < ApplicationController
     case params[:options_page]
     when "channels"
       @items = Channel.order(:name)
-      @item = Channel.new
-    when 6
+      @item  = Channel.new
+    when "statuses"
       puts "It's 6"
-    when String
-      puts "You passed a string"
+    when "budgets"
+      @items = Budget.order(:name)  
+      @item  = Budget.new
+    when "styles"
+      @items = Style.order(:name)
+      @item  = Style.new
+    when "goodstypes"
+      @items = Goodstype.order(:name)
+      @item  = Goodstype.new
     else
       puts "You gave me #{a} -- I have no idea what to do with that."
     end

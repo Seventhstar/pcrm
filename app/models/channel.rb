@@ -5,7 +5,6 @@ class Channel < ActiveRecord::Base
   attr_accessor :parents_count
   
   def parents_count
-
     self.try(:leads).count
   end
 

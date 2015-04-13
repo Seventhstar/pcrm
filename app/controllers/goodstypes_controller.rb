@@ -7,6 +7,10 @@ class GoodstypesController < ApplicationController
   def index
     @goodstypes = Goodstype.order(:name)
     @goodstype = Goodstype.new
+
+    @items  = Goodstype.order(:name)  
+    @item = Goodstype.new
+
   end
 
   # GET /goodstypes/1
@@ -31,7 +35,7 @@ class GoodstypesController < ApplicationController
     respond_to do |format|
       if @goodstype.save
         format.html { redirect_to '/options/goodstypes', notice: 'Вид товара успешно создан.' }
-        format.json { render :show, status: :created, location: @goodstype }
+        format.json { render :index, status: :created, location: @goodstype }
       else
         format.html { render :new }
         format.json { render json: @goodstype.errors, status: :unprocessable_entity }

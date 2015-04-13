@@ -7,6 +7,9 @@ class BudgetsController < ApplicationController
   def index
     @budgets = Budget.order(:name)
     @budget =  Budget.new
+
+    @items  = Budget.order(:name)  
+    @item = Budget.new
   end
 
   # GET /budgets/1
@@ -33,7 +36,7 @@ class BudgetsController < ApplicationController
     respond_to do |format|
       if @budget.save
         format.html { redirect_to '/options/budgets', notice: 'Бюджет успешно создан.' }
-        format.json { render :show, status: :created, location: @budget }
+        format.json { render :index, status: :created, location: @budget }
       else
         format.html { render :new }
         format.json { render json: @budget.errors, status: :unprocessable_entity }

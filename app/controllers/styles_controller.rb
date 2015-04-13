@@ -7,6 +7,9 @@ class StylesController < ApplicationController
     #@styles = Style.all
     @styles = Style.order(:name)
     @style = Style.new
+
+    @items  = Style.order(:name)  
+    @item = Style.new
   end
 
   # GET /styles/1
@@ -34,7 +37,7 @@ class StylesController < ApplicationController
     respond_to do |format|
       if @style.save
         format.html { redirect_to '/options/styles', notice: 'Стиль успешно создан.' }
-        format.json { render :show, status: :created, location: @style }
+        format.json { render :index, status: :created, location: @style }
       else
         format.html { render :new }
         format.json { render json: @style.errors, status: :unprocessable_entity }
