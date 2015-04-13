@@ -14,7 +14,7 @@ a:hover {text-decoration:none;}
 
 input, textarea , button , select {font: normal 14px 'Pragmatica', sans-serif;}
 
-input[type="submit"], input[type="reset"], input[type="text"], input[type="email"], input[type="search"], input[type="password"], textarea {
+input[type="submit"], input[type="reset"], input[type="text"], input[type="tel"], input[type="url"], input[type="email"], input[type="search"], input[type="password"], textarea {
   -webkit-appearance: none;
   -moz-appearance: none;
 }
@@ -201,14 +201,43 @@ label.inp_btn_label .inp_btn {position:absolute; top: -1px; left: 0;}
 
 .select_custom {position:relative;}
 .select_custom select{width: 50%; position:absolute; top: 0; left: -20000px; opacity: 0; filter: alpha(opacity=0); }
-.select_custom .sel_val, .sel_val
-{background: #fff; height: 32px; padding: 0 35px 0 10px; border:1px solid #e5e5e5; border-top:1px solid #d9d9d9; box-shadow: inset 0 2px 0 #f2f2f2; border-radius: 5px; position:relative; cursor:pointer; z-index: 1; line-height: 1; }
 
-.select_custom .sel_val .mark{display: block; width: 12px; height: 7px; position:absolute; top: 13px; right: 10px;}
-.select_custom .sel_val .mark span{display: block; width: 12px; height: 7px; background: url('arr1.png') no-repeat -18px 0; }
+.select_custom .sel_val, .sel_val
+{background: #fff; height: 32px; padding: 0 35px 0 10px; border:1px solid #e5e5e5; border-top:1px solid #d9d9d9; box-shadow: inset 0 2px 0 #f2f2f2; border-radius: 5px; 
+	position:relative; cursor:pointer; z-index: 1; line-height: 1; 
+	appearance:none !important;
+	-webkit-appearance:none;
+    -moz-appearance:none;
+    outline:none;}
+
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    select {padding-right:18px}
+}
+
+label.combobox {position:relative}
+label.combobox:after {
+    content:'  ';
+    position:absolute;
+    pointer-events:none;
+    width: 12px; height: 7px;
+    right: 12px;
+    top: 7px;
+    background: url('arr1.png') no-repeat -18px 0;
+    overflow: hidden; zoom: 1;
+      z-index: 1;
+}
+
+label.select_custom_ext:after {
+	background-position: -18px -9px;
+}
+
+#p_search select.sel_val{ width: 240px;}
+
+//.select_custom .sel_val .mark{display: block; width: 12px; height: 7px; position:absolute; top: 13px; right: 10px;}
+//.select_custom .sel_val .mark span{display: block; width: 12px; height: 7px; background: url('arr1.png') no-repeat -18px 0; }
 
 .select_custom .sel_val .sv_text,
-
 {display: block; height: 32px; line-height: 32px; font-size: 14px; color: #000000; white-space:nowrap; overflow: hidden; zoom: 1; }
 
 .select_custom .down_list{display: none; position:absolute; top: 34px; left: 0; width: 100%; }
@@ -217,9 +246,10 @@ label.inp_btn_label .inp_btn {position:absolute; top: -1px; left: 0;}
 .select_custom .down_list ul li{margin:0 0 0 0; padding: 6px 10px 6px 10px; cursor:pointer; position:relative; font-size: 14px; color: #000; background:none;}
 .select_custom .down_list ul li:hover,
 .select_custom .down_list ul li.checked{background: #f2f2f2;}
-.select_custom_ext {z-index: 2;}
-.select_custom_ext .sel_val .mark span{background-position: -18px -9px;}
-.select_custom_ext .down_list{display: block; }
+
+//.select_custom_ext {z-index: 2;}
+//.select_custom_ext .sel_val .mark span{background-position: -18px -9px;}
+//.select_custom_ext .down_list{display: block; }
 
 .txt_tags {position:relative;}
 .txt_tags .txt{height: auto; min-height: 34px; padding: 0 0 0 0; overflow:hidden; cursor:pointer; position:relative; z-index: 1;}
@@ -407,8 +437,3 @@ table.tbl_fc_1 td.caption{width: 170px; }
 .clearfix:after {content: ' '; clear:both; display: block; width: 0; height: 0; overflow: hidden; font-size: 0;}
 
 .empty_f {height: 100px;}
-
-
-
-
-

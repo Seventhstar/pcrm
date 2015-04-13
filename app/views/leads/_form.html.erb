@@ -1,64 +1,44 @@
 <%= simple_form_for(@lead) do |f| %>
 <%= f.error_notification %>
 
-  <div class="col-6">
+	<div class="left">
+		<table class="tbl_fc tbl_fc_1">
 
-      <div class="input-group gr-btm_mg">
-        <span class="label-group-addon addon182">ФИО</span><%= f.input :fio, label: false %>
-      </div>
-      <div class="input-group gr-btm_mg">
-        <span class="label-group-addon addon182">Телефон</span><%= f.input :phone, label: false %>
-      </div>
-      <div class="input-group gr-btm_mg">
-        <span class="label-group-addon addon182">E-mail</span><%= f.input :email, label: false %>
-      </div>
-      <div class="input-group gr-btm_mg">
-        <span class="label-group-addon addon182">Информация о запросе</span><%= f.input :info, label: false %>
-      </div>
-      <div class="input-group gr-btm_mg">
-        <span class="label-group-addon addon182">Метраж</span><%= f.input :footage, label: false %>
-      </div>
-      <div class="input-group gr-btm_mg">
-        <span class="label-group-addon addon182">Адрес</span><%= f.input :address, label: false %>
-      </div>
-      <div class="input-group gr-btm_mg">
-        <span class="label-group-addon addon182">Дата для статуса</span><%= f.text_field :status_date, label: false %>
-      </div>
-      <div class="input-group gr-btm_mg">
-        <span class="label-group-addon addon182">Дата создания</span><%= f.text_field :start_date, label: false %>
-      </div>
-      <div class="input-group gr-btm_mg">
-        <span class="label-group-addon addon182">Канал</span><%= f.select 'channel_id', options_for_select(@channels.collect{ |u| [u.name, u.id] },@lead.channel_id) %>
-      </div>
-      <div class="input-group gr-btm_mg">
-        <span class="label-group-addon addon182">Статус</span><%= f.select 'status_id', options_for_select(@statuses.collect{ |u| [u.name, u.id] },@lead.status_id) %>
-      </div>
+		<tr><td class="caption">Фио:</td>
+		    <td><div class="inp_w"><%= f.input :fio, label: false %></div></td></tr>
+		<tr><td class="caption">Телефон:</td>
+		    <td><div class="inp_w"><%= f.input :phone, label: false, class: :txt %></div></td></tr>
+		<tr><td class="caption">E-Mail:</td>
+			<td><div class="inp_w"><%= f.input :email, label: false %></div></td></tr>    
+		<tr><td class="caption">Информация о запросе:</td>
+			<td><div class="inp_w"><%= f.input :info, label: false %></div></td></tr>
+		<tr><td class="caption">Метраж:</td>
+			<td><div class="inp_w"><%= f.input :footage, label: false %></div></td></tr>
+		<tr><td class="caption">Адрес объекта:</td>
+			<td><div class="inp_w"><%= f.input :address, label: false %></div></td></tr>
 
-    
+
+		<tr><td class="caption">Дата для статуса:</td>
+			<td><div class="inp_w"><%= f.text_field :status_date, label: false %></div></td></tr>
+
+		<tr><td class="caption">Дата создания:</td>
+			<td><div class="inp_w"><%= f.text_field :start_date, label: false %></div></td></tr>
+
+		<tr><td class="caption">Канал:</td>
+			<td><div class="inp_w"><%= f.select 'channel_id', options_for_select(@channels.collect{ |u| [u.name, u.id] },@lead.channel_id) %>
+		</div></td></tr>
+		<tr><td class="caption">Статус:</td>
+			<td><div class="inp_w"><%= f.select 'status_id', options_for_select(@statuses.collect{ |u| [u.name, u.id] },@lead.status_id) %>
+		</div></td></tr>
+
+
+		<tr><td class="caption"></td>
+			<td><%= link_to 'Отмена', leads_path, :class => "sub btn_a btn_reset"%>
+				<%= f.button :submit, value: 'Сохранить', :class => 'sub btn_a' %></td></tr>
+		</table>
+	</div>
+
+   
     <%= f.hidden_field :user_id %>
 
-  <div class="form-actions">
-    <%= link_to 'Отмена', leads_path, class: "btn btn-default btn-white" %> 
-    <%= f.button :submit, value: 'Сохранить', :class => 'btn btn-success' %>
-  </div>
 <% end %>
-
-
-  <div class="file_progress">
-    <div class="progress">
-      <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-        <span class="sr-only">20% Complete</span>
-      </div>
-    </div>
-  </div>
-
-<p><label for="file"> <a>+ Добавить файл</a> </label></p>
-  <input id="file" type="file" leadid="<%= @lead.id %>" name="file" data-url="/file" multiple="">
-
-
-<table class="files table table-striped"><tbody><%= render "lead_files" %></tbody></table>
-</div>
-
-
-
-

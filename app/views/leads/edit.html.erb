@@ -1,56 +1,28 @@
+<div class="hl hl_a bd">Редактирование лида</div>
+
+<div class="box_wrap box_wrap_1">
 <%= render 'form' %>
 
-<div class="col-6">
-  <div class="panel panel-primary">
-    <div class="panel-heading"><span class="glyphicon glyphicon-comment"></span> Комментарии </div>
-    <div class="panel-body">
-      <ul class="microposts">
-        <%= render 'comments' %>
-      </ul>
-    </div>         
+<div class="right">
+  <div class="comments_box">
+  <div class="hl">Комментарии:<span class="icon icon_chat"></span></div>
+  <div class="box_i">
 
-    <div class="panel-footer">
-      <div class="input-group">                    
-        <%= text_area "comment","comment", placeholder: "Новый комментарий...", class: "comment_area" %>
-        <span class="input-group-btn">
-          <span class="btn btn-warning btn-sm" id="btn-chat" leadid=<%= @lead.id %>> Отправить</span>
-        </span>
-      </div>
-
+  <div class="commentAdd_form">
+                    <form action="">
+                      <fieldset>
+                        <input type="text" class="txt" placeholder="Новый комментарий">
+                        <input type="submit" class="sub btn_a" value="Отправить">
+                      </fieldset>
+                    </form>
+                  </div>
     </div>
-  </div>
-
+    </div>
+    </div>
 </div>
 
-<div class="container">
- <div class="col-6">
+<div class="sep_3"></div>
 
-   <% if @lead.versions.count >1 %>
-   <h3>История изменений (<%= @lead.versions.count-1 %>)</h3>
+<%= render "lead_files" %>
 
-   <%- @lead.versions.reverse.each do |version| %>
-
-   <% if version[:event]!="create" && version != @lead.versions.first %> 
-      <p><b><%= find_version_author_name(version) %></b> <span class="helptext"><%= version.created_at.localtime.strftime("%d-%m-%Y %H:%M:%S") %></span>
-      <ul>
-      <% changeset = version.changeset %>
-      <% changeset.keys.each do |k| %>
-        
-          <% if k=="updated_at" %>
-          <% elsif k=="channel_id" %>
-             <li>Изменено поле <b><%= t(k) %></b> c «<%= channel_name(changeset[k][0]) %>» на «<%= channel_name(changeset[k][1]) %>»</li>
-          <% elsif k=="status_id" %>
-             <li>Изменено поле <b><%= t(k) %></b> c «<%= status_name(changeset[k][0]) %>» на «<%= status_name(changeset[k][1]) %>»</li>
-          <% else %>
-             <li>Изменено поле <b><%= t(k) %></b> c «<%= changeset[k][0] %>» на «<%= changeset[k][1] %>»</li>
-          <% end %>
-        
-      <% end %>
-    </ul> 
-  </p>    
-  <% end %>
-  <% end %>
-  <% end %>
-
- </div>
 </div>

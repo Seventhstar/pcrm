@@ -138,6 +138,19 @@ $("#mulitplefileuploader").uploadFile(settings);
       if (url!="/undefined") setLoc("options"+url);
   });*/
 
+  //var $select_custom = $select.parent();
+        $('.sel_val').click(function(){
+          if ($(this).hasClass('select_custom_ext')) {
+            $(this).removeClass('select_custom_ext');
+            $(this).parent().removeClass('select_custom_ext');
+          }
+          else {
+            $(this).addClass('select_custom_ext');
+            $(this).parent().addClass('select_custom_ext');
+          }
+        });
+
+
   $('.menu_sb li a').click(function(){ 
       $('.menu_sb li.active').removeClass("active", 150, "easeInQuint");
       $(this).parent().addClass("active");

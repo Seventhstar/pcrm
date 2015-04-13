@@ -6,9 +6,11 @@ $(document).ready ->
   #  $.get 'providers', $("#p_search").serialize(), null, 'script'
   $('#style').on 'change', ->
   	$.get 'providers', $("#p_search").serialize(), null, 'script'
-  $('#budget').chosen(width: '200px').on 'change', ->
+  #$('#budget').chosen(width: '200px').on 'change', ->
+  $('#budget').on 'change', ->
     $.get 'providers', $("#p_search").serialize(), null, 'script'
-  $('#goodstype').chosen(width: '200px').on 'change', ->
+  #$('#goodstype').chosen(width: '200px').on 'change', ->
+  $('#goodstype').on 'change', ->
     $.get 'providers', $("#p_search").serialize(), null, 'script'
     
   $('.chosen-select').chosen

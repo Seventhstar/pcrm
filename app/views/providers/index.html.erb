@@ -2,12 +2,19 @@
 <div class="left">
 <%= form_tag providers_path, :method => 'get', :id => "p_search" do %>
 
-<%= select_tag "style", content_tag(:option,'Стиль...',:value=>"")+options_from_collection_for_select(@styles, "id", "name"),
-    :class => "select_custom select sel_val" %>
+<label class="combobox">
+<%= select_tag "style", content_tag(:option,'Стиль...',:value=>"")+options_from_collection_for_select(@styles, "id", "name"),:class => "select_custom select sel_val" %>
+</label>
 
-<%= select_tag "budget", content_tag(:option,'Бюджет...',:value=>"")+options_from_collection_for_select(@budgets, "id", "name") %>
-<%= select_tag "goodstype", content_tag(:option,'Вид товара...',:value=>"")+options_from_collection_for_select(@goodstypes, "id", "name") %>
+<label class="combobox">
+<%= select_tag "budget", content_tag(:option,'Бюджет...',:value=>"")+options_from_collection_for_select(@budgets, "id", "name"),:class => "select_custom select sel_val" %> 
+</label>
+
+<label class="combobox">
+<%= select_tag "goodstype", content_tag(:option,'Вид товара...',:value=>"")+options_from_collection_for_select(@goodstypes, "id", "name"),:class => "select_custom select sel_val" %> 
+</label>
 <% end %>
+
 </div>
 
 <%= link_to 'Добавить поставщика', new_provider_path, class: "btn_a btn-add right" %>
