@@ -68,7 +68,7 @@ $(document).ready ->
         return
     return
 
-  $('.microposts').on 'click', 'span.glyphicon-remove', ->
+  $('.comments_box').on 'click', 'span.btn_remove', ->
     # alert('del');
     del = confirm('Действительно удалить?')
     if !del

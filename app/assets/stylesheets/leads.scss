@@ -20,6 +20,39 @@ td.right_icon  {
 }
 
 
+.btn_remove{
+	cursor: pointer;
+}
+
+.comments_list_a{
+  
+  width: 470px; 
+  //height: 295px;
+  //height: 290px;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/*::-webkit-scrollbar-track {
+    background:#FBFBFB;
+    box-shadow: 3px 3px 10px rgba(0,0,0,.25) inset;
+}*/
+
+::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 8px;
+    border:1px solid #ccc; //rgba(0,0,0,0.3);
+    //box-shadow: -3px -3px 6px rgba(66,137,224,1) inset,3px 3px 3px rgba(158,226,225,1) inset;
+}
+
+
+
+
+.box_i{
+//	height: 534px;
+}
 
 /*.only_actual, .subnav span{
 	min-width: 100px;

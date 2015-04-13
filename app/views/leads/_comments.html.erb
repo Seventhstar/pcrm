@@ -1,22 +1,43 @@
-<% if @comments != nil %>
- <% @comments.each do |leads_comment| %>
-      <li class="clearfix">
-      <div class="chat-body clearfix">
-      <span class="chat-img pull-left">
-      <%= image_tag avatar_url(leads_comment.user, 50) %>
-      </span>
-      <div class="header">
-        <strong class="primary-font"><%= leads_comment.user.name %></strong> 
-        <small class="pull-right text-muted">
-          <span class="glyphicon glyphicon-time"></span><%= leads_comment.created_at %>
-          <% if current_user== leads_comment.user || current_user.admin %>
-          <span class="glyphicon glyphicon-remove" leadcommentid=<%= leads_comment.id %>  leadid=<%= leads_comment.lead.id %> ></span>
-          <% end %>
-        </small>
-      </div>
-      <span leadid=<%= leads_comment.lead.id %>><%= simple_format(leads_comment.comment) %></span>
-      </div>
-      </li>
+  <div class="hl">Комментарии:<span class="icon icon_chat"></span></div>
+  <div class="box_i">
+   <div class="jspContainer">
+     <div class="jspPane">
 
- <% end %>
-<% end %>
+    <div class="comments_list_a">
+        <% if @comments != nil %>
+         <% @comments.each do |leads_comment| %>
+            <div class="item">
+              <div class="pic"><%= image_tag avatar_url(leads_comment.user, 50) %></div>
+              <div class="cont">
+                <div class="head">
+                  <div class="name"><%= leads_comment.user.name %></div>
+                  <div class="info"><a href="#"><%= leads_comment.user.email %></a></div>
+                  <div class="date"><%= leads_comment.created_at %> 
+                  
+                    <% if current_user== leads_comment.user || current_user.admin %>
+                       <span class="icon icon_remove_1 btn_remove" leadcommentid=<%= leads_comment.id %>  leadid=<%= leads_comment.lead.id %> ></span>
+                    <% end %>
+                    </div>
+                </div>
+              </div>
+              <div class="text">
+                <span leadid=<%= leads_comment.lead.id %>><%= simple_format(leads_comment.comment) %></span>
+              </div>
+           </div>
+         <% end %>
+        <% end %>
+     </div>
+    </div>
+  </div>
+  <div class="commentAdd_form">
+    <form action="">
+      <fieldset>
+        
+        <input type="text" class="txt" placeholder="Новый комментарий" id="comment_comment">
+         <span class="sub btn_a btn-sm" id="btn-chat" leadid=<%= @lead.id %>> Отправить</span>
+      </fieldset>
+    </form>
+  </div>
+</div>
+
+

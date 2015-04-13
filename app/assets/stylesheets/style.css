@@ -266,7 +266,13 @@ label.select_custom_ext:after {
 .txt_tags.extend {z-index: 2;}
 .txt_tags.extend .down_list {display: block; }
 
-.jspContainer{overflow: hidden; position: relative; }
+/*.jspContainer{overflow: hidden; position: relative; */
+.jspContainer{ position: relative; 
+width: 492px; 
+height: 295px;
+overflow-y: scroll;
+}
+}
 .jspPane{position: absolute; }
 .jspVerticalBar{position: absolute; top: 0; right: 0; width: 10px; height: 100%; }
 .jspHorizontalBar{position: absolute; bottom: 0; left: 0; width: 100%; height: 6px; }
@@ -383,8 +389,8 @@ table.tbl_fc_1 td.caption{width: 170px; }
 .comments_box .hl{margin: 6px 0 10px 0; font-weight: 500;}
 .comments_box .hl .icon{margin:0 0 0 10px;}
 .comments_box .box_i {border:1px solid #e5e5e5; padding: 20px 20px 20px 20px; border-radius: 5px;}
-.comments_box .comments_list_a {padding-right: 20px;}
-.comments_box .scrollPane_v {max-height: 295px; overflow:auto;}
+//.comments_box .comments_list_a {padding-right: 20px;}
+//.comments_box .scrollPane_v {max-height: 295px; overflow:auto;}
 .comments_box .commentAdd_form {margin: 25px 0 0 0; overflow:hidden;}
 .comments_box .commentAdd_form .txt {float:left; width: 370px; }
 .comments_box .commentAdd_form .sub {float:right;}

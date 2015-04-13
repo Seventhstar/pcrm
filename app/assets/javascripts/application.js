@@ -122,6 +122,8 @@ $("#mulitplefileuploader").uploadFile(settings);
   $("#lead_start_date").datepicker({format: "yyyy-mm-dd", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});
   $("#user_date_birth").datepicker({format: "yyyy-mm-dd", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});
 
+  $(".datepicker").datepicker({format: "yyyy-mm-dd", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});
+
   // дата по умолчанию для нового лида - сегодня
   if (!$("#lead_start_date").val()){
 	    $("#lead_start_date").val($.datepicker.formatDate('yy-mm-dd', new Date()));
@@ -173,11 +175,7 @@ $("#mulitplefileuploader").uploadFile(settings);
         dataType: 'JSON',  
         beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},         
         success: function(){
-
           $.get(url, null, null, "script");
-          
-
-          
       }
     });
     
@@ -191,7 +189,8 @@ $("#mulitplefileuploader").uploadFile(settings);
   //$('table.tleads ').tableSort({width: 1100px;});
 
   
-  $('span.btn-sm').click(function(){
+  //$('span.btn-sm').click(function(){
+    $('.comments_box').on('click', 'span.btn-sm', function(){
   	var comment = $("#comment_comment").val();
   	var lead_id = $(this).attr('leadid');
 

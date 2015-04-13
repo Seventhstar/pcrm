@@ -1,28 +1,19 @@
 <div class="hl hl_a bd">Редактирование лида</div>
 
 <div class="box_wrap box_wrap_1">
-<%= render 'form' %>
 
-<div class="right">
-  <div class="comments_box">
-  <div class="hl">Комментарии:<span class="icon icon_chat"></span></div>
-  <div class="box_i">
+ <%= render 'form' %>
 
-  <div class="commentAdd_form">
-                    <form action="">
-                      <fieldset>
-                        <input type="text" class="txt" placeholder="Новый комментарий">
-                        <input type="submit" class="sub btn_a" value="Отправить">
-                      </fieldset>
-                    </form>
-                  </div>
+  <div class="right">
+    <div class="comments_box">
+      <%= render "comments" %>
     </div>
-    </div>
-    </div>
+  </div>
+
 </div>
 
-<div class="sep_3"></div>
-
-<%= render "lead_files" %>
+  <div class="sep_3"></div>
+    <%= render "lead_files" %>
+  </div>
 
 </div>
