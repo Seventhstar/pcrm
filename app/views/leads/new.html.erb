@@ -27,18 +27,16 @@
 	<div class="right">
 		<table class="tbl_fc"><tbody>
 		<tr><td class="caption">Дата статуса:</td>
-			<td><div class="inp_w"><%= f.text_field :status_date, class: :txt %></div></td>	</tr>
+			<td><div class="inp_w"><%= f.text_field :status_date, class: "txt datepicker" %></div></td>	</tr>
 		<tr><td class="caption">Дата создания:</td>
-			<td><div class="inp_w"><%= f.text_field :start_date, class: :txt %></div></td></tr>
+			<td><div class="inp_w"><%= f.text_field :start_date, class: "txt datepicker" %></div></td></tr>
 		<tr><td class="caption">Канал:</td>
 			<td><div class="select_custom select"><%= f.select 'channel_id', options_for_select(@channels.collect{ |u| [u.name, u.id] }) %>
-					<div class="sel_val"><div class="sv_text"><span class="svt_i">Телефон...</span></div><div class="mark"><span></span></div></div><div class="down_list">
-					<div class="dl_i"><div class="dl_ii scrollPane_v"><ul><li class="checked">Телефон...</li><li>Телефон 1</li><li class="last">Телефон 2</li></ul>
-					</div></div></div></div>
+					
 			</td></tr>
 		<tr><td class="caption">Статус:</td>
-			<td><div class="select_custom select"><%= f.select 'status_id', options_for_select(@statuses.collect{ |u| [u.name, u.id] },@lead.status_id) %><div class="sel_val">
-				<div class="sv_text"><span class="svt_i">Дорого...</span></div><div class="mark"><span></span></div></div><div class="down_list"><div class="dl_i"><div class="dl_ii scrollPane_v"><ul><li class="checked">Дорого...</li><li>Дешево 1</li><li class="last">Средне 2</li></ul></div></div></div></div>
+			<td><div class="select_custom select"><%= f.select 'status_id', options_for_select(@statuses.collect{ |u| [u.name, u.id] },@lead.status_id) %>
+				
 				</td></tr>
 		<tr><td class="caption">Примечание:</td>
 			<td><div class="inp_w"><%= f.text_area :first_comment, class: :txt, label: false %></div></td></tr>

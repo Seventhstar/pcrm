@@ -12,15 +12,12 @@
 //
 //= require jquery
 //= require jquery-ui
-//= require jquery-ui/datepicker
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require bootstrap-tokenfield
 //= require bootstrap
 //= require chosen.jquery
 
-//= require bootstrap-datepicker/core
-//= require bootstrap-datepicker/locales/bootstrap-datepicker.ru.js
 //= require_tree .
 //= require jquery.fileupload
 
@@ -118,16 +115,16 @@ $("#mulitplefileuploader").uploadFile(settings);
 //alert(29);
 
   // форматы календарей
-  $("#lead_status_date").datepicker({format: "yyyy-mm-dd", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});
+  /*$("#lead_status_date").datepicker({format: "yyyy-mm-dd", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});
   $("#lead_start_date").datepicker({format: "yyyy-mm-dd", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});
-  $("#user_date_birth").datepicker({format: "yyyy-mm-dd", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});
+  $("#user_date_birth").datepicker({format: "yyyy-mm-dd", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});*/
 
-  $(".datepicker").datepicker({format: "yyyy-mm-dd", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});
+  //$(".datepicker").datepicker({format: "dd.mm.yyyy", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});
 
   // дата по умолчанию для нового лида - сегодня
   if (!$("#lead_start_date").val()){
-	    $("#lead_start_date").val($.datepicker.formatDate('yy-mm-dd', new Date()));
-      $("#lead_status_date").val($.datepicker.formatDate('yy-mm-dd', new Date()));
+	    $("#lead_start_date").val($.datepicker.formatDate('dd.mm.yy', new Date()));
+      $("#lead_status_date").val($.datepicker.formatDate('dd.mm.yy', new Date()));
   }
 
   //$('#lead_channel_id').chosen();

@@ -19,10 +19,10 @@
 
 
 		<tr><td class="caption">Дата для статуса:</td>
-			<td><div class="inp_w"><%= f.text_field :status_date, label: false, class: "txt datepicker hasDatepicker" %></div></td></tr>
+			<td><div class="inp_w"><%= f.text_field :status_date,:value => @lead.status_date.strftime("%d.%m.%Y"), label: false, class: "txt datepicker" %></div></td></tr>
 
 		<tr><td class="caption">Дата создания:</td>
-			<td><div class="inp_w"><%= f.text_field :start_date, label: false, class: "txt datepicker hasDatepicker" %></div></td></tr>
+			<td><div class="inp_w"><%= f.text_field :start_date, :value => @lead.start_date.strftime("%d.%m.%Y"), label: false, class: "txt datepicker" %></div></td></tr>
 
 		<tr><td class="caption">Канал:</td>
 			<td><div class="inp_w"><%= f.select 'channel_id', options_for_select(@channels.collect{ |u| [u.name, u.id] },@lead.channel_id) %>

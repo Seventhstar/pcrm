@@ -9,7 +9,7 @@ module UsersHelper
 
   def date_of_birth(user)
       if user.date_birth
-         user.date_birth.strftime("%Y-%m-%d")
+         user.date_birth.strftime("%d.%m.%Y")
       end
   end
 

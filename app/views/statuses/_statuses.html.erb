@@ -4,8 +4,7 @@
   <thead>
     <tr>
       <th>Статус</th>
-      <th class="center">Актуальный</th>
-      <th></th>
+      <th width="60px" class="center">Актуальный</th>
       <th class="edit_delete"></th>
     </tr>
   </thead>
@@ -14,15 +13,10 @@
     <% @statuses.each do |status| %>
       <tr >
         <td><%= status.name %></td>
-        <td class="center"><%= check_box_tag status.actual, status.actual, status.actual %></td>
-        <td></td>
+        <td class="state"><%= check_box_tag status.actual, status.actual, status.actual %></td>
         <%= edit_delete(status, status.leads.count )%>
-        
       </tr>
     <% end %>
-
-
-    
   </tbody>
 </table>
 </div>
