@@ -2,17 +2,16 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 $(document).ready ->
-  #$('#style').chosen().on 'change', ->
-  #  $.get 'providers', $("#p_search").serialize(), null, 'script'
-  $('#style').on 'change', ->
+
+  $('#style').chosen(width: '240px', disable_search: true).on 'change', ->
   	$.get 'providers', $("#p_search").serialize(), null, 'script'
-  #$('#budget').chosen(width: '200px').on 'change', ->
-  $('#budget').on 'change', ->
+
+
+  $('#budget').chosen(width: '240px', disable_search: true).on 'change', ->
     $.get 'providers', $("#p_search").serialize(), null, 'script'
-  #$('#goodstype').chosen(width: '200px').on 'change', ->
-  $('#goodstype').on 'change', ->
+  
+  $('#goodstype').chosen(width: '240px', disable_search: true).on 'change', ->
     $.get 'providers', $("#p_search").serialize(), null, 'script'
     
-  $('.chosen-select').chosen
-  	width: '348px'
-  	placeholder_text_multiple: 'Выберите...'
+  $('.chosen-select').chosen({width: '402px', display_selected_options: false, display_disabled_options:false,placeholder_text_multiple: 'Выберите...'})
+  	

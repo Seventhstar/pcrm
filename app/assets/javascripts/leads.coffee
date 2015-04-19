@@ -23,8 +23,8 @@
 
 $(document).ready ->
 
-  $('#lead_channel_id').chosen()
-  $('#lead_status_id').chosen()
+  $('#lead_channel_id').chosen(width: '402px', disable_search: 'true')
+  $('#lead_status_id').chosen(width: '402px', disable_search: 'true')
 
   $('#basic1').fileupload
     done: (e, data)->
@@ -103,6 +103,7 @@ $(document).ready ->
 
   $('.container').on 'click', 'span.sort-span', ->
     srt = $(this).attr('sort')
+    #//alert(srt)
     dir = $(this).attr('direction')
     actual = $('.only_actual').hasClass('active')
     search = $('.container #search').val()
@@ -113,13 +114,42 @@ $(document).ready ->
     else
       $('.sort-span').removeClass('active')
       $(this).addClass('active')
-    $.get 'leads', {
+
+      url = {
         only_actual: actual
         direction: dir
         sort: srt
         search: search
-    }, null, 'script'
+    }
+    $.get 'leads', url, null, 'script'
+    setLoc("leads?so"+url);
     return
+
+  $('.container').on 'click', 'span.subsort', ->
+    sort2 = $(this).attr('sort2')
+    alert(sort2)
+    dir2 = $(this).attr('dir2')
+    srt = $('span.active').attr('sort');
+
+    dir = $('span.active').attr('direction')
+    actual = $('.only_actual').hasClass('active')
+    search = $('.container #search').val()
+
+    url = {
+        only_actual: actual
+        sort: srt
+        direction: dir
+        sort_2: sort2
+        dir_2: dir2
+        search: search
+    }
+    
+
+    $.get 'leads', url, null, 'script'
+    
+    setLoc("leads?sort="+srt + "&direction="+dir+"&sort2="+sort2+"&dir2="+dir2);
+    return
+
 
   $('.container').on 'click', 'span.only_actual', ->
     srt = $('.subnav .active').attr('sort')

@@ -7,9 +7,24 @@ module UsersHelper
     image_tag(gravatar_url, alt: user.name, class: "gravatar")
   end
 
+
+
   def date_of_birth(user)
       if user.date_birth
-         user.date_birth.strftime("%Y-%m-%d")
+         a = content_tag("span",user.date_birth.strftime("%d.%m.%Y"))
+
+         $interval = $Date.now->diff(user.date_birth);
+          
+
+        d = content_tag :span,"через 3 дня"
+        e = content_tag("span","",{:class=>'icon icon_birthday'})
+         #c = content_tag("span","123",{:class=>'red message'})
+         c = content_tag :span, {:class => 'red message'} do
+            d + e
+             
+         end
+         
+	       a  + c
       end
   end
 

@@ -8,51 +8,24 @@
     <div class="comments_box">
       <%= render "comments" %>
     </div>
-
-    <div class="sep_2"></div>
-
-    <% if @lead.versions.count >1 %>
-
-      <div class="historyChange_box">
-        <div class="hl hl_a">История изменений <span class="grey">(<%= @lead.versions.count-1 %>)</span></div>
-        <div class="historyChange_list_a">
-
-
-           <%- @lead.versions.reverse.each do |version| %>
-           <% if version[:event]!="create" && version != @lead.versions.first %> 
-
-          <div class="item">
-            <div class="head"><%= find_version_author_name(version) %>, <span class="date"><%= version.created_at.localtime.strftime("%d-%m-%Y %H:%M:%S") %></span></div>
-            
-              <ul>
-                <% changeset = version.changeset %>
-                <% changeset.keys.each do |k| %>
-                  
-                    <% if k=="updated_at" %>
-                    <% elsif k=="channel_id" %>
-                       <li>Изменено поле <b><%= t(k) %></b> c «<%= channel_name(changeset[k][0]) %>» на «<%= channel_name(changeset[k][1]) %>»</li>
-                    <% elsif k=="status_id" %>
-                       <li>Изменено поле <b><%= t(k) %></b> c «<%= status_name(changeset[k][0]) %>» на «<%= status_name(changeset[k][1]) %>»</li>
-                    <% else %>
-                       <li>Изменено поле <b><%= t(k) %></b> c «<%= changeset[k][0] %>» на «<%= changeset[k][1] %>»</li>
-                    <% end %>
-                  
-                <% end %>
-              </ul> 
-            
-          </div>
-          <% end %>
-          <% end %>
-        </div>
-      </div>
-
-    <% end %>
   </div>
 
 </div>
 
   <div class="sep_3"></div>
-    <%= render "lead_files" %>
+
+  <div class="box_wide">
+  <div class="box_wrap box_wrap_1">
+
+    <div class="left">  
+      <%= render "lead_files" %>
+    </div>
+    <div class="right">
+      <%= render "history" %>    
+    </div>
+
+  </div>
+  </div>  
   </div>
 
 </div>

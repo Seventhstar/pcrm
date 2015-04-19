@@ -22,12 +22,12 @@
 
         <tr class="<%= class_for_lead(lead) %>" >      
         <td><%= lead.status_name %></td>
-        <td><%= new_date %></td>
+        <td><%= new_date.try('strftime',"%d.%m.%Y") %></td>
         <td><%= lead.fio %></td>
         <td><%= lead.phone %></td>
         <td><%= lead.info %></td>
         <td class="center"><%= lead.footage %></td>
-        <td class="center"><%= lead.start_date %></td>
+        <td class="center"><%= lead.start_date.try('strftime',"%d.%m.%Y") %></td>
         <%= edit_delete(lead)%>
       </tr>
 <% end %>

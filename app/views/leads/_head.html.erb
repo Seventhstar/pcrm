@@ -1,16 +1,16 @@
 
 <% if first_table == false %>
-             </tbody></table></div>
-          <% end %>
-          <% first_table = false %>
-          <div class="panel panel-default">
-          <div class="panel-heading table-heading head month"> <%= heading %></div>
-          <table class="tleads ">
-             <thead>
+</tbody></table></div>
+<% end %>
+<% first_table = false %>
+<div class="panel panel-default">
+  <div class="panel-heading table-heading head month"> <%= heading %></div>
+  <table class="tleads ">
+   <thead>
     <tr>
-      <th width="180px">Статус</th>
-      <th width="100px">Дата статуса</th>
-      <th width="140px">ФИО</th>
+    <th width="180px"><%= sortable_th(:status_id,'Статус') %> </th>
+      <th width="108px"><%= sortable_th(:status_date,'Дата статуса') %></th>
+      <th width="140px"><%= sortable_th(:fio,'ФИО') %></th>
       <th width="120px">Телефон</th>
       
       <th >Информация о запросе</th>
@@ -20,5 +20,5 @@
     </tr>
   </thead>
 
-          <tbody>
+  <tbody>
 

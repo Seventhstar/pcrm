@@ -2,15 +2,20 @@ class LeadsController < ApplicationController
   before_action :set_lead, only: [:show, :edit, :update, :destroy]
   before_action :logged_in_user
   helper_method :sort_column, :sort_direction, :only_actual
+  helper_method :sort_2, :dir_2
 
   # GET /leads
   # GET /leads.json
   def index
 
     if current_user.admin? 
-      @leads = Lead.all
+       if Rails.env.production?
+          @leads = Lead.select("*, date_trunc('month', status_date) AS month")
+       else
+          @leads = Lead.select("*, datetime(status_date, 'start of month') AS month")
+       end
     else
-      @leads = current_user.leads #.select("*, date_trunc('month', status_date) AS month")
+      @leads = current_user.leads.select("*, date_trunc('month', status_date) AS month")
     end
 
     if params[:search]
@@ -18,12 +23,27 @@ class LeadsController < ApplicationController
       @leads = @leads.where('LOWER(info) like LOWER(?)','%'+info+'%')
     end
 
+
+    puts "debug"
+    puts sort_2
+    puts "sort_column: " + sort_column
+    puts "dir_2: " + dir_2
+
+    sort_1 = sort_column=='status_date' ? 'month' : sort_column
+
+    
+
+
+    
     if !params[:only_actual] || params[:only_actual] == "true"
       @s_status_ids = Status.where(:actual => true) 
       @leads = @leads.where(:status => @s_status_ids)
     end
 
-    @leads = @leads.order(sort_column + " " + sort_direction + ", status_date desc ") #month desc
+    @leads = @leads.order(sort_1 + " " + sort_direction + ", "+ sort_2  + " " + dir_2) #month desc +" " + dir_2
+    #@leads = @leads.order(sort_column + " " + sort_direction + ", status_date desc" ) #month desc
+    #@leads.count
+        
 
     @channels = Channel.all
   end
@@ -110,8 +130,19 @@ class LeadsController < ApplicationController
     end
 
   def sort_column
-    Lead.column_names.include?(params[:sort]) ? params[:sort] : "status_date"
+    #Lead.column_names.include?(params[:sort]) ? params[:sort] : "status_date"
+    Lead.column_names.include?(params[:sort]) ? params[:sort] : "month"
   end
+
+  def sort_2
+    #Lead.column_names.include?(params[:sort]) ? params[:sort] : "status_date"
+    Lead.column_names.include?(params[:sort2]) ? params[:sort2] : "status_date"
+  end
+
+  def dir_2
+    %w[asc desc].include?(params[:dir2]) ? params[:dir2] : "desc"
+  end
+
 
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"

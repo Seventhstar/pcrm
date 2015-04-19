@@ -59,7 +59,7 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :leads, 'Проекты', '#', {:class => 'disabled'}
     primary.item :providers, 'Поставщики', providers_path
     
-    #primary.item :statuses,"", '/options/'+opt_page, :class => 'icon icon_options', if: -> { current_user.admin? } #do |sub_nav|
+    primary.item :statuses,"", '/options/'+opt_page, :class => 'li-right icon icon_options', if: -> { current_user.admin? } #do |sub_nav|
     
       #sub_nav.item :statuses, 'statuses', '/statuses'
 #      sub_nav.item :channels, 'channels', '/channels'
@@ -73,7 +73,7 @@ SimpleNavigation::Configuration.run do |navigation|
       # Add an item to the sub navigation (same params again)
      # sub_nav.item :key_2_1, 'name', url, options
     #end
-primary.dom_class = 'nav'
+    primary.dom_class = 'nav'
     # You can also specify a condition-proc that needs to be fullfilled to display an item.
     # Conditions are part of the options. They are evaluated in the context of the views,
     # thus you can use all the methods and vars you have available in the views.

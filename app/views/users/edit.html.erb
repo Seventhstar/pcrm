@@ -3,39 +3,32 @@
 
 <%= form_for(@user) do |f| %>
 
-<div class="row">
+<div class="box_wrap box_wrap_1">
+<div class="left">
+  <table class="tbl_fc tbl_fc_1">
+    <tr><td class="caption">Имя:</td>
+        <td><div class="inp_w"><%= f.text_field :name, class: 'form-control' %></div></td></tr>
+    <tr><td class="caption">Дата рождения:</td>
+        <td><div class="inp_w"><%= f.text_field :date_birth, :value => @user.date_birth.try('strftime',"%d.%m.%Y"), class: 'form-control datepicker' %></div></td></tr>
+    <tr><td class="caption">E-mail:</td>
+        <td><div class="inp_w"><%= f.text_field :email, class: 'form-control' %></div></td></tr>    
+    <tr><td class="caption">Пароль:</td>
+        <td><div class="inp_w"><%= f.password_field :password, class: 'form-control' %></div></td></tr>    
 
-  <div class="col-md-1">
+    <tr><td class="caption"></td>
+      <td><%= link_to 'Отмена', users_path, :class => "sub btn_a btn_reset"%>
+        <%= f.button 'Сохранить', :class => 'sub btn_a' %></td></tr>
+
+  </table>
+</div>
+<div class="right">
   <div class="gravatar_edit">
-      <%= gravatar_for @user %>
-      <a href="http://gravatar.com/emails" target=_blank>Изменить</a>
-    </div>
-  </div>
-
-  <div class="col-md-6">
-    
-      <%= render 'shared/error_messages', object: f.object %>
-
-      <%= f.label :name %>
-      <%= f.text_field :name, class: 'form-control' %>
-	    
-      <%= f.label :date_birth %>
-      <%= f.text_field :date_birth, class: 'form-control' %>
+     <%= gravatar_for @user %>
+     <a href="http://gravatar.com/emails" target=_blank>Изменить</a>
       
-      <%= f.label :email %>
-      <%= f.email_field :email, class: 'form-control' %>
-      
-      <%= f.label :password %>
-      <%= f.password_field :password, class: 'form-control' %>
-      
-      <%= f.label :password_confirmation, "Confirmation" %>
-      <%= f.password_field :password_confirmation, class: 'form-control' %>
-      
-      <%= f.submit "Сохранить", class: "btn btn-success" %>
-    
-    
-    
   </div>
 </div>
 
+
 <% end %>
+</div>

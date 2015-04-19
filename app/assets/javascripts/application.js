@@ -12,15 +12,12 @@
 //
 //= require jquery
 //= require jquery-ui
-//= require jquery-ui/datepicker
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require bootstrap-tokenfield
 //= require bootstrap
 //= require chosen.jquery
 
-//= require bootstrap-datepicker/core
-//= require bootstrap-datepicker/locales/bootstrap-datepicker.ru.js
 //= require_tree .
 //= require jquery.fileupload
 
@@ -35,6 +32,8 @@ function checkTime(i){
 	if (i<10){i="0" + i;}
 	return i;
 }
+
+
 
 function startTime(){
 	var tm=new Date();
@@ -56,11 +55,11 @@ var show_ajax_message = function(msg, type) {
     fade_flash();
 };
 
-  var fixEncode = function(loc) {
+var fixEncode = function(loc) {
     var h = loc.split('#');
     var l = h[0].split('?');
     return l[0] + (l[1] ? ('?' + ajx2q(q2ajx(l[1]))) : '') + (h[1] ? ('#' + h[1]) : '');
-  }
+  };
 
 
 
@@ -71,9 +70,7 @@ var show_ajax_message = function(msg, type) {
 
 $(function() {
 
-
-var setLoc = function(loc) {
-  //curLoc = fixEncode(loc.replace(/#(\/|!)?/, ''));
+/*var setLoc = function(loc) {
   navPrefix ="";
   curLoc = fixEncode(loc);
   var l = (location.toString().match(/#(.*)/) || {})[1] || '';
@@ -82,18 +79,18 @@ var setLoc = function(loc) {
   l = fixEncode(l);
   if (l.replace(/^(\/|!)/, '') != curLoc) {
       try {
-        //alert(l);
       history.pushState({}, '', '/' + curLoc);
       return;
     } catch(e) {}
   window.chHashFlag = true;
-  //location.hash = '#' + navPrefix + curLoc;
   location.hash = navPrefix + curLoc;
   if (withFrame && getLoc() != curLoc) {
   setFrameContent(curLoc);
   }
   }
-}
+};*/
+
+
   startTime();
 
 var settings = {
@@ -118,16 +115,16 @@ $("#mulitplefileuploader").uploadFile(settings);
 //alert(29);
 
   // форматы календарей
-  $("#lead_status_date").datepicker({format: "yyyy-mm-dd", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});
+  /*$("#lead_status_date").datepicker({format: "yyyy-mm-dd", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});
   $("#lead_start_date").datepicker({format: "yyyy-mm-dd", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});
-  $("#user_date_birth").datepicker({format: "yyyy-mm-dd", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});
+  $("#user_date_birth").datepicker({format: "yyyy-mm-dd", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});*/
 
-  $(".datepicker").datepicker({format: "yyyy-mm-dd", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});
+  //$(".datepicker").datepicker({format: "dd.mm.yyyy", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});
 
   // дата по умолчанию для нового лида - сегодня
   if (!$("#lead_start_date").val()){
-	    $("#lead_start_date").val($.datepicker.formatDate('yy-mm-dd', new Date()));
-      $("#lead_status_date").val($.datepicker.formatDate('yy-mm-dd', new Date()));
+	    $("#lead_start_date").val($.datepicker.formatDate('dd.mm.yy', new Date()));
+      $("#lead_status_date").val($.datepicker.formatDate('dd.mm.yy', new Date()));
   }
 
   //$('#lead_channel_id').chosen();
