@@ -127,7 +127,7 @@ $(document).ready ->
 
   $('.container').on 'click', 'span.subsort', ->
     sort2 = $(this).attr('sort2')
-    alert(sort2)
+    #alert(sort2)
     dir2 = $(this).attr('dir2')
     srt = $('span.active').attr('sort');
 
@@ -139,8 +139,8 @@ $(document).ready ->
         only_actual: actual
         sort: srt
         direction: dir
-        sort_2: sort2
-        dir_2: dir2
+        sort2: sort2
+        dir2: dir2
         search: search
     }
     

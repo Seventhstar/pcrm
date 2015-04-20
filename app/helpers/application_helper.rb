@@ -41,7 +41,8 @@ module ApplicationHelper
 
   def sortable_pil(column, title = nil)
     title ||= column.titleize
-    css_class = column == sort_column ? "active #{sort_direction}" : ""
+    sort_col = sort_column == 'month' ?  "status_date": sort_column
+    css_class = column == sort_col ? "active #{sort_direction}" : ""
     css_class.concat(" sort-span")
 
     #direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
@@ -51,7 +52,7 @@ module ApplicationHelper
     if (column == "month" && column != sort_column)
       direction = "desc"
     end  
-
+    
     add_text = ""
     #if column == sort_column 
     #   add_text = sort_direction == "asc" ? " ▲" : " ▼"
@@ -69,7 +70,8 @@ module ApplicationHelper
     css_class = column.to_s().include?(sort_2) ? "subsort current #{dir_2}" : "subsort"
 
     direction = column.to_s.include?(sort_2.to_s) && dir_2.include?("asc") ? "desc" : "asc"
-    hdir = column == sort_2 && direction == "asc" ? "desc" : "asc"
+    
+    hdir = css_class.include?("current") ? direction : direction.include?("asc") ? "desc" : "asc"
 
     a = content_tag :div, "",{class: "sortArrow"}
     b = content_tag :span,title
@@ -79,13 +81,13 @@ module ApplicationHelper
     end
 
     puts "params: "
-    puts sort_2
-    puts dir_2
+    puts "sort_2 #{sort_2}"
+    puts "dir_2 #{dir_2}"
     puts css_class 
 	
 	
 	#content_tag :span,{:class => css_class, :url => params.merge(:sort2 => column, :dir2 => direction, :page => nil)} do
-	content_tag :span,{:class => css_class, :sort2 => column, :dir2 => dir_2} do
+	content_tag :span,{:class => css_class, :sort2 => column, :dir2 => hdir} do
     #link_to params.merge(:sort2 => column, :dir2 => direction, :page => nil), {:class => css_class} do
        b + a
     end  
