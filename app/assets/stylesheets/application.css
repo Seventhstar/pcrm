@@ -21,7 +21,6 @@
 }
 
 
-
 .subnav{
 	display: block;
 	max-width: 1200px;
@@ -55,7 +54,11 @@
 
 .li-right, .right {
   float: right !important;
-  margin: 0 !important;
+  margin-top: 0 !important;
+}
+
+.li-right a img{
+  margin-top: 13px !important;
 }
 
 #p_search {
@@ -92,3 +95,6 @@ li.disabled a{
 }
 
 
+tr.nonactual td{
+  color: #ccc;
+}

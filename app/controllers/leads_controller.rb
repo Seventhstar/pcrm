@@ -4,6 +4,9 @@ class LeadsController < ApplicationController
   helper_method :sort_column, :sort_direction, :only_actual
   helper_method :sort_2, :dir_2
 
+  include LeadsHelper
+  #before_action :store_location
+
   # GET /leads
   # GET /leads.json
   def index
@@ -23,27 +26,15 @@ class LeadsController < ApplicationController
       @leads = @leads.where('LOWER(info) like LOWER(?)','%'+info+'%')
     end
 
-
-    puts "debug"
-    puts sort_2
-    puts "sort_column: " + sort_column
-    puts "dir_2: " + dir_2
-
     sort_1 = sort_column=='status_date' ? 'month' : sort_column
-
-    
-
-
-    
     if !params[:only_actual] || params[:only_actual] == "true"
       @s_status_ids = Status.where(:actual => true) 
       @leads = @leads.where(:status => @s_status_ids)
     end
 
     @leads = @leads.order(sort_1 + " " + sort_direction + ", "+ sort_2  + " " + dir_2) #month desc +" " + dir_2
-    #@leads = @leads.order(sort_column + " " + sort_direction + ", status_date desc" ) #month desc
-    #@leads.count
-        
+    #session[:last_leads_page] = request.url || leads_url    
+    store_leads_path
 
     @channels = Channel.all
   end
@@ -99,7 +90,8 @@ class LeadsController < ApplicationController
   def update
     respond_to do |format|
       if @lead.update(lead_params)
-        format.html { redirect_to leads_url, notice: 'Лид успешно обновлен.' }
+        format.html { redirect_to leads_page_url, notice: 'Лид успешно обновлен.' }
+        format.html { redirect_back_or leads_url }
         format.json { render :show, status: :ok, location: @lead }
       else
         format.html { render :edit }

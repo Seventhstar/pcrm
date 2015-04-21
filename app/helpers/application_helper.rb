@@ -45,21 +45,13 @@ module ApplicationHelper
     css_class = column == sort_col ? "active #{sort_direction}" : ""
     css_class.concat(" sort-span")
 
-    #direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
     direction = column == sort_column && sort_direction
-    #puts direction
-    #if (column == "status_date" && column != sort_column)
     if (column == "month" && column != sort_column)
       direction = "desc"
     end  
     
-    add_text = ""
-    #if column == sort_column 
-    #   add_text = sort_direction == "asc" ? " ▲" : " ▼"
-    #end
-    #direction = "asc"
-    #link_to title, params.merge(:sort => column, :direction => direction, :page => nil) , {:class => css_class}
-    content_tag :span, title + add_text,{ :class => css_class, :sort => column, :direction => direction } 
+
+    content_tag :span, title,{ :class => css_class, :sort => column, :direction => direction } 
   end
 
 
@@ -69,26 +61,10 @@ module ApplicationHelper
     title ||= column.titleize
     css_class = column.to_s().include?(sort_2) ? "subsort current #{dir_2}" : "subsort"
 
-    direction = column.to_s.include?(sort_2.to_s) && dir_2.include?("asc") ? "desc" : "asc"
-    
-    hdir = css_class.include?("current") ? direction : direction.include?("asc") ? "desc" : "asc"
-
     a = content_tag :div, "",{class: "sortArrow"}
     b = content_tag :span,title
 
-    if not params.nil?
-       params.delete("_")
-    end
-
-    puts "params: "
-    puts "sort_2 #{sort_2}"
-    puts "dir_2 #{dir_2}"
-    puts css_class 
-	
-	
-	#content_tag :span,{:class => css_class, :url => params.merge(:sort2 => column, :dir2 => direction, :page => nil)} do
-	content_tag :span,{:class => css_class, :sort2 => column, :dir2 => hdir} do
-    #link_to params.merge(:sort2 => column, :dir2 => direction, :page => nil), {:class => css_class} do
+    content_tag :span,{:class => css_class, :sort2 => column, :dir2 => dir_2} do
        b + a
     end  
 
@@ -102,15 +78,6 @@ module ApplicationHelper
 
     direction = column.to_s.include?(sort_2.to_s) && dir_2.include?("asc") ? "desc" : "asc"
     hdir = column == sort_2 && direction == "asc" ? "desc" : "asc"
-
-	puts "direction: " + direction
-    puts "dir_2: "+ dir_2.class.to_s + " " +dir_2+" " + "desc".class.to_s + " desc"
-    puts "res" + dir_2.include?("desc").to_s
-    puts column
-    puts column.to_s.include?(sort_2.to_s)
-    puts sort_2
-
-    #s
 
     a = content_tag :div, "",{class: "sortArrow"}
     b = content_tag :span,title

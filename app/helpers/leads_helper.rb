@@ -22,4 +22,13 @@ module LeadsHelper
    	end
  end 
 
+ def leads_page_url
+    session[:last_leads_page] || leads_url
+ end
+ 
+ def store_leads_path
+    session[:last_leads_page] = request.url || leads_url if request.get?
+ end
+
+
 end

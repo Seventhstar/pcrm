@@ -82,7 +82,7 @@ a:hover .icon_user, .active .icon_user {background-position:-18px -18px; }
 .user_h .logout .icon{margin:0 7px 0 0;}
 
 .menu_main {height: 44px; background: #f1f1f1 url('bg1_1.png') no-repeat 0 0; border-radius: 5px; margin:0 0 0 146px; position:relative;}
-.menu_main ul{margin:0 50px 0 0; padding: 0 0 0 0; list-style:none; overflow:hidden;}
+.menu_main ul{margin:0 0 0 0; padding: 0 0 0 0; list-style:none; overflow:hidden;}
 .menu_main ul li{margin:0 0 0 0; padding: 0 0 0 0; background:none; float:left;}
 .menu_main ul li a{display: inline-block; font-size: 15px; color: #000; text-decoration:none;}
 .menu_main ul li a {display: inline-block; height: 44px; line-height: 44px; background: url('bg1_2.png') no-repeat 100% -100px; padding: 0 14px 0 14px; }
@@ -96,7 +96,13 @@ li.icon_options a {display: inline-block; background: url('pict0.png') no-repeat
 vertical-align:middle; position:relative;
 background-position:-34px 0 !important; width: 16px; height: 16px;}
 
-.menu_main li.btn_options{ float: right !important; }
+.options{
+  overflow: auto;
+  border-radius: 0 5px 5px 0;
+  margin-top: 1px !important;
+}
+
+/*.menu_main li.btn_options{ float: right !important; }
 .menu_main .btn_options {
   position:absolute; 
   float: right;
@@ -109,7 +115,7 @@ background-position:-34px 0 !important; width: 16px; height: 16px;}
  }
  .menu_main .btn_options span{
  //   padding: 12px;
- }
+ }*/
 
 
 .btn_call_a {display: block; width: 85px; height: 85px; background: url('pict_call.png') no-repeat 0 0; position:relative;}
@@ -368,7 +374,7 @@ td.state{
 .menu_c ul li.active a,
 .subnav span.active, 
 .subnav span:hover{background: #6acc00; border-color:#6acc00; padding-left: 20px; padding-right: 20px; color: #fff; border-left: 0; border-right: 0;}
-.subnav span{margin:0 10px 0 0; float: left;}
+.subnav span:not(.li-right){margin:0 10px 0 0; float: left;}
 
 
 .history_box {}

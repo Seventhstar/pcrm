@@ -54,19 +54,20 @@ SimpleNavigation::Configuration.run do |navigation|
     #                            when the item should be highlighted, you can set a regexp which is matched
     #                            against the current URI.  You may also use a proc, or the symbol <tt>:subpath</tt>.
     #
-    primary.item :leads, 'Лиды', leads_path
+#    flash[:success] =  request.url == root_url
+    primary.item :leads, 'Лиды', leads_path, {:class => request.url==root_url ? "selected active":"" }
     primary.item :leads, 'Тарифы', '#', {:class => 'disabled'}
     primary.item :leads, 'Проекты', '#', {:class => 'disabled'}
     primary.item :providers, 'Поставщики', providers_path
     
-    primary.item :statuses,"", '/options/'+opt_page, :class => 'li-right icon icon_options', if: -> { current_user.admin? } #do |sub_nav|
+    primary.item :statuses,image_tag('options.png'), '/options/'+opt_page, :class => 'li-right options', if: -> { current_user.admin? } #do |sub_nav|
     
       #sub_nav.item :statuses, 'statuses', '/statuses'
 #      sub_nav.item :channels, 'channels', '/channels'
  #     sub_nav.item :users, 'users', '/users', if: -> { current_user.admin? }
 
   #  end
-    primary.item :develops, image_tag('089.png'), develops_path, :class => 'li-right', if: -> { current_user.admin? }
+    primary.item :develops, image_tag('089.png'), develops_path, :class => 'li-right develops', if: -> { current_user.admin? }
 
     # Add an item which has a sub navigation (same params, but with block)
     #primary.item :key_2, 'name', url, options do |sub_nav|
