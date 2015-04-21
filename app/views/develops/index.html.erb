@@ -1,10 +1,11 @@
-<h3>Описание, выполнение и проверка разработок</h3>
+<div class="hl hl_a bd">Описание, выполнение и проверка разработок</div>
 
-<div class="container">
-<%= form_tag develops_path, :method => 'get', :id => "develops_search" do %>
+<div class="items_box_head">
+ <%= form_tag develops_path, :method => 'get', :id => "develops_search" do %>
   <div class="input-group left"> 
-    <%= text_field_tag :search, params[:search], :class => "search_area" %>
+    <%= text_field_tag :search, params[:search], :class => "search_area txt" %>
   </div>
+
 <div class="btn-group btn-group-xs right" data-toggle="buttons">
   <label class="<%= " #{switch_active "check"} "%>" show="check">
     <input type="radio" name="options" id="dev_check1" autocomplete="off" checked> К проверке
@@ -17,12 +18,10 @@
   </label>
 </div>
 <% end %>
+
 </div>
-</br>
 
-<div id="develops_list"><%= render 'develops' %></div>
-
-
+<div id="develops_list" class="develops"><%= render 'develops' %></div>
 
 <br>
 

@@ -7,6 +7,9 @@ class StatusesController < ApplicationController
   def index
     @statuses = Status.all
     @status = Status.new
+
+    @items  = Status.order(:name)  
+    @item = Status.new
   end
 
   # GET /statuses/1

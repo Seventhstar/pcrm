@@ -1,12 +1,10 @@
 <div class="panel panel-default">
-
-<table class="table table-striped">
+<table class="table tleads">
   <thead>
     <tr>
-      <th>Что нужно сделать?
-</th>
-      <th width="60px" class="center">Coder</th>
-      <th width="60px" class="center">Boss</th>
+      <th>Что нужно сделать?</th>
+      <th width="60px" class="center">Выполнено</th>
+      <th width="60px" class="center">Проверено</th>
       <th class="edit_delete"></th>
 </div>
 
@@ -18,8 +16,8 @@
     <% @develops.each do |develop| %>
       <tr>
         <td><%= develop.name %></td>
-        <td><span class="check_img <%= develop.coder ? "checked" :"" %>" developid="<%=develop.id%>" chk="coder"></span></td>
-        <td><span class="check_img <%= develop.boss ? "checked" :"" %>" developid="<%=develop.id%>" chk="boss"></span></td>
+        <td class="state"><span class="check_img <%= develop.coder ? "checked" :"" %>" developid="<%=develop.id%>" chk="coder"></span></td>
+        <td class="state"><span class="check_img <%= develop.boss ? "checked" :"" %>" developid="<%=develop.id%>" chk="boss"></span></td>
         <%= edit_delete(develop) %>
       </tr>
     <% end %>

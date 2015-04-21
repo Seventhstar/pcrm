@@ -46,6 +46,7 @@ Rails.application.routes.draw do
   post "ajax/del_file"
   post "ajax/dev_check" 
   post "ajax/user_upd" 
+  post "ajax/status_check" 
 
   post "channels/new"
 

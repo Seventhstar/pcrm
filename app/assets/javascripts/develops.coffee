@@ -3,16 +3,17 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 @updateDev = ->
+  #alert($('.btn-group .btn.active').attr('show'));    
   $.get 'develops/', {
-    'search': $('#search').val()
-    'show': $('.active').attr('show')
+    'search': $('#search').val(),
+    'show': $('.btn-group .btn.active').attr('show')
   }, null, 'script'
   return
 
 # меняем отметки coder и boss непосредственно в index
 $(document).ready ->
-  $('#develops_list').on 'click', 'span.check_img', ->
-    #alert(228);
+  $('.develops').on 'click', 'span.check_img', ->
+    #alert(228)
     if $(this).hasClass('checked')
       $(this).removeClass 'checked'
       checked = false
@@ -21,6 +22,7 @@ $(document).ready ->
       $(this).addClass 'checked'
     dev_id = $(this).attr('developid')
     chk = $(this).attr('chk')
+    
     $.ajax
       url: '/ajax/dev_check'
       data:
@@ -34,6 +36,7 @@ $(document).ready ->
       success: ->
         $(this).addClass 'done'
         return
+    #alert($('.active').attr('show'));    
     return
 
   $('#develops_search .btn').click ->

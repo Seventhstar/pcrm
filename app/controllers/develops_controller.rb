@@ -10,6 +10,8 @@ class DevelopsController < ApplicationController
 
     view = show_dev
     
+    puts "show_dev: " + show_dev
+
     case view
     when "check"
       @develops = @develops.where(:boss => false, :coder =>true)      

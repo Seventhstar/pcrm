@@ -161,5 +161,39 @@ module ApplicationHelper
       end
   end
 
+  def list_header( cls )
+  case cls
+    when "Style"
+      "Список стилей"
+    when "Budget"
+      "Список бюджетов"
+    when "Goodstype"
+      "Список видов товаров"
+    when "Channel"
+      "Список каналов"
+    when "Status"
+      "Список статусов"    
+    else
+      cls
+    end
+  end
+
+  def new_item_header( cls )
+  case cls
+    when "Style"
+      "Новый стиль"
+    when "Budget"
+      "Новый бюджет"
+    when "Goodstype"
+      "Новый вид товаров"
+    when "Channel"
+      "Новый канал"
+    when "Status"
+      "Новый статус"    
+    else
+      cls
+    end
+  end
+
 
 end

@@ -65,6 +65,16 @@ class AjaxController < ApplicationController
    render :nothing => true
   end
 
+  def status_check
+   if params[:status_id]
+      develop = Status.find(params[:status_id])
+      develop.actual = params[:checked]
+      develop.save  
+   end
+   render :nothing => true
+  end
+
+
   def user_upd
    if params[:user_id]
       u = User.find(params[:user_id])

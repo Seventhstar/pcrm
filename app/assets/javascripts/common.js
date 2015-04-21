@@ -53,7 +53,7 @@ $(document).ready(function(){
 		box_cent();
 	})
 
-	inpBtns_init($('input[type="radio"], input[type="checkbox"]'));
+	// inpBtns_init($('input[type="radio"], input[type="checkbox"]'));
 	
 	$('.select').select();
 	
@@ -131,30 +131,7 @@ $(document).ready(function(){
 
 })
 
-	function inpBtns_init($input){
-		$input.each(function(){
-			if ($(this).attr('type')=='radio') {
-				if (!$(this).parents('.inp_btn').length) {
-					$(this).wrap('<div class="inp_btn radio"></div>')
-				}
-				if ($(this).prop('checked')) {
-					var $inp_btn = $(this).parents('.inp_btn');
-					$('.inp_btn', $inp_btns).removeClass('active');
-					$inp_btn.addClass('active');
-				}
-			}
-			else {
-				if (!$(this).parents('.inp_btn').length) {
-					$(this).wrap('<div class="inp_btn checkbox"></div>')
-				}
-				if ($(this).prop('checked')) {
-					var $inp_btn = $(this).parents('.inp_btn');
-					$inp_btn.addClass('active');
-				}
-			}
-		})
-	}
-	
+
 	// Custom scroll Init
     function scrollPane_v_init($scrollPane, dragMinHeight, dragMaxHeight){
         if (!dragMinHeight) {dragMinHeight = 50;}

@@ -16,7 +16,8 @@ class OptionsController < ApplicationController
       @items = Channel.order(:name)
       @item  = Channel.new
     when "statuses"
-      puts "It's 6"
+      @items  = Status.order(:name)  
+      @item = Status.new
     when "budgets"
       @items = Budget.order(:name)  
       @item  = Budget.new
