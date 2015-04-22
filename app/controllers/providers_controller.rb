@@ -9,7 +9,7 @@ class ProvidersController < ApplicationController
     @budgets = Budget.order(:name)
     @goodstypes = Goodstype.order(:name)
 
-    all_ids = Provider.ids
+    all_ids = Provider.order(:name).ids
     sp = all_ids
     bp = all_ids
     gtp = all_ids
@@ -32,7 +32,7 @@ class ProvidersController < ApplicationController
     #  @providers = @p.order(sort_column + " " + sort_direction) 
     #else 
       
-    @providers = Provider.find(ids)
+    @providers = Provider.where(:id => ids).order(:name) # find(ids, :order => :name)
     #end
     #
     

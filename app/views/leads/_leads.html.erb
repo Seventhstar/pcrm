@@ -7,10 +7,13 @@
 
 
 <% @leads.each do |lead| %>
-    <% new_date = lead.status_date? ? lead.status_date : Date.today %>
-    <% if cur_month != new_date.month && (params[:sort] == "status_date" || params[:sort] == nil)%>
+    <% new_date = lead.start_date? ? lead.start_date : Date.today %>
+      <% if cur_month != new_date.month && (params[:sort] == "start_date" || params[:sort] == nil)%>
           <% cur_month = new_date.month %>
           <%= render "head", {:first_table => first_table, :heading => t(new_date.strftime("%B"))+" "+new_date.strftime("%Y") } %>
+      <% elsif cur_month != lead.status_date.strftime("%B") && (params[:sort] == "status_date" || params[:sort] == nil)%>
+          <% cur_month = lead.status_date.strftime("%B") %>
+          <%= render "head", {:first_table => first_table, :heading => t(lead.status_date.strftime("%B"))+" "+lead.status_date.strftime("%Y") } %>    
       <% elsif cur_user != lead.user.name && (params[:sort] == "user_id")%>
         <% cur_user = lead.user.name %>
           <%= render "head", {:first_table => first_table, :heading => t(lead.user.name) } %>
@@ -22,7 +25,7 @@
 
         <tr class="<%= class_for_lead(lead) %>" >      
         <td><%= lead.status_name %></td>
-        <td><%= new_date.try('strftime',"%d.%m.%Y") %></td>
+        <td><%= lead.status_date.try('strftime',"%d.%m.%Y") %></td>
         <td><%= lead.fio %></td>
         <td><%= lead.phone %></td>
         <td><%= lead.info %></td>

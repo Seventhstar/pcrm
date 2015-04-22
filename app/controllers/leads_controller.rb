@@ -13,12 +13,12 @@ class LeadsController < ApplicationController
 
     if current_user.admin? 
        if Rails.env.production?
-          @leads = Lead.select("*, date_trunc('month', status_date) AS month")
+          @leads = Lead.select("*, date_trunc('month', start_date) AS month")
        else
-          @leads = Lead.select("*, datetime(status_date, 'start of month') AS month")
+          @leads = Lead.select("*, datetime(start_date, 'start of month') AS month")
        end
     else
-      @leads = current_user.leads.select("*, date_trunc('month', status_date) AS month")
+      @leads = current_user.leads.select("*, date_trunc('month', start_date) AS month")
     end
 
     if params[:search]
@@ -26,7 +26,7 @@ class LeadsController < ApplicationController
       @leads = @leads.where('LOWER(info) like LOWER(?)','%'+info+'%')
     end
 
-    sort_1 = sort_column=='status_date' ? 'month' : sort_column
+    sort_1 = sort_column=='start_date' ? 'month' : sort_column
     if !params[:only_actual] || params[:only_actual] == "true"
       @s_status_ids = Status.where(:actual => true) 
       @leads = @leads.where(:status => @s_status_ids)
@@ -35,6 +35,9 @@ class LeadsController < ApplicationController
     @leads = @leads.order(sort_1 + " " + sort_direction + ", "+ sort_2  + " " + dir_2) #month desc +" " + dir_2
     #session[:last_leads_page] = request.url || leads_url    
     store_leads_path
+    puts "sort"
+    puts sort_1
+    
 
     @channels = Channel.all
   end
@@ -128,7 +131,7 @@ class LeadsController < ApplicationController
 
   def sort_2
     #Lead.column_names.include?(params[:sort]) ? params[:sort] : "status_date"
-    Lead.column_names.include?(params[:sort2]) ? params[:sort2] : "status_date"
+    Lead.column_names.include?(params[:sort2]) ? params[:sort2] : "start_date"
   end
 
   def dir_2

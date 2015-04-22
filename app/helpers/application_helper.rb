@@ -41,7 +41,7 @@ module ApplicationHelper
 
   def sortable_pil(column, title = nil)
     title ||= column.titleize
-    sort_col = sort_column == 'month' ?  "status_date": sort_column
+    sort_col = sort_column == 'month' ?  "start_date": sort_column
     css_class = column == sort_col ? "active #{sort_direction}" : ""
     css_class.concat(" sort-span")
 

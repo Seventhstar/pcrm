@@ -26,17 +26,15 @@
 
 	<div class="right">
 		<table class="tbl_fc"><tbody>
-		<tr><td class="caption">Дата статуса:</td>
-			<td><div class="inp_w"><%= f.text_field :status_date, class: "txt datepicker" %></div></td>	</tr>
 		<tr><td class="caption">Дата создания:</td>
 			<td><div class="inp_w"><%= f.text_field :start_date, class: "txt datepicker" %></div></td></tr>
 		<tr><td class="caption">Канал:</td>
 			<td><div class="select_custom select"><%= f.select 'channel_id', options_for_select(@channels.collect{ |u| [u.name, u.id] }) %>
-					
 			</td></tr>
 		<tr><td class="caption">Статус:</td>
 			<td><div class="select_custom select"><%= f.select 'status_id', options_for_select(@statuses.collect{ |u| [u.name, u.id] },@lead.status_id) %>
-				
+		<tr><td class="caption">Дата статуса:</td>
+			<td><div class="inp_w"><%= f.text_field :status_date, class: "txt datepicker" %></div></td>	</tr>		
 				</td></tr>
 		<tr><td class="caption">Примечание:</td>
 			<td><div class="inp_w"><%= f.text_area :first_comment, class: :txt, label: false %></div></td></tr>

@@ -11,8 +11,8 @@
               <div class="cont">
                 <div class="head">
                   <div class="name"><%= leads_comment.user.name %></div>
-                  <div class="info"><a href="#"><%= leads_comment.user.email %></a></div>
-                  <div class="date"><%= leads_comment.created_at %> 
+                  <div class="info"><%= leads_comment.created_at.strftime("%d.%m.%Y %H:%M:%S") %></div>
+                  <div class="date">
                   
                     <% if current_user== leads_comment.user || current_user.admin %>
                        <span class="icon icon_remove_1 btn_remove" leadcommentid=<%= leads_comment.id %>  leadid=<%= leads_comment.lead.id %> ></span>

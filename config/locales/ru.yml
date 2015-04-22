@@ -33,7 +33,7 @@ ru:
 
   date:
     formats:
-      default: "%d.%m.%Y"
+      default: "%d.%m.%Y-"
       short: "%b %d"
       long: "%B %d, %Y"
 
@@ -73,7 +73,7 @@ ru:
     - пятница
     - суббота
     formats:
-      default: ! '%d.%m.%Y'
+      default: ! '%d.%m.%Y-'
       long: ! '%-d %B %Y'
       short: ! '%-d %b'
     month_names:

@@ -172,6 +172,8 @@ background-position:-34px 0 !important; width: 16px; height: 16px;}
 .tbl_a table tr:nth-child(even) td, table.tleads tr:nth-child(even) td {background: #fafafa;}
 .tbl_a table tr:hover, table.tleads tr:hover td{ background-color: #f5f5f5;}
 
+table td{font-size: 13px;}
+
 .tbl_a table tbody tr:last-child td {border-bottom: 0;}
 .tbl_a table tbody tr:last-child td:first-child {border-radius: 0 0 0 5px;}
 .tbl_a table tbody tr:last-child td:last-child {border-radius: 0 0 5px 0;}
@@ -442,7 +444,7 @@ table.tbl_fc_1 td.caption{width: 170px; }
 .comments_list_a .item .pic img{vertical-align:top; width: 50px; border-radius: 50%;}
 .comments_list_a .item .cont{}
 .comments_list_a .item .cont .head{padding: 6px 0 0 0; margin:0 0 12px 0; position:relative;}
-.comments_list_a .item .cont .head .info{}
+.comments_list_a .item .cont .head .info{ font-size: 12px; color: #aaa; }
 .comments_list_a .item .cont .head .info a{color: #7d7d7d; }
 .comments_list_a .item .cont .head .info a:hover{color: #000; }
 .comments_list_a .item .cont .name{}

@@ -1,7 +1,8 @@
 <div class="subnav">
-	<%= sortable_pil "status_date", "По месяцам" %>
+	<%= sortable_pil "start_date", "По месяцам" %>
 	<%= sortable_pil "user_id", "По сотрудникам" %>
 	<%= sortable_pil "status_id", "По статусам" %>
+	<%= sortable_pil "status_date", "По приоритетам" %>
 
 	<%= form_tag leads_path, :method => 'get', :id => "leads_search" do %>	
   	<div class="navsearch"> 
