@@ -152,6 +152,3 @@ $(document).ready ->
       actual = true
     lead_query({only_actual:actual})
     return
-
-  
-    

@@ -11,13 +11,9 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery-ui
-//= require jquery_ujs
-//= require twitter/bootstrap
+//= require jquery-ui/datepicker
 //= require bootstrap-tokenfield
-//= require bootstrap
 //= require chosen.jquery
-
 //= require_tree .
 //= require jquery.fileupload
 

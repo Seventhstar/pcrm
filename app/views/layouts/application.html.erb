@@ -55,7 +55,10 @@
 
 <div class="container">
   <div class="flash">
-      <%= bootstrap_flash %>
+      <% flash.each do |name, msg| %>
+        <%= content_tag :div, msg, :id => "flash_#{name}", :class => "fade flash_#{name}" %>
+      <% end %>
+
   </div>
 </div>
 
