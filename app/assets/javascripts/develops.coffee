@@ -3,15 +3,15 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 @updateDev = ->
-  #alert($('.btn-group .btn.active').attr('show'));    
-  $.get 'develops/', {
-    'search': $('#search').val(),
-    'show': $('.btn-group .btn.active').attr('show')
-  }, null, 'script'
+  param = {'search': $('#search').val(), 'show': $('.btn-group .btn.active').attr('show')}
+
+  $.get 'develops/', param, null, 'script'
+  setLoc("develops?"+ajx2q(param));
   return
 
 # меняем отметки coder и boss непосредственно в index
 $(document).ready ->
+  $('#develop_project_id').chosen(width: '402px', disable_search: 'true')
   $('.develops').on 'click', 'span.check_img', ->
     #alert(228)
     if $(this).hasClass('checked')
@@ -41,6 +41,13 @@ $(document).ready ->
 
   $('#develops_search .btn').click ->
     setTimeout 'updateDev()', 400
+    return
+
+  $('#develops_search').on 'click', '.btn-group input', ->
+    #alert(28)
+    $('.btn-group label.active').removeClass 'active'
+    $('.btn-group label.active .radio').removeClass 'active'
+    $(this).parent().parent().addClass 'active'
     return
 
   $('#develops_search input').keyup ->

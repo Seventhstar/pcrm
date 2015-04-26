@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   
+  resources :priorities
+
+  resources :dev_projects
+
   resources :goodstypes
   resources :budgets
   resources :styles

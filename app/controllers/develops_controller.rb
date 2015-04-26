@@ -2,15 +2,17 @@ class DevelopsController < ApplicationController
   before_action :set_develop, only: [:show, :edit, :update, :destroy]
   helper_method :show_dev
   before_action :logged_in_user
+  include DevelopsHelper
 
   # GET /develops
   # GET /develops.json
   def index
-    @develops = Develop.search(params[:search]).paginate(:page => params[:page], :per_page => 15)
+    @develops = Develop.search(params[:search]).order('project_id desc').paginate(:page => params[:page], :per_page => 15)
 
     view = show_dev
     
     puts "show_dev: " + show_dev
+    
 
     case view
     when "check"
@@ -29,10 +31,12 @@ class DevelopsController < ApplicationController
   # GET /develops/new
   def new
     @develop = Develop.new
+    @dev_projects = DevProject.all
   end
 
   # GET /develops/1/edit
   def edit
+    @dev_projects = DevProject.all
   end
 
   # POST /develops
@@ -83,7 +87,7 @@ class DevelopsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def develop_params
-      params.require(:develop).permit(:name, :coder, :boss)
+      params.require(:develop).permit(:name, :coder, :boss, :project_id, :description)
     end
 
     def show_dev

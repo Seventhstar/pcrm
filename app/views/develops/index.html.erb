@@ -6,23 +6,27 @@
     <%= text_field_tag :search, params[:search], :class => "search_area txt" %>
   </div>
 
+
+
 <div class="btn-group btn-group-xs right" data-toggle="buttons">
-  <label class="<%= " #{switch_active "check"} "%>" show="check">
-    <input type="radio" name="options" id="dev_check1" autocomplete="off" checked> К проверке
+  <label class="<%= switch_active "check" %>" show="check">
+    <div class="inp radio"><input type="radio" name="options" id="dev_check1" autocomplete="off"></div> К проверке
   </label>
-  <label class="<%= " #{switch_active "new"} "%>" show="new">
-    <input type="radio" name="options" id="dev_new1" autocomplete="off"> Новые
+  <label class="<%= switch_active "new" %>" show="new">
+    <div class="inp radio"><input type="radio" name="options" id="dev_new1" autocomplete="off"></div> Новые
   </label>
-  <label class="<%= " #{switch_active "all"} "%>" show="all">
-    <input type="radio" name="options" id="dev_all" autocomplete="off"> Все
+  <label class="<%= switch_active "all" %>" show="all">
+    <div class="inp radio"><input type="radio" name="options" id="dev_all" autocomplete="off"></div> Все
   </label>
 </div>
+
+
 <% end %>
 
 </div>
 
 <div id="develops_list" class="develops"><%= render 'develops' %></div>
 
-<br>
-
 <%= link_to 'Добавить', new_develop_path, class: "btn btn-success" %>
+</br>
+

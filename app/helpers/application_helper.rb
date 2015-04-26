@@ -21,14 +21,14 @@ module ApplicationHelper
   def calls_color
       if params[:controller] && params[:controller]=="leads" && params[:action] 
          if params[:action]=="new"
-            "orange"
+            "red"
 	 elsif params[:action]=="edit"
-	    "btn-warning"
+	    "orange"
          else
-	    "btn-success"
+	    "call"
          end
       else
-         "btn-success"
+         "call"
       end
   end
 
@@ -104,6 +104,9 @@ module ApplicationHelper
   def switch_active(show)
 
     active = show == show_dev ? "active" : nil
+    puts "show: " + show
+    puts "show_dev: " + show_dev
+    
     css_class = "btn #{active}" 
   end
 

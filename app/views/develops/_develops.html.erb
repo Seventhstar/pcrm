@@ -1,19 +1,16 @@
-<div class="panel panel-default">
-<table class="table tleads">
-  <thead>
-    <tr>
-      <th>Что нужно сделать?</th>
-      <th width="60px" class="center">Выполнено</th>
-      <th width="60px" class="center">Проверено</th>
-      <th class="edit_delete"></th>
-</div>
-
-</th>
-    </tr>
-  </thead>
-
-  <tbody>
+<% cur_prj  = nil %>
+  <% first_table = true %>
+    
+  
     <% @develops.each do |develop| %>
+
+      <% prj_name = project_name(develop.id) %>
+      <% if cur_prj != prj_name %>
+        <% cur_prj = prj_name %>
+        <%= render "head", {:first_table => first_table, :heading => prj_name } %>
+        <% first_table = false %>
+      <% end %>        
+
       <tr>
         <td><%= develop.name %></td>
         <td class="state"><span class="check_img <%= develop.coder ? "checked" :"" %>" developid="<%=develop.id%>" chk="coder"></span></td>
@@ -23,6 +20,3 @@
     <% end %>
   </tbody>
 </table>
-
-<%= will_paginate @collection, renderer: BootstrapPagination::Rails %>
-</div>

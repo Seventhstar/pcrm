@@ -1,0 +1,2 @@
+module DevProjectsHelper
+end
