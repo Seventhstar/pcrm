@@ -32,8 +32,17 @@ Rails.application.routes.draw do
   resources :account_activations, only: [:edit]
   resources :password_resets,     only: [:new, :create, :edit, :update]
 
-  resources :leads_comments
+#  get '/leads/update_multiple/', to: 'leads#edit_multiple'
+  resources :leads do
+    collection do
+      get :edit_multiple
+      put :update_multiple
+    end
+  end
+
   resources :leads
+
+  resources :leads_comments
   resources :channels
   resources :statuses
 

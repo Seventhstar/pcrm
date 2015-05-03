@@ -119,3 +119,9 @@ li.disabled a{
 tr.nonactual td{
   color: #ccc;
 }
+
+
+.img_link img{
+  width: 16px;
+  height: 16px;
+}

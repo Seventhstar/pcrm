@@ -5,7 +5,6 @@
 
 <% lead = @leads.first %>
 
-
 <% @leads.each do |lead| %>
     <% new_date = lead.start_date? ? lead.start_date : Date.today %>
     <% p_date = lead.status_date? ? lead.status_date : Date.today %>
@@ -32,9 +31,14 @@
         <td><%= lead.info %></td>
         <td class="center"><%= lead.footage %></td>
         <td class="center"><%= lead.start_date.try('strftime',"%d.%m.%Y") %></td>
-        <%= edit_delete(lead)%>
+
+        <% if is_update_form? %>
+          <td><%= check_box_tag "leads_ids[]", lead.id %></td>
+        <% else %>
+          <%= edit_delete(lead)%>
+        <% end %>
+
       </tr>
 <% end %>
 </tbody></table></div>
 <br>
-
