@@ -19,6 +19,12 @@
 //= require jquery.fileupload
 
 
+var fade_flash = function() {
+    $("#flash_notice").delay(5000).fadeOut("slow");
+    $("#flash_alert").delay(5000).fadeOut("slow");
+    $("#flash_error").delay(5000).fadeOut("slow");
+};
+
 window.setTimeout(function() {
   $(".fade").fadeTo(500, 0).slideUp(500, function(){
       $(this).remove();
@@ -30,7 +36,12 @@ function checkTime(i){
 	return i;
 }
 
-
+/*function stopRKey(evt) { 
+  var evt = (evt) ? evt : ((event) ? event : null); 
+  var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null); 
+  alert($(this).attr('class'));
+  if ((evt.keyCode == 13) && (node.type=="text"))  {return false;} 
+}*/
 
 function startTime(){
 	var tm=new Date();
@@ -67,6 +78,7 @@ var fixEncode = function(loc) {
 
 $(function() {
 
+//  document.onkeypress = stopRKey; 
 /*var setLoc = function(loc) {
   navPrefix ="";
   curLoc = fixEncode(loc);
@@ -184,7 +196,7 @@ $("#mulitplefileuploader").uploadFile(settings);
 
   
   //$('span.btn-sm').click(function(){
-    $('.comments_box').on('click', 'span.btn-sm', function(){
+  /*$('.comments_box').on('click', 'span.btn-sm', function(){
   	var comment = $("#comment_comment").val();
   	var lead_id = $(this).attr('leadid');
 
@@ -202,7 +214,7 @@ $("#mulitplefileuploader").uploadFile(settings);
     	   //$('.panel-body').scrollTop(-9999);
     	  }
     	 });
-  });
+  });*/
 
 
 

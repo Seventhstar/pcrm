@@ -20,6 +20,27 @@
 #  alert 'leadid'+lead_id
   $.get '/leads/'+lead_id+'/edit', "", null, "script"
 
+@add_comment = (lead_id,comment)->
+  comment_id = $('.microposts p:first').attr('leadid')
+  if comment == ''
+    return
+  #return;
+  $.ajax
+    url: '/ajax/add_comment'
+    data:
+      'comment': comment
+      'lead_id': lead_id
+    type: 'POST'
+    beforeSend: (xhr) ->
+      xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
+      return
+    success: ->
+      $('#comment_comment').val ''
+      $.get '/leads/' + lead_id + '/edit', '', null, 'script'
+      #$('.panel-body').scrollTop(-9999);
+      return
+  return
+
 @lead_query = (lead_params)->
   sort2 = $('span.subsort.current').attr('sort2')
   dir2 = $('span.subsort.current').attr('dir2')
@@ -40,9 +61,12 @@
   each lead_params, (i, a) ->
   	url[i] = a
 
-  $.get 'leads', url, null, 'script'
+  
+  method = if $('#cur_method').val() == 'edit_multiple' then '/edit_multiple' else ''
+  #alert('leads'+method)
 
-  setLoc("leads?"+ajx2q(url));
+  $.get '/leads'+method, url, null, 'script'
+  setLoc("leads"+method+"?"+ajx2q(url));
   return
 
 $(document).ready ->
@@ -66,7 +90,7 @@ $(document).ready ->
     done: (e, data) ->
       lead_id = $('#file').attr('leadid')
       setTimeout 'update_lead('+lead_id+')',200
-      $('.progress').hide()
+      #$('.progress').hide()
       return
     progressall: (e, data) ->
       progress = parseInt(data.loaded / data.total * 100, 10)
@@ -74,7 +98,7 @@ $(document).ready ->
       $('.progress-bar').css width: progress + '%'
       return
 
-  $('.files').on 'click', 'span.glyphicon-remove', ->
+  $('.box_wide').on 'click', 'span.icon_remove_1', ->
     file_id = $(this).attr('file_id')
     del = confirm('Действительно удалить?')
     if !del
@@ -110,6 +134,30 @@ $(document).ready ->
         $.get '/leads/' + lead_id + '/edit', '', null, 'script'
         show_ajax_message "Успешно удален"
         return
+    return
+
+  #$('.container').on 'keyup', '#search', ->
+  #commentAdd_form
+
+
+
+
+  # добавление комментария 
+  # кликом по кнопке 
+  $('.comments_box').on 'click', 'span.btn-sm', ->
+    comment = $('#comment_comment').val()
+    lead_id = $(this).attr('leadid')
+    #alert(comment)
+    add_comment(lead_id,comment)
+    return
+  
+  # нажатием на Enter
+  $('.container').on 'keypress', '#comment_comment', ->
+    if event.keyCode==13
+      comment = $('#comment_comment').val()
+      lead_id = $('#btn-chat').attr('leadid')
+      add_comment(lead_id,comment)
+      return false;
     return
 
   # поиск 

@@ -7,54 +7,17 @@ class LeadsController < ApplicationController
   include LeadsHelper
   #before_action :store_location
 
+  def index_leads_params
+
+  end
+
   # GET /leads
   # GET /leads.json
   def index
 
-    if current_user.admin? 
-       if Rails.env.production?
-          @leads = Lead.select("*, date_trunc('month', start_date) AS month")
-       else
-          @leads = Lead.select("*, datetime(start_date, 'start of month') AS month")
-       end
-    else
-      @leads = current_user.leads.select("*, date_trunc('month', start_date) AS month")
-    end
-
-    if params[:search]
-      info =params[:search]
-      @leads = @leads.where('LOWER(info) like LOWER(?)','%'+info+'%')
-    end
-
-    sort_1 = sort_column=='start_date' ? 'month' : sort_column
-    if !params[:only_actual] || params[:only_actual] == "true"
-      @s_status_ids = Status.where(:actual => true) 
-      @leads = @leads.where(:status => @s_status_ids)
-    end
-
-    @leads = @leads.order(sort_1 + " " + sort_direction + ", "+ sort_2  + " " + dir_2) #month desc +" " + dir_2
-    #session[:last_leads_page] = request.url || leads_url    
-    store_leads_path
-    puts "sort"
-    puts sort_1
+    query_str = Rails.env.production? ? "*, date_trunc('month', start_date) AS month" : "*, datetime(start_date, 'start of month') AS month"
+    @leads = current_user.admin? ? Lead.select(query_str) : current_user.leads.select(query_str)
     
-
-    @channels = Channel.all
-  end
-
-  def edit_multiple
-    @users = User.order(:name)
-
-    if current_user.admin? 
-      if Rails.env.production?
-          @leads = Lead.select("*, date_trunc('month', start_date) AS month")
-       else
-          @leads = Lead.select("*, datetime(start_date, 'start of month') AS month")
-       end
-    else
-      @leads = current_user.leads.select("*, date_trunc('month', start_date) AS month")
-    end
-
     if params[:search]
       info =params[:search]
       @leads = @leads.where('LOWER(info) like LOWER(?)','%'+info+'%')
@@ -67,6 +30,13 @@ class LeadsController < ApplicationController
     end
 
     @leads = @leads.order(sort_1 + " " + sort_direction + ", "+ sort_2  + " " + dir_2) 
+
+    store_leads_path
+  end
+
+  def edit_multiple
+    index
+    @users = User.order(:name)
   end
 
 
@@ -75,20 +45,8 @@ class LeadsController < ApplicationController
     puts params[:leads_ids]
     @leads = Lead.find(params[:leads_ids])
 
-    #puts @leads.count
-    #ee
-
     Lead.where(id: params[:leads_ids]).update_all(user_id: params[:user_id])
-    redirect_to leads_url
-    #@leads.reject! do |lead|
-    #  lead.update_attributes(params[:lead].reject { |k,v| v.blank? })
-    #end
-    #if @leads.empty?
-    #    redirect_to leads_url
-    #else
-    #  @leads = Lead.new(params[:lead])
-    #  render "edit_multiple"
-    #end
+    redirect_to leads_page_url
   end
 
 
@@ -167,6 +125,7 @@ class LeadsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_lead
+#      puts params[:id]
       @lead = Lead.find(params[:id])
     end
 
@@ -177,7 +136,8 @@ class LeadsController < ApplicationController
 
   def sort_column
     #Lead.column_names.include?(params[:sort]) ? params[:sort] : "status_date"
-    Lead.column_names.include?(params[:sort]) ? params[:sort] : "month"
+    default_column = current_user.admin? ? "status_date":"month"
+    Lead.column_names.include?(params[:sort]) ? params[:sort] : default_column
   end
 
   def sort_2

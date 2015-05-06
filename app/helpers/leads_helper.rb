@@ -36,8 +36,10 @@ module LeadsHelper
  end
 
  def multi_edit_icon
-    link_to edit_multiple_leads_path, {:class => 'li-right splink'} do #splink
-      image_tag('edit.png')
+    if current_user.admin? 
+      link_to edit_multiple_leads_path, {:class => 'li-right splink'} do #splink
+        image_tag('edit.png')
+      end
     end
  end
 

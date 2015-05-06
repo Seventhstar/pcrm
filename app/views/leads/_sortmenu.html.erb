@@ -1,8 +1,10 @@
 <div class="subnav">
+        <%= hidden_field_tag :cur_method,controller.action_name %>
+
+	<%= sortable_pil "status_date", "По приоритету" %>
 	<%= sortable_pil "start_date", "По месяцам" %>
 	<%= sortable_pil "user_id", "По сотрудникам" %>
 	<%= sortable_pil "status_id", "По статусам" %>
-	<%= sortable_pil "status_date", "По приоритетам" %>
 
 	<%= form_tag leads_path, :method => 'get', :id => "leads_search" do %>	
   	<div class="navsearch"> 

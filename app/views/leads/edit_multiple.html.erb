@@ -1,12 +1,14 @@
 <%= render "sortmenu" %>
  <%= hidden_field_tag :sort, params[:sort] %>
 
-<div id="div_tleads">
   <%= form_tag update_multiple_leads_path, method: :put do %>
   <div class="items_box_head">
     <%= select_tag 'user_id', options_for_select(@users.collect{ |u| [u.name, u.id] }) %>
     <%= submit_tag "Обновить", :class => 'sub btn_a' %>
   </div>
+
+<div id="div_tleads">
   <%= render "leads" %>
-  <% end %>
 </div>
+
+  <% end %>
