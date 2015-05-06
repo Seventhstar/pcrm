@@ -37,6 +37,7 @@ class DevelopsController < ApplicationController
   # GET /develops/1/edit
   def edit
     @dev_projects = DevProject.all
+    @dev_files    = @develop.dev_files
   end
 
   # POST /develops

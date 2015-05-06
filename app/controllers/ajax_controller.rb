@@ -43,8 +43,17 @@ class AjaxController < ApplicationController
 
    def del_file
      if params[:file_id]
-        file = LeadsFile.find(params[:file_id])
-        filename = Rails.root.join('public', 'uploads','leads',file.lead.id.to_s,file.name)
+        puts "!!type: " + params[:type]
+        if params[:type] == 'leads'
+           file = LeadsFile.find(params[:file_id])
+           num_to_s = file.lead.id.to_s
+        else
+          file = DevFile.find(params[:file_id])
+          num_to_s = file.develop.id.to_s
+        end
+
+        filename = Rails.root.join('public', 'uploads',params[:type],num_to_s,file.name)
+        puts 'filename: '+filename.to_s
         File.delete(filename) if File.exist?(filename)
         file.destroy
      end

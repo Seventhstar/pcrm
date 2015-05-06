@@ -23,6 +23,7 @@ var fade_flash = function() {
     $("#flash_notice").delay(5000).fadeOut("slow");
     $("#flash_alert").delay(5000).fadeOut("slow");
     $("#flash_error").delay(5000).fadeOut("slow");
+    $(".alert").delay(5000).fadeOut("slow");
 };
 
 window.setTimeout(function() {
@@ -36,13 +37,6 @@ function checkTime(i){
 	return i;
 }
 
-/*function stopRKey(evt) { 
-  var evt = (evt) ? evt : ((event) ? event : null); 
-  var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null); 
-  alert($(this).attr('class'));
-  if ((evt.keyCode == 13) && (node.type=="text"))  {return false;} 
-}*/
-
 function startTime(){
 	var tm=new Date();
 	var h=tm.getHours();
@@ -51,7 +45,6 @@ function startTime(){
 	
 	m=checkTime(m);
 	s=checkTime(s);
-  //alert(h+":"+m+":"+s);
 	$(".time_h").html(h+":"+m+":"+s);
 	t=setTimeout('startTime()',500);
 }
@@ -69,36 +62,7 @@ var fixEncode = function(loc) {
     return l[0] + (l[1] ? ('?' + ajx2q(q2ajx(l[1]))) : '') + (h[1] ? ('#' + h[1]) : '');
   };
 
-
-
-
-//function updateDev(){
-//  $.get( "develops/", {'search':$("#search").val(),'show':$(".active").attr('show')},null,"script");
-//}
-
 $(function() {
-
-//  document.onkeypress = stopRKey; 
-/*var setLoc = function(loc) {
-  navPrefix ="";
-  curLoc = fixEncode(loc);
-  var l = (location.toString().match(/#(.*)/) || {})[1] || '';
-  if (!l ) { l = (location.pathname || '') + (location.search || '');  }
-  
-  l = fixEncode(l);
-  if (l.replace(/^(\/|!)/, '') != curLoc) {
-      try {
-      history.pushState({}, '', '/' + curLoc);
-      return;
-    } catch(e) {}
-  window.chHashFlag = true;
-  location.hash = navPrefix + curLoc;
-  if (withFrame && getLoc() != curLoc) {
-  setFrameContent(curLoc);
-  }
-  }
-};*/
-
 
   startTime();
 
@@ -120,34 +84,13 @@ $('#file').hide();
  
 $("#mulitplefileuploader").uploadFile(settings);
 
-
-//alert(29);
-
-  // форматы календарей
-  /*$("#lead_status_date").datepicker({format: "yyyy-mm-dd", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});
-  $("#lead_start_date").datepicker({format: "yyyy-mm-dd", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});
-  $("#user_date_birth").datepicker({format: "yyyy-mm-dd", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});*/
-
-  //$(".datepicker").datepicker({format: "dd.mm.yyyy", weekStart: 1, autoclose: true, language: "ru", todayHighlight: true});
-
   // дата по умолчанию для нового лида - сегодня
   if (!$("#lead_start_date").val()){
 	    $("#lead_start_date").val($.datepicker.formatDate('dd.mm.yy', new Date()));
       $("#lead_status_date").val($.datepicker.formatDate('dd.mm.yy', new Date()));
   }
 
-  //$('#lead_channel_id').chosen();
-
-/*  $('.options-menu a').click(function(){ 
-      $('.options-menu a.active').removeClass("active", 150, "easeInQuint");
-      $(this).addClass("active");
-      var url = "/" + $(this).attr("controller");
-      $.get(url, null, null, "script");
-      if (url!="/undefined") setLoc("options"+url);
-  });*/
-
-  //var $select_custom = $select.parent();
-        $('.sel_val').click(function(){
+ $('.sel_val').click(function(){
           if ($(this).hasClass('select_custom_ext')) {
             $(this).removeClass('select_custom_ext');
             $(this).parent().removeClass('select_custom_ext');
@@ -167,8 +110,6 @@ $("#mulitplefileuploader").uploadFile(settings);
       if (url!="/undefined") setLoc("options"+url);
   });
 
-    
-
   $(document).on('click','#btn-send',function(e) {  
      
     var valuesToSubmit = $('form').serialize();
@@ -187,36 +128,6 @@ $("#mulitplefileuploader").uploadFile(settings);
     
     return false; // prevents normal behaviour
   });
-
-
-  /*$( document ).ajaxStop(function() {
-    $('table.tleads ').tableSort();
-  });*/
-  //$('table.tleads ').tableSort({width: 1100px;});
-
-  
-  //$('span.btn-sm').click(function(){
-  /*$('.comments_box').on('click', 'span.btn-sm', function(){
-  	var comment = $("#comment_comment").val();
-  	var lead_id = $(this).attr('leadid');
-
-	comment_id = $(".microposts p:first").attr('leadid');
-	if (comment=='') return;
-  	//return;
-  	$.ajax({
-    	 url: "/ajax/add_comment",
-    	 data: {'comment':comment,'lead_id':lead_id},
-    	 type: "POST",
-    	 beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},	 
-    	  success: function(){
-    	   $("#comment_comment").val("");
-    	   $.get('/leads/'+lead_id+'/edit', "", null, "script");
-    	   //$('.panel-body').scrollTop(-9999);
-    	  }
-    	 });
-  });*/
-
-
 
 });
 

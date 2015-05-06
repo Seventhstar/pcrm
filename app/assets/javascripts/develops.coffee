@@ -9,6 +9,11 @@
   setLoc("develops?"+ajx2q(param));
   return
 
+@update_dev = (dev_id)->
+#  alert 'leadid'+lead_id
+  $.get '/develops/'+dev_id+'/edit', "", null, "script"
+
+
 # меняем отметки coder и boss непосредственно в index
 $(document).ready ->
   $('#develop_project_id').chosen(width: '402px', disable_search: 'true')
@@ -42,6 +47,22 @@ $(document).ready ->
   $('#develops_search .btn').click ->
     setTimeout 'updateDev()', 400
     return
+
+  $('#dev_file').fileupload
+    formData: devid: $('#dev_file').attr('devid')
+    url: @importUrl
+    pasteZone: null
+    done: (e, data) ->
+      dev_id = $('#dev_file').attr('devid')
+      setTimeout 'update_dev('+dev_id+')',200
+      $('.progress').hide()
+      return
+    progressall: (e, data) ->
+      progress = parseInt(data.loaded / data.total * 100, 10)
+      $('.progress').show()
+      $('.progress-bar').css width: progress + '%'
+      return
+
 
   $('#develops_search').on 'click', '.btn-group input', ->
     #alert(28)
