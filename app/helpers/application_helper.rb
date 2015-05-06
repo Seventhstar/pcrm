@@ -1,4 +1,8 @@
 module ApplicationHelper
+
+  def is_admin?
+    current_user.admin? 
+  end
   
   def opt_page
      if self.controller_name =='leads' 

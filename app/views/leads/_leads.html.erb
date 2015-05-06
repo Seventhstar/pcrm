@@ -8,10 +8,11 @@
 <% @leads.each do |lead| %>
     <% new_date = lead.start_date? ? lead.start_date : Date.today %>
     <% p_date = lead.status_date? ? lead.status_date : Date.today %>
-      <% if cur_month != new_date.month && (params[:sort] == "start_date" || params[:sort] == nil)%>
+      
+      <% if cur_month != new_date.month && (params[:sort] == "start_date" || (params[:sort] == nil && !is_admin?)) %> 
           <% cur_month = new_date.month %>
           <%= render "head", {:first_table => first_table, :heading => t(new_date.try('strftime',"%B"))+" "+new_date.try('strftime',"%Y") } %>
-      <% elsif cur_month != p_date.try('strftime',"%B") && (params[:sort] == "status_date" )%>
+      <% elsif cur_month != p_date.try('strftime',"%B") && (params[:sort] == "status_date" || (params[:sort] == nil && is_admin?))%>
           <% cur_month = p_date.try('strftime',"%B") %>
           <%= render "head", {:first_table => first_table, :heading => t(p_date.try('strftime',"%B"))+" "+p_date.try('strftime',"%Y") } %>    
       <% elsif cur_user != lead.user.name && (params[:sort] == "user_id")%>
