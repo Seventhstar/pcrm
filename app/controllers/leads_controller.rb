@@ -1,4 +1,5 @@
 class LeadsController < ApplicationController
+
   before_action :set_lead, only: [:show, :edit, :update, :destroy]
   before_action :logged_in_user
   helper_method :sort_column, :sort_direction, :only_actual
@@ -29,7 +30,7 @@ class LeadsController < ApplicationController
       @leads = @leads.where(:status => @s_status_ids)
     end
 
-    @leads = @leads.order(sort_1 + " " + sort_direction + ", "+ sort_2  + " " + dir_2) 
+    @leads = @leads.order(sort_1 + " " + sort_direction + ", "+ sort_2  + " " + dir_2 + ", info asc") 
 
     store_leads_path
   end

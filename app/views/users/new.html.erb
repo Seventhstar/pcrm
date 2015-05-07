@@ -1,9 +1,8 @@
 <% provide(:title, 'Sign up') %>
 <div class="signin">
-<h2>Новый пользователь</h2>
-    <%= form_for(@user) do |f| %>
+<div class="hl hl_a bd">Новый пользователь</div>
 
-
+ <%= form_for(@user) do |f| %>
 
 <%= render 'shared/error_messages', object: f.object %>
 

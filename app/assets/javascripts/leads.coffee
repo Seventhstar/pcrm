@@ -70,8 +70,8 @@
 
 $(document).ready ->
 
-  $('#lead_channel_id').chosen(width: '402px', disable_search: 'true')
-  $('#lead_status_id').chosen(width: '402px', disable_search: 'true')
+  $('#lead_channel_id').chosen(width: '352px', disable_search: 'true')
+  $('#lead_status_id').chosen(width: '352px', disable_search: 'true')
   $('#user_id').chosen(width: '200px', disable_search: 'true')
 
   #$('#basic1').fileupload

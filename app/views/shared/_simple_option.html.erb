@@ -1,3 +1,17 @@
+<div class="sep_05"></div>
+<%= form_for(@item) do |f| %>
+<div class="itemAdd_form">
+  <table><tbody>
+  <tr><td class="caption"><%= new_item_header(@item.class.name) %>:</td>
+      <td><div class="inp">
+          <%= f.text_field :name, :class => 'txt' %>
+	  <span class="sub btn_a" id="btn-send"> Добавить</span>
+      </td></tr>
+  </tbody></table>
+</div>
+<% end %>
+<div class="sep_15"></div>
+
 <div class="items_box_cont tbl_a">
 <div class="head"><%= list_header(@item.class.name) %></div>
 <table class="tleads">
@@ -13,14 +27,3 @@
 </table>
 </div>
 
-<%= form_for(@item) do |f| %>
-<div class="itemAdd_form">
-  <table><tbody>
-  <tr><td class="caption"><%= new_item_header(@item.class.name) %>:</td>
-      <td><div class="inp">
-          <%= f.text_field :name, :class => 'txt' %>
-	  <span class="sub btn_a" id="btn-send"> Добавить</span>
-      </td></tr>
-  </tbody></table>
-</div>
-<% end %>
