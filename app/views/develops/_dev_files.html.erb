@@ -1,10 +1,10 @@
 		<% @dev_files.each do |dev_file| %>
 		<div class="item">
 			<div class="fname">
- 			 <a href="/download/<%= @develop.id %>/<%= dev_file.name %>" target="_blank"><%= dev_file.name %></a>
+ 			 <a href="/download/dev/<%= @develop.id %>/<%= dev_file.name %>" target="_blank"><%= dev_file.name %></a>
             </div>
 			<div class="tools">
-				<a href="/download/<%= @develop.id %>/<%= dev_file.name %>" target="_blank" class="icon icon_download"></a>
+				<a href="/download/dev/<%= @develop.id %>/<%= dev_file.name %>" target="_blank" class="icon icon_download"></a>
 				<span file_id=<%= dev_file.id %> class="icon icon_remove_1"></span> </td>
 			</div>
 		</div>

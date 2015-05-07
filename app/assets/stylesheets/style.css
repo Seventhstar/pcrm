@@ -37,7 +37,7 @@ p {margin:0 0 14px 0; padding: 0 0 0 0; }
 .red {color: #cd1010; }
 .grey {color: #aeaeae; }
 
-.icon,li.icon a {display: inline-block; background: url('pict0.png') no-repeat; vertical-align:middle; position:relative;}
+.icon,li.icon a {display: inline-block; background: url('pict01.png') no-repeat; vertical-align:middle; position:relative;}
 .icon_logout {background-position:0 0; width: 16px; height: 16px; }
 .icon_user {background-position:-18px 0; width: 14px; height: 16px; }
 a:hover .icon_user, .active .icon_user {background-position:-18px -18px; }
@@ -45,7 +45,10 @@ a:hover .icon_user, .active .icon_user {background-position:-18px -18px; }
 .icon_edit {background-position:-69px 0; width: 16px; height: 16px;}
 .icon_remove {background-position:-52px 0; width: 15px; height: 15px;}
 .icon_remove.disabled {background-position:-52px -18px; }
-.icon_remove_1 {background-position:-119px 0; width: 9px; height: 9px;}
+
+.icon_remove_1 {background-position:-119px -9px; width: 9px; height: 9px;}
+.icon_remove_1:hover {background-position:-119px 0;}
+
 .icon_download {background-position:-130px 0; width: 12px; height: 12px;}
 .icon_chat {background-position:-144px 0; width: 16px; height: 16px;}
 .icon_birthday {background-position:-163px 0; width: 15px; height: 20px;}

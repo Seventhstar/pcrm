@@ -18,10 +18,6 @@ Rails.application.routes.draw do
   resources :develops
   resources :providers
 
-  post '/file' => 'application#create_file'
-  get    '/download/:lead/:basename.:extension'  => 'application#download'
-
-
   get    'options'  => 'options#edit'
   get    'options/:options_page'  => 'options#edit'
   get    'signup'  => 'users#new'
@@ -56,10 +52,13 @@ Rails.application.routes.draw do
 
   post "ajax/add_comment"
   post "ajax/del_comment"
-  post "ajax/del_file"
   post "ajax/dev_check" 
   post "ajax/user_upd" 
   post "ajax/status_check" 
+
+  post "file/del_file"
+  post '/file' => 'file#create_file'
+  get  '/download/:type/:id/:basename.:extension'  => 'file#download'
 
   post "channels/new"
 
