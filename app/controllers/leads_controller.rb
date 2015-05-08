@@ -70,6 +70,9 @@ class LeadsController < ApplicationController
     @statuses = Status.all
     @comments = @lead.leads_comments.order('created_at asc')
     @lead_files = @lead.leads_files
+
+    @history = get_history
+    
   end
 
   # POST /leads
@@ -158,4 +161,78 @@ class LeadsController < ApplicationController
   def only_actual
     %w[true false nil].include?(params[:only_actual]) ? params[:only_actual] : "all"
   end
+
+  def get_history
+    
+    history = Hash.new
+
+    # изменения в самом лиде
+    @lead.versions.reverse.each do |version|
+      if version[:event]!="create" && version != @lead.versions.first 
+        author = find_version_author_name(version) 
+        at = version.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 
+        changeset = version.changeset 
+        ch = Hash.new
+        changeset.keys.each_with_index do |k,index| 
+          if k=="updated_at"
+          elsif k=="channel_id"
+            ch.store( index, {'field' => t(k), 'from' => channel_name(changeset[k][0]), 'to' => channel_name(changeset[k][1]) } )
+          elsif k=="status_id"
+            ch.store( index, {'field' => t(k), 'from' => status_name(changeset[k][0]), 'to' => status_name(changeset[k][1]) } )
+          elsif k=="user_id"
+            ch.store( index, {'field' => t(k), 'from' => user_name(changeset[k][0]), 'to' => user_name(changeset[k][1]) } )
+          else
+            ch.store( index, {'field' => t(k), 'from' => changeset[k][0], 'to' => changeset[k][1] } )
+          end
+        end
+        history.store( at.to_s, {'type'=> 'ch','author' => author,'changeset' => ch})
+      end
+    end
+
+    # созданные файлы
+    @lead.leads_files.each do |file|
+      ch = Hash.new
+      file.versions.reverse.each do |version|
+        at = version.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 
+        author = user_name(version.whodunnit)
+        ch.store( index, {'file' =>  file.name} )
+        history.store( at, {'type'=> 'add','author' => author,'changeset' => ch})
+      end  
+    end
+
+    # удаленные файлы
+    file_id = []
+    deleted = PaperTrail::Version.where_object(lead_id: @lead.id)
+    deleted.each_with_index do |file,index|
+      ch = Hash.new  
+      at = file.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 
+      author = user_name(file.whodunnit)
+      file_id << file['item_id']
+      f = file['object'].split(/\r?\n/)
+      f.shift
+      a = Hash.new
+      f.each do |line| 
+        b,c = line.chomp.split(/: /)
+        a[b] = c
+      end
+      #at = a['created_at'].to_time.localtime.strftime("%d.%m.%Y %H:%M:%S") 
+      ch.store( index, {'file' =>  a['name']} )
+      history.store( at, {'type'=> 'del','author' => author,'changeset' => ch})
+    end  
+
+    # созданные и потом удаленные файлы
+    created = PaperTrail::Version.where(:item_id => file_id, event: 'create', item_type: 'LeadsFile')
+    created.each_with_index do |file,index|
+      at = file.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 
+      ch = Hash.new  
+      author = user_name(file.whodunnit)
+      file_id << file['item_id']
+      f = file['object_changes'].split(/\r?\n/)
+      ch.store( index, {'file' =>  f[f.index('name:')+2][2..-1] } )
+      history.store( at, {'type'=> 'add','author' => author,'changeset' => ch})
+    end  
+
+    history.sort.reverse
+  end
+
 end

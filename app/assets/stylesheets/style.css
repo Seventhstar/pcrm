@@ -59,6 +59,8 @@ a:hover .icon_user, .active .icon_user {background-position:-18px -18px; }
 .btn_a,.form-actions .btn-success, a.btn-success,
 .input-group .btn-warning {display: inline-block; background: #ff8411; height: 34px; line-height: 34px; padding: 0 19px 0 19px; text-decoration:none; font-size: 14px; color: #fff; border-radius: 5px; position:relative;}
 .btn_a:hover {opacity: 0.7;}
+.btn:hover {opacity: 0.7;}
+.only_actual:hover {opacity: 0.8;}
 .btn_a.btn_reset {background: #c3c3c3;}
 
 .btn_b{display: inline-block; border:1px solid #e5e5e5; padding: 9px 19px 9px 19px; color: #000000; position:relative; text-decoration:none; border-radius: 5px; line-height: 1; }
@@ -67,6 +69,7 @@ a:hover .icon_user, .active .icon_user {background-position:-18px -18px; }
 
 .btn_c{display: inline-block; border:1px solid #e5e5e5; padding: 9px 19px 9px 19px; color: #ff8411; position:relative; text-decoration:none; border-radius: 5px; line-height: 1; text-decoration:underline;}
 .btn_c:hover{text-decoration:none;}
+label a.btn_c:hover{cursor: pointer;}
 
 .page_wrapper {min-height: 100%; position:relative;}
 

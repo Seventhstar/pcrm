@@ -14,7 +14,7 @@ module LeadsHelper
        channel=Channel.find(ch_id)
        channel.name 
     else 
-      res = ""
+      ""
     end
  end
 
@@ -23,9 +23,16 @@ module LeadsHelper
    		status = Status.find(st_id)
    		status.name
    	else
-   	res =""	
+   	  ""	
    	end
  end 
+
+  def user_name(id)
+    user = User.find(id)
+    user ? user.name : ''
+    
+  end
+
 
  def leads_page_url
     session[:last_leads_page] || leads_url

@@ -36,7 +36,11 @@
         </div>
     </div>
     <div class="right">
-      <%= render "history" %>    
+      <% if @lead.versions.count >1 %>
+        <div class="historyChange_box">
+            <%= render "history" %>    
+        </div>
+      <% end %>
     </div>
 
   </div>
