@@ -14,7 +14,9 @@
  *= require_self
   */
 
-
+#p_search .chosen-container-single{
+  margin-right: 14px;
+}
 
 .flash_notice, .flash_error, .flash_alert {
   padding: 15px;

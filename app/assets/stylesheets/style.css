@@ -49,7 +49,7 @@ a:hover .icon_user, .active .icon_user {background-position:-18px -18px; }
 .icon_remove.disabled {background-position:-52px -18px; }
 
 .icon_remove_1 {background-position:-119px -9px; width: 9px; height: 9px;}
-.icon_remove_1:hover {background-position:-119px 0;}
+.icon_remove_1:hover {background-position:-119px 0; cursor: pointer;}
 
 .icon_download {background-position:-130px 0; width: 12px; height: 12px;}
 .icon_chat {background-position:-144px 0; width: 16px; height: 16px;}
@@ -427,7 +427,7 @@ td.state{
 .box_wrap .left{float:left;}
 .box_wrap .right{float:right;}
 
-.box_wrap_1 .left{width: 535px; }
+.box_wrap_1 .left{width: 542px; }
 .box_wrap_1 .right{width: 535px; }
 
 .box_cent {position:relative;}

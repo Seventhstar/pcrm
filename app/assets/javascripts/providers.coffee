@@ -3,7 +3,7 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 $(document).ready ->
 
-  $('#style').chosen(width: '240px', disable_search: true).on 'change', ->
+  $('#style').chosen(width: '240px',  disable_search: true).on 'change', ->
   	$.get 'providers', $("#p_search").serialize(), null, 'script'
 
 

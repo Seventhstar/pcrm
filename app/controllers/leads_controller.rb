@@ -24,13 +24,14 @@ class LeadsController < ApplicationController
       @leads = @leads.where('LOWER(info) like LOWER(?)','%'+info+'%')
     end
 
-    sort_1 = sort_column=='start_date' ? 'month' : sort_column
     if !params[:only_actual] || params[:only_actual] == "true"
-      @s_status_ids = Status.where(:actual => true) 
+      @s_status_ids = Status.where(:actual => true).ids
       @leads = @leads.where(:status => @s_status_ids)
     end
 
-    @leads = @leads.order(sort_1 + " " + sort_direction + ", "+ sort_2  + " " + dir_2 + ", info asc") 
+    sort_1 = sort_column=='start_date' ? 'month' : sort_column
+    order = sort_1 + " " + sort_direction + ", "+ sort_2  + " " + dir_2 + ", info asc"
+    @leads = @leads.order(order)
 
     store_leads_path
   end
