@@ -171,7 +171,8 @@ class LeadsController < ApplicationController
     @lead.versions.reverse.each do |version|
       if version[:event]!="create" && version != @lead.versions.first 
         author = find_version_author_name(version) 
-        at = version.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 
+        at = version.created_at.localtime.strftime("%Y.%m.%d %H:%M:%S") 
+        at_hum = version.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 
         changeset = version.changeset 
         ch = Hash.new
         changeset.keys.each_with_index do |k,index| 
@@ -186,7 +187,7 @@ class LeadsController < ApplicationController
             ch.store( index, {'field' => t(k), 'from' => changeset[k][0], 'to' => changeset[k][1] } )
           end
         end
-        history.store( at.to_s, {'type'=> 'ch','author' => author,'changeset' => ch})
+        history.store( at.to_s, {'at' => at_hum,'type'=> 'ch','author' => author,'changeset' => ch})
       end
     end
 
@@ -194,10 +195,11 @@ class LeadsController < ApplicationController
     @lead.leads_files.each do |file|
       ch = Hash.new
       file.versions.reverse.each do |version|
-        at = version.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 
+        at = version.created_at.localtime.strftime("%Y.%m.%d %H:%M:%S") 
+        at_hum = version.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 
         author = user_name(version.whodunnit)
         ch.store( index, {'file' =>  file.name} )
-        history.store( at, {'type'=> 'add','author' => author,'changeset' => ch})
+        history.store( at, {'at' => at_hum,'type'=> 'add','author' => author,'changeset' => ch})
       end  
     end
 
@@ -206,7 +208,8 @@ class LeadsController < ApplicationController
     deleted = PaperTrail::Version.where_object(lead_id: @lead.id)
     deleted.each_with_index do |file,index|
       ch = Hash.new  
-      at = file.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 
+      at = file.created_at.localtime.strftime("%Y.%m.%d %H:%M:%S") 
+      at_hum = file.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 
       author = user_name(file.whodunnit)
       file_id << file['item_id']
       f = file['object'].split(/\r?\n/)
@@ -218,19 +221,20 @@ class LeadsController < ApplicationController
       end
       #at = a['created_at'].to_time.localtime.strftime("%d.%m.%Y %H:%M:%S") 
       ch.store( index, {'file' =>  a['name']} )
-      history.store( at, {'type'=> 'del','author' => author,'changeset' => ch})
+      history.store( at, {'at' => at_hum,'type'=> 'del','author' => author,'changeset' => ch})
     end  
 
     # созданные и потом удаленные файлы
     created = PaperTrail::Version.where(:item_id => file_id, event: 'create', item_type: 'LeadsFile')
     created.each_with_index do |file,index|
-      at = file.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 
+      at = file.created_at.localtime.strftime("%Y.%m.%d %H:%M:%S") 
+      at_hum = file.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 
       ch = Hash.new  
       author = user_name(file.whodunnit)
       file_id << file['item_id']
       f = file['object_changes'].split(/\r?\n/)
       ch.store( index, {'file' =>  f[f.index('name:')+2][2..-1] } )
-      history.store( at, {'type'=> 'add','author' => author,'changeset' => ch})
+      history.store( at, {'at' => at_hum,'type'=> 'add','author' => author,'changeset' => ch})
     end  
 
     history.sort.reverse

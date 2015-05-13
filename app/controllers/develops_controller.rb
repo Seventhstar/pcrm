@@ -32,6 +32,7 @@ class DevelopsController < ApplicationController
   def new
     @develop = Develop.new
     @dev_projects = DevProject.all
+    @dev_files    = {}
   end
 
   # GET /develops/1/edit

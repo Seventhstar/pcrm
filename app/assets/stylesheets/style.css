@@ -321,12 +321,6 @@ label.select_custom_ext:after {
 .txt_tags.extend .down_list {display: block; }
 
 /*.jspContainer{overflow: hidden; position: relative; */
-.jspContainer{ position: relative; 
-  width: 492px; 
-  //height: 295px;
-  height: 317px;
-  overflow-y: scroll;
- }
 
 .jspPane{position: absolute; }
 .jspVerticalBar{position: absolute; top: 0; right: 0; width: 10px; height: 100%; }
@@ -435,6 +429,7 @@ td.state{
 .form_c {}
 table.tbl_fc{border-collapse:collapse; width: 100%; }
 table.tbl_fc td{vertical-align:top; padding: 0 0 10px 0; }
+table.tbl_fc td.last_td{padding: 0 !important; }
 table.tbl_fc td.caption{width: 115px; padding-right: 15px; padding-top: 7px; text-align:right; font-weight: 500; }
 table.tbl_fc td.caption2{width: 235px; padding-right: 15px; padding-top: 0px; text-align:right; font-weight: 500; }
 
@@ -454,14 +449,17 @@ table.tbl_fc_1 td.caption{width: 170px; }
 .auth_form .forgot_pass {float:right; font-size: 12px; position:relative; top: 1px; font-style: italic;}
 
 .comments_box {}
-.comments_box .hl{margin: 6px 0 10px 0; font-weight: 500;}
+.comments_box .hl{margin: 0 0 15px 0; font-weight: 500;   border-bottom: 1px solid #e5e5e5; padding-bottom: 5px;}
 .comments_box .hl .icon{margin:0 0 0 10px;}
-.comments_box .box_i {border:1px solid #e5e5e5; padding: 20px 20px 20px 20px; border-radius: 5px;}
+.comments_box .box_i {border:1px solid #e5e5e5; padding: 12px 20px 20px 20px; border-radius: 5px;}
 //.comments_box .comments_list_a {padding-right: 20px;}
 //.comments_box .scrollPane_v {max-height: 295px; overflow:auto;}
-.comments_box .commentAdd_form {margin: 25px 0 0 0; overflow:hidden;}
+.comments_box .commentAdd_form {margin: 20px 0 0 0; overflow:hidden;}
 .comments_box .commentAdd_form .txt {float:left; width: 370px; }
 .comments_box .commentAdd_form .sub {float:right;}
+
+.jspContainer{ position: relative;  width: 492px;  height: 347px;  overflow-y: scroll; }
+
 
 .comments_list_a {}
 .comments_list_a .item{padding: 14px 0 0 0; margin: 14px 0 0 64px; border-top:1px solid #e5e5e5; line-height:1.25;}
