@@ -122,7 +122,7 @@ class LeadsController < ApplicationController
   def destroy
     @lead.destroy
     respond_to do |format|
-      format.html { redirect_to leads_url, notice: 'Лид удален.' }
+      format.html { redirect_to leads_page_url, notice: 'Лид удален.' }
       format.json { head :no_content }
     end
   end
@@ -136,7 +136,8 @@ class LeadsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def lead_params
-      params.require(:lead).permit(:info, :fio, :footage, :phone, :email, :address, :channel_id, :status_id, :user_id, :status_date,:start_date, :first_comment,:leads_ids)
+      params.require(:lead).permit(:info, :fio, :footage, :phone, :email, :address, :channel_id, 
+                      :status_id, :user_id, :status_date,:start_date, :first_comment,:leads_ids, :ic_user_id)
     end
 
   def sort_column
@@ -181,7 +182,7 @@ class LeadsController < ApplicationController
             ch.store( index, {'field' => t(k), 'from' => channel_name(changeset[k][0]), 'to' => channel_name(changeset[k][1]) } )
           elsif k=="status_id"
             ch.store( index, {'field' => t(k), 'from' => status_name(changeset[k][0]), 'to' => status_name(changeset[k][1]) } )
-          elsif k=="user_id"
+          elsif k=="user_id" || k=="ic_user_id"
             ch.store( index, {'field' => t(k), 'from' => user_name(changeset[k][0]), 'to' => user_name(changeset[k][1]) } )
           else
             ch.store( index, {'field' => t(k), 'from' => changeset[k][0], 'to' => changeset[k][1] } )

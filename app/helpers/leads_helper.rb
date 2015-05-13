@@ -28,8 +28,12 @@ module LeadsHelper
  end 
 
   def user_name(id)
-    user = User.find(id)
-    user ? user.name : ''
+    if !id.nil?
+     user = User.find(id)
+     user ? user.name : ''
+    else
+      ""
+    end
     
   end
 

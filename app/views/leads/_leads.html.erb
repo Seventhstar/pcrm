@@ -15,9 +15,9 @@
       <% elsif cur_month != p_date.try('strftime',"%B") && (params[:sort] == "status_date" || (params[:sort] == nil && is_admin?))%>
           <% cur_month = p_date.try('strftime',"%B") %>
           <%= render "head", {:first_table => first_table, :heading => t(p_date.try('strftime',"%B"))+" "+p_date.try('strftime',"%Y") } %>    
-      <% elsif cur_user != lead.user.name && (params[:sort] == "user_id")%>
-        <% cur_user = lead.user.name %>
-          <%= render "head", {:first_table => first_table, :heading => t(lead.user.name) } %>
+      <% elsif cur_user != lead.ic_user.name && (params[:sort] == "ic_user_id")%>
+        <% cur_user = lead.ic_user.name %>
+          <%= render "head", {:first_table => first_table, :heading => t(lead.ic_user.name) } %>
       <% elsif cur_status != lead.status.name && (params[:sort] == "status_id")%>
         <% cur_status = lead.status.name %>
         <%= render "head", {:first_table => first_table, :heading => t(lead.status.name) } %>

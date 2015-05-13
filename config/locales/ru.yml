@@ -19,7 +19,8 @@ ru:
   Status: Статус
   status_id: Статус
   channel_id: Канал
-  user_id: Ответственный
+  user_id: Создатель
+  ic_user_id: Ответственный
   info: Информация о запросе
   status_date: Дата для статуса
   start_date: Дата создания

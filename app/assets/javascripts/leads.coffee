@@ -74,6 +74,8 @@ $(document).ready ->
   $('#lead_channel_id').chosen(width: '99.5%', disable_search: 'true')
   $('#lead_status_id').chosen(width: '99.5%', disable_search: 'true')
   $('.inp_w #lead_user_id').chosen(width: '99.5%', disable_search: 'true')
+  $('.inp_w #lead_ic_user_id').chosen(width: '99.5%', disable_search: 'true')
+  
   
   $('#user_id').chosen(width: '200px', disable_search: 'true')
 
