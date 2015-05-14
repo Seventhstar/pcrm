@@ -22,6 +22,24 @@ class AjaxController < ApplicationController
     render json: list
   end
 
+  def add_provider_manager
+   if params[:provider_id] 
+      pm = ProviderManager.new
+      pm.provider_id = params[:provider_id] 
+      pm.name  = params[:manager][:name]
+      pm.phone = params[:manager][:phone]
+      pm.email = params[:manager][:email]
+      pm.save  
+   end
+   render :nothing => true 
+  end
+
+  def del_provider_manager
+     if params[:p_id] 
+      pm = ProviderManager.find(params[:p_id]).destroy
+     end
+    render :nothing => true
+  end
 
   def add_comment
    if params[:lead_id] 

@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   resources :goodstypes
   resources :budgets
   resources :styles
+  resources :provider_managers
+
  
 #  resources :budgets, only: [:edit, :update]
 #  get 'budgets' => redirect('options/budgets'), only: [:index, :new, :create]
@@ -55,6 +57,8 @@ Rails.application.routes.draw do
   post "ajax/dev_check" 
   post "ajax/user_upd" 
   post "ajax/status_check" 
+  post "ajax/add_provider_manager" 
+  post "ajax/del_provider_manager" 
 
   post "file/del_file"
   post '/file' => 'file#create_file'

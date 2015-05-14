@@ -17,6 +17,8 @@
 # меняем отметки coder и boss непосредственно в index
 $(document).ready ->
   
+
+
   $('#develop_project_id').chosen(width: '402px', disable_search: 'true')
   $('.develops').on 'click', 'span.check_img', ->
     #alert(228)

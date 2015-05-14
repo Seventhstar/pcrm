@@ -115,13 +115,13 @@ $("#mulitplefileuploader").uploadFile(settings);
     var valuesToSubmit = $('form').serialize();
     var values = $('form').serialize();
     var url = $('form').attr('action');
-    alert(q2ajx(values));
-        //alert(q2ajx(values));
-    /*each(q2ajx(values), function(i, a) {
-      //return url[i] = a;
-      //alert(values[i]);
-      alert (i);
-    });*/
+    var empty_name = false;
+    //alert(values);
+    each(q2ajx(values), function(i, a) {
+      if (i.indexOf("[name]") >0  && a=="" ) { empty_name = true; return false; }
+    });
+
+    if (!empty_name){
     $.ajax({
         type: "POST",
         url: url, //sumbits it to the given url of the form
@@ -132,6 +132,7 @@ $("#mulitplefileuploader").uploadFile(settings);
           $.get(url, null, null, "script");
       }
     });
+    }
     
     return false; // prevents normal behaviour
   });

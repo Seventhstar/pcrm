@@ -375,6 +375,8 @@ table.tbl_fc td{vertical-align:top; padding: 0 0 10px 0; }
 table.tbl_fc td.last_td{padding: 0 !important; }
 table.tbl_fc td.caption{width: 115px; padding-right: 15px; padding-top: 7px; text-align:right; font-weight: 500; }
 table.tbl_fc td.caption2{width: 235px; padding-right: 15px; padding-top: 0px; text-align:right; font-weight: 500; }
+table.tbl_fc td.caption3{ font-weight: 500; float: left;}
+input.left{float: left;}
 
 .btn_reset {margin-right: 10px;}
 

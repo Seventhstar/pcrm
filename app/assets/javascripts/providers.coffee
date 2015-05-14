@@ -1,6 +1,11 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
+
+@update_provider = (p_id)->
+  $.get '/providers/'+p_id+'/edit', "", null, "script"
+  return
+
 $(document).ready ->
 
   $('#style').chosen(width: '240px',  disable_search: true).on 'change', ->
@@ -15,3 +20,36 @@ $(document).ready ->
     
   $('.chosen-select').chosen({width: '402px', display_selected_options: false, display_disabled_options:false,placeholder_text_multiple: 'Выберите...'})
   	
+  $('.page-wrapper').on 'click','#btn-send', ->
+    pr_id = $(this).attr('providerid')
+    inputs = $('input[name^=manager]')
+    $.ajax
+      url: '/ajax/add_provider_manager'
+      data: inputs.serialize()+"&provider_id="+pr_id
+      type: 'POST'
+      beforeSend: (xhr) ->
+        xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
+        return
+      success: ->
+        update_provider(pr_id)
+        return
+     return
+
+  # удаляем менеджера
+  $('.page-wrapper').on 'click', '#pmanagers span.icon_remove', ->
+    pr_id = $('#btn-send').attr('providerid')
+    del = confirm('Действительно удалить?')
+    if !del
+      return
+    pm_id = $(this).attr('providermanager_id')
+    $.ajax
+      url: '/ajax/del_provider_manager'
+      data: 'p_id': pm_id
+      type: 'POST'
+      beforeSend: (xhr) ->
+        xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
+        return
+      success: ->
+        update_provider(pr_id)
+        return
+    return

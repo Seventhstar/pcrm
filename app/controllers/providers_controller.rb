@@ -46,11 +46,15 @@ class ProvidersController < ApplicationController
   # GET /providers/new
   def new
     @provider = Provider.new
+    @managers = {}
+    @manager  = ProviderManager.new
   end
 
   # GET /providers/1/edit
   def edit
     @provider = Provider.find(params[:id])
+    @managers = @provider.provider_managers
+    @manager  = ProviderManager.new
   end
 
   # POST /providers
@@ -73,6 +77,7 @@ class ProvidersController < ApplicationController
   # PATCH/PUT /providers/1.json
   def update
     respond_to do |format|
+      puts provider_params
       if @provider.update(provider_params)
       #@provider = Provider.find(params[:id])
       #if @provider.update_attributes(params[:provider])

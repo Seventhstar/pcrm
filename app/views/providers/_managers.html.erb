@@ -1,0 +1,33 @@
+
+<div class="panel panel-default">
+<div class="panel-heading table-heading head month"> Менеджеры:</div>
+<table class="tleads" id="pmanagers">
+  <thead>
+    <tr>
+      <th>ФИО</th>
+      <th>Телефон</th>
+      <th>E-mail</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @managers.each do |manager| %>
+      <tr>
+        <td><%= manager.name %></td>
+        <td><%= manager.phone %></td>
+        <td><%= manager.email %></td>
+        <%= sp_edit_delete(manager) %>
+      </tr>
+    <% end %>
+
+
+     <tr><td class="caption3">Новый менеджер: <%= text_field "manager",:name, {:class => 'txt'} %></td>
+      <td><div class="inp"><%= text_field "manager",:phone, {:class => 'txt'} %></td>
+      <td><div class="inp"><%= text_field "manager",:email, {:class => 'txt'} %></td>
+      <td><span class="sub btn_a" id="btn-send" providerid="<%= @provider.id %>"> Добавить</span></td></tr>
+
+  </tbody>
+</table>
+
+</div>

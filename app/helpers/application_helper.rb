@@ -43,7 +43,7 @@ module ApplicationHelper
     end
   end
 
-  def sortable_pil(column, title = nil)
+  def sortable_pil(column, title = nil, default_dir = 'desc')
     title ||= column.titleize
     sort_col = sort_column == 'month' ?  "start_date": sort_column
     css_class = column == sort_col ? "active #{sort_direction}" : ""
@@ -51,8 +51,12 @@ module ApplicationHelper
 
     direction = column == sort_column && sort_direction
     if (column == "month" && column != sort_column)
-      direction = "desc"
+      direction = "desc"    
     end  
+    if (direction == false)
+      direction = default_dir
+    end
+
     
 
     content_tag :span, title,{ :class => css_class, :sort => column, :direction => direction } 
@@ -167,6 +171,13 @@ module ApplicationHelper
 	ed + de
       end
   end
+
+  def sp_edit_delete(element)
+      content_tag :td,{:class=>"edit_delete"} do
+       de = content_tag("span","",{:class=>'icon icon_remove', element.class.to_s.concat("_id") => element.id})
+      end
+  end
+
 
   def list_header( cls )
   case cls
