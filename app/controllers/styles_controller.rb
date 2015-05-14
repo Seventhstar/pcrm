@@ -51,7 +51,7 @@ class StylesController < ApplicationController
     respond_to do |format|
       if @style.update(style_params)
         format.html { redirect_to '/options/styles', notice: 'Стиль успешно обновлен.' }
-        format.json { render :show, status: :ok, location: @style }
+        format.json { render :index, status: :ok, location: @style }
       else
         format.html { render :edit }
         format.json { render json: @style.errors, status: :unprocessable_entity }

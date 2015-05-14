@@ -36,7 +36,7 @@ class StatusesController < ApplicationController
     respond_to do |format|
       if @status.save
         format.html { redirect_to '/options/statuses', notice: 'Статус успешно создан.' }
-        format.json { render :show, status: :created, location: @status }
+        format.json { render :index, status: :created, location: @status }
       else
         format.html { render :new }
         format.json { render json: @status.errors, status: :unprocessable_entity }

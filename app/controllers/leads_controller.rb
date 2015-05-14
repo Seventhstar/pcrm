@@ -19,7 +19,8 @@ class LeadsController < ApplicationController
     query_str = Rails.env.production? ? "*, date_trunc('month', start_date) AS month" : "*, datetime(start_date, 'start of month') AS month"
     @leads = current_user.admin? ? Lead.select(query_str) : current_user.leads.select(query_str)
     
-    if params[:search]
+    if !params[:search].nil?
+      #puts "params[:search]:" + params[:search].nil?.to_s
       info =params[:search]
       @leads = @leads.where('LOWER(info) like LOWER(?)','%'+info+'%')
     end
@@ -84,22 +85,19 @@ class LeadsController < ApplicationController
 
     respond_to do |format|
       if @lead.save
-         if params[:lead][:first_comment]
-            comm = @lead.leads_comments.new
-	    comm.comment = params[:lead][:first_comment]
-	    comm.user_id = params[:lead][:user_id]
-            comm.save
-	 end
-	   STDERR.puts "params"
-	   STDERR.puts params[:phone]
-	   STDERR.puts params[:lead][:first_comment]
-        format.html { redirect_to leads_url, notice: 'Лид успешно создан.'}
-        format.json { render :show, status: :created, location: @lead }
+       if params[:lead][:first_comment]
+        comm = @lead.leads_comments.new
+        comm.comment = params[:lead][:first_comment]
+        comm.user_id = params[:lead][:user_id]
+        comm.save
+       end
+       format.html { redirect_to leads_url, notice: 'Лид успешно создан.'}
+       format.json { render :show, status: :created, location: @lead }
       else
-        format.html { render :new }
-        format.json { render json: @lead.errors, status: :unprocessable_entity }
+       format.html { render :new }
+       format.json { render json: @lead.errors, status: :unprocessable_entity }
       end
-    end
+     end
   end
 
   # PATCH/PUT /leads/1

@@ -321,6 +321,7 @@ label.select_custom_ext:after {	background-position: -18px -9px; }
 .users_box .items_box_cont table .state {width: 70px; text-align: center; }
 .users_box .items_box_cont table .admin {width: 70px; text-align: center; }
 
+/*td.state,td.center{  text-align: center !important;}*/
 td.state{  text-align: center;}
 
 .menu_c {}

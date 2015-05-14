@@ -18,26 +18,33 @@
   margin-right: 7px;
 }
 
-.flash_notice, .flash_error, .flash_alert {
+.alert .close {display: none;}
+
+.alert { padding: 15px; margin-bottom: 20px; border: 1px solid transparent; border-radius: 4px; }
+.flash_notice, .flash_error, .flash_alert, .flash_danger, .flash_warning {
   padding: 15px;
   margin-bottom: 20px;
   border: 1px solid transparent;
   border-radius: 4px;
 }
 
-
-.flash_notice, .flash_success {
+.flash_notice, .flash_success,.alert-success  {
   color: #3c763d;
   background-color: #dff0d8;
   border-color: #d6e9c6;
 }
 
-.flash_error,.flash_alert {
+.flash_error,.flash_alert, .flash_danger,.alert-danger {
   color: #a94442;
   background-color: #f2dede;
   border-color: #ebccd1;
 }
 
+.flash_warning, .alert-warning  {
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+}
 
 .container {
   width: 1100px;

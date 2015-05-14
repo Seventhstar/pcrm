@@ -87,7 +87,7 @@ $("#mulitplefileuploader").uploadFile(settings);
   // дата по умолчанию для нового лида - сегодня
   if (!$("#lead_start_date").val()){
 	    $("#lead_start_date").val($.datepicker.formatDate('dd.mm.yy', new Date()));
-      $("#lead_status_date").val($.datepicker.formatDate('dd.mm.yy', new Date()));
+     // $("#lead_status_date").val($.datepicker.formatDate('dd.mm.yy', new Date()));
   }
 
  $('.sel_val').click(function(){
@@ -113,8 +113,15 @@ $("#mulitplefileuploader").uploadFile(settings);
   $(document).on('click','#btn-send',function(e) {  
      
     var valuesToSubmit = $('form').serialize();
+    var values = $('form').serialize();
     var url = $('form').attr('action');
-    
+    alert(q2ajx(values));
+        //alert(q2ajx(values));
+    /*each(q2ajx(values), function(i, a) {
+      //return url[i] = a;
+      //alert(values[i]);
+      alert (i);
+    });*/
     $.ajax({
         type: "POST",
         url: url, //sumbits it to the given url of the form

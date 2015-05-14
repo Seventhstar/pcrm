@@ -7,17 +7,18 @@
 
 <% @leads.each do |lead| %>
     <% new_date = lead.start_date? ? lead.start_date : Date.today %>
-    <% p_date = lead.status_date? ? lead.status_date : Date.today %>
+    <% p_date = lead.status_date? ? lead.status_date.try('strftime',"%d.%m.%Y") : "" %>
+    <% m_head = lead.status_date? ? t(lead.status_date.try('strftime',"%B"))+" "+lead.status_date.try('strftime',"%Y"): "Без статуса" %>
       
       <% if cur_month != new_date.month && (params[:sort] == "start_date" || (params[:sort] == nil && !is_admin?)) %> 
           <% cur_month = new_date.month %>
           <%= render "head", {:first_table => first_table, :heading => t(new_date.try('strftime',"%B"))+" "+new_date.try('strftime',"%Y") } %>
-      <% elsif cur_month != p_date.try('strftime',"%B") && (params[:sort] == "status_date" || (params[:sort] == nil && is_admin?))%>
-          <% cur_month = p_date.try('strftime',"%B") %>
-          <%= render "head", {:first_table => first_table, :heading => t(p_date.try('strftime',"%B"))+" "+p_date.try('strftime',"%Y") } %>    
-      <% elsif cur_user != lead.ic_user.name && (params[:sort] == "ic_user_id")%>
-        <% cur_user = lead.ic_user.name %>
-          <%= render "head", {:first_table => first_table, :heading => t(lead.ic_user.name) } %>
+      <% elsif cur_month != p_date && (params[:sort] == "status_date" || (params[:sort] == nil && is_admin?))%>
+          <% cur_month = p_date %>
+          <%= render "head", {:first_table => first_table, :heading =>  m_head} %>    
+      <% elsif cur_user != user_name(lead.user_id) && (params[:sort] == "ic_user_id")%>
+        <% cur_user = user_name(lead.user_id) %>
+          <%= render "head", {:first_table => first_table, :heading => user_name(lead.user_id) } %>
       <% elsif cur_status != lead.status.name && (params[:sort] == "status_id")%>
         <% cur_status = lead.status.name %>
         <%= render "head", {:first_table => first_table, :heading => t(lead.status.name) } %>
@@ -26,7 +27,7 @@
 
         <tr class="<%= class_for_lead(lead) %>" >      
         <td><%= lead.status_name %></td>
-        <td><%= p_date.try('strftime',"%d.%m.%Y") %></td>
+        <td class="center"><%= p_date %></td>
         <td><%= lead.fio %></td>
         <td><%= lead.phone %></td>
         <td><%= lead.info %></td>

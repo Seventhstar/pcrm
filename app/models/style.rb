@@ -1,6 +1,7 @@
 class Style < ActiveRecord::Base
   has_many :provider_styles
   has_many :providers, through: :provider_styles
+  validates :name, :length => { :minimum => 3 }
 
   def self.tokens(query)
     styles = where("name like ?", "%#{query}%")
