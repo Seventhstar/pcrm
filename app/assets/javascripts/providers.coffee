@@ -20,7 +20,7 @@ $(document).ready ->
     
   $('.chosen-select').chosen({width: '402px', display_selected_options: false, display_disabled_options:false,placeholder_text_multiple: 'Выберите...'})
   	
-  $('.page-wrapper').on 'click','#btn-send', ->
+  $('.page-wrapper').on 'click','.managers #btn-send', ->
     pr_id = $(this).attr('providerid')
     inputs = $('input[name^=manager]')
     $.ajax

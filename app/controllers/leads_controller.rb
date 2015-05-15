@@ -20,7 +20,6 @@ class LeadsController < ApplicationController
     @leads = current_user.admin? ? Lead.select(query_str) : current_user.leads.select(query_str)
     
     if !params[:search].nil?
-      #puts "params[:search]:" + params[:search].nil?.to_s
       info =params[:search]
       @leads = @leads.where('LOWER(info) like LOWER(?)','%'+info+'%')
     end
@@ -37,7 +36,7 @@ class LeadsController < ApplicationController
     sort_1 = sort_column=='start_date' ? 'month' : sort_column
     order = sort_1 + " " + sort_direction + ", "+ sort_2  + " " + dir_2 + ", leads.created_at desc"
 
-    puts sort_1 + ": sort_1 " + sort_direction + " :sort_direction, "+ sort_2  + " " + dir_2 
+    #puts sort_1 + ": sort_1 " + sort_direction + " :sort_direction, "+ sort_2  + " " + dir_2 
 
     @leads = @leads.order(order)
 
@@ -51,8 +50,6 @@ class LeadsController < ApplicationController
 
 
   def update_multiple
-    
-    puts params[:leads_ids]
     @leads = Lead.find(params[:leads_ids])
 
     Lead.where(id: params[:leads_ids]).update_all(user_id: params[:user_id])
@@ -135,7 +132,6 @@ class LeadsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_lead
-#      puts params[:id]
       @lead = Lead.find(params[:id])
     end
 
@@ -172,7 +168,6 @@ class LeadsController < ApplicationController
   def get_history
     
     history = Hash.new
-
     # изменения в самом лиде
     @lead.versions.reverse.each do |version|
       if version[:event]!="create" && version != @lead.versions.first 
@@ -196,7 +191,6 @@ class LeadsController < ApplicationController
         history.store( at.to_s, {'at' => at_hum,'type'=> 'ch','author' => author,'changeset' => ch})
       end
     end
-
     # созданные файлы
     @lead.leads_files.each do |file|
       ch = Hash.new
@@ -208,7 +202,6 @@ class LeadsController < ApplicationController
         history.store( at, {'at' => at_hum,'type'=> 'add','author' => author,'changeset' => ch})
       end  
     end
-
     # удаленные файлы
     file_id = []
     deleted = PaperTrail::Version.where_object(lead_id: @lead.id)
@@ -229,7 +222,7 @@ class LeadsController < ApplicationController
       ch.store( index, {'file' =>  a['name']} )
       history.store( at, {'at' => at_hum,'type'=> 'del','author' => author,'changeset' => ch})
     end  
-
+    
     # созданные и потом удаленные файлы
     created = PaperTrail::Version.where(:item_id => file_id, event: 'create', item_type: 'LeadsFile')
     created.each_with_index do |file,index|
@@ -242,7 +235,6 @@ class LeadsController < ApplicationController
       ch.store( index, {'file' =>  f[f.index('name:')+2][2..-1] } )
       history.store( at, {'at' => at_hum,'type'=> 'add','author' => author,'changeset' => ch})
     end  
-
     history.sort.reverse
   end
 

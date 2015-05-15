@@ -49,7 +49,9 @@
 
 
 <div class='managers'>
-<%= render "managers" %>
+<% if !@provider.id.nil? %>
+    <%= render "managers" %>
+<% end %>    
 </div>
 
 <div class="sep_3"></div>

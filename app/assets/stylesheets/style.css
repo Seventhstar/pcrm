@@ -375,12 +375,18 @@ table.tbl_fc td{vertical-align:top; padding: 0 0 10px 0; }
 table.tbl_fc td.last_td{padding: 0 !important; }
 table.tbl_fc td.caption{width: 115px; padding-right: 15px; padding-top: 7px; text-align:right; font-weight: 500; }
 table.tbl_fc td.caption2{width: 235px; padding-right: 15px; padding-top: 0px; text-align:right; font-weight: 500; }
-table.tbl_fc td.caption3{ font-weight: 500; float: left;}
+
+
+td.caption3{ font-weight: 500; }
+td.caption3 span{ float: left; padding-top: 8px; padding-right: 15px;}
+.inp2{ width: 245px; float: left;}  
+
 input.left{float: left;}
 
 .btn_reset {margin-right: 10px;}
 
 table.tbl_fc_1 td.caption{width: 170px; }
+th.center {text-align:center;}
 
 
 .auth_form {width: 425px; margin:0 auto; }
