@@ -1,5 +1,7 @@
 class LeadsController < ApplicationController
 
+  respond_to :html, :json
+
   before_action :set_lead, only: [:show, :edit, :update, :destroy]
   before_action :logged_in_user
   helper_method :sort_column, :sort_direction, :only_actual
@@ -61,6 +63,15 @@ class LeadsController < ApplicationController
   # GET /leads/1
   # GET /leads/1.json
   def show
+    @title = 'Просмотр лида'
+
+    @channels = Channel.all
+    @statuses = Status.all
+    @comments = @lead.leads_comments.order('created_at asc')
+    @lead_files = @lead.leads_files
+
+    @history = get_history
+    respond_modal_with @lead, location: root_path
   end
 
   # GET /leads/new

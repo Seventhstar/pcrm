@@ -1,0 +1,14 @@
+<div id="full-width" class="modal container" tabindex="-1" style="display: block; margin-top: -135.5px;" aria-hidden="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="hl hl_a bd" id="mainModalLabel">
+          <%= @title if @title %>
+        </h4>
+      </div>
+
+      <%= yield %>
+    </div>
+  </div>
+</div>

@@ -1,49 +1,55 @@
-<p id="notice"><%= notice %></p>
+<div class="box_wrap box_wrap_1">
 
-<p>
-  <strong>Info:</strong>
-  <%= @lead.info %>
-</p>
+<%= simple_form_for(@lead) do |f| %>
+<%= f.error_notification %>
 
-<p>
-  <strong>Fio:</strong>
-  <%= @lead.fio %>
-</p>
+	<div class="left">
+		<table class="tbl_fc tbl_fc_1">
+		<tr><td class="caption">Дата создания:</td>
+			<td><div class="inp_w"><%= f.text_field :start_date, :value => @lead.start_date.try('strftime',"%d.%m.%Y"), label: false, class: "txt datepicker" %></div></td></tr>
+		<tr><td class="caption">Фио:</td>
+		    <td><div class="inp_w"><%= f.input :fio, label: false %></div></td></tr>
+		<tr><td class="caption">Телефон:</td>
+		    <td><div class="inp_w"><%= f.input :phone, label: false, class: :txt %></div></td></tr>
+		<tr><td class="caption">E-Mail:</td>
+			<td><div class="inp_w"><%= f.input :email, label: false %></div></td></tr>    
+		<tr><td class="caption">Информация о запросе:</td>
+			<td><div class="inp_w"><%= f.input :info, label: false %></div></td></tr>
+		<tr><td class="caption">Метраж:</td>
+			<td><div class="inp_w"><%= f.input :footage, label: false %></div></td></tr>
+		<tr><td class="caption">Адрес объекта:</td>
+			<td><div class="inp_w"><%= f.input :address, label: false %></div></td></tr>
+			
+		<tr><td class="caption">Статус:</td>
+			<td><div class="inp_w"><%= f.select 'status_id', options_for_select(@statuses.collect{ |u| [u.name, u.id] },@lead.status_id) %>
+			</div></td></tr>
+		<tr><td class="caption">Дата для статуса:</td>
+			<td><div class="inp_w"><%= f.text_field :status_date,:value => @lead.status_date.try('strftime',"%d.%m.%Y"), label: false, class: "txt datepicker" %>
+			</div></td></tr>
+		<tr><td class="caption">Канал:</td>
+			<td><div class="inp_w"><%= f.select 'channel_id', options_for_select(@channels.collect{ |u| [u.name, u.id] },@lead.channel_id) %>
+		</div></td></tr>
+		
+		
+		<% if is_admin? %>
+			<tr><td class="caption">Создатель:</td>
+				<td><div class="inp_w"><%= f.select :user_id, options_for_select(User.order(:name).collect{ |u| [u.name, u.id] },@lead.user_id) %>
+			</div></td></tr>
+		<% end %>
+		
+		<tr><td class="caption">Ответственный:</td>
+			<td><div class="inp_w"><%= f.select :ic_user_id, options_for_select(User.order(:name).collect{ |u| [u.name, u.id] },@lead.ic_user_id) %>
+		</div></td></tr>
 
-<p>
-  <strong>Footage:</strong>
-  <%= @lead.footage %>
-</p>
+		</table>
+	</div>
+<% end %>
 
-<p>
-  <strong>Phone:</strong>
-  <%= @lead.phone %>
-</p>
+  <div class="right">
+    <div class="comments_box">
+      <%= render "comments" %>
+    </div>
+  </div>
 
-<p>
-  <strong>Email:</strong>
-  <%= @lead.email %>
-</p>
+</div>
 
-<p>
-  <strong>Channel:</strong>
-  <%= @lead.channel_id %>
-</p>
-
-<p>
-  <strong>Status:</strong>
-  <%= @lead.status_id %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @lead.user_id %>
-</p>
-
-<p>
-  <strong>Status date:</strong>
-  <%= @lead.status_date %>
-</p>
-
-<%= link_to 'Edit', edit_lead_path(@lead) %> |
-<%= link_to 'Back', leads_path %>
