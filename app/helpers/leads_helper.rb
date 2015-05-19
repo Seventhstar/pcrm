@@ -20,8 +20,7 @@ module LeadsHelper
 
  def status_name(st_id)
    	if st_id.present?
-   		status = Status.find(st_id)
-   		status.name
+       Status.find_by_id(st_id).try(:name)
    	else
    	  ""	
    	end

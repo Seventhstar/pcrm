@@ -20,8 +20,8 @@
       <% elsif cur_user != user_name(lead.user_id) && (params[:sort] == "users.name")%>
         <% cur_user = user_name(lead.user_id) %>
           <%= render "head", {:first_table => first_table, :heading => user_name(lead.user_id) } %>
-      <% elsif cur_status != lead.status.name && (params[:sort] == "status_id")%>
-        <% cur_status = lead.status.name %>
+      <% elsif cur_status != lead.status.try(:name) && (params[:sort] == "status_id")%>
+        <% cur_status = lead.status.try(:name) %>
         <%= render "head", {:first_table => first_table, :heading => t(lead.status.name) } %>
       <% end %>
         <% first_table = false %>        
