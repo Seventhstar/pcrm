@@ -195,7 +195,7 @@ table td{font-size: 13px;}
 /*----Элементы формы_start----*/
 .txt,.form-control {height: 34px; padding: 0 10px 0 10px; background: #fff; border:1px solid #e5e5e5; border-top:1px solid #d9d9d9; box-shadow: inset 0 2px 0 #f2f2f2; border-radius: 5px; box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box;}
 .inp_w .txt, .inp_w, .inp_w input{width: 100%; }
-.lbl{ padding: 6px 10px 6px 10px; border:1px solid #e5e5e5; border-radius: 5px; font: normal 14px 'Pragmatica', sans-serif; }
+.lbl{ padding: 6px 10px 6px 10px; border:1px solid #e5e5e5; border-radius: 5px; font: normal 14px 'Pragmatica', sans-serif; min-height: 20px;}
 
 textarea.txt, #lead_first_comment {padding: 5px 10px 5px 10px; margin:0 0 0 0; vertical-align:top; resize: none; overflow:auto;}
 .txtArea_1 {height: 80px; }
@@ -413,8 +413,11 @@ th.center {text-align:center;}
 .comments_box .commentAdd_form .txt {float:left; width: 370px; }
 .comments_box .commentAdd_form .sub {float:right;}
 
-.jspContainer{ position: relative;  width: 492px;  height: 347px;  overflow-y: scroll; }
-.jspContainer2{ position: relative;  width: 492px;  height: 390px;  overflow-y: scroll; }
+.jspContainer{ position: relative;  width: 492px; overflow-y: scroll; }
+.jsph  { height: 347px; }
+.jsph2 { height: 390px; }
+.jsph21{ height: 444px; }
+.jsph1 { height: 400px; }
 
 .comments_list_a {}
 .comments_list_a .item{padding: 14px 0 0 0; margin: 14px 0 0 64px; border-top:1px solid #e5e5e5; line-height:1.25;}

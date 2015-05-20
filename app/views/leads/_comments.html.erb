@@ -1,7 +1,7 @@
   
   <div class="box_i">
   <div class="hl"><span class="icon icon_chat"></span>Комментарии: </div>  
-   <div class="jspContainer<%= is_admin? ? 2:"" %>">
+   <div class="jspContainer jsph<%= is_admin? ? 2:"" %><%= controller.action_name != 'edit' ? "1":"" %>">
      <div class="jspPane">
 
     <div class="comments_list_a">
@@ -15,7 +15,7 @@
                   <div class="info"><%= leads_comment.created_at.strftime("%d.%m.%Y %H:%M:%S") %></div>
                   <div class="date">
                   
-                    <% if current_user== leads_comment.user || current_user.admin %>
+                    <% if (current_user== leads_comment.user || current_user.admin) && controller.action_name == 'edit' %>
                        <span class="icon icon_remove_1 btn_remove" leadcommentid=<%= leads_comment.id %>  leadid=<%= leads_comment.lead.id %> ></span>
                     <% end %>
                     </div>
