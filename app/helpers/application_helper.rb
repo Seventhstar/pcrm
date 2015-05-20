@@ -174,6 +174,14 @@ module ApplicationHelper
     end
   end
 
+  def edit_show(element)
+    content_tag :td,{:class=>"edit_delete"} do
+     ed = link_to "", edit_polymorphic_path(element), :class=>"icon icon_edit"
+     show = link_to "", polymorphic_path(element), :class=>"icon icon_show", data: { modal: true }
+     ed + show
+    end
+  end
+
   def sp_edit_delete(element)
       content_tag :td,{:class=>"edit_delete"} do
        de = content_tag("span","",{:class=>'icon icon_remove', element.class.to_s.concat("_id") => element.id})

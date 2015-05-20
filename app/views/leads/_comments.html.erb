@@ -1,6 +1,6 @@
   
   <div class="box_i">
-  <div class="hl"><span class="icon icon_chat"></span>Комментарии:</div>  
+  <div class="hl"><span class="icon icon_chat"></span>Комментарии: </div>  
    <div class="jspContainer<%= is_admin? ? 2:"" %>">
      <div class="jspPane">
 
@@ -30,15 +30,18 @@
      </div>
     </div>
   </div>
+
+<% if controller.action_name == 'edit' %>
   <div class="commentAdd_form">
     <form action="">
       <fieldset>
-        
         <input type="text" class="txt" placeholder="Новый комментарий" id="comment_comment">
          <span class="sub btn_a btn-sm" id="btn-chat" leadid=<%= @lead.id %>> Отправить</span>
       </fieldset>
     </form>
   </div>
+<% end %>
+
 </div>
 
 

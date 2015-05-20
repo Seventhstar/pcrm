@@ -38,7 +38,7 @@
         <% if is_update_form? %>
           <td><%= check_box_tag "leads_ids[]", lead.id %></td>
         <% else %>
-          <%= edit_delete(lead)%>
+          <%= edit_show(lead)%>
         <% end %>
 
       </tr>

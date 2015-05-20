@@ -30,6 +30,11 @@ class Lead < ActiveRecord::Base
     user.try(:name)
   end
 
+  def ic_user_name
+    ic_user.try(:name)
+  end
+
+
   def user_name=(name)
     self.users = User.find_or_create_by_name(name) if name.present?
   end
