@@ -43,7 +43,9 @@ a:hover .icon_user, .active .icon_user {background-position:-18px -18px; }
 
 .icon_remove {background-position:-52px 0; width: 15px; height: 15px;}
 .icon_remove.disabled {background-position:-52px -18px; }
-.icon_close {background-position:-52px -34px; width: 16px; height: 16px;}
+
+.icon_close {background-position:-52px -35px; width: 16px; height: 16px;}
+.icon_close:hover {background-position:-52px 0; }
 
 .hl .icon_remove {margin-top: 4px !important;}
 
@@ -363,15 +365,16 @@ td.state{  text-align: center;}
 .history_box .items_box_cont .date{width: 80px;}
 
 .hl_a {font-size: 17px; color: #000; line-height: 1.2; margin:0 0 14px 0; font-weight: 500;}
-.hl_a.bd {border-bottom: 2px solid #e5e5e5; padding: 0 0 16px 0; margin:0 0 20px 0;}
+.hl_a.bd {border-bottom: 2px solid #e5e5e5; padding: 0 0 16px 0; margin:0 0 30px 0;}
 
 .box_wrap {}
 .box_wrap:after {content: ' '; clear:both; display: block; width: 0; height: 0; overflow: hidden; font-size: 0;}
 .box_wrap .left{float:left;}
 .box_wrap .right{float:right;}
 
-.box_wrap_1 .left{width: 542px; }
-.box_wrap_1 .right{width: 535px; }
+.box_wrap_1 .left{width: 534px; }
+.box_wrap_1 .left2{width: 520px; float:left;}
+.box_wrap_1 .right{width: 534px; }
 
 .box_cent {position:relative;}
 
@@ -391,7 +394,7 @@ input.left{float: left;}
 
 .btn_reset {margin-right: 10px;}
 
-table.tbl_fc_1 td.caption{width: 170px; }
+table.tbl_fc_1 td.caption{width: 160px; }
 th.center {text-align:center;}
 
 
