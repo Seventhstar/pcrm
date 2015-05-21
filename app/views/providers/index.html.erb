@@ -13,7 +13,14 @@
 <label class="combobox">
 <%= select_tag "goodstype", content_tag(:option,'Вид товара...',:value=>"")+options_from_collection_for_select(@goodstypes, "id", "name") %> 
 </label>
+
+<label class="combobox">
+<%= select_tag "p_status", content_tag(:option,'Статус...',:value=>"")+options_from_collection_for_select(@p_statuses, "id", "name") %> 
+</label>
+
+
 <% end %>
+
 
 </div>
 

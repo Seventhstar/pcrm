@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing P Statuses</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @p_statuses.each do |p_status| %>
+      <tr>
+        <td><%= p_status.name %></td>
+        <td><%= link_to 'Show', p_status %></td>
+        <td><%= link_to 'Edit', edit_p_status_path(p_status) %></td>
+        <td><%= link_to 'Destroy', p_status, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New P status', new_p_status_path %>

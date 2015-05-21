@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   has_many :leads
+  has_many :ic_leads, foreign_key: :ic_user_id, class_name: 'Lead'
   has_many :leads_files
 
   attr_accessor :remember_token, :activation_token, :reset_token

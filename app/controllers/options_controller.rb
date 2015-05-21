@@ -27,6 +27,9 @@ class OptionsController < ApplicationController
     when "goodstypes"
       @items = Goodstype.order(:name)
       @item  = Goodstype.new
+    when "p_statuses"
+      @items = PStatus.order(:name)
+      @item  = PStatus.new
     else
       puts "You gave me #{a} -- I have no idea what to do with that."
     end

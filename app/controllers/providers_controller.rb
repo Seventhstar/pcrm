@@ -8,11 +8,13 @@ class ProvidersController < ApplicationController
     @styles = Style.all
     @budgets = Budget.order(:name)
     @goodstypes = Goodstype.order(:name)
+    @p_statuses = PStatus.order(:name)
 
     all_ids = Provider.order(:name).ids
     sp = all_ids
     bp = all_ids
     gtp = all_ids
+    ps = all_ids
 
     
     if params[:style] && params[:style]!=""
@@ -27,7 +29,12 @@ class ProvidersController < ApplicationController
         gtp = Goodstype.find(params[:goodstype]).providers.ids
     end
 
-    ids = sp & bp & gtp
+    if params[:p_status] && params[:p_status]!=""
+        ps = PStatus.find(params[:p_status]).providers.ids
+    end
+
+
+    ids = sp & bp & gtp & ps
     #if ids.empty?
     #  @providers = @p.order(sort_column + " " + sort_direction) 
     #else 
@@ -55,6 +62,7 @@ class ProvidersController < ApplicationController
     @provider = Provider.find(params[:id])
     @managers = @provider.provider_managers
     @manager  = ProviderManager.new
+    @p_statuses = PStatus.order(:name)
   end
 
   # POST /providers
@@ -108,7 +116,7 @@ class ProvidersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def provider_params
-      params.require(:provider).permit(:name, :manager, :phone, :komment, :address, :email, :url, :spec, :budget_ids =>[], :style_ids=>[], :goodstype_ids =>[] )
+      params.require(:provider).permit(:name, :manager, :phone, :komment, :address, :email, :url, :spec, :p_status_id,:budget_ids =>[], :style_ids=>[], :goodstype_ids =>[] )
     end
 
   def sort_column

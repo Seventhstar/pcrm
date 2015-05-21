@@ -50,7 +50,7 @@ class StatusesController < ApplicationController
     respond_to do |format|
       if @status.update(status_params)
         format.html { redirect_to '/options/statuses', notice: 'Статус успешно обновлен.' }
-        format.json { render :show, status: :ok, location: @status }
+        format.json { render :index, status: :ok, location: @status }
       else
         format.html { render :edit }
         format.json { render json: @status.errors, status: :unprocessable_entity }

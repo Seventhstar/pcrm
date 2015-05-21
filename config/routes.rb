@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  resources :p_statuses
+
   resources :priorities
 
   resources :dev_projects

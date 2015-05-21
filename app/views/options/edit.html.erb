@@ -14,12 +14,13 @@
 		  </ul>	
 	<% end %>
 
-	<% if ['providers','budgets','goodstypes','styles'].include?(params['options_page']) %>		    
+	<% if ['providers','budgets','goodstypes','styles','p_statuses'].include?(params['options_page']) %>		    
 			<div class="head">Настройки поставшиков:</div>
 			<ul>
 			    <%= option_li("budgets","Бюджеты") %>
 			    <%= option_li("goodstypes","Виды товаров") %>
 			    <%= option_li("styles","Стили") %>
+			    <%= option_li("p_statuses","Статусы") %>
 			</ul>
 	<% end %> 
   </div>

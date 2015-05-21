@@ -7,8 +7,8 @@
 
 <% @leads.each do |lead| %>
     <% new_date = lead.start_date? ? lead.start_date : Date.today %>
-    <% p_date = lead.status_date? ? lead.status_date.try('strftime',"%B") : "Без статуса" %>
-    <% m_head = lead.status_date? ? t(lead.status_date.try('strftime',"%B"))+" "+lead.status_date.try('strftime',"%Y"): "Без статуса" %>
+    <% p_date = lead.status_date? ? lead.status_date.try('strftime',"%B") : "Без даты статуса" %>
+    <% m_head = lead.status_date? ? t(lead.status_date.try('strftime',"%B"))+" "+lead.status_date.try('strftime',"%Y"): "Без даты статуса" %>
       
       <% if cur_month != new_date.month && (params[:sort] == "start_date" || (params[:sort] == nil && !is_admin?)) %> 
           <% cur_month = new_date.month %>
@@ -20,6 +20,9 @@
       <% elsif cur_user != user_name(lead.user_id) && (params[:sort] == "users.name")%>
         <% cur_user = user_name(lead.user_id) %>
           <%= render "head", {:first_table => first_table, :heading => user_name(lead.user_id) } %>
+      <% elsif cur_user != user_name(lead.ic_user_id) && (params[:sort] == "ic_users.name")%>
+          <% cur_user = user_name(lead.ic_user_id) %>
+          <%= render "head", {:first_table => first_table, :heading => user_name(lead.ic_user_id) } %>          
       <% elsif cur_status != lead.status.try(:name) && (params[:sort] == "status_id")%>
         <% cur_status = lead.status.try(:name) %>
         <%= render "head", {:first_table => first_table, :heading => t(lead.status.name) } %>

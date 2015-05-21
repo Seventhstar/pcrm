@@ -8,17 +8,25 @@
 
 $(document).ready ->
 
-  $('#style').chosen(width: '240px',  disable_search: true).on 'change', ->
+  $('#style').chosen(width: '180px').on 'change', ->
   	$.get 'providers', $("#p_search").serialize(), null, 'script'
 
-
-  $('#budget').chosen(width: '240px', disable_search: true).on 'change', ->
+  $('#budget').chosen(width: '180px').on 'change', ->
     $.get 'providers', $("#p_search").serialize(), null, 'script'
   
-  $('#goodstype').chosen(width: '240px', disable_search: true).on 'change', ->
+  $('#goodstype').chosen(width: '180px').on 'change', ->
     $.get 'providers', $("#p_search").serialize(), null, 'script'
-    
+
+  $('#p_status').chosen(width: '180px').on 'change', ->
+    $.get 'providers', $("#p_search").serialize(), null, 'script'
+
+  
+
   $('.chosen-select').chosen({width: '402px', display_selected_options: false, display_disabled_options:false,placeholder_text_multiple: 'Выберите...'})
+
+  $('#provider_p_status_id').chosen({width: '402px', display_selected_options: false, display_disabled_options:false,placeholder_text_multiple: 'Выберите...'})
+
+  
   	
   $('.page-wrapper').on 'click','.managers #btn-send', ->
     pr_id = $(this).attr('providerid')

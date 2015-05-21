@@ -201,6 +201,8 @@ module ApplicationHelper
       "Список каналов"
     when "Status"
       "Список статусов"    
+    when "PStatus"
+      "Список статусов"    
     else
       cls
     end
@@ -217,6 +219,8 @@ module ApplicationHelper
     when "Channel"
       "Новый канал"
     when "Status"
+      "Новый статус"    
+    when "PStatus"
       "Новый статус"    
     else
       cls

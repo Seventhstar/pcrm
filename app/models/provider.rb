@@ -6,7 +6,7 @@ class Provider < ActiveRecord::Base
     has_many :styles, through: :provider_styles
     has_many :budgets, through: :provider_budgets
     has_many :goodstypes, through: :provider_goodstypes
-
+    belongs_to :p_status
 
     attr_reader :style_tokens
     attr_reader :budget_tokens
@@ -33,6 +33,10 @@ class Provider < ActiveRecord::Base
 
     def goods_type_names
       self.goods_types.collect{ |t| t.name}.join(", ")
+    end
+
+    def p_status_name
+      p_status.try(:name)
     end
 
 
