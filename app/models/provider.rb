@@ -28,11 +28,11 @@ class Provider < ActiveRecord::Base
     end
 
     def goods_types_tokens=(tokens)
-      self.goods_type_ids = GoodsType.ids_from_tokens(tokens)
+      self.goodstype_ids = GoodsType.ids_from_tokens(tokens)
     end
 
     def goods_type_names
-      self.goods_types.collect{ |t| t.name}.join(", ")
+      self.goodstypes.collect{ |t| t.name}.join(", ")
     end
 
     def p_status_name

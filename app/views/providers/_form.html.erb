@@ -3,31 +3,14 @@
 <div class="box_wrap box_wrap_1">
   <div class="left">
     <table class="tbl_fc tbl_fc">
-    <tr><td class="caption">Название:</td>
-        <td><div class="inp_w"><%= f.input :name, label: false %></div></td></tr>
-    <tr><td class="caption">Менеджер:</td>
-        <td><div class="inp_w"><%= f.input :manager, label: false, class: :txt %></div></td></tr>
-    <tr><td class="caption">Телефон:</td>
-      <td><div class="inp_w"><%= f.input :phone, label: false, class: :txt, type: "text" %></div></td></tr>    
-    <tr><td class="caption">Адрес:</td>
-      <td><div class="inp_w"><%= f.input :address, label: false %></div></td></tr>
-    <tr><td class="caption">E-mail:</td>
-      <td><div class="inp_w"><%= f.input :email, label: false %></div></td></tr>
-    <tr><td class="caption">Сайт:</td>
-      <td><div class="inp_w"><%= f.input :url, label: false %></div></td></tr>
 
-    <tr><td class="caption"></td>
-      <td><%= link_to 'Отмена', providers_path, :class => "sub btn_a btn_reset"%>
-        <%= f.button :submit, value: 'Сохранить', :class => 'sub btn_a' %></td></tr>
-    </table>
-  </div>
+    <% a = [:name,:phone,:address,:url, :spec ] %>
+    <% a.each do |el| %>
 
-  <div class="right">
-    <table class="tbl_fc"><tbody>
-    <tr><td class="caption">Примечание:</td>
-      <td><div class="inp_w"><%= f.text_field :komment, class: :txt %></div></td> </tr>
-    <tr><td class="caption">Специализация:</td>
-      <td><div class="inp_w"><%= f.text_field :spec, class: :txt %></div></td></tr>
+      <tr><td class="caption"> <%= t(el) %>:</td>
+      <td><div class="inp_w"><%= f.input el, label: false %></div></td></tr>
+    <% end %>
+
     <tr><td class="caption">Стили:</td>
       <td><div class="select_custom select">
       <%= f.collection_select(:style_ids, Style.all, :id, :name, {}, {multiple: true,  class: "chosen-select"}) %>  </div>
@@ -41,8 +24,20 @@
       <%= f.collection_select(:goodstype_ids, Goodstype.all, :id, :name, {}, {multiple: true,  class: "chosen-select", :include_blank => 'None'}) %>    </div>
         </td></tr>
     <tr><td class="caption">Статус:</td>
-      <td><div class="inp_w"><%= f.select 'p_status_id', options_for_select(@p_statuses.collect{ |u| [u.name, u.id] },@provider.p_status_id) %>
+      <td><div class="inp_w">
+      <%= f.collection_select(:p_status_id, @p_statuses, :id, :name,{}) %>
       </div></td></tr>    
+
+    <tr><td class="caption"></td>
+      <td><%= link_to 'Отмена', providers_path, :class => "sub btn_a btn_reset"%>
+        <%= f.button :submit, value: 'Сохранить', :class => 'sub btn_a' %></td></tr>
+    </table>
+  </div>
+
+  <div class="right">
+    <table class="tbl_fc"><tbody>
+    <tr><td class="caption">Примечание:</td>
+      <td><div class="inp_w"><%= f.text_field :komment, class: :txt %></div></td> </tr>
     </tbody></table>
   </div>
 </div>

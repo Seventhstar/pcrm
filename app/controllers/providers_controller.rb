@@ -1,4 +1,5 @@
 class ProvidersController < ApplicationController
+  respond_to :html, :json
   before_action :set_provider, only: [:show, :edit, :update, :destroy]
   helper_method :sort_column, :sort_direction
   before_action :logged_in_user
@@ -47,7 +48,9 @@ class ProvidersController < ApplicationController
 
   # GET /providers/1
   # GET /providers/1.json
-  def show
+  def show    
+    @title = 'Просмотр лида'
+    respond_modal_with @lead, location: root_path
   end
 
   # GET /providers/new
@@ -55,6 +58,7 @@ class ProvidersController < ApplicationController
     @provider = Provider.new
     @managers = {}
     @manager  = ProviderManager.new
+    @p_statuses = PStatus.order(:name)
   end
 
   # GET /providers/1/edit
@@ -63,6 +67,8 @@ class ProvidersController < ApplicationController
     @managers = @provider.provider_managers
     @manager  = ProviderManager.new
     @p_statuses = PStatus.order(:name)
+    
+    
   end
 
   # POST /providers

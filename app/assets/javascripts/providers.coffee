@@ -22,9 +22,9 @@ $(document).ready ->
 
   
 
-  $('.chosen-select').chosen({width: '402px', display_selected_options: false, display_disabled_options:false,placeholder_text_multiple: 'Выберите...'})
+  $('.chosen-select').chosen({width: '402px', display_selected_options: false, display_disabled_options:false})
 
-  $('#provider_p_status_id').chosen({width: '402px', display_selected_options: false, display_disabled_options:false,placeholder_text_multiple: 'Выберите...'})
+  $('#provider_p_status_id').chosen({width: '402px', display_selected_options: false, display_disabled_options:false})
 
   
   	

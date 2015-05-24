@@ -28,6 +28,14 @@ ru:
   phone: Телефон
   footage: Метраж
   address: Адрес
+  email: "E-Mail" 
+  url: Сайт
+  spec: Специализация
+  name: Название
+  style_names: Стили
+  budget_names: Бюджеты
+  goods_type_names: Виды товаров
+  p_status_name: Статус
 
   Style: Стиль
   Budget: Бюджет

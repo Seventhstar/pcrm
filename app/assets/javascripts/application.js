@@ -15,11 +15,8 @@
 //= require jquery-ui/datepicker
 //= require bootstrap-tokenfield
 //= require chosen.jquery
-//= require_tree .
 //= require jquery.fileupload
-
-
-
+//= require_tree .
 
 var fade_flash = function() {
     $("#flash_notice").delay(5000).fadeOut("slow");
@@ -120,7 +117,7 @@ $('#div_tleads .tleads').on('dblclick','td', function(){
 $('.progress').hide();
 $('#file').hide();
  
-$("#mulitplefileuploader").uploadFile(settings);
+//$("#mulitplefileuploader").uploadFile(settings);
 
   // дата по умолчанию для нового лида - сегодня
   if (!$("#lead_start_date").val()){
