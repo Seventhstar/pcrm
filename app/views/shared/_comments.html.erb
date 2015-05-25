@@ -1,0 +1,47 @@
+  
+  <div class="box_i">
+  <div class="hl"><span class="icon icon_chat"></span>Комментарии: </div>  
+   <div class="jspContainer" style="height:<%= @comm_height %>px;">
+     <div class="jspPane">
+
+    <div class="comments_list_a">
+        <% if @comments != nil %>
+         <% @comments.each do |comment| %>
+            <div class="item">
+              <div class="pic"><%= image_tag avatar_url(comment.user, 50) %></div>
+              <div class="cont">
+                <div class="head">
+                  <div class="name"><%= comment.user.name %></div>
+                  <div class="info"><%= comment.created_at.strftime("%d.%m.%Y %H:%M:%S") %></div>
+                  <div class="date">
+                  
+                    <% if (current_user== comment.user || current_user.admin) && controller.action_name == 'edit' %>
+                       <span class="icon icon_remove_1 btn_remove" commentid=<%= comment.id %>  ownerid=<%= comment.owner.id %> ></span>
+                    <% end %>
+                    </div>
+                </div>
+              </div>
+              <div class="text">
+                <span ownerid=<%= comment.owner.id %>><%= simple_format(comment.comment) %></span>
+              </div>
+           </div>
+         <% end %>
+        <% end %>
+     </div>
+    </div>
+  </div>
+
+<% if controller.action_name == 'edit' %>
+  <div class="commentAdd_form">
+    <form action="">
+      <fieldset>
+        <input type="text" class="txt" placeholder="Новый комментарий" id="comment_comment">
+         <span class="sub btn_a btn-sm" id="btn-chat" ownerid=<%= @owner.id %> ownertype='<%= @owner.class.name %>' > Отправить</span>
+      </fieldset>
+    </form>
+  </div>
+<% end %>
+
+</div>
+
+

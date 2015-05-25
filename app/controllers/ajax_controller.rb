@@ -42,19 +42,28 @@ class AjaxController < ApplicationController
   end
 
   def add_comment
-   if params[:lead_id] 
-      leadcomment = LeadsComment.new
-      leadcomment.lead_id = params[:lead_id]
-      leadcomment.comment = params[:comment]
-      leadcomment.user_id = current_user.id
-      leadcomment.save	
+   #if params[:lead_id] 
+   ##   leadcomment = LeadsComment.new
+   #   leadcomment.lead_id = params[:lead_id]
+   #   leadcomment.comment = params[:comment]
+   #   leadcomment.user_id = current_user.id
+   #   leadcomment.save	
+   #end
+
+   if params[:owner_id]
+     com = Comment.new
+     com.comment = params[:comment]
+     com.user_id = current_user.id
+     com.owner_id = params[:owner_id]
+     com.owner_type= params[:owner_type]
+     com.save
    end
-	render :nothing => true
-   end
+	 render :nothing => true
+  end
 
   def del_comment
-   if params[:lead_comment_id] 
-      leadcomment = LeadsComment.find(params[:lead_comment_id]).destroy
+   if params[:comment_id] 
+      leadcomment = Comment.find(params[:comment_id]).destroy
    end
   	render :nothing => true
    end

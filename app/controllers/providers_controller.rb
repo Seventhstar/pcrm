@@ -50,6 +50,9 @@ class ProvidersController < ApplicationController
   # GET /providers/1.json
   def show    
     @title = 'Просмотр лида'
+    @owner = @provider
+    @comments = @provider.comments.order('created_at asc')
+    @comm_height = 313
     respond_modal_with @lead, location: root_path
   end
 
@@ -68,7 +71,9 @@ class ProvidersController < ApplicationController
     @manager  = ProviderManager.new
     @p_statuses = PStatus.order(:name)
     
-    
+    @comm_height = 302
+    @comments = @provider.comments.order('created_at asc')
+    @owner = @provider
   end
 
   # POST /providers

@@ -3,7 +3,7 @@ class Lead < ActiveRecord::Base
   belongs_to :status
   belongs_to :user
   belongs_to :ic_user, foreign_key: :ic_user_id, class_name: 'User'
-  has_many :leads_comments
+  has_many :comments, :as => :owner
   has_many :leads_files
   has_paper_trail
   attr_accessor :first_comment

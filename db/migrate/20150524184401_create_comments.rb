@@ -1,0 +1,12 @@
+class CreateComments < ActiveRecord::Migration
+  def change
+    create_table :comments do |t|
+      t.text :comment
+      t.integer :user_id
+      t.integer :owner_id
+      t.string :owner_type
+
+      t.timestamps null: false
+    end
+  end
+end

@@ -75,10 +75,11 @@ class LeadsController < ApplicationController
 
     @channels = Channel.all
     @statuses = Status.all
-    @comments = @lead.leads_comments.order('created_at asc')
+    @comments = @lead.comments.order('created_at asc')
     @lead_files = @lead.leads_files
 
-    @history = get_history
+    @history = get_lead_history(@lead)
+    @comm_height = 444
     respond_modal_with @lead, location: root_path
   end
 
@@ -93,11 +94,11 @@ class LeadsController < ApplicationController
   def edit
     @channels = Channel.all
     @statuses = Status.all
-    @comments = @lead.leads_comments.order('created_at asc')
+    @comments = @lead.comments.order('created_at asc')
     @lead_files = @lead.leads_files
-
+    @comm_height = 390
     @history = get_lead_history(@lead)
-    
+    @owner = @lead
   end
 
   # POST /leads

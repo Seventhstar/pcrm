@@ -20,8 +20,12 @@
 #  alert 'leadid'+lead_id
   $.get '/leads/'+lead_id+'/edit', "", null, "script"
 
-@add_comment = (lead_id,comment)->
-  comment_id = $('.microposts p:first').attr('leadid')
+@add_comment = ->
+  comment_id = $('.microposts p:first').attr('ownerid')
+  comment = $('#comment_comment').val()
+  owner_id = $('#btn-chat').attr('ownerid')
+  owner_type = $('#btn-chat').attr('ownertype');
+  upd_url = owner_type.toLowerCase()+'s';
   if comment == ''
     return
   #return;
@@ -29,14 +33,15 @@
     url: '/ajax/add_comment'
     data:
       'comment': comment
-      'lead_id': lead_id
+      'owner_id': owner_id
+      'owner_type': owner_type
     type: 'POST'
     beforeSend: (xhr) ->
       xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
       return
     success: ->
       $('#comment_comment').val ''
-      $.get '/leads/' + lead_id + '/edit', '', null, 'script'
+      $.get '/'+upd_url+'/' + owner_id + '/edit', '', null, 'script'
       #$('.panel-body').scrollTop(-9999);
       return
   return
@@ -79,54 +84,38 @@ $(document).ready ->
   
   $('#user_id').chosen(width: '200px', disable_search: 'true')
 
-  #$('#basic1').fileupload
-  #  done: (e, data)->
-      #console.log "Done", data.result
-      #$("body").append(data.result)
-      #$('.files').
-      #$.get('/leads/'+lead_id+'/edit', "", null, "script");
-
   # удаляем комент
   $('.comments_box').on 'click', 'span.btn_remove', ->
     del = confirm('Действительно удалить?')
     if !del
       return
-    lead_id = $(this).attr('leadid')
-    leadcomm_id = $(this).attr('leadcommentid')
+    ownerid = $(this).attr('ownerid')
+    comm_id = $(this).attr('commentid')
+    owner_type = $('#btn-chat').attr('ownertype');
+    upd_url = owner_type.toLowerCase()+'s';
     $.ajax
       url: '/ajax/del_comment'
-      data: 'lead_comment_id': leadcomm_id
+      data: 'comment_id': comm_id
       type: 'POST'
       beforeSend: (xhr) ->
         xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
         return
       success: ->
-        $.get '/leads/' + lead_id + '/edit', '', null, 'script'
+        $.get '/'+upd_url+'/' + ownerid + '/edit', '', null, 'script'
         show_ajax_message "Успешно удален"
         return
     return
 
-  #$('.container').on 'keyup', '#search', ->
-  #commentAdd_form
-
-
-
-
   # добавление комментария 
   # кликом по кнопке 
   $('.comments_box').on 'click', 'span.btn-sm', ->
-    comment = $('#comment_comment').val()
-    lead_id = $(this).attr('leadid')
-    #alert(comment)
-    add_comment(lead_id,comment)
+    add_comment()
     return
   
   # нажатием на Enter
   $('.container').on 'keypress', '#comment_comment', ->
     if event.keyCode==13
-      comment = $('#comment_comment').val()
-      lead_id = $('#btn-chat').attr('leadid')
-      add_comment(lead_id,comment)
+      add_comment()
       return false;
     return
 

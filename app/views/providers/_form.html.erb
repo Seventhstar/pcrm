@@ -26,7 +26,9 @@
     <tr><td class="caption">Статус:</td>
       <td><div class="inp_w">
       <%= f.collection_select(:p_status_id, @p_statuses, :id, :name,{}) %>
-      </div></td></tr>    
+      </div></td></tr>   
+        <tr><td class="caption">Примечание:</td>
+      <td><div class="inp_w"><%= f.text_field :komment, class: :txt %></div></td> </tr> 
 
     <tr><td class="caption"></td>
       <td><%= link_to 'Отмена', providers_path, :class => "sub btn_a btn_reset"%>
@@ -35,10 +37,10 @@
   </div>
 
   <div class="right">
-    <table class="tbl_fc"><tbody>
-    <tr><td class="caption">Примечание:</td>
-      <td><div class="inp_w"><%= f.text_field :komment, class: :txt %></div></td> </tr>
-    </tbody></table>
+    <div class="comments_box">
+      <%= render "shared/comments" %>
+    </div>
+
   </div>
 </div>
 

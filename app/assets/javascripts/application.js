@@ -109,15 +109,10 @@ var settings = {
     }
 }
 
-$('#div_tleads .tleads').on('dblclick','td', function(){
-  
-  
-});
 
 $('.progress').hide();
 $('#file').hide();
  
-//$("#mulitplefileuploader").uploadFile(settings);
 
   // дата по умолчанию для нового лида - сегодня
   if (!$("#lead_start_date").val()){
