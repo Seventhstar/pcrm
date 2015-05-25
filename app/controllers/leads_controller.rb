@@ -110,7 +110,7 @@ class LeadsController < ApplicationController
     respond_to do |format|
       if @lead.save
        if params[:lead][:first_comment]
-        comm = @lead.leads_comments.new
+        comm = @lead.comments.new
         comm.comment = params[:lead][:first_comment]
         comm.user_id = params[:lead][:user_id]
         comm.save
