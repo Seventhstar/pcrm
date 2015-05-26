@@ -1,5 +1,7 @@
 class OptionsController < ApplicationController
 
+ include OptionsHelper
+
  def edit
 
     if params[:options_page]
@@ -30,8 +32,14 @@ class OptionsController < ApplicationController
     when "p_statuses"
       @items = PStatus.order(:name)
       @item  = PStatus.new
+    when "dev_projects"
+      @items = DevProject.order(:name)
+      @item  = DevProject.new
+    when "priorities"
+      @items = Priority.order(:name)
+      @item  = Priority.new      
     else
-      puts "You gave me #{a} -- I have no idea what to do with that."
+      puts "You gave me #{params[:options_page]} -- I have no idea what to do with that."
     end
 
     @statuses = Status.order(:name)
@@ -39,12 +47,16 @@ class OptionsController < ApplicationController
     @styles   = Style.order(:name)
     @budgets  = Budget.order(:name)
     @goodstypes  = Goodstype.order(:name)
+    @priorities = Priority.order(:name)
+
 
     @status = Status.new
     @channel = Channel.new
     @style = Style.new
     @budget = Budget.new
-    @goodstype  = Goodstype.new
+    @goodstype = Goodstype.new
+    @priority  = Priority.new
+
   end
 
 

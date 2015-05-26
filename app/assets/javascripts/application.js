@@ -13,6 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui/datepicker
+//= require jquery-ui  
+//= require jquery-ui/accordion
 //= require bootstrap-tokenfield
 //= require chosen.jquery
 //= require jquery.fileupload
@@ -66,8 +68,18 @@ $(function() {
   startTime();
 
 
+/* $("#accordion").accordion({
+    header: "h3",
+    active: parseInt($("#accordion").attr('active')),
+    collapsible: true,
+    heightStyle: "content",
+    autoHeight: false,
+    navigation: true 
+});*/
 
-var $modal = $('#ajax-modal');
+
+
+/*var $modal = $('#ajax-modal');
  
 $('.ajax .demo').on('click', function(){
   // create the backdrop and wait for next modal to be triggered
@@ -78,9 +90,9 @@ $('.ajax .demo').on('click', function(){
       $modal.modal();
     });
   }, 1000);
-});
+});*/
  
-$modal.on('click', '.update', function(){
+/*$modal.on('click', '.update', function(){
   $modal.modal('loading');
   setTimeout(function(){
     $modal
@@ -90,11 +102,12 @@ $modal.on('click', '.update', function(){
           'Updated!<button type="button" class="close" data-dismiss="alert">&times;</button>' +
         '</div>');
   }, 1000);
-});
+});*/
 
-  $('#myModal').on('shown.bs.modal', function () {
+/*  $('#myModal').on('shown.bs.modal', function () {
     $('#myInput').focus()
   })
+
 var settings = {
     url: "/",
     method: "POST",
@@ -107,7 +120,7 @@ var settings = {
     {       
         alert("Upload Failed");
     }
-}
+}*/
 
 
 $('.progress').hide();
@@ -132,21 +145,21 @@ $('#file').hide();
         });
 
 
-  $('.menu_sb li a').click(function(){ 
+  /*$('.menu_sb li a').click(function(){ 
       $('.menu_sb li.active').removeClass("active", 150, "easeInQuint");
       $(this).parent().addClass("active");
       var url = "/" + $(this).attr("controller");
       $.get(url, null, null, "script");
       if (url!="/undefined") setLoc("options"+url);
-  });
+  });*/
 
-  $(document).on('click','#btn-send',function(e) {  
+/*  $(document).on('click','#btn-send',function(e) {  
      
     var valuesToSubmit = $('form').serialize();
     var values = $('form').serialize();
     var url = $('form').attr('action');
     var empty_name = false;
-    //alert(values);
+    alert(values);
     each(q2ajx(values), function(i, a) {
       if (i.indexOf("[name]") >0  && a=="" ) { empty_name = true; return false; }
     });
@@ -165,7 +178,7 @@ $('#file').hide();
     }
     
     return false; // prevents normal behaviour
-  });
+  });*/
 
 });
 

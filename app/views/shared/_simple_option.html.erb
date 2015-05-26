@@ -1,4 +1,6 @@
 <div class="sep_05"></div>
+
+<div class="option_list">
 <%= form_for(@item) do |f| %>
 <div class="itemAdd_form">
   <table><tbody>
@@ -20,10 +22,11 @@
       <tr>
         <td><%= item.name %></td>
         <td></td>
-        <%= edit_delete(item, item.parents_count )%>
+        <%= sp_edit_delete(item, item.parents_count )%>
       </tr>
     <% end %>
   </tbody>
 </table>
+</div>
 </div>
 

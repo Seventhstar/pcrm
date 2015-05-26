@@ -5,6 +5,9 @@ class PrioritiesController < ApplicationController
   # GET /priorities.json
   def index
     @priorities = Priority.all
+    @items = Priority.order(:name)
+    @item  = Priority.new      
+    puts "we in priority"
   end
 
   # GET /priorities/1
@@ -28,8 +31,8 @@ class PrioritiesController < ApplicationController
 
     respond_to do |format|
       if @priority.save
-        format.html { redirect_to @priority, notice: 'Priority was successfully created.' }
-        format.json { render :show, status: :created, location: @priority }
+        format.html { redirect_to '/options/priorities', notice: 'Priority was successfully created.' }
+        format.json { render :index, status: :created, location: @priority }
       else
         format.html { render :new }
         format.json { render json: @priority.errors, status: :unprocessable_entity }
@@ -42,7 +45,7 @@ class PrioritiesController < ApplicationController
   def update
     respond_to do |format|
       if @priority.update(priority_params)
-        format.html { redirect_to @priority, notice: 'Priority was successfully updated.' }
+        format.html { redirect_to '/options/priorities', notice: 'Priority was successfully updated.' }
         format.json { render :show, status: :ok, location: @priority }
       else
         format.html { render :edit }
@@ -56,7 +59,7 @@ class PrioritiesController < ApplicationController
   def destroy
     @priority.destroy
     respond_to do |format|
-      format.html { redirect_to priorities_url, notice: 'Priority was successfully destroyed.' }
+      format.html { redirect_to '/options/priorities', notice: 'Priority was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

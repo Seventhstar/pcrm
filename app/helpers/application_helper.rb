@@ -182,50 +182,28 @@ module ApplicationHelper
     end
   end
 
-  def sp_edit_delete(element)
+  def sp_delete(element,subcount = nil)
       content_tag :td,{:class=>"edit_delete"} do
        de = content_tag("span","",{:class=>'icon icon_remove', element.class.to_s.concat("_id") => element.id})
       end
   end
 
 
-  def list_header( cls )
-  case cls
-    when "Style"
-      "Список стилей"
-    when "Budget"
-      "Список бюджетов"
-    when "Goodstype"
-      "Список видов товаров"
-    when "Channel"
-      "Список каналов"
-    when "Status"
-      "Список статусов"    
-    when "PStatus"
-      "Список статусов"    
-    else
-      cls
+  def sp_edit_delete(element,subcount = nil)
+    content_tag :td,{:class=>"edit_delete"} do
+     ed = link_to "", edit_polymorphic_path(element), :class=>"icon icon_edit"
+     #ed = link_to "", polymorphic_path(element), :class=>"icon icon_edit", data: { modal: true }
+     subcount ||= 0
+     if subcount>0 
+      de = content_tag("span","",{:class=>'icon icon_remove disabled'})
+     else
+      de = content_tag("span","",{:class=>'icon icon_remove', item_id: element.id})
+     end 
+     ed + de
     end
   end
 
-  def new_item_header( cls )
-  case cls
-    when "Style"
-      "Новый стиль"
-    when "Budget"
-      "Новый бюджет"
-    when "Goodstype"
-      "Новый вид товаров"
-    when "Channel"
-      "Новый канал"
-    when "Status"
-      "Новый статус"    
-    when "PStatus"
-      "Новый статус"    
-    else
-      cls
-    end
-  end
+
 
 
 end

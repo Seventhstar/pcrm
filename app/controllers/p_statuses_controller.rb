@@ -7,6 +7,7 @@ class PStatusesController < ApplicationController
     @p_statuses = PStatus.all
     @items  = PStatus.order(:name)  
     @item = PStatus.new
+    format.json { render :content_type => 'text/javascript' }
   end
 
   # GET /p_statuses/1

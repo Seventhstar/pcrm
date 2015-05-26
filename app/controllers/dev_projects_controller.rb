@@ -1,10 +1,13 @@
 class DevProjectsController < ApplicationController
   before_action :set_dev_project, only: [:show, :edit, :update, :destroy]
+  before_action :logged_in_user
 
   # GET /dev_projects
   # GET /dev_projects.json
   def index
     @dev_projects = DevProject.all
+    @items = DevProject.order(:name)
+    @item  = DevProject.new
   end
 
   # GET /dev_projects/1
@@ -28,8 +31,8 @@ class DevProjectsController < ApplicationController
 
     respond_to do |format|
       if @dev_project.save
-        format.html { redirect_to @dev_project, notice: 'Dev project was successfully created.' }
-        format.json { render :show, status: :created, location: @dev_project }
+        format.html { redirect_to '/options/dev_projects', notice: 'Dev project was successfully created.' }
+        format.json { render :index, status: :created, location: @dev_project }
       else
         format.html { render :new }
         format.json { render json: @dev_project.errors, status: :unprocessable_entity }
@@ -42,7 +45,7 @@ class DevProjectsController < ApplicationController
   def update
     respond_to do |format|
       if @dev_project.update(dev_project_params)
-        format.html { redirect_to @dev_project, notice: 'Dev project was successfully updated.' }
+        format.html { redirect_to '/options/dev_projects', notice: 'Dev project was successfully updated.' }
         format.json { render :show, status: :ok, location: @dev_project }
       else
         format.html { render :edit }
@@ -56,7 +59,7 @@ class DevProjectsController < ApplicationController
   def destroy
     @dev_project.destroy
     respond_to do |format|
-      format.html { redirect_to dev_projects_url, notice: 'Dev project was successfully destroyed.' }
+      format.html { redirect_to '/options/dev_projects', notice: 'Dev project was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

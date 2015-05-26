@@ -130,7 +130,11 @@ background-position:-34px 0 !important; width: 16px; height: 16px;}
 
 /*----Меню слева_start----*/
 .menu_sb {margin:0 0 0 0; font-size: 14px; }
-.menu_sb .head{background: #f2f2f2; padding: 10px 10px 10px 20px; border-radius: 5px 5px 0 0; font-weight: 500;}
+/*.menu_sb div{margin-bottom: 5px;}*/
+.menu_sb .head, .menu_sb h3{ background: #f2f2f2; padding: 10px 10px 10px 20px; font-weight: 500; font-size: 100%; margin: 0; }
+.menu_sb h3.first {border-radius: 5px 5px 0 0; }
+.menu_sb h3:hover{ cursor: pointer;}
+
 .menu_sb ul{margin: 1px 0 0 0; padding: 0 0 0 0; list-style:none;}
 .menu_sb ul li{margin: -1px 0 10px 0; padding: 0 0 0 0; background:none;}
 .menu_sb ul li a{display: block; border:1px solid #e5e5e5; padding: 10px 19px 10px 19px; color: #000000; position:relative; text-decoration:none; border-radius: 5px;}

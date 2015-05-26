@@ -5,24 +5,24 @@
 	  </ul>
 	</div>
 		
-	<div class="menu_sb menu_sb_a">	
-	<% if ['leads','statuses','channels'].include?(params['options_page']) %>
-		  <div class="head">Настройки лидов:</div>
-		  <ul>
+
+
+  <div id="accordion" class="menu_sb menu_sb_a" active=<%= get_active_option_page %> >
+  <h3 class="first">Настройки лидов:</h3><div><ul>
 			<%= option_li("statuses","Статусы") %>
 			<%= option_li("channels","Каналы") %>
-		  </ul>	
-	<% end %>
-
-	<% if ['providers','budgets','goodstypes','styles','p_statuses'].include?(params['options_page']) %>		    
-			<div class="head">Настройки поставшиков:</div>
-			<ul>
+  </ul></div>	  
+  <h3>Настройки поставшиков:</h3><div><ul>
 			    <%= option_li("budgets","Бюджеты") %>
 			    <%= option_li("goodstypes","Виды товаров") %>
 			    <%= option_li("styles","Стили") %>
 			    <%= option_li("p_statuses","Статусы") %>
-			</ul>
-	<% end %> 
+  </ul></div>
+  <h3>Настройки задач:</h3><div><ul>
+      <%= option_li("dev_projects","Проекты разработки") %>
+      <%= option_li("priorities","Приоритеты") %>
+  </ul></div>
+			
   </div>
 </div>
 
