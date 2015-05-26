@@ -21,6 +21,9 @@ ru:
   channel_id: Канал
   user_id: Создатель
   ic_user_id: Ответственный
+  priority_id: Приоритет
+  boss: Проверено
+  coder: Выполнено
   info: Информация о запросе
   status_date: Дата для статуса
   start_date: Дата создания
@@ -40,6 +43,9 @@ ru:
   Style: Стиль
   Budget: Бюджет
   Goodstype: Вид товара
+
+  "true": Да
+  "false": Нет
 
   date:
     formats:

@@ -24,7 +24,7 @@ class FileController < ApplicationController
     if params[:file] || params[:files]
 
       dev_file =  params[:leadid].nil? ? true : false
-      folder = dev_file ? 'dev' : 'leads'
+      folder = controller_name #dev_file ? 'develops' : 'leads'
       subfolder = dev_file ? params[:devid] : params[:leadid]
 
       puts params[:file].original_filename

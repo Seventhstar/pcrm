@@ -3,7 +3,7 @@ class DevelopsController < ApplicationController
   helper_method :show_dev
   before_action :logged_in_user
   include DevelopsHelper
-
+  include CommonHelper
   # GET /develops
   # GET /develops.json
   def index
@@ -32,13 +32,20 @@ class DevelopsController < ApplicationController
   def new
     @develop = Develop.new
     @dev_projects = DevProject.all
-    @dev_files    = {}
+    @priorities   = Priority.order(:name)
+    @users        = User.order(:name)
+    @files        = {}
+    @history      = {}
   end
 
   # GET /develops/1/edit
   def edit
     @dev_projects = DevProject.all
-    @dev_files    = @develop.dev_files
+    @priorities   = Priority.order(:name)
+    @users        = User.order(:name)
+    @files        = @develop.files
+    @history 	    = get_history_with_files(@develop)
+    @owner        = @develop
   end
 
   # POST /develops
@@ -89,7 +96,7 @@ class DevelopsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def develop_params
-      params.require(:develop).permit(:name, :coder, :boss, :project_id, :description)
+      params.require(:develop).permit(:name, :coder, :boss, :project_id, :description, :ic_user_id, :priority_id)
     end
 
     def show_dev

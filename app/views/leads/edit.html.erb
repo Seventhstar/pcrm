@@ -33,14 +33,14 @@
 	<p><label for="file"> <a class="btn_c btn_add"><span class="pict"><span class="icon icon_file"></span></span>Добавить файл</a> </label></p>
 	<input id="file" type="file" leadid="<%= @lead.id %>" name="file" data-url="/file" multiple="" style="display: none;">
 	<div class="files_list_a">
-         <%= render "lead_files" %>
+         <%= render "shared/files" %>
         </div>
     </div>
     <div class="right">
       
         <div class="historyChange_box">
           <% if @history.count >0 %>
-            <%= render "history" %>    
+            <%= render "shared/history" %>    
           <% end %>
         </div>
       

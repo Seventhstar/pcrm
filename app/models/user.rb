@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   has_many :leads
   has_many :ic_leads, foreign_key: :ic_user_id, class_name: 'Lead'
-  has_many :leads_files
+  has_many :files, class_name: 'LeadFile'
 
   attr_accessor :remember_token, :activation_token, :reset_token
   before_save   :downcase_email

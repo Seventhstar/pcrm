@@ -7,6 +7,7 @@ class LeadsController < ApplicationController
   helper_method :sort_2, :dir_2
 
   include LeadsHelper
+  include CommonHelper
   #before_action :store_location
 
   def index_leads_params
@@ -76,9 +77,9 @@ class LeadsController < ApplicationController
     @channels = Channel.all
     @statuses = Status.all
     @comments = @lead.comments.order('created_at asc')
-    @lead_files = @lead.leads_files
+    @files = @lead.files
 
-    @history = get_lead_history(@lead)
+    @history = get_history_with_files(@lead)
     @comm_height = 444
     respond_modal_with @lead, location: root_path
   end
@@ -95,9 +96,9 @@ class LeadsController < ApplicationController
     @channels = Channel.all
     @statuses = Status.all
     @comments = @lead.comments.order('created_at asc')
-    @lead_files = @lead.leads_files
+    @files    = @lead.files
     @comm_height = 390
-    @history = get_lead_history(@lead)
+    @history = get_history_with_files(@lead)
     @owner = @lead
   end
 

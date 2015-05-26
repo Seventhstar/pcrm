@@ -17,9 +17,11 @@
 # меняем отметки coder и boss непосредственно в index
 $(document).ready ->
   
-
-
   $('#develop_project_id').chosen(width: '402px', disable_search: 'true')
+  $('#develop_priority_id').chosen(width: '402px', disable_search: 'true') 
+  $('#develop_ic_user_id').chosen(width: '402px', disable_search: 'true') 
+
+
   $('.develops').on 'click', 'span.check_img', ->
     #alert(228)
     if $(this).hasClass('checked')
