@@ -1,4 +1,5 @@
 class DevelopsController < ApplicationController
+  respond_to :html, :json
   before_action :set_develop, only: [:show, :edit, :update, :destroy]
   helper_method :show_dev
   before_action :logged_in_user
@@ -26,6 +27,10 @@ class DevelopsController < ApplicationController
   # GET /develops/1
   # GET /develops/1.json
   def show
+
+    @title = @develop.name
+    respond_modal_with @develop, location: root_path
+
   end
 
   # GET /develops/new
@@ -102,4 +107,7 @@ class DevelopsController < ApplicationController
     def show_dev
       %w[check new all].include?(params[:show]) ? params[:show] : "check"
     end
+
+
+
 end 
