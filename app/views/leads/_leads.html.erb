@@ -34,7 +34,7 @@
         <td class="center"><%= lead.status_date.try('strftime',"%d.%m.%Y") %></td>
         <td><%= lead.fio %></td>
         <td><%= lead.phone %></td>
-        <td><%= lead.info %></td>
+        <td title="<%= lead.info %>"><%= lead.short_info %></td>
         <td class="center"><%= lead.footage %></td>
         <td class="center"><%= lead.start_date.try('strftime',"%d.%m.%Y") %></td>
 

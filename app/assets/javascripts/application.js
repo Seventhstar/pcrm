@@ -67,6 +67,8 @@ $(function() {
 
   startTime();
 
+  $('.nav #develops').addClass('li-right develops');
+  $('.nav #options').addClass('li-right options');
 
 /* $("#accordion").accordion({
     header: "h3",

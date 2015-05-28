@@ -16,7 +16,7 @@ end
 group :production do
 
 # Use Unicorn as the app server
-  gem 'unicorn'
+#  gem 'unicorn'
   gem 'pg'
   gem 'rails_12factor', '0.0.2'
 end

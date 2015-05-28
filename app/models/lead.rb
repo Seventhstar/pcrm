@@ -34,6 +34,14 @@ class Lead < ActiveRecord::Base
     ic_user.try(:name)
   end
 
+  def short_info
+     if info.length>50
+        info[0..50]+' ...'
+     else
+	info
+     end
+  end
+
 
   def user_name=(name)
     self.users = User.find_or_create_by_name(name) if name.present?

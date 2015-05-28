@@ -60,7 +60,7 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :leads, 'Проекты', '#', {:class => 'disabled'}
     primary.item :providers, 'Поставщики', providers_path
     
-    primary.item :statuses,image_tag('options.png'), '/options/'+opt_page, :class => 'li-right options', if: -> { current_user.admin? } #do |sub_nav|
+    primary.item :options,image_tag('options.png'), '/options/'+opt_page, :class => 'li-right options', if: -> { current_user.admin? } #do |sub_nav|
     
       #sub_nav.item :statuses, 'statuses', '/statuses'
 #      sub_nav.item :channels, 'channels', '/channels'
