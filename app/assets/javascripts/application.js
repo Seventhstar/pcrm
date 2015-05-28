@@ -69,6 +69,10 @@ $(function() {
 
   $('.nav #develops').addClass('li-right develops');
   $('.nav #options').addClass('li-right options');
+  $('.nav #tarifs').addClass('disabled');
+  $('.nav #projects').addClass('disabled');
+
+  $('[data-toggle="tooltip"]').tooltip({'placement': 'top', fade: false});
 
 /* $("#accordion").accordion({
     header: "h3",

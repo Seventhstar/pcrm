@@ -56,8 +56,8 @@ SimpleNavigation::Configuration.run do |navigation|
     #
 #    flash[:success] =  request.url == root_url
     primary.item :leads, 'Лиды', leads_path, {:class => request.url==root_url ? "selected active":"" }
-    primary.item :leads, 'Тарифы', '#', {:class => 'disabled'}
-    primary.item :leads, 'Проекты', '#', {:class => 'disabled'}
+    primary.item :tarifs, 'Тарифы', '#', {:class => 'disabled'}
+    primary.item :projects, 'Проекты', '#', {:class => 'disabled'}
     primary.item :providers, 'Поставщики', providers_path
     
     primary.item :options,image_tag('options.png'), '/options/'+opt_page, :class => 'li-right options', if: -> { current_user.admin? } #do |sub_nav|

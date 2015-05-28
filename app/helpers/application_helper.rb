@@ -203,4 +203,13 @@ module ApplicationHelper
     end
   end
 
+  def tooltip_if_big( info, length = 50 )
+      if info.length >length
+         content_tag("span",'   '+info[0..length]+' ...',{'data-toggle' =>"tooltip", 'data-placement' => "top", :title => info})
+      else
+         info
+      end
+  end
+
+
 end
