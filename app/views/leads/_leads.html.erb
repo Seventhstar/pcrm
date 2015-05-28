@@ -14,7 +14,7 @@
           <% cur_month = new_date.month %>
           <%= render "head", {:first_table => first_table, :heading => t(new_date.try('strftime',"%B"))+" "+new_date.try('strftime',"%Y") } %>
       <% elsif cur_month != p_date && (params[:sort] == "status_date" || (params[:sort] == nil && is_admin?))%>
-          <% puts "cur_month: " + cur_month +", p_date: " +p_date %>
+          
           <% cur_month = p_date %>
           <%= render "head", {:first_table => first_table, :heading =>  m_head} %>    
       <% elsif cur_user != user_name(lead.user_id) && (params[:sort] == "users.name")%>

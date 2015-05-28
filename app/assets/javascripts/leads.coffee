@@ -136,6 +136,7 @@ $(document).ready ->
     else
       $('.sort-span').removeClass('active')
       $(this).addClass('active')
+    #lead_query({sort:srt,dir:dir})
     lead_query({})
     return
 

@@ -1,19 +1,24 @@
-<p id="notice"><%= notice %></p>
+  <div class="box_wide">
+  <div class="box_wrap box_wrap_1">
 
-<p>
-  <strong>Name:</strong>
-  <%= @develop.name %>
-</p>
-
-<p>
-  <strong>Coder:</strong>
-  <%= @develop.coder %>
-</p>
-
-<p>
-  <strong>Boss:</strong>
-  <%= @develop.boss %>
-</p>
-
-<%= link_to 'Edit', edit_develop_path(@develop) %> |
-<%= link_to 'Back', develops_path %>
+    <div class="left">  
+    <table class="tbl_fc tbl_fc_1">
+        <tr><td class="caption">Проект:</td>
+            <td><div class="lbl"><%= @develop.project_name %></div></td></tr>
+        <tr><td class="caption">Приоритет:</td>
+            <td><div class="lbl"><%= @develop.priority_name %></div></td></tr>
+		<tr><td class="caption">Ответственный:</td>
+            <td><div class="lbl"><%= @develop.ic_user_name %></div></td></tr>
+		<tr><td class="caption">Описание:</td>
+            <td><div class="lbl"><%= @develop.description %></div></td></tr>
+	</table>
+    </div>
+    <div class="right">
+    	<div class="historyChange_box">
+    		<% if @history.count >0 %>
+    		<%= render "shared/history" %>    
+    		<% end %>
+    	</div>
+    </div>
+  </div>
+  </div>

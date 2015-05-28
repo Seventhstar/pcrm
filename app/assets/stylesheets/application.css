@@ -18,6 +18,8 @@
   margin-right: 7px;
 }
 
+/*span.current span{ background-color: #eee;}*/
+span.current{ border-radius: 2px; color: #009ddd;}
 
 .alert .close {display: none;}
 
@@ -90,7 +92,7 @@
 }
 
 .li-right a img{
-  margin-top: 13px !important;
+  margin-top: 10px !important;
 }
 
 #p_search {
@@ -99,6 +101,7 @@
 
 li.disabled a{
   color: #ccc !important; 
+  cursor: not-allowed;
 }
 
 

@@ -29,8 +29,9 @@ class DevelopsController < ApplicationController
   def show
 
     @title = @develop.name
+    @history      = get_history_with_files(@develop)
+    @owner        = @develop
     respond_modal_with @develop, location: root_path
-
   end
 
   # GET /develops/new

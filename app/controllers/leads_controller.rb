@@ -18,9 +18,18 @@ class LeadsController < ApplicationController
   # GET /leads.json
   def index
 
-    query_str = Rails.env.production? ? "*, date_trunc('month', start_date) AS month" : "*, datetime(start_date, 'start of month') AS month "
+
+    if sort_column == "status_date"
+      query_str = Rails.env.production? ? "*, date_trunc('month', status_date) AS month" : "*, datetime(status_date, 'start of month') AS month "
+      sort_1 = sort_column == 'status_date' ? 'month' : sort_column
+    else
+      query_str = Rails.env.production? ? "*, date_trunc('month', start_date) AS month" : "*, datetime(start_date, 'start of month') AS month "
+      sort_1 = sort_column == 'start_date' ? 'month' : sort_column
+    end
+
+#    query_str = Rails.env.production? ? "*, date_trunc('month', start_date) AS month" : "*, datetime(start_date, 'start of month') AS month "
     
-    sort_1 = sort_column == 'start_date' ? 'month' : sort_column
+ #   sort_1 = sort_column == 'start_date' ? 'month' : sort_column
 
     if sort_column == "status_date" && !current_user.admin?
       @leads = current_user.ic_leads.select(query_str)
@@ -47,7 +56,7 @@ class LeadsController < ApplicationController
     
     order = sort_1 + " " + sort_direction + ", "+ sort_2  + " " + dir_2 + ", leads.created_at desc"
 
-    #puts sort_1 + ": sort_1 " + sort_direction + " :sort_direction, "+ sort_2  + " " + dir_2 
+    puts sort_1 + ": sort_1 " + sort_direction + " :sort_direction, "+ sort_2  + " " + dir_2 
 
     @leads = @leads.order(order)
 
