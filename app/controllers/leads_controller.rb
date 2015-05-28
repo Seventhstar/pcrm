@@ -178,8 +178,8 @@ class LeadsController < ApplicationController
   end
 
   def sort_2
-    #Lead.column_names.include?(params[:sort]) ? params[:sort] : "status_date"
-    Lead.column_names.include?(params[:sort2]) ? params[:sort2] : "start_date"
+    Lead.column_names.include?(params[:sort2]) ? params[:sort2] : "status_date"
+    #Lead.column_names.include?(params[:sort2]) ? params[:sort2] : "start_date"
   end
 
   def dir_2

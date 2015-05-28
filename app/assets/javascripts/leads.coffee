@@ -137,7 +137,7 @@ $(document).ready ->
       $('.sort-span').removeClass('active')
       $(this).addClass('active')
     #lead_query({sort:srt,dir:dir})
-    lead_query({})
+    lead_query({sort2:'status_date',dir2:'asc'})
     return
 
   # сортировка 2го уровня
