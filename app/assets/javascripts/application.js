@@ -73,6 +73,10 @@ $(function() {
   $('.nav #projects').addClass('disabled');
 
   $('[data-toggle="tooltip"]').tooltip({'placement': 'top', fade: false});
+  $( document ).ajaxStop( function() {
+    $('[data-toggle="tooltip"]').tooltip({'placement': 'top', fade: false});
+  });
+    
 
 /* $("#accordion").accordion({
     header: "h3",
