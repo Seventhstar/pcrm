@@ -183,12 +183,15 @@ class LeadsController < ApplicationController
   end
 
   def dir_2
-    %w[asc desc].include?(params[:dir2]) ? params[:dir2] : "desc"
+    defaul_dir = sort_column =='status_date' ? "asc": "desc"
+    %w[asc desc].include?(params[:dir2]) ? params[:dir2] : defaul_dir
   end
 
 
   def sort_direction
     defaul_dir = sort_column =='status_date' ? "asc": "desc"
+    #puts %w[asc desc].include?(params[:direction]) ? params[:direction] : defaul_dir
+    #s
     %w[asc desc].include?(params[:direction]) ? params[:direction] : defaul_dir
   end
 
