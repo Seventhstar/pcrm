@@ -17,7 +17,7 @@ class Develop < ActiveRecord::Base
 
   end
 
-  def changeset_email
+  def send_changeset_email
     DevelopMailer.changeset_email().deliver_now
   end
 

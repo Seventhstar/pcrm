@@ -78,61 +78,6 @@ $(function() {
   });
     
 
-/* $("#accordion").accordion({
-    header: "h3",
-    active: parseInt($("#accordion").attr('active')),
-    collapsible: true,
-    heightStyle: "content",
-    autoHeight: false,
-    navigation: true 
-});*/
-
-
-
-/*var $modal = $('#ajax-modal');
- 
-$('.ajax .demo').on('click', function(){
-  // create the backdrop and wait for next modal to be triggered
-  $('body').modalmanager('loading');
- 
-  setTimeout(function(){
-     $modal.load('modal_ajax_test.html', '', function(){
-      $modal.modal();
-    });
-  }, 1000);
-});*/
- 
-/*$modal.on('click', '.update', function(){
-  $modal.modal('loading');
-  setTimeout(function(){
-    $modal
-      .modal('loading')
-      .find('.modal-body')
-        .prepend('<div class="alert alert-info fade in">' +
-          'Updated!<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-        '</div>');
-  }, 1000);
-});*/
-
-/*  $('#myModal').on('shown.bs.modal', function () {
-    $('#myInput').focus()
-  })
-
-var settings = {
-    url: "/",
-    method: "POST",
-    fileName: "myfile",
-    onSuccess:function(files,data,xhr)
-    {
-        alert("Upload success");
-    },
-    onError: function(files,status,errMsg)
-    {       
-        alert("Upload Failed");
-    }
-}*/
-
-
 $('.progress').hide();
 $('#file').hide();
  
