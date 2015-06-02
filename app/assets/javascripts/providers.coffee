@@ -6,19 +6,31 @@
   $.get '/providers/'+p_id+'/edit', "", null, "script"
   return
 
+@provider_query = ->
+  p_params = $("#p_search").serialize()
+  $.get 'providers', p_params, null, 'script'
+  setLoc("providers?"+p_params)
+
 $(document).ready ->
 
-  $('#style').chosen(width: '180px').on 'change', ->
-  	$.get 'providers', $("#p_search").serialize(), null, 'script'
+  chosen_params = {width: '170px', allow_single_deselect: true, placeholder_text_single: 'Стиль...'}
 
-  $('#budget').chosen(width: '180px').on 'change', ->
-    $.get 'providers', $("#p_search").serialize(), null, 'script'
+  $('#style').chosen(chosen_params).on 'change', ->
+    provider_query()
+  	#$.get 'providers', $("#p_search").serialize(), null, 'script'
+
+  chosen_params.placeholder_text_single = 'Бюджет...'
+  $('#budget').chosen(chosen_params).on 'change', ->
+    provider_query()
+    #$.get 'providers', $("#p_search").serialize(), null, 'script'
   
-  $('#goodstype').chosen(width: '180px').on 'change', ->
-    $.get 'providers', $("#p_search").serialize(), null, 'script'
+  $('#goodstype').chosen(chosen_params ).on 'change', ->
+    provider_query()
+    #$.get 'providers', $("#p_search").serialize(), null, 'script'
 
-  $('#p_status').chosen(width: '180px').on 'change', ->
-    $.get 'providers', $("#p_search").serialize(), null, 'script'
+  $('#p_status').chosen(chosen_params).on 'change', ->
+    provider_query()
+    #$.get 'providers', $("#p_search").serialize(), null, 'script'
 
   
 
@@ -26,7 +38,11 @@ $(document).ready ->
 
   $('#provider_p_status_id').chosen({width: '402px', display_selected_options: false, display_disabled_options:false})
 
-  
+    # поиск 
+  $('#p_search').on 'keyup', '#search', ->    
+    provider_query()
+    return
+
   	
   $('.page-wrapper').on 'click','.managers #btn-send', ->
     pr_id = $(this).attr('providerid')

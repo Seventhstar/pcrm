@@ -30,12 +30,6 @@
 			<td><div class="inp_w">
 			<%= f.select :ic_user_id, options_for_select(@users.collect{ |u| [u.name, u.id] },@develop.ic_user_id) %></div>
 			</td></tr>						
-    	<tr>
-    		<td></td><td><label class="inp_btn_label">
-					<div class="inp_btn checkbox <%= @develop.coder ? "active" :"" %>"><%= f.check_box :coder, {}, "true", "false" %></div>Выполнено</label>
-		            <label class="inp_btn_label">
-					<div class="inp_btn checkbox <%= @develop.boss ? "active" :"" %>"><%= f.check_box :boss, {}, "true", "false" %></div>Проверено</label></td>
-    	</tr>
 		<tr><td class="caption">Описание:</td>
 		    <td><div class="inp_w"><%= f.text_area :description, class: :txt, label: false %></div></td></tr>
 

@@ -16,26 +16,31 @@ class ProvidersController < ApplicationController
     bp = all_ids
     gtp = all_ids
     ps = all_ids
+    s_ids = all_ids
+
+    if !params[:search].nil?
+      s_ids = Provider.where('LOWER(name) like LOWER(?)','%'+params[:search]+'%').ids
+    end
 
     
-    if params[:style] && params[:style]!=""
+    if params[:style] && params[:style]!="" && params[:style]!='0'
         sp = Style.find(params[:style]).providers.ids
     end
 
-    if params[:budget] && params[:budget]!=""
+    if params[:budget] && params[:budget]!="" && params[:budget]!='0'
         bp = Budget.find(params[:budget]).providers.ids
     end
 
-    if params[:goodstype] && params[:goodstype]!=""
+    if params[:goodstype] && params[:goodstype]!="" && params[:goodstype]!='0'
         gtp = Goodstype.find(params[:goodstype]).providers.ids
     end
 
-    if params[:p_status] && params[:p_status]!=""
+    if params[:p_status] && params[:p_status]!="" && params[:p_status]!='0'
         ps = PStatus.find(params[:p_status]).providers.ids
     end
 
 
-    ids = sp & bp & gtp & ps
+    ids = sp & bp & gtp & ps & s_ids
     #if ids.empty?
     #  @providers = @p.order(sort_column + " " + sort_direction) 
     #else 

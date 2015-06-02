@@ -69,6 +69,10 @@ ActiveRecord::Schema.define(version: 20150602102259) do
     t.integer  "dev_status_id"
   end
 
+  add_index "develops", ["dev_status_id"], name: "index_develops_on_dev_status_id"
+  add_index "develops", ["ic_user_id"], name: "index_develops_on_ic_user_id"
+  add_index "develops", ["priority_id"], name: "index_develops_on_priority_id"
+
   create_table "goodstypes", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false

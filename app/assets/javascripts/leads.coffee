@@ -120,8 +120,8 @@ $(document).ready ->
     return
 
   # поиск 
-  $('.container').on 'keyup', '#search', ->
-    search = $('.container #search').val()
+  $('#leads_search').on 'keyup', '#search', ->
+    search = $('#leads_search #search').val()
     lead_query({})
     return
 
