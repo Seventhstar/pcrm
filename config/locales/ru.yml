@@ -18,6 +18,7 @@ ru:
   Channel: Канал
   Status: Статус
   status_id: Статус
+  dev_status_id: Статус
   channel_id: Канал
   user_id: Создатель
   ic_user_id: Ответственный

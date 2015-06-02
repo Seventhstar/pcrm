@@ -29,6 +29,8 @@ module OptionsHelper
       "Список статусов"    
     when "DevProject"
       "Список проектов разработки"    
+    when "DevStatus"
+      "Список статусов задач"    
     when "Priority"
 	  "Список приоритетов"        	
     else
@@ -51,7 +53,9 @@ module OptionsHelper
     when "PStatus"
       "Новый статус" 
     when "DevProject"   
-      "Новый проект" 
+      "Новый проект"
+    when "DevStatus"
+      "Новый статус"    
     when "Priority"
       "Новый приоритет"           
     else

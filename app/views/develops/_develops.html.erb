@@ -2,22 +2,23 @@
   <% first_table = true %>
     
   
-    <% @develops.each do |develop| %>
+<% @develops.each do |develop| %>
 
-      <% prj_name = project_name(develop.id) %>
-      <% if cur_prj != prj_name %>
-        <% cur_prj = prj_name %>
-        <%= render "head", {:first_table => first_table, :heading => prj_name } %>
-        <% first_table = false %>
-      <% end %>        
+  <% prj_name = project_name(develop.id) %>
+  <% if cur_prj != prj_name %>
+    <% cur_prj = prj_name %>
+    <%= render "head", {:first_table => first_table, :heading => prj_name } %>
+    <% first_table = false %>
+  <% end %>        
 
-      <tr>
-        <td><%= develop.name %></td>
-        <td class="state"><span class="check_img <%= develop.coder ? "checked" :"" %>" developid="<%=develop.id%>" chk="coder"></span></td>
-        <td class="state"><span class="check_img <%= develop.boss ? "checked" :"" %>" developid="<%=develop.id%>" chk="boss"></span></td>
-        <%= edit_show(develop) %>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  <tr>
+    <td><%= develop.name %></td>
+    <td class="state"><span class="check_img <%= develop.coder ? "checked" :"" %>" developid="<%=develop.id%>" chk="coder"></span></td>
+    <td class="state"><span class="check_img <%= develop.boss ? "checked" :"" %>" developid="<%=develop.id%>" chk="boss"></span></td>
+    <%= edit_show(develop) %>
+  </tr>
+<% end %>
 
+<% if @develops.count>0 %>
+  </tbody></table></div>
+<% end %>

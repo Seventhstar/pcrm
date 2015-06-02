@@ -17,9 +17,9 @@ class DevelopsController < ApplicationController
 
     case view
     when "check"
-      @develops = @develops.where(:boss => false, :coder =>true)      
+      @develops = @develops.where(:dev_status_id => 2)      
     when "new"
-      @develops = @develops.where(:boss => false, :coder =>false)      
+      @develops = @develops.where(:dev_status_id => [1,4])      
     end
       
   end
@@ -36,8 +36,9 @@ class DevelopsController < ApplicationController
 
   # GET /develops/new
   def new
-    @develop = Develop.new
+    @develop      = Develop.new
     @dev_projects = DevProject.all
+    @dev_statuses = DevStatus.order(:id)
     @priorities   = Priority.order(:name)
     @users        = User.order(:name)
     @files        = {}
@@ -46,9 +47,11 @@ class DevelopsController < ApplicationController
 
   # GET /develops/1/edit
   def edit
+    @dev_statuses = DevStatus.order(:id)
     @dev_projects = DevProject.all
     @priorities   = Priority.order(:name)
     @users        = User.order(:name)
+
     @files        = @develop.files
     @history 	    = get_history_with_files(@develop)
     @owner        = @develop
@@ -102,7 +105,7 @@ class DevelopsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def develop_params
-      params.require(:develop).permit(:name, :coder, :boss, :project_id, :description, :ic_user_id, :priority_id)
+      params.require(:develop).permit(:name, :coder, :boss, :project_id, :description, :ic_user_id, :priority_id, :dev_status_id)
     end
 
     def show_dev

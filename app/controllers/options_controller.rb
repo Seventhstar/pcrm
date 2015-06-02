@@ -35,6 +35,9 @@ class OptionsController < ApplicationController
     when "dev_projects"
       @items = DevProject.order(:name)
       @item  = DevProject.new
+    when "dev_statuses"
+      @items = DevStatus.order(:name)
+      @item  = DevStatus.new      
     when "priorities"
       @items = Priority.order(:name)
       @item  = Priority.new      

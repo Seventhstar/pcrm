@@ -30,6 +30,9 @@ module CommonHelper
     when "channel_id"
       from = channel_name(changeset[0])
       to = channel_name(changeset[1]) 
+    when "dev_status_id"
+      from = status_name(changeset[0])
+      to = status_name(changeset[1])      
     when "status_id"
       from = status_name(changeset[0])
       to = status_name(changeset[1])

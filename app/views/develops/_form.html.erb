@@ -17,6 +17,11 @@
 			<td><div class="inp_w">
 			<%= f.select :project_id, options_for_select(@dev_projects.collect{ |u| [u.name, u.id] },@develop.project_id) %></div>
 			</td></tr>
+		<tr><td class="caption">Статус:</td>
+			<td><div class="inp_w">
+			<%= f.select :dev_status_id, options_for_select(@dev_statuses.collect{ |u| [u.name, u.id] },@develop.dev_status_id) %></div>
+			</td></tr>			
+
 		<tr><td class="caption">Приоритет:</td>
 			<td><div class="inp_w">
 			<%= f.select :priority_id, options_for_select(@priorities.collect{ |u| [u.name, u.id] },@develop.priority_id) %></div>

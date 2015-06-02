@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150526163308) do
+ActiveRecord::Schema.define(version: 20150602102259) do
 
   create_table "budgets", force: :cascade do |t|
     t.string   "name"
@@ -50,19 +50,32 @@ ActiveRecord::Schema.define(version: 20150526163308) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "dev_statuses", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "develops", force: :cascade do |t|
     t.string   "name"
     t.boolean  "coder"
     t.boolean  "boss"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.text     "description"
     t.integer  "project_id"
     t.integer  "priority_id"
     t.integer  "ic_user_id"
+    t.integer  "dev_status_id"
   end
 
   create_table "goodstypes", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "lead_styles", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -150,9 +163,6 @@ ActiveRecord::Schema.define(version: 20150526163308) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "provider_styles", ["provider_id"], name: "index_provider_styles_on_provider_id"
-  add_index "provider_styles", ["style_id"], name: "index_provider_styles_on_style_id"
 
   create_table "providers", force: :cascade do |t|
     t.string   "name"

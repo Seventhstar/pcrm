@@ -22,4 +22,14 @@ module DevelopsHelper
   end
 
 
+ def status_name(st_id)
+   	if st_id.present?
+       DevStatus.find_by_id(st_id).try(:name)
+   	else
+   	  ""	
+   	end
+ end 
+
+
+
 end

@@ -2,6 +2,7 @@ class Develop < ActiveRecord::Base
   after_save :send_changeset_email
   belongs_to :dev_project, foreign_key: :project_id
   belongs_to :priority
+  belongs_to :dev_status
   belongs_to :ic_user, foreign_key: :ic_user_id, class_name: 'User'
   has_many :files, foreign_key: :develop_id, class_name: 'DevFile'
   has_paper_trail
