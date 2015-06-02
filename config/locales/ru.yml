@@ -22,6 +22,7 @@ ru:
   user_id: Создатель
   ic_user_id: Ответственный
   priority_id: Приоритет
+  project_id: Проект 
   boss: Проверено
   coder: Выполнено
   info: Информация о запросе

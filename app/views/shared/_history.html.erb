@@ -6,27 +6,11 @@
   <%- version = version_fields[1] %>
   <div class="item">
     <div class="head"><%= version['author'] %>, <span class="date"><%= version['at'] %></span></div>
-
     <ul>
-      <% if version['type'] == 'ch' %>
-          <% version['changeset'].each do |fields| %>
-            <%- k = fields[1] %>
-            <li>Изменено поле <b><%= k['field'] %></b> c «<%= k['from'] %>» на «<%= k['to'] %>»</li>
-          <% end %>                   
-      <% elsif version['type'] == 'add' %>
-          <% version['changeset'].each do |fields| %>
-          <%- k = fields[1] %>
-          <li>Добавлен файл <b><%= k['file'] %></b></li>
-          <% end %>                
-      <% elsif version['type'] == 'del' %>
-          <% version['changeset'].each do |fields| %>
-          <%- k = fields[1] %>
-          <li>Удален файл <%= k['event'] %><b><%= k['file'] %></b> </li>
-          <% end %>                
-      <% end %>                
-
+	<%- version['description'].each do |descr| %>
+	       <li><%= raw(descr) %></li>
+        <% end %>
     </ul>
-
   </div>
 
   <% end %>
