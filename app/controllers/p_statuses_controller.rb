@@ -1,4 +1,5 @@
 class PStatusesController < ApplicationController
+  before_action :logged_in_user
   before_action :set_p_status, only: [:show, :edit, :update, :destroy]
 
   # GET /p_statuses
@@ -7,7 +8,7 @@ class PStatusesController < ApplicationController
     @p_statuses = PStatus.all
     @items  = PStatus.order(:name)  
     @item = PStatus.new
-    format.json { render :content_type => 'text/javascript' }
+    #format.json { render :content_type => 'text/javascript' }
   end
 
   # GET /p_statuses/1

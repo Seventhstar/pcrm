@@ -21,9 +21,9 @@
       <tr>
         <td><%= provider.name %></td>
         <td><%= provider.spec %></td>
-        <td><%= provider.p_status_name %></td>
+        <td><%= colored_status(provider.p_status) %></td>
         <td><%= provider.phone %></td>
-        <td><%= provider.url %></td>
+        <td><%= site_link(provider.url) %></td>
         <td><%= provider.address %></td>
         <%= edit_show(provider) %>
       </tr>

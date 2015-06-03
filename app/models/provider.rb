@@ -39,6 +39,4 @@ class Provider < ActiveRecord::Base
     def p_status_name
       p_status.try(:name)
     end
-
-
 end
