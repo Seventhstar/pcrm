@@ -31,6 +31,11 @@ class Develop < ActiveRecord::Base
   end
 
 
+  def status_name
+    dev_status.try(:name)
+  end
+
+
   def ic_user_name
     ic_user.try(:name)
   end

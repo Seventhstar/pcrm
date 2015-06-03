@@ -73,12 +73,19 @@ class AjaxController < ApplicationController
       develop = Develop.find(params[:develop_id])
       if params[:field] == "boss"
         #develop.boss = params[:checked]
-	develop.dev_status_id = 3
+        
+	      develop.dev_status_id = params[:checked]=='true' ? 3 : 4
+        puts develop.dev_status_id
+        develop.save  
       else
         #develop.coder = params[:checked]
-        develop.dev_status_id = 2
+        puts "develop.dev_status_id: "+develop.dev_status_id.to_s
+        if [1,2,4].include?(develop.dev_status_id)
+          develop.dev_status_id = params[:checked]='true' ? 2 : 1
+          develop.save  
+        end
       end
-      develop.save  
+      
    end
    render :nothing => true
   end

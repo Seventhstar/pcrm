@@ -9,10 +9,8 @@ class DevelopsController < ApplicationController
   # GET /develops.json
   def index
     @develops = Develop.search(params[:search]).order('project_id desc').paginate(:page => params[:page], :per_page => 15)
-
     view = show_dev
-    
-    puts "show_dev: " + show_dev
+    #puts "show_dev: " + show_dev
     
 
     case view

@@ -13,8 +13,8 @@
 
   <tr>
     <td><%= develop.name %></td>
-    <td class="state"><span class="check_img <%= develop.coder ? "checked" :"" %>" developid="<%=develop.id%>" chk="coder"></span></td>
-    <td class="state"><span class="check_img <%= develop.boss ? "checked" :"" %>" developid="<%=develop.id%>" chk="boss"></span></td>
+    <td class="state"><span class="check_img <%= [2,3].include?(develop.dev_status_id) ? "checked" :"" %>" developid="<%=develop.id%>" chk="coder"></span></td>
+    <td class="state"><span class="check_img <%= develop.dev_status_id==3 ? "checked" :"" %>" developid="<%=develop.id%>" chk="boss"></span></td>
     <%= edit_show(develop) %>
   </tr>
 <% end %>

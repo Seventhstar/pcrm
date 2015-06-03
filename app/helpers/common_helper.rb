@@ -85,8 +85,8 @@ module CommonHelper
           from = from_to['from'] 
           to = from_to['to']
           if from.present? || to.present?
-            
-            desc << (from==nil ? to : ('Изменено поле <b>'+t(k)+'</b> c «'+from+'» на «'+to+'»') )
+            puts 'Изменено поле <b>'+t(k)+'</b> c «'
+            desc << (from==nil ? to : ('Изменено поле <b>'+t(k)+'</b> c «'+from.to_s+'» на «'+to.to_s+'»') )
             ch.store( index, {'field' => t(k), 'from' => from, 'to' => to, 'description' => desc } )
           end
         end
@@ -116,9 +116,13 @@ module CommonHelper
     end
     # удаленные файлы
     file_id = []
-    deleted = PaperTrail::Version.where_object(lead_id: lead.id)
+    deleted = PaperTrail::Version.where_object(''+controller_name[0..-2]+'_id' => lead.id)
+    deleted << PaperTrail::Version.where_object(''+controller_name[0..-2]+'_id' => "'"+lead.id.to_s+"'")
+    #deleted = PaperTrail::Version.where_object(lead_id: lead.id)
     deleted.each_with_index do |file,index|
       ch = Hash.new  
+      puts "file!!!"
+      puts "file:"+file.to_s
       at = file.created_at.localtime.strftime("%Y.%m.%d %H:%M:%S") 
       at_hum = file.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 
       author = user_name(file.whodunnit)
@@ -132,7 +136,7 @@ module CommonHelper
       end
       #at = a['created_at'].to_time.localtime.strftime("%d.%m.%Y %H:%M:%S") 
       desc = []
-      desc << 'Добавлен файл <b>' +a['name'] +'</b>'
+      desc << 'Удален файл <b>' +a['name'] +'</b>'
 
       ch.store( index, {'file' =>  a['name']} )
       history.store( at, {'at' => at_hum,'type'=> 'del','author' => author,'changeset' => ch,'description' => desc})

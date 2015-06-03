@@ -3,20 +3,27 @@ class ProvidersController < ApplicationController
   before_action :set_provider, only: [:show, :edit, :update, :destroy]
   helper_method :sort_column, :sort_direction
   before_action :logged_in_user
+
+  include ProvidersHelper
   # GET /providers
   # GET /providers.json
   def index
+
     @styles = Style.all
     @budgets = Budget.order(:name)
     @goodstypes = Goodstype.order(:name)
     @p_statuses = PStatus.order(:name)
 
+    @param_style = params[:style]
+    @param_budget = params[:budget]
+    @param_goodstype = params[:goodstype]
+    @param_p_status = params[:p_status]
+    @param_search = params[:search]
+
+    
+
     all_ids = Provider.order(:name).ids
-    sp = all_ids
-    bp = all_ids
-    gtp = all_ids
-    ps = all_ids
-    s_ids = all_ids
+    sp,bp,gtp,ps,s_ids = all_ids,all_ids,all_ids,all_ids,all_ids
 
     if !params[:search].nil?
       s_ids = Provider.where('LOWER(name) like LOWER(?)','%'+params[:search]+'%').ids
@@ -39,16 +46,10 @@ class ProvidersController < ApplicationController
         ps = PStatus.find(params[:p_status]).providers.ids
     end
 
-
     ids = sp & bp & gtp & ps & s_ids
-    #if ids.empty?
-    #  @providers = @p.order(sort_column + " " + sort_direction) 
-    #else 
       
     @providers = Provider.where(:id => ids).order(:name) # find(ids, :order => :name)
-    #end
-    #
-    
+    store_providers_path
   end
 
   # GET /providers/1
@@ -88,7 +89,7 @@ class ProvidersController < ApplicationController
 
     respond_to do |format|
       if @provider.save
-        format.html { redirect_to providers_path, notice: 'Поставщик успешно создан.' }
+        format.html { redirect_to providers_page_url, notice: 'Поставщик успешно создан.' }
         format.json { render :show, status: :created, location: @provider }
       else
         format.html { render :new }
@@ -105,7 +106,7 @@ class ProvidersController < ApplicationController
       if @provider.update(provider_params)
       #@provider = Provider.find(params[:id])
       #if @provider.update_attributes(params[:provider])
-        format.html { redirect_to providers_path, notice: 'Поставщик успешно обновлен.' }
+        format.html { redirect_to providers_page_url, notice: 'Поставщик успешно обновлен.' }
         format.json { render :show, status: :ok, location: @provider }
       else
         format.html { render :edit }
@@ -119,7 +120,7 @@ class ProvidersController < ApplicationController
   def destroy
     @provider.destroy
     respond_to do |format|
-      format.html { redirect_to providers_url, notice: 'Поставщик успешно удален.' }
+      format.html { redirect_to providers_page_url, notice: 'Поставщик успешно удален.' }
       format.json { head :no_content }
     end
   end

@@ -23,8 +23,9 @@ class FileController < ApplicationController
 
     if params[:file] || params[:files]
 
-      dev_file =  params[:leadid].nil? ? true : false
-      folder = controller_name #dev_file ? 'develops' : 'leads'
+      dev_file  = params[:leadid].nil? ? true : false
+#      folder    = controller_name #dev_file ? 'develops' : 'leads'
+      folder    = dev_file ? 'develops' : 'leads'
       subfolder = dev_file ? params[:devid] : params[:leadid]
 
       puts params[:file].original_filename
@@ -48,14 +49,14 @@ class FileController < ApplicationController
     render layout: false, content_type: "text/html"
   end
 
-  def check_file_name(filename,lead_id, type)
+  def check_file_name(filename,id, type)
      extn = File.extname filename
      name = File.basename filename, extn
 
      if type =='leads'
-      f = LeadsFile.where('lead_id = ? and name like ? ' ,lead_id, name+"%" ).order('created_at desc').first
+      f = LeadsFile.where('lead_id = ? and name like ? ' ,id, name+"%" ).order('created_at desc').first
      else
-      f = DevFile.where('develop_id = ? and name like ? ' ,lead_id, name+"%" ).order('created_at desc').first
+      f = DevFile.where('develop_id = ? and name like ? ' ,id, name+"%" ).order('created_at desc').first
      end
 
      

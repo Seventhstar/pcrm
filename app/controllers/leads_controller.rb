@@ -125,7 +125,7 @@ class LeadsController < ApplicationController
         comm.user_id = params[:lead][:user_id]
         comm.save
        end
-       format.html { redirect_to leads_url, notice: 'Лид успешно создан.'}
+       format.html { redirect_to leads_page_url, notice: 'Лид успешно создан.'}
        format.json { render :show, status: :created, location: @lead }
       else
        format.html { render :new }
@@ -140,7 +140,7 @@ class LeadsController < ApplicationController
     respond_to do |format|
       if @lead.update(lead_params)
         format.html { redirect_to leads_page_url, notice: 'Лид успешно обновлен.' }
-        format.html { redirect_back_or leads_url }
+#        format.html { redirect_back_or leads_url }
         format.json { render :show, status: :ok, location: @lead }
       else
         format.html { render :edit }

@@ -3,23 +3,23 @@
 <%= form_tag providers_path, :method => 'get', :id => "p_search" do %>
 
 <label class="combobox">
-<%= select_tag "style", content_tag(:option,'Стиль...',:value=>0)+options_from_collection_for_select(@styles, "id", "name"),:class => "select_custom select sel_val" %>
+<%= select_tag "style", content_tag(:option,'Стиль...',:value=>0)+options_from_collection_for_select(@styles, "id", "name",:selected=>@param_style) %>
 </label>
 
 <label class="combobox">
-<%= select_tag "budget", content_tag(:option,'Бюджет...',:value=>0)+options_from_collection_for_select(@budgets, "id", "name"),:class => "select_custom select sel_val" %> 
+<%= select_tag "budget", content_tag(:option,'Бюджет...',:value=>0)+options_from_collection_for_select(@budgets, "id", "name",:selected=>@param_budget) %> 
 </label>
 
 <label class="combobox">
-<%= select_tag "goodstype", content_tag(:option,'Вид товара...',:value=>0)+options_from_collection_for_select(@goodstypes, "id", "name") %> 
+<%= select_tag "goodstype", content_tag(:option,'Вид товара...',:value=>0)+options_from_collection_for_select(@goodstypes, "id", "name",:selected=>@param_goodstype) %> 
 </label>
 
 <label class="combobox">
-<%= select_tag "p_status", content_tag(:option,'Статус...',:value=>0)+options_from_collection_for_select(@p_statuses, "id", "name") %> 
+<%= select_tag "p_status", content_tag(:option,'Статус...',:value=>0)+options_from_collection_for_select(@p_statuses, "id", "name",:selected=>@param_p_status) %> 
 </label>
 
 <div class="combobox short_search"> 
-<%= text_field_tag :search, params[:search], :class => "search_area txt", :placeholder=>"Поиск..." %>
+<%= text_field_tag :search, params[:search], :class => "search_area txt", :placeholder=>"Поиск...", :value=>@param_search %>
 </div>
 
 <% end %>

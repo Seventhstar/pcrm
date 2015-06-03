@@ -10,4 +10,14 @@ module ProvidersHelper
        ""
     end
   end
+
+ def providers_page_url
+    session[:last_providers_page] || providers_url
+ end
+
+
+ def store_providers_path
+    session[:last_providers_page] = request.url || providers_url if request.get?
+ end
+
 end
