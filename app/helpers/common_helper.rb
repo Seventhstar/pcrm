@@ -53,26 +53,45 @@ module CommonHelper
   end
 
   def get_last_history_item(obj)
-      v = obj.versions.last
+      history = Hash.new
+      #puts "obj: "+obj
+      version = obj.versions.last
       author = find_version_author_name(version) 
       at = version.created_at.localtime.strftime("%Y.%m.%d %H:%M:%S") 
       at_hum = version.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 
       changeset = version.changeset 
-      if v.event = "create"
+      if version.event = "create"
         event = "создал задачу"
-      elsif v.event = "update"
-        event = "создал задачу"
-
+      elsif version.event = "update"
+        event = "обновил задачу"
       end
+
+
+        changeset = version.changeset 
+        ch = Hash.new
+        desc = []
+        changeset.keys.each_with_index do |k,index| 
+          
+          from_to = from_to_from_changeset(changeset[k],k)
+          from = from_to['from'] 
+          to = from_to['to']
+          if from.present? || to.present?
+            #puts 'Изменено поле <b>'+t(k)+'</b> c «'
+            desc << (from==nil ? to : ('Изменено поле <b>'+t(k)+'</b> c «'+from.to_s+'» на «'+to.to_s+'»') )
+            ch.store( index, {'field' => t(k), 'from' => from, 'to' => to, 'description' => desc } )
+          end
+        end
+
+        history.store( at.to_s, {'at' => at_hum,'type'=> 'ch','author' => author,'changeset' => ch, 'description' => desc})
 
 
   end
 
-  def get_history_with_files(lead)
+  def get_history_with_files(obj)
     history = Hash.new
     # изменения в самом объекте
-    lead.versions.reverse.each do |version|
-      if version[:event]!="create" && version != lead.versions.first 
+    obj.versions.reverse.each do |version|
+      if version[:event]!="create" && version != obj.versions.first 
         author = find_version_author_name(version) 
         at = version.created_at.localtime.strftime("%Y.%m.%d %H:%M:%S") 
         at_hum = version.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 
@@ -85,24 +104,17 @@ module CommonHelper
           from = from_to['from'] 
           to = from_to['to']
           if from.present? || to.present?
-            puts 'Изменено поле <b>'+t(k)+'</b> c «'
+            #puts 'Изменено поле <b>'+t(k)+'</b> c «'
             desc << (from==nil ? to : ('Изменено поле <b>'+t(k)+'</b> c «'+from.to_s+'» на «'+to.to_s+'»') )
             ch.store( index, {'field' => t(k), 'from' => from, 'to' => to, 'description' => desc } )
           end
         end
 
-        
-        #changeset.each do |fields|
-         # k = fields[1]
-          #desc << ('Изменено поле <b>'+k['field'] +'</b> c «'+k['from'] +'» на «'+ k['to']+'»')
-         # desc << 'Изменено поле <b>'
-        #end
-
         history.store( at.to_s, {'at' => at_hum,'type'=> 'ch','author' => author,'changeset' => ch, 'description' => desc})
       end
     end
     # созданные файлы
-    lead.files.each do |file|
+    obj.files.each do |file|
       ch = Hash.new
       file.versions.reverse.each do |version|
         at = version.created_at.localtime.strftime("%Y.%m.%d %H:%M:%S") 
@@ -116,13 +128,14 @@ module CommonHelper
     end
     # удаленные файлы
     file_id = []
-    deleted = PaperTrail::Version.where_object(''+controller_name[0..-2]+'_id' => lead.id)
-    deleted << PaperTrail::Version.where_object(''+controller_name[0..-2]+'_id' => "'"+lead.id.to_s+"'")
-    #deleted = PaperTrail::Version.where_object(lead_id: lead.id)
+    deleted = PaperTrail::Version.where_object(''+controller_name[0..-2]+'_id' => obj.id)
+    #puts "deleted.count: " + deleted.count.to_s
+    if deleted.count==0
+        deleted = PaperTrail::Version.where_object(''+controller_name[0..-2]+'_id' => "'"+obj.id.to_s+"'")
+    end
+    #deleted = PaperTrail::Version.where_object(obj_id: obj.id)
     deleted.each_with_index do |file,index|
       ch = Hash.new  
-      puts "file!!!"
-      puts "file:"+file.to_s
       at = file.created_at.localtime.strftime("%Y.%m.%d %H:%M:%S") 
       at_hum = file.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 
       author = user_name(file.whodunnit)
@@ -143,7 +156,7 @@ module CommonHelper
     end  
     
     # созданные и потом удаленные файлы
-    created = PaperTrail::Version.where(:item_id => file_id, event: 'create', item_type: 'LeadsFile')
+    created = PaperTrail::Version.where(:item_id => file_id, event: 'create', item_type: 'objsFile')
     created.each_with_index do |file,index|
       at = file.created_at.localtime.strftime("%Y.%m.%d %H:%M:%S") 
       at_hum = file.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 

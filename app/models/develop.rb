@@ -7,6 +7,7 @@ class Develop < ActiveRecord::Base
   has_many :files, foreign_key: :develop_id, class_name: 'DevFile'
   has_paper_trail
 
+  include CommonHelper
 
   def self.search(search)
     if search
@@ -19,7 +20,8 @@ class Develop < ActiveRecord::Base
   end
 
   def send_changeset_email
-    DevelopMailer.changeset_email().deliver_now
+#    puts "id: "+id.to_s
+ #   DevelopMailer.changeset_email(id).deliver_now
   end
 
   def project_name
