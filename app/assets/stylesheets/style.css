@@ -40,6 +40,9 @@ a:hover .icon_user, .active .icon_user {background-position:-18px -18px; }
 .icon_options,li.icon_options a{background-position:-228px 0; width: 24px; height: 24px; }
 .icon_edit {background-position:-69px -16px; width: 16px; height: 16px; margin: 0 4px 0 0 !important;}
 .icon_show {background-position:-212px -16px; width: 16px; height: 16px; margin: 0 4px 0 0 !important;}
+.icon_apply {background-position:-68px -32px; width: 18px; height: 18px; margin: 0 4px 0 0 !important;}
+.icon_cancel {background-position:-68px -50px; width: 18px; height: 18px; margin: 0 4px 0 0 !important;}
+
 
 .icon_remove {background-position:-52px 0; width: 15px; height: 15px;}
 .icon_remove.disabled {background-position:-52px -18px; }
@@ -131,16 +134,16 @@ background-position:-34px 0 !important; width: 16px; height: 16px;}
 /*----Меню слева_start----*/
 .menu_sb {margin:0 0 0 0; font-size: 14px; }
 /*.menu_sb div{margin-bottom: 5px;}*/
-.menu_sb .head, .menu_sb h3{ background: #f2f2f2; padding: 10px 10px 10px 20px; font-weight: 500; font-size: 100%; margin: 0; }
+.menu_sb .head, .menu_sb h3{ border: 1px solid #f2f2f2; padding: 10px 10px 10px 20px; font-weight: 500; font-size: 100%; margin: 0; }
 .menu_sb h3 {border-radius: 5px; margin-top: 10px;}
 .menu_sb h3.first {margin-top: 0;}
 .menu_sb h3.ui-state-active{border-radius: 5px 5px 0 0;}
-.menu_sb h3:hover{ cursor: pointer;}
+.menu_sb h3:hover,.menu_sb .ui-state-active{ cursor: pointer; background: #f2f2f2;}
 
 .menu_sb ul{margin: 1px 0 0 0; padding: 0 0 0 0; list-style:none;}
 .menu_sb ul li{margin: -1px 0 10px 0; padding: 0 0 0 0; background:none;}
 .menu_sb ul li a{display: block; border:1px solid #e5e5e5; padding: 10px 19px 10px 19px; color: #000000; position:relative; text-decoration:none; border-radius: 5px;}
-.menu_sb ul li a .pict{display: inline-block; height: 14px; margin:0 7px 0 0;}
+.menu_sb ul li a .pict, h3 a .pict .icon {display: inline-block; height: 14px; margin:0 7px 0 0; text-decoration: none;}
 .menu_sb ul li a .pict .icon{top:-1px;}
 .menu_sb ul li a:hover,
 .menu_sb ul li.active a{background: #6acc00; background: linear-gradient(to top, #6acc00, #6acc00); padding-left: 20px; padding-right: 20px; color: #fff; border-left: 0; border-right: 0;}
@@ -163,6 +166,7 @@ background-position:-34px 0 !important; width: 16px; height: 16px;}
 .tbl_a table{border-collapse:collapse; width: 100%; }
 .tbl_a table th, table th{vertical-align:top; padding: 12px 0 12px 20px; border-bottom: 2px solid #e5e5e5; font-weight: 500;}
 .tbl_a table td{vertical-align: top; padding: 12px 0 12px 20px; border-bottom:1px solid #e5e5e5; }
+.tbl_a table td.editable {vertical-align: top; padding: 8px 0 0 16px; border-bottom:1px solid #e5e5e5; }
 .tbl_a table .disabled td{color: #aeaeae; }
 .tbl_a table .disabled td a{color: #aeaeae; }
 .tbl_a table tr:nth-child(even) td, table.tleads tr:nth-child(even) td {background: #fafafa;}

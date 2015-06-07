@@ -1,0 +1,11 @@
+Пользователь "<%= find_version_author_name(@version) %>" создал новую задачу:
+<%= @dev.name  %> 
+
+<% if !@dev.description.nil? %>
+
+Описание задачи:
+
+<%= @dev.description %>
+<% end -%>
+
+

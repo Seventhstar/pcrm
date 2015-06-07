@@ -16,12 +16,11 @@
 
 <div class="items_box_cont tbl_a">
 <div class="head"><%= list_header(@item.class.name) %></div>
-<table class="tleads">
+<table class="tleads" model="<%= @item.class.name %>">
   <tbody>
     <% @items.each do |item| %>
       <tr>
         <td><%= item.name %></td>
-        <td></td>
         <%= sp_edit_delete(item, item.parents_count )%>
       </tr>
     <% end %>

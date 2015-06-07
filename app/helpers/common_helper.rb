@@ -54,19 +54,12 @@ module CommonHelper
 
   def get_last_history_item(obj)
       history = Hash.new
-      #puts "obj: "+obj
-      version = obj.versions.last
-      author = find_version_author_name(version) 
-      at = version.created_at.localtime.strftime("%Y.%m.%d %H:%M:%S") 
-      at_hum = version.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 
-      changeset = version.changeset 
-      if version.event = "create"
-        event = "создал задачу"
-      elsif version.event = "update"
-        event = "обновил задачу"
-      end
-
-
+    # изменения в самом объекте
+      version = obj.versions.last || @version
+      if version[:event]!="create" && version != obj.versions.first 
+        author = find_version_author_name(version) 
+        at = version.created_at.localtime.strftime("%Y.%m.%d %H:%M:%S") 
+        at_hum = version.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 
         changeset = version.changeset 
         ch = Hash.new
         desc = []
@@ -76,15 +69,14 @@ module CommonHelper
           from = from_to['from'] 
           to = from_to['to']
           if from.present? || to.present?
-            #puts 'Изменено поле <b>'+t(k)+'</b> c «'
             desc << (from==nil ? to : ('Изменено поле <b>'+t(k)+'</b> c «'+from.to_s+'» на «'+to.to_s+'»') )
             ch.store( index, {'field' => t(k), 'from' => from, 'to' => to, 'description' => desc } )
           end
         end
 
         history.store( at.to_s, {'at' => at_hum,'type'=> 'ch','author' => author,'changeset' => ch, 'description' => desc})
-
-
+      end
+    history
   end
 
   def get_history_with_files(obj)
@@ -104,7 +96,6 @@ module CommonHelper
           from = from_to['from'] 
           to = from_to['to']
           if from.present? || to.present?
-            #puts 'Изменено поле <b>'+t(k)+'</b> c «'
             desc << (from==nil ? to : ('Изменено поле <b>'+t(k)+'</b> c «'+from.to_s+'» на «'+to.to_s+'»') )
             ch.store( index, {'field' => t(k), 'from' => from, 'to' => to, 'description' => desc } )
           end
@@ -129,45 +120,43 @@ module CommonHelper
     # удаленные файлы
     file_id = []
     deleted = PaperTrail::Version.where_object(''+controller_name[0..-2]+'_id' => obj.id)
-    #puts "deleted.count: " + deleted.count.to_s
+
     if deleted.count==0
         deleted = PaperTrail::Version.where_object(''+controller_name[0..-2]+'_id' => "'"+obj.id.to_s+"'")
     end
-    #deleted = PaperTrail::Version.where_object(obj_id: obj.id)
+
     deleted.each_with_index do |file,index|
       ch = Hash.new  
       at = file.created_at.localtime.strftime("%Y.%m.%d %H:%M:%S") 
       at_hum = file.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 
       author = user_name(file.whodunnit)
       file_id << file['item_id']
-      f = file['object'].split(/\r?\n/)
-      f.shift
-      a = Hash.new
-      f.each do |line| 
-        b,c = line.chomp.split(/: /)
-        a[b] = c
-      end
-      #at = a['created_at'].to_time.localtime.strftime("%d.%m.%Y %H:%M:%S") 
-      desc = []
-      desc << 'Удален файл <b>' +a['name'] +'</b>'
 
-      ch.store( index, {'file' =>  a['name']} )
-      history.store( at, {'at' => at_hum,'type'=> 'del','author' => author,'changeset' => ch,'description' => desc})
+      obj = YAML.load(file['object'])
+      desc = []
+      desc << 'Удален файл <b>' +obj['name'] +'</b>'
+
+      ch.store( index, {'file' =>  obj['name']} )
+      history.store( at+'2', {'at' => at_hum,'type'=> 'del','author' => author,'changeset' => ch,'description' => desc})
     end  
     
+    puts "file_id: "+ file_id.to_s 
+    puts "controller_name: " + controller_name.classify
+
     # созданные и потом удаленные файлы
-    created = PaperTrail::Version.where(:item_id => file_id, event: 'create', item_type: 'objsFile')
+    created = PaperTrail::Version.where(:item_id => file_id, event: 'create', item_type: controller_name.classify+'sFile')
     created.each_with_index do |file,index|
+
       at = file.created_at.localtime.strftime("%Y.%m.%d %H:%M:%S") 
       at_hum = file.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 
       ch = Hash.new  
       author = user_name(file.whodunnit)
       file_id << file['item_id']
-      f = file['object_changes'].split(/\r?\n/)
-      ch.store( index, {'file' =>  f[f.index('name:')+2][2..-1] } )
+      obj = YAML.load(file['object_changes'])
+      ch.store( index, {'file' =>  obj['name'][1] } )
       desc = []
-      desc << 'Добавлен файл <b>' +f[f.index('name:')+2][2..-1] +'</b>'
-      history.store( at, {'at' => at_hum,'type'=> 'add','author' => author,'changeset' => ch,'description' => desc})
+      desc << 'Добавлен файл <b>' +obj['name'][1] +'</b>'
+      history.store( at +'1', {'at' => at_hum,'type'=> 'add','author' => author,'changeset' => ch,'description' => desc})
     end  
     history.sort.reverse
   end

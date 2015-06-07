@@ -62,6 +62,7 @@ Rails.application.routes.draw do
   post "ajax/status_check" 
   post "ajax/add_provider_manager" 
   post "ajax/del_provider_manager" 
+  post "ajax/upd_param"
 
   post "file/del_file"
   post '/file' => 'file#create_file'

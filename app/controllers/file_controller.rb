@@ -7,7 +7,7 @@ class FileController < ApplicationController
            file = LeadsFile.find(params[:file_id])
            num_to_s = file.lead.id.to_s
         else
-          file = DevFile.find(params[:file_id])
+          file = DevelopsFile.find(params[:file_id])
           num_to_s = file.develop.id.to_s
         end
 
@@ -56,7 +56,7 @@ class FileController < ApplicationController
      if type =='leads'
       f = LeadsFile.where('lead_id = ? and name like ? ' ,id, name+"%" ).order('created_at desc').first
      else
-      f = DevFile.where('develop_id = ? and name like ? ' ,id, name+"%" ).order('created_at desc').first
+      f = DevelopsFile.where('develop_id = ? and name like ? ' ,id, name+"%" ).order('created_at desc').first
      end
 
      
@@ -87,7 +87,7 @@ class FileController < ApplicationController
   end
 
   def append_dev_file(filename,dev_id)
-     f = DevFile.new
+     f = DevelopsFile.new
      f.develop_id = dev_id
      f.name = filename
      f.save

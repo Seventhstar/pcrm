@@ -1,11 +1,11 @@
 class Develop < ActiveRecord::Base
-  after_save :send_changeset_email
   belongs_to :dev_project, foreign_key: :project_id
   belongs_to :priority
   belongs_to :dev_status
   belongs_to :ic_user, foreign_key: :ic_user_id, class_name: 'User'
-  has_many :files, foreign_key: :develop_id, class_name: 'DevFile'
+  has_many :files, foreign_key: :develop_id, class_name: 'DevelopsFile'
   has_paper_trail
+  after_save :send_changeset_email
 
   include CommonHelper
 
@@ -20,8 +20,13 @@ class Develop < ActiveRecord::Base
   end
 
   def send_changeset_email
-#    puts "id: "+id.to_s
- #   DevelopMailer.changeset_email(id).deliver_now
+     @version =  versions.last
+     puts "version.event: "+@version.event
+     if version.event == "create"
+        DevelopMailer.created_email(id).deliver_now
+     else
+        DevelopMailer.changeset_email(id).deliver_now
+     end
   end
 
   def project_name
