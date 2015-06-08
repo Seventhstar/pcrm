@@ -25,13 +25,14 @@
         </td></tr>
     <tr><td class="caption">Статус:</td>
       <td><div class="inp_w">
-      <%= f.collection_select(:p_status_id, @p_statuses, :id, :name,{}) %>
+      
+      <%= f.select :p_status_id, content_tag(:option,'Выберите...',:value=>nil)+options_for_select(@p_statuses.collect{ |u| [u.name, u.id] }, @provider.p_status_id) %></div>
       </div></td></tr>   
         <tr><td class="caption">Примечание:</td>
       <td><div class="inp_w"><%= f.text_field :komment, class: :txt %></div></td> </tr> 
 
     <tr><td class="caption"></td>
-      <td><%= link_to 'Отмена', providers_path, :class => "sub btn_a btn_reset"%>
+      <td><%= link_to 'Отмена', providers_page_url, :class => "sub btn_a btn_reset"%>
         <%= f.button :submit, value: 'Сохранить', :class => 'sub btn_a' %></td></tr>
     </table>
   </div>

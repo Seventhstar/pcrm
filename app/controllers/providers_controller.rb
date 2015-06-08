@@ -68,6 +68,7 @@ class ProvidersController < ApplicationController
     @managers = {}
     @manager  = ProviderManager.new
     @p_statuses = PStatus.order(:name)
+    
   end
 
   # GET /providers/1/edit
