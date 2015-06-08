@@ -1,2 +1,5 @@
-<div class="hl hl_a bd">Редактирование поставщика</div>
+<div class="hl hl_a bd">Редактирование поставщика
+<%= link_to "", @provider, method: :delete, data: { confirm: 'Действительно удалить поставщика?' }, :class=>"icon icon_remove right" %>
+</div>
+
 <%= render 'form' %>

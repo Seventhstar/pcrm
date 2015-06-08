@@ -1,4 +1,7 @@
-<div class="hl hl_a bd">Описание задачи:</div>
+<div class="hl hl_a bd">Описание задачи:
+<%= link_to "", @develop, method: :delete, data: { confirm: 'Действительно удалить задачу?' }, :class=>"icon icon_remove right" %>
+</div>
+
 
 <%= simple_form_for(@develop) do |f| %>
 	<div class="left">
