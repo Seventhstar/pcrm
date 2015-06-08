@@ -25,14 +25,10 @@ $(document).ready ->
 
   $('.develops').on 'click', 'span.check_img', ->
     #alert(228)
-    if $(this).hasClass('checked')
-      $(this).removeClass 'checked'
-      checked = false
-    else
-      checked = true
-      $(this).addClass 'checked'
+    checked = if $(this).hasClass('checked') then false else true
     dev_id = $(this).attr('developid')
     chk = $(this).attr('chk')
+    th = $(this)
     
     $.ajax
       url: '/ajax/dev_check'
@@ -45,10 +41,19 @@ $(document).ready ->
         xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
         return
       success: ->
-        $(this).addClass 'done'
+        if checked
+          th.addClass 'checked'
+        else
+          th.removeClass 'checked'
+          #childrens = th.parents('tr').children('td .check_img')
+          #alert(childrens.serialize())
+          #childrens.each ->
+          #  _cell = $(this)
+          #  _cell.removeClass 'checked'
+          #  return
         return
     #alert($('.active').attr('show'));    
-    return
+    #return
 
   $('#develops_search .btn').click ->
     setTimeout 'updateDev()', 400

@@ -34,14 +34,14 @@ ActiveRecord::Schema.define(version: 20150602102259) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "develops_files", force: :cascade do |t|
+  create_table "dev_files", force: :cascade do |t|
     t.string   "develop_id"
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  add_index "develops_files", ["develop_id"], name: "index_dev_files_on_develop_id"
+  add_index "dev_files", ["develop_id"], name: "index_dev_files_on_develop_id"
 
   create_table "dev_projects", force: :cascade do |t|
     t.string   "name"
@@ -69,13 +69,11 @@ ActiveRecord::Schema.define(version: 20150602102259) do
     t.integer  "dev_status_id"
   end
 
-  create_table "goodstypes", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
+  add_index "develops", ["dev_status_id"], name: "index_develops_on_dev_status_id"
+  add_index "develops", ["ic_user_id"], name: "index_develops_on_ic_user_id"
+  add_index "develops", ["priority_id"], name: "index_develops_on_priority_id"
 
-  create_table "lead_styles", force: :cascade do |t|
+  create_table "goodstypes", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -163,6 +161,9 @@ ActiveRecord::Schema.define(version: 20150602102259) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "provider_styles", ["provider_id"], name: "index_provider_styles_on_provider_id"
+  add_index "provider_styles", ["style_id"], name: "index_provider_styles_on_style_id"
 
   create_table "providers", force: :cascade do |t|
     t.string   "name"

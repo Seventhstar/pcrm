@@ -56,11 +56,12 @@ module CommonHelper
       history = Hash.new
     # изменения в самом объекте
       version = obj.versions.last || @version
-      if version[:event]!="create" && version != obj.versions.first 
+      #if version[:event]!="create" && version != obj.versions.first 
         author = find_version_author_name(version) 
         at = version.created_at.localtime.strftime("%Y.%m.%d %H:%M:%S") 
         at_hum = version.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 
         changeset = version.changeset 
+        #puts "changeset: "+changeset
         ch = Hash.new
         desc = []
         changeset.keys.each_with_index do |k,index| 
@@ -75,7 +76,7 @@ module CommonHelper
         end
 
         history.store( at.to_s, {'at' => at_hum,'type'=> 'ch','author' => author,'changeset' => ch, 'description' => desc})
-      end
+     # end
     history
   end
 

@@ -5,18 +5,26 @@ class DevelopMailer < ActionMailer::Base
   add_template_helper(CommonHelper)
   add_template_helper(DevelopsHelper)
 
+  def send_mail_to_admins( subj)
+    if Rails.env.production?
+      admins = User.where('admin = true and id <> 10')
+      emails = admins.collect(&:email).join(",")
+      #puts "emails: "  + emails
+      #emails = User.first.email
+      mail(:to => emails, :subject => subj) do |format|
+
+        format.html 
+      end
+    end
+  end
+
   def changeset_email(dev_id)
     @dev = Develop.find(dev_id)
     puts "dev_id: "+ dev_id.to_s
     @history = get_last_history_item(@dev) 
     @version = @dev.versions.last
-    #user = User.first
-    admins = User.where({admin: true})
-    admins.each do |user|
-      if Rails.env.production?
-        mail to: user.email, subject: "Изменения в задаче"
-      end
-    end
+    send_mail_to_admins("Изменения в задаче")
+    
   end
 
 
@@ -26,12 +34,8 @@ class DevelopMailer < ActionMailer::Base
     @history = get_last_history_item(@dev) 
     @version = @dev.versions.last
 
-    admins = User.where({admin: true})
-    admins.each do |user|
-      if Rails.env.production?
-        mail to: user.email, subject: "Создана новая задача"
-      end
-    end
+    send_mail_to_admins("Создана новая задача")
+  
   end
 
 end

@@ -81,7 +81,7 @@ class AjaxController < ApplicationController
         #develop.coder = params[:checked]
         puts "develop.dev_status_id: "+develop.dev_status_id.to_s
         if [1,2,4].include?(develop.dev_status_id)
-          develop.dev_status_id = params[:checked]='true' ? 2 : 1
+          develop.dev_status_id = params[:checked]=='true' ? 2 : 4
           develop.save  
         end
       end

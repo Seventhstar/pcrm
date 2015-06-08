@@ -1,11 +1,12 @@
-<h3>Пользователь "<%= find_version_author_name(@version) %>" изменил задачу:</h3>
+Пользователь "<%= find_version_author_name(@version) %>" изменил задачу:
+
+<% puts @version.to_s %>
 
 Изменения в задаче <%= @dev.name  %>:
 
   <%- @history.each do |version_fields| %>
   <%- version = version_fields[1] %>
 	<%- version['description'].each do |descr| %>
-	       <li><%= raw(descr) %></li>
+	   <%= raw(descr) %>
         <% end %>
-    </ul>
   <% end %>
