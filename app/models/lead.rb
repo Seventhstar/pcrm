@@ -7,6 +7,18 @@ class Lead < ActiveRecord::Base
   has_many :files, class_name: 'LeadsFile'
   has_paper_trail
   attr_accessor :first_comment
+  after_save :send_changeset_email
+
+
+  def send_changeset_email
+     @version = versions.last
+     puts "version.event: "+@version.event
+    if version.event == "create"
+    else
+       LeadMailer.changeset_email(id).deliver_now
+    end
+  end
+
 
   def channel_name
     channel.try(:name)

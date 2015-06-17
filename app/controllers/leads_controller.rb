@@ -20,10 +20,10 @@ class LeadsController < ApplicationController
 
 
     if sort_column == "status_date"
-      query_str = Rails.env.production? ? "*, date_trunc('month', status_date) AS month" : "*, datetime(status_date, 'start of month') AS month "
+      query_str = Rails.env.production? ? "leads.*, date_trunc('month', status_date) AS month" : "leads.*, datetime(status_date, 'start of month') AS month "
       sort_1 = sort_column == 'status_date' ? 'month' : sort_column
     else
-      query_str = Rails.env.production? ? "*, date_trunc('month', start_date) AS month" : "*, datetime(start_date, 'start of month') AS month "
+      query_str = Rails.env.production? ? "leads.*, date_trunc('month', start_date) AS month" : "leads.*, datetime(start_date, 'start of month') AS month "
       sort_1 = sort_column == 'start_date' ? 'month' : sort_column
     end
 
@@ -35,11 +35,13 @@ class LeadsController < ApplicationController
       @leads = current_user.ic_leads.select(query_str)
     else
       @leads = Lead.select(query_str)
+      #@leads = Lead.find(:select => query_str'leads.*',:conditions => query_str)
+      
     end
     
     if !params[:search].nil?
       info =params[:search]
-      @leads = @leads.where('LOWER(info) like LOWER(?)','%'+info+'%')
+      @leads = @leads.where('LOWER(info) like LOWER(?) or LOWER(phone) like LOWER(?) or LOWER(fio) like LOWER(?)','%'+info+'%','%'+info+'%','%'+info+'%')
     end
 
     if !params[:only_actual] || params[:only_actual] == "true"
