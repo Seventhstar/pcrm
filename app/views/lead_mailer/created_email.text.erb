@@ -1,0 +1,11 @@
+Пользователь "<%= find_version_author_name(@version) %>" создал новый лид:
+<%= @lead.info  %> 
+
+<% if !@lead.info.nil? %>
+
+Детали лида:
+
+<%= @lead.info %>
+<% end -%>
+
+
