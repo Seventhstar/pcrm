@@ -6,7 +6,7 @@ class LeadMailer < ActionMailer::Base
 
   default from: "admin@crmpp.ru"
 
-  def send_mail_to_admins( subj )
+  def send_mail_to_admins( subj, to = nil )
     
   	if Rails.env.production?
   		admins = User.where('admin = true and id <> 10')
@@ -14,14 +14,17 @@ class LeadMailer < ActionMailer::Base
   		admins = User.where("admin = 't' and id <> 10").to_a
   	end
 
-      admins = admins | [@lead.user]
-      admins = admins | [@lead.ic_user]
-      
-      $stdout.puts "admins count:" + admins.count.to_s
-      emails = admins.collect(&:email).join(",")
-      $stdout.puts "emails:" + emails
+      if to.nil?
+        admins = admins | [@lead.user]
+        admins = admins | [@lead.ic_user]
+        emails = admins.collect(&:email).join(",")
+      else
+      	emails = to
+      end
 
-#      emails = User.first.email
+      
+
+
     if Rails.env.production?
       mail(:to => emails, :subject => subj) do |format|
         format.html 
@@ -41,7 +44,7 @@ class LeadMailer < ActionMailer::Base
     @lead = Lead.find(lead_id)
     @history = get_last_history_item(@lead) 
     @version = @lead.versions.last
-    send_mail_to_admins("Вам передан лид")
+    send_mail_to_admins("Вам передан лид", @lead.ic_user.email)
   end
 
 end
