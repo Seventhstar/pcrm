@@ -4,6 +4,6 @@
 Телефон: <%= @lead.phone %>
 E-mail: <%= @lead.email %>
 Информация: 
-<%= @lead.info %>
+<%= raw(@lead.info.gsub!(/\n/, '<br>'))  %>
 
 

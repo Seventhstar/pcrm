@@ -5,7 +5,7 @@
 
 <h4>Детали лида:</h4>
 
-<%= @lead.info %>
+<%= raw(@lead.info.gsub!(/\n/, '<br>'))  %>
 <% end -%>
 
 

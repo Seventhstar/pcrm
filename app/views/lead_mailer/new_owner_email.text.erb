@@ -1,0 +1,12 @@
+<%= find_version_author_name(@version) %> назначил(а) ответственным пользователя "<%= @lead.ic_user.name %>" по лиду <%= link_to '#'+@lead.id.to_s, @lead %>
+
+ФИО: <%= @lead.fio %>
+
+Телефон: <%= @lead.phone %>
+
+E-mail: <%= @lead.email %>
+
+Информация: 
+<%= raw(@lead.info.gsub!(/\n/, '<br>'))  %>
+
+

@@ -17,7 +17,8 @@ class Lead < ActiveRecord::Base
     if version.event == "create"
     #   LeadMailer.created_email(id).deliver_now
     elsif obj_ch['ic_user_id'].class == [].class
-      LeadMailer.newowner_email(id).deliver_now 
+      LeadMailer.new_owner_email(id).deliver_now 
+      LeadMailer.you_owner_email(id).deliver_now 
     else
        LeadMailer.changeset_email(id).deliver_now
     end

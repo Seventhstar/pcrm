@@ -7,8 +7,7 @@
   <%- @history.each do |version_fields| %>
   <%- version = version_fields[1] %>
 	<%- version['description'].each do |descr| %>
-	       <li><%= raw(descr) %></li>
-                <% puts "descr: "+descr %>
+	    <li><%= raw(descr.gsub!(/\n/, '<br>')) %></li>
         <% end %>
     </ul>
   <% end %>

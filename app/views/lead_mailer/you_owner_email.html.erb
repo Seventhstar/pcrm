@@ -1,0 +1,9 @@
+<h3><%= find_version_author_name(@version) %> назначил(а) Вас ответственным по лиду <%= link_to '#'+@lead.id.to_s, @lead %></h3>
+
+<b>ФИО:</b> <%= @lead.fio %></br>
+<b>Телефон:</b> <%= @lead.phone %></br>
+<b>E-mail:</b> <%= @lead.email %></br>
+<b>Информация:</b> </br>
+<%= raw(@lead.info.gsub!(/\n/, '<br>'))  %>
+
+<%= link_to 'Перейти к лиду', @lead %>
