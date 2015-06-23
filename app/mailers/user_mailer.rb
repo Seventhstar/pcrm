@@ -1,6 +1,5 @@
 class UserMailer < ActionMailer::Base
   default from: "service@crmpp.ru"
-
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
   #
