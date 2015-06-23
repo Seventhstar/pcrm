@@ -1,4 +1,5 @@
 class LeadMailer < ActionMailer::Base
+  default from: "service@crmpp.ru"
   include CommonHelper
   include LeadsHelper
   add_template_helper(CommonHelper)

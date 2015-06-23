@@ -70,7 +70,12 @@ module CommonHelper
           from = from_to['from'] 
           to = from_to['to']
           if from.present? || to.present?
-            desc << (from==nil ? to : ('Изменено поле <b>'+t(k)+'</b> c «'+from.to_s+'» на «'+to.to_s+'»') )
+          	puts k,k == 'description'
+          	if k == 'description' || k == 'info'
+              desc << (from==nil ? to : ('Изменено поле <b>'+t(k)+'</b> c<br> «'+from.to_s+'»<br><b> на </b><br>«'+to.to_s+'»') )
+            else
+              desc << (from==nil ? to : ('Изменено поле <b>'+t(k)+'</b> c «'+from.to_s+'» на «'+to.to_s+'»') )
+        	end
             ch.store( index, {'field' => t(k), 'from' => from, 'to' => to, 'description' => desc } )
           end
         end

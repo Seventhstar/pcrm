@@ -1,5 +1,5 @@
 class DevelopMailer < ActionMailer::Base
-  default from: "seventhstar@mail.ru" 
+  default from: "service@crmpp.ru" 
   include CommonHelper
   include DevelopsHelper
   add_template_helper(CommonHelper)

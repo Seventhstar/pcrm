@@ -5,7 +5,8 @@
 
 <h4>Описание задачи:</h4>
 
-<%= @dev.description %>
+<%= raw(@dev.description.gsub!(/\n/, '<br>')) %>
+
 <% end -%>
 
 
