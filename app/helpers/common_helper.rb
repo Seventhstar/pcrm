@@ -70,11 +70,13 @@ module CommonHelper
           from = from_to['from'] 
           to = from_to['to']
           if from.present? || to.present?
+            from = from.nil? ? "" : from.to_s
+            to = to.nil?  ? "" : to.to_s
           	#puts k,k == 'description'
           	if k == 'description' || k == 'info'
-          	  from = from.nil? ? "" : from.to_s
+          	  
           	  from.gsub!(/\n/, '<br>')
-          	  to = to.nil?  ? "" : to.to_s
+          	  
           	  to.gsub!(/\n/, '<br>')
               desc << (from.empty? ? ('Заполнено поле <b>'+t(k)+':</b> «'+to+'»') : ('Изменено поле <b>'+t(k)+'</b> c<br> «'+from+'»<br><b> на </b><br>«'+to+'»') )
             else
