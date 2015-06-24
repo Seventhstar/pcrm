@@ -21,7 +21,7 @@ class Develop < ActiveRecord::Base
 
   def send_changeset_email
      @version =  versions.last
-     puts "version.event: "+@version.event
+     #puts "version.event: "+@version.event
      if version.event == "create"
         DevelopMailer.created_email(id).deliver_now
      else

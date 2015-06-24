@@ -70,11 +70,13 @@ module CommonHelper
           from = from_to['from'] 
           to = from_to['to']
           if from.present? || to.present?
-          	puts k,k == 'description'
+          	#puts k,k == 'description'
           	if k == 'description' || k == 'info'
-              desc << (from==nil ? to : ('Изменено поле <b>'+t(k)+'</b> c<br> «'+from.to_s+'»<br><b> на </b><br>«'+to.to_s+'»') )
+          	  from.gsub!(/\n/, '<br>')
+          	  to.gsub!(/\n/, '<br>')
+              desc << ((from.nil? || from.empty?) ? ('Заполнено поле <b>'+t(k)+':</b> «'+to.to_s+'»') : ('Изменено поле <b>'+t(k)+'</b> c<br> «'+from.to_s+'»<br><b> на </b><br>«'+to.to_s+'»') )
             else
-              desc << (from==nil ? to : ('Изменено поле <b>'+t(k)+'</b> c «'+from.to_s+'» на «'+to.to_s+'»') )
+              desc << ((from.nil? || from.empty?) ?  ('Заполнено поле <b>'+t(k)+':</b> «'+to.to_s+'»'): ('Изменено поле <b>'+t(k)+'</b> c «'+from.to_s+'» на «'+to.to_s+'»') )
         	end
             ch.store( index, {'field' => t(k), 'from' => from, 'to' => to, 'description' => desc } )
           end
@@ -102,7 +104,7 @@ module CommonHelper
           from = from_to['from'] 
           to = from_to['to']
           if from.present? || to.present?
-            desc << (from==nil ? to : ('Изменено поле <b>'+t(k)+'</b> c «'+from.to_s+'» на «'+to.to_s+'»') )
+            desc << ((from.nil? || from.empty?) ? ('Заполнено поле <b>'+t(k)+':</b> «'+to.to_s+'»') : ('Изменено поле <b>'+t(k)+'</b> c «'+from.to_s+'» на «'+to.to_s+'»') )
             ch.store( index, {'field' => t(k), 'from' => from, 'to' => to, 'description' => desc } )
           end
         end
@@ -146,8 +148,8 @@ module CommonHelper
       history.store( at+'2', {'at' => at_hum,'type'=> 'del','author' => author,'changeset' => ch,'description' => desc})
     end  
     
-    puts "file_id: "+ file_id.to_s 
-    puts "controller_name: " + controller_name.classify
+    #puts "file_id: "+ file_id.to_s 
+    #puts "controller_name: " + controller_name.classify
 
     # созданные и потом удаленные файлы
     created = PaperTrail::Version.where(:item_id => file_id, event: 'create', item_type: controller_name.classify+'sFile')

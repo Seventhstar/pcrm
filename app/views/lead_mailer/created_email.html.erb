@@ -1,11 +1,20 @@
-<h3>Пользователь "<%= find_version_author_name(@version) %>" создал новый лид:</h3>
-<%= @lead.info  %> 
+<h3><%= @lead.user.name %> принял(а) заявку:</h3>
 
-<% if !@lead.info.nil? %>
-
-<h4>Детали лида:</h4>
-
-<%= raw(@lead.info.gsub!(/\n/, '<br>'))  %>
-<% end -%>
+<br>
+<b>Дата создания:</b> <%= @lead.created_at.try('strftime',"%d.%m.%Y") %><br>
+<b>Фио:</b>	<%= @lead.fio %><br>
+<b>Телефон:</b>	<%= @lead.phone %><br>
+<b>E-Mail:</b>	<%= @lead.email %><br>
+<b>Информация о запросе:</b><br>
+ <%= raw(@lead.info)  %><br>
+<b>Статус:</b> <%= @lead.status_name %><br>
+<b>Дата для статуса:</b> <%= @lead.status_date.try('strftime',"%d.%m.%Y") %><br>	
+<b>Канал:</b> <%= @lead.channel_name %><br>
+<b>Метраж:</b>	<%= @lead.footage %><br>
+<b>Адрес объекта:</b>	<%= @lead.address %><br>
+<b>Ответственный:</b>	<%= @lead.ic_user_name %><br>
+<b>Примечание:</b> <%= @first_comment %><br>
+<br>
+<%= link_to 'Перейти к лиду', [:edit, @lead] %>
 
 

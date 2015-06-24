@@ -103,7 +103,7 @@ class ProvidersController < ApplicationController
   # PATCH/PUT /providers/1.json
   def update
     respond_to do |format|
-      puts provider_params
+      #puts provider_params
       if @provider.update(provider_params)
       #@provider = Provider.find(params[:id])
       #if @provider.update_attributes(params[:provider])

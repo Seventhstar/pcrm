@@ -21,11 +21,11 @@ module UsersHelper
         diff=diff-1
         #diff = diff/ (24 * 3600)
         
-        puts "diff"
-        puts diff
-        puts today
-        puts user.date_birth
-        puts Date.parse(user.date_birth.to_s)
+        #puts "diff"
+        #puts diff
+        #puts today
+        #puts user.date_birth
+        #puts Date.parse(user.date_birth.to_s)
         #s
 
         case diff

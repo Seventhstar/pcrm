@@ -121,7 +121,7 @@ class LeadsController < ApplicationController
 
     respond_to do |format|
       if @lead.save
-       if params[:lead][:first_comment]
+       if params[:lead][:first_comment] && !params[:lead][:first_comment].empty?
         comm = @lead.comments.new
         comm.comment = params[:lead][:first_comment]
         comm.user_id = params[:lead][:user_id]

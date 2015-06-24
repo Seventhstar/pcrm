@@ -12,7 +12,7 @@ class OptionsController < ApplicationController
       @page_data = "statuses"
     end
 
-    puts params[:options_page]
+    #puts params[:options_page]
     case params[:options_page]
     when "channels"
       @items = Channel.order(:name)
@@ -42,7 +42,7 @@ class OptionsController < ApplicationController
       @items = Priority.order(:name)
       @item  = Priority.new      
     else
-      puts "You gave me #{params[:options_page]} -- I have no idea what to do with that."
+      #puts "You gave me #{params[:options_page]} -- I have no idea what to do with that."
     end
 
     @statuses = Status.order(:name)

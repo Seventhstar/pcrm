@@ -7,7 +7,7 @@ class PrioritiesController < ApplicationController
     @priorities = Priority.all
     @items = Priority.order(:name)
     @item  = Priority.new      
-    puts "we in priority"
+    #puts "we in priority"
   end
 
   # GET /priorities/1

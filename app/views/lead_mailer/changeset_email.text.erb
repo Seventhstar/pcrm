@@ -1,7 +1,5 @@
 Пользователь "<%= find_version_author_name(@version) %>" изменил лид <%= link_to '#'+@lead.id.to_s, @lead %>
 
-<% puts @version.to_s %>
-
 Изменения в лиде <%= @lead.info  %>:
 
   <%- @history.each do |version_fields| %>

@@ -1,11 +1,20 @@
-Пользователь "<%= find_version_author_name(@version) %>" создал новый лид:
-<%= @lead.info  %> 
+<%= @lead.user.name %> принял(а) заявку:
 
-<% if !@lead.info.nil? %>
 
-Детали лида:
+Дата создания: <%= @lead.created_at.try('strftime',"%d.%m.%Y") %>
+Фио:	<%= @lead.fio %>
+Телефон:	<%= @lead.phone %>
+E-Mail:	<%= @lead.email %>
+Информация о запросе:
+ <%= raw(@lead.info)  %>
+Статус: <%= @lead.status_name %>
+Дата для статуса: <%= @lead.status_date.try('strftime',"%d.%m.%Y") %>	
+Канал: <%= @lead.channel_name %>
+Метраж:	<%= @lead.footage %>
+Адрес объекта:	<%= @lead.address %>
+Ответственный:	<%= @lead.ic_user_name %>
+Примечание: <%= @first_comment %>
 
-<%= @lead.info %>
-<% end -%>
+<%= link_to 'Перейти к лиду', [:edit, @lead] %>
 
 

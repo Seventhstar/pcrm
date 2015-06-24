@@ -12,10 +12,11 @@ class Lead < ActiveRecord::Base
 
   def send_changeset_email
      @version = versions.last
-     puts "version.event: "+@version.event
+     #puts "version.event: "+@version.event
+     #puts "first_comment: " + first_comment
      obj_ch = YAML.load(version['object_changes'])
     if version.event == "create"
-    #   LeadMailer.created_email(id).deliver_now
+       LeadMailer.created_email(id, first_comment).deliver_now
     elsif obj_ch['ic_user_id'].class == [].class
       LeadMailer.new_owner_email(id).deliver_now 
       LeadMailer.you_owner_email(id).deliver_now 

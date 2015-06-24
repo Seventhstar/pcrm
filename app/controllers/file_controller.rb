@@ -2,7 +2,7 @@ class FileController < ApplicationController
 
    def del_file
      if params[:file_id]
-        puts "!!type: " + params[:type]
+        #puts "!!type: " + params[:type]
         if params[:type] == 'leads'
            file = LeadsFile.find(params[:file_id])
            num_to_s = file.lead.id.to_s
@@ -12,7 +12,7 @@ class FileController < ApplicationController
         end
 
         filename = Rails.root.join('public', 'uploads',params[:type],num_to_s,file.name)
-        puts 'filename: '+filename.to_s
+        #puts 'filename: '+filename.to_s
         File.delete(filename) if File.exist?(filename)
         file.destroy
      end
@@ -28,7 +28,7 @@ class FileController < ApplicationController
       folder    = dev_file ? 'develops' : 'leads'
       subfolder = dev_file ? params[:devid] : params[:leadid]
 
-      puts params[:file].original_filename
+      #puts params[:file].original_filename
       uploaded_io = params[:file]
 
       name = check_file_name(uploaded_io.original_filename,subfolder,folder)
@@ -61,7 +61,7 @@ class FileController < ApplicationController
 
      
      if f
-        puts f.name
+        #puts f.name
         extn = File.extname f.name
         name = File.basename f.name, extn
         if name.split('(').count>1 
@@ -95,7 +95,7 @@ class FileController < ApplicationController
 
 
   def download
-    puts params[:filename]
+    #puts params[:filename]
     dir = Rails.root.join('public', 'uploads',params[:type],params[:id],params[:basename]+"."+params[:extension])
     send_file dir, :disposition => 'attachment'
     flash[:notice] = "Файл успешно загружен"

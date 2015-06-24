@@ -112,8 +112,8 @@ module ApplicationHelper
   def switch_active(show)
 
     active = show == show_dev ? "active" : nil
-    puts "show: " + show
-    puts "show_dev: " + show_dev
+    #puts "show: " + show
+    #puts "show_dev: " + show_dev
     
     css_class = "btn #{active}" 
   end

@@ -20,8 +20,9 @@ class DevelopMailer < ActionMailer::Base
 
   def changeset_email(dev_id)
     @dev = Develop.find(dev_id)
-    puts "dev_id: "+ dev_id.to_s
+    #puts "dev_id: "+ dev_id.to_s
     @history = get_last_history_item(@dev) 
+     puts "history:"+ @history.to_s
     @version = @dev.versions.last
     send_mail_to_admins("Изменения в задаче")
     

@@ -75,11 +75,11 @@ class AjaxController < ApplicationController
         #develop.boss = params[:checked]
         
 	      develop.dev_status_id = params[:checked]=='true' ? 3 : 4
-        puts develop.dev_status_id
+        #puts develop.dev_status_id
         develop.save  
       else
         #develop.coder = params[:checked]
-        puts "develop.dev_status_id: "+develop.dev_status_id.to_s
+        #puts "develop.dev_status_id: "+develop.dev_status_id.to_s
         if [1,2,4].include?(develop.dev_status_id)
           develop.dev_status_id = params[:checked]=='true' ? 2 : 4
           develop.save  
@@ -115,7 +115,7 @@ class AjaxController < ApplicationController
 
   def upd_param
   	if params['model'] && params['model']!='undefined'
-  		puts params        
+  		#puts params        
   		obj = Object.const_get(params['model']).find(params['id'])
    	 	#puts obj.class
    	 	new_name = params['upd']['name'].present? ? params['upd']['name'] : params['upd']['undefined']
