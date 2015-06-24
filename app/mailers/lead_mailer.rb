@@ -19,8 +19,8 @@ class LeadMailer < ActionMailer::Base
 
 
     if !only_admins 
-      admins = admins | [@lead.user]
-      admins = admins | [@lead.ic_user]
+      admins = @lead.user.nil? ? admins : admins | [@lead.user]
+      admins = @lead.ic_user.nil? ? admins : admins | [@lead.ic_user]
     end
 
     if to.nil? 
@@ -28,7 +28,7 @@ class LeadMailer < ActionMailer::Base
       if !user_exclude.nil?
         admins.delete(user_exclude)
       end
-      #p admins.count
+      puts admins
       
 
       emails = ""
@@ -77,7 +77,7 @@ class LeadMailer < ActionMailer::Base
   def you_owner_email(lead_id)
     @lead = Lead.find(lead_id)
     @version = @lead.versions.last
-    send_lead_mail("[CRM] Вы назначены ответственным", @lead.ic_user.email)
+    send_lead_mail("[CRM] Вы назначены ответственным", @lead.ic_user.try(:email))
   end
 
 end
