@@ -26,7 +26,7 @@ class LeadMailer < ActionMailer::Base
     if to.nil? 
       
       if !user_exclude.nil?
-        admins.delete(user_exclude)
+#        admins.delete(user_exclude)
       end
       puts admins
       

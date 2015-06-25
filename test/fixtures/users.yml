@@ -7,3 +7,12 @@ one:
 two:
   name: MyString
   email: 1222
+
+# lo & behold! I am a YAML comment!
+david:
+  name: David Heinemeier Hansson
+  email: 1232144
+ 
+steve:
+  name: Steve Ross Kellock
+  email: 1232444
