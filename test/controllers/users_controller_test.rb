@@ -1,6 +1,9 @@
 require 'test_helper'
+include SignInHelper
 
 class UsersControllerTest < ActionController::TestCase
+  sign_in User.first
+
   setup do
     @user = users(:one)
   end

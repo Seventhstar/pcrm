@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class DevFileTest < ActiveSupport::TestCase
+class DevelopFileTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

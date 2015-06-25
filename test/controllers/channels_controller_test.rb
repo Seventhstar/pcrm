@@ -1,6 +1,8 @@
 require 'test_helper'
 
 class ChannelsControllerTest < ActionController::TestCase
+  sign_in User.first
+
   setup do
     @channel = channels(:one)
   end

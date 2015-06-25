@@ -2,8 +2,8 @@
 
 one:
   provider_id: 1
-  goods_type_id: 1
+  goodstype_id: 1
 
 two:
   provider_id: 1
-  goods_type_id: 1
+  goodstype_id: 1
