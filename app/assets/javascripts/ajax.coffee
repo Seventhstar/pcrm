@@ -13,6 +13,7 @@
         return
       success: ->
         disable_input(false)
+        show_ajax_message('Успешно обновлено')
      return
 
 

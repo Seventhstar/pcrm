@@ -47,14 +47,13 @@
 <% end %>      
  
 
-<div class="container">
-  <div class="flash">
-      <% flash.each do |name, msg| %>
-        <%= content_tag :div, msg, :id => "flash_#{name}", :class => "fade flash_#{name}" %>
-      <% end %>
-
-  </div>
+<div class="js-notes has-note">
+  <% flash.each do |name, msg| %>
+        <%= content_tag :div, msg, :id => "flash_#{name}", :class => "alert fade-in in flash_#{name}" %>
+  <% end %>
+  <a class="close note-close" href="#"></a>
 </div>
+
 
 <div class="container">
   <div id="modal-holder" class="slide"></div>

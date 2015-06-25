@@ -8,7 +8,7 @@
         <% if @comments != nil %>
          <% @comments.each do |comment| %>
             <div class="item">
-              <div class="pic"><%= image_tag avatar_url(comment.user, 50) %></div>
+              <div class="pic"><%= avatar_for(comment.user) %></div>
               <div class="cont">
                 <div class="head">
                   <div class="name"><%= comment.user.name %></div>

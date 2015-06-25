@@ -20,18 +20,11 @@
 //= require jquery.fileupload
 //= require_tree .
 
-var fade_flash = function() {
-    $("#flash_notice").delay(5000).fadeOut("slow");
-    $("#flash_alert").delay(5000).fadeOut("slow");
-    $("#flash_error").delay(5000).fadeOut("slow");
-    $(".alert").delay(5000).fadeOut("slow");
-};
 
-window.setTimeout(function() {
-  $(".fade").fadeTo(500, 0).slideUp(500, function(){
-      $(this).remove();
-  });
-}, 3000);
+var showNotifications = function(){ 
+  $nt = $(".alert"); 
+  setTimeout(function() {$nt.removeClass("in").addClass('out'); setTimeout('$nt.remove();',1000);}, 3000);
+}
 
 function checkTime(i){
 	if (i<10){i="0" + i;}
@@ -53,8 +46,8 @@ function startTime(){
 
 var show_ajax_message = function(msg, type) {
     if (!type) {type = "success"};
-    $(".flash").html('<div class="alert fade in alert-'+type+'">'+msg+'</div>');    
-    fade_flash();
+    $(".js-notes").html( '<div class="alert fade-in flash_'+type+'">'+msg+'</div>');    
+    showNotifications();
 };
 
 var fixEncode = function(loc) {
@@ -66,6 +59,7 @@ var fixEncode = function(loc) {
 $(function() {
 
   startTime();
+  showNotifications();
 
   $('.nav #develops').addClass('li-right develops');
   $('.nav #options').addClass('li-right options');

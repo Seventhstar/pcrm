@@ -22,7 +22,7 @@
   <!-- %= render @users %> -->
 <% @users.each do |user| %>
 <tr >
-  <td width="60"><%= link_to gravatar_for(user, size: 50), user %></td>
+  <td width="60"><%= avatar_for(user) %></td>
   <td>  <%= link_to user.name, user %> </br> <%= user.email %> </td>
   <td class ="birthday">  <%= date_of_birth user %> </td>
   <td class="state"><span class="check_img <%= user.activated ? "checked" :"" %>" userid="<%=user.id%>" chk="activated"></span></td>

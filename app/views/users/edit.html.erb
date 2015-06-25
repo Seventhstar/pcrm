@@ -22,10 +22,14 @@
   </table>
 </div>
 <div class="right">
-  <div class="gravatar_edit">
-     <%= gravatar_for @user %>
-     <a href="http://gravatar.com/emails" target=_blank>Изменить</a>
-      
+  <%= image_tag(@user.avatar_url) if @user.avatar? %> 
+  <div class="file_upload">
+
+        <span class="button">Выбрать</span>
+        <mark>Файл не выбран</mark>
+   
+    <%= f.file_field :avatar %>
+    <%= f.hidden_field :avatar_cache %> 
   </div>
 </div>
 

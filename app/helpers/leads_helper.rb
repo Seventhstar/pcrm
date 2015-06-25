@@ -24,7 +24,10 @@ module LeadsHelper
 
 
  def leads_page_url
-    session[:last_leads_page] || leads_url
+#    flash[:warning]= edit_polymorphic_url(@lead)
+#    flash[:info]= session[:last_leads_page]
+    sess_url = session[:last_leads_page]
+    sess_url || leads_url
  end
  
  def store_leads_path

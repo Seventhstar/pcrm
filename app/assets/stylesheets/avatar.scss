@@ -1,0 +1,73 @@
+.file_upload{
+    display: block;
+    position: relative;
+    overflow: hidden;
+    font-size: 1em;              /* example */
+    height: 2em;                 /* example */
+    line-height: 2em             /* the same as height */
+}
+.file_upload .button, .file_upload > mark{
+    display: block;
+    cursor: pointer              /* example */
+}
+.file_upload .button{
+    float: right;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    width: 8em;                  /* example */
+    height: 100%;
+    text-align: center           /* example */
+}
+.file_upload > mark{
+    background: transparent;     /* example */
+    padding-left: 1em            /* example */
+}
+@media only screen and ( max-width: 500px ){  /* example */
+    .file_upload > mark{
+        display: none
+    }
+    .file_upload .button{
+    //    width: 100%
+    width: 100%;
+    }
+}
+.file_upload input[type=file]{
+    position: absolute;
+    top: 0;
+    opacity: 0;
+    width: 100%;
+}
+
+/* Making it beautiful */
+
+.file_upload{
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    transition: box-shadow 0.1s linear
+}
+.file_upload.focus{
+    box-shadow: 0 0 5px rgba(0,30,255,0.4)
+}
+.file_upload .button{
+    background: #ff8411;
+    transition: background 0.2s;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
+    border-radius: 2px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+    color: #fff;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis
+}
+
+.file_upload:hover .button{
+ opacity: 0.7;
+}
+
+.file_upload:active .button{
+    opacity: 1;
+    box-shadow: 0 0 3px rgba(0,0,0,0.3) inset;
+    
+}

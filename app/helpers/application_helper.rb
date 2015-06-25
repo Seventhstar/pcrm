@@ -212,5 +212,12 @@ module ApplicationHelper
       end
   end
 
+  def avatar_for( user )
+     if user.present? && user.avatar.present?
+        user.avatar.url.empty? ? image_tag('unknown.png') : image_tag(user.avatar) 
+     else
+        image_tag('unknown.png')
+     end
+  end
 
 end
