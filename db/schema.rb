@@ -67,19 +67,11 @@ ActiveRecord::Schema.define(version: 20150625170714) do
   create_table "develops_files", force: :cascade do |t|
     t.string   "develop_id"
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
-
-  add_index "develops_files", ["develop_id"], name: "index_dev_files_on_develop_id"
 
   create_table "goodstypes", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "lead_styles", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -167,6 +159,9 @@ ActiveRecord::Schema.define(version: 20150625170714) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "provider_styles", ["provider_id"], name: "index_provider_styles_on_provider_id"
+  add_index "provider_styles", ["style_id"], name: "index_provider_styles_on_style_id"
 
   create_table "providers", force: :cascade do |t|
     t.string   "name"
