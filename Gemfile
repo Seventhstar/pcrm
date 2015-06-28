@@ -11,6 +11,8 @@ gem 'rails', '4.2.0'
 group :development, :test do
   gem 'sqlite3',     '1.3.10'
   gem 'coffee-script-source', '1.8.0'
+  gem 'rspec-rails', '~> 3.0'
+  gem "capybara"
 end
           
 group :production do

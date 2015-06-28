@@ -211,6 +211,7 @@ table td{font-size: 13px;}
 
 textarea.txt, #lead_first_comment {padding: 5px 10px 5px 10px; margin:0 0 0 0; vertical-align:top; resize: none; overflow:auto;}
 .txtArea_1 {height: 80px; }
+#lead_info.txt.alone{ height: 86px; vertical-align:top;}
 
 .body.sb_left .box_wide {margin-left: -254px;}
 
@@ -312,7 +313,8 @@ label.select_custom_ext:after {	background-position: -18px -9px; }
 .ui-datepicker .ui-datepicker-calendar th{text-align: center; vertical-align:top; padding: 0 0 5px 0; font-weight: 500;}
 .ui-datepicker .ui-datepicker-calendar td{text-align: center; vertical-align:top; padding:0;}
 .ui-datepicker .ui-datepicker-calendar .ui-state-default{display: block; width: 32px; height: 29px; line-height:29px; color: #000; text-decoration:none; border-radius: 5px; position:relative;}
-.ui-datepicker .ui-datepicker-calendar .ui-datepicker-today .ui-state-default{border:1px solid #e5e5e5; width: 30px; height: 27px; line-height: 27px;}
+.ui-datepicker .ui-datepicker-calendar .ui-datepicker-today .ui-state-default{border:1px solid #ff8411; width: 30px; height: 27px; line-height: 27px;}
+
 .ui-datepicker .ui-datepicker-calendar .ui-datepicker-current-day .ui-state-default{background: #ff8411; border: 0; color: #fff; }
 .ui-datepicker .ui-datepicker-calendar .ui-datepicker-other-month .ui-state-default{color: #7d7d7d; }
 

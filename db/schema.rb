@@ -67,9 +67,11 @@ ActiveRecord::Schema.define(version: 20150625170714) do
   create_table "develops_files", force: :cascade do |t|
     t.string   "develop_id"
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
+
+  add_index "develops_files", ["develop_id"], name: "index_develops_files_on_develop_id"
 
   create_table "goodstypes", force: :cascade do |t|
     t.string   "name"

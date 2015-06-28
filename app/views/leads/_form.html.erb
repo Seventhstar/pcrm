@@ -1,6 +1,11 @@
 <%= simple_form_for(@lead) do |f| %>
 <%= f.error_notification %>
 
+	<table class="tbl_fc tbl_fc_1">
+		<tr><td class="caption">Информация о запросе:</td>
+			<td><div class="inp_w"><%= f.text_area :info, class: 'txt alone',label: false %></div></td></tr>
+	</table>
+
 	<div class="left">
 		<table class="tbl_fc tbl_fc_1">
 		<tr><td class="caption">Дата создания:</td>
@@ -11,8 +16,6 @@
 		    <td><div class="inp_w"><%= f.input :phone, label: false, class: :txt %></div></td></tr>
 		<tr><td class="caption">E-Mail:</td>
 			<td><div class="inp_w"><%= f.input :email, label: false %></div></td></tr>    
-		<tr><td class="caption">Информация о запросе:</td>
-			<td><div class="inp_w"><%= f.input :info, label: false %></div></td></tr>
 		<tr><td class="caption">Метраж:</td>
 			<td><div class="inp_w"><%= f.input :footage, label: false %></div></td></tr>
 		<tr><td class="caption">Адрес объекта:</td>

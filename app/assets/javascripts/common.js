@@ -79,17 +79,18 @@ $(document).ready(function(){
 
 	$(document).on('click', '.datepicker', function (event) {
 		var $txt = $(this),
-			val = $txt.val(),
-			placeholder = $(this).attr('placeholder');
+			val = $txt.val(),			
+			placeholder = $(this).attr('placeholder'); //if (val!='') 
+			
 		$(this).datepicker({
 			showOn: 'focus',
 			dateFormat: 'dd.mm.yy',
 			onClose: function() {},
 			beforeShow: function(){
 				var offsetTop = $('#ui-datepicker-div').offset().top;
-				if (!val) {
-					$txt.val(placeholder);
-				}
+				//if (!val && val!='') {
+				//	$txt.val(placeholder);					
+				//}
 				//alert(offsetTop);
 			}
 		}).focus();
