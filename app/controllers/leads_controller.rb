@@ -108,7 +108,7 @@ class LeadsController < ApplicationController
     @statuses = Status.all
     @comments = @lead.comments.order('created_at asc')
     @files    = @lead.files
-    @comm_height = 390
+    @comm_height = 356
     @history = get_history_with_files(@lead)
     @owner = @lead
   end

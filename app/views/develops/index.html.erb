@@ -3,7 +3,7 @@
 <div class="items_box_head">
  <%= form_tag develops_path, :method => 'get', :id => "develops_search" do %>
   <div class="input-group left"> 
-    <%= text_field_tag :search, params[:search], :class => "search_area txt" %>
+    <%= text_field_tag :search, params[:search], :class => "search_area txt slim_txt", :placeholder=>"Поиск..." %>
   </div>
 
 

@@ -19,7 +19,7 @@
 </label>
 
 <div class="combobox short_search"> 
-<%= text_field_tag :search, params[:search], :class => "search_area txt", :placeholder=>"Поиск...", :value=>@param_search %>
+<%= text_field_tag :search, params[:search], :class => "search_area txt slim_txt", :placeholder=>"Поиск...", :value=>@param_search %>
 </div>
 
 <% end %>
@@ -27,7 +27,7 @@
 
 </div>
 
-<%= link_to 'Добавить поставщика', new_provider_path, class: "btn_a btn-add right" %>
+<%= link_to 'Добавить поставщика', new_provider_path, class: "btn_a btn-add btn_slim right" %>
 </div>
 </div>
 <div class ="container">

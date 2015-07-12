@@ -34,9 +34,9 @@ $(document).ready ->
 
   
 
-  $('.chosen-select').chosen({width: '402px', display_selected_options: false, display_disabled_options:false})
+  $('.chosen-select').chosen({width: '452px', display_selected_options: false, display_disabled_options:false})
 
-  $('#provider_p_status_id').chosen({width: '402px', display_selected_options: false, display_disabled_options:false})
+  $('#provider_p_status_id').chosen({width: '452px', display_selected_options: false, display_disabled_options:false})
 
     # поиск 
   $('#p_search').on 'keyup', '#search', ->    

@@ -8,7 +8,7 @@
 
 	<%= form_tag leads_path, :method => 'get', :id => "leads_search" do %>	
   	<div class="navsearch"> 
-    	<%= text_field_tag :search, params[:search], :class => "search_area txt", :placeholder=>"Искать в таблице..." %>
+    	<%= text_field_tag :search, params[:search], :class => "search_area txt slim_txt", :placeholder=>"Искать в таблице..." %>
 	</div>
 	<% end %>
 

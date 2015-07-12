@@ -78,7 +78,7 @@ class ProvidersController < ApplicationController
     @manager  = ProviderManager.new
     @p_statuses = PStatus.order(:name)
     
-    @comm_height = 302
+    @comm_height = 310
     @comments = @provider.comments.order('created_at asc')
     @owner = @provider
   end
