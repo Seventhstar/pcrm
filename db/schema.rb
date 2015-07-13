@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150625170714) do
+ActiveRecord::Schema.define(version: 20150712033146) do
 
   create_table "budgets", force: :cascade do |t|
     t.string   "name"
@@ -67,11 +67,9 @@ ActiveRecord::Schema.define(version: 20150625170714) do
   create_table "develops_files", force: :cascade do |t|
     t.string   "develop_id"
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
-
-  add_index "develops_files", ["develop_id"], name: "index_develops_files_on_develop_id"
 
   create_table "goodstypes", force: :cascade do |t|
     t.string   "name"
@@ -188,6 +186,14 @@ ActiveRecord::Schema.define(version: 20150625170714) do
 
   create_table "styles", force: :cascade do |t|
     t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_options", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "option_id"
+    t.string   "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

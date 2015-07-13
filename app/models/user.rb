@@ -3,12 +3,12 @@ require 'carrierwave/orm/activerecord'
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  
 #  acts_as_avatarable
   mount_uploader :avatar, AvatarUploader
   has_many :leads
   has_many :ic_leads, foreign_key: :ic_user_id, class_name: 'Lead'
   has_many :files, class_name: 'LeadFile'
+  has_many :options, class_name: 'UserOption'
 
   attr_accessor :remember_token, :activation_token, :reset_token
   before_save   :downcase_email

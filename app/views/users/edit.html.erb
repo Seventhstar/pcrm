@@ -31,7 +31,22 @@
     <%= f.file_field :avatar %>
     <%= f.hidden_field :avatar_cache %> 
   </div>
+
+<h4>Уведомления о событиях в лидах:</h4>
+<table class="tbl_option">
+  <tr><td>Лид создан</td><td><%= check_box_tag "options[]", 1 %></td></tr>
+  <tr><td>Лид обновлен</td><td><%= check_box_tag "options[]",2 %></td></tr>
+  <tr><td>Назначен ответственный</td><td><%= check_box_tag "options[]",3 %></td></tr>
+</table>
+
+<h4>Уведомления о событиях в задачах:</h4>
+<table class="tbl_option">
+  <tr><td>Задача создана</td><td><%= check_box_tag "options[]",4 %></td></tr>
+  <tr><td>Задача обновлена</td><td><%= check_box_tag "options[]",5 %></td></tr>
+</table>
+
 </div>
+
 
 
 <% end %>

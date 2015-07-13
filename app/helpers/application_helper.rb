@@ -1,3 +1,10 @@
+#module UserOptionsEnum1
+#   LEAD_CRAEATED = 1
+#   :lead_updated
+#   :lead_new_owner =3
+#
+#end
+
 module ApplicationHelper
 
   def is_admin?
