@@ -40,7 +40,15 @@ class UsersController < ApplicationController
   def update
     if @user.update_attributes(user_params)
       flash[:success] = "Профиль обновлен"
+
       redirect_to users_url
+      @user.options.destroy_all
+      params[:options].each do |option|
+        opt = @user.options.new
+        opt.option_id = option
+        opt.value = true
+        opt.save
+      end
     else
       render 'edit'
     end

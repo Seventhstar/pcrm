@@ -7,6 +7,10 @@ module UsersHelper
     image_tag(gravatar_url, alt: user.name, class: "gravatar")
   end
 
+  def user_option(id)
+    f = @user.options.find_by_option_id(id) #where(:option_id => id)
+    f.nil? ? false : f.value
+  end
 
 
   def date_of_birth(user)

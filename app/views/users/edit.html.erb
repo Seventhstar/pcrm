@@ -34,15 +34,15 @@
 
 <h4>Уведомления о событиях в лидах:</h4>
 <table class="tbl_option">
-  <tr><td>Лид создан</td><td><%= check_box_tag "options[]", 1 %></td></tr>
-  <tr><td>Лид обновлен</td><td><%= check_box_tag "options[]",2 %></td></tr>
-  <tr><td>Назначен ответственный</td><td><%= check_box_tag "options[]",3 %></td></tr>
+  <tr><td>Лид создан</td><td><%= check_box_tag "options[]", 1, user_option(1) %></td></tr>
+  <tr><td>Лид обновлен</td><td><%= check_box_tag "options[]",2,user_option(2) %></td></tr>
+  <tr><td>Назначен ответственный</td><td><%= check_box_tag "options[]",3,user_option(3) %></td></tr>
 </table>
 
 <h4>Уведомления о событиях в задачах:</h4>
 <table class="tbl_option">
-  <tr><td>Задача создана</td><td><%= check_box_tag "options[]",4 %></td></tr>
-  <tr><td>Задача обновлена</td><td><%= check_box_tag "options[]",5 %></td></tr>
+  <tr><td>Задача создана</td><td><%= check_box_tag "options[]",4,user_option(4) %></td></tr>
+  <tr><td>Задача обновлена</td><td><%= check_box_tag "options[]",5,user_option(5) %></td></tr>
 </table>
 
 </div>
