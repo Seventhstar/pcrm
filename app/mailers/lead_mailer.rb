@@ -16,6 +16,8 @@ class LeadMailer < ActionMailer::Base
     #end
       
     #p admins.collect(&:name).join(","), @lead.user.name,@lead.ic_user.name
+    p "admins: "+ admins.to_s
+    p "id: "+id.to_s
     if !id.nil?
       opt_users = User.joins(:options).where('option_id = ?',id).ids
       p "opt_users: " + opt_users.to_s

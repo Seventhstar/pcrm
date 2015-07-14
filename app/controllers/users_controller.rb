@@ -43,11 +43,13 @@ class UsersController < ApplicationController
 
       redirect_to users_url
       @user.options.destroy_all
-      params[:options].each do |option|
-        opt = @user.options.new
-        opt.option_id = option
-        opt.value = true
-        opt.save
+      if params[:options]
+        params[:options].each do |option|
+          opt = @user.options.new
+          opt.option_id = option
+          opt.value = true
+          opt.save
+        end
       end
     else
       render 'edit'
