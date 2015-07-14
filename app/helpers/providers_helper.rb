@@ -5,7 +5,7 @@ module ProvidersHelper
 
   def colored_status(status)
   	if status
-      content_tag :span, status.name, class: 'pstatus'+status.id.to_s
+      content_tag :span, status.name, class: 'pstatus pst'+status.id.to_s
     else
        ""
     end

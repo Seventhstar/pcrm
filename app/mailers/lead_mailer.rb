@@ -5,15 +5,27 @@ class LeadMailer < ActionMailer::Base
   add_template_helper(CommonHelper)
   add_template_helper(LeadsHelper)
 
+  def reminder_email(user, leads_today, leads_tomorrow)
+       @l_today =leads_today
+       @l_tomorrow = leads_tomorrow
+  	  subj = '[CRM] Напоминание о событии'
+  	  email = User.find(user).email
+  	  if Rails.env.production? && !email.empty?
+      mail(:to => email, :subject => subj) do |format|
+        format.html 
+      end
+    end
+  end
+
   def send_lead_mail( subj, to = nil, user_exclude = nil, only_admins = false, id = nil )
     
-    #if Rails.env.production?
+    if Rails.env.production?
       #admins = User.where('admin = true and id <> 1').to_a
       admins = User.where('admin = true' ).ids
-    #else
+    else
       #admins = User.where("admin = 't' and id <> 10").to_a
-#      admins = User.where(:admin => true).to_a
-    #end
+      admins = User.where(:admin => true).ids
+    end
       
     #p admins.collect(&:name).join(","), @lead.user.name,@lead.ic_user.name
     p "admins: "+ admins.to_s
