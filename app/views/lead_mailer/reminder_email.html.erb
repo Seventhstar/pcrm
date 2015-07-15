@@ -1,4 +1,4 @@
-<% if @l_today.count %>
+<% if @l_today.count>0 %>
 
    <% many = (@l_today.count>1) %>
    <h3> Сегодня запланирован<%=many ? "ы":"о"%> событи<%=many ? "я":"е"%>:</h3>
@@ -10,7 +10,7 @@
    <br>
 <% end %>
 
-<% if @l_tomorrow.count %>
+<% if @l_tomorrow.count>0 %>
   <% many = (@l_tomorrow.count>1) %>
   <h3> Завтра <%= DateTime.now.tomorrow.try('strftime',"%d.%m.%Y") %> запланирован<%=many ? "ы":"о"%> событи<%=many ? "я":"е"%>:</h3>
   <% @l_tomorrow.each do |lead_id| %>

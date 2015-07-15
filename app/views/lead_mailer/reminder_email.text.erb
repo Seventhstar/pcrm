@@ -1,1 +1,21 @@
-<h3>Завтра дата / Сегодня запланировано событие <событие> (встреча в офисе)</h3>
+<% if @l_today.count>0 %>
+
+   <% many = (@l_today.count>1) %>
+   Сегодня запланирован<%=many ? "ы":"о"%> событи<%=many ? "я":"е"%>:
+   <% @l_today.each do |lead_id| %>
+   		<% lead = Lead.find(lead_id) %>
+   		<%= lead.status_name %> <%= link_to 'Лид #'+lead.id.to_s, [:edit, lead] %>
+
+   <% end %>
+   <br>
+<% end %>
+
+<% if @l_tomorrow.count>0 %>
+  <% many = (@l_tomorrow.count>1) %>
+  Завтра <%= DateTime.now.tomorrow.try('strftime',"%d.%m.%Y") %> запланирован<%=many ? "ы":"о"%> событи<%=many ? "я":"е"%>:
+  <% @l_tomorrow.each do |lead_id| %>
+   		<% lead = Lead.find(lead_id) %>
+   		<%= lead.status_name %> <%= link_to 'Лид #'+lead.id.to_s, [:edit, lead] %>
+
+   <% end %>
+<% end %>
