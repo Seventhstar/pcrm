@@ -3,7 +3,8 @@
 
 	<%= sortable_pil "status_date", "По приоритету" %>
 	<%= sortable_pil "start_date", "По месяцам" %>
-	<%= sortable_pil "ic_users.name", "По сотрудникам", 'asc' %>
+	<%= sortable_pil "ic_users.name", "По ответственным", 'asc' %>
+	<%= sortable_pil "users.name", "По создателям", 'asc' %>
 	<%= sortable_pil "status_id", "По статусам" %>
 
 	<%= form_tag leads_path, :method => 'get', :id => "leads_search" do %>	
