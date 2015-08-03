@@ -70,6 +70,9 @@ Rails.application.routes.draw do
 
   post "channels/new"
 
+  get "/pages/" => "pages#show"
+  get "/pages/:page" => "pages#show"
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

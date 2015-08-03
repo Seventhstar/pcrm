@@ -1,0 +1,16 @@
+<%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
+
+<div class="box_wrap box_wrap_1">
+<div class="left">
+<%= Lead.group_by_month(:status_date, format: "%B %Y" ).count %>
+</br>
+<%= Lead.group_by_month{ |u| u.status_date } %>
+</div>
+
+<div class="right">
+<%= column_chart Lead.group_by_month(:status_date, format: "%B").count %>
+
+<%= line_chart Lead.group_by_month(:created_at).count %>
+</div>
+</div>
+
