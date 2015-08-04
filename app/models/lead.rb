@@ -66,4 +66,6 @@ class Lead < ActiveRecord::Base
     self.users = User.find_or_create_by_name(name) if name.present?
   end
 
+
+
 end

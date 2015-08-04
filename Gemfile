@@ -13,6 +13,7 @@ group :development, :test do
   gem 'coffee-script-source', '1.8.0'
   gem 'rspec-rails', '~> 3.0'
   gem "capybara"
+
 end
           
 group :production do
@@ -76,6 +77,6 @@ gem 'nokogiri'
 gem 'responders'
 gem 'carrierwave'
 gem 'mini_magick'
-gem 'groupdate'
+#gem 'groupdate'
 gem 'dateslices'
 gem 'chartkick'
