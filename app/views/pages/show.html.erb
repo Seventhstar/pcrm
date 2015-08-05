@@ -1,29 +1,33 @@
-<% require 'json/ext' %>
-<% leads_data = Lead.group_by_month(:status_date).collect{|hash, key| {value: t(Date.parse(hash).strftime("%B")), count: key}.to_json }.to_s.gsub!(/\"{/, '{').gsub!(/}"/, '}').gsub!(/\\/, '') %>
-
-
-
-
-<%= content_tag :div, "", id: "leads_chart", leads: leads_data %>
-
 <div class="box_wrap box_wrap_1">
 <div class="left">
 
-<% if Rails.env.production? %>
-<%= Lead.group_by_month(:status_date, format: "%B %Y" ).count %>
-</br>
-<%= column_chart Lead.group_by_month(:status_date, format: "%B").count %>
-
-<%= Lead.group_by_month{ |u| u.status_date } %>
-<%= Lead.group_by_month{ |u| u.created_at } %>
-
+<% leads_count = Lead.leads_count %>
+	<div class="panel panel-default">
+	  <div class="panel-heading table-heading head month"> Количество лидов</div>
+		<table class="tleads">
+		<thead>
+		  <th>Месяц</th>
+			<% leads_count[:headers].each do |head| %>
+				<th><%= head %></th>
+			<% end %>
+			</th>
+		</thead>
+		<tbody>
+		    <% leads_count[:hash].each do |row| %>
+			<tr>
+				<% leads_count[:json][0].keys.each do |key| %>
+					<td><%= row[key] %></td>
+				<% end %>
+			</tr>
+			<% end %>
+		  </tbody>
+		</table>
+	</div>
 </div>
 
 <div class="right">
-<%= line_chart Lead.group_by_month(:created_at).count %>
+	<%= content_tag :div, "", id: "leads_chart", leads: leads_count[:json].to_json, headers: leads_count[:headers].to_s %>
 </div>
 </div>
-<% end %>
 
 
-<div id="myfirstchart" style="height: 250px;"></div>

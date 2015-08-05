@@ -66,6 +66,16 @@ class Lead < ActiveRecord::Base
     self.users = User.find_or_create_by_name(name) if name.present?
   end
 
-
+  def self.leads_count
+    grp_data1 = Lead.group_by_month(:status_date).collect{|hash, key| {value: I18n.t(Date.parse(hash).strftime("%B")), status_date: key}}
+    grp_data2 = Lead.group_by_month(:start_date).collect{|hash, key| {value: I18n.t(Date.parse(hash).strftime("%B")), start_date: key}}    
+    grp_data3 = Lead.group_by_month(:created_at).collect{|hash, key| {value: I18n.t(Date.parse(hash).strftime("%B")), created_at: key}}    
+    grp_data = (grp_data1+grp_data2+grp_data3).group_by{|h| h[:value]}.map{|k,v| v.reduce(:merge)}    
+    p grp_data
+    #leads_data = grp_data.collect{|hash, key| {value: I18n.t(Date.parse(hash).strftime("%B")), count: key}.to_json }
+    #grp_data = grp_data.collect{|hash, key| [I18n.t(Date.parse(hash).strftime("%B")), key] }
+   # puts leads_data.to_s.gsub!(/\"{/, '{').gsub!(/}"/, '}').gsub!(/\\/, '')
+    {hash: grp_data, json: grp_data, headers: ['Дата статуса','Дата создания','Создано']}
+  end
 
 end
