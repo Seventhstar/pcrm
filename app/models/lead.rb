@@ -78,4 +78,14 @@ class Lead < ActiveRecord::Base
     {hash: grp_data, json: grp_data, headers: ['Дата статуса','Дата создания','Создано']}
   end
 
+  def self.leads_users_count
+    data = Lead.group(:ic_user_id, "datetime(start_date, 'start of month')")
+        .select(:ic_user_id, "datetime(start_date, 'start of month') as month", "count(id) as f1")
+        .order("datetime(start_date, 'start of month')")
+        .collect{ |lead| {month:I18n.t(Date.parse(lead.month).strftime("%B")), user:lead.ic_user_id, count:lead.f1}}
+        #.order("f1 DESC")
+        #.collect{ |lead| [lead.ic_user_id, :month, lead.f1] } 
+     { json: data, headers: ['Дата статуса','Дата создания','Создано']}   
+  end
+
 end

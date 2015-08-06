@@ -1,7 +1,14 @@
 <div class="box_wrap box_wrap_1">
 <div class="left">
 
-<% leads_count = Lead.leads_count %>
+  <%= Lead.group(:ic_user_id, "datetime(start_date, 'start of month')")
+        .select(:ic_user_id, "datetime(start_date, 'start of month') as month", "count(id) as f1")
+        .order("datetime(start_date, 'start of month')")
+        .collect{ |lead| {month:I18n.t(Date.parse(lead.month).strftime("%B")), user:lead.ic_user_id, count:lead.f1}}  %>
+
+
+  <% leads_count = Lead.leads_count %>
+  <% leads_users_count = Lead.leads_users_count %>
 	<div class="panel panel-default">
 	  <div class="panel-heading table-heading head month"> Количество лидов</div>
 		<table class="tleads">
@@ -26,7 +33,8 @@
 </div>
 
 <div class="right">
-	<%= content_tag :div, "", id: "leads_chart", leads: leads_count[:json].to_json, headers: leads_count[:headers].to_s %>
+	<%= content_tag :div, "", id: "leads_chart", leads: leads_count[:json].to_json, headers: leads_count[:headers].to_s, class: "graph", style: "position: relative;" %>
+		<%= content_tag :div, "", id: "leads_users_chart", leads: leads_users_count[:json].to_json, headers: leads_count[:headers].to_s, class: "graph", style: "position: relative;" %>
 </div>
 </div>
 
