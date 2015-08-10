@@ -1,8 +1,6 @@
 jQuery ->
-  #alert(JSON.parse("[{\"value\":\"February\",\"count\":8}]"))
-#  alert($('#leads_chart').attr('leads'))	
-#  alert(JSON.parse($('#leads_chart').attr('leads')))	
   data_container = $('#leads_chart')
+  if data_container.attr('leads') == undefined then return
   Morris.Bar
     element: 'leads_chart'
     data: jQuery.parseJSON(data_container.attr('leads')),

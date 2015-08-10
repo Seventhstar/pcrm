@@ -5,58 +5,29 @@ class BudgetsController < ApplicationController
   # GET /budgets
   # GET /budgets.json
   def index
-    @budgets = Budget.order(:name)
-    @budget =  Budget.new
 
     @items  = Budget.order(:name)  
     @item = Budget.new
+
   end
 
-  # GET /budgets/1
-  # GET /budgets/1.json
-  def show
-    @style = Style.find(params[:id])
-  end
-
-  # GET /budgets/new
-  def new
-    @budgets = Budget.order(:name)
-    @budget = Budget.new
-  end
-
-  # GET /budgets/1/edit
-  def edit
-  end
 
   # POST /budgets
   # POST /budgets.json
   def create
-    @budget = Budget.new(budget_params)
-
+    @item = Budget.new(budget_params)
+    @items  = Budget.order(:name)  
     respond_to do |format|
-      if @budget.save
+      if @item.save
         format.html { redirect_to '/options/budgets', notice: 'Бюджет успешно создан.' }
-        format.json { render :index, status: :created, location: @budget }
+        format.json { render 'options/index', status: :created, location: @item }
       else
         format.html { render :new }
-        format.json { render json: @budget.errors, status: :unprocessable_entity }
+        format.json { render json: @item.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # PATCH/PUT /budgets/1
-  # PATCH/PUT /budgets/1.json
-  def update
-    respond_to do |format|
-      if @budget.update(budget_params)
-        format.html { redirect_to '/options/budgets', notice: 'Бюджет успешно обновлен' }
-        format.json { render :show, status: :ok, location: @budget }
-      else
-        format.html { render :edit }
-        format.json { render json: @budget.errors, status: :unprocessable_entity }
-      end
-    end
-  end
 
   # DELETE /budgets/1
   # DELETE /budgets/1.json

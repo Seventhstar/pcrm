@@ -40,7 +40,7 @@ $(document).ready ->
     item_id = $(this).attr('item_id')
     $row = $(this).parents('')
     disable_input()
-    $cells = $row.children('td').not('.edit_delete')
+    $cells = $row.children('td').not('.edit_delete,.state')
     table = $(this).closest('table')
     $cells.each ->
       _cell = $(this)

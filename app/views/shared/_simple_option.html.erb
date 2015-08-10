@@ -12,15 +12,31 @@
   </tbody></table>
 </div>
 <% end %>
+
 <div class="sep_15"></div>
+
+<% attrs = @item.attributes.except("id", "created_at", "updated_at") %>
 
 <div class="items_box_cont tbl_a">
 <div class="head"><%= list_header(@item.class.name) %></div>
 <table class="tleads" model="<%= @item.class.name %>">
+  <thead>
+  <% attrs.each do |attr| %>
+  	<th <%= attr_boolean?(@item,attr[0]) ? 'width=60px;':'' %> fld='<%= attr[0] %>'><%= t(attr[0]) %></th>
+  <% end %>
+  <th></th>
+  </thead>
   <tbody>
     <% @items.each do |item| %>
       <tr>
-        <td><%= item.name %></td>
+        <% attrs.each do |attr| %>
+          <% if attr_boolean?(@item,attr[0]) %>
+            <td class="state"><span class="check_img <%= item[attr[0]] ? "checked" :"" %>" sid="<%= item.id%>" chk="coder"></span>
+            </td> 
+          <% else %>
+            <td><%= item[attr[0]].to_s %></td>
+          <% end %>
+        <% end %>
         <%= sp_edit_delete(item, item.parents_count )%>
       </tr>
     <% end %>
@@ -28,4 +44,3 @@
 </table>
 </div>
 </div>
-

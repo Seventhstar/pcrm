@@ -4,6 +4,34 @@
 
 $(document).ready ->
 
+ $('.tleads').on 'click', 'span.check_img', ->
+  is_status_table = $(this).parents('table').attr('model')
+  #alert(is_status_table)
+  if is_status_table == 'Status' 
+    if $(this).hasClass('checked')
+      $(this).removeClass 'checked'
+      checked = false
+    else
+      checked = true
+      $(this).addClass 'checked'
+    status_id = $(this).attr('sid')
+    chk = $(this).attr('chk')
+    
+    $.ajax
+      url: '/ajax/status_check'
+      data:
+        'status_id': status_id
+        'field': chk
+        'checked': checked
+      type: 'POST'
+      beforeSend: (xhr) ->
+        xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
+        return
+      success: ->
+        $(this).addClass 'done'
+        return  
+    return
+
 # menu 
  $('#accordion').accordion
    header: 'h3'
@@ -47,10 +75,16 @@ $(document).on 'click', '#btn-send', (e) ->
       success: ->
         $.get url, null, null, 'script'
         return
+      error: (evt, xhr, status, error) ->
+        #alert(status)
+        errors = evt.responseText
+        #alert(errors)
+        show_ajax_message(errors,'error')
+        showNotifications();
   false
 
 # удаляем элемент справочника
-  $(document).on 'click', ' span.icon_remove', ->
+$(document).on 'click', ' span.icon_remove', ->
     url = $('form').attr('action')
     item_id = $(this).attr('item_id')
     del_url = url + '/' + item_id

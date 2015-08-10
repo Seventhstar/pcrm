@@ -7,6 +7,11 @@
 
 module ApplicationHelper
 
+
+  def attr_boolean?(item,attr)
+    item.class.column_types[attr.to_s].class == ActiveRecord::Type::Boolean
+  end
+
   def is_admin?
     current_user.admin? 
   end

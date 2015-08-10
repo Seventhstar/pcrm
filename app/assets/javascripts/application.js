@@ -44,6 +44,8 @@ function startTime(){
 }
 
 
+
+
 var show_ajax_message = function(msg, type) {
     if (!type) {type = "success"};
     $(".js-notes").html( '<div class="alert fade-in flash_'+type+'">'+msg+'</div>');    
@@ -59,7 +61,7 @@ var fixEncode = function(loc) {
 $(function() {
 
   startTime();
-  showNotifications();
+
 
   $('.nav #develops').addClass('li-right develops');
   $('.nav #options').addClass('li-right options');
@@ -67,8 +69,14 @@ $(function() {
   $('.nav #projects').addClass('disabled');
 
   $('[data-toggle="tooltip"]').tooltip({'placement': 'top', fade: false});
+  
   $( document ).ajaxStop( function() {
     $('[data-toggle="tooltip"]').tooltip({'placement': 'top', fade: false});
+    alert(222);
+  });
+
+  $(document).ajaxError(function myErrorHandler(event, xhr, ajaxOptions, thrownError) {
+    alert("There was an ajax error!");
   });
     
 
@@ -93,6 +101,7 @@ $('#file').hide();
           }
         });
 
+  showNotifications();
 
   /*$('.menu_sb li a').click(function(){ 
       $('.menu_sb li.active').removeClass("active", 150, "easeInQuint");
