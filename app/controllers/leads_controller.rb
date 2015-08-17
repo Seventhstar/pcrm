@@ -20,10 +20,12 @@ class LeadsController < ApplicationController
 
 
     if sort_column == "status_date"
-      query_str = Rails.env.production? ? "leads.*, date_trunc('month', status_date) AS month" : "leads.*, datetime(status_date, 'start of month') AS month "
+      #query_str = Rails.env.production? ? "leads.*, date_trunc('month', status_date) AS month" : "leads.*, datetime(status_date, 'start of month') AS month "
+      query_str = "leads.*, date_trunc('month', status_date) AS month"
       sort_1 = sort_column == 'status_date' ? 'month' : sort_column
     else
-      query_str = Rails.env.production? ? "leads.*, date_trunc('month', start_date) AS month" : "leads.*, datetime(start_date, 'start of month') AS month "
+      #query_str = Rails.env.production? ? "leads.*, date_trunc('month', start_date) AS month" : "leads.*, datetime(start_date, 'start of month') AS month "
+      query_str = "leads.*, date_trunc('month', start_date) AS month"
       sort_1 = sort_column == 'start_date' ? 'month' : sort_column
     end
 

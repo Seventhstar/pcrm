@@ -1,44 +1,18 @@
 <div class="box_wrap box_wrap_1">
-<div class="left">
 
-  <%= Lead.group(:ic_user_id, "datetime(start_date, 'start of month')")
-        .select(:ic_user_id, "datetime(start_date, 'start of month') as month", "count(id) as count")
-        .where('start_date not null')
-        .order("datetime(start_date, 'start of month')")
-        .collect{ |lead| {month:I18n.t(Date.parse(lead.month).strftime("%B")), lead.ic_user_id => lead.count}}  
-        #.group_by{|h| h[:value]}.map{|k,v| v.reduce(:merge)} 
-        %>
-
-
-  <%= leads_count = Lead.leads_count %>
-  <% #leads_users_count = Lead.leads_users_count %>
-	<div class="panel panel-default">
-	  <div class="panel-heading table-heading head month"> Количество лидов</div>
-		<table class="tleads">
-		<thead>
-		  <th>Месяц</th>
-			<% leads_count[:headers].each do |head| %>
-				<th><%= head %></th>
-			<% end %>
-			</th>
-		</thead>
-		<tbody>
-		    <% leads_count[:hash].each do |row| %>
-			<tr>
-				<% leads_count[:json][0].keys.each do |key| %>
-					<td><%= row[key] %></td>
-				<% end %>
-			</tr>
-			<% end %>
-		  </tbody>
-		</table>
-	</div>
+<div class="items_box_head">
+<%= form_tag pages_path, :method =>'get', :id => "stats_page" do %>
+<label class="combobox">
+   <%= select_tag "page_type", options_for_select(Lead.chart_types.collect {|p| [ p['name'], p['id'] ] }, @page_type) %>
+</label>
+<% end %>
 </div>
 
-<div class="right">
-	<%= content_tag :div, "", id: "leads_chart", leads: leads_count[:json].to_json, headers: leads_count[:headers].to_s, class: "graph", style: "position: relative; width:590px;" %>
-		<% #= content_tag :div, "", id: "leads_users_chart", leads: leads_users_count[:json].to_json, headers: leads_count[:headers].to_s, class: "graph", style: "position: relative;" %>
+<div id='charts_data'>
+<%= render "charts_table" %>
 </div>
+
 </div>
+
 
 

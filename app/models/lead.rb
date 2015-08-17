@@ -67,26 +67,81 @@ class Lead < ActiveRecord::Base
   end
 
   def self.leads_count
-    grp_data1 = Lead.group_by_month(:status_date).collect{|hash, key| {value: I18n.t(Date.parse(hash).strftime("%B")), status_date: key}}
-    grp_data2 = Lead.group_by_month(:start_date).collect{|hash, key| {value: I18n.t(Date.parse(hash).strftime("%B")), start_date: key}}    
-    grp_data3 = Lead.group_by_month(:created_at).collect{|hash, key| {value: I18n.t(Date.parse(hash).strftime("%B")), created_at: key}}    
-    grp_data = (grp_data1+grp_data2+grp_data3).group_by{|h| h[:value]}.map{|k,v| v.reduce(:merge)}    
-    p grp_data
+    #grp_data1 = Lead.group_by_month(:status_date).collect{|hash, key| {value: I18n.t(Date.parse(hash).strftime("%B")), status_date: key}}
+    #grp_data2 = Lead.group_by_month(:start_date).collect{|hash, key| {value: I18n.t(Date.parse(hash).strftime("%B")), start_date: key}}    
+    #grp_data3 = Lead.group_by_month(:created_at).collect{|hash, key| {value: I18n.t(Date.parse(hash).strftime("%B")), created_at: key}}    
+    #grp_data = (grp_data1+grp_data2+grp_data3).group_by{|h| h[:value]}.map{|k,v| v.reduce(:merge)}    
+    #p grp_data
     #leads_data = grp_data.collect{|hash, key| {value: I18n.t(Date.parse(hash).strftime("%B")), count: key}.to_json }
     #grp_data = grp_data.collect{|hash, key| [I18n.t(Date.parse(hash).strftime("%B")), key] }
    # puts leads_data.to_s.gsub!(/\"{/, '{').gsub!(/}"/, '}').gsub!(/\\/, '')
-    {hash: grp_data, json: grp_data, headers: ['Дата статуса','Дата создания','Создано']}
+ #  grp_data = {}
+   # {hash: grp_data, json: grp_data, headers: ['Дата статуса','Дата создания','Создано']}
+    #User.order(:name).collect{}
   end
 
-  def self.leads_users_count
-    data = Lead.group(:ic_user_id, "datetime(start_date, 'start of month')")
-        .select(:ic_user_id, "datetime(start_date, 'start of month') as month", "count(id) as f1")
-        .order("datetime(start_date, 'start of month')")
-        .where('start_date not null')
-        .collect{ |lead| {month:I18n.t(Date.parse(lead.month).strftime("%B")), (lead.ic_user_id.nil? ? "none" : lead.ic_user_id) => lead.f1}}
-        #.order("f1 DESC")
-        #.collect{ |lead| [lead.ic_user_id, :month, lead.f1] } 
-     { json: data, headers: ['Дата статуса','Дата создания','Создано']}   
+  def self.chart_types
+    [ {"id" => 'created_at', 'name' => 'Создано лидов'},
+      {"id" => 'users_created_at', 'name'=> 'Создано сотрудниками'},
+      {"id" => 'footage', 'name' => 'Метраж'},
+       ]
+    
+  end
+
+  def self.leads_users_count(type)
+
+    data = {}
+    start_date = Date.new(2015,4,1)
+    end_date   = Date.new(2015,8,1)
+    range  = start_date.to_date..end_date.to_date 
+    period = range.map {|d| Date.new(d.year, d.month, 1) }.uniq
+
+    
+    case type
+    when 'created_at'
+       data = Lead.group( "date_trunc('month', created_at)")
+                 .select("date_trunc('month', created_at) as month", "count(id) as count")
+                 .order("date_trunc('month', created_at)")
+                 .map { |l| {month: I18n.t(l.month.try('strftime',"%B")), 'Количество' => l.count} }
+    #    .where('created_at between')
+     
+      headers = ['Количество'] 
+      el= 'bar'
+    when 'footage'
+        data = Lead.group( "date_trunc('month', created_at)")
+                 .select("date_trunc('month', created_at) as month", "sum(footage) as count")
+                 .order("date_trunc('month', created_at)")
+                 .map { |l| {month: I18n.t(l.month.try('strftime',"%B")), 'Метраж' => l.count} }
+       headers = ['Метраж']          
+      el= 'Area'
+    when 'users_created_at'
+      usr = User.where('id NOT IN (?)',[1,3]).order(:name)
+      data = period.each.collect{ |p|  usr.collect{ |u| {month:I18n.t(p.try('strftime',"%B")),  u.name =>  u.leads.where("date_trunc('month', created_at) = ?",p).count } }.reduce(:merge) }
+      headers = usr.map {|u| u.name }  
+      el= 'Bar'
+    end
+    #data = {}
+    #
+    #p "page_type",@page_type
+    #qw
+    #User.order(:name).each do |user|
+        #a = user.leads.group_by_month(:created_at).count
+        #a =  user.leads.group_by_month { |u| u.created_at }.map { |k, v| [k, v.size] } #collect{|hash, key| {value: I18n.t(Date.parse(hash).strftime("%B")), created_at: key}} 
+       # Lead.
+      #  p a
+    #end
+    #data = Lead.group(:ic_user_id, "date_trunc('month', status_date)")
+    #    .select(:ic_user_id, "date_trunc('month', status_date) as month", "count(id) as count")
+    #    .where('NOT start_date is NULL')
+    ##    .order("date_trunc('month', status_date)")
+     #   .collect{ |lead| {month:I18n.t(lead.month.try('strftime',"%B")), lead.ic_user_name => lead.count}} 
+
+    
+
+   # p data
+
+       #['Дата статуса','Дата создания','Создано']
+    { hash: data, json: data, headers: headers, element: el}   
   end
 
 end

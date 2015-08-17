@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20150712033146) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "budgets", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
@@ -60,16 +63,18 @@ ActiveRecord::Schema.define(version: 20150712033146) do
     t.integer  "dev_status_id"
   end
 
-  add_index "develops", ["dev_status_id"], name: "index_develops_on_dev_status_id"
-  add_index "develops", ["ic_user_id"], name: "index_develops_on_ic_user_id"
-  add_index "develops", ["priority_id"], name: "index_develops_on_priority_id"
+  add_index "develops", ["dev_status_id"], name: "index_develops_on_dev_status_id", using: :btree
+  add_index "develops", ["ic_user_id"], name: "index_develops_on_ic_user_id", using: :btree
+  add_index "develops", ["priority_id"], name: "index_develops_on_priority_id", using: :btree
 
   create_table "develops_files", force: :cascade do |t|
     t.string   "develop_id"
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
+
+  add_index "develops_files", ["develop_id"], name: "index_develops_files_on_develop_id", using: :btree
 
   create_table "goodstypes", force: :cascade do |t|
     t.string   "name"
@@ -129,8 +134,8 @@ ActiveRecord::Schema.define(version: 20150712033146) do
     t.datetime "updated_at",  null: false
   end
 
-  add_index "provider_budgets", ["budget_id"], name: "index_provider_budgets_on_budget_id"
-  add_index "provider_budgets", ["provider_id"], name: "index_provider_budgets_on_provider_id"
+  add_index "provider_budgets", ["budget_id"], name: "index_provider_budgets_on_budget_id", using: :btree
+  add_index "provider_budgets", ["provider_id"], name: "index_provider_budgets_on_provider_id", using: :btree
 
   create_table "provider_goodstypes", force: :cascade do |t|
     t.integer  "provider_id"
@@ -139,8 +144,8 @@ ActiveRecord::Schema.define(version: 20150712033146) do
     t.datetime "updated_at",   null: false
   end
 
-  add_index "provider_goodstypes", ["goodstype_id"], name: "index_provider_goodstypes_on_goodstype_id"
-  add_index "provider_goodstypes", ["provider_id"], name: "index_provider_goodstypes_on_provider_id"
+  add_index "provider_goodstypes", ["goodstype_id"], name: "index_provider_goodstypes_on_goodstype_id", using: :btree
+  add_index "provider_goodstypes", ["provider_id"], name: "index_provider_goodstypes_on_provider_id", using: :btree
 
   create_table "provider_managers", force: :cascade do |t|
     t.string   "name"
@@ -151,7 +156,7 @@ ActiveRecord::Schema.define(version: 20150712033146) do
     t.datetime "updated_at",  null: false
   end
 
-  add_index "provider_managers", ["provider_id"], name: "index_provider_managers_on_provider_id"
+  add_index "provider_managers", ["provider_id"], name: "index_provider_managers_on_provider_id", using: :btree
 
   create_table "provider_styles", force: :cascade do |t|
     t.integer  "provider_id"
@@ -160,8 +165,8 @@ ActiveRecord::Schema.define(version: 20150712033146) do
     t.datetime "updated_at"
   end
 
-  add_index "provider_styles", ["provider_id"], name: "index_provider_styles_on_provider_id"
-  add_index "provider_styles", ["style_id"], name: "index_provider_styles_on_style_id"
+  add_index "provider_styles", ["provider_id"], name: "index_provider_styles_on_provider_id", using: :btree
+  add_index "provider_styles", ["style_id"], name: "index_provider_styles_on_style_id", using: :btree
 
   create_table "providers", force: :cascade do |t|
     t.string   "name"
@@ -224,8 +229,8 @@ ActiveRecord::Schema.define(version: 20150712033146) do
     t.string   "avatar"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "versions", force: :cascade do |t|
     t.string   "item_type",      null: false
@@ -237,6 +242,6 @@ ActiveRecord::Schema.define(version: 20150712033146) do
     t.text     "object_changes"
   end
 
-  add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
+  add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
 
 end

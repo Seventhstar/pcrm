@@ -1,0 +1,27 @@
+$("#charts_data").html("<%= escape_javascript(render("charts_table")) %>");
+var data_container;
+
+data_container = $('#leads_chart');
+
+
+ labels = jQuery.parseJSON(data_container.attr('headers'));
+ config = {
+      data: jQuery.parseJSON(data_container.attr('leads')),
+      xkey: 'month',
+      ykeys: labels,
+      labels: labels,
+      fillOpacity: 0.6,
+      hideHover: 'auto',
+      behaveLikeLine: true,
+      resize: true,
+      parseTime: false,
+      pointFillColors:['#ffffff'],
+      pointStrokeColors: ['black']
+  };
+
+ config.element = 'leads_chart';
+
+ if (data_container.attr('element') === 'Area') { Morris.Area(config) } else {Morris.Bar(config)};
+
+
+

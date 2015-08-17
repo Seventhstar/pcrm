@@ -72,11 +72,10 @@ $(function() {
   
   $( document ).ajaxStop( function() {
     $('[data-toggle="tooltip"]').tooltip({'placement': 'top', fade: false});
-    alert(222);
   });
 
   $(document).ajaxError(function myErrorHandler(event, xhr, ajaxOptions, thrownError) {
-    alert("There was an ajax error!");
+   // alert("There was an ajax error!");
   });
     
 

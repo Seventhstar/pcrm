@@ -14,7 +14,9 @@
  *= require_self
   */
 
-
+#leads_chart{
+  min-height: 450px;
+}
 
 #p_search .chosen-container-single{
   margin-right: 7px;

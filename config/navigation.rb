@@ -60,15 +60,9 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :projects, 'Проекты', '#', {:class => 'disabled'}
     primary.item :providers, 'Поставщики', providers_path
     
-    primary.item :options,image_tag('options2.png'), '/options/'+opt_page, :class => 'li-right options', if: -> { current_user.admin? } #do |sub_nav|
-    
-      #sub_nav.item :statuses, 'statuses', '/statuses'
-#      sub_nav.item :channels, 'channels', '/channels'
- #     sub_nav.item :users, 'users', '/users', if: -> { current_user.admin? }
-
-  #  end
-    primary.item :develops, image_tag('task2.png'), develops_path, :class => 'li-right develops', if: -> { current_user.admin? }
-    primary.item :charts,   image_tag('chart.png'), '/pages/', class: 'li-right charts', if: -> { current_user.admin? }
+    primary.item :options,image_tag('options2.png'), '/options/'+opt_page, :html => {:class => 'li-right options'}, :class=> 'li-right', if: -> { current_user.admin? } #do |sub_nav|
+    primary.item :develops, image_tag('task2.png'), develops_path, :html => {:class => 'li-right develops'}, :class=> 'li-right' , if: -> { current_user.admin? }
+    primary.item :charts1,   image_tag('chart.png'), pages_path, :html => {:class=> 'li-right'}, :class=> 'li-right' 
 
     # Add an item which has a sub navigation (same params, but with block)
     #primary.item :key_2, 'name', url, options do |sub_nav|

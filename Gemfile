@@ -9,20 +9,20 @@ gem 'rails', '4.2.0'
 # gem 'pg'
 
 group :development, :test do
-  gem 'sqlite3',     '1.3.10'
+#  gem 'sqlite3',     '1.3.10'
   gem 'coffee-script-source', '1.8.0'
   gem 'rspec-rails', '~> 3.0'
   gem "capybara"
 
 end
           
-group :production do
+#group :production do
 
 # Use Unicorn as the app server
 #  gem 'unicorn'
   gem 'pg'
   gem 'rails_12factor', '0.0.2'
-end
+# end
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -58,18 +58,14 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-#gem 'twitter-bootstrap-rails'
 gem 'simple_form'
-#gem 'simple-navigation-bootstrap'
 gem 'simple-navigation'
-#gem 'devise'
 gem 'bootstrap-datepicker-rails'
 gem 'jquery-ui-rails'
 gem 'bcrypt'
 gem 'yaml_db'
 gem 'font-kit-rails'
 gem 'will_paginate-bootstrap'
-#gem 'chosen-rails'
 gem 'bootstrap_tokenfield_rails'
 gem 'paper_trail'
 gem 'jquery.fileupload-rails'
@@ -77,4 +73,4 @@ gem 'nokogiri'
 gem 'responders'
 gem 'carrierwave'
 gem 'mini_magick'
-gem 'dateslices'
+gem 'yaml_db'
