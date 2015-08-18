@@ -13,16 +13,16 @@ group :development, :test do
   gem 'coffee-script-source', '1.8.0'
   gem 'rspec-rails', '~> 3.0'
   gem "capybara"
-
+  gem 'pg'
 end
           
-#group :production do
+group :production do
 
 # Use Unicorn as the app server
 #  gem 'unicorn'
   gem 'pg'
   gem 'rails_12factor', '0.0.2'
-# end
+end
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'

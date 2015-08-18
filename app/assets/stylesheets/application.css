@@ -173,3 +173,14 @@ tr.nonactual td{
 
 
 .fullwidth{ width: 100%} 
+
+.page-wrapper {
+    min-height: 100%;
+    margin-bottom: -50px;
+}
+* html .page-wrapper {
+    height: 100%;
+}
+.page-buffer {
+    height: 200px;
+} 

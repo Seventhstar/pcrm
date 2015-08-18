@@ -99,20 +99,17 @@ class Lead < ActiveRecord::Base
     
     case type
     when 'created_at'
-       data = Lead.group( "date_trunc('month', created_at)")
-                 .select("date_trunc('month', created_at) as month", "count(id) as count")
-                 .order("date_trunc('month', created_at)")
-                 .map { |l| {month: I18n.t(l.month.try('strftime',"%B")), 'Количество' => l.count} }
-    #    .where('created_at between')
-     
+
+      data = period.each.collect{ |p|  {month:I18n.t(p.try('strftime',"%B")),  'Количество' => Lead.where("date_trunc('month', created_at) = ?",p).count } }
       headers = ['Количество'] 
       el= 'bar'
     when 'footage'
-        data = Lead.group( "date_trunc('month', created_at)")
-                 .select("date_trunc('month', created_at) as month", "sum(footage) as count")
-                 .order("date_trunc('month', created_at)")
-                 .map { |l| {month: I18n.t(l.month.try('strftime',"%B")), 'Метраж' => l.count} }
-       headers = ['Метраж']          
+      st = Status.find(10)
+      data = period.each.collect{ |p|  {month:I18n.t(p.try('strftime',"%B")),                                              
+                                            'Всего' => Lead.where("date_trunc('month', created_at) = ?",p).sum(:footage),
+                                            'Заключили договор' => st.leads.where("date_trunc('month', created_at) = ?",p).sum(:footage) } }
+                         
+       headers = ['Всего','Заключили договор']          
       el= 'Area'
     when 'users_created_at'
       usr = User.where('id NOT IN (?)',[1,3]).order(:name)
@@ -120,27 +117,7 @@ class Lead < ActiveRecord::Base
       headers = usr.map {|u| u.name }  
       el= 'Bar'
     end
-    #data = {}
-    #
-    #p "page_type",@page_type
-    #qw
-    #User.order(:name).each do |user|
-        #a = user.leads.group_by_month(:created_at).count
-        #a =  user.leads.group_by_month { |u| u.created_at }.map { |k, v| [k, v.size] } #collect{|hash, key| {value: I18n.t(Date.parse(hash).strftime("%B")), created_at: key}} 
-       # Lead.
-      #  p a
-    #end
-    #data = Lead.group(:ic_user_id, "date_trunc('month', status_date)")
-    #    .select(:ic_user_id, "date_trunc('month', status_date) as month", "count(id) as count")
-    #    .where('NOT start_date is NULL')
-    ##    .order("date_trunc('month', status_date)")
-     #   .collect{ |lead| {month:I18n.t(lead.month.try('strftime',"%B")), lead.ic_user_name => lead.count}} 
 
-    
-
-   # p data
-
-       #['Дата статуса','Дата создания','Создано']
     { hash: data, json: data, headers: headers, element: el}   
   end
 
