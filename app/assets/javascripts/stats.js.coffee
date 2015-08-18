@@ -10,12 +10,15 @@ jQuery ->
   
   data_container = $('#leads_chart')
   if data_container.attr('leads') == undefined then return
+  headers = jQuery.parseJSON(data_container.attr('headers'))
   config = 
     element: 'leads_chart'
     data: jQuery.parseJSON(data_container.attr('leads')),
     xkey: 'month'
-    ykeys: jQuery.parseJSON(data_container.attr('headers'))
-    labels: jQuery.parseJSON(data_container.attr('headers'))
+    ykeys: headers
+    labels: headers
+    resize: true
+    behaveLikeLine: true    
     parseTime: false
   
   if (data_container.attr('element') == 'Area') then  Morris.Area(config)  else Morris.Bar(config) 
