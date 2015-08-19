@@ -5,7 +5,7 @@
 
 <div class="items_box_cont tbl_a">
 <div class="head">Список пользователей</div>
-<table class="tleads user-table">
+<table class="tleads user-table" model="User">
   <thead>
     <tr>
       <th></th>
@@ -25,8 +25,8 @@
   <td width="60"><%= avatar_for(user) %></td>
   <td>  <%= link_to user.name, user %> </br> <%= user.email %> </td>
   <td class ="birthday">  <%= date_of_birth user %> </td>
-  <td class="state"><span class="check_img <%= user.activated ? "checked" :"" %>" userid="<%=user.id%>" chk="activated"></span></td>
-  <td class="state"><span class="check_img <%= user.admin ? "checked" :"" %>" userid="<%=user.id%>" chk="admin"></span></td>
+  <td class="state"><span class="check_img <%= user.activated ? "checked" :"" %>" item_id="<%=user.id%>" chk="activated"></span></td>
+  <td class="state"><span class="check_img <%= user.admin ? "checked" :"" %>" item_id="<%=user.id%>" chk="admin"></span></td>
   
   <% if current_user.admin? %>
      <%= edit_delete(user, current_user?(user) ? 1:nil ) %>

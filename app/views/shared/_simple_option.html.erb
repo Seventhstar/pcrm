@@ -27,7 +27,7 @@
       <tr>
         <% attrs.each do |attr| %>
           <% if attr_boolean?(@item,attr[0]) %>
-            <td class="state"><span class="check_img <%= item[attr[0]] ? "checked" :"" %>" sid="<%= item.id%>" chk="coder"></span>
+            <td class="state"><span class="check_img <%= item[attr[0]] ? "checked" :"" %>" item_id="<%= item.id%>" chk="<%= attr[0] %>"></span>
             </td> 
           <% else %>
             <td><%= item[attr[0]].to_s %></td>

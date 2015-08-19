@@ -1,5 +1,5 @@
 class FileController < ApplicationController
-
+before_action :logged_in_user
    def del_file
      if params[:file_id]
         #puts "!!type: " + params[:type]

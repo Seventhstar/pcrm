@@ -1,5 +1,6 @@
 class AjaxController < ApplicationController
 
+before_action :logged_in_user
   def channels
     if params[:term]
       like= "%".concat(params[:term].concat("%"))
@@ -90,28 +91,27 @@ class AjaxController < ApplicationController
    render :nothing => true
   end
 
-  def status_check
-   if params[:status_id]
-      develop = Status.find(params[:status_id])
-      develop.actual = params[:checked]
-      develop.save  
-   end
-   render :nothing => true
-  end
-
-
-  def user_upd
-   if params[:user_id]
-      u = User.find(params[:user_id])
-      if params[:field] == "admin"
-        u.admin = params[:checked]
-      else
-        u.activated = params[:checked]
+  def switch_check
+      item = params[:model].classify.constantize.find(params[:item_id])
+      if !item.nil?
+          item[params[:field]] = params[:checked]
+          item.save
       end
-      u.save  
-   end
-   render :nothing => true
+      render :nothing => true 
   end
+
+#  def user_upd
+#   if params[:user_id]
+#      u = User.find(params[:user_id])
+#      if params[:field] == "admin"
+#        u.admin = params[:checked]
+#      else
+#        u.activated = params[:checked]
+#      end
+#      u.save  
+#   end
+#   render :nothing => true
+#  end
 
   def upd_param
   	if params['model'] && params['model']!='undefined'

@@ -1,4 +1,6 @@
 class StatisticsController < ApplicationController
+  before_action :logged_in_user
+  
   def show
 
     @page_type = params[:page_type].nil? ? "created_at": params[:page_type]

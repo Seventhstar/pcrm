@@ -24,7 +24,6 @@ $(document).ready ->
 
 
   $('.develops').on 'click', 'span.check_img', ->
-    #alert(228)
     checked = if $(this).hasClass('checked') then false else true
     dev_id = $(this).attr('developid')
     chk = $(this).attr('chk')
@@ -45,15 +44,7 @@ $(document).ready ->
           th.addClass 'checked'
         else
           th.removeClass 'checked'
-          #childrens = th.parents('tr').children('td .check_img')
-          #alert(childrens.serialize())
-          #childrens.each ->
-          #  _cell = $(this)
-          #  _cell.removeClass 'checked'
-          #  return
         return
-    #alert($('.active').attr('show'));    
-    #return
 
   $('#develops_search .btn').click ->
     setTimeout 'updateDev()', 400
@@ -63,7 +54,6 @@ $(document).ready ->
 
 
   $('#develops_search').on 'click', '.btn-group input', ->
-    #alert(28)
     $('.btn-group label.active').removeClass 'active'
     $('.btn-group label.active .radio').removeClass 'active'
     $(this).parent().parent().addClass 'active'

@@ -5,32 +5,28 @@
 $(document).ready ->
 
  $('.tleads').on 'click', 'span.check_img', ->
-  is_status_table = $(this).parents('table').attr('model')
-  #alert(is_status_table)
-  if is_status_table == 'Status' 
-    if $(this).hasClass('checked')
-      $(this).removeClass 'checked'
-      checked = false
-    else
-      checked = true
-      $(this).addClass 'checked'
-    status_id = $(this).attr('sid')
-    chk = $(this).attr('chk')
-    
-    $.ajax
-      url: '/ajax/status_check'
-      data:
-        'status_id': status_id
-        'field': chk
-        'checked': checked
-      type: 'POST'
-      beforeSend: (xhr) ->
-        xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
-        return
-      success: ->
-        $(this).addClass 'done'
-        return  
-    return
+  model = $(this).parents('table').attr('model')
+  if $(this).hasClass('checked')
+    $(this).removeClass 'checked'
+    checked = false
+  else
+    checked = true
+    $(this).addClass 'checked'
+  item_id = $(this).attr('item_id')
+  chk = $(this).attr('chk')
+  
+  $.ajax
+    url: '/ajax/switch_check'
+    data:
+      'model': model
+      'item_id': item_id
+      'field': chk
+      'checked': checked
+    type: 'POST'
+    beforeSend: (xhr) ->
+      xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
+      return
+  return
 
 # menu 
  $('#accordion').accordion

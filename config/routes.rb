@@ -60,6 +60,7 @@ Rails.application.routes.draw do
   post "ajax/dev_check" 
   post "ajax/user_upd" 
   post "ajax/status_check" 
+  post "ajax/switch_check" 
   post "ajax/add_provider_manager" 
   post "ajax/del_provider_manager" 
   post "ajax/upd_param"
