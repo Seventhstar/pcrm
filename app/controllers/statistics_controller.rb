@@ -8,8 +8,9 @@ class StatisticsController < ApplicationController
     @start_date = params[:start_date].nil? ? DateTime.now.at_beginning_of_month - 3.months : Date.parse(params[:start_date])
     @end_date = params[:end_date].nil? ? DateTime.now.at_beginning_of_month : Date.parse(params[:end_date])
 
+    @leads_count = Lead.leads_users_count(@page_type,@start_date,@end_date)
+    
     @page_header = case @page_type
-
     when 'created_at'
     	'Создано лидов'
     when 'footage'
@@ -17,11 +18,9 @@ class StatisticsController < ApplicationController
     when 'users_created_at'
     	'Лидов создано сотрудниками'
     when 'statuses'
-      'Количество и процент лидов по статусам'
-        
+       @two_columns = true 
+      'Количество и процент лидов по статусам'      
     end 
-  #  p params
-  #  p "@page_type:"+@page_type.to_s
   end
 end
 

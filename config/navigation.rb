@@ -55,7 +55,9 @@ SimpleNavigation::Configuration.run do |navigation|
     #                            against the current URI.  You may also use a proc, or the symbol <tt>:subpath</tt>.
     #
 #    flash[:success] =  request.url == root_url
-    primary.item :leads, 'Лиды', leads_path, {:class => request.url==root_url ? "selected active":"" }
+#    
+    leads_class = request.url==root_url ? "selected active" : ""
+    primary.item :leads, 'Лиды', leads_path, :html => {:class=> leads_class}, :class => leads_class 
     primary.item :tarifs, 'Тарифы', '#', {:class => 'disabled'}
     primary.item :projects, 'Проекты', '#', {:class => 'disabled'}
     primary.item :providers, 'Поставщики', providers_path

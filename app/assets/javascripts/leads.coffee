@@ -127,6 +127,7 @@ $(document).ready ->
 
   # основновная сортировка
   $('.container').on 'click', 'span.sort-span', ->
+    #alert(12)
     srt = $(this).attr('sort')
     dir = $(this).attr('direction')
 
@@ -136,8 +137,7 @@ $(document).ready ->
     else
       $('.sort-span').removeClass('active')
       $(this).addClass('active')
-    #lead_query({sort:srt,dir:dir})
-    lead_query({sort2:'status_date',dir2:'asc'})
+    lead_query({sort2: srt,dir2:dir})
     return
 
   # сортировка 2го уровня

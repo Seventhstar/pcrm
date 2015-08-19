@@ -56,13 +56,17 @@ module ApplicationHelper
   end
 
   def sortable_pil(column, title = nil, default_dir = 'desc')
+    
+    p "sort_column: " + @sort_column
+    p "column:" + column
+
     title ||= column.titleize
-    sort_col = sort_column == 'month' ?  "start_date": sort_column
+    sort_col = @sort_column == 'month' ?  "start_date": @sort_column
     css_class = column == sort_col ? "active #{sort_direction}" : ""
     css_class.concat(" sort-span")
 
-    direction = column == sort_column && sort_direction
-    if (column == "month" && column != sort_column)
+    direction = column == @sort_column && sort_direction
+    if (column == "month" && column != @sort_column)
       direction = "desc"    
     end  
     if (direction == false)

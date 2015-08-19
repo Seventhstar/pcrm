@@ -19,22 +19,22 @@ class LeadsController < ApplicationController
   # GET /leads.json
   def index
 
-
-    if sort_column == "status_date"
+    @sort_column = sort_column
+    if @sort_column == "status_date"
       #query_str = Rails.env.production? ? "leads.*, date_trunc('month', status_date) AS month" : "leads.*, datetime(status_date, 'start of month') AS month "
       query_str = "leads.*, date_trunc('month', status_date) AS month"
-      sort_1 = sort_column == 'status_date' ? 'month' : sort_column
+      sort_1 = @sort_column == 'status_date' ? 'month' : @sort_column
     else
       #query_str = Rails.env.production? ? "leads.*, date_trunc('month', start_date) AS month" : "leads.*, datetime(start_date, 'start of month') AS month "
       query_str = "leads.*, date_trunc('month', start_date) AS month"
-      sort_1 = sort_column == 'start_date' ? 'month' : sort_column
+      sort_1 = @sort_column == 'start_date' ? 'month' : @sort_column
     end
 
 #    query_str = Rails.env.production? ? "*, date_trunc('month', start_date) AS month" : "*, datetime(start_date, 'start of month') AS month "
     
  #   sort_1 = sort_column == 'start_date' ? 'month' : sort_column
 
-    if sort_column == "status_date" && !current_user.admin?
+    if @sort_column == "status_date" && !current_user.admin?
       @leads = current_user.ic_leads.select(query_str)
     else
       @leads = Lead.select(query_str)
@@ -182,7 +182,7 @@ class LeadsController < ApplicationController
   def sort_column
     #default_column = current_user.admin? ? "status_date" : "month"
     default_column = "status_date"
-    Lead.column_names.include?(params[:sort]) || params[:sort] == 'ic_users.name' ? params[:sort] : default_column
+    (Lead.column_names.include?(params[:sort]) || params[:sort] == 'ic_users.name' || params[:sort] == 'users.name' ) ? params[:sort] : default_column
   end
 
   def sort_2

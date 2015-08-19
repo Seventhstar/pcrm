@@ -1,0 +1,21 @@
+<div class="panel panel-default">
+	<div class="panel-heading table-heading head month"><%= @page_header %></div>
+	<table class="tleads">
+		<thead>
+			<% if @leads_count[:element]!='Donut' %><th>Месяц</th> <% end %>
+			<% @leads_count[:headers].each do |head| %>
+			<th><%= head %></th>
+			<% end %>
+		</th>
+	</thead>
+	<tbody>
+		<% @leads_count[:hash].each do |row| %>
+		<tr>
+			<% @leads_count[:json][0].keys.each do |key| %>
+			<td><%= row[key] %></td>
+			<% end %>
+		</tr>
+		<% end %>
+	</tbody>
+</table>
+</div>

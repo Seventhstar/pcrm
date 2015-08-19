@@ -4,14 +4,15 @@
 
 $(document).ready ->
 
- $('.tleads').on 'click', 'span.check_img', ->
+ $('.container').on 'click', 'span.check_img', ->
   model = $(this).parents('table').attr('model')
   if $(this).hasClass('checked')
     $(this).removeClass 'checked'
     checked = false
   else
-    checked = true
     $(this).addClass 'checked'
+    checked = true
+    
   item_id = $(this).attr('item_id')
   chk = $(this).attr('chk')
   
