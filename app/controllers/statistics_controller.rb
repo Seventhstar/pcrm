@@ -16,6 +16,9 @@ class StatisticsController < ApplicationController
     	'Метраж объектов'
     when 'users_created_at'
     	'Лидов создано сотрудниками'
+    when 'statuses'
+      'Количество и процент лидов по статусам'
+        
     end 
   #  p params
   #  p "@page_type:"+@page_type.to_s

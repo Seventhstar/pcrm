@@ -84,6 +84,7 @@ class Lead < ActiveRecord::Base
     [ {"id" => 'created_at', 'name' => 'Создано лидов'},
       {"id" => 'users_created_at', 'name'=> 'Создано сотрудниками'},
       {"id" => 'footage', 'name' => 'Метраж'},
+      {"id" => 'statuses', 'name' => 'По статусам'}
        ]
     
   end
@@ -98,11 +99,21 @@ class Lead < ActiveRecord::Base
 
     
     case type
+    when 'statuses'
+      #data = Lead.all.each.collect{ |p|  {month:,  'Количество' => Lead.where("date_trunc('month', created_at) = ?",p).count } }      
+        total = Lead.where('created_at between ? and ?',start_date,end_date).count
+        data = Lead.group(:status_id)
+                   .select(:status_id, "count(id) as count", '(Count(id)* 100 / '+total.to_s+') as percent' ) #Grade, (Count(Grade)* 100 / (Select Count(*) From MyTable))
+                   .where('created_at between ? and ?',start_date,end_date)
+                   .order(:status_id)
+                   .collect{ |lead| {label: lead.status_name, value: lead.count, present: lead.percent}} 
+        headers = ['Статус','Количество','%']
+      el = 'Donut'
     when 'created_at'
 
       data = period.each.collect{ |p|  {month:I18n.t(p.try('strftime',"%B")),  'Количество' => Lead.where("date_trunc('month', created_at) = ?",p).count } }
       headers = ['Количество'] 
-      el= 'bar'
+      el= 'Bar'
     when 'footage'
       st = Status.find(10)
       data = period.each.collect{ |p|  {month:I18n.t(p.try('strftime',"%B")),                                              

@@ -4,7 +4,7 @@
   	<div class="panel-heading table-heading head month"><%= @page_header %></div>
   	<table class="tleads">
   		<thead>
-  			<th>Месяц</th>
+  			<% if leads_count[:element]!='Donut' %><th>Месяц</th> <% end %>
   			<% leads_count[:headers].each do |head| %>
   			<th><%= head %></th>
   			<% end %>
