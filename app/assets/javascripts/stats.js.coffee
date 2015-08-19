@@ -1,7 +1,7 @@
 @stats_query = ->
   p_params = $("#stats_page").serialize()
-  $.get 'pages', p_params, null, 'script'
-  setLoc("pages?"+p_params)
+  $.get 'statistics', p_params, null, 'script'
+  setLoc("statistics?"+p_params)
 
 jQuery ->
   chosen_params = {width: '270px'}

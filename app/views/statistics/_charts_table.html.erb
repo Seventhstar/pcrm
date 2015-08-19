@@ -1,7 +1,7 @@
-  <% leads_count = Lead.leads_users_count(@page_type) %>
+  <% leads_count = Lead.leads_users_count(@page_type,@start_date,@end_date) %>
 
   <div class="panel panel-default">
-  	<div class="panel-heading table-heading head month"> Количество лидов</div>
+  	<div class="panel-heading table-heading head month"><%= @page_header %></div>
   	<table class="tleads">
   		<thead>
   			<th>Месяц</th>

@@ -1,21 +1,17 @@
 <div class="sep_05"></div>
 
 <div class="option_list">
-<%= form_for(@item) do |f| %>
-<div class="itemAdd_form">
-  <table><tbody>
-  <tr><td class="caption"><%= new_item_header(@item.class.name) %>:</td>
-      <td><div class="inp">
-          <%= f.text_field :name, :class => 'txt' %>
-	  <span class="sub btn_a" id="btn-send"> Добавить</span>
-      </td></tr>
-  </tbody></table>
-</div>
+<% if @item.class.name =='Status' %>
+  <%= render 'statuses/new_item' %>
+<% else %>
+  <%= render 'shared/new_item' %>
 <% end %>
+</div>
 
 <div class="sep_15"></div>
 
-<% attrs = @item.attributes.except("id", "created_at", "updated_at") %>
+<% attrs = @items.first.attributes.except("id", "created_at", "updated_at") %>
+
 
 <div class="items_box_cont tbl_a">
 <div class="head"><%= list_header(@item.class.name) %></div>

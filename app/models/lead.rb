@@ -88,11 +88,11 @@ class Lead < ActiveRecord::Base
     
   end
 
-  def self.leads_users_count(type)
+  def self.leads_users_count(type,start_date,end_date)
 
     data = {}
-    start_date = Date.new(2015,4,1)
-    end_date   = Date.new(2015,8,1)
+    #start_date = Date.new(2015,4,1)
+    #end_date   = Date.new(2015,8,1)
     range  = start_date.to_date..end_date.to_date 
     period = range.map {|d| Date.new(d.year, d.month, 1) }.uniq
 

@@ -1,0 +1,27 @@
+<div class="box_wrap box_wrap_1">
+
+<div class="items_box_param">
+<%= form_tag statistics_path, :method =>'get', :id => "stats_page" do %>
+
+<%= select_tag "page_type", options_for_select(Lead.chart_types.collect {|p| [ p['name'], p['id'] ] }, @page_type) %>
+
+
+<label class="first">Период с:</label>
+<div class="inp_w"><%= text_field_tag :start_date, @start_date.try('strftime',"%d.%m.%Y"), class: "txt datepicker" %></div>
+
+<label>по:</label>
+<div class="inp_w"><%= text_field_tag :end_date, @end_date.try('strftime',"%d.%m.%Y"), class: "txt datepicker" %></div>
+
+<%= submit_tag "Обновить", class: "sub btn_a" %>
+
+<% end %>
+</div>
+
+<div id='charts_data'>
+<%= render "charts_table" %>
+</div>
+
+</div>
+
+
+

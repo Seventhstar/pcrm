@@ -190,9 +190,15 @@ table td{font-size: 13px;}
 .items_box_head:after {content: ' '; clear:both; display: block; width: 0; height: 0; overflow: hidden; font-size: 0;}
 .items_box_head .left {float:left;}
 .items_box_head .right {float:right;}
-.items_box_cont{}
+
+.items_box_cont{ }
 .items_box_cont .message{margin:0 0 0 15px;}
 .items_box_cont .message .icon_birthday{margin:0 0 0 8px;}
+
+.items_box_param {height: 30px; display: block; margin:0 0 26px 0;}
+.items_box_param label{float: left; margin: 7px 5px;}
+.items_box_param label.first{ margin-left: 30px;}
+.items_box_param .inp_w{ width:100px; float: left; margin-right: 20px;}
 /*.items_box .itemAdd_form{margin: 10px 0 0 0;}*/
 
 /*.itemAdd_form{ margin: 10px 0 0 0; }*/
@@ -209,6 +215,9 @@ table td{font-size: 13px;}
 .txt,.form-control {height: 34px; padding: 0 10px 0 10px; background: #fff; border:1px solid #e5e5e5; border-top:1px solid #d9d9d9; box-shadow: inset 0 2px 0 #f2f2f2; border-radius: 5px; box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box;}
 .slim_txt {height: 24px; font-size: 13px;}
 .inp_w .txt, .inp_w, .inp_w input{width: 100%; }
+
+
+
 .lbl{ padding: 6px 10px 6px 10px; border:1px solid #e5e5e5; border-radius: 5px; font: normal 14px 'Pragmatica', sans-serif; min-height: 20px;}
 
 textarea.txt, #lead_first_comment {padding: 5px 10px 5px 10px; margin:0 0 0 0; vertical-align:top; resize: none; overflow:auto;}

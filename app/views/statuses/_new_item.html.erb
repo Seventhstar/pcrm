@@ -1,0 +1,13 @@
+<%= form_for(@item) do |f| %>
+<div class="itemAdd_form">
+  <table><tbody>
+  <tr><td class="caption">Новый статус:</td>
+      <td><label class="inp_btn_label"><div class="inp_btn checkbox"><%= f.check_box :actual, {}, "true", "false" %></div>Актуальный
+      </label></td>
+      <td><div class="inp">
+          <%= f.text_field :name, :class => 'txt' %>
+          <span class="sub btn_a" id="btn-send"> Добавить</span>
+      </td></tr>
+  </tbody></table>
+</div>
+<% end %>
