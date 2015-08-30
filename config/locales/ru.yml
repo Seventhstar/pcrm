@@ -45,8 +45,32 @@ ru:
   Style: Стиль
   Budget: Бюджет
   Goodstype: Вид товара
+  Priority: Приоритет
   actual: Актуальный
   Actual: Актуальный
+  ProjectType: Вид проекта
+
+  new_Priority: Новый приоритет
+  new_ProjectType: Новый вид проекта
+  new_Style: Новый стиль
+  new_Budget: Новый бюджет
+  new_Goodstype: Новый вид товаров
+  new_Channel: Новый канал
+  new_Status: Новый статус
+  new_PStatus: Новый статус
+  new_DevProject: Новый проект
+  new_DevStatus: Новый статус    
+
+  list_Priority: Список приоритетов
+  list_ProjectType: Список видов проектов
+  list_Style: Список стилей
+  list_Budget: Список бюджетов
+  list_Goodstype: Список видов товаров
+  list_Channel: Список каналов
+  list_Status: Список статусов
+  list_PStatus: Список статусов
+  list_DevProject: Список проектов
+  list_DevStatus: Список статусов 
 
   "true": Да
   "false": Нет

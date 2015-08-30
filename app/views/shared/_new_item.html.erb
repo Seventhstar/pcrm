@@ -1,7 +1,7 @@
 <%= form_for(@item) do |f| %>
 <div class="itemAdd_form">
   <table><tbody>
-  <tr><td class="caption"><%= new_item_header(@item.class.name) %>:</td>
+  <tr><td class="caption"><%= t("new_"+@item.class.name) %>:</td>
       <td><div class="inp">
           <%= f.text_field :name, :class => 'txt' %>
 	  <span class="sub btn_a" id="btn-send"> Добавить</span>

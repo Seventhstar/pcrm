@@ -10,11 +10,14 @@
 
 <div class="sep_15"></div>
 
+<% if @items.first.nil? %>
+<% attrs = @item.attributes.except("id", "created_at", "updated_at") %>
+<% else %>
 <% attrs = @items.first.attributes.except("id", "created_at", "updated_at") %>
-
+<% end %>
 
 <div class="items_box_cont tbl_a">
-<div class="head"><%= list_header(@item.class.name) %></div>
+<div class="head"><%= t("list_"+@item.class.name) %></div>
 <table class="tleads" model="<%= @item.class.name %>">
   <thead>
   <% attrs.each do |attr| %>
@@ -33,7 +36,7 @@
             <td><%= item[attr[0]].to_s %></td>
           <% end %>
         <% end %>
-        <%= sp_edit_delete(item, item.parents_count )%>
+        <%= sp_edit_delete(item, item.try(:parents_count) )%>
       </tr>
     <% end %>
   </tbody>
