@@ -1,0 +1,59 @@
+<%= simple_form_for(@project) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+
+    <%= f.input :client_id %>
+
+    <%= f.input :address %>
+
+    <%= f.input :owner_id %>
+
+    <%= f.input :executor_id %>
+
+    <%= f.input :designer_id %>
+
+    <%= f.input :project_type_id %>
+
+    <%= f.input :date_start %>
+
+    <%= f.input :date_end_plan %>
+
+    <%= f.input :date_end_real %>
+
+    <%= f.input :number %>
+
+    <%= f.input :footage %>
+
+    <%= f.input :footage2 %>
+
+    <%= f.input :footage_real %>
+
+    <%= f.input :footage2_real %>
+
+    <%= f.input :style_id %>
+
+    <%= f.input :sum %>
+
+    <%= f.input :sum_real %>
+
+    <%= f.input :price_m %>
+
+    <%= f.input :price_2 %>
+
+    <%= f.input :price_real_m %>
+
+    <%= f.input :price_real_2 %>
+
+    <%= f.input :month_in_gift %>
+
+    <%= f.input :act %>
+
+    <%= f.input :delay_days %>
+
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

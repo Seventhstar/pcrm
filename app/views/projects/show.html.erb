@@ -1,0 +1,124 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Client:</strong>
+  <%= @project.client_id %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @project.address %>
+</p>
+
+<p>
+  <strong>Owner:</strong>
+  <%= @project.owner_id %>
+</p>
+
+<p>
+  <strong>Executor:</strong>
+  <%= @project.executor_id %>
+</p>
+
+<p>
+  <strong>Designer:</strong>
+  <%= @project.designer_id %>
+</p>
+
+<p>
+  <strong>Project type:</strong>
+  <%= @project.project_type_id %>
+</p>
+
+<p>
+  <strong>Date start:</strong>
+  <%= @project.date_start %>
+</p>
+
+<p>
+  <strong>Date end plan:</strong>
+  <%= @project.date_end_plan %>
+</p>
+
+<p>
+  <strong>Date end real:</strong>
+  <%= @project.date_end_real %>
+</p>
+
+<p>
+  <strong>Number:</strong>
+  <%= @project.number %>
+</p>
+
+<p>
+  <strong>Footage:</strong>
+  <%= @project.footage %>
+</p>
+
+<p>
+  <strong>Footage2:</strong>
+  <%= @project.footage2 %>
+</p>
+
+<p>
+  <strong>Footage real:</strong>
+  <%= @project.footage_real %>
+</p>
+
+<p>
+  <strong>Footage2 real:</strong>
+  <%= @project.footage2_real %>
+</p>
+
+<p>
+  <strong>Style:</strong>
+  <%= @project.style_id %>
+</p>
+
+<p>
+  <strong>Sum:</strong>
+  <%= @project.sum %>
+</p>
+
+<p>
+  <strong>Sum real:</strong>
+  <%= @project.sum_real %>
+</p>
+
+<p>
+  <strong>Price m:</strong>
+  <%= @project.price_m %>
+</p>
+
+<p>
+  <strong>Price 2:</strong>
+  <%= @project.price_2 %>
+</p>
+
+<p>
+  <strong>Price real m:</strong>
+  <%= @project.price_real_m %>
+</p>
+
+<p>
+  <strong>Price real 2:</strong>
+  <%= @project.price_real_2 %>
+</p>
+
+<p>
+  <strong>Month in gift:</strong>
+  <%= @project.month_in_gift %>
+</p>
+
+<p>
+  <strong>Act:</strong>
+  <%= @project.act %>
+</p>
+
+<p>
+  <strong>Delay days:</strong>
+  <%= @project.delay_days %>
+</p>
+
+<%= link_to 'Edit', edit_project_path(@project) %> |
+<%= link_to 'Back', projects_path %>
