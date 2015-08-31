@@ -96,15 +96,17 @@ label a.btn_c:hover{cursor: pointer;}
 .user_h .logout .icon{margin:0 7px 0 0;}
 
 .menu_main {height: 44px; background: #f1f1f1 url('bg1_1.png') no-repeat 0 0; border-radius: 5px; margin:0 0 0 146px; position:relative;}
-.menu_main ul{margin:0 0 0 0; padding: 0 0 0 0; list-style:none; overflow:hidden;}
-.menu_main ul li{margin:0 0 0 0; padding: 0 0 0 0; background:none; float:left;}
+.menu_main ul, .submenu ul{margin:0 0 0 0; padding: 0 0 0 0; list-style:none; overflow:hidden;}
+.menu_main ul li, .submenu ul li{margin:0 0 0 0; padding: 0 0 0 0; background:none; float:left;}
 .menu_main ul li a{display: inline-block; font-size: 15px; color: #000; text-decoration:none;}
 .menu_main ul li a {display: inline-block; height: 44px; line-height: 44px; background: url('bg1_2.png') no-repeat 100% -100px; padding: 0 14px 0 14px; }
 .menu_main ul li:not(.disabled) a:hover, .menu_main ul li.active a,
-.menu_main .btn_options:hover{background: #59c600; background: linear-gradient(to top, #59c600, #61c900); color: #fff; }
+.menu_main .btn_options:hover {background: #59c600; background: linear-gradient(to top, #59c600, #61c900); color: #fff; }
 .menu_main ul li:not(.disabled) a:hover , .menu_main ul li.active a {background-position: 100% 0;}
 .menu_main ul li:first-child a{border-radius: 5px 0 0 5px;}
 .menu_main ul li:first-child a {padding-left: 20px; border-radius: 5px 0 0 5px;}
+
+.submenu ul li a{text-decoration:none;}
 
 li.icon_options a {display: inline-block; background: url('pict0.png') no-repeat !important; 
 vertical-align:middle; position:relative;
@@ -360,13 +362,15 @@ td.state{  text-align: center;}
 .menu_c {}
 .menu_c ul {margin:0 0 0 -10px; padding: 0 0 0 0; list-style:none; overflow:hidden;}
 .menu_c ul li{margin:0 0 0 10px; padding: 0 0 0 0; background:none; float:left;}
-.menu_c ul li a, .subnav span{display: inline-block; border:1px solid #e5e5e5; font-size: 13px; padding: 5px 12px; color: #000000; position:relative; text-decoration:none; border-radius: 5px; line-height: 1;}
+.menu_c ul li a, .subnav span, .submenu ul li {display: inline-block; border:1px solid #e5e5e5; font-size: 13px; padding: 5px 12px; color: #000000; position:relative; text-decoration:none; border-radius: 5px; line-height: 1;}
 
 .menu_c ul li a:hover,
 .menu_c ul li.active a,
-.subnav span.active, 
-.subnav span:hover{background: #6acc00; border: 1px solid #6acc00; color: #fff; }
-.subnav span:not(.li-right){margin:0 10px 0 0; float: left;}
+.subnav span.active, .submenu ul li.active, .submenu ul li:hover, 	
+.subnav span:hover{background: #6acc00; border: 1px solid #6acc00; color: #fff !important; }
+.subnav span:not(.li-right), .submenu ul li{margin:0 10px 0 0; float: left;}
+
+.submenu ul li:hover a, .submenu ul li.active a{color: #fff !important; cursor: pointer;}
 
 .splink{ margin-right: 10px;}
 .splink{ display: inline-block; border:1px solid #e5e5e5; padding: 7px 10px 7px 10px; color: #000000; position:relative; text-decoration:none; border-radius: 5px; line-height: 1;}

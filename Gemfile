@@ -59,7 +59,7 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'simple_form'
-gem 'simple-navigation'
+gem 'simple-navigation', '4.0.3'
 gem 'bootstrap-datepicker-rails'
 gem 'jquery-ui-rails'
 gem 'bcrypt'

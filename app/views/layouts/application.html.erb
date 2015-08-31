@@ -33,7 +33,9 @@
       <div class="menu_main menu_h">
         <%= render_navigation :level => 1 %>
       </div>
+
     </div>
+
 </div>
 
 
@@ -56,8 +58,11 @@
 
 
 <div class="container">
+      <div class="submenu">
+        <%= render_navigation(:level => 2) %>
+      </div>
   <div id="modal-holder" class="slide"></div>
-          <%= yield %>
+  <%= yield %>
 </div>
 
 

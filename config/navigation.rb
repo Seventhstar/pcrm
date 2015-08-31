@@ -7,7 +7,8 @@ SimpleNavigation::Configuration.run do |navigation|
   # navigation.renderer = Your::Custom::Renderer
 
   # Specify the class that will be applied to active navigation items.
-  # Defaults to 'selected' navigation.selected_class = 'your_selected_class'
+  # Defaults to 'selected' 
+  navigation.selected_class = 'selected active'
 
   # Specify the class that will be applied to the current leaf of
   # active navigation items. Defaults to 'simple-navigation-active-leaf'
@@ -57,14 +58,21 @@ SimpleNavigation::Configuration.run do |navigation|
 #    flash[:success] =  request.url == root_url
 #    
     leads_class = request.url==root_url ? "selected active" : ""
-    primary.item :leads, 'Лиды', leads_path, :html => {:class=> leads_class}, :class => leads_class 
-    primary.item :tarifs, 'Тарифы', '#', {:class => 'disabled'}
-    primary.item :projects, 'Проекты', '#', {:class => 'disabled'}
+    primary.item :leads, 'Лиды', leads_path, html: {class: leads_class}, link_html: {class: leads_class} 
+    primary.item :tarifs, 'Тарифы', '#', html: {class: 'disabled'}
+      
+    primary.item :projects, 'Проекты', 'projects' do |sub_nav|
+      sub_nav.item :projects, 'Проекты', projects_path
+      sub_nav.item :clients, 'Клиенты', clients_path
+    end
+     
     primary.item :providers, 'Поставщики', providers_path
     
-    primary.item :options,image_tag('options2.png'), '/options/'+opt_page, :html => {:class => 'li-right options'}, :class=> 'li-right', if: -> { current_user.admin? } #do |sub_nav|
-    primary.item :develops, image_tag('task2.png'), develops_path, :html => {:class => 'li-right develops'}, :class=> 'li-right' , if: -> { current_user.admin? }
-    primary.item :charts1,   image_tag('chart.png'), statistics_path, :html => {:class=> 'li-right'}, :class=> 'li-right' 
+
+    
+    primary.item :options,  image_tag('options2.png'), '/options/'+opt_page, html: {class: 'li-right options'}, if: -> { current_user.admin? } #do |sub_nav|
+    primary.item :develops, image_tag('task2.png'), develops_path, html: {class: 'li-right develops'} , if: -> { current_user.admin? }
+    primary.item :charts1,  image_tag('chart.png'), statistics_path, html: {class: 'li-right'} 
 
     # Add an item which has a sub navigation (same params, but with block)
     #primary.item :key_2, 'name', url, options do |sub_nav|
