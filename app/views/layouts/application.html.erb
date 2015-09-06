@@ -1,69 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <%= favicon_link_tag 'favicon.png' %>
-   
-    <%= javascript_include_tag "application" %> 
-    <title><%= content_for?(:title) ? yield(:title) : "Pcrm" %></title>
-    <%= csrf_meta_tags %>
-    <%= stylesheet_link_tag "application", :media => "all" %>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%= favicon_link_tag 'favicon.png' %>
+ 
+  <%= javascript_include_tag "application" %> 
+  <title><%= content_for?(:title) ? yield(:title) : "Pcrm" %></title>
+  <%= csrf_meta_tags %>
+  <%= stylesheet_link_tag "application", :media => "all" %>
 
-  </head>
-  <body>
-    
+</head>
+<body>
+  
 <div class="page-wrapper">
 
-<% if current_user %>
-<div class="header">
-  <div class="bw_i">
-      <a href="/leads/new" class="btn_call_a <%= calls_color %> btn_call"></a>
-      <div class="time_h">20:06:28</div>
-      <div class="user_h">
-        <span class="name"><%= current_user.name %></span>
-        
-        <%= link_to logout_path, method: :delete, class: "orange logout" do %>
-            <span class="icon icon_logout"></span>выйти
-        <% end %>
-
+  <% if current_user %>
+    <div class="header">
+      <div class="bw_i">
+        <a href="/leads/new" class="btn_call_a <%= calls_color %> btn_call"></a>
+        <div class="time_h">20:06:28</div>
+        <div class="user_h">
+          <span class="name"><%= current_user.name %></span>
+          <%= link_to logout_path, method: :delete, class: "orange logout" do %>
+          <span class="icon icon_logout"></span>выйти
+          <% end %>
+        </div>
+        <div class="menu_main menu_h">
+          <%= render_navigation :level => 1 %>
+        </div>
       </div>
-      <div class="menu_main menu_h">
-        <%= render_navigation :level => 1 %>
-      </div>
-
     </div>
 
-</div>
-
-
-<div class="container">
-   <div >
-    <div class="call_button">
-      <a href="/leads/new" class="btn call <%= calls_color %> btn-lg"><span class="glyphicon glyphicon-earphone" style="color: white; font-size:50px;"></span></a>
+    <div class="container">
+      <div>
+        <div class="call_button">
+          <a href="/leads/new" class="btn call <%= calls_color %> btn-lg"><span class="glyphicon glyphicon-earphone" style="color: white; font-size:50px;"></span></a>
+        </div>
+      </div>
     </div>
+  <% end %>      
+
+
+  <div class="js-notes has-note">
+    <% flash.each do |name, msg| %>
+      <%= content_tag :div, msg, :id => "flash_#{name}", :class => "alert fade-in in flash_#{name}" %>
+    <% end %>
+    <a class="close note-close" href="#"></a>
   </div>
-  </div>
-<% end %>      
- 
-
-<div class="js-notes has-note">
-  <% flash.each do |name, msg| %>
-        <%= content_tag :div, msg, :id => "flash_#{name}", :class => "alert fade-in in flash_#{name}" %>
-  <% end %>
-  <a class="close note-close" href="#"></a>
-</div>
 
 
-<div class="container">
+  <div class="container">
+    <% if current_user %>
       <div class="submenu">
         <%= render_navigation(:level => 2) %>
       </div>
+    <% end -%>
   <div id="modal-holder" class="slide"></div>
   <%= yield %>
-</div>
+  </div>
 
 
 </div>
@@ -71,7 +68,7 @@
 </div>
 
 <div class="page-footer">
-    <footer class="footer"></footer>
+  <footer class="footer"></footer>
 </div>
 
 </body>

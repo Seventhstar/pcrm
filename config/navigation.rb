@@ -64,6 +64,7 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :projects, 'Проекты', 'projects' do |sub_nav|
       sub_nav.item :projects, 'Проекты', projects_path
       sub_nav.item :clients, 'Клиенты', clients_path
+      sub_nav.item :new_project,'Новый проект', new_project_path, html: {class: 'right btn-success'}
     end
      
     primary.item :providers, 'Поставщики', providers_path

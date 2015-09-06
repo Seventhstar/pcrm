@@ -1,6 +1,58 @@
 <h1>Editing Project</h1>
 
-<%= render 'form' %>
+<%= simple_form_for(@project) do |f| %>
 
-<%= link_to 'Show', @project %> |
-<%= link_to 'Back', projects_path %>
+    <h3>Данные</h3>
+
+    <div class="box_wrap box_wrap_1">
+      <div class="fullwidth">
+        <table class="fullwidth tbl_fc fw_form">
+        <thead>
+        <tr><th width="20%"></th><th width="20%"></th><th width="20%"></th><th width="20%"></th><th width="20%"></th></tr></thead>
+        <tbody>
+          <tr>
+            <td><div class="inp_w"><%= f.input :number, label: 'Номер' %></div></td>
+            <td><div class="inp_w"><label>Дата</label><%= f.text_field :date_sign, value: Date.today.try('strftime',"%d.%m.%Y"), class: "txt datepicker" %></div></td>
+            <td colspan="3"><div class="inp_w"><%= f.input :address, label: 'Адрес' %></div></td>
+          </tr>
+
+          <tr><td class="gr_caption">Вид работы и исполнитель</td></tr>
+          <tr>
+            <td colspan="2"><div class="inp_w"><%= f.select :project_type_id, options_for_select(ProjectType.order(:name).collect{ |u| [u.name, u.id] }) %></div></td>
+            <td><div class="inp_w"><%= f.select :style_id, options_for_select(Style.order(:name).collect{ |u| [u.name, u.id] }) %></div></td>
+            <td colspan="2"><div class="inp_w"><%= f.select :executor_id, options_for_select(User.order(:name).collect{ |u| [u.name, u.id] }) %></div></td>
+          </tr>
+
+          <tr><td class="gr_caption">Площадь и стоимость</td></tr>
+          <tr>
+          <td><div class="inp_w"><%= f.input :footage, label: 'Метраж' %></div></td>
+          <td><div class="inp_w"><%= f.input :price_m, label: 'Цена за м2' %></div></td>
+          <td><div class="inp_w"><%= f.input :sum, label: 'Сумма' %></div></td>
+          <td><div class="inp_w"><%= f.input :sum_total, label: 'Общая стоимость' %></div></td>
+          </tr>
+             <tr>
+          <td><div class="inp_w"><%= f.input :footage2, label: 'Метраж 2' %></div></td>
+          <td><div class="inp_w"><%= f.input :price_2, label: 'Цена за м2' %></div></td>
+          <td><div class="inp_w"><%= f.input :sum_2, label: 'Сумма' %></div></td>
+          <td><div class="inp_w"><%= f.input :month_in_gift, label: 'Месяцев в подарок' %></div></td>
+          </tr>
+          <tr><td class="gr_caption">Сроки</td></tr>
+            <tr>
+            <td><div class="inp_w"><label>Начало</label><%= f.text_field :date_start, value: @project.date_start.try('strftime',"%d.%m.%Y"), class: "txt datepicker" %></div></td>
+            <td><div class="inp_w"><label>Окончание</label><%= f.text_field :date_end_plan, value: @project.date_end_plan.try('strftime',"%d.%m.%Y"), class: "txt datepicker" %></div></td>
+            <td><div class="inp_w"><label>Дней</label> <%= number_field_tag :days, @project.days_plan, {class: 'form-control'} %></div></td>
+            <td></td>
+            <td><%= f.button :submit, value: 'Сохранить', :class => 'sub btn_a fullwidth' %></td>
+          </tr>
+        </tbody>
+        </table>
+      </div>
+    </div> 
+
+
+  <div class="form-actions">
+    
+  </div>
+<% end %>
+
+

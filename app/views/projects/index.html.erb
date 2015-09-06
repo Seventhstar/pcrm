@@ -1,51 +1,37 @@
+<div class="hl hl_a bd">Список проектов</div>
 
 
-
-<h1>Listing Projects</h1>
-
-<table>
+<div class="panel panel-default">
+<table class="tleads projects">
   <thead>
     <tr>
-      <th>Client</th>
-      <th>Address</th>
-      <th>Project type</th>
-      <th>Date start</th>
-      <th>Date end plan</th>
-      <th>Date end real</th>
-      <th>Number</th>
-      <th>Footage</th>
-      <th>Footage2</th>
-      <th>Footage real</th>
-      <th>Footage2 real</th>
-      <th>Style</th>
-      <th>Sum</th>
-      <th>Sum real</th>
-      <th>Act</th>
-      <th>Delay days</th>
-      <th colspan="3"></th>
+      <th>Номер</th>
+      <th>Адрес</th>
+      <th>Вид проекта</th>
+      <th>Заказчик</th>
+      <th>Дата начала</th>
+      <th>Дата окончания</th>
+      <th>Продление</th>
+      <th>Стоимость план</th>
     </tr>
   </thead>
 
   <tbody>
     <% @projects.each do |project| %>
       <tr>
-        <td><%= project.client_id %></td>
+        <td><%= project.number %></td>
         <td><%= project.address %></td>
-        <td><%= project.project_type_id %></td>
+        <td><%= project.project_type_name %></td>
+        <td><%= project.client_name %></td>
+        
+        
         <td><%= project.date_start %></td>
         <td><%= project.date_end_plan %></td>
         <td><%= project.date_end_real %></td>
-        <td><%= project.number %></td>
-        <td><%= project.footage %></td>
-        <td><%= project.footage2 %></td>
-        <td><%= project.footage_real %></td>
-        <td><%= project.footage2_real %></td>
-        <td><%= project.style_id %></td>
-        <td><%= project.sum %></td>
-        <td><%= project.sum_real %></td>
+        
+
         <td><%= project.act %></td>
-        <td><%= project.delay_days %></td>
-        <td><%= link_to 'Show', project %></td>
+        <td><%= project.sum_total %></td>
         <td><%= link_to 'Edit', edit_project_path(project) %></td>
         <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
@@ -55,4 +41,4 @@
 
 <br>
 
-<%= link_to 'New Project', new_project_path %>
+

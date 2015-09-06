@@ -60,7 +60,7 @@ a:hover .icon_user, .active .icon_user {background-position:-18px -18px; }
 .icon_birthday {background-position:-163px 0; width: 15px; height: 20px;}
 .icon_file {background-position:-180px 0; width: 12px; height: 16px;}
 
-.btn_a,.form-actions .btn-success, a.btn-success,
+.btn_a,.form-actions .btn-success, a.btn-success, 
 .input-group .btn-warning {display: inline-block; background: #ff8411; height: 34px; line-height: 34px; padding: 0 19px 0 19px; text-decoration:none; font-size: 14px; color: #fff; border-radius: 5px; position:relative;}
 .btn_slim{ height: 24px; font-size: 13px; padding: 0 12px; line-height: 24px;} 
 .btn_a:hover {opacity: 0.7;}
@@ -167,7 +167,7 @@ background-position:-34px 0 !important; width: 16px; height: 16px;}
 .tbl_a .head,.panel-default .head{background: #f2f2f2; padding: 8px; font-size: 17px; position:relative; font-weight: 500;}
 
 .tbl_a table{border-collapse:collapse; width: 100%; }
-.tbl_a table th, table th{vertical-align:top; padding: 12px 0 12px 20px; border-bottom: 2px solid #e5e5e5; font-weight: 500;}
+.tbl_a table th{vertical-align:top; padding: 12px 0 12px 20px; border-bottom: 2px solid #e5e5e5; font-weight: 500;}
 .tbl_a table td{vertical-align: top; padding: 12px 0 12px 20px; border-bottom:1px solid #e5e5e5; }
 .tbl_a table td.editable {vertical-align: top; padding: 8px 0 0 16px; border-bottom:1px solid #e5e5e5; }
 .tbl_a table .disabled td{color: #aeaeae; }
@@ -206,7 +206,7 @@ table td{font-size: 13px;}
 /*.itemAdd_form{ margin: 10px 0 0 0; }*/
 .itemAdd_form table{border-collapse:collapse; }
 .itemAdd_form table td{vertical-align: middle; padding-right: 15px; white-space:nowrap;}
-.itemAdd_form table td.caption{font-weight: 500;}
+.itemAdd_form table td.caption, td label{font-weight: 500;}
 .itemAdd_form .inp{width: 354px; }
 .itemAdd_form .inp .txt, .search_area {width: 239px; float:left;}
 .itemAdd_form .inp .sub {float:right;}
