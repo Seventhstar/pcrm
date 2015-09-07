@@ -29,7 +29,7 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       if @project.save
-        format.html { redirect_to projects_url, notice: 'Project was successfully created.' }
+        format.html { redirect_to projects_url, notice: 'Проект успешно создан' }
         format.json { render :show, status: :created, location: @project }
       else
         format.html { render :new }
@@ -43,7 +43,7 @@ class ProjectsController < ApplicationController
   def update
     respond_to do |format|
       if @project.update(project_params)
-        format.html { redirect_to projects_url, notice: 'Project was successfully updated.' }
+        format.html { redirect_to projects_url, notice: 'Проект успешно сохранен' }
         format.json { render :show, status: :ok, location: @project }
       else
         format.html { render :edit }
@@ -57,7 +57,7 @@ class ProjectsController < ApplicationController
   def destroy
     @project.destroy
     respond_to do |format|
-      format.html { redirect_to projects_url, notice: 'Project was successfully destroyed.' }
+      format.html { redirect_to projects_url, notice: 'Проект успешно удален' }
       format.json { head :no_content }
     end
   end
@@ -70,6 +70,8 @@ class ProjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      params.require(:project).permit(:client_id, :address, :owner_id, :executor_id, :designer_id, :project_type_id, :date_start, :date_end_plan, :date_end_real, :number, :footage, :footage2, :footage_real, :footage2_real, :style_id, :sum, :sum_real, :price_m, :price_2, :price_real_m, :price_real_2, :month_in_gift, :act, :delay_days)
+      params.require(:project).permit(:client_id, :address, :owner_id, :executor_id, :designer_id, :project_type_id, :date_start, :date_end_plan, :date_end_real, 
+        :number, :footage, :footage2, :footage_real, :footage2_real, :style_id, :sum, :sum_real, :price_m, :price_2, :price_real_m, :price_real_2, 
+        :month_in_gift, :act, :delay_days, :sum_total, :sum_2, :date_sign)
     end
 end

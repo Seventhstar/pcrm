@@ -18,6 +18,10 @@
 			d2 = dateFromString($('#project_date_end_plan').val())
 			$('#days').val((d2-d1)/24/3600/1000 )
 			return
+@calc_proj_sum =() ->
+		$('#project_sum').val( $('#project_price_m').val() * $('#project_footage').val() )
+		$('#project_sum_2').val( $('#project_price_2').val() * $('#project_footage2').val() )
+		$('#project_sum_total').val( parseInt($('#project_sum_2').val()) + parseInt($('#project_sum').val()) )
     
 
 $(document).ready ->
@@ -28,3 +32,11 @@ $(document).ready ->
   	d= dateFromString $('#project_date_start').val(), $(this).val()  
   	dd = $.datepicker.formatDate('dd.mm.yy', new Date(d))
   	$('#project_date_end_plan').val(dd)
+  $('#project_price_m').change ->
+  	calc_proj_sum()
+  $('#project_price_2').change ->
+  	calc_proj_sum()
+  $('#project_footage2').change ->
+  	calc_proj_sum()
+  $('#project_footage').change ->
+  	calc_proj_sum()
