@@ -55,7 +55,7 @@ class ProvidersController < ApplicationController
   # GET /providers/1
   # GET /providers/1.json
   def show    
-    @title = 'Просмотр лида'
+    @title = 'Просмотр поставщика'
     @owner = @provider
     @comments = @provider.comments.order('created_at asc')
     @comm_height = 313
