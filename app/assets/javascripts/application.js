@@ -18,6 +18,7 @@
 //= require bootstrap-tokenfield
 //= require chosen.jquery
 //= require jquery.fileupload
+//= require nprogress
 //= require_tree .
 
 
@@ -67,12 +68,27 @@ $(function() {
   $('.nav #options').addClass('li-right options');
  
  
+   NProgress.configure({
+    showSpinner: false,
+    ease: 'ease',
+    speed: 300
+  });
+
+  NProgress.start();
+  NProgress.done();
+
+  $( document ).ajaxStart(function() {
+      NProgress.start();
+  });  
+
+  $( document ).ajaxStop( function() {
+    $('[data-toggle="tooltip"]').tooltip({'placement': 'top', fade: false});
+    NProgress.done();
+  });
 
   $('[data-toggle="tooltip"]').tooltip({'placement': 'top', fade: false});
   
-  $( document ).ajaxStop( function() {
-    $('[data-toggle="tooltip"]').tooltip({'placement': 'top', fade: false});
-  });
+
 
   $(document).ajaxError(function myErrorHandler(event, xhr, ajaxOptions, thrownError) {
    // alert("There was an ajax error!");

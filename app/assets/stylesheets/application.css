@@ -12,7 +12,8 @@
  *
  *= require_tree .
  *= require_self
-  */
+ *= require nprogress
+ */
 
 #leads_chart{
   min-height: 450px;
