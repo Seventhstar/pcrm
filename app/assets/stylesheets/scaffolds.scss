@@ -1,3 +1,6 @@
+$nprogress-color: #ff8411;
+@import 'nprogress';
+
 .page-wrapper { min-height: 95%; margin-bottom: -50px; }
 * html .page-wrapper { height: 95%; }
 .page-buffer { height: 50px; }

@@ -73,7 +73,7 @@ SimpleNavigation::Configuration.run do |navigation|
     
     primary.item :options,  image_tag('options2.png'), '/options/'+opt_page, html: {class: 'li-right options'}, if: -> { current_user.admin? } #do |sub_nav|
     primary.item :develops, image_tag('task2.png'), develops_path, html: {class: 'li-right develops'} , if: -> { current_user.admin? }
-    primary.item :charts1,  image_tag('chart.png'), statistics_path, html: {class: 'li-right'} 
+    primary.item :charts1,  image_tag('chart.png'), statistics_path, html: {class: 'li-right'} , if: -> { current_user.admin? }
 
     # Add an item which has a sub navigation (same params, but with block)
     #primary.item :key_2, 'name', url, options do |sub_nav|

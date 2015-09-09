@@ -34,16 +34,16 @@
 
 <h4>Уведомления о событиях в лидах:</h4>
 <table class="tbl_option">
-  <tr><td>Лид создан</td><td><%= check_box_tag "options[]", 1, user_option(1) %></td></tr>
-  <tr><td>Лид обновлен</td><td><%= check_box_tag "options[]",2,user_option(2) %></td></tr>
-  <tr><td>Назначен ответственный</td><td><%= check_box_tag "options[]",3,user_option(3) %></td></tr>
-  <tr><td>Напоминание о событии</td><td><%= check_box_tag "options[]", 4, user_option(4) %></td></tr>
+  <tr><td><%= check_box_tag "options[]", 1, user_option(1) %></td><td>Лид создан</td></tr>
+  <tr><td><%= check_box_tag "options[]",2,user_option(2) %></td><td>Лид обновлен</td></tr>
+  <tr><td><%= check_box_tag "options[]",3,user_option(3) %></td><td>Назначен ответственный</td></tr>
+  <tr><td><%= check_box_tag "options[]", 4, user_option(4) %></td><td>Напоминание о событии</td></tr>
 </table>
 
 <h4>Уведомления о событиях в задачах:</h4>
 <table class="tbl_option">
-  <tr><td>Задача создана</td><td><%= check_box_tag "options[]",10,user_option(10) %></td></tr>
-  <tr><td>Задача обновлена</td><td><%= check_box_tag "options[]",11,user_option(11) %></td></tr>
+  <tr><td><%= check_box_tag "options[]",10,user_option(10) %></td><td>Задача создана</td></tr>
+  <tr><td><%= check_box_tag "options[]",11,user_option(11) %></td><td>Задача обновлена</td></tr>
 </table>
 
 </div>
