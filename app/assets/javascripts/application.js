@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui/datepicker
+//= require jquery-ui/tabs
 //= require jquery-ui  
 //= require jquery-ui/accordion
 //= require bootstrap-tokenfield
@@ -97,6 +98,7 @@ $(function() {
 
 $('.progress').hide();
 $('#file').hide();
+$( "#tabs" ).tabs();
  
 
   // дата по умолчанию для нового лида - сегодня
