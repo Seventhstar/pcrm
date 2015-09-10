@@ -13,7 +13,7 @@
             <td><div class="inp_w"><label>Дата</label><%= f.text_field :date_sign, value: Date.today.try('strftime',"%d.%m.%Y"), class: "txt datepicker" %></div></td>
             <td colspan="3"><div class="inp_w"><%= f.input :address, label: 'Адрес' %></div></td>
           </tr>
-          <%= f.simple_fields_for (@client) do |c| %>
+          <%= f.simple_fields_for  :client do |c| %>
           <tr>
             <td colspan="2"><div class="inp_w"><%= c.input :name, label: 'ФИО' %></div></td>
             <td><div class="inp_w"><%= c.input :phone, label: 'Телефон' %></div></td>

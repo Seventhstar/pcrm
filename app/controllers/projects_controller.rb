@@ -15,7 +15,7 @@ class ProjectsController < ApplicationController
   # GET /projects/new
   def new
     @project = Project.new
-    @client = Client.new
+    @client =  @project.build_client
   end
 
   # GET /projects/1/edit
@@ -25,7 +25,11 @@ class ProjectsController < ApplicationController
   # POST /projects
   # POST /projects.json
   def create
+    
     @project = Project.new(project_params)
+    @client = @project.create_client(project_params[:client_attributes])
+
+    @client.save
 
     respond_to do |format|
       if @project.save
@@ -72,6 +76,7 @@ class ProjectsController < ApplicationController
     def project_params
       params.require(:project).permit(:client_id, :address, :owner_id, :executor_id, :designer_id, :project_type_id, :date_start, :date_end_plan, :date_end_real, 
         :number, :footage, :footage2, :footage_real, :footage2_real, :style_id, :sum, :sum_real, :price_m, :price_2, :price_real_m, :price_real_2, 
-        :month_in_gift, :act, :delay_days, :sum_total, :sum_2, :date_sign)
+        :month_in_gift, :act, :delay_days, :sum_total, :sum_2, :date_sign, :client_attributes => [:name, :address, :phone, :email] )
     end
+
 end
