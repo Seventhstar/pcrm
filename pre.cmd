@@ -1,2 +1,2 @@
-#rake assets:precompile
-rails g scaffold Project client_id:integer address owner_id:integer executor_id:integer designer_id:integer project_type_id:integer date_start:date date_end_plan:date date_end_real:date number:integer footage:float footage2:float footage_real:float footage2_real:float style_id:integer sum:integer sum_real:integer price_m:integer price_2:integer price_real_m:integer price_real_2:integer month_in_gift:integer act:boolean delay_days:integer
+rake assets:precompile
+#rails g scaffold Project client_id:integer address owner_id:integer executor_id:integer designer_id:integer project_type_id:integer date_start:date date_end_plan:date date_end_real:date number:integer footage:float footage2:float footage_real:float footage2_real:float style_id:integer sum:integer sum_real:integer price_m:integer price_2:integer price_real_m:integer price_real_2:integer month_in_gift:integer act:boolean delay_days:integer

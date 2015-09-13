@@ -4,7 +4,12 @@ class ClientsController < ApplicationController
   # GET /clients
   # GET /clients.json
   def index
-    @clients = Client.all
+   # @clients = Client.all
+    if !params[:search].nil?
+      @clients = Client.where('LOWER(name) like LOWER(?)','%'+params[:search]+'%').order(:name)
+    else
+      @clients = Client.order(:name)
+    end
   end
 
   # GET /clients/1

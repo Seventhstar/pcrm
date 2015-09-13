@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150906134837) do
+ActiveRecord::Schema.define(version: 20150910205727) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -145,6 +145,7 @@ ActiveRecord::Schema.define(version: 20150906134837) do
   create_table "projects", force: :cascade do |t|
     t.integer  "client_id"
     t.integer  "number"
+    t.date     "date_sign"
     t.string   "address"
     t.integer  "owner_id"
     t.integer  "executor_id"
@@ -154,24 +155,25 @@ ActiveRecord::Schema.define(version: 20150906134837) do
     t.date     "date_start"
     t.date     "date_end_plan"
     t.date     "date_end_real"
-    t.float    "footage"
-    t.float    "footage2"
-    t.float    "footage_real"
-    t.float    "footage2_real"
-    t.integer  "sum"
-    t.integer  "sum_real"
-    t.integer  "price_m"
-    t.integer  "price_2"
-    t.integer  "price_real_m"
-    t.integer  "price_real_2"
+    t.float    "footage",         default: 0.0
+    t.float    "footage_2",       default: 0.0
+    t.float    "footage_real",    default: 0.0
+    t.float    "footage_2_real",  default: 0.0
+    t.integer  "price",           default: 0
+    t.integer  "price_2",         default: 0
+    t.integer  "price_real",      default: 0
+    t.integer  "price_2_real",    default: 0
+    t.integer  "sum",             default: 0
+    t.integer  "sum_2",           default: 0
+    t.integer  "sum_real",        default: 0
+    t.integer  "sum_2_real",      default: 0
+    t.integer  "sum_total",       default: 0
+    t.integer  "sum_2_total",     default: 0
     t.integer  "month_in_gift"
     t.boolean  "act"
     t.integer  "delay_days"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.datetime "date_sign"
-    t.integer  "sum_total"
-    t.integer  "sum_2"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
   create_table "provider_budgets", force: :cascade do |t|

@@ -1,0 +1,35 @@
+<div class="panel panel-default">
+<table class="tleads projects">
+  <thead>
+    <tr>
+      <th>Номер</th>
+      <th>Адрес</th>
+      <th>Вид проекта</th>
+      <th>Заказчик</th>
+      <th>Дата начала</th>
+      <th>Дата окончания</th>
+      <th>Продление</th>
+      <th>Стоимость план</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @projects.each do |project| %>
+      <tr>
+        <td><%= project.number %></td>
+        <td><%= project.address %></td>
+        <td><%= project.project_type_name %></td>
+        <td><%= project.client_name %></td>
+        
+        
+        <td><%= project.date_start %></td>
+        <td><%= project.date_end_plan %></td>
+ 
+        <td><%= project.act %></td>
+        <td><%= project.sum_total %></td>
+        <%= edit_show(project) %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -4,7 +4,11 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
-    @projects = Project.all
+      if !params[:search].nil?
+      @projects = Project.where('LOWER(address) like LOWER(?)','%'+params[:search]+'%').order(:date_end_plan)
+    else
+      @projects = Project.order(:date_end_plan)
+    end
   end
 
   # GET /projects/1
@@ -74,9 +78,9 @@ class ProjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      params.require(:project).permit(:client_id, :address, :owner_id, :executor_id, :designer_id, :project_type_id, :date_start, :date_end_plan, :date_end_real, 
-        :number, :footage, :footage2, :footage_real, :footage2_real, :style_id, :sum, :sum_real, :price_m, :price_2, :price_real_m, :price_real_2, 
-        :month_in_gift, :act, :delay_days, :sum_total, :sum_2, :date_sign, :client_attributes => [:name, :address, :phone, :email] )
+      params.require(:project).permit(:client_id, :address, :owner_id, :executor_id, :designer_id, :project_type_id, :date_start, :date_end_plan, :date_end_real, :number, 
+        :footage, :footage_2, :footage_real, :footage_2_real, :style_id, :sum, :sum_real, :price, :price_2, :price_real, :price_2_real, 
+        :month_in_gift, :act, :delay_days, :sum_total, :sum_2, :sum_total_real, :date_sign, :client_attributes => [:name, :address, :phone, :email] )
     end
 
 end

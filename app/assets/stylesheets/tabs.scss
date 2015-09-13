@@ -22,7 +22,8 @@
 
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active { color: #212121;}
 
-.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{
+//.ui-state-default, .ui-widget-content .ui-state-default, .tabs>.ui-widget-header>.ui-state-default{
+.ui-widget-header .ui-state-default{
     background: #e6e6e6 url(/assets/jquery-ui/ui-bg_glass_75_e6e6e6_1x400-74e4fbd3fcc6242de3a262119f48fa0f.png) 50% 50% repeat-x;
     color: #555555;
 }

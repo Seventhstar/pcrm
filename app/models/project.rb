@@ -22,11 +22,18 @@ class Project < ActiveRecord::Base
   end
 
   def sum_plan
-    (footage*price_m).to_i
+    (footage*price).to_i
+  end
+
+  def sum_2
+    (footage_2*price_2).to_i
   end
 
   def sum_real
-    (footage2*price_2).to_i
+    (footage_real.to_f*price_real).to_i
+  end
+ def sum_2_real
+    (footage_2_real*price_2_real).to_i
   end
 
 end

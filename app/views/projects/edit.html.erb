@@ -45,17 +45,29 @@
           <tr><td class="gr_caption" colspan="5">Заявленная площадь и стоимость</td></tr>
           <tr>
           <td><div class="inp_w"><%= f.input :footage, label: 'Метраж' %></div></td>
-          <td><div class="inp_w"><%= f.input :price_m, label: 'Цена за м2' %></div></td>
+          <td><div class="inp_w"><%= f.input :price, label: 'Цена за м2' %></div></td>
           <td><div class="inp_w"><%= f.input :sum, label: 'Сумма',:input_html => { :value => @project.sum_plan } %></div></td>
           <td><div class="inp_w"><%= f.input :sum_total, label: 'Общая стоимость' %></div></td>
           </tr>
-             <tr>
-          <td><div class="inp_w"><%= f.input :footage2, label: 'Метраж 2' %></div></td>
+          <tr>
+          <td><div class="inp_w"><%= f.input :footage_2, label: 'Метраж 2' %></div></td>
           <td><div class="inp_w"><%= f.input :price_2, label: 'Цена за м2' %></div></td>
-          <td><div class="inp_w"><%= f.input :sum_2, label: 'Сумма',:input_html => { :value => @project.sum_real } %></div></td>
+          <td><div class="inp_w"><%= f.input :sum_2, label: 'Сумма',:input_html => { :value => @project.sum_2 } %></div></td>
           <td><div class="inp_w"><%= f.input :month_in_gift, label: 'Месяцев в подарок' %></div></td>
           </tr>
           <tr><td class="gr_caption" colspan="5">Фактическая площадь и стоимость</td></tr>
+          <tr>
+          <td><div class="inp_w"><%= f.input :footage_real, label: 'Метраж' %></div></td>
+          <td><div class="inp_w"><%= f.input :price_real, label: 'Цена за м2' %></div></td>
+          <td><div class="inp_w"><%= f.input :sum_real, label: 'Сумма',:input_html => { :value => @project.sum_real } %></div></td>
+          <td><div class="inp_w"><%= f.input :sum_total_real, label: 'Общая стоимость' %></div></td>
+          </tr>
+          <tr>
+          <td><div class="inp_w"><%= f.input :footage_2_real, label: 'Метраж 2' %></div></td>
+          <td><div class="inp_w"><%= f.input :price_2_real, label: 'Цена за м2' %></div></td>
+          <td><div class="inp_w"><%= f.input :sum_2_real, label: 'Сумма',:input_html => { :value => @project.sum_2_real } %></div></td>
+          <td></td>
+          </tr>
 
 </tbody></table></div></div></div>
 <div id="tabs-3" class="ptab">
