@@ -1,20 +1,18 @@
-<% provide(:title, 'Reset password') %>
-<h1>Reset password</h1>
+<div class="page-wrapper">
+<%= form_for(@user, url: password_reset_path(params[:id])) do |f| %>
+  <div class="box_cent form_c auth_form" style="top: 58.5px;">
+  <div class="hl hl_a bd">Восстановление пароля</div>
+    <%= render 'shared/error_messages', object: f.object %>
+  
+    <%= hidden_field_tag :email, @user.email %>
 
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <%= form_for(@user, url: password_reset_path(params[:id])) do |f| %>
-      <%= render 'shared/error_messages', object: f.object %>
-
-      <%= hidden_field_tag :email, @user.email %>
-
-      <%= f.label :password %>
-      <%= f.password_field :password, class: 'form-control' %>
-      
-      <%= f.label :password_confirmation, "Confirmation" %>
-      <%= f.password_field :password_confirmation, class: 'form-control' %>
-      
-      <%= f.submit "Update password", class: "btn btn-primary" %>
-    <% end %>
+    <table class="tbl_fc tbl_fc_1">
+    <tr><td class="caption">Пароль:</td>
+        <td><div class="inp_w"><%= f.password_field :password, class: 'txt' %></div></td></tr>
+    <tr><td class="caption">Подтверждение:</td>
+        <td><div class="inp_w"><%= f.password_field :password_confirmation, class: 'txt' %></div></td></tr>
+    <tr><td colspan="2"><%= f.submit "Обновить пароль", class: "btn_a right" %></td></tr>
+    </table>
+  <% end %>
   </div>
 </div>

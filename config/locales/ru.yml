@@ -72,9 +72,21 @@ ru:
   list_DevProject: Список проектов
   list_DevStatus: Список статусов 
 
+  Password: Пароль
   "true": Да
   "false": Нет
 
+  kids:
+    zero: ru_zero
+    one: ru_one
+    few: ru_few
+    other: ru_other
+  error:
+    zero: ошибок
+    one: '%{count} ошибку'
+    few: '%{count} ошибки'
+    many: '%{count} ошибок'
+    other: '%{count} ошибок'
   date:
     formats:
       default: "%d.%m.%Y-"
@@ -203,13 +215,26 @@ ru:
       month: Месяц
       second: Секунд
       year: Год
+  activerecord:
+    attributes:
+      Password: "Пароль"
+      user:
+        password: "Пароль"
+        login: "Имя пользователя"
+        password_confirmation: "Подтверждение пароля"
+    errors:
+      models:
+        user:
+          attributes:
+            password_confirmation:
+              confirmation: 'не совпадает со значением поля %{attribute}'
   errors:
     format: ! '%{attribute} %{message}'
     messages:
       accepted: нужно подтвердить
       blank: не может быть пустым
       present: нужно оставить пустым
-      confirmation: 'не совпадает со значением поля %{attribute}'
+      confirmation: 'не совпадает со значением поля %{t attribute}'
       empty: не может быть пустым
       equal_to: может иметь лишь значение, равное %{count}
       even: может иметь лишь нечетное значение
@@ -344,9 +369,9 @@ ru:
   flash:
     actions:
       create:
-        notice: "%{resource_name} was successfully created."
+        notice: "%{resource_name} успешно создано."
       update:
-        notice: "%{resource_name} was successfully обновлено."
+        notice: "%{resource_name} успешно обновлено."
       destroy:
-        notice: "%{resource_name} was successfully destroyed."
-        alert: "%{resource_name} could not be destroyed."
+        notice: "%{resource_name} успешно удалено."
+        alert: "%{resource_name} не может быть удалено."

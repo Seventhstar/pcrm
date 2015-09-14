@@ -15,7 +15,7 @@ class PasswordResetsController < ApplicationController
       flash[:info] = "Инструкции по изменению пароля отправлены на Вашу почту"
       redirect_to root_url
     else
-      flash.now[:danger] = "Email адрес не найден"
+      flash[:danger] = "E-mail адрес не найден"
       render 'new'
     end
   end
@@ -29,8 +29,8 @@ class PasswordResetsController < ApplicationController
       render 'edit'
     elsif @user.update_attributes(user_params)
       log_in @user
-      flash[:success] = "Пароль был сброшен."
-      redirect_to @user
+      flash[:success] = "Пароль был изменен."
+      redirect_to root_url
     else
       render 'edit'
     end

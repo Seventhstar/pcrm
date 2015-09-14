@@ -41,7 +41,7 @@ class UsersController < ApplicationController
     if @user.update_attributes(user_params)
       flash[:success] = "Профиль обновлен"
 
-      redirect_to users_url
+      redirect_to root_url
       @user.options.destroy_all
       if params[:options]
         params[:options].each do |option|
