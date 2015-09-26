@@ -1,0 +1,2 @@
+module PaymentPurposesHelper
+end

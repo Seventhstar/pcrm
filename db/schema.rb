@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150910205727) do
+ActiveRecord::Schema.define(version: 20150925042457) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -130,6 +130,18 @@ ActiveRecord::Schema.define(version: 20150910205727) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "payment_purposes", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "payment_types", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "priorities", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
@@ -168,7 +180,7 @@ ActiveRecord::Schema.define(version: 20150910205727) do
     t.integer  "sum_real",        default: 0
     t.integer  "sum_2_real",      default: 0
     t.integer  "sum_total",       default: 0
-    t.integer  "sum_2_total",     default: 0
+    t.integer  "sum_total_real",  default: 0
     t.integer  "month_in_gift"
     t.boolean  "act"
     t.integer  "delay_days"
@@ -229,6 +241,18 @@ ActiveRecord::Schema.define(version: 20150910205727) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.integer  "p_status_id"
+  end
+
+  create_table "receipts", force: :cascade do |t|
+    t.integer  "project_id"
+    t.integer  "user_id"
+    t.integer  "provider_id"
+    t.integer  "payment_type_id"
+    t.date     "date"
+    t.integer  "sum"
+    t.string   "description"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   create_table "statuses", force: :cascade do |t|

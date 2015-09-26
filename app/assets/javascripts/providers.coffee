@@ -65,7 +65,7 @@ $(document).ready ->
     del = confirm('Действительно удалить?')
     if !del
       return
-    pm_id = $(this).attr('providermanager_id')
+    pm_id = $(this).attr('item_id')
     $.ajax
       url: '/ajax/del_provider_manager'
       data: 'p_id': pm_id

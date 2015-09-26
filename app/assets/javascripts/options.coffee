@@ -81,7 +81,7 @@ $(document).on 'click', '#btn-send', (e) ->
   false
 
 # удаляем элемент справочника
-$(document).on 'click', ' span.icon_remove', ->
+$(document).on 'click', '.option_list span.icon_remove', ->
     url = $('form').attr('action')
     item_id = $(this).attr('item_id')
     del_url = url + '/' + item_id

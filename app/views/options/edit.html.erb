@@ -15,9 +15,12 @@
   </ul></div>	  
    <h3>Настройки проектов:</h3><div><ul>
 			    <%= option_li("project_types","Виды проектов") %>
-			    
   </ul></div>
 
+  <h3>Настройки финансов:</h3><div><ul>
+			    <%= option_li("payment_types","Виды оплат") %>
+			    <%= option_li("payment_purposes","Назначение платежей") %>
+  </ul></div>
   <h3>Настройки поставшиков:</h3><div><ul>
 			    <%= option_li("budgets","Бюджеты") %>
 			    <%= option_li("goodstypes","Виды товаров") %>
@@ -33,7 +36,7 @@
   </div>
 </div>
 
-<div class="content">
+<div class="content option_list">
         <%= render("shared/simple_option") %>
 <div class="sep_3"></div>
 </div>

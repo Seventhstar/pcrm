@@ -1,5 +1,8 @@
 class ProjectTypesController < ApplicationController
-	def index
+	before_action :set_project_type, only: [:show, :edit, :update, :destroy]
+  before_action :logged_in_user
+  
+  def index
 
 		@items = ProjectType.order(:name)
 		@item  = ProjectType.new
@@ -16,6 +19,29 @@ class ProjectTypesController < ApplicationController
         format.html { render :new }
         format.json { render json: @project_type.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def show
+  end
+
+  def update
+    respond_to do |format|
+      if @project_type.update(project_type_params)
+        format.html { redirect_to '/options/project_types', notice: 'project_type was successfully updated.' }
+        format.json { render :show, status: :ok, location: @project_type }
+      else
+        format.html { render :edit }
+        format.json { render json: @project_type.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def destroy
+    @project_type.destroy
+    respond_to do |format|
+      format.html { redirect_to '/options/project_types', notice: 'project_type was successfully destroyed.' }
+      format.json { head :no_content }
     end
   end
 

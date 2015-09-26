@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
   
+  resources :payment_purposes
+
+  resources :payment_types
+
+  resources :receipts
+
   resources :projects
 
   resources :project_types

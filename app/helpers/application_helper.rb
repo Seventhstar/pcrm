@@ -175,54 +175,30 @@ module ApplicationHelper
     end
   end
 
-
-  def edit_delete(element,subcount = nil)
-    content_tag :td,{:class=>"edit_delete"} do
-     ed = link_to "", edit_polymorphic_path(element), :class=>"icon icon_edit"
-     #ed = link_to "", polymorphic_path(element), :class=>"icon icon_edit", data: { modal: true }
-     subcount ||= 0
-     if subcount>0 
-      de = content_tag("span","",{:class=>'icon icon_remove disabled'})
-     else
-      de = link_to "", element, method: :delete, data: { confirm: 'Действительно удалить?' }, :class=>"icon icon_remove" 
-     end 
-     ed + de
+  def td_tool_icons(element,str_icons='edit,delete',tag='span',subcount=nil)
+    
+    all_icons = {} #['edit','delete','show']
+    icons = str_icons.split(',')
+    subcount ||= 0
+    dilable_cls = subcount>0 ? '_disabled' : ''
+    if tag == 'span' 
+      all_icons['edit'] = content_tag :span, "", {class: 'icon icon_edit', item_id: element.id}
+      all_icons['delete'] = content_tag( :span,"",{class: 'icon icon_remove'.concat(dilable_cls), item_id: element.id})
+    else
+      all_icons['edit'] = link_to "", edit_polymorphic_path(element), class: "icon icon_edit"
+      all_icons['show'] = link_to "", polymorphic_path(element), class: "icon icon_show", data: { modal: true }
+      all_icons['delete'] = link_to "", element, method: :delete, data: { confirm: 'Действительно удалить?' }, class: "icon icon_remove " if subcount==0
+      all_icons['delete'] = content_tag(:span,"",{class: 'icon icon_remove_disabled'}) if subcount>0
     end
-  end
-
-  def edit_show(element)
     content_tag :td,{:class=>"edit_delete"} do
-     ed = link_to "", edit_polymorphic_path(element), :class=>"icon icon_edit"
-     show = link_to "", polymorphic_path(element), :class=>"icon icon_show", data: { modal: true }
-     ed + show
+      icons.collect{ |i| all_icons[i] }.join.html_safe
     end
-  end
 
-  def sp_delete(element,subcount = nil)
-      content_tag :td,{:class=>"edit_delete"} do
-       de = content_tag("span","",{:class=>'icon icon_remove', element.class.to_s.concat("_id") => element.id})
-      end
-  end
-
-
-  def sp_edit_delete(element,subcount = nil)
-    content_tag :td,{:class=>"edit_delete"} do
-     #ed = link_to "", edit_polymorphic_path(element), :class=>"icon icon_edit"
-     #ed = link_to "", polymorphic_path(element), :class=>"icon icon_edit", data: { modal: true }
-      ed = content_tag :span, "",{class: 'icon icon_edit', item_id: element.id}
-     subcount ||= 0
-     if subcount>0 
-      de = content_tag("span","",{:class=>'icon icon_remove disabled'})
-     else
-      de = content_tag("span","",{:class=>'icon icon_remove', item_id: element.id})
-     end 
-     ed + de
-    end
   end
 
   def tooltip_if_big( info, length = 50 )
       if info.length >length
-         content_tag("span",'   '+info[0..length]+' ...',{'data-toggle' =>"tooltip", 'data-placement' => "top", :title => info})
+         content_tag(:span,'   '+info[0..length]+' ...',{'data-toggle' =>"tooltip", 'data-placement' => "top", :title => info})
       else
          info
       end

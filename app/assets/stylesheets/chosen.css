@@ -243,10 +243,12 @@ font-size: 13px;
   line-height: 15px;
   word-wrap: break-word;
   -webkit-touch-callout: none;
+  width: 100%;
 }
 .chosen-container .chosen-results li.active-result {
   display: list-item;
   cursor: pointer;
+  width: 100%;
 }
 .chosen-container .chosen-results li.disabled-result {
   display: list-item;

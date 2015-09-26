@@ -59,7 +59,9 @@ ru:
   new_Status: Новый статус
   new_PStatus: Новый статус
   new_DevProject: Новый проект
-  new_DevStatus: Новый статус    
+  new_DevStatus: Новый статус   
+  new_PaymentPurpose: Новое назначение платежа
+  new_PaymentType: Новый вид оплаты
 
   list_Priority: Список приоритетов
   list_ProjectType: Список видов проектов
@@ -71,6 +73,8 @@ ru:
   list_PStatus: Список статусов
   list_DevProject: Список проектов
   list_DevStatus: Список статусов 
+  list_PaymentPurpose: Список назначений платежа
+  list_PaymentType: Список видов оплаты
 
   Password: Пароль
   "true": Да

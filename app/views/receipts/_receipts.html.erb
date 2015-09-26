@@ -1,0 +1,39 @@
+<div class="panel panel-default">
+<table class="tleads">
+  <thead>
+    <tr>
+    	<th>Дата</th>
+    	<th>Тип оплаты</th>
+    	<th>Исполнитель</th>
+      <th>Основание</th>
+      
+      <th>Контрагент</th>
+      <th>Адрес</th>
+      
+      <th>Сумма</th>
+      <th>Комментарий</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @receipts.each do |receipt| %>
+      <tr>
+      	<td><%= receipt.date %></td>
+      	<td><%= receipt.payment_type_name %></td>
+      	<td><%= receipt.user_name %></td>
+      	<td><%= receipt.purpose %></td>
+      	<td><%= receipt.provider_name %></td>
+        <td><%= receipt.project_address %></td>
+        
+        
+        
+        
+        <td><%= receipt.sum %></td>
+        <td><%= receipt.description %></td>
+        <%= td_tool_icons(receipt, 'edit,delete','span' )%>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>

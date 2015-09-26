@@ -63,13 +63,15 @@ SimpleNavigation::Configuration.run do |navigation|
       
     primary.item :projects, 'Проекты', '/projects/' do |sub_nav|
       sub_nav.item :projects, 'Проекты', projects_path
-      sub_nav.item :clients, 'Клиенты', clients_path
-      
+      sub_nav.item :clients, 'Клиенты', clients_path  
     end
      
     primary.item :providers, 'Поставщики', providers_path
     
-
+    primary.item :receipts, 'Деньги', '/receipts/' do |sub_nav|
+      sub_nav.item :receipts, 'Приходы', receipts_path
+      sub_nav.item :payments, 'Расходы', clients_path  
+    end
     
     primary.item :options,  image_tag('options2.png'), '/options/'+opt_page, html: {class: 'li-right options'}, if: -> { current_user.admin? } #do |sub_nav|
     primary.item :develops, image_tag('task2.png'), develops_path, html: {class: 'li-right develops'} , if: -> { current_user.admin? }
