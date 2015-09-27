@@ -77,8 +77,6 @@ module ApplicationHelper
 
     content_tag :span, title,{ :class => css_class, :sort => column, :direction => direction } 
   end
-
-
   
   def sortable_th(column, title = nil)
 

@@ -2,9 +2,25 @@
 <div class="left">
 <%= render_navigation(:level => 2) %>
 </div>
+
 <%= form_tag receipts_path, :method => 'get', :id => "rcpt_search" do %>
+
 <div class="combobox short_search left"> 
-<%= text_field_tag :search, params[:search], :class => "search_area txt slim_txt", :placeholder=>"Поиск...", :value=>@param_search %>
+<label class="combobox left">
+	<%= select_tag "receipt_provider", content_tag(:option,'Все контрагенты...',:value=>-1)+
+														if @param_provider==0 
+															content_tag(:option,'#Клиенты',:value=>0, selected: 'selected' ) 
+														else
+															content_tag(:option,'#Клиенты',:value=>0 )
+														end	+	options_from_collection_for_select(@providers, "id", "name",
+														:selected => @param_provider) %></label>
+
+
+<label class="combobox left">
+<%= select_tag "receipt_payment_type", content_tag(:option,'Вид платежа...',:value=>0)+options_from_collection_for_select(PaymentType.all, "id", "name",:selected=>params[:receipt_payment_type]) %> 
+</label>
+
+<%= text_field_tag :rcpt_search, params[:rcpt_search], :class => "search_area txt slim_txt", :placeholder=>"Поиск...", :value=>params[:rcpt_search] %>
 </div>
 <% end %>
 <%= link_to 'Добавить приход',new_receipt_path, class: "btn_a btn-add btn_slim right" %>

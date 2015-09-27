@@ -7,6 +7,7 @@ class Provider < ActiveRecord::Base
     has_many :styles, through: :provider_styles
     has_many :budgets, through: :provider_budgets
     has_many :goodstypes, through: :provider_goodstypes
+    has_many :receipts
     belongs_to :p_status
 
     attr_reader :style_tokens

@@ -25,15 +25,22 @@
       	<td><%= receipt.purpose %></td>
       	<td><%= receipt.provider_name %></td>
         <td><%= receipt.project_address %></td>
-        
-        
-        
-        
         <td><%= receipt.sum %></td>
         <td><%= receipt.description %></td>
-        <%= td_tool_icons(receipt, 'edit,delete','span' )%>
+        <%= td_tool_icons(receipt, 'edit,delete','href' )%>
       </tr>
     <% end %>
+       <tr class="total">
+        <td>Итого:</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><%= @sum %></td>
+        <td></td>
+        <td></td>
+      </tr>   
   </tbody>
 </table>
 </div>

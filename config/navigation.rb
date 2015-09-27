@@ -68,7 +68,7 @@ SimpleNavigation::Configuration.run do |navigation|
      
     primary.item :providers, 'Поставщики', providers_path
     
-    primary.item :receipts, 'Деньги', '/receipts/' do |sub_nav|
+    primary.item :receipts, 'Деньги', '/receipts/', if: -> { current_user.admin? } do |sub_nav|
       sub_nav.item :receipts, 'Приходы', receipts_path
       sub_nav.item :payments, 'Расходы', clients_path  
     end

@@ -200,10 +200,10 @@ table td{font-size: 13px;}
 .items_box_cont .message{margin:0 0 0 15px;}
 .items_box_cont .message .icon_birthday{margin:0 0 0 8px;}
 
-.items_box_param {height: 30px; display: block; margin:0 0 26px 0;}
-.items_box_param label{float: left; margin: 7px 5px;}
-.items_box_param label.first{ margin-left: 30px;}
-.items_box_param .inp_w{ width:100px; float: left; margin-right: 20px;}
+.items_box_param {height: 24px; display: block; margin:0 0 16px 0;}
+.items_box_param label{float: left; margin: 3px 5px;}
+.items_box_head label.first{ margin-left: 30px;}
+.items_box_head .inp_w{ width:100px; float: left; margin-right: 20px;}
 /*.items_box .itemAdd_form{margin: 10px 0 0 0;}*/
 
 /*.itemAdd_form{ margin: 10px 0 0 0; }*/

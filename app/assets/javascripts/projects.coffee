@@ -60,6 +60,6 @@ $(document).ready ->
     calc_proj_sum()
   $('#project_sum_real').change ->
     calc_proj_sum()
-  $('#prj_search').on 'keyup', '#search', ->    
+  $('.container').on 'keyup', '#prj_search', ->    
     projects_query()
     return

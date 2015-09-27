@@ -4,8 +4,8 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
-      if !params[:search].nil?
-      @projects = Project.where('LOWER(address) like LOWER(?)','%'+params[:search]+'%').order(:date_end_plan)
+      if !params[:prj_search].nil?
+      @projects = Project.where('LOWER(address) like LOWER(?)','%'+params[:prj_search]+'%').order(:date_end_plan)
     else
       @projects = Project.order(:date_end_plan)
     end
