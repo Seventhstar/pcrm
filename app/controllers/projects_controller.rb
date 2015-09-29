@@ -24,6 +24,15 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1/edit
   def edit
+    @cl_payments = @project.receipts.where(provider_id: 0).order(:date)
+    @cl_total = @cl_payments.sum(:sum)
+    
+    sum1 = @project.price_real * @project.footage_real
+    sum1 = @project.price * @project.footage if sum1 <1
+    sum2 = @project.price_2_real * @project.footage_2_real
+    sum2 = @project.price_2 * @project.footage_2 if sum2 <1
+
+    @cl_debt  =  sum2 + sum1 - @cl_total
   end
 
   # POST /projects

@@ -1,4 +1,6 @@
-<div class="hl hl_a bd">Редактирование проекта</div>
+<div class="hl hl_a bd">Редактирование проекта
+<%= link_to "", @project, method: :delete, data: { confirm: 'Действительно удалить проект?' }, :class=>"icon icon_remove right" %>
+</div>
 
 <%= simple_form_for(@project) do |f| %>
 
@@ -7,6 +9,8 @@
     <li><a href="#tabs-1">Данные</a></li>
     <li><a href="#tabs-2">Площадь и стоимость</a></li>
     <li><a href="#tabs-3">Сроки</a></li>
+    <li><a href="#tabs-4">Выплаты</a></li>
+    <li><a href="#tabs-5">Заказы</a></li>
   </ul>
 
 
@@ -71,26 +75,65 @@
 
 </tbody></table></div></div></div>
 <div id="tabs-3" class="ptab">
+  <div class="box_wrap box_wrap_1">
+        <div class="fullwidth">
+          <table class="fullwidth tbl_fc fw_form">
+          <thead>
+          <tr><th width="20%"></th><th width="20%"></th><th width="20%"></th><th width="20%"></th><th width="20%"></th></tr></thead>
+          <tbody>
+              <tr>
+              <td><div class="inp_w"><label>Начало</label><%= f.text_field :date_start, value: @project.date_start.try('strftime',"%d.%m.%Y"), class: "txt datepicker" %></div></td>
+              <td><div class="inp_w"><label>Окончание</label><%= f.text_field :date_end_plan, value: @project.date_end_plan.try('strftime',"%d.%m.%Y"), class: "txt datepicker" %></div></td>
+              <td><div class="inp_w"><label>Дней</label> <%= number_field_tag :days, @project.days_plan, {class: 'form-control'} %></div></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+          </table>
+        </div>
+   </div>
+</div>
+<div id="tabs-4" class="ptab">
 
-<div class="box_wrap box_wrap_1">
-      <div class="fullwidth">
-        <table class="fullwidth tbl_fc fw_form">
+
+  <div class="box_wrap box_wrap_1">
+    <div class="panel panel-default">
+      <div class="panel-heading table-heading head month">Выплаты по проекту</div>
+      <table class="tleads">
         <thead>
-        <tr><th width="20%"></th><th width="20%"></th><th width="20%"></th><th width="20%"></th><th width="20%"></th></tr></thead>
+        <tr><th width="20%"></th><th width="15%">Аванс</th><th width="15%">Аванс 2</th><th width="15%">Финал</th><th width="15%">Итог</th><th width="15%">Долг</th><th></th></tr></thead>
         <tbody>
-            <tr>
-            <td><div class="inp_w"><label>Начало</label><%= f.text_field :date_start, value: @project.date_start.try('strftime',"%d.%m.%Y"), class: "txt datepicker" %></div></td>
-            <td><div class="inp_w"><label>Окончание</label><%= f.text_field :date_end_plan, value: @project.date_end_plan.try('strftime',"%d.%m.%Y"), class: "txt datepicker" %></div></td>
-            <td><div class="inp_w"><label>Дней</label> <%= number_field_tag :days, @project.days_plan, {class: 'form-control'} %></div></td>
-            <td></td>
-            <td></td>
+          <tr><td>Заказчик</td>
+              <% i = 0 %>
+              <% @cl_payments.each do |cp| %>
+                <td><%= cp.sum %></td>
+                <% i+=1 %>
+              <% end -%>
+              <% (3-i).times do %>
+                <td></td>
+              <% end -%>
+              <td><%= @cl_total %></td>
+              <td><%= @cl_debt %></td>
+              <td></td>
+          </tr>
+          <tr><td>Дизайнер</td>
+              <% 6.times do %>
+                <td></td>
+              <% end -%>
+          </tr>
+          <tr><td>Визуализатор</td>
+              <% 6.times do %>
+                <td></td>
+              <% end -%>
           </tr>
         </tbody>
-        </table>
-      </div>
- </div>
-  
+      </table>
+    </div>
+  </div>
 </div>
+<div id="tabs-5" class="ptab">
+</div>
+
 
 </div>
   <div class="form-actions">
