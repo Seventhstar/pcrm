@@ -32,7 +32,7 @@ class ProjectsController < ApplicationController
     sum2 = @project.price_2_real * @project.footage_2_real
     sum2 = @project.price_2 * @project.footage_2 if sum2 <1
 
-    @cl_debt  =  sum2 + sum1 - @cl_total
+    @cl_debt  =  (sum2 + sum1 - @cl_total).to_i
   end
 
   # POST /projects
