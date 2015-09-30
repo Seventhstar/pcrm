@@ -81,8 +81,17 @@ li.flash_danger {}
 }
 
 .li-right a img{
-  margin-top: 10px !important;
+  margin-top: 7px !important;
 }
+
+#charts1 img{ background: url('tools.png') no-repeat 0 0; background-position: -32px 0; }
+#charts1:hover img{ background-position: -32px -32px;}
+
+#options img{ background: url('tools.png') no-repeat 0 0; background-position: 0 0;}
+#options:hover img{ background-position: 0 -32px;}
+
+#develops img{ background: url('tools.png') no-repeat 0 0; background-position: -64px 0;}
+#develops:hover img{ background-position: -64px -32px;}
 
 #p_search {
   float: left;
