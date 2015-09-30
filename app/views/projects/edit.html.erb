@@ -112,17 +112,23 @@
               <% (3-i).times do %>
                 <td></td>
               <% end -%>
-              <td><%= @cl_total %></td>
-              <td><%= @cl_debt %></td>
+              <td id='cl_total'><%= @cl_total %></td>
+              <td id='cl_debt'><%= @cl_debt %></td>
               <td></td>
           </tr>
           <tr><td>Дизайнер</td>
-              <% 6.times do %>
+              <% 3.times do %>
+                <td><span class='add_pay'>Выплатить</span></td>
+              <% end -%>
+               <% 3.times do %>
                 <td></td>
               <% end -%>
           </tr>
           <tr><td>Визуализатор</td>
-              <% 6.times do %>
+              <% 3.times do %>
+                <td><span class='add_pay'>Выплатить</span></td>
+              <% end -%>
+              <% 3.times do %>
                 <td></td>
               <% end -%>
           </tr>

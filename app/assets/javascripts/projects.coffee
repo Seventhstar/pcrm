@@ -26,6 +26,9 @@
   $('#project_sum_real').val( $('#project_price_real').val() * parseInt($('#project_footage_real').val()*10)/10 )
   $('#project_sum_2_real').val( $('#project_price_2_real').val() * parseInt($('#project_footage_2_real').val()*10)/10 )
   $('#project_sum_total_real').val( parseInt($('#project_sum_2_real').val()) + parseInt($('#project_sum_real').val()) )
+  sum_total = parseInt($('#project_sum_total_real').val())
+  if sum_total==0 then sum_total = $('#project_sum_total').val()
+  $('#cl_debt').html(sum_total-$('#cl_total').html())
     
 @projects_query = ->
   params = $("#prj_search").serialize()
