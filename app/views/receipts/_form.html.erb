@@ -18,7 +18,7 @@
     <div class="right">
     <table class="tbl_fc tbl_fc">
       <tr><td class="caption">Проект:</td>
-        <td><div class="inp_w"><%= f.select :project_id, options_for_select(@projects.collect{ |u| [u.address, u.id] }) %>  
+        <td><div class="inp_w"><%= f.select :project_id, options_for_select(@projects.collect{ |u| [u.address, u.id] },@receipt.project_id) %>  
         </div></td></tr>
       <tr><td class="caption">Контрагент:</td>
         <td><div class="inp_w"><%= f.select :provider_id, content_tag(:option,'Клиент',:value=>0)+options_for_select(Provider.order(:name).collect{ |u| [u.name, u.id] },@receipt.provider_id) %>
