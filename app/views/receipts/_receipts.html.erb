@@ -25,7 +25,7 @@
       	<td><%= receipt.purpose %></td>
       	<td><%= receipt.provider_name %></td>
         <td><%= receipt.project_address %></td>
-        <td><%= receipt.sum %></td>
+        <td class="td_right"><%= receipt.sum.to_sum %></td>
         <td><%= receipt.description %></td>
         <%= td_tool_icons(receipt, 'edit,delete','href' )%>
       </tr>
@@ -37,7 +37,7 @@
         <td></td>
         <td></td>
         <td></td>
-        <td><%= @sum %></td>
+        <td class="td_right"><%= @sum.to_sum %></td>
         <td></td>
         <td></td>
       </tr>   

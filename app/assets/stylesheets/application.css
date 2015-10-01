@@ -80,11 +80,14 @@ li.flash_danger {}
   margin-top: 0 !important;
 }
 
-.li-right a img{
-  margin-top: 7px !important;
+.li-right a {
+ padding: 6px 8px !important; line-height: 32px !important; height: 32px !important;
 }
+/*.li-right a img{
+  margin-top: 6px !important;
+  }*/
 
-#charts1 img{ background: url('tools.png') no-repeat 0 0; background-position: -32px 0; }
+#charts1 img{ background: url('tools.png') no-repeat 0 0; background-position: -32px 0;}
 #charts1:hover img{ background-position: -32px -32px;}
 
 #options img{ background: url('tools.png') no-repeat 0 0; background-position: 0 0;}
@@ -93,9 +96,15 @@ li.flash_danger {}
 #develops img{ background: url('tools.png') no-repeat 0 0; background-position: -64px 0;}
 #develops:hover img{ background-position: -64px -32px;}
 
+
+#options img{margin-right: 6px; }
+/* #charts1 a, #develops a {padding: 6px 10px; line-height: 32px; height: 32px;}*/
+
 #p_search {
   float: left;
 }
+
+.td_right {text-align: right; }
 
 li.disabled a{
   color: #ccc !important; 

@@ -33,8 +33,13 @@ class Project < ActiveRecord::Base
   def sum_real
     (footage_real.to_f*price_real).to_i
   end
- def sum_2_real
+ 
+  def sum_2_real
     (footage_2_real*price_2_real).to_i
+  end
+  
+  def total
+     sum_total_real==0 ? sum_total : sum_total_real 
   end
 
 end

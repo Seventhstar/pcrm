@@ -21,7 +21,7 @@ belongs_to :provider
 	end
 
   def purpose
-  		project.project_type_name
+  		provider_id==0 ? project.project_type_name + ", " + ( sum*100/project.total ).to_s + '%' : ''
   end
 
 end
