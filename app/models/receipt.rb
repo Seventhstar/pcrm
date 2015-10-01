@@ -21,7 +21,8 @@ belongs_to :provider
 	end
 
   def purpose
-  		provider_id==0 ? project.project_type_name + ", " + ( sum*100/project.total ).to_s + '%' : ''
+  	  all_payd = project.receipts.where('provider_id = 0 and date <= ?', date).sum(:sum)
+  		provider_id==0 ? project.project_type_name + ", " + ( all_payd*100/project.total ).to_s + '%' : ''
   end
 
 end
