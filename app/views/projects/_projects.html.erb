@@ -27,7 +27,7 @@
         <td><%= project.date_end_plan %></td>
  
         <td><%= project.act %></td>
-        <td class="td_right <%= project.sum_total_real ==0 ? '':'red' %>"><%= project.total.to_sum %></td>
+        <td class="td_right <%= project.sum_total_real ==0 ? '':'red' %>" title="<%= project.sum_total %>"><%= project.total.to_sum %></td>
         <%= td_tool_icons(project,'edit,show','href') %>
       </tr>
     <% end %>
