@@ -2,7 +2,7 @@
 <%= simple_form_for(@receipt) do |f| %>
 
   <div class="box_wrap box_wrap_1">
-  <div class="left">
+  <div class="panel-left">
     <%= hidden_field_tag 'prj_sum', @receipt.project.nil? ? '': @receipt.project.total %> 
     <table class="tbl_fc tbl_fc">
       <tr><td class="caption">Дата создания:</td>
@@ -12,17 +12,20 @@
       </div></td></tr>
 
 
-    <tr><td class="caption">Сумма:</td><td><div class="inp_70"><%= f.text_field :sum, label: false, class: "txt sum_mask" %></div>
+    <tr><td class="caption">Сумма:</td><td ><div class="left"><%= f.text_field :sum, label: false, class: "txt sum_mask" %></div>
+        <div class="calc_div">
         <span class='calc_proc' delim=4>25%</span>
         <span class='calc_proc' delim=2>50%</span>
         <span class='calc_proc' delim=1>100%</span>
+        <span class='calc_proc' delim=1>Остаток</span>
+        </div>
         </td></tr>
 
     <tr><td class="caption">Комментарий:</td>
       <td><div class="inp_w"><%= f.text_area :description, class: 'txt alone',label: false %></div></td></tr>
       </table>
   </div>
-    <div class="right">
+    <div class="panel-right">
     <table class="tbl_fc tbl_fc">
       <tr><td class="caption">Проект:</td>
         <td><div class="inp_w"><%= f.select :project_id, content_tag(:option,'Выберите...',:value=>0)+options_for_select(@projects.collect{ |u| [u.address, u.id] },@receipt.project_id) %>  

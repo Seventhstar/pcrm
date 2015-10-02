@@ -1,7 +1,7 @@
 <%= simple_form_for(@provider) do |f| %>
 
 <div class="box_wrap box_wrap_1">
-  <div class="left">
+  <div class="panel-left">
     <table class="tbl_fc tbl_fc">
 
     <% a = [:name,:phone,:address,:url, :spec ] %>
@@ -37,7 +37,7 @@
     </table>
   </div>
 
-  <div class="right">
+  <div class="panel-right">
     <div class="comments_box">
       <%= render "shared/comments" %>
     </div>

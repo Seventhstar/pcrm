@@ -193,8 +193,8 @@ table td{font-size: 13px;}
 .items_box {margin:0 0 40px 0;}
 .items_box_head {margin:0 0 16px 0;}
 .items_box_head:after {content: ' '; clear:both; display: block; width: 0; height: 0; overflow: hidden; font-size: 0;}
-.items_box_head .left {float:left;}
-.items_box_head .right {float:right;}
+/*.items_box_head .left {float:left;}*/
+/*.items_box_head .right {float:right;}*/
 
 .items_box_cont{ }
 .items_box_cont .message{margin:0 0 0 15px;}
@@ -387,12 +387,15 @@ input[type=number]::-webkit-inner-spin-button {
 
 .only_actual.active,.only_actual:hover{ background:#428bca !important;   border-color: #428bca !important;}
 
+.left,.panel-left {float: left;}
+.right, .panel-right{float: right;}
+ 
 .history_box {}
 .history_box .items_box_head{}
-.history_box .items_box_head .left{width: 600px; }
-.history_box .items_box_head .right{width: 460px; }
-.history_box .items_box_head .right .txt {width: 239px; float:left;}
-.history_box .items_box_head .right .btn_action {float:right;}
+.history_box .items_box_head .panel-left{width: 600px;}
+.history_box .items_box_head .panel-right{width: 460px; }
+.history_box .items_box_head .panel-right .txt {width: 239px; float:left;}
+.history_box .items_box_head .panel-right .btn_action {float:right;}
 .history_box .items_box_cont{}
 .history_box .items_box_cont .state{width: 180px; }
 .history_box .items_box_cont .state_date{width: 100px; }
@@ -407,12 +410,12 @@ input[type=number]::-webkit-inner-spin-button {
 
 .box_wrap {}
 .box_wrap:after {content: ' '; clear:both; display: block; width: 0; height: 0; overflow: hidden; font-size: 0;}
-.box_wrap .left{float:left;}
-.box_wrap .right{float:right;}
+/*.box_wrap .panel-left{float:left;}*/
+/*.box_wrap .right{float:right;}*/
 
-.box_wrap_1 .left{width: 584px; }
-.box_wrap_1 .left2{width: 490px; float:left;}
-.box_wrap_1 .right{width: 584px; }
+.box_wrap_1 .panel-left{width: 584px; }
+.box_wrap_1 .panel-left2{width: 490px; }
+.box_wrap_1 .panel-right{width: 584px; }
 
 .box_cent {position:relative;}
 
@@ -427,13 +430,11 @@ table.tbl_fc td.caption2{width: 235px; padding-right: 15px; padding-top: 0px; te
 td.caption3{ font-weight: 500; }
 td.caption3 span{ float: left; padding-top: 8px; padding-right: 15px;}
 .inp2{ width: 245px; float: left;}  
-
-input.left{float: left;}
-
 .btn_reset {margin-right: 10px;}
 
 table.tbl_fc_1 td.caption{width: 160px; }
-th.center {text-align:center;}
+th.center,td.center {text-align:center;}
+
 
 
 .auth_form {width: 425px; margin:0 auto; }

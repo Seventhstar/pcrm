@@ -1,9 +1,9 @@
 <% if @two_columns %>
 
-<div class="left">
+<div class="panel-left">
 <%= render 'table' %>
 </div>
-<div class="right">
+<div class="panel-right">
   <%= content_tag :div, "", id: "leads_chart", leads: @leads_count[:json].to_json, headers: @leads_count[:headers].to_s, element: @leads_count[:element], class: "graph", style: "position: relative; width:580px;" %>
 </div>
 <% else %>

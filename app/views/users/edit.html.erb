@@ -4,7 +4,7 @@
 <%= form_for(@user) do |f| %>
 
 <div class="box_wrap box_wrap_1">
-<div class="left">
+<div class="panel-left">
   <table class="tbl_fc tbl_fc_1">
     <tr><td class="caption">Имя:</td>
         <td><div class="inp_w"><%= f.text_field :name, class: 'form-control' %></div></td></tr>
@@ -21,7 +21,7 @@
 
   </table>
 </div>
-<div class="right">
+<div class="panel-right">
   <%= image_tag(@user.avatar_url) if @user.avatar? %> 
   <div class="file_upload">
 

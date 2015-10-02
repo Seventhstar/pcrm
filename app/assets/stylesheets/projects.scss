@@ -3,9 +3,10 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 span.add_pay, span.calc_proc{ color: white; background-color: #ff8411; padding: 3px 6px; border-radius: 3px; cursor: pointer;}
+span.calc_proc:hover{opacity: 0.7;}
 
-span.calc_proc{
-	padding: 8px 6px;
-    margin-left: 6px;
-    display: inline-block;
-    border-radius: 5px;}
+span.calc_proc{ padding: 8px 6px;  margin-left: 6px;  display: inline-block;  border-radius: 5px;}
+
+.calc_div{float: right; display: table-cell;}
+
+.td_table {display: table; width: 100%;}

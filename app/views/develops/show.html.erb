@@ -1,7 +1,7 @@
   <div class="box_wide">
   <div class="box_wrap box_wrap_1">
 
-    <div class="left">  
+    <div class="panel-left">  
     <table class="tbl_fc tbl_fc_1">
         <tr><td class="caption">Проект:</td>
             <td><div class="lbl"><%= @develop.project_name %></div></td></tr>
@@ -16,7 +16,7 @@
 
 	</table>
     </div>
-    <div class="right">
+    <div class="panel-right">
     	<div class="historyChange_box">
     		<% if @history.count >0 %>
     		<%= render "shared/history" %>    

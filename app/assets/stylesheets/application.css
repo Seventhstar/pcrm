@@ -104,7 +104,7 @@ li.flash_danger {}
   float: left;
 }
 
-.td_right {text-align: right; }
+.td_right {text-align: right; padding-right: 10px;}
 
 li.disabled a{
   color: #ccc !important; 
