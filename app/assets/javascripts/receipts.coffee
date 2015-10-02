@@ -18,16 +18,18 @@ $(document).ready ->
 			 $.getJSON '/projects/'+prj_id+'.json', (data) ->
 				 $('#prj_sum').val(data.total)
 			return
-
+	$('.sum_mask').mask("# ##0", {reverse: true, maxlength: false})
 
 	$('#receipt_payment_type_id').chosen(chosen_params)
 	
 	chosen_params = {width: '170px', allow_single_deselect: true}
-	$('#receipt_provider').chosen(chosen_params).on 'change', ->
+	$('#receipts_provider').chosen(chosen_params).on 'change', ->
     receipt_query()
-  $('#receipt_payment_type').chosen(chosen_params).on 'change', ->
+  $('#receipts_project_id').chosen(chosen_params).on 'change', ->
+    receipt_query()
+  $('#receipts_payment_type').chosen(chosen_params).on 'change', ->
     receipt_query()
   $('.container').on 'keyup', '#rcpt_search', ->    
     receipt_query()
   $('.calc_proc').on 'click', ->
-  	$('#receipt_sum').val($('#prj_sum').val() / $(this).attr('delim'))
+  	$('#receipt_sum').val( to_sum($('#prj_sum').val() / $(this).attr('delim')) )

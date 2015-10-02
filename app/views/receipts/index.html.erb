@@ -7,7 +7,7 @@
 
 <div class="combobox short_search left"> 
 <label class="combobox left">
-	<%= select_tag "receipt_provider", content_tag(:option,'Все контрагенты...',:value=>-1)+
+	<%= select_tag "receipts_provider", content_tag(:option,'Все контрагенты...',:value=>-1)+
 														if @param_provider==0 
 															content_tag(:option,'#Клиенты',:value=>0, selected: 'selected' ) 
 														else
@@ -17,7 +17,11 @@
 
 
 <label class="combobox left">
-<%= select_tag "receipt_payment_type", content_tag(:option,'Вид платежа...',:value=>0)+options_from_collection_for_select(PaymentType.all, "id", "name",:selected=>params[:receipt_payment_type]) %> 
+<%= select_tag "receipts_payment_type", content_tag(:option,'Вид платежа...',:value=>0)+options_from_collection_for_select(PaymentType.all, "id", "name",:selected=>params[:receipts_payment_type]) %> 
+</label>
+
+<label class="combobox left">
+<%= select_tag "receipts_project_id", content_tag(:option,'Проект...',:value=>0)+options_from_collection_for_select(@projects, "id", "address",:selected=>params[:receipts_project_id]) %> 
 </label>
 
 <%= text_field_tag :rcpt_search, params[:rcpt_search], :class => "search_area txt slim_txt", :placeholder=>"Поиск...", :value=>params[:rcpt_search] %>

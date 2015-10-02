@@ -22,6 +22,9 @@
 //= require nprogress
 //= require_tree .
 
+function to_sum(d){ 
+    return d.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1 "); 
+}
 
 var showNotifications = function(){ 
   $nt = $(".alert"); 
