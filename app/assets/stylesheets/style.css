@@ -178,6 +178,7 @@ background-position:-34px 0 !important; width: 16px; height: 16px;}
 .tbl_a table tr:nth-child(even) td, table.tleads tr:nth-child(even) td {background: #fafafa;}
 .tbl_a table tr:hover, table.tleads tr:hover td{ background-color: #f5f5f5;}
 
+
 table td{font-size: 13px;}
 
 .tbl_a table tbody tr:last-child td {border-bottom: 0;}
@@ -437,7 +438,7 @@ td.caption3 span{ float: left; padding-top: 8px; padding-right: 15px;}
 table.tbl_fc_1 td.caption{width: 160px; }
 th.center,td.center {text-align:center;}
 
-
+.va_bottom{vertical-align: bottom !important; }
 
 .auth_form {width: 425px; margin:0 auto; }
 .auth_form table.tbl_fc {}
