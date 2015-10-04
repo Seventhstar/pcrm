@@ -12,13 +12,9 @@
       </div></td></tr>
 
 
-    <tr><td class="caption">Сумма:</td><td ><div class="left"><%= f.text_field :sum, label: false, class: "txt sum_mask" %></div>
-        <div class="calc_div">
-        <span class='calc_proc' delim=4>25%</span>
-        <span class='calc_proc' delim=2>50%</span>
-        <span class='calc_proc' delim=1>100%</span>
-        <span class='calc_proc' delim=1>Остаток</span>
-        </div>
+    <tr><td class="caption">Сумма:</td>
+        <td><div class="left"><%= f.text_field :sum,  class: "txt sum_mask" %></div>
+            <%= receipt_procents_div %>
         </td></tr>
 
     <tr><td class="caption">Комментарий:</td>

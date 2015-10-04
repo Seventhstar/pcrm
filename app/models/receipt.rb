@@ -19,10 +19,17 @@ belongs_to :provider
 	def provider_name
 			provider_id==0 ? 'Клиент' : provider.try(:name)
 	end
+	
+	def all_payd( include = false)
+		#to_date = date if to_date =='' || to_date == nil 
+		# по умолчанию всего заплачено _до_ даты текущего платежа 
+		payments = project.receipts.where('provider_id = 0 and date < ?', date).sum(:sum) if !project.nil?
+		payments = payments + sum if include 
+		payments
+	end
 
-  def purpose
-  	  all_payd = project.receipts.where('provider_id = 0 and date <= ?', date).sum(:sum)
-  		provider_id==0 ? project.project_type_name + ", " + ( all_payd*100/project.total ).to_s + '%' : ''
+  def purpose  
+  		provider_id==0 ? project.project_type_name + ", " + ( all_payd(true)*100/project.total ).to_s + '%' : ''
   end
 
 end

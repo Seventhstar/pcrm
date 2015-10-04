@@ -49,27 +49,28 @@
           <tr><td class="gr_caption" colspan="5">Заявленная площадь и стоимость</td></tr>
           <tr>
           <td><div class="inp_w"><%= f.input :footage, label: 'Метраж' %></div></td>
-          <td><div class="inp_w"><%= f.input :price, label: 'Цена за м2' %></div></td>
-          <td><div class="inp_w"><%= f.input :sum, label: 'Сумма',:input_html => { :value => @project.sum_plan } %></div></td>
-          <td><div class="inp_w"><%= f.input :sum_total, label: 'Общая стоимость' %></div></td>
+          <%= td_sum_field(f, :price, 'Цена за м2') %>
+          <%= td_sum_field(f, :sum, 'Сумма') %>
+          <%= td_sum_field(f, :sum_total, 'Общая стоимость') %>         
           </tr>
           <tr>
           <td><div class="inp_w"><%= f.input :footage_2, label: 'Метраж 2' %></div></td>
-          <td><div class="inp_w"><%= f.input :price_2, label: 'Цена за м2' %></div></td>
-          <td><div class="inp_w"><%= f.input :sum_2, label: 'Сумма',:input_html => { :value => @project.sum_2 } %></div></td>
+          <%= td_sum_field(f, :price_2, 'Цена за м2') %>
+          <%= td_sum_field(f, :sum_2, 'Сумма') %>
           <td><div class="inp_w"><%= f.input :month_in_gift, label: 'Месяцев в подарок' %></div></td>
           </tr>
           <tr><td class="gr_caption" colspan="5">Фактическая площадь и стоимость</td></tr>
           <tr>
+
           <td><div class="inp_w"><%= f.input :footage_real, label: 'Метраж' %></div></td>
-          <td><div class="inp_w"><%= f.input :price_real, label: 'Цена за м2' %></div></td>
-          <td><div class="inp_w"><%= f.input :sum_real, label: 'Сумма',:input_html => { :value => @project.sum_real } %></div></td>
-          <td><div class="inp_w"><%= f.input :sum_total_real, label: 'Общая стоимость' %></div></td>
+          <%= td_sum_field(f, :price_real, 'Цена за м2') %>
+          <%= td_sum_field(f, :sum_real, 'Сумма') %>
+          <%= td_sum_field(f, :sum_total_real, 'Общая стоимость') %>
           </tr>
           <tr>
           <td><div class="inp_w"><%= f.input :footage_2_real, label: 'Метраж 2' %></div></td>
-          <td><div class="inp_w"><%= f.input :price_2_real, label: 'Цена за м2' %></div></td>
-          <td><div class="inp_w"><%= f.input :sum_2_real, label: 'Сумма',:input_html => { :value => @project.sum_2_real } %></div></td>
+          <%= td_sum_field(f, :price_2_real, 'Цена за м2') %>
+          <%= td_sum_field(f, :sum_2_real, 'Сумма') %>
           <td></td>
           </tr>
 
@@ -106,14 +107,14 @@
           <tr><td>Заказчик</td>
               <% i = 0 %>
               <% @cl_payments.each do |cp| %>
-                <td><%= cp.sum %></td>
+                <td><%= cp.sum.to_sum %></td>
                 <% i+=1 %>
               <% end -%>
               <% (3-i).times do %>
                 <td></td>
               <% end -%>
-              <td id='cl_total'><%= @cl_total %></td>
-              <td id='cl_debt'><%= @cl_debt %></td>
+              <td id='cl_total'><%= @cl_total.to_sum %></td>
+              <td id='cl_debt'><%= @cl_debt.to_sum %></td>
               <td></td>
           </tr>
           <tr><td>Дизайнер</td>

@@ -4,7 +4,7 @@
 		<thead>
 			<% if @leads_count[:element]!='Donut' %><th>Месяц</th> <% end %>
 			<% @leads_count[:headers].each do |head| %>
-			<th><%= head %></th>
+				<th ><%= head %></th>
 			<% end %>
 		</th>
 	</thead>
@@ -12,7 +12,11 @@
 		<% @leads_count[:hash].each do |row| %>
 		<tr>
 			<% @leads_count[:json][0].keys.each do |key| %>
-			<td ><%= row[key] %></td>
+				<% if row[key].to_i >0 %>
+					<td><%= row[key].to_sum %></td>
+				<% else %>
+					<td ><%= row[key] %></td>
+				<% end -%>
 			<% end %>
 		</tr>
 		<% end %>

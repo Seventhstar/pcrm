@@ -23,27 +23,32 @@
 
           <tr><td class="gr_caption">Вид работы и исполнитель</td></tr>
           <tr>
-            <td colspan="2"><div class="inp_w"><%= f.select :project_type_id, options_for_select(ProjectType.order(:name).collect{ |u| [u.name, u.id] }) %></div></td>
+            <td colspan="2"><div class="inp_w">
+              <%= f.select :project_type_id, options_for_select(ProjectType.order(:name).collect{ |u| [u.name, u.id] }) %>
+            </div></td>
             <td><div class="inp_w"><%= f.select :style_id, options_for_select(Style.order(:name).collect{ |u| [u.name, u.id] }) %></div></td>
-            <td colspan="2"><div class="inp_w"><%= f.select :executor_id, options_for_select(User.order(:name).collect{ |u| [u.name, u.id] }) %></div></td>
+            <td colspan="2"><div class="inp_w">
+              <%= f.select :executor_id, options_for_select(User.order(:name).collect{ |u| [u.name, u.id] }) %>
+            </div></td>
           </tr>
 
           <tr><td class="gr_caption">Площадь и стоимость</td></tr>
           <tr>
-          <td><div class="inp_w"><%= f.input :footage, label: 'Метраж' %></div></td>
-          <td><div class="inp_w"><%= f.input :price, label: 'Цена за м2' %></div></td>
-          <td><div class="inp_w"><%= f.input :sum, label: 'Сумма' %></div></td>
-          <td><div class="inp_w"><%= f.input :sum_total, label: 'Общая стоимость' %></div></td>
+            <td><div class="inp_w"><%= f.input :footage, label: 'Метраж' %></div></td>
+            <%= td_sum_field(f, :price, 'Цена за м2') %>
+            <%= td_sum_field(f, :sum, 'Сумма') %>
+            <%= td_sum_field(f, :sum_total, 'Общая стоимость' ) %> 
           </tr>
-             <tr>
-          <td><div class="inp_w"><%= f.input :footage_2, label: 'Метраж 2' %></div></td>
-          <td><div class="inp_w"><%= f.input :price_2, label: 'Цена за м2' %></div></td>
-          <td><div class="inp_w"><%= f.input :sum_2, label: 'Сумма' %></div></td>
-          <td><div class="inp_w"><%= f.input :month_in_gift, label: 'Месяцев в подарок' %></div></td>
+          <tr>
+            <td><div class="inp_w"><%= f.input :footage_2, label: 'Метраж 2' %></div></td>
+            <%= td_sum_field(f, :price_2, 'Цена за м2') %>
+            <%= td_sum_field(f, :sum_2, 'Сумма') %>
+            <td><div class="inp_w"><%= f.input :month_in_gift, label: 'Месяцев в подарок' %></div></td>
           </tr>
           <tr><td class="gr_caption">Сроки</td></tr>
             <tr>
-            <td><div class="inp_w"><label>Начало</label><%= f.text_field :date_start, value: Date.today.try('strftime',"%d.%m.%Y"), class: "txt datepicker" %></div></td>
+            <td><div class="inp_w"><label>Начало</label>
+                <%= f.text_field :date_start, value: Date.today.try('strftime',"%d.%m.%Y"), class: "txt datepicker" %></div></td>
             <td><div class="inp_w"><label>Окончание</label><%= f.text_field :date_end_plan, class: "txt datepicker" %></div></td>
             <td><div class="inp_w"><label>Дней</label> <%= number_field_tag :days, 0, {class: 'form-control'} %></div></td>
             <td></td>

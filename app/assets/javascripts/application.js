@@ -26,6 +26,10 @@ function to_sum(d){
     return d.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1 "); 
 }
 
+function intFromSum(sum){
+  return parseInt(sum.replace(' ',''))
+}
+
 var showNotifications = function(){ 
   $nt = $(".alert"); 
   if (!$nt.hasClass('alert-danger')){

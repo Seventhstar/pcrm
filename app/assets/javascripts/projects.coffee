@@ -19,16 +19,33 @@
 		$('#days').val((d2-d1)/24/3600/1000 )
 		return
 
+@calc_debt =() ->
+  sum_total = intFromSum($('#project_sum_total').val())  
+  calc_sum_total = intFromSum($('#project_sum_2').val()) + intFromSum($('#project_sum').val())
+  $('#project_sum_total').attr('title',sum_total)
+  if calc_sum_total != sum_total 
+     $('#project_sum_total').addClass('red')
+  else
+     $('#project_sum_total').removeClass('red')
+  sum_total_real = intFromSum($('#project_sum_total_real').val())
+  calc_sum_total_real = intFromSum($('#project_sum_2_real').val()) + intFromSum($('#project_sum_real').val())
+  if calc_sum_total_real != sum_total_real 
+     $('#project_sum_total_real').addClass('red')
+  else
+     $('#project_sum_total_real').removeClass('red')
+  if sum_total_real!=0 then sum_total = sum_total_real
+  $('#cl_debt').html(to_sum(sum_total-intFromSum($('#cl_total').html())))
+  return
+
 @calc_proj_sum =() ->
-  $('#project_sum').val( $('#project_price').val() * parseInt($('#project_footage').val()*10)/10 )
-  $('#project_sum_2').val( $('#project_price_2').val() * parseInt($('#project_footage_2').val()*10)/10 )
-  $('#project_sum_total').val( parseInt($('#project_sum_2').val()) + parseInt($('#project_sum').val()))
-  $('#project_sum_real').val( $('#project_price_real').val() * parseInt($('#project_footage_real').val()*10)/10 )
-  $('#project_sum_2_real').val( $('#project_price_2_real').val() * parseInt($('#project_footage_2_real').val()*10)/10 )
-  $('#project_sum_total_real').val( parseInt($('#project_sum_2_real').val()) + parseInt($('#project_sum_real').val()) )
-  sum_total = parseInt($('#project_sum_total_real').val())
-  if sum_total==0 then sum_total = $('#project_sum_total').val()
-  $('#cl_debt').html(sum_total-$('#cl_total').html())
+  $('#project_sum').val( to_sum(intFromSum($('#project_price').val()) * parseInt($('#project_footage').val()*10)/10 ))
+  $('#project_sum_2').val( to_sum(intFromSum($('#project_price_2').val()) * parseInt($('#project_footage_2').val()*10)/10 ))
+  $('#project_sum_total').val( to_sum(intFromSum($('#project_sum_2').val()) + intFromSum($('#project_sum').val())))
+  $('#project_sum_real').val( to_sum(intFromSum($('#project_price_real').val()) * parseInt($('#project_footage_real').val()*10)/10 ))
+  $('#project_sum_2_real').val( to_sum(intFromSum($('#project_price_2_real').val()) * parseInt($('#project_footage_2_real').val()*10)/10 ))
+  $('#project_sum_total_real').val( to_sum(intFromSum($('#project_sum_2_real').val()) + intFromSum($('#project_sum_real').val()) ))
+  calc_debt()
+  return
     
 @projects_query = ->
   params = $("#prj_search").serialize()
@@ -47,9 +64,9 @@ $(document).ready ->
   	calc_proj_sum()
   $('#project_price_2').change ->
   	calc_proj_sum()
-  $('#project_footage_2').change ->
-  	calc_proj_sum()
   $('#project_footage').change ->
+  	calc_proj_sum()
+  $('#project_footage_2').change ->
   	calc_proj_sum()
   $('#project_price_real').change ->
     calc_proj_sum()
@@ -63,6 +80,10 @@ $(document).ready ->
     calc_proj_sum()
   $('#project_sum_real').change ->
     calc_proj_sum()
+  $('#project_sum_total').change ->
+    calc_debt()
+  $('#project_sum_total_real').change ->
+    calc_debt()
   $('.container').on 'keyup', '#prj_search', ->    
     projects_query()
     return

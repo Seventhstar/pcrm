@@ -1,6 +1,7 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy]
   before_action :logged_in_user
+  before_action :check_sum, only: [:create,:update]
   # GET /projects
   # GET /projects.json
   def index
@@ -14,25 +15,20 @@ class ProjectsController < ApplicationController
   # GET /projects/1
   # GET /projects/1.json
   def show
+    data = params[:data]
+    get_debt(data)
   end
 
   # GET /projects/new
   def new
     @project = Project.new
     @client =  @project.build_client
+    get_debt
   end
 
   # GET /projects/1/edit
   def edit
-    @cl_payments = @project.receipts.where(provider_id: 0).order(:date)
-    @cl_total = @cl_payments.sum(:sum)
-    
-    sum1 = @project.price_real * @project.footage_real
-    sum1 = @project.price * @project.footage if sum1 <1
-    sum2 = @project.price_2_real * @project.footage_2_real
-    sum2 = @project.price_2 * @project.footage_2 if sum2 <1
-
-    @cl_debt  =  (sum2 + sum1 - @cl_total).to_i
+    get_debt
   end
 
   # POST /projects
@@ -80,6 +76,24 @@ class ProjectsController < ApplicationController
   end
 
   private
+    def get_debt(to_date = '')
+      if to_date == ''
+        @cl_payments = @project.receipts.where(provider_id: 0).order(:date)
+      else
+        @cl_payments = @project.receipts.where('provider_id = 0 and date < ?', to_date).order(:date)
+      end
+        
+      @cl_total = @cl_payments.sum(:sum)
+      @cl_debt  =  (@project.total - @cl_total).to_i
+    end
+
+    def check_sum
+      prms = ['price','price_2','price_real','price_2_real','sum','sum_2','sum_real','sum_2_real','sum_total','sum_total_real']
+      prms.each do |p|
+        project_params[p] = project_params[p].gsub!(' ','') if !project_params[p].nil?
+      end
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_project
       @project = Project.find(params[:id])
@@ -87,9 +101,12 @@ class ProjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      params.require(:project).permit(:client_id, :address, :owner_id, :executor_id, :designer_id, :project_type_id, :date_start, :date_end_plan, :date_end_real, :number, 
-        :footage, :footage_2, :footage_real, :footage_2_real, :style_id, :sum, :sum_real, :price, :price_2, :price_real, :price_2_real, 
-        :month_in_gift, :act, :delay_days, :sum_total, :sum_2, :sum_total_real, :date_sign, :client_attributes => [:name, :address, :phone, :email] )
+      params.require(:project).permit(:client_id, :address, :owner_id, :executor_id, :designer_id, :project_type_id, 
+        :date_start, :date_end_plan, :date_end_real, :number, :date_sign, 
+        :footage, :footage_2, :footage_real, :footage_2_real, :style_id, 
+        :sum, :sum_real, :price, :price_2, :price_real, :sum_total, :sum_2, :sum_total_real, :sum_2_real, :price_2_real, 
+        :month_in_gift, :act, :delay_days,  
+        :client_attributes => [:name, :address, :phone, :email] )
     end
 
 end

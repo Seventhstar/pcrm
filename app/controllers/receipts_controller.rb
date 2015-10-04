@@ -50,6 +50,8 @@ class ReceiptsController < ApplicationController
     @projects =  Project.all
     @receipt_user = current_user
     @date = Date.today.try('strftime',"%d.%m.%Y")
+
+    get_debt
   end
 
   # GET /receipts/1/edit
@@ -57,6 +59,8 @@ class ReceiptsController < ApplicationController
     @projects =  Project.all
     @receipt_user = @receipt.user
     @date = @receipt.date.try('strftime',"%d.%m.%Y")
+
+    get_debt
   end
 
   # POST /receipts
@@ -100,21 +104,24 @@ class ReceiptsController < ApplicationController
   end
 
   private
+
+    def get_debt
+      #cl_payments = @receipt.project.receipts.where(provider_id: 0).order(:date)
+      @cl_total = @receipt.all_payd
+      @cl_debt  = @receipt.project.nil? ? 0 : @receipt.project.total - @receipt.all_payd 
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_receipt
       @receipt = Receipt.find(params[:id])
     end
 
     def check_sum
-      p receipt_params
       receipt_params[:sum] = receipt_params[:sum].gsub!(' ','')
-      p receipt_params[:sum]
-      p receipt_params
     end
 
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def receipt_params
-      params.require(:receipt).permit(:project_id, :user_id, :provider_id, :payment_type_id, :date, :sum, :description)
+      params.require(:receipt).permit(:project_id, :user_id, :provider_id, :payment_type_id, :date, :sum,:description)
     end
 end

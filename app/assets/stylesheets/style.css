@@ -363,9 +363,11 @@ label.select_custom_ext:after {	background-position: -18px -9px; }
 /*td.state,td.center{  text-align: center !important;}*/
 td.state{  text-align: center;}
 .sum_mask{ text-align: right; }
-input[type=number]::-webkit-inner-spin-button {
+input[type='number']{padding-right: 0;}
+input[type='number']::-webkit-inner-spin-button {
  /*   -webkit-appearance: none;*/
     margin: 0 0 0 5px;
+    
 }
 
 .menu_c {}
