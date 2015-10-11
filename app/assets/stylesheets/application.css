@@ -88,13 +88,13 @@ li.flash_danger {}
   }*/
 
 #charts1 img{ background: url('tools.png') no-repeat 0 0; background-position: -32px 0;}
-#charts1:hover img{ background-position: -32px -32px;}
+#charts1:hover img, #charts1 .active img{ background-position: -32px -32px;}
 
 #options img{ background: url('tools.png') no-repeat 0 0; background-position: 0 0;}
-#options:hover img{ background-position: 0 -32px;}
+#options:hover img, #options .active img{ background-position: 0 -32px;}
 
 #develops img{ background: url('tools.png') no-repeat 0 0; background-position: -64px 0;}
-#develops:hover img{ background-position: -64px -32px;}
+#develops:hover img, #develops .active img{ background-position: -64px -32px;}
 
 
 #options img{margin-right: 6px; }
