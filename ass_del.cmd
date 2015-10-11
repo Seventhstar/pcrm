@@ -1,0 +1,1 @@
+rm -d -f -r public/assets/*
