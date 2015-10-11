@@ -3,21 +3,26 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 @receipt_query = ->
-  p_params = undefined
   p_params = $('#rcpt_search').serialize()
   $.get '/receipts', p_params, null, 'script'
   setLoc 'receipts?' + p_params
   return
+
+@receipt_procent_visibility = (prov_id) ->
+	if (prov_id=='0') then $('.calc_div').removeClass 'invisible' else $('.calc_div').addClass 'invisible' 
 
 $(document).ready ->
   chosen_params =
     width: '99.5%'
     disable_search: 'true'
   $('#receipt_user_id').chosen chosen_params
-  $('#receipt_provider_id').chosen chosen_params
+  $('#receipt_provider_id').chosen(chosen_params).on 'change', ->
+  	receipt_procent_visibility $('#receipt_provider_id').val()
+  	return
+
   $('#receipt_project_id').chosen(chosen_params).on 'change', ->
     prj_id = $(this).val()
-    if prj_id
+    if prj_id && prj_id >0
      dt = $('#receipt_date').val()
      $.getJSON('/projects/' + prj_id + '.json',{'data': dt}, (data) ->
         $('#prj_sum').val data.total
@@ -31,6 +36,8 @@ $(document).ready ->
            return
          return
       )
+    else
+    	$('#prj_sum').val 0
     return
   $('.sum_mask').mask '# ##0',
     reverse: true

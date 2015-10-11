@@ -8,7 +8,8 @@
       <tr><td class="caption">Дата создания:</td>
         <td><div class="inp_w"><%= f.text_field :date, :value => @date, label: false, class: "txt datepicker" %></div></td></tr>
       <tr><td class="caption">Вид платежа:</td>
-        <td><div class="inp_w"><%= f.select :payment_type_id, options_for_select(PaymentType.order(:name).collect{ |u| [u.name, u.id] },@receipt.payment_type_id) %>
+        <td><div class="inp_w">
+        <%= f.select :payment_type_id, options_for_select(PaymentType.order(:name).collect{ |u| [u.name, u.id] },@receipt.payment_type_id) %>
       </div></td></tr>
 
 
@@ -27,7 +28,8 @@
         <td><div class="inp_w"><%= f.select :project_id, content_tag(:option,'Выберите...',:value=>0)+options_for_select(@projects.collect{ |u| [u.address, u.id] },@receipt.project_id) %>  
         </div></td></tr>
       <tr><td class="caption">Контрагент:</td>
-        <td><div class="inp_w"><%= f.select :provider_id, content_tag(:option,'Клиент',:value=>0)+options_for_select(Provider.order(:name).collect{ |u| [u.name, u.id] },@receipt.provider_id) %>
+        <td><div class="inp_w">        
+        <%= select_options_with_special('receipt[provider_id]','Выберите...','* Клиент', Provider.order(:name), @receipt.provider_id) %>
       </div></td></tr>
       <tr><td class="caption">Создатель:</td>
         <td><div class="inp_w"><%= f.select :user_id, options_for_select(User.order(:name).collect{ |u| [u.name, u.id] },@receipt_user.id) %>

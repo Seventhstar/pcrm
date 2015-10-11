@@ -7,13 +7,7 @@
 
 <div class="combobox short_search left"> 
 <label class="combobox left">
-	<%= select_tag "receipts_provider", content_tag(:option,'Все контрагенты...',:value=>-1)+
-														if @param_provider==0 
-															content_tag(:option,'#Клиенты',:value=>0, selected: 'selected' ) 
-														else
-															content_tag(:option,'#Клиенты',:value=>0 )
-														end	+	options_from_collection_for_select(@providers, "id", "name",
-														:selected => @param_provider) %></label>
+	<%= select_options_with_special('receipts_provider','Все контрагенты...','* Клиенты *', @providers, @param_provider) %></label>
 
 
 <label class="combobox left">
