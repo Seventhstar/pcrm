@@ -41,11 +41,16 @@
   $('#project_sum').val( to_sum(intFromSum($('#project_price').val()) * parseInt($('#project_footage').val()*10)/10 ))
   $('#project_sum_2').val( to_sum(intFromSum($('#project_price_2').val()) * parseInt($('#project_footage_2').val()*10)/10 ))
   $('#project_sum_total').val( to_sum(intFromSum($('#project_sum_2').val()) + intFromSum($('#project_sum').val())))
+  calc_debt()
+  return
+
+@calc_proj_sum_real =() ->
   $('#project_sum_real').val( to_sum(intFromSum($('#project_price_real').val()) * parseInt($('#project_footage_real').val()*10)/10 ))
   $('#project_sum_2_real').val( to_sum(intFromSum($('#project_price_2_real').val()) * parseInt($('#project_footage_2_real').val()*10)/10 ))
   $('#project_sum_total_real').val( to_sum(intFromSum($('#project_sum_2_real').val()) + intFromSum($('#project_sum_real').val()) ))
   calc_debt()
   return
+
     
 @projects_query = ->
   params = $("#prj_search").serialize()
@@ -60,30 +65,23 @@ $(document).ready ->
   	d= dateFromString $('#project_date_start').val(), $(this).val()  
   	dd = $.datepicker.formatDate('dd.mm.yy', new Date(d))
   	$('#project_date_end_plan').val(dd)
-  $('#project_price').change ->
+  
+  $('#project_price,#project_footage,#project_price_2,#project_footage_2').change ->
   	calc_proj_sum()
-  $('#project_price_2').change ->
-  	calc_proj_sum()
-  $('#project_footage').change ->
-  	calc_proj_sum()
-  $('#project_footage_2').change ->
-  	calc_proj_sum()
-  $('#project_price_real').change ->
-    calc_proj_sum()
-  $('#project_price_2_real').change ->
-    calc_proj_sum()
-  $('#project_footage_2_real').change ->
-    calc_proj_sum()
-  $('#project_footage_real').change ->
-    calc_proj_sum()
+  $('#project_price_real,#project_price_2_real,#project_footage_2_real,#project_footage_real').change ->
+    calc_proj_sum_real()
+  
   $('#project_sum_2_real').change ->
-    calc_proj_sum()
+    calc_proj_sum_real()
+
   $('#project_sum_real').change ->
     calc_proj_sum()
+
   $('#project_sum_total').change ->
     calc_debt()
   $('#project_sum_total_real').change ->
     calc_debt()
+
   $('.container').on 'keyup', '#prj_search', ->    
     projects_query()
     return
