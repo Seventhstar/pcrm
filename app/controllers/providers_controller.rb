@@ -19,7 +19,7 @@ class ProvidersController < ApplicationController
     @param_goodstype = params[:goodstype]
     @param_p_status = params[:p_status]
     @param_p_status = 1 if @param_p_status.nil?
-    p_status = @param_p_status
+    
 
     @param_search = params[:search]
 
@@ -45,8 +45,8 @@ class ProvidersController < ApplicationController
         gtp = Goodstype.find(params[:goodstype]).providers.ids
     end
 
-    if p_status && p_status!="" && p_status!='0'
-        ps = PStatus.find(p_status).providers.ids
+    if @param_p_status && @param_p_status!="" && @param_p_status!='0'
+        ps = PStatus.find(@param_p_status).providers.ids
     end
 
     ids = sp & bp & gtp & ps & s_ids
