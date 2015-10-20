@@ -18,7 +18,7 @@ class ProvidersController < ApplicationController
     @param_budget = params[:budget]
     @param_goodstype = params[:goodstype]
     @param_p_status = params[:p_status]
-    @param_p_status = 1 if @param_p_status.nil?
+    @param_p_status = 5 if @param_p_status.nil?
     
 
     @param_search = params[:search]
