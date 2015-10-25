@@ -1,0 +1,19 @@
+<div class="hl hl_a bd">База знаний</div>
+<%= link_to 'Новое знание', new_wiki_record_path, class: "btn_a btn-add btn_slim right" %>
+
+<table>
+  <tbody>
+    <% @wiki_records.each do |wiki_record| %>
+      <tr>
+        <td class="td_folder"><span class="folder icon"> </span></td>
+        <td class="wiki_name"><%= wiki_record.name %></td>
+        <td><%= wiki_record.parent_id %></td>
+        <td><%= link_to 'Edit', edit_wiki_record_path(wiki_record) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+

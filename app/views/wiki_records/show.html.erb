@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @wiki_record.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @wiki_record.description %>
+</p>
+
+<p>
+  <strong>Parent:</strong>
+  <%= @wiki_record.parent_id %>
+</p>
+
+<%= link_to 'Edit', edit_wiki_record_path(@wiki_record) %> |
+<%= link_to 'Back', wiki_records_path %>
