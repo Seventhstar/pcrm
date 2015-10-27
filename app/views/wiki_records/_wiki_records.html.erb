@@ -1,0 +1,14 @@
+<table>
+  <tbody>
+    <% @wiki_records.each do |wiki_record| %>
+      <tr>
+        <td class="td_folder" item="<%= wiki_record.id %>"><span class="folder icon"> </span></td>
+        <td class="wiki_name"><%= link_to wiki_record.name,edit_wiki_record_path(wiki_record) %></td></tr>
+      <tr class="hidden" id="sub<%= wiki_record.id %>">
+        <td></td>
+        <td class="wiki_descr"><%= wiki_record.description.html_safe %></td></tr>
+      </tr>
+      <tr class="hidden" id="chitem_<%= wiki_record.id %>"></tr>
+    <% end %>
+  </tbody>
+</table>

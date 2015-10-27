@@ -5,6 +5,12 @@
 span.folder {background: url('folder.png'); width: 32px; height: 32px;}
 span.folder.opened {background: url('opened_folder.png');}
 .td_folder {width: 40px;}
+
 .wiki_name {font-size: 20px; padding-top: 3px;}
+.wiki_descr {font-size: 17px; padding-top: 3px;}
 
 #wiki_record_description { height: 10em;}
+
+.hidden {display: none;}
+
+.wiki_name a{text-decoration: none;}

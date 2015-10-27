@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   
-  resources :wiki_records
+  resources :wiki_records do
+    resources :wiki_records
+  end
 
   resources :payment_purposes
 

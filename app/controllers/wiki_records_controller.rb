@@ -4,12 +4,18 @@ class WikiRecordsController < ApplicationController
   # GET /wiki_records
   # GET /wiki_records.json
   def index
-    @wiki_records = WikiRecord.where(:parent_id =>0)
+    @parent_id = params[:wiki_record_id]
+    @parent_id = 0 if @parent_id.nil?
+    @wiki_records = WikiRecord.where(:parent_id =>@parent_id).order(:id)
   end
 
   # GET /wiki_records/1
   # GET /wiki_records/1.json
   def show
+    @parent_id = params[:id]
+    @parent_id = 0 if @parent_id.nil?
+    p "show", @parent_id, params
+    @wiki_records = WikiRecord.where(:parent_id =>@parent_id).order(:id)
   end
 
   # GET /wiki_records/new
