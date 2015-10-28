@@ -38,6 +38,22 @@ $(document).ready ->
       $('.progress-bar span').text progress + '%'
       return
 
+  $('#wiki_file').fileupload
+    formData: ownerid: $('#wiki_file').attr('ownerid'), cls: 'wiki'
+    url: @importUrl
+    pasteZone: null
+    done: (e, data) ->
+      owner_id = $('#wiki_file').attr('ownerid')
+
+      #setTimeout 'update_dev('+dev_id+')',200
+      $('.progress').hide()
+      return
+    progressall: (e, data) ->
+      progress = parseInt(data.loaded / data.total * 100, 10)
+      $('.progress').show()
+      $('.progress-bar').css width: progress + '%'
+      $('.progress-bar span').text progress + '%'
+      return
 
   # удаляем файл
   $('.box_wide').on 'click', 'span.icon_remove_1', ->

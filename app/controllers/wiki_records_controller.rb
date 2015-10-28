@@ -27,6 +27,8 @@ class WikiRecordsController < ApplicationController
   # GET /wiki_records/1/edit
   def edit
     @wiki_folders = WikiRecord.where(:parent_id =>0)
+    @files = @wiki_record.files
+    @owner = @wiki_record
   end
 
   # POST /wiki_records

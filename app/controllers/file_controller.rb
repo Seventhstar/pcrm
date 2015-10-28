@@ -27,6 +27,7 @@ before_action :logged_in_user
 #      folder    = controller_name #dev_file ? 'develops' : 'leads'
       folder    = dev_file ? 'develops' : 'leads'
       subfolder = dev_file ? params[:devid] : params[:leadid]
+      subfolder = params[:ownerid] if subfolder.nil?
 
       #puts params[:file].original_filename
       uploaded_io = params[:file]
