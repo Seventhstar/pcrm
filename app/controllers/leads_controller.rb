@@ -113,7 +113,7 @@ class LeadsController < ApplicationController
     @channels = Channel.all
     @statuses = Status.all
     @comments = @lead.comments.order('created_at asc')
-    @files    = @lead.files
+    @files    = @lead.attachments
     @comm_height = 356
     @history = get_history_with_files(@lead)
     @owner = @lead

@@ -16,7 +16,7 @@
   a.search = (if a.search.substring(0, 1) == '?' then '' else '?') + str.join('&')
   a.href
 
-@update_lead = (lead_id)->
+@update_Lead = (lead_id)->
 #  alert 'leadid'+lead_id
   $.get '/leads/'+lead_id+'/edit', "", null, "script"
 

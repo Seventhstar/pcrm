@@ -118,24 +118,46 @@ module CommonHelper
       end
     end
     # созданные файлы
-    obj.files.each do |file|
-      ch = Hash.new
-      file.versions.reverse.each do |version|
-        at = version.created_at.localtime.strftime("%Y.%m.%d %H:%M:%S") 
-        at_hum = version.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 
-        author = user_name(version.whodunnit)
-        ch.store( index, {'file' =>  file.name} )
-        desc = []
-        desc << ('Добавлен файл <b>'+file.name+'</b>')
-        history.store( at, {'at' => at_hum,'type'=> 'add','author' => author,'changeset' => ch,'description' => desc})
-      end  
-    end
+    #obj.attachments.each do |file|
+    #  ch = Hash.new
+    #  file.versions.reverse.each do |version|
+    #    at = version.created_at.localtime.strftime("%Y.%m.%d %H:%M:%S")+' 0'
+    #    at_hum = version.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 
+    #    author = user_name(version.whodunnit)
+    #    ch.store( index, {'file' =>  file.name} )
+    #    desc = []
+    #    desc << ('Добавлен файл <b>'+file.name+'</b>')
+    #    history.store( at, {'at' => at_hum,'type'=> 'add','author' => author,'changeset' => ch,'description' => desc})
+    #  end  
+    #end
+    
+    created = PaperTrail::Version.where_object_changes(owner_id: obj.id, owner_type: obj.class.name)
+
+    created.each_with_index do |file,index|
+      ch = Hash.new  
+      at = file.created_at.localtime.strftime("%Y.%m.%d %H:%M:%S") 
+      at_hum = file.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 
+      author = user_name(file.whodunnit)
+      #file_id << file['item_id']
+      #p file
+      _obj = YAML.load(file['object_changes'])
+      desc = []
+      desc << 'Cоздан файл файл <b>' +_obj['name'][1] +'</b>'
+
+      ch.store( index, {'file' =>  _obj['name'][1]} )
+      history.store( at+'2', {'at' => at_hum,'type'=> 'add','author' => author,'changeset' => ch,'description' => desc})
+    end  
+
+   # p history
     # удаленные файлы
     file_id = []
-    deleted = PaperTrail::Version.where_object(''+controller_name[0..-2]+'_id' => obj.id)
+    #deleted = PaperTrail::Version.where_object(''+controller_name[0..-2]+'_id' => obj.id)
+    deleted = PaperTrail::Version.where_object(owner_id: obj.id, owner_type: obj.class.name)
 
+  #  p "deleted",deleted
     if deleted.count==0
-        deleted = PaperTrail::Version.where_object(''+controller_name[0..-2]+'_id' => "'"+obj.id.to_s+"'")
+        #deleted = PaperTrail::Version.where_object(''+controller_name[0..-2]+'_id' => "'"+obj.id.to_s+"'")
+        deleted = PaperTrail::Version.where_object(owner_id: "'"+obj.id.to_s+"'", owner_type: obj.class.name)
     end
 
     deleted.each_with_index do |file,index|
@@ -145,14 +167,14 @@ module CommonHelper
       author = user_name(file.whodunnit)
       file_id << file['item_id']
 
-      obj = YAML.load(file['object'])
+      _obj = YAML.load(file['object'])
       desc = []
-      desc << 'Удален файл <b>' +obj['name'] +'</b>'
+      desc << 'Удален файл <b>' +_obj['name'] +'</b>'
 
-      ch.store( index, {'file' =>  obj['name']} )
+      ch.store( index, {'file' =>  _obj['name']} )
       history.store( at+'2', {'at' => at_hum,'type'=> 'del','author' => author,'changeset' => ch,'description' => desc})
     end  
-    
+  #  p history  
     #puts "file_id: "+ file_id.to_s 
     #puts "controller_name: " + controller_name.classify
 

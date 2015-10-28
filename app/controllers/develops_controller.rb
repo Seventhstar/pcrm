@@ -50,7 +50,7 @@ class DevelopsController < ApplicationController
     @priorities   = Priority.order(:name)
     @users        = User.order(:name)
 
-    @files        = @develop.files
+    @files        = @develop.attachments
     @history 	    = get_history_with_files(@develop)
     @owner        = @develop
   end

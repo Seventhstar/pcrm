@@ -9,7 +9,7 @@
   setLoc("develops?"+ajx2q(param));
   return
 
-@update_dev = (dev_id)->
+@update_Develop = (dev_id)->
 #  alert 'leadid'+lead_id
   $.get '/develops/'+dev_id+'/edit', "", null, "script"
 

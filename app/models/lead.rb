@@ -4,7 +4,8 @@ class Lead < ActiveRecord::Base
   belongs_to :user
   belongs_to :ic_user, foreign_key: :ic_user_id, class_name: 'User'
   has_many :comments, :as => :owner
-  has_many :files, class_name: 'LeadsFile'
+#  has_many :files, class_name: 'LeadsFile'
+  has_many :attachments, :as => :owner
   has_paper_trail
   attr_accessor :first_comment
   after_save :send_changeset_email

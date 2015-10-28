@@ -44,19 +44,8 @@
 	</table>
     </div>
     <div class="panel-right">
-    	<p><label for="dev_file"> <a class="btn_c btn_add"><span class="pict"><span class="icon icon_file"></span></span>Добавить файл</a> </label></p>
-    	<div class="file_progress">
-    		<div class="progress">
-    			<div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-    				<span class="sr-only">20% Complete</span>
-    			</div>
-    		</div>
-    	</div>
-
-    	<input id="dev_file" type="file" devid="<%= @develop.id %>" name="file" data-url="/file" multiple="" style="display: none;">
-    	<div class="files_list_a">
-    		<%= render "shared/files" %>
-    	</div>
+    	
+    	<%= render "shared/attach_list" %>
 
     	<div class="sep_3"></div>
     	<div class="historyChange_box">

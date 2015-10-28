@@ -7,6 +7,9 @@
   $.get '/wiki_records/'+p_id+'/wiki_records', "", null, "script"
   return
 
+@update_WikiRecord = (id)->
+  $.get '/wiki_records/'+id+'/edit', "", null, "script"
+  return
 
 jQuery ->
   $('.container').on 'click', 'span.folder',->

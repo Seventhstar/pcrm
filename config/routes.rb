@@ -59,7 +59,7 @@ Rails.application.routes.draw do
 
   resources :leads
 
-  resources :leads_comments
+#  resources :leads_comments
   resources :channels
   resources :statuses
 

@@ -2,16 +2,17 @@ class FileController < ApplicationController
 before_action :logged_in_user
    def del_file
      if params[:file_id]
-        #puts "!!type: " + params[:type]
-        if params[:type] == 'leads'
-           file = LeadsFile.find(params[:file_id])
-           num_to_s = file.lead.id.to_s
-        else
-          file = DevelopsFile.find(params[:file_id])
-          num_to_s = file.develop.id.to_s
-        end
+        #if params[:type] == 'leads'
+        #   file = LeadsFile.find(params[:file_id])
+        #   num_to_s = file.lead.id.to_s
+        #else
+        #  file = DevelopsFile.find(params[:file_id])
+        #  num_to_s = file.develop.id.to_s
+        #end
+        file = Attachment.find(params[:file_id])
+        num_to_s = file.owner_id.to_s
 
-        filename = Rails.root.join('public', 'uploads',params[:type],num_to_s,file.name)
+        filename = Rails.root.join('public', 'uploads',file.owner_type,num_to_s,file.name)
         #puts 'filename: '+filename.to_s
         File.delete(filename) if File.exist?(filename)
         file.destroy
@@ -22,14 +23,8 @@ before_action :logged_in_user
   def create_file
 
     if params[:file] || params[:files]
-
-      dev_file  = params[:leadid].nil? ? true : false
-#      folder    = controller_name #dev_file ? 'develops' : 'leads'
-      folder    = dev_file ? 'develops' : 'leads'
-      subfolder = dev_file ? params[:devid] : params[:leadid]
-      subfolder = params[:ownerid] if subfolder.nil?
-
-      #puts params[:file].original_filename
+      folder = params[:owner_type]
+      subfolder = params[:owner_id]
       uploaded_io = params[:file]
 
       name = check_file_name(uploaded_io.original_filename,subfolder,folder)
@@ -40,12 +35,7 @@ before_action :logged_in_user
          file.write(uploaded_io.read)
       end
 
-      if dev_file 
-        append_dev_file(name,params[:devid])
-      else  
-        append_file(name,params[:leadid])
-      end
-
+        append_file(name)
     end
     render layout: false, content_type: "text/html"
   end
@@ -54,12 +44,12 @@ before_action :logged_in_user
      extn = File.extname filename
      name = File.basename filename, extn
 
-     if type =='leads'
-      f = LeadsFile.where('lead_id = ? and name like ? ' ,id, name+"%" ).order('created_at desc').first
-     else
-      f = DevelopsFile.where('develop_id = ? and name like ? ' ,id, name+"%" ).order('created_at desc').first
-     end
-
+     #if type =='leads'
+     # f = LeadsFile.where('lead_id = ? and name like ? ' ,id, name+"%" ).order('created_at desc').first
+     #else
+     # f = DevelopsFile.where('develop_id = ? and name like ? ' ,id, name+"%" ).order('created_at desc').first
+     #end
+     f = Attachment.where('owner_id = ? and owner_type = ? and name like ? ' ,id,type, name+"%" ).order('created_at desc').first
      
      if f
         #puts f.name
@@ -79,24 +69,16 @@ before_action :logged_in_user
      
   end
 
-  def append_file(filename,lead_id)
-     f = LeadsFile.new
-     f.lead_id = lead_id
-     f.user_id = current_user.id
-     f.name = filename
-     f.save
+  def append_file(filename) #,lead_id
+    f = Attachment.new
+    f.owner_id = params[:owner_id]
+    f.owner_type = params[:owner_type]
+    f.user_id = current_user.id
+    f.name = filename
+    f.save
   end
-
-  def append_dev_file(filename,dev_id)
-     f = DevelopsFile.new
-     f.develop_id = dev_id
-     f.name = filename
-     f.save
-  end
-
 
   def download
-    #puts params[:filename]
     dir = Rails.root.join('public', 'uploads',params[:type],params[:id],params[:basename]+"."+params[:extension])
     send_file dir, :disposition => 'attachment'
     flash[:notice] = "Файл успешно загружен"
