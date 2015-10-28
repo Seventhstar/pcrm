@@ -24,7 +24,9 @@
 				<%= f.button :submit, value: 'Сохранить', :class => 'sub btn_a' %></td></tr>
 		</table>
 		</div>
+	<% if !@owner.nil? %>	
 		<div class="panel-right">
           <%= render "shared/attach_list" %>
         </div>
+         <% end %>
 <% end %>
