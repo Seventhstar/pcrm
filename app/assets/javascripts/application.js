@@ -19,7 +19,6 @@
 //= require bootstrap-tokenfield
 //= require chosen.jquery
 //= require jquery.fileupload
-//= require tree
 //= require nprogress
 //= require_tree .
 

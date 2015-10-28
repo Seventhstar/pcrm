@@ -6,21 +6,19 @@ gem 'rails', '4.2.0'
 
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3'
-# gem 'pg'
+  gem 'pg'
 
 group :development, :test do
 #  gem 'sqlite3',     '1.3.10'
   gem 'coffee-script-source', '1.8.0'
   gem 'rspec-rails', '~> 3.0'
   gem "capybara"
-  gem 'pg'
 end
           
 group :production do
 
 # Use Unicorn as the app server
 #  gem 'unicorn'
-  gem 'pg'
   gem 'rails_12factor', '0.0.2'
 end
 
