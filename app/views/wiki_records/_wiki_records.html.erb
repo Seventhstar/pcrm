@@ -1,12 +1,24 @@
-<table>
+<table class="fullwidth">
   <tbody>
     <% @wiki_records.each do |wiki_record| %>
+    <% @files = wiki_record.attachments %>
+  
       <tr>
         <td class="td_folder" item="<%= wiki_record.id %>"><span class="folder icon"> </span></td>
         <td class="wiki_name"><%= link_to wiki_record.name,edit_wiki_record_path(wiki_record) %></td></tr>
       <tr class="hidden" id="sub<%= wiki_record.id %>">
         <td></td>
         <td class="wiki_descr"><%= RedCloth.new(wiki_record.description).to_html.html_safe %></td></tr>
+      <tr class="hidden" id="files<%= wiki_record.id %>">
+        <td></td>
+        <td>
+        <ul class="files_ul">
+        <% wiki_record.attachments.each do |file| %>
+        <li><a href="/download/WikiRecord/<%= wiki_record.id %>/<%= file.name %>" target="_blank"><%= file.name %></a></li>
+        <% end -%>
+        </ul>
+        </td>
+      </tr>
       </tr>
       <tr class="hidden" id="chitem_<%= wiki_record.id %>"></tr>
     <% end %>

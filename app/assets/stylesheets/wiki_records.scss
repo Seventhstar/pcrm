@@ -9,6 +9,9 @@ span.folder.opened {background: url('opened_folder.png');}
 .wiki_name {font-size: 20px; padding-top: 3px;}
 .wiki_descr {font-size: 17px; padding-top: 3px;}
 
+.files_ul {list-style-image: url('file.png'); margin: 0; padding-left: 18px; }
+.files_ul li {margin: 0;}
+
 #wiki_record_description { height: 10em;}
 
 .hidden {display: none;}

@@ -16,6 +16,7 @@ jQuery ->
     $(this).toggleClass 'opened'
     itm_id = $(this).parents('td').attr('item')    
     $('#sub'+itm_id).toggleClass('hidden')
+    $('#files'+itm_id).toggleClass('hidden')
     if ($('#chitem_'+itm_id).html() =='') 
     	get_child_wiki(itm_id)
     $('#chitem_'+itm_id).toggleClass('hidden')
