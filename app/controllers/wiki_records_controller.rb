@@ -6,16 +6,16 @@ class WikiRecordsController < ApplicationController
   def index
     @parent_id = params[:wiki_record_id]
     @parent_id = 0 if @parent_id.nil?
-    @wiki_records = WikiRecord.where(:parent_id =>@parent_id).order(:id)
+    if current_user.admin? 
+      @wiki_records = WikiRecord.where(:parent_id =>@parent_id).order(:id)
+    else
+      @wiki_records = WikiRecord.where(parent_id: @parent_id, admin: false).order(:id)
+    end
   end
 
   # GET /wiki_records/1
   # GET /wiki_records/1.json
   def show
-    @parent_id = params[:id]
-    @parent_id = 0 if @parent_id.nil?
-    p "show", @parent_id, params
-    @wiki_records = WikiRecord.where(:parent_id =>@parent_id).order(:id)
   end
 
   # GET /wiki_records/new
@@ -38,7 +38,7 @@ class WikiRecordsController < ApplicationController
 
     respond_to do |format|
       if @wiki_record.save
-        format.html { redirect_to wiki_records_url, notice: 'Wiki record was successfully created.' }
+        format.html { redirect_to wiki_records_url, notice: 'Знание успешно создано.' }
         format.json { render :show, status: :created, location: @wiki_record }
       else
         format.html { render :new }
@@ -52,7 +52,7 @@ class WikiRecordsController < ApplicationController
   def update
     respond_to do |format|
       if @wiki_record.update(wiki_record_params)
-        format.html { redirect_to wiki_records_url, notice: 'Wiki record was successfully updated.' }
+        format.html { redirect_to wiki_records_url, notice: 'Знание успешно обновлено.' }
         format.json { render :show, status: :ok, location: @wiki_record }
       else
         format.html { render :edit }
@@ -66,7 +66,7 @@ class WikiRecordsController < ApplicationController
   def destroy
     @wiki_record.destroy
     respond_to do |format|
-      format.html { redirect_to wiki_records_url, notice: 'Wiki record was successfully destroyed.' }
+      format.html { redirect_to wiki_records_url, notice: 'Знание успешно удалено.' }
       format.json { head :no_content }
     end
   end
@@ -79,6 +79,6 @@ class WikiRecordsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def wiki_record_params
-      params.require(:wiki_record).permit(:name, :description, :parent_id)
+      params.require(:wiki_record).permit(:name, :description, :parent_id, :admin)
     end
 end

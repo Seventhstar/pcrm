@@ -2,18 +2,9 @@ class FileController < ApplicationController
 before_action :logged_in_user
    def del_file
      if params[:file_id]
-        #if params[:type] == 'leads'
-        #   file = LeadsFile.find(params[:file_id])
-        #   num_to_s = file.lead.id.to_s
-        #else
-        #  file = DevelopsFile.find(params[:file_id])
-        #  num_to_s = file.develop.id.to_s
-        #end
         file = Attachment.find(params[:file_id])
         num_to_s = file.owner_id.to_s
-
         filename = Rails.root.join('public', 'uploads',file.owner_type,num_to_s,file.name)
-        #puts 'filename: '+filename.to_s
         File.delete(filename) if File.exist?(filename)
         file.destroy
      end
@@ -44,15 +35,8 @@ before_action :logged_in_user
      extn = File.extname filename
      name = File.basename filename, extn
 
-     #if type =='leads'
-     # f = LeadsFile.where('lead_id = ? and name like ? ' ,id, name+"%" ).order('created_at desc').first
-     #else
-     # f = DevelopsFile.where('develop_id = ? and name like ? ' ,id, name+"%" ).order('created_at desc').first
-     #end
-     f = Attachment.where('owner_id = ? and owner_type = ? and name like ? ' ,id,type, name+"%" ).order('created_at desc').first
-     
+     f = Attachment.where('owner_id = ? and owner_type = ? and name like ? ' ,id,type, name+"%" ).order('created_at desc').first 
      if f
-        #puts f.name
         extn = File.extname f.name
         name = File.basename f.name, extn
         if name.split('(').count>1 
