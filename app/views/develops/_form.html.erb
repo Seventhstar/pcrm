@@ -44,8 +44,9 @@
 	</table>
     </div>
     <div class="panel-right">
-    	
-    	<%= render "shared/attach_list" %>
+    	<% if !@owner.nil? %>	
+    		<%= render "shared/attach_list" %>
+    	<% end -%>
 
     	<div class="sep_3"></div>
     	<div class="historyChange_box">

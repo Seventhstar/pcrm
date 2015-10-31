@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :wiki_records do
     resources :wiki_records
   end
+  resources :wiki_files
 
   resources :payment_purposes
 

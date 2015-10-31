@@ -73,7 +73,11 @@ SimpleNavigation::Configuration.run do |navigation|
       sub_nav.item :payments, 'Расходы', clients_path  
     end
     
-    primary.item :wiki_records, 'База знаний', wiki_records_path
+    primary.item :wiki_records, 'База знаний', wiki_records_path do |sub_nav|
+      sub_nav.item :receipts, 'Знания', wiki_records_path
+      sub_nav.item :payments, 'Файлы', wiki_files_path  
+    end
+
 
     primary.item :options,  image_tag('dummy.png'), '/options/'+opt_page, html: {class: 'li-right options'}, if: -> { current_user.admin? } #do |sub_nav|
     primary.item :develops, image_tag('dummy.png'), develops_path, html: {class: 'li-right develops'} , if: -> { current_user.admin? }

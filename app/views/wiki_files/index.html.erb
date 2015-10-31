@@ -1,0 +1,7 @@
+<%= render 'wiki_records/wiki_menu' %>
+
+<ul class="files_ul">
+	<% @wiki_files.each do |file| %>
+	<li><a href="/download/WikiRecord/<%= file.owner_id %>/<%= file.name %>" target="_blank"><%= file.name %></a></li>
+	<% end -%>
+</ul>
