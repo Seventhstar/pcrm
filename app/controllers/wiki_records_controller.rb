@@ -7,7 +7,7 @@ class WikiRecordsController < ApplicationController
     @parent_id = params[:wiki_record_id]
     @parent_id = 0 if @parent_id.nil?
     if current_user.admin? 
-      @wiki_records = WikiRecord.where(:parent_id =>@parent_id).order(:id)
+      @wiki_records = WikiRecord.where(:parent_id => @parent_id ).order(:id)
     else
       @wiki_records = WikiRecord.where(parent_id: @parent_id, admin: false).order(:id)
     end
@@ -26,6 +26,9 @@ class WikiRecordsController < ApplicationController
 
   # GET /wiki_records/1/edit
   def edit
+    if !current_user.admin? 
+      redirect_to wiki_records_url
+    end
     @wiki_folders = WikiRecord.where(:parent_id =>0)
     @files = @wiki_record.attachments
     @owner = @wiki_record

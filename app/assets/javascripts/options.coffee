@@ -43,9 +43,8 @@ $(document).ready ->
    $('.menu_sb li.active').removeClass 'active', 1000
    $(this).parent().addClass 'active' , {duration:500}
    url = '/' + $(this).attr('controller')
-   #alert url
-   $.get url, null, null, 'script'
    if url != '/undefined'
+     $.get url, null, null, 'script'
      setLoc 'options' + url
 
 # запись нового элемента простого справочника

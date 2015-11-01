@@ -1,12 +1,5 @@
 module UsersHelper
 
-  def gravatar_for(user, options = { size: 80 })
-    gravatar_id = Digest::MD5::hexdigest(user.email.downcase)
-    size = options[:size]
-    gravatar_url = "https://secure.gravatar.com/avatar/#{gravatar_id}?s=#{size}"
-    image_tag(gravatar_url, alt: user.name, class: "gravatar")
-  end
-
   def user_option(id)
     f = @user.options.find_by_option_id(id) #where(:option_id => id)
     f.nil? ? false : f.value
@@ -23,15 +16,7 @@ module UsersHelper
         today.change(year: user.date_birth.year)
         diff = (Date.parse(user.date_birth.to_s)- today).to_i 
         diff=diff-1
-        #diff = diff/ (24 * 3600)
-        
-        #puts "diff"
-        #puts diff
-        #puts today
-        #puts user.date_birth
-        #puts Date.parse(user.date_birth.to_s)
-        #s
-
+       
         case diff
         when -1
           txt = "сегодня!!!"

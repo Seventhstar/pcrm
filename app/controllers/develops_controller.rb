@@ -1,7 +1,6 @@
 class DevelopsController < ApplicationController
   respond_to :html, :json
   before_action :set_develop, only: [:show, :edit, :update, :destroy]
-  helper_method :show_dev
   before_action :logged_in_user
   include DevelopsHelper
   include CommonHelper
@@ -16,8 +15,10 @@ class DevelopsController < ApplicationController
       @develops = Develop.search(search).order('project_id desc').paginate(:page => page, :per_page => 15)
     end
     
-    show_dev ||=''
-    case show_dev
+    show = params[:show]
+    show_dev = %w[check new all].include?(show) ? show : "check" 
+    #show_dev = ''
+    case  show_dev
     when "check"
       @develops = @develops.where(:dev_status_id => 2)      
     when "new"
@@ -109,11 +110,5 @@ class DevelopsController < ApplicationController
     def develop_params
       params.require(:develop).permit(:name, :coder, :boss, :project_id, :description, :ic_user_id, :priority_id, :dev_status_id)
     end
-
-    def show_dev
-      %w[check new all].include?(params[:show]) ? params[:show] : "check"
-    end
-
-
 
 end 

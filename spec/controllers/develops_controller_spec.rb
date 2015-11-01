@@ -48,7 +48,7 @@ RSpec.describe DevelopsController, type: :controller do
     it "assigns all Develops as @Develops" do
       log_in user1
       develop = Develop.create! valid_attributes
-      get :index
+      get :index,{ show: 'all'}
       p [develop]
       p "assigns(:develops)", assigns(:develops)
       expect(assigns(:develops).to_a).to eq([develop])

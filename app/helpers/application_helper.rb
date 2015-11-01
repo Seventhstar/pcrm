@@ -1,10 +1,3 @@
-#module UserOptionsEnum1
-#   LEAD_CRAEATED = 1
-#   :lead_updated
-#   :lead_new_owner =3
-#
-#end
-
 module ApplicationHelper
 
 
@@ -35,17 +28,17 @@ module ApplicationHelper
   end
 
   def calls_color
-      if params[:controller] && params[:controller]=="leads" && params[:action] 
-         if params[:action]=="new"
-            "red"
-	 elsif params[:action]=="edit"
-	    "orange"
-         else
-	    "call"
-         end
+    if params[:controller] && params[:controller]=="leads" && params[:action] 
+      if params[:action]=="new"
+         "red"
+	    elsif params[:action]=="edit"
+	       "orange"
       else
-         "call"
+	       "call"
       end
+    else
+      "call"
+    end
   end
 
   def activeClassIfModel( model )
@@ -57,9 +50,6 @@ module ApplicationHelper
 
   def sortable_pil(column, title = nil, default_dir = 'desc')
     
-    p "sort_column: " + @sort_column
-    p "column:" + column
-
     title ||= column.titleize
     sort_col = @sort_column == 'month' ?  "start_date": @sort_column
     css_class = column == sort_col ? "active #{sort_direction}" : ""
@@ -94,7 +84,6 @@ module ApplicationHelper
   
   def sortable(column, title = nil)
 
-    #flash[:success] = column.to_s() +' '+ sort_column.to_s()
     title ||= column.titleize
     css_class = column.to_s() == sort_2 ? "current #{dir_2}" : nil
 
@@ -111,25 +100,6 @@ module ApplicationHelper
     link_to params.merge(:sort2 => column, :dir2 => direction, :page => nil), {:class => css_class} do
        b + a
     end
-    #link_to title, params.merge(:sort => column, :direction => direction, :page => nil), {:class => css_class} 
-  end
-
-
-  def switchable(show, title)
-      css_class = show == show_dev ? "focus" : nil
-      #input title, {:class => "btn btn-default #{css_class}", :type => "button", :id => show}
-      button_tag title, {:class => "btn btn-default #{css_class}", :type => "button", :id => show}
-      #<button type="button" class="btn btn-default #{css_class}">title</button>
-      #link_to title, params.merge(:show => show), {:class => "btn btn-default", :role => "group", :autofocus => css_class}
-  end
-
-  def switch_active(show)
-
-    active = show == show_dev ? "active" : nil
-    #puts "show: " + show
-    #puts "show_dev: " + show_dev
-    
-    css_class = "btn #{active}" 
   end
 
   def set_only_actual(actual,title = nil)  
@@ -137,10 +107,7 @@ module ApplicationHelper
 		css_class.concat(" only_actual li-right")
 		p_active = only_actual == "false"
     p_title  = only_actual == "false" ? "Все" : "Актуальные"
-		#link_to p_title, params.merge(:only_actual => p_active) , {:class => css_class}
-    #content_tag :span, p_title, {:class => css_class, :pamams => params.merge(:only_actual => p_active)}
     content_tag :span, p_title, {:class => css_class}
-    #<span class="btn btn-warning btn-sm only_actual" id="btn-send"> </span>
   end
 
   def class_for_lead( lead )
@@ -151,14 +118,8 @@ module ApplicationHelper
       "nonactual"
     elsif (st_date <= Date.today+1 )
       "hotlead"
-      #(lead.status_date > Now().)
     end
     
-  end
-
-  def avatar_url(user, size)
-    	gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
-    		"http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}"
   end
 
   def option_link( page,title )

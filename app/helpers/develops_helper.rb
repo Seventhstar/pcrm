@@ -1,5 +1,15 @@
 module DevelopsHelper
 
+  def show_dev
+    show = params[:show]
+    %w[check new all].include?(show) ? show : "check" 
+  end
+
+  def switch_active(show)
+    active = show == show_dev ? "active" : nil
+    css_class = "btn #{active}" 
+  end
+
  def project_name(dev_id)
     if dev_id.present?
        dev = Develop.find(dev_id)

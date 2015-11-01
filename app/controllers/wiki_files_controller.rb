@@ -6,7 +6,7 @@ class WikiFilesController < ApplicationController
 			else
 				not_adm_ids = WikiRecord.where(admin: false).ids
       	@wiki_files = Attachment.where(owner_type: 'WikiRecord').
-      							where(owner_id: root_adm_ids ).order(:name)
+      							where(owner_id: not_adm_ids ).order(:name)
     	end
   end
 

@@ -21,25 +21,17 @@ class LeadsController < ApplicationController
 
     @sort_column = sort_column
     if @sort_column == "status_date"
-      #query_str = Rails.env.production? ? "leads.*, date_trunc('month', status_date) AS month" : "leads.*, datetime(status_date, 'start of month') AS month "
       query_str = "leads.*, date_trunc('month', status_date) AS month"
       sort_1 = @sort_column == 'status_date' ? 'month' : @sort_column
     else
-      #query_str = Rails.env.production? ? "leads.*, date_trunc('month', start_date) AS month" : "leads.*, datetime(start_date, 'start of month') AS month "
       query_str = "leads.*, date_trunc('month', start_date) AS month"
       sort_1 = @sort_column == 'start_date' ? 'month' : @sort_column
     end
-
-#    query_str = Rails.env.production? ? "*, date_trunc('month', start_date) AS month" : "*, datetime(start_date, 'start of month') AS month "
-    
- #   sort_1 = sort_column == 'start_date' ? 'month' : sort_column
 
     if @sort_column == "status_date" && !current_user.admin?
       @leads = current_user.ic_leads.select(query_str)
     else
       @leads = Lead.select(query_str)
-      #@leads = Lead.find(:select => query_str'leads.*',:conditions => query_str)
-      
     end
     
     if !params[:search].nil?
@@ -52,7 +44,6 @@ class LeadsController < ApplicationController
       @leads = @leads.where(:status => @s_status_ids)
     end
 
-    #if params[:sort] == 'users.name'
     if params[:sort] == 'ic_users.name'
       sort_1 = "users.name"
       @leads = @leads.joins(:ic_user)
@@ -60,12 +51,8 @@ class LeadsController < ApplicationController
       sort_1 = "users.name"
       @leads = @leads.joins(:user)      
     end
-
     
     order = sort_1 + " " + sort_direction + ", "+ sort_2  + " " + dir_2 + ", leads.created_at desc"
-
-    puts sort_1 + ": sort_1 " + sort_direction + " :sort_direction, "+ sort_2  + " " + dir_2 
-
     @leads = @leads.order(order)
 
     store_leads_path
@@ -94,7 +81,7 @@ class LeadsController < ApplicationController
     @channels = Channel.all
     @statuses = Status.all
     @comments = @lead.comments.order('created_at asc')
-    @files = @lead.files
+    @files = @lead.attachments
 
     @history = get_history_with_files(@lead)
     @comm_height = 444
@@ -180,14 +167,12 @@ class LeadsController < ApplicationController
     end
 
   def sort_column
-    #default_column = current_user.admin? ? "status_date" : "month"
     default_column = "status_date"
     (Lead.column_names.include?(params[:sort]) || params[:sort] == 'ic_users.name' || params[:sort] == 'users.name' ) ? params[:sort] : default_column
   end
 
   def sort_2
     Lead.column_names.include?(params[:sort2]) ? params[:sort2] : "status_date"
-    #Lead.column_names.include?(params[:sort2]) ? params[:sort2] : "start_date"
   end
 
   def dir_2
@@ -198,8 +183,6 @@ class LeadsController < ApplicationController
 
   def sort_direction
     defaul_dir = sort_column =='status_date' ? "asc": "desc"
-    #puts %w[asc desc].include?(params[:direction]) ? params[:direction] : defaul_dir
-    #s
     %w[asc desc].include?(params[:direction]) ? params[:direction] : defaul_dir
   end
 

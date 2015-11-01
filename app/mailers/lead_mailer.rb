@@ -19,25 +19,12 @@ class LeadMailer < ActionMailer::Base
 
   def send_lead_mail( subj, to = nil, user_exclude = nil, only_admins = false, id = nil )
     
-    if Rails.env.production?
-      #admins = User.where('admin = true and id <> 1').to_a
-      admins = User.where('admin = true' ).ids
-    else
-      #admins = User.where("admin = 't' and id <> 10").to_a
-      admins = User.where(:admin => true).ids
-    end
+    admins = User.where('admin = true').ids
       
-    #p admins.collect(&:name).join(","), @lead.user.name,@lead.ic_user.name
-    p "admins: "+ admins.to_s
-    p "id: "+id.to_s
     if !id.nil?
       opt_users = User.joins(:options).where('option_id = ?',id).ids
-      p "opt_users: " + opt_users.to_s
       admins = admins & opt_users
-      p "admins: " + admins.to_s
-
     end
-
 
     if !only_admins 
       admins = @lead.user.nil? ? admins : admins | [@lead.user.id]
@@ -72,9 +59,7 @@ class LeadMailer < ActionMailer::Base
 
   def changeset_email(lead_id)
     @lead = Lead.find(lead_id)
-    #puts "lead_id: "+ lead_id.to_s
     @history = get_last_history_item(@lead) 
-    puts "history:"+ @history.to_s
     @version = @lead.versions.last
     send_lead_mail("[CRM] Изменение информации о лиде",nil,nil,false,2)
   end

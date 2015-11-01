@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   validates :password, length: { minimum: 6 }, allow_blank: true
 
   def self.find_version_author(version)
-    find(version.terminator)   
+    find(version.terminator) if version.terminator  
   end
 
   # Returns the hash digest of the given string.
