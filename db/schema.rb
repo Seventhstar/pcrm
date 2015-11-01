@@ -328,16 +328,6 @@ ActiveRecord::Schema.define(version: 20151029181401) do
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
 
-  create_table "wiki_files", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "wiki_record_id"
-    t.string   "name"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-  end
-
-  add_index "wiki_files", ["wiki_record_id"], name: "index_wiki_files_on_wiki_record_id", using: :btree
-
   create_table "wiki_records", force: :cascade do |t|
     t.string   "name"
     t.text     "description"

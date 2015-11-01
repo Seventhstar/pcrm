@@ -5,6 +5,7 @@ class Develop < ActiveRecord::Base
   belongs_to :ic_user, foreign_key: :ic_user_id, class_name: 'User'
   has_many :files, foreign_key: :develop_id, class_name: 'DevelopsFile'
   has_many :attachments, :as => :owner
+  validates :name, :length => { :minimum => 3 }
   has_paper_trail
   after_save :send_changeset_email
 

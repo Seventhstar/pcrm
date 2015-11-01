@@ -8,12 +8,16 @@ class DevelopsController < ApplicationController
   # GET /develops
   # GET /develops.json
   def index
-    @develops = Develop.search(params[:search]).order('project_id desc').paginate(:page => params[:page], :per_page => 15)
-    view = show_dev
-    #puts "show_dev: " + show_dev
+    page = params[:page].nil? ? 1 : params[:page]
+    search = params[:search]
+    if search.nil?
+      @develops = Develop.order('project_id desc').paginate(:page => page, :per_page => 15)
+    else
+      @develops = Develop.search(search).order('project_id desc').paginate(:page => page, :per_page => 15)
+    end
     
-
-    case view
+    show_dev ||=''
+    case show_dev
     when "check"
       @develops = @develops.where(:dev_status_id => 2)      
     when "new"
