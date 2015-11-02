@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20151029181401) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "attachments", ["owner_id"], name: "index_attachments_on_owner_id", using: :btree
+  add_index "attachments", ["owner_id"], name: "index_files_on_owner_id", using: :btree
 
   create_table "budgets", force: :cascade do |t|
     t.string   "name"
