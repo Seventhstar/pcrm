@@ -1,4 +1,11 @@
 ru:
+  activerecord:
+    models:
+      place: "Place"
+    successful:
+      messages:
+        created: "%{model} was successfully created."
+        updated: "%{model} was successfully updated."
   will_paginate:
     next_label: "вперед"
     previous_label: "назад"

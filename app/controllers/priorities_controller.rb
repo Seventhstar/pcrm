@@ -32,7 +32,7 @@ class PrioritiesController < ApplicationController
 
     respond_to do |format|
       if @priority.save
-        format.html { redirect_to '/options/priorities', notice: 'Priority was successfully created.' }
+        format.html { redirect_to '/options/priorities', :notice => t('activerecord.successful.messages.created', :model => @priority.class.model_name.human) }
         format.json { render :index, status: :created, location: @priority }
       else
         format.html { render :new }
@@ -46,7 +46,7 @@ class PrioritiesController < ApplicationController
   def update
     respond_to do |format|
       if @priority.update(priority_params)
-        format.html { redirect_to '/options/priorities', notice: 'Priority was successfully updated.' }
+        format.html { redirect_to '/options/priorities', notice: 'Приоритет успешно обновлен.' }
         format.json { render :show, status: :ok, location: @priority }
       else
         format.html { render :edit }
@@ -58,6 +58,7 @@ class PrioritiesController < ApplicationController
   # DELETE /priorities/1
   # DELETE /priorities/1.json
   def destroy
+    p 'we in destroy'
     @priority.destroy
     respond_to do |format|
       format.html { redirect_to '/options/priorities', notice: 'Priority was successfully destroyed.' }

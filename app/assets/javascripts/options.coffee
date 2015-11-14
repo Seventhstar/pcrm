@@ -1,7 +1,3 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
-
 $(document).ready ->
 
  $('.container').on 'click', 'span.check_img', ->
@@ -96,4 +92,3 @@ $(document).on 'click', '.option_list span.icon_remove', ->
         $.get url, null, null, 'script'
         return
     return
-

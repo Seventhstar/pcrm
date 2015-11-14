@@ -126,7 +126,7 @@ before_action :logged_in_user
    	 	end
 
    	 end
-   	 render :nothing => true
+   	 render :nothing => true 
    	end
 
 end
