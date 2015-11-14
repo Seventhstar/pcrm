@@ -84,30 +84,30 @@ class Lead < ActiveRecord::Base
     
     case type
     when 'statuses'
-        total = Lead.where('created_at between ? and ?',start_date,end_date).count
+        total = Lead.where('start_date between ? and ?',start_date,end_date).count
         data = Lead.group(:status_id)
                    .select(:status_id, "count(id) as count", '(Count(id)* 100 / '+total.to_s+') as percent' ) 
-                   .where('created_at between ? and ?',start_date,end_date)
+                   .where('start_date between ? and ?',start_date,end_date)
                    .order(:status_id)
                    .collect{ |lead| {label: lead.status_name, value: lead.count, present: lead.percent}} 
         headers = ['Статус','Количество','%']
       el = 'Donut'
     when 'created_at'
 
-      data = period.each.collect{ |p|  {month:I18n.t(p.try('strftime',"%B")),  'Количество' => Lead.where("date_trunc('month', created_at) = ?",p).count } }
+      data = period.each.collect{ |p|  {month:I18n.t(p.try('strftime',"%B")),  'Количество' => Lead.where("date_trunc('month', start_date) = ?",p).count } }
       headers = ['Количество'] 
       el= 'Bar'
     when 'footage'
       st = Status.find(10)
       data = period.each.collect{ |p|  {month:I18n.t(p.try('strftime',"%B")),                                              
-                                            'Всего' => Lead.where("date_trunc('month', created_at) = ?",p).sum(:footage),
-                                            'Заключили договор' => st.leads.where("date_trunc('month', created_at) = ?",p).sum(:footage) } }
+                                            'Всего' => Lead.where("date_trunc('month', start_date) = ?",p).sum(:footage),
+                                            'Заключили договор' => st.leads.where("date_trunc('month', start_date) = ?",p).sum(:footage) } }
                          
        headers = ['Всего','Заключили договор']          
       el= 'Area'
     when 'users_created_at'
       usr = User.where('id NOT IN (?)',[1,3]).order(:name)
-      data = period.each.collect{ |p|  usr.collect{ |u| {month:I18n.t(p.try('strftime',"%B")),  u.name =>  u.leads.where("date_trunc('month', created_at) = ?",p).count } }.reduce(:merge) }
+      data = period.each.collect{ |p|  usr.collect{ |u| {month:I18n.t(p.try('strftime',"%B")),  u.name =>  u.leads.where("date_trunc('month', start_date) = ?",p).count } }.reduce(:merge) }
       headers = usr.map {|u| u.name }  
       el= 'Bar'
     end

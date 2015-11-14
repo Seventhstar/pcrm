@@ -5,7 +5,7 @@ class StatisticsController < ApplicationController
 
     @page_type = params[:page_type].nil? ? "created_at": params[:page_type]
 
-    @start_date = params[:start_date].nil? ? DateTime.now.at_beginning_of_month - 3.months : Date.parse(params[:start_date])
+    @start_date = params[:start_date].nil? ? DateTime.now.at_beginning_of_year : Date.parse(params[:start_date])
     @end_date = params[:end_date].nil? ? DateTime.now.at_beginning_of_month : Date.parse(params[:end_date])
 
     @leads_count = Lead.leads_users_count(@page_type,@start_date,@end_date)
