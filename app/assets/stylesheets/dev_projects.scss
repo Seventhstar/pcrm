@@ -4,3 +4,11 @@
 
 #develop_description{ height: 200px; }
 .tbl_option { border-spacing: 10px 0; border-collapse: separate;}
+
+.dev_priority2 { color: #a94442; background-color: #ffefef;}
+table.tleads .dev_priority2:nth-child(even) td {color: #a94442; background-color: #fae5e5;}
+table.tleads tr.dev_priority2:hover, table.tleads tr.dev_priority2:hover td{ color: #a94442; background-color: #f9e1e1;}
+
+table.tleads tr.dev_priority4 {color: #0089d8;  background-color: #dcf2ff;}
+table.tleads .dev_priority4:nth-child(even) td {color: #0089d8;  background-color: #f2fafe;}
+table.tleads tr.dev_priority4:hover, table.tleads tr.dev_priority4:hover td{ color: #0089d8;  background-color: #cbe8ff;}

@@ -66,6 +66,7 @@ $(document).on 'click', '#btn-send', (e) ->
         return
       success: ->
         $.get url, null, null, 'script'
+        show_ajax_message 'Успешно добавлено'
         return
       error: (evt, xhr, status, error) ->
         #alert(status)
@@ -90,5 +91,6 @@ $(document).on 'click', '.option_list span.icon_remove', ->
       type: 'POST'
       complete: ->
         $.get url, null, null, 'script'
+        show_ajax_message('Успешно удалено')
         return
     return
