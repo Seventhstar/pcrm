@@ -1,4 +1,4 @@
-Пользователь "<%= find_version_author_name(@version) %>" изменил лид <%= link_to '#'+@lead.id.to_s, @lead %>
+Пользователь "<%= find_version_author_name(@version) %>" изменил лид <%= link_to '#'+@lead.id.to_s, [:edit, @lead] %>
 
 Изменения в лиде <%= @lead.info  %>:
 

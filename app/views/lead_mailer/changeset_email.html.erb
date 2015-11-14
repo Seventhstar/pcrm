@@ -1,5 +1,5 @@
 <h3><%= @lead.updated_at.try('strftime',"%d.%m.%Y") %></h3>
-<h3><%= find_version_author_name(@version) %> внес(ла) изменения в лид <%= link_to '#'+@lead.id.to_s, @lead %></h3>
+<h3><%= find_version_author_name(@version) %> внес(ла) изменения в лид <%= link_to '#'+@lead.id.to_s, [:edit, @lead] %></h3>
 
  
    <ul>
