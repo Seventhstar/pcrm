@@ -10,9 +10,9 @@ class DevelopsController < ApplicationController
     page = params[:page].nil? ? 1 : params[:page]
     search = params[:search]
     if search.nil?
-      @develops = Develop.order('project_id desc').paginate(:page => page, :per_page => 15)
+      @develops = Develop.order('project_id desc') #.paginate(:page => page, :per_page => 20)
     else
-      @develops = Develop.search(search).order('project_id desc').paginate(:page => page, :per_page => 15)
+      @develops = Develop.search(search).order('project_id desc') #.paginate(:page => page, :per_page => 20)
     end
     
     show = params[:show]
