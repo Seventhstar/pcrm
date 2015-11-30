@@ -4,7 +4,7 @@
     <% @files = wiki_record.attachments %>
   
       <tr>
-        <td class="td_folder" item="<%= wiki_record.id %>"><span class="folder icon"> </span></td>
+        <td class="td_folder" item="<%= wiki_record.id %>"><span class="folder icon <%= wiki_record.admin ? 'admin' : '' %>"> </span></td>
         <td class="wiki_name" item="<%= wiki_record.id %>"><span><%= wiki_record.name %></span></tr></tr>
       <tr class="hidden" id="sub<%= wiki_record.id %>">
         <td></td>

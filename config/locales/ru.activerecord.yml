@@ -1,8 +1,8 @@
 ru:
-	activerecord:
-  	models:
-    	place: "Place"
-  	successful:
-    	messages:
-	      created: "%{model} was successfully created."
-  	    updated: "%{model} was successfully updated."
+  activerecord:
+    models:
+      place: "Place"
+    successful:
+      messages:
+        created: "%{model} was successfully created."
+        updated: "%{model} was successfully updated."
