@@ -75,7 +75,7 @@ $(document).ready ->
  
    $('body').on 'keyup', '.editable input', (e) ->
       if e.keyCode == 13
-        apply_opt_change($('.span.icon_apply'))
+        apply_opt_change($('span.icon_apply'))
       return
    $('body').on 'keyup keypress', '.simple_options_form',(e) ->
     code = e.keyCode or e.which
