@@ -73,6 +73,51 @@ $(function() {
 
   startTime();
 
+ $('.switcher_a').each(function(){
+        var switcher = $(this);
+        var link = $(this).find('.link_a');
+        var scale = $(this).find('.scale');
+        var handle = $(this).find('.handle');
+        var details = switcher.parent().find('.details');
+
+        $(link).click(function(event){
+            switcher.toggleClass('toggled');
+            link.toggleClass('on');
+            var attr = link.hasClass('on') ? 'on' : 'off'
+            link[0].innerHTML = link.attr(attr);
+            handle.toggleClass('active');
+
+            if(switcher.hasClass('toggled')){
+                details.slideDown(300);
+                
+            } else {
+                details.slideUp(300);
+           
+            }
+            lead_query({only_actual:link.hasClass('on')});
+            return false;
+        });
+
+        $(scale).click(function(event){
+            switcher.toggleClass('toggled');
+            link.toggleClass('on');
+            link[0].innerHTML = link.attr(link.hasClass('on') ? 'on' : 'off');
+            handle.toggleClass('active');
+
+            if(switcher.hasClass('toggled')){
+                details.slideDown(300);
+            } else {
+                details.slideUp(300);
+            }
+            lead_query({only_actual:link.hasClass('on')});
+            return false;
+        });
+       
+        
+
+    });
+
+
 
   $('.nav #develops').addClass('li-right develops');
   $('.nav #options').addClass('li-right options');

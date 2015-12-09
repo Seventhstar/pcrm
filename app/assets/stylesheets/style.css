@@ -389,7 +389,7 @@ input[type='number']::-webkit-inner-spin-button {
 .splink{ display: inline-block; border:1px solid #e5e5e5; padding: 7px 10px 7px 10px; color: #000000; position:relative; text-decoration:none; border-radius: 5px; line-height: 1;}
 .splink:hover{background: #6acc00; border-color:#6acc00;}
 
-.only_actual.active,.only_actual:hover{ background:#428bca !important;   border-color: #428bca !important;}
+/*.only_actual.active,.only_actual:hover{ background:#428bca !important;   border-color: #428bca !important;}*/
 
 .left,.panel-left {float: left;}
 .right, .panel-right{float: right;}

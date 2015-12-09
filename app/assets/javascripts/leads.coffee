@@ -150,14 +150,15 @@ $(document).ready ->
     return
 
   # вкл/откл лидов с неактуальными статусами
-  $('.container').on 'click', 'span.only_actual', ->
-    if $(this).hasClass('active')
-      $(this).removeClass('active')
-      $(this).text('Все')
-      actual = false
-    else 
-      $(this).addClass('active')
-      $(this).text('Актуальные')
-      actual = true
-    lead_query({only_actual:actual})
+  #$('.container').on 'click', '.only_actual, .switcher_a', ->
+  #  alert('dd')
+  #  if $(this).hasClass('active')
+  #    $(this).removeClass('active')
+  #    $(this).text('Все')
+  #    actual = false
+  #  else 
+  #    $(this).addClass('active')
+  #    $(this).text('Актуальные')
+  #    actual = true
+  #  lead_query({only_actual:actual})
     return
