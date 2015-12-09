@@ -10,6 +10,7 @@
 .switcher_a .link_a {
 
 	text-decoration: none;
+	text-align: right;
 	padding: 0 5px;
 	min-width: 78px;
 }
@@ -32,7 +33,7 @@
     width: 17px;
     height: 17px;
     //background: #ff8411;
-    background: gray;
+    background: #ccc;
     border-radius: 50%;
     position: absolute;
     top: 0;
@@ -43,7 +44,7 @@
 
 .switcher_a .handle.active {
     left: 27px;
-    background: #ff8411;
+    background: #428bca; //ff8411;
 }
 
 
