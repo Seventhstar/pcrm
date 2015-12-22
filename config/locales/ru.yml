@@ -69,6 +69,7 @@ ru:
   new_DevStatus: Новый статус   
   new_PaymentPurpose: Новое назначение платежа
   new_PaymentType: Новый вид оплаты
+  new_AbsenceReason: Новая причина
 
   list_Priority: Список приоритетов
   list_ProjectType: Список видов проектов
@@ -82,6 +83,7 @@ ru:
   list_DevStatus: Список статусов 
   list_PaymentPurpose: Список назначений платежа
   list_PaymentType: Список видов оплаты
+  list_AbsenceReason: Список причин 
 
   Password: Пароль
   "true": Да

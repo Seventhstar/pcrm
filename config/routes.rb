@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   
+  resources :absence_reasons
+
+  resources :absences
+
   resources :wiki_records do
     resources :wiki_records
   end

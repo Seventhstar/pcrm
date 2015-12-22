@@ -427,8 +427,10 @@ input[type='number']::-webkit-inner-spin-button {
 table.tbl_fc{border-collapse:collapse; width: 100%; }
 table.tbl_fc td{vertical-align:top; padding: 0 0 10px 0; }
 table.tbl_fc td.last_td{padding: 0 !important; }
+
 table.tbl_fc td.caption{width: 115px; padding-right: 15px; padding-top: 7px; text-align:right; font-weight: 500; }
 table.tbl_fc td.caption2{width: 235px; padding-right: 15px; padding-top: 0px; text-align:right; font-weight: 500; }
+
 
 
 td.caption3{ font-weight: 500; }
@@ -437,6 +439,8 @@ td.caption3 span{ float: left; padding-top: 8px; padding-right: 15px;}
 .btn_reset {margin-right: 10px;}
 
 table.tbl_fc_1 td.caption{width: 160px; }
+table.tbl_fc_1 td.caption_sm {width: 70px;}
+
 th.center,td.center {text-align:center;}
 
 .va_bottom{vertical-align: bottom !important; }
