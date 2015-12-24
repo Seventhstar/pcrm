@@ -122,6 +122,10 @@ module ApplicationHelper
     
   end
 
+  def class_for_abs( absence)
+      absence.reason_id == 1 ? "hot" : ""
+  end
+
   def option_link( page,title )
     css_class = @page_data == page ? "active" : nil
     link_to title, '#',{:class =>"list-group-item #{css_class}", :controller => page}

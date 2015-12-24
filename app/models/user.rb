@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
 #  acts_as_avatarable
   mount_uploader :avatar, AvatarUploader
   has_many :leads
+  has_many :absence
   has_many :ic_leads, foreign_key: :ic_user_id, class_name: 'Lead'
   has_many :files, class_name: 'LeadFile'
   has_many :options, class_name: 'UserOption'

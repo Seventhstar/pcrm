@@ -2,6 +2,7 @@ class Project < ActiveRecord::Base
 	belongs_to :client
 	belongs_to :project_type
   has_many :receipts
+  has_many :absence
 	accepts_nested_attributes_for :client
 
   def client_name

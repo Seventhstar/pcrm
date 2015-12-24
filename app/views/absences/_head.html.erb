@@ -1,0 +1,22 @@
+
+<% if first_table == false %>
+</tbody></table></div>
+<% end %>
+<% first_table = false %>
+<div class="panel panel-default">
+  <div class="panel-heading table-heading head month"> <%= heading %></div>
+  <table class="tleads ">
+   <thead>
+    <tr>
+      <th width="240px"><%= sortable_th(:user_id,'Сотрудник') %></th>
+      <th ><%= sortable_th(:reason_id,'Причина') %> </th>
+      <th ><%= sortable_th(:project_id,'Проект') %> </th>
+      <th width="108px"><%= sortable_th(:dt_from,'Дата') %></th>   
+      <th width="108px"><%= sortable_th(:dt_to,'По') %></th>
+      
+      <th class="edit_delete"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+

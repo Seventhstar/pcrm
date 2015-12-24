@@ -1,10 +1,29 @@
 class AbsencesController < ApplicationController
   before_action :set_absence, only: [:show, :edit, :update, :destroy]
-
+  helper_method :sort_2, :dir_2
+  helper_method :sort_column, :sort_direction
   # GET /absences
   # GET /absences.json
   def index
-    @absences = Absence.all
+    #@absences = Absence.all
+    query_str = "absences.*, date_trunc('month', dt_from) AS month"
+    #@sort_column = "dt_from"
+    @sort_column = sort_column
+
+    if !current_user.admin?
+      @absences = current_user.absences.select(query_str)
+    else
+      @absences = Absence.select(query_str)
+    end
+
+    if params[:sort] == 'users.name'
+      sort_1 = "users.name"
+      @absences = @absences.joins(:user)      
+    end
+
+    sort_1 = @sort_column == 'dt_from' ? 'month' : @sort_column
+    order = sort_1 + " " + sort_direction + ", "+ sort_2  + " " + dir_2 + ", absences.created_at desc"
+    @absences = @absences.order(order)
   end
 
   # GET /absences/1
@@ -74,5 +93,23 @@ class AbsencesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def absence_params
       params.require(:absence).permit(:user_id, :from, :to, :reason_id, :new_reason_id, :comment, :project_id)
+    end
+
+    def sort_column
+      default_column = "dt_from"
+      (Absence.column_names.include?(params[:sort]) || params[:sort] == 'users.name' ) ? params[:sort] : default_column
+    end
+
+    def sort_direction
+      defaul_dir = sort_column =='dt_from' ? "asc": "desc"
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : defaul_dir
+    end
+
+    def sort_2
+      "dt_from"
+    end
+
+    def dir_2 
+      "desc"
     end
 end

@@ -1,4 +1,8 @@
-<h1>Editing Absence</h1>
+<div class="hl hl_a bd">Редактирование отсутствия
+<% if is_admin? %>
+<%= link_to "", @absence, method: :delete, data: { confirm: 'Действительно удалить?' }, :class=>"icon icon_remove right" %>
+<% end -%>
+</div>
 
 <%= render 'form' %>
 

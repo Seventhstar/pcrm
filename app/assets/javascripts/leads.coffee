@@ -46,12 +46,12 @@
       return
   return
 
-@lead_query = (lead_params)->
+@sortable_query = (params)->
   sort2 = $('span.subsort.current').attr('sort2')
   dir2 = $('span.subsort.current').attr('dir2')
   srt = $('span.active').attr('sort');
   dir = $('span.active').attr('direction')
-  actual = $('.only_actual').hasClass('active')
+  actual = $('.only_actual').hasClass('on')
   search = $('.container #search').val()
 
   url = {
@@ -63,14 +63,16 @@
     search: search
   }
 
-  each lead_params, (i, a) ->
+  each params, (i, a) ->
   	url[i] = a
 
   
   method = if $('#cur_method').val() == 'edit_multiple' then '/edit_multiple' else ''
 
-  $.get '/leads'+method, url, null, 'script'
-  setLoc("leads"+method+"?"+ajx2q(url));
+  controller = $('#cur_method').attr('controller')
+
+  $.get '/'+controller+method, url, null, 'script'
+  setLoc(""+controller+method+"?"+ajx2q(url));
   return
 
 $(document).ready ->
@@ -137,7 +139,7 @@ $(document).ready ->
     else
       $('.sort-span').removeClass('active')
       $(this).addClass('active')
-    lead_query({sort2: srt,dir2:dir})
+    sortable_query({sort2: srt,dir2:dir})
     return
 
   # сортировка 2го уровня
@@ -146,7 +148,7 @@ $(document).ready ->
     srt2 = $(this).attr('sort2')
     if $(this).hasClass('current')
       dir2 = if dir2 == 'asc' then 'desc' else 'asc'
-    lead_query({sort2:srt2,dir2:dir2})
+    sortable_query({sort2:srt2,dir2:dir2})
     return
 
   # вкл/откл лидов с неактуальными статусами
