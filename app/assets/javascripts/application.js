@@ -94,7 +94,7 @@ $(function() {
                 details.slideUp(300);
            
             }
-            lead_query({only_actual:link.hasClass('on')});
+            sortable_query({only_actual:link.hasClass('on')});
             return false;
         });
 
@@ -109,7 +109,7 @@ $(function() {
             } else {
                 details.slideUp(300);
             }
-            lead_query({only_actual:link.hasClass('on')});
+            sortable_query({only_actual:link.hasClass('on')});
             return false;
         });
        

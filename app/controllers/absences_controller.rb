@@ -92,7 +92,7 @@ class AbsencesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def absence_params
-      params.require(:absence).permit(:user_id, :from, :to, :reason_id, :new_reason_id, :comment, :project_id)
+      params.require(:absence).permit(:user_id, :dt_from, :dt_to, :reason_id, :new_reason_id, :comment, :project_id)
     end
 
     def sort_column

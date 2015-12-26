@@ -47,25 +47,23 @@
   return
 
 @sortable_query = (params)->
-  sort2 = $('span.subsort.current').attr('sort2')
-  dir2 = $('span.subsort.current').attr('dir2')
-  srt = $('span.active').attr('sort');
-  dir = $('span.active').attr('direction')
-  actual = $('.only_actual').hasClass('on')
-  search = $('.container #search').val()
+  actual = if $('.only_actual').length==0 then null else $('.only_actual').hasClass('on')
 
-  url = {
+  url = {    
     only_actual: actual
-    sort: srt
-    direction: dir
-    sort2: sort2
-    dir2: dir2
-    search: search
+    sort: $('span.active').attr('sort')
+    direction: $('span.active').attr('direction')
+    sort2: $('span.subsort.current').attr('sort2')
+    dir2: $('span.subsort.current').attr('dir2')
+    search: $('.container #search').val()
   }
 
   each params, (i, a) ->
-  	url[i] = a
+    url[i] = a
 
+  each url, (i, a) -> 
+    if a == undefined || a == null || a == ''
+       delete url[i] 
   
   method = if $('#cur_method').val() == 'edit_multiple' then '/edit_multiple' else ''
 
@@ -124,7 +122,7 @@ $(document).ready ->
   # поиск 
   $('#leads_search').on 'keyup', '#search', ->
     search = $('#leads_search #search').val()
-    lead_query({})
+    sortable_query({})
     return
 
   # основновная сортировка
