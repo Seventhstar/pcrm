@@ -1,16 +1,4 @@
-<div class="items_box_head">
-<div class="panel-left">
-<%= render_navigation(:level => 2) %>
-</div>
-<%= form_tag projects_path, :method => 'get' do %>
-<div class="combobox short_search left"> 
-<%= text_field_tag :prj_search, params[:prj_search], :class => "search_area txt slim_txt", :placeholder=>"Поиск...", :value=>params[:prj_search] %>
-</div>
-<% end %>
-<%= link_to 'Добавить проект',new_project_path, class: "btn_a btn-add btn_slim right" %>
-</div>
-
-
+<%= render "sortmenu" %>
 
 <div class ="container">
 	<div id="div_tprojects">

@@ -5,9 +5,7 @@ class AbsencesController < ApplicationController
   # GET /absences
   # GET /absences.json
   def index
-    #@absences = Absence.all
     query_str = "absences.*, date_trunc('month', dt_from) AS month"
-    #@sort_column = "dt_from"
     @sort_column = sort_column
 
     if !current_user.admin?

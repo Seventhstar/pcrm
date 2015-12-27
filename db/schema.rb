@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151222035359) do
+ActiveRecord::Schema.define(version: 20151227151259) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,8 +24,8 @@ ActiveRecord::Schema.define(version: 20151222035359) do
 
   create_table "absences", force: :cascade do |t|
     t.integer  "user_id"
-    t.datetime "from"
-    t.datetime "to"
+    t.datetime "dt_from"
+    t.datetime "dt_to"
     t.integer  "reason_id"
     t.integer  "new_reason_id"
     t.text     "comment"
@@ -177,6 +177,12 @@ ActiveRecord::Schema.define(version: 20151222035359) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "project_statuses", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "project_types", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
@@ -215,6 +221,7 @@ ActiveRecord::Schema.define(version: 20151222035359) do
     t.integer  "delay_days"
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
+    t.integer  "pstatus_id"
   end
 
   create_table "provider_budgets", force: :cascade do |t|

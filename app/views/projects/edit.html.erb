@@ -35,6 +35,12 @@
             <td><div class="inp_w"><%= f.select :style_id, options_for_select(Style.order(:name).collect{ |u| [u.name, u.id] }, @project.style_id) %></div></td>
             <td colspan="2"><div class="inp_w"><%= f.select :executor_id, options_for_select(User.order(:name).collect{ |u| [u.name, u.id] }, @project.executor_id) %></div></td>
           </tr>
+          <tr><td class="gr_caption">Статус:</td></tr>
+          <tr>
+            <td><div class="inp_w"><%= f.select :pstatus_id, options_for_select(ProjectStatus.order(:name).collect{ |u| [u.name, u.id] }, @project.pstatus_id),{},{class: 'chosen'} %></div></td>
+            <td></td>
+            <td></td>
+            </tr>
 
 </tbody></table></div></div></div>
 <div id="tabs-2" class="ptab">

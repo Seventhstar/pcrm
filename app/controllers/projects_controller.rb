@@ -2,14 +2,37 @@ class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy]
   before_action :logged_in_user
   before_action :check_sum, only: [:create,:update]
+    helper_method :sort_2, :dir_2
+  helper_method :sort_column, :sort_direction
   # GET /projects
   # GET /projects.json
   def index
-      if !params[:prj_search].nil?
-      @projects = Project.where('LOWER(address) like LOWER(?)','%'+params[:prj_search]+'%').order(:date_end_plan)
+      
+    @sort_column = sort_column
+
+    if !current_user.admin?
+      @projects = current_user.projects
     else
-      @projects = Project.order(:date_end_plan)
+      @projects = Project.all
     end
+
+    if !params[:prj_search].nil?
+      @projects = @projects.where('LOWER(address) like LOWER(?)','%'+params[:prj_search]+'%')
+    end
+
+    if !params[:only_actual] || params[:only_actual] == "true"
+      @projects = @projects.where('pstatus_id in (1,2)')
+    end
+
+    if params[:sort] == 'users.name'
+      sort_1 = "executor.name"
+      @projects = @projects.joins(:executor)      
+    end
+
+    sort_1 = @sort_column #== 'date_end_plan' ? 'month' : @sort_column
+    p sort_1
+    order = sort_1 + " " + sort_direction + ", "+ sort_2  + " " + dir_2 + ", projects.created_at desc"
+    @projects = @projects.order(order)
   end
 
   # GET /projects/1
@@ -105,8 +128,26 @@ class ProjectsController < ApplicationController
         :date_start, :date_end_plan, :date_end_real, :number, :date_sign, 
         :footage, :footage_2, :footage_real, :footage_2_real, :style_id, 
         :sum, :sum_real, :price, :price_2, :price_real, :sum_total, :sum_2, :sum_total_real, :sum_2_real, :price_2_real, 
-        :month_in_gift, :act, :delay_days,  
+        :month_in_gift, :act, :delay_days,  :pstatus_id,
         :client_attributes => [:name, :address, :phone, :email] )
+    end
+
+    def sort_column
+      default_column = "number"
+      (Project.column_names.include?(params[:sort]) || params[:sort] == 'users.name' ) ? params[:sort] : default_column
+    end
+
+    def sort_direction
+      defaul_dir = sort_column =='number' ? "asc": "desc"
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : defaul_dir
+    end
+
+    def sort_2
+      "date_end_plan"
+    end
+
+    def dir_2 
+      "desc"
     end
 
 end

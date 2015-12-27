@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  get 'project_status/name'
+
   resources :absence_reasons
 
   resources :absences
@@ -16,9 +18,8 @@ Rails.application.routes.draw do
   resources :receipts
 
   resources :projects
-
   resources :project_types
-
+  resources :project_statuses
   resources :clients
 
   resources :p_statuses

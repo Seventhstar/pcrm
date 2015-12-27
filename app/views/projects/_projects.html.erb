@@ -6,9 +6,10 @@
       <th>Адрес</th>
       <th>Вид проекта</th>
       <th>Заказчик</th>
+      <th>Исполнитель</th>
       <th width="87px">Дата начала</th>
       <th width="112px">Дата окончания</th>
-      <th width="87px">Продление</th>
+      <th width="40px">1/м2</th>
       <th width="70px">Стоимость</th>
       <th></th>
     </tr>
@@ -16,17 +17,17 @@
 
   <tbody>
     <% @projects.each do |project| %>
-      <tr>
+      <tr class="<%= class_for_project(project) %>">
         <td class="center"><%= project.number %></td>
         <td><%= project.address %></td>
         <td><%= project.project_type_name %></td>
         <td><%= project.client_name %></td>
-        
+        <td><%= project.executor_name %></td>
         
         <td class="center"><%= project.date_start %></td>
         <td class="center"><%= project.date_end_plan %></td>
  
-        <td><%= project.act %></td>
+        <td class="td_right"><%= project.price %></td>
         <td class="td_right <%= project.sum_total_real ==0 ? '':'red' %>" title="<%= project.sum_total.to_sum %>"><%= project.total.to_sum %></td>
         <%= td_tool_icons(project,'edit,show','href') %>
       </tr>

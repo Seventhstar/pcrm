@@ -122,7 +122,13 @@ module ApplicationHelper
     
   end
 
-  def class_for_abs( absence)
+  def class_for_project (prj)
+    actual = prj.pstatus_id == 3  ? "nonactual" : ""
+    actual
+  end
+
+  def class_for_abs( absence )
+      
       absence.reason_id == 1 ? "hot" : ""
   end
 
