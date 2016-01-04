@@ -34,12 +34,16 @@ class AbsencesController < ApplicationController
     @absence = Absence.new
     @reasons = AbsenceReason.all
     @projects = Project.all
+    @dt_from = DateTime.now.try('strftime',"%d.%m.%Y %H:%M")
+    @dt_to = @dt_from
   end
 
   # GET /absences/1/edit
   def edit
-        @reasons = AbsenceReason.all
+    @reasons = AbsenceReason.all
     @projects = Project.all
+    @dt_from = @absence.dt_from.try('strftime',"%d.%m.%Y %H:%M")
+    @dt_to = @absence.dt_to.try('strftime',"%d.%m.%Y %H:%M")
   end
 
   # POST /absences

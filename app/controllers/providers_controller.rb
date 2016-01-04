@@ -29,7 +29,7 @@ class ProvidersController < ApplicationController
     sp,bp,gtp,ps,s_ids = all_ids,all_ids,all_ids,all_ids,all_ids
 
     if !params[:search].nil?
-      s_ids = Provider.where('LOWER(name) like LOWER(?)','%'+params[:search]+'%').ids
+      s_ids = Provider.where('LOWER(name) like LOWER(?) or LOWER(address) like LOWER(?)','%'+params[:search]+'%','%'+params[:search]+'%').ids
     end
 
     
@@ -45,7 +45,8 @@ class ProvidersController < ApplicationController
         gtp = Goodstype.find(params[:goodstype]).providers.ids
     end
 
-    if @param_p_status && @param_p_status!="" && @param_p_status!='0'
+    #if @param_p_status && @param_p_status!="" && @param_p_status!='0'
+    if !params[:only_actual] || params[:only_actual] == "true"
         ps = PStatus.find(@param_p_status).providers.ids
     end
 

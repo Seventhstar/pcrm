@@ -20,10 +20,12 @@ class AbsenceReasonsController < ApplicationController
   # GET /absence_reasons/new
   def new
     @absence_reason = AbsenceReason.new
+
   end
 
   # GET /absence_reasons/1/edit
   def edit
+
   end
 
   # POST /absence_reasons

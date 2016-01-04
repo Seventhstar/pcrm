@@ -54,7 +54,13 @@ function startTime(){
 	t=setTimeout('startTime()',500);
 }
 
-
+var delay = (function(){
+  var timer = 0;
+  return function(callback, ms){
+    clearTimeout (timer);
+    timer = setTimeout(callback, ms);
+  };
+})();
 
 
 var show_ajax_message = function(msg, type) {
@@ -72,6 +78,8 @@ var fixEncode = function(loc) {
 $(function() {
 
   startTime();
+
+  $('.datetimepicker').datetimepicker({step:30,minTime:'08:00'});
 
  $('.switcher_a').each(function(){
         var switcher = $(this);

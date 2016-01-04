@@ -78,24 +78,24 @@ label a.btn_c:hover{cursor: pointer;}
 
 .page_wrapper {min-height: 100%; position:relative;}
 
-.bw_i {width: 1200px; margin:0 auto; position:relative;}
+
 .bw_i:after {content: ' '; clear:both; display: block; width: 0; height: 0; overflow: hidden; font-size: 0;}
 
 
-.header {margin:0 0 40px 0; position:relative;}
-.header .bw_i{padding: 80px 0 0 0; height: 44px; }
+.header {margin: 0 auto; position:relative; width: 1200px; }
+.header .bw_i{padding: 30px 0 0 0; height: 44px; }
 .header .btn_call{position:absolute; top: 39px; left: 0;}
 .header .logo {position:absolute; top: 39px; left: 0;}
 .header .logo img {vertical-align:top;}
 
-.time_h {position:absolute; top: 35px; left: 146px; font-size: 15px; font-weight: 500; color: #000000; }
+.time_h {position:absolute; top: 33px; font-size: 15px; font-weight: 500; color: #000000; }
 
-.user_h {position:absolute; top: 35px; right: 0; font-size: 15px; font-weight: 500; color: #000000;}
+.user_h {position:absolute; top: 33px; right: 0; font-size: 15px; font-weight: 500; color: #000000;}
 .user_h .name{}
 .user_h .logout{margin:0 0 0 20px; }
 .user_h .logout .icon{margin:0 7px 0 0;}
 
-.menu_main {height: 44px; background: #f1f1f1 url('bg1_1.png') no-repeat 0 0; border-radius: 5px; margin:0 0 0 146px; position:relative;}
+.menu_main {height: 44px; background: #f1f1f1 url('bg1_1.png') no-repeat 0 0; border-radius: 5px; position:relative; margin-bottom: 20px;}
 .menu_main ul, .submenu ul, .items_box_head ul{margin:0 0 0 0; padding: 0 0 0 0; list-style:none; overflow:hidden;}
 .menu_main ul li, .submenu ul li, .items_box_head ul li{margin:0 0 0 0; padding: 0 0 0 0; background:none; float:left;}
 .menu_main ul li a{display: inline-block; font-size: 15px; color: #000; text-decoration:none;}
@@ -125,11 +125,8 @@ background-position:-34px 0 !important; width: 16px; height: 16px;}
 
 
 .body {}
-.body .bw_i{}
 
 .sidebar{float: left; width: 214px; }
-
-.content {}
 
 .body.sb_left {}
 .body.sb_left .sidebar{float:left;}

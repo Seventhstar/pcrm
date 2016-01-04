@@ -8,18 +8,15 @@
 	<%= sortable_pil "users.name", "По создателям", 'asc' %>
 	<%= sortable_pil "status_id", "По статусам" %>
 
-	<%= form_tag leads_path, :method => 'get', :id => "leads_search" do %>	
-  	<div class="navsearch"> 
-    	<%= text_field_tag :search, params[:search], :class => "search_area txt slim_txt", :placeholder=>"Искать в таблице..." %>
-	</div>
-	<% end %>
-
+	<%= link_to 'Добавить', new_lead_path, class: "btn_a btn-add btn_slim right space20" %>
 	<div class="switcher_a toggled">
 		<a href="#" class="link_a left on only_actual" off="Все" on="Актуальные">Актуальные</a>
 		<div class="scale">
 			<div class="handle active"></div>
 		</div>
 	</div>
+
+
 
 	<% multi_edit_icon %>
 

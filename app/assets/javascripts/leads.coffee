@@ -55,9 +55,9 @@
     direction: $('span.active').attr('direction')
     sort2: $('span.subsort.current').attr('sort2')
     dir2: $('span.subsort.current').attr('dir2')
-    search: $('.container #search').val()
+    search: $('#search').val()
   }
-
+  
   each params, (i, a) ->
     url[i] = a
 
@@ -120,9 +120,13 @@ $(document).ready ->
     return
 
   # поиск 
-  $('#leads_search').on 'keyup', '#search', ->
-    search = $('#leads_search #search').val()
-    sortable_query({})
+  $('#search').on 'keyup', (e)-> 
+    #alert e.which
+    c= String.fromCharCode(event.keyCode);
+    isWordCharacter = c.match(/\w/);
+    isBackspaceOrDelete = (event.keyCode == 8 || event.keyCode == 46);
+    if (isWordCharacter || isBackspaceOrDelete)
+       delay('sortable_query({})',700)
     return
 
   # основновная сортировка

@@ -2,18 +2,23 @@
 
   <table class="tbl_fc tbl_fc_1">
       <tr><td class="caption">Причина:</td>
-      <td><div class="inp_w"><%= f.select 'reason_id', options_for_select(@reasons.collect{ |u| [u.name, u.id] },@absence.reason_id), {},{class: 'chosen'} %>
-      </div></td>
-        <td class="caption caption_sm">Проект:</td><td>
-        <div class="inp_w"><%= f.select :project_id, content_tag(:option,'Выберите...',:value=>0)+options_for_select(@projects.collect{ |u| [u.address, u.id] },@absence.project_id), {},{class: 'chosen'} %>  
-        </div></td>
+      <td width='490px;'>         
+          <div class="inp_w" >
+            <%= f.select 'reason_id', options_for_select(@reasons.collect{ |u| [u.name, u.id] },@absence.reason_id) %>
+          </div>
+      </td>
+     <% disp = @absence.reason_id==2 ? 'table-cell;' : 'none;' %>
+      <td class="caption caption_sm p_obj" style="display: <%= disp %>">Проект:</td><td class="p_obj" style="display: <%= disp %>">
+          <div class="inp_w">
+          <%= f.select :project_id, content_tag(:option,'Выберите...',:value=>0)+options_for_select(@projects.collect{ |u| [u.address, u.id] },@absence.project_id), {},{class: 'chosen'} %>  
+          </div></td>
       </tr>
     <tr><td class="caption">Комментарий:</td>
       <td><div class="inp_w"><%= f.text_area :comment, class: 'txt alone',label: false %></div></td></tr>
           <tr><td class="caption">Дата/время c:</td>
-      <td><div class="inp_w"><%= f.text_field :dt_from, :value => DateTime.now.try('strftime',"%d.%m.%Y"), label: false, class: "txt datepicker" %></div></td>
+      <td><div class="inp_w"><%= f.text_field :dt_from, :value => @dt_from, label: false, class: "txt datetimepicker" %></div></td>
       <td class="caption caption_sm">по:</td>
-      <td><div class="inp_w"><%= f.text_field :dt_to, :value => DateTime.now.try('strftime',"%d.%m.%Y"), label: false, class: "txt datepicker" %></div></td>
+      <td><div class="inp_w"><%= f.text_field :dt_to, :value => @dt_to, label: false, class: "txt datetimepicker" %></div></td>
       <td ></td></tr>
   </table>
 
@@ -24,7 +29,8 @@
 
     <% if is_admin? %>
       <tr><td class="caption">Создатель:</td>
-        <td><div class="inp_w"><%= f.select :user_id, options_for_select(User.order(:name).collect{ |u| [u.name, u.id] },@absence.user_id), {},{class: 'chosen'} %>
+        <td width='490px;'><div class="inp_w" >
+        <%= f.select :user_id, options_for_select(User.order(:name).collect{ |u| [u.name, u.id] },@absence.user_id), {},{class: 'chosen'} %>
       </div></td></tr>
     <% end %>
 
