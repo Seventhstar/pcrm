@@ -19,6 +19,7 @@
 //= require bootstrap-tokenfield
 //= require chosen.jquery
 //= require jquery.fileupload
+//= require jquery.timepicker
 //= require nprogress
 //= require_tree .
 
@@ -79,7 +80,7 @@ $(function() {
 
   startTime();
 
-  $('.datetimepicker').datetimepicker({step:30,minTime:'08:00'});
+  $('.timepicker').timepicker({ 'timeFormat': 'H:i' });
 
  $('.switcher_a').each(function(){
         var switcher = $(this);

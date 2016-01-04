@@ -2,6 +2,7 @@ class AbsencesController < ApplicationController
   before_action :set_absence, only: [:show, :edit, :update, :destroy]
   helper_method :sort_2, :dir_2
   helper_method :sort_column, :sort_direction
+
   # GET /absences
   # GET /absences.json
   def index
@@ -34,16 +35,22 @@ class AbsencesController < ApplicationController
     @absence = Absence.new
     @reasons = AbsenceReason.all
     @projects = Project.all
-    @dt_from = DateTime.now.try('strftime',"%d.%m.%Y %H:%M")
+    @dt_from = DateTime.now.try('strftime',"%d.%m.%Y")
     @dt_to = @dt_from
+    @t_from = "10:00"
+    @t_to = '19:00'
+    @checked = false
   end
 
   # GET /absences/1/edit
   def edit
     @reasons = AbsenceReason.all
     @projects = Project.all
-    @dt_from = @absence.dt_from.try('strftime',"%d.%m.%Y %H:%M")
-    @dt_to = @absence.dt_to.try('strftime',"%d.%m.%Y %H:%M")
+    @dt_from = @absence.dt_from.try('strftime',"%d.%m.%Y")
+    @dt_to = @absence.dt_to.try('strftime',"%d.%m.%Y")
+    @t_from = @absence.dt_from.try('strftime',"%H:%M")
+    @t_to = @absence.dt_to.try('strftime',"%H:%M")
+    @checked = @absence.dt_from.beginning_of_day != @absence.dt_to.beginning_of_day 
   end
 
   # POST /absences
@@ -53,7 +60,7 @@ class AbsencesController < ApplicationController
 
     respond_to do |format|
       if @absence.save
-        format.html { redirect_to absences_url, notice: 'Absence was successfully created.' }
+        format.html { redirect_to absences_url, notice: 'Отсутствие успешно создано.' }
         format.json { render :show, status: :created, location: @absence }
       else
         format.html { render :new }
@@ -66,8 +73,9 @@ class AbsencesController < ApplicationController
   # PATCH/PUT /absences/1.json
   def update
     respond_to do |format|
+
       if @absence.update(absence_params)
-        format.html { redirect_to absences_url, notice: 'Absence was successfully updated.' }
+        format.html { redirect_to absences_url, notice: 'Отсутствие успешно обновлено.' }
         format.json { render :show, status: :ok, location: @absence }
       else
         format.html { render :edit }
@@ -81,12 +89,13 @@ class AbsencesController < ApplicationController
   def destroy
     @absence.destroy
     respond_to do |format|
-      format.html { redirect_to absences_url, notice: 'Absence was successfully destroyed.' }
+      format.html { redirect_to absences_url, notice: 'Отсутствие успешно удалено.' }
       format.json { head :no_content }
     end
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_absence
       @absence = Absence.find(params[:id])
@@ -94,7 +103,11 @@ class AbsencesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def absence_params
-      params.require(:absence).permit(:user_id, :dt_from, :dt_to, :reason_id, :new_reason_id, :comment, :project_id)
+      a = params.require(:absence).permit(:user_id, :dt_from, :dt_to, :reason_id, :new_reason_id, :comment, :project_id,:t_from,:t_to,:checked)
+      a['dt_to'] = a['dt_from'] if a['checked']=='false'
+      a['dt_from'] = a['dt_from'].gsub("00:00", '')+ ' ' + a['t_from']
+      a['dt_to'] = a['dt_to'].gsub("00:00", '') +' ' + a['t_to']
+      a
     end
 
     def sort_column

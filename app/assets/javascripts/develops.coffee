@@ -23,7 +23,7 @@ $(document).ready ->
   $('#develop_dev_status_id').chosen(width: '99.5%', disable_search: 'true') 
 
 
-  $('.develops').on 'click', 'span.check_img', ->
+  $('.develops').on 'click', 'span.sw_check', ->
     checked = if $(this).hasClass('checked') then false else true
     dev_id = $(this).attr('developid')
     chk = $(this).attr('chk')

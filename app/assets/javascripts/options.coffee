@@ -1,6 +1,6 @@
 $(document).ready ->
 
- $('.container').on 'click', 'span.check_img', ->
+ $('.container').on 'click', 'span.sw_check', ->
   model = $(this).parents('table').attr('model')
   if $(this).hasClass('checked')
     $(this).removeClass 'checked'

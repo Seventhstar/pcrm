@@ -27,8 +27,8 @@
   <td width="60"><%= avatar_for(user) %></td>
   <td>  <%= link_to user.name, user %> </br> <%= user.email %> </td>
   <td class ="birthday">  <%= date_of_birth user %> </td>
-  <td class="state"><span class="check_img <%= user.activated ? "checked" :"" %>" item_id="<%=user.id%>" chk="activated"></span></td>
-  <td class="state"><span class="check_img <%= user.admin ? "checked" :"" %>" item_id="<%=user.id%>" chk="admin"></span></td>
+  <td class="state"><span class="check_img sw_check <%= user.activated ? "checked" :"" %>" item_id="<%=user.id%>" chk="activated"></span></td>
+  <td class="state"><span class="check_img sw_check <%= user.admin ? "checked" :"" %>" item_id="<%=user.id%>" chk="admin"></span></td>
   
   <% if current_user.admin? %>
      <%= td_tool_icons(user, 'edit,delete','href', current_user?(user) ? 1:nil ) %>

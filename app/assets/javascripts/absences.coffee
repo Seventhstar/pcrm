@@ -11,3 +11,13 @@ $(document).ready ->
       $('.p_obj').show()
     else
       $('.p_obj').hide()
+  $('.edit_absence').on 'click', '#dt_to_check', ->
+    $(this).toggleClass('checked')
+    $('#absence_checked').val($(this).hasClass('checked'))
+    if $(this).hasClass('checked')
+      $('#absence_dt_to').addClass('datepicker')
+      $('#absence_dt_to').prop('disabled', false)
+    else
+      $('#absence_dt_to').removeClass('datepicker')
+      $('#absence_dt_to').attr('disabled',"disabled")
+    return
