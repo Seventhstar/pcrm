@@ -1,7 +1,7 @@
 .timepicker {
     background: url('ico-clock.png') 90% 8px no-repeat;
     float: left;
-    width: 100px !important;
+    width: 80px !important;
     cursor: pointer;
 }
 

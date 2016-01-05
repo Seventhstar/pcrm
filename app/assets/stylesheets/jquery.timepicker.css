@@ -1,7 +1,7 @@
-.ui-timepicker-wrapper {
+	.ui-timepicker-wrapper {
 	overflow-y: auto;
 	height: 150px;
-	width: 6.5em;
+	width: 5.5em;
 	background: #fff;
 	border: 1px solid #ddd;
 	-webkit-box-shadow:0 5px 10px rgba(0,0,0,0.2);
@@ -51,7 +51,7 @@
 li.ui-timepicker-selected,
 .ui-timepicker-list li:hover,
 .ui-timepicker-list .ui-timepicker-selected:hover {
-	background: #1980EC; color: #fff;
+	background: #ff8411; color: #fff;
 }
 
 li.ui-timepicker-selected .ui-timepicker-duration,
