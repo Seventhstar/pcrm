@@ -18,10 +18,10 @@
 <%= select_tag "receipts_project_id", content_tag(:option,'Проект...',:value=>0)+options_from_collection_for_select(@projects, "id", "address",:selected=>params[:receipts_project_id]) %> 
 </label>
 
-<%= text_field_tag :rcpt_search, params[:rcpt_search], :class => "search_area txt slim_txt", :placeholder=>"Поиск...", :value=>params[:rcpt_search] %>
+
 </div>
 <% end %>
-<%= link_to 'Добавить приход',new_receipt_path, class: "btn_a btn-add btn_slim right" %>
+<%= link_to 'Добавить',new_receipt_path, class: "btn_a btn-add btn_slim right" %>
 
 </div>
 

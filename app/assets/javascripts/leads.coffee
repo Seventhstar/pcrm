@@ -66,8 +66,7 @@
        delete url[i] 
   
   method = if $('#cur_method').val() == 'edit_multiple' then '/edit_multiple' else ''
-
-  controller = $('#cur_method').attr('controller')
+  controller = $('#search').attr('cname')
 
   $.get '/'+controller+method, url, null, 'script'
   setLoc(""+controller+method+"?"+ajx2q(url));

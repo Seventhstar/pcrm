@@ -13,8 +13,8 @@
 
 jQuery ->
   $('.container').on 'click', 'span.folder, .wiki_name span',->
-    $(this).toggleClass 'opened'
-    itm_id = $(this).parents('td').attr('item')    
+    itm_id = $(this).parents('tr').attr('item')
+    $('#folder'+itm_id).toggleClass 'opened'
     $('#sub'+itm_id).toggleClass('hidden')
     $('#files'+itm_id).toggleClass('hidden')
     if ($('#chitem_'+itm_id).html() =='') 
@@ -22,7 +22,7 @@ jQuery ->
     $('#chitem_'+itm_id).toggleClass('hidden')
     return
   $('.container').on 'dblclick', '.wiki_name span',->
-  	id = $(this).closest('.wiki_name').attr('item')
+  	id = $(this).closest('tr').attr('item')
   	window.location.href = '/wiki_records/'+id+'/edit'
   chosen_params = width: '100%'
   $('#wiki_record_parent_id').chosen(chosen_params).on 'change', ->

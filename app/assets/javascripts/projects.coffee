@@ -58,30 +58,37 @@
   setLoc("projects?"+params)
 
 $(document).ready ->
-	$('#project_project_type_id').chosen(width: '99.5%', disable_search: 'true')
-	$('#project_executor_id').chosen(width: '99.5%', disable_search: 'true')
-	$('#project_style_id').chosen(width: '99.5%', disable_search: 'true')
-	$('#days').change ->
-  	d= dateFromString $('#project_date_start').val(), $(this).val()  
-  	dd = $.datepicker.formatDate('dd.mm.yy', new Date(d))
-  	$('#project_date_end_plan').val(dd)
-  
+  $('#add_footage').click ->
+    $(this).hide()
+    $('#tr_footage_2').show()
+    $('#tr_footage_2_real').show()
+    return
+  $('#project_project_type_id').chosen
+    width: '99.5%'
+    disable_search: 'true'
+  $('#project_executor_id').chosen
+    width: '99.5%'
+    disable_search: 'true'
+  $('#project_style_id').chosen
+    width: '99.5%'
+    disable_search: 'true'
+  $('#days').change ->
+    d = dateFromString($('#project_date_start').val(), $(this).val())
+    dd = $.datepicker.formatDate('dd.mm.yy', new Date(d))
+    $('#project_date_end_plan').val dd
   $('#project_price,#project_footage,#project_price_2,#project_footage_2').change ->
-  	calc_proj_sum()
+    calc_proj_sum()
   $('#project_price_real,#project_price_2_real,#project_footage_2_real,#project_footage_real').change ->
     calc_proj_sum_real()
-  
   $('#project_sum_2_real').change ->
     calc_proj_sum_real()
-
   $('#project_sum_real').change ->
     calc_proj_sum()
-
   $('#project_sum_total').change ->
     calc_debt()
   $('#project_sum_total_real').change ->
     calc_debt()
-
-  $('.container').on 'keyup', '#prj_search', ->    
+  $('.container').on 'keyup', '#prj_search', ->
     projects_query()
     return
+  return

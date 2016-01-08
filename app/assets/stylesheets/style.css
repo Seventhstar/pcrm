@@ -61,18 +61,24 @@ a:hover .icon_user, .active .icon_user {background-position:-18px -18px; }
 .icon_file {background-position:-180px 0; width: 12px; height: 16px;}
 
 .btn_a,.form-actions .btn-success, a.btn-success, 
-.input-group .btn-warning {display: inline-block; background: #ff8411; height: 34px; line-height: 34px; padding: 0 19px 0 19px; text-decoration:none; font-size: 14px; color: #fff; border-radius: 5px; position:relative;}
+.input-group .btn-warning {display: inline-block; background: #ff8411; height: 34px; line-height: 34px; padding: 0 19px 0 19px; text-decoration:none; font-size: 14px; color: #fff; 
+  /*border-radius: 5px; */
+  position:relative;}
 .btn_slim{ height: 24px; font-size: 13px; padding: 0 12px; line-height: 24px;} 
 .btn_a:hover {opacity: 0.7;}
 .icon:hover,.btn:hover {opacity: 0.7;}
 .only_actual:hover {opacity: 0.8;}
 .btn_a.btn_reset {background: #c3c3c3;}
 
-.btn_b{display: inline-block; border:1px solid #e5e5e5; padding: 9px 19px 9px 19px; color: #000000; position:relative; text-decoration:none; border-radius: 5px; line-height: 1; }
+.btn_b{display: inline-block; border:1px solid #e5e5e5; padding: 9px 19px 9px 19px; color: #000000; position:relative; text-decoration:none; 
+  /*border-radius: 5px; */
+  line-height: 1; }
 .btn_b:hover,
 .btn_b.active{background: #6acc00; border-color:#6acc00; padding-left: 20px; padding-right: 20px; color: #fff; border-left: 0; border-right: 0; text-decoration:none;}
 
-.btn_c{display: inline-block; border:1px solid #e5e5e5; padding: 9px 19px 9px 19px; color: #ff8411; position:relative; text-decoration:none; border-radius: 5px; line-height: 1; text-decoration:underline;}
+.btn_c{display: inline-block; border:1px solid #e5e5e5; padding: 9px 19px 9px 19px; color: #ff8411; position:relative; text-decoration:none; 
+  /*border-radius: 5px; */
+  line-height: 1;  text-decoration:underline;}
 .btn_c:hover{text-decoration:none;}
 label a.btn_c:hover{cursor: pointer;}
 
@@ -95,11 +101,13 @@ label a.btn_c:hover{cursor: pointer;}
 .user_h .logout{margin:0 0 0 20px; }
 .user_h .logout .icon{margin:0 7px 0 0;}
 
-.menu_main {height: 44px; background: #f1f1f1 url('bg1_1.png') no-repeat 0 0; border-radius: 5px; position:relative; margin-bottom: 20px;}
+.menu_main {height: 44px; background: #f1f1f1 url('bg1_1.png') no-repeat 0 0; border-radius: 5px; position:relative; margin-bottom: 40px;}
 .menu_main ul, .submenu ul, .items_box_head ul{margin:0 0 0 0; padding: 0 0 0 0; list-style:none; overflow:hidden;}
 .menu_main ul li, .submenu ul li, .items_box_head ul li{margin:0 0 0 0; padding: 0 0 0 0; background:none; float:left;}
 .menu_main ul li a{display: inline-block; font-size: 15px; color: #000; text-decoration:none;}
-.menu_main ul li a {display: inline-block; height: 44px; line-height: 44px; background: url('bg1_2.png') no-repeat 100% -100px; padding: 0 14px 0 14px; }
+.menu_main ul li a {display: inline-block; 
+  line-height: 44px;
+  background: url('bg1_2.png') no-repeat 100% -100px; padding: 0 14px 0 14px; }
 .menu_main ul li:not(.disabled) a:hover, .menu_main ul li.active a,
 .menu_main .btn_options:hover {background: #59c600; background: linear-gradient(to top, #59c600, #61c900); color: #fff; }
 .menu_main ul li:not(.disabled) a:hover , .menu_main ul li.active a {background-position: 100% 0;}
@@ -202,7 +210,7 @@ table td{font-size: 13px;}
 .items_box_param {height: 24px; display: block; margin:0 0 16px 0;}
 .items_box_param label{float: left; margin: 3px 5px;}
 .items_box_head label.first{ margin-left: 30px;}
-.items_box_head .inp_w{ width:100px; float: left; margin-right: 20px;}
+.items_box_head .inp_w{ width:105px; float: left; margin-right: 20px;}
 /*.items_box .itemAdd_form{margin: 10px 0 0 0;}*/
 
 /*.itemAdd_form{ margin: 10px 0 0 0; }*/
@@ -372,7 +380,10 @@ input[type='number']::-webkit-inner-spin-button {
 .menu_c {}
 .menu_c ul {margin:0 0 0 -10px; padding: 0 0 0 0; list-style:none; overflow:hidden;}
 .menu_c ul li{margin:0 0 0 10px; padding: 0 0 0 0; background:none; float:left;}
-.menu_c ul li a, .subnav span, .submenu ul li, .items_box_head ul li a{display: inline-block; border:1px solid #e5e5e5; font-size: 13px; padding: 5px 12px; color: #000000; position:relative; text-decoration:none; border-radius: 5px; line-height: 1;}
+.menu_c ul li a, .subnav span, .submenu ul li, .items_box_head ul li a{display: inline-block; 
+  border:1px solid #e5e5e5; font-size: 13px; padding: 5px 12px; color: #000000; position:relative; text-decoration:none; 
+  /*border-radius: 5px; */
+  line-height: 1;}
 
 .menu_c ul li a:hover,
 .menu_c ul li.active a,

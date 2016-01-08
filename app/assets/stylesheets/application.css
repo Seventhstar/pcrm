@@ -56,24 +56,9 @@ li.flash_danger {}
   background: #6acc00;
   color: #fff;
   border-color: #6acc00;
-  /*
-  padding-left: 20px;
-  padding-right: 20px;
-  
-  border-left: 0;
-  border-right: 0; */
+
 }
 
-/*.subnav span {
-  min-width: 100px;
-  text-align: center;
-  border-radius: 4px;
-  float: left;
-  color: #428bca;
-  padding: 3px 10px;
-  height: 24px !important;
-  cursor: pointer;
-}*/
 
 .li-right, .right {
   float: right !important;
@@ -81,23 +66,27 @@ li.flash_danger {}
 }
 
 .li-right a {
- padding: 6px 8px !important; line-height: 32px !important; height: 32px !important;
+ padding: 6px 8px !important; line-height: 32px !important; 
+ /*height: 32px !important;*/ 
 }
 /*.li-right a img{
   margin-top: 6px !important;
   }*/
+.li-right a span {padding: 6px 16px; margin: 0;}
 
-#charts1 img{ background: url('tools.png') no-repeat 0 0; background-position: -32px 0;}
-#charts1:hover img, #charts1 .active img{ background-position: -32px -32px;}
+#charts1 span{ background: url('tools.png') no-repeat 0 0; background-position: -32px 0;}
+#charts1:hover span, #charts1 .active span{ background-position: -32px -32px;}
 
-#options img{ background: url('tools.png') no-repeat 0 0; background-position: 0 0;}
-#options:hover img, #options .active img{ background-position: 0 -32px;}
+#options span{ background: url('tools.png') no-repeat 0 0; background-position: 0 0;}
+#options:hover span, #options .active span{ background-position: 0 -32px;}
 
-#develops img{ background: url('tools.png') no-repeat 0 0; background-position: -64px 0;}
-#develops:hover img, #develops .active img{ background-position: -64px -32px;}
+#develops span{ background: url('tools.png') no-repeat 0 0; background-position: -64px 0;}
+#develops:hover span, #develops .active span{ background-position: -64px -32px;}
 
+#history span{ background: url('tools.png') no-repeat 0 0; background-position: -96px 0;}
+#history:hover span, #history .active span{ background-position: -96px -32px;}
 
-#options img{margin-right: 6px; }
+#options span { margin-right: 6px; }
 /* #charts1 a, #develops a {padding: 6px 10px; line-height: 32px; height: 32px;}*/
 
 #p_search {
@@ -111,11 +100,8 @@ li.disabled a{
   cursor: not-allowed;
 }
 
-
-.navsearch {
-  margin-left: 770px;
-  float: left;
-}
+#search{ margin: 0 auto; }
+.navsearch { display: flex;}
 
 .panel {
   margin-bottom: 20px;

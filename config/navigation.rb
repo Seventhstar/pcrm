@@ -73,17 +73,19 @@ SimpleNavigation::Configuration.run do |navigation|
       sub_nav.item :payments, 'Расходы', clients_path  
     end
 
-    primary.item :absence, 'Отсутствия', absences_path
+    primary.item :absence, 'Календарь', absences_path
 
     primary.item :wiki_records, 'База знаний', wiki_records_path do |sub_nav|
       sub_nav.item :receipts, 'Знания', wiki_records_path
       sub_nav.item :payments, 'Файлы', wiki_files_path  
     end
 
-
-    primary.item :options,  image_tag('dummy.png'), '/options/'+opt_page, html: {class: 'li-right options'}, if: -> { current_user.admin? } #do |sub_nav|
-    primary.item :develops, image_tag('dummy.png'), develops_path, html: {class: 'li-right develops'} , if: -> { current_user.admin? }
-    primary.item :charts1,  image_tag('dummy.png'), statistics_path, html: {class: 'li-right'} , if: -> { current_user.admin? }
+    if current_user.admin? 
+      primary.item :options,  content_tag(:span,' '), '/options/'+opt_page, html: {class: 'li-right options', title: 'Настройки'}
+      primary.item :develops, content_tag(:span), develops_path, html: {class: 'li-right develops',title: 'Разработка'} 
+      primary.item :charts1,  content_tag(:span), statistics_path, html: {class: 'li-right', title: 'Статистика'} 
+      primary.item :history,  content_tag(:span), history_path, html: {class: 'li-right', title: 'История'} 
+    end
 
     # Add an item which has a sub navigation (same params, but with block)
     #primary.item :key_2, 'name', url, options do |sub_nav|

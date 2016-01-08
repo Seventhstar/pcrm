@@ -1,16 +1,8 @@
 <div class="subnav">
-        
-  <%= hidden_field_tag :cur_method,controller.action_name, {controller: controller.controller_name} %>
 
 	<%= sortable_pil "number", "По № договора" %>
 	<%= sortable_pil "users.name", "По исполнителям", 'asc' %>
 	<%= sortable_pil "reason_id", "По статусам" %>
-
-<%= form_tag projects_path, :method => 'get' do %>
-<div class="combobox short_search left"> 
-<%= text_field_tag :prj_search, params[:prj_search], :class => "search_area txt slim_txt", :placeholder=>"Поиск...", :value=>params[:prj_search] %>
-</div>
-<% end %>
 
 <%= link_to 'Добавить', new_project_path, class: "btn_a btn-add btn_slim right space20" %>
 

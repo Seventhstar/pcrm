@@ -16,8 +16,8 @@ class ProjectsController < ApplicationController
       @projects = Project.all
     end
 
-    if !params[:prj_search].nil?
-      @projects = @projects.where('LOWER(address) like LOWER(?)','%'+params[:prj_search]+'%')
+    if !params[:search].nil?
+      @projects = @projects.where('LOWER(address) like LOWER(?)','%'+params[:search]+'%')
     end
 
     if !params[:only_actual] || params[:only_actual] == "true"

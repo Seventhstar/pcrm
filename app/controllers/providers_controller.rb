@@ -19,11 +19,9 @@ class ProvidersController < ApplicationController
     @param_goodstype = params[:goodstype]
     @param_p_status = params[:p_status]
     @param_p_status = 5 if @param_p_status.nil?
-    
 
     @param_search = params[:search]
-
-    
+    @only_actual = !params[:only_actual] || params[:only_actual] == "true"
 
     all_ids = Provider.order(:name).ids
     sp,bp,gtp,ps,s_ids = all_ids,all_ids,all_ids,all_ids,all_ids
@@ -46,13 +44,13 @@ class ProvidersController < ApplicationController
     end
 
     #if @param_p_status && @param_p_status!="" && @param_p_status!='0'
-    if !params[:only_actual] || params[:only_actual] == "true"
+    if  @only_actual
         ps = PStatus.find(@param_p_status).providers.ids
     end
 
-    ids = sp & bp & gtp & ps & s_ids
+    @ids = sp & bp & gtp & ps & s_ids
       
-    @providers = Provider.where(:id => ids).order(:name) # find(ids, :order => :name)
+    @providers = Provider.where(:id => @ids).order(:name) # find(ids, :order => :name)
     store_providers_path
   end
 

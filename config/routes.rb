@@ -96,6 +96,8 @@ Rails.application.routes.draw do
   get "/statistics/" => "statistics#show"
   get "/statistics/:page" => "statistics#show"
 
+  get "/history/" => "history#show"
+  get "/history/:period" => "history#show"
 
 
   # The priority is based upon order of creation: first created -> highest priority.

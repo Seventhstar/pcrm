@@ -57,12 +57,18 @@
           <td><div class="inp_w"><%= f.input :footage, label: 'Метраж' %></div></td>
           <%= td_sum_field(f, :price, 'Цена за м2') %>
           <%= td_sum_field(f, :sum, 'Сумма') %>
+          <td class="va_bottom"> 
+            <% if @project.footage_2==0 %>
+              <span class="sub btn_a" id="add_footage">Добавить</span>
+            <% end %> 
+          </td>
           <%= td_sum_field(f, :sum_total, 'Общая стоимость') %>         
           </tr>
-          <tr>
+          <tr <%= @project.footage_2==0 ? 'style=display:none;' : '' %>  id="tr_footage_2">
           <td><div class="inp_w"><%= f.input :footage_2, label: 'Метраж 2' %></div></td>
           <%= td_sum_field(f, :price_2, 'Цена за м2') %>
           <%= td_sum_field(f, :sum_2, 'Сумма') %>
+          <td></td>
           <td><div class="inp_w"><%= f.input :month_in_gift, label: 'Месяцев в подарок' %></div></td>
           </tr>
           <tr><td class="gr_caption" colspan="5">Фактическая площадь и стоимость</td></tr>
@@ -71,9 +77,10 @@
           <td><div class="inp_w"><%= f.input :footage_real, label: 'Метраж' %></div></td>
           <%= td_sum_field(f, :price_real, 'Цена за м2') %>
           <%= td_sum_field(f, :sum_real, 'Сумма') %>
+          <td></td>
           <%= td_sum_field(f, :sum_total_real, 'Общая стоимость') %>
           </tr>
-          <tr>
+          <tr <%= @project.footage_2==0 ? 'style=display:none;' : '' %>  id="tr_footage_2_real">
           <td><div class="inp_w"><%= f.input :footage_2_real, label: 'Метраж 2' %></div></td>
           <%= td_sum_field(f, :price_2_real, 'Цена за м2') %>
           <%= td_sum_field(f, :sum_2_real, 'Сумма') %>
@@ -149,9 +156,8 @@
 
 
 </div>
-  <div class="form-actions">
-    <%= f.button :submit, value: 'Сохранить', :class => 'sub btn_a fullwidth' %>
-  </div>
+<%= link_to 'Отмена', projects_url, :class => "sub btn_a btn_reset"%>
+            <%= f.button :submit, value: 'Сохранить', :class => 'sub btn_a ' %>
 <% end %>
 
 

@@ -38,13 +38,14 @@
             <td><div class="inp_w"><%= f.input :footage, label: 'Метраж' %></div></td>
             <%= td_sum_field(f, :price, 'Цена за м2') %>
             <%= td_sum_field(f, :sum, 'Сумма') %>
+            <td class="va_bottom"><span class="sub btn_a" id="add_footage">Добавить</span></td>
             <%= td_sum_field(f, :sum_total, 'Общая стоимость' ) %> 
-          </tr>
-          <tr>
+          </tr>=
+          <tr style="display:none;" id="tr_footage_2">
             <td><div class="inp_w"><%= f.input :footage_2, label: 'Метраж 2' %></div></td>
             <%= td_sum_field(f, :price_2, 'Цена за м2') %>
             <%= td_sum_field(f, :sum_2, 'Сумма') %>
-            <td><div class="inp_w"><%= f.input :month_in_gift, label: 'Месяцев в подарок' %></div></td>
+            <td></td>
           </tr>
           <tr><td class="gr_caption">Сроки</td></tr>
             <tr>
@@ -53,9 +54,11 @@
             <td><div class="inp_w"><label>Окончание</label><%= f.text_field :date_end_plan, class: "txt datepicker" %></div></td>
             <td><div class="inp_w"><label>Дней</label> <%= number_field_tag :days, 0, {class: 'form-control'} %></div></td>
             <td></td>
-            <td class="va_bottom">
-            <%= link_to 'Отмена', projects_url, :class => "sub btn_a btn_reset"%>
-            <%= f.button :submit, value: 'Сохранить', :class => 'sub btn_a ' %></td>
+            <td></td>
+            <tr><td><%= link_to 'Отмена', projects_url, :class => "sub btn_a btn_reset"%>
+            <%= f.button :submit, value: 'Сохранить', :class => 'sub btn_a ' %></td></tr>
+            
+            
           </tr>
         </tbody>
         </table>

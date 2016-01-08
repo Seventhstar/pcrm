@@ -16,5 +16,5 @@
     end
 
     if AbsenceReason.all.count==0  
-      AbsenceReason.create([{name: 'По невыясненной причине'},{name: 'На объекте'},{name: 'Отпуск'}])
+      AbsenceReason.create([{name: 'Прогул'},{name: 'На объекте'},{name: 'Выезд в магазин'},{name: 'Отпуск'}])
     end

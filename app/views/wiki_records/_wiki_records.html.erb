@@ -3,9 +3,9 @@
     <% @wiki_records.each do |wiki_record| %>
     <% @files = wiki_record.attachments %>
   
-      <tr>
-        <td class="td_folder" item="<%= wiki_record.id %>"><span class="folder icon <%= wiki_record.admin ? 'admin' : '' %>"> </span></td>
-        <td class="wiki_name" item="<%= wiki_record.id %>"><span><%= wiki_record.name %></span></tr></tr>
+      <tr class="tr_folder" item="<%= wiki_record.id %>">
+        <td class="td_folder"><span class="folder icon <%= wiki_record.admin ? 'admin' : '' %>" id='folder<%= wiki_record.id %>'> </span></td>
+        <td class="wiki_name"><span><%= wiki_record.name %></span></tr></tr>
       <tr class="hidden" id="sub<%= wiki_record.id %>">
         <td></td>
         <td class="wiki_descr"><%= RedCloth.new(wiki_record.description).to_html.html_safe %></td></tr>

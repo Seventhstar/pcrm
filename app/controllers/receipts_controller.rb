@@ -20,8 +20,8 @@ class ReceiptsController < ApplicationController
         p_ids = Receipt.where(provider_id: 0).ids
     end
 
-    if ![nil,''].include? params[:rcpt_search]
-       _prj_ids = Project.where('LOWER(address) like LOWER(?)', '%'+params[:rcpt_search]+'%').ids
+    if ![nil,''].include? params[:search]
+       _prj_ids = Project.where('LOWER(address) like LOWER(?)', '%'+params[:search]+'%').ids
        s_ids   = Receipt.where(project_id: _prj_ids).ids
     end
 
