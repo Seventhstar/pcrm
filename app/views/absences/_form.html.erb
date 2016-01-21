@@ -74,7 +74,7 @@
 <div class="sep_3"></div>
 
 
-<div class='shops'>
+<div class='shops' id='dshops' style="display:<%= @absence.reason_id==3 ? 'block;' : 'none;'%>" >
 <% if !@absence.id.nil? %>
     <%= render "shops" %>
 <% end %>    

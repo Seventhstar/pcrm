@@ -83,11 +83,8 @@ Rails.application.routes.draw do
   post "ajax/add_comment"
   post "ajax/del_comment"
   post "ajax/dev_check" 
-  post "ajax/user_upd" 
   post "ajax/status_check" 
   post "ajax/switch_check" 
-  post "ajax/add_provider_manager" 
-  post "ajax/del_provider_manager" 
   post "ajax/upd_param"
 
   post "file/del_file"

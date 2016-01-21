@@ -23,34 +23,7 @@ before_action :logged_in_user
     render json: list
   end
 
-  def add_provider_manager
-   if params[:provider_id] 
-      pm = ProviderManager.new
-      pm.provider_id = params[:provider_id] 
-      pm.name  = params[:manager][:name]
-      pm.phone = params[:manager][:phone]
-      pm.email = params[:manager][:email]
-      pm.save  
-   end
-   render :nothing => true 
-  end
-
-  def del_provider_manager
-     if params[:p_id] 
-      pm = ProviderManager.find(params[:p_id]).destroy
-     end
-    render :nothing => true
-  end
-
   def add_comment
-   #if params[:lead_id] 
-   ##   leadcomment = LeadsComment.new
-   #   leadcomment.lead_id = params[:lead_id]
-   #   leadcomment.comment = params[:comment]
-   #   leadcomment.user_id = current_user.id
-   #   leadcomment.save	
-   #end
-
    if params[:owner_id]
      com = Comment.new
      com.comment = params[:comment]
@@ -72,15 +45,10 @@ before_action :logged_in_user
   def dev_check
    if params[:develop_id]
       develop = Develop.find(params[:develop_id])
-      if params[:field] == "boss"
-        #develop.boss = params[:checked]
-        
+      if params[:field] == "boss"    
 	      develop.dev_status_id = params[:checked]=='true' ? 3 : 4
-        #puts develop.dev_status_id
         develop.save  
       else
-        #develop.coder = params[:checked]
-        #puts "develop.dev_status_id: "+develop.dev_status_id.to_s
         if [1,2,4].include?(develop.dev_status_id)
           develop.dev_status_id = params[:checked]=='true' ? 2 : 4
           develop.save  
@@ -99,19 +67,6 @@ before_action :logged_in_user
       end
       render :nothing => true 
   end
-
-#  def user_upd
-#   if params[:user_id]
-#      u = User.find(params[:user_id])
-#      if params[:field] == "admin"
-#        u.admin = params[:checked]
-#      else
-#        u.activated = params[:checked]
-#      end
-#      u.save  
-#   end
-#   render :nothing => true
-#  end
 
   def upd_param
   	if params['model'] && params['model']!='undefined'

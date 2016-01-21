@@ -12,6 +12,11 @@ $(document).ready ->
       $('.p_obj').show()
     else
       $('.p_obj').hide()
+    if $(this).val()=='3'
+      $('#dshops').show()
+    else
+      $('#dshops').hide()
+
   $('.edit_absence').on 'click', '#dt_to_check', ->
     $(this).toggleClass('checked')
     $('#absence_checked').val($(this).hasClass('checked'))
