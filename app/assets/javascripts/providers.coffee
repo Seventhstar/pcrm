@@ -60,20 +60,20 @@ $(document).ready ->
      return
 
   # удаляем менеджера
-  $('.page-wrapper').on 'click', '#pmanagers span.icon_remove', ->
-    pr_id = $('#btn-send').attr('providerid')
-    del = confirm('Действительно удалить?')
-    if !del
-      return
-    pm_id = $(this).attr('item_id')
-    $.ajax
-      url: '/ajax/del_provider_manager'
-      data: 'p_id': pm_id
-      type: 'POST'
-      beforeSend: (xhr) ->
-        xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
-        return
-      success: ->
-        update_provider(pr_id)
-        return
-    return
+  # $('.page-wrapper').on 'click', '#pmanagers span.icon_remove', ->
+  #   pr_id = $('#btn-send').attr('providerid')
+  #   del = confirm('Действительно удалить?')
+  #   if !del
+  #     return
+  #   pm_id = $(this).attr('item_id')
+  #   $.ajax
+  #     url: '/ajax/del_provider_manager'
+  #     data: 'p_id': pm_id
+  #     type: 'POST'
+  #     beforeSend: (xhr) ->
+  #       xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
+  #       return
+  #     success: ->
+  #       update_provider(pr_id)
+  #       return
+  #   return

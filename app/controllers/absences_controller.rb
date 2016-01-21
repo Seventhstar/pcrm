@@ -28,6 +28,10 @@ class AbsencesController < ApplicationController
   # GET /absences/1
   # GET /absences/1.json
   def show
+    @shops  = @absence.shops
+    @shop  = AbsenceShop.new
+    @shop_targets = AbsenceShopTarget.all
+
   end
 
   # GET /absences/new

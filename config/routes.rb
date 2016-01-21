@@ -1,11 +1,9 @@
 Rails.application.routes.draw do
   
-  get 'absence_target/name'
-
   get 'project_status/name'
 
   resources :absence_reasons
-
+  resources :absence_shops
   resources :absences
 
   resources :wiki_records do
@@ -48,7 +46,10 @@ Rails.application.routes.draw do
   resources :providers
 
   get    'options'  => 'options#edit'
-  get    'options/:options_page'  => 'options#edit'
+  get    'options/:options_page'  => 'options#edit',:constraints => {:format => /(json|html)/}
+
+  delete 'options/:options_page/:id' => 'options#destroy'
+
   get    'signup'  => 'users#new'
   get    'login'   => 'sessions#new'                                   
   post   'login'   => 'sessions#create'

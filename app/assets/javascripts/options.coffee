@@ -43,6 +43,31 @@ $(document).ready ->
      $.get url, null, null, 'script'
      setLoc 'options' + url
 
+$(document).on 'click', '#btn-sub-send', (e) ->
+  attr_url = $(this).attr('action')
+  prm = $(this).attr('prm')
+  values = $('[name^='+prm+']').serialize()
+  url = document.URL
+  #alert values
+  $.ajax
+    type: 'POST'
+    url: attr_url
+    data: values
+    dataType: 'JSON'
+    beforeSend: (xhr) ->
+      xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
+      return
+    success: ->
+      $.get url, null, null, 'script'
+      show_ajax_message 'Успешно добавлено'
+      return
+    error: (evt, xhr, status, error) ->      
+      errors = evt.responseText
+      #alert(errors)
+      show_ajax_message(errors,'error')
+      showNotifications();
+  return
+
 # запись нового элемента простого справочника
 $(document).on 'click', '#btn-send', (e) ->
   valuesToSubmit = $('form').serialize()
@@ -77,10 +102,15 @@ $(document).on 'click', '#btn-send', (e) ->
   false
 
 # удаляем элемент справочника
-$(document).on 'click', '.option_list span.icon_remove', ->
-    url = $('form').attr('action')
+$(document).on 'click', ' span.icon_remove', ->
     item_id = $(this).attr('item_id')
-    del_url = url + '/' + item_id
+    url = document.URL.replace('#', '') #$('form').attr('action')
+    attr_url = $(this).parents('table').attr('action')
+    if attr_url!=undefined
+      del_url = '/'+attr_url + '/' + item_id
+    else
+      del_url = url + '/' + item_id
+    url = url.replace('options/','')  
     del = confirm('Действительно удалить?')
     if !del
       return
