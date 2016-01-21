@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  get 'absence_target/name'
+
   get 'project_status/name'
 
   resources :absence_reasons

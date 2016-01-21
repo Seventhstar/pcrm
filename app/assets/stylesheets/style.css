@@ -443,6 +443,8 @@ table.tbl_fc td.caption2{width: 235px; padding-right: 15px; padding-top: 0px; te
 
 td.caption3{ font-weight: 500; }
 td.caption3 span{ float: left; padding-top: 8px; padding-right: 15px;}
+td.caption3 .chosen-container span, td.caption3 .chosen-container li { font-weight: normal;}
+td.caption3 .chosen-container span {padding-top: 0px;}
 .inp2{ width: 245px; float: left;}  
 .btn_reset {margin-right: 10px;}
 

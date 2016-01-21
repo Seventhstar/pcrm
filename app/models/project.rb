@@ -6,6 +6,7 @@ class Project < ActiveRecord::Base
   has_many :receipts
   has_many :absence
 	accepts_nested_attributes_for :client
+  has_paper_trail
 
   def client_name
     client.try(:name)

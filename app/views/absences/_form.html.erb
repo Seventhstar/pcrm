@@ -1,3 +1,4 @@
+<div>
 <%= simple_form_for(@absence) do |f| %>
 
   <table class="tbl_fc tbl_fc_1">
@@ -7,11 +8,18 @@
             <%= f.select 'reason_id', options_for_select(@reasons.collect{ |u| [u.name, u.id] },@absence.reason_id) %>
           </div>
       </td>
-     <% disp = @absence.reason_id==2 ? 'table-cell;' : 'none;' %>
-      <td class="caption caption_sm p_obj" style="display: <%= disp %>">Проект:</td><td class="p_obj" style="display: <%= disp %>">
+      <td></td>
+      </tr>
+      <% disp = @absence.reason_id==2 ? 'table-row;' : 'none;' %>
+      <tr class="p_obj" style="display: <%= disp %>">
+     
+          <td class="caption">Проект:</td>
+          <td colspan="3">
           <div class="inp_w">
           <%= f.select :project_id, content_tag(:option,'Выберите...',:value=>0)+options_for_select(@projects.collect{ |u| [u.address, u.id] },@absence.project_id), {},{class: 'chosen'} %>  
           </div></td>
+          <td class="caption">Цель:</td>
+          <td><%= f.select :target_id, content_tag(:option,'Выберите...',:value=>0)+options_for_select(@targets.collect{ |u| [u.name, u.id] },@absence.target_id), {},{class: 'chosen'} %></td>
       </tr>
     <tr><td class="caption">Комментарий:</td>
       <td colspan="3"><div class="inp_w" ><%= f.text_area :comment, class: 'txt alone',label: false %></div></td></tr>
@@ -32,6 +40,23 @@
       <span class="time_separator">–</span>
       <div class="inp_w"><%= f.text_field :t_to, :value => @t_to, label: false, class: "txt timepicker" %></div></td>
       <td ></td></tr>
+      <% if is_admin? %>
+        <tr><td class="caption">Создатель:</td>
+            <td width='490px;' colspan="3"><div class="inp_w" >
+             <%= f.select :user_id, options_for_select(User.order(:name).collect{ |u| [u.name, u.id] },@absence.user_id), {},{class: 'chosen'} %></div>
+        </td></tr>
+
+            <% if controller.action_name == 'edit' %>
+      <tr><td class="caption">Изменить причину на:</td>
+      <td colspan="3"><div class="inp_w"><%= f.select 'new_reason_id', options_for_select(@reasons.collect{ |u| [u.name, u.id] },@absence.new_reason_id), {},{class: 'chosen'} %>
+      </div></td></tr>
+      <% end -%>
+
+    <tr><td class="last_td"></td>
+      <td class="last_td" colspan="3"><%= link_to 'Отмена', absences_url, :class => "sub btn_a btn_reset"%>
+        <%= f.button :submit, value: 'Сохранить', :class => 'sub btn_a' %></td></tr>
+    <% end %>
+
   </table>
 
     <div class="panel-left">
@@ -39,23 +64,20 @@
 
 
 
-    <% if is_admin? %>
-      <tr><td class="caption">Создатель:</td>
-        <td width='490px;'><div class="inp_w" >
-        <%= f.select :user_id, options_for_select(User.order(:name).collect{ |u| [u.name, u.id] },@absence.user_id), {},{class: 'chosen'} %>
-      </div></td></tr>
-    <% end %>
 
-    <% if controller.action_name == 'edit' %>
-      <tr><td class="caption">Изменить причину на:</td>
-      <td><div class="inp_w"><%= f.select 'new_reason_id', options_for_select(@reasons.collect{ |u| [u.name, u.id] },@absence.new_reason_id), {},{class: 'chosen'} %>
-      </div></td></tr>
-      <% end -%>
 
-    <tr><td class="last_td"></td>
-      <td class="last_td"><%= link_to 'Отмена', absences_url, :class => "sub btn_a btn_reset"%>
-        <%= f.button :submit, value: 'Сохранить', :class => 'sub btn_a' %></td></tr>
     </table>
   </div>
 
 <% end %>
+</div>
+<div class="sep_3"></div>
+
+
+<div class='shops'>
+<% if !@absence.id.nil? %>
+    <%= render "shops" %>
+<% end %>    
+</div>
+
+<div class="sep_3"></div>

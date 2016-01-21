@@ -56,6 +56,10 @@ ru:
   actual: Актуальный
   Actual: Актуальный
   ProjectType: Вид проекта
+  Lead: Лид
+  Attachment: Файл
+  Develop: Задача
+  Provider: Поставщик
 
   new_Priority: Новый приоритет
   new_ProjectType: Новый вид проекта

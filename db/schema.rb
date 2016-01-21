@@ -11,12 +11,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151227151259) do
+ActiveRecord::Schema.define(version: 20160119054229) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "absence_reasons", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "absence_shop_targets", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "absence_shops", force: :cascade do |t|
+    t.integer  "absence_id"
+    t.integer  "shop_id"
+    t.integer  "target_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "absence_targets", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -32,6 +52,7 @@ ActiveRecord::Schema.define(version: 20151227151259) do
     t.integer  "project_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.integer  "target_id"
   end
 
   create_table "attachments", force: :cascade do |t|

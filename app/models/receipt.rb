@@ -1,8 +1,10 @@
 class Receipt < ActiveRecord::Base
-belongs_to :payment_type
-belongs_to :user
-belongs_to :project
-belongs_to :provider
+	
+	belongs_to :payment_type
+	belongs_to :user
+	belongs_to :project
+	belongs_to :provider
+	has_paper_trail
 
 	def payment_type_name
 		payment_type.try(:name)

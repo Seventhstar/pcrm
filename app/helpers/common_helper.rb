@@ -91,14 +91,20 @@ module CommonHelper
     history
   end
 
-  def get_history_with_files(obj)
-    history = Hash.new
-    # изменения в самом объекте
-    obj.versions.reverse.each do |version|
-      if version[:event]!="create" && version != obj.versions.first 
-        author = find_version_author_name(version) 
-        at = version.created_at.localtime.strftime("%Y.%m.%d %H:%M:%S") 
-        at_hum = version.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 
+  def get_all_history
+    pt = PaperTrail::Version.order(created_at: :desc).limit(50) #.where('created_at > ?',Date.yesterday)
+  end
+
+  def link_to_obj(obj, id)
+    "<a href=" + [nil,obj.downcase.pluralize,id,'edit'].join('/')+ ">" + t(obj) +' #' + id.to_s + "</a>"
+  end
+
+  def changeset_detail(version)
+    obj = YAML.load(version['object_changes'])
+    obj = YAML.load(version['object']) if obj.nil?
+    info = {}
+    case version[:event]
+    when "update" 
         changeset = version.changeset 
         ch = Hash.new
         desc = []
@@ -108,13 +114,54 @@ module CommonHelper
           from = from_to['from'] 
           to = from_to['to']
           if from.present? || to.present?
-          	from = from.nil? ? "" : from.to_s
+            from = from.nil? ? "" : from.to_s
             desc << (from.empty? ? ('Заполнено поле <b>'+t(k)+':</b> «'+to.to_s+'»') : ('Изменено поле <b>'+t(k)+'</b> c «'+from.to_s+'» на «'+to.to_s+'»') )
             ch.store( index, {'field' => t(k), 'from' => from, 'to' => to, 'description' => desc } )
           end
         end
+    when "create"
+        ch = {}
+        case version['item_type']
+        when 'Attachment'
+          desc = 'Прикреплен файл '+obj['name'][1]
+        when 'Develop'
+          desc = 'Создана ' +link_to_obj(version["item_type"], version['item_id'])
+        else
+          desc = 'Создан ' + link_to_obj(version["item_type"], version['item_id'])
+        end
+    else
+      ch = {}
+      desc = {}
+    end
+    {'ch' => ch, 'desc' => desc}
+  end
 
-        history.store( at.to_s, {'at' => at_hum,'type'=> 'ch','author' => author,'changeset' => ch, 'description' => desc})
+  def get_version_details(version)
+    obj = YAML.load(version['object_changes'])
+    obj = YAML.load(version['object']) if obj.nil?
+    p version
+    # if version['item_type'] == 'Attachment'
+    #   info = {:desc => 'Прикреплен файл '+obj['name'][1]}
+    # else
+       info = changeset_detail(version)
+    # end
+    obj['inf'] = info
+
+    obj
+    
+  end
+
+  def get_history_with_files(obj)
+    history = Hash.new
+    # изменения в самом объекте
+    obj.versions.reverse.each do |version|
+      if version[:event]!="create" && version != obj.versions.first 
+        author = find_version_author_name(version) 
+        at = version.created_at.localtime.strftime("%Y.%m.%d %H:%M:%S") 
+        at_hum = version.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 
+        info = changeset_detail(version)
+
+        history.store( at.to_s, {'at' => at_hum,'type'=> 'ch','author' => author,'changeset' => info['ch'], 'description' => info['desc']})
       end
     end
    

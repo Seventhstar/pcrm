@@ -34,18 +34,26 @@ class AbsencesController < ApplicationController
   def new
     @absence = Absence.new
     @reasons = AbsenceReason.all
+    @targets = AbsenceTarget.all
     @projects = Project.all
     @dt_from = DateTime.now.try('strftime',"%d.%m.%Y")
     @dt_to = @dt_from
     @t_from = "10:00"
     @t_to = '19:00'
     @checked = false
+    @shops = {}
+    @shop  = AbsenceShop.new
+    @shop_targets = AbsenceShopTarget.all
   end
 
   # GET /absences/1/edit
   def edit
     @reasons = AbsenceReason.all
     @projects = Project.all
+    @targets = AbsenceTarget.all
+    @shops  = @absence.shops
+    @shop  = AbsenceShop.new
+    @shop_targets = AbsenceShopTarget.all
     @dt_from = @absence.dt_from.try('strftime',"%d.%m.%Y")
     @dt_to = @absence.dt_to.try('strftime',"%d.%m.%Y")
     @t_from = @absence.dt_from.try('strftime',"%H:%M")
@@ -103,10 +111,12 @@ class AbsencesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def absence_params
-      a = params.require(:absence).permit(:user_id, :dt_from, :dt_to, :reason_id, :new_reason_id, :comment, :project_id,:t_from,:t_to,:checked)
-      a['dt_to'] = a['dt_from'] if a['checked']=='false'
+      a = params.require(:absence).permit(:user_id, :dt_from, :dt_to, :reason_id, :new_reason_id, :comment, :project_id,:t_from,:t_to,:checked, :target_id)
+      a['dt_to'] = a['dt_from'] if a['checked']=='false' || a['dt_to'].nil?
       a['dt_from'] = a['dt_from'].gsub("00:00", '')+ ' ' + a['t_from']
-      a['dt_to'] = a['dt_to'].gsub("00:00", '') +' ' + a['t_to']
+      
+      a['dt_to'] = a['dt_to'].gsub("00:00", '') +' ' + a['t_to'] 
+      
       a
     end
 

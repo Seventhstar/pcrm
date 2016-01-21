@@ -18,3 +18,9 @@
     if AbsenceReason.all.count==0  
       AbsenceReason.create([{name: 'Прогул'},{name: 'На объекте'},{name: 'Выезд в магазин'},{name: 'Отпуск'}])
     end
+    if AbsenceTarget.all.count==0  
+      AbsenceTarget.create([{name: 'Приемка кухни'},{name: 'Встреча с заказчиком'},{name: 'Обсуждение вопросов с прорабом'}])
+    end
+    if AbsenceShopTarget.all.count==0  
+      AbsenceShopTarget.create([{name: 'Подбор'},{name: 'Корректировка'},{name: 'Заказ'}])
+    end

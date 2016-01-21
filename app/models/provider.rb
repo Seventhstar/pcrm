@@ -9,6 +9,7 @@ class Provider < ActiveRecord::Base
     has_many :goodstypes, through: :provider_goodstypes
     has_many :receipts
     belongs_to :p_status
+    has_paper_trail
 
     attr_reader :style_tokens
     attr_reader :budget_tokens

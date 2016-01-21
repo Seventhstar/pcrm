@@ -6,6 +6,7 @@ $(document).ready ->
   chosen_params =
     width: '99.5%'
     disable_search: 'true'
+  $('#shop_provider_id').chosen(chosen_params)
   $('#absence_reason_id').chosen(chosen_params).on 'change', ->
     if $(this).val()=='2' 
       $('.p_obj').show()

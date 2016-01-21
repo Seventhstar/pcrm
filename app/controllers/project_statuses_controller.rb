@@ -3,7 +3,6 @@ class ProjectStatusesController < ApplicationController
   before_action :logged_in_user
   
   def index
-
     @items = ProjectStatus.order(:name)
     @item  = ProjectStatus.new
   end

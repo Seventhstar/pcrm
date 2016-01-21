@@ -1,0 +1,36 @@
+
+<div class="panel panel-default">
+<div class="panel-heading table-heading head month"> Магазины:</div>
+<table class="tleads" id="pmanagers">
+  <thead>
+    <tr>
+      <th width="380px" class="center">Магазин</th>
+      <th class="center">Цель</th>
+      <th class="edit_delete"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @shops.each do |shop| %>
+      <tr>
+        <td><%= shop.name %></td>
+        <td><%= shop.phone %></td>
+        <%= td_tool_icons(shop, 'delete','span') %>
+      </tr>
+    <% end %>
+
+
+    <tr>
+      <td class="caption3"><span>Новый магазин: </span><div class="inp2" >
+      <%= select_options_with_special('shop[provider_id]','Выберите...','* другой', Provider.order(:name), @shop.shop_id) %>
+      </div> </td>
+      
+      <td> <%= select "shop", :target_id, content_tag(:option,'Выберите...',:value=>0)+options_for_select(@shop_targets.collect{ |u| [u.name, u.id] },0),{},{class: 'chosen'} %>
+      </td>
+      <td><span class="sub btn_a" id="btn-send" absid="<%= @absence.id %>"> Добавить</span></td>
+    </tr>
+
+  </tbody>
+</table>
+
+</div>
