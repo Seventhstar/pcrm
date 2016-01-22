@@ -100,8 +100,10 @@ module CommonHelper
   end
 
   def changeset_detail(version)
-    obj = YAML.load(version['object_changes'])
+    obj = YAML.load(version['object_changes']) if !version['object_changes'].nil?
+    p version['object_changes']
     obj = YAML.load(version['object']) if obj.nil?
+    p obj
     info = {}
     case version[:event]
     when "update" 
@@ -129,7 +131,12 @@ module CommonHelper
         else
           desc = 'Создан ' + link_to_obj(version["item_type"], version['item_id'])
         end
+    when "destroy"    
+      ch = {}
+      ch.store(0,'Удален')
+      desc = 'Удален ' + link_to_obj(version["item_type"], version['item_id'])
     else
+      p "version[:event]",version[:event]
       ch = {}
       desc = {}
     end
@@ -137,16 +144,19 @@ module CommonHelper
   end
 
   def get_version_details(version)
-    obj = YAML.load(version['object_changes'])
+    #p "version",version
+    obj = YAML.load(version['object_changes']) if !version['object_changes'].nil?
     obj = YAML.load(version['object']) if obj.nil?
-    p version
+    
+    #p version
     # if version['item_type'] == 'Attachment'
     #   info = {:desc => 'Прикреплен файл '+obj['name'][1]}
     # else
        info = changeset_detail(version)
+       p info
     # end
     obj['inf'] = info
-
+    p "obj",obj
     obj
     
   end
