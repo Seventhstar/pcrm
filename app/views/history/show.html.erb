@@ -20,16 +20,14 @@
     <% cur_day = day %>
   <% end %>
     <% author = find_version_author_name(version) %>    
-    <% p "_obj", version %>
+    <% p version %>
     <% _obj = get_version_details(version) %> 
     
-    <!-- <% _obj = YAML.load(version['object']) if _obj.nil? %> -->
   <li><span><%= version['created_at'].try('strftime',"%H:%M:%S") %></span> 
     <% if version['event'] == 'create' %>
         <span><%= author %></span> <span><%= raw(_obj['inf']['desc']) %></span>
-    <% elsif version['event'] == 'destroy' %>
-        <span><%= author %></span> <span><%= raw(_obj['inf']['desc']) %></span>
-    <% else %>
+    <% elsif version['event'] == 'update' %>
+        <% p "_obj", version %>
           <% v = _obj['inf']['ch'][0] %>
           <%= author %>, <span class="date"><%= raw(link_to_obj(version["item_type"], version['item_id'])) %></span>
             <ul>
@@ -37,6 +35,9 @@
                  <li><%= raw(descr) %></li>
                 <% end %>
             </ul>
+        
+    <% else %>
+        <span><%= author %></span> <span><%= raw(_obj['inf']['desc']) %></span>  
     <% end %>
   
   </li>

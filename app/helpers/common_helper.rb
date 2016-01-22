@@ -136,7 +136,7 @@ module CommonHelper
       ch.store(0,'Удален')
       desc = 'Удален ' + link_to_obj(version["item_type"], version['item_id'])
     else
-      p "version[:event]",version[:event]
+      STDERR.puts "version[:event]",version[:event]
       ch = {}
       desc = {}
     end
