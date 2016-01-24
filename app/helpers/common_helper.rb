@@ -15,8 +15,10 @@ module CommonHelper
     
   end
 
-  def from_to_from_changeset(changeset,event)
-      to=""
+  def from_to_from_changeset(obj,changeset,event)
+      
+    to=""
+
     case event 
     when "updated_at"
     when "coder"
@@ -27,25 +29,24 @@ module CommonHelper
       from = nil
       pref = changeset[1]? '': ' не '
       to = 'Помечен как <b>' + pref + ' проверено </b>'
-    when "channel_id"
-      from = channel_name(changeset[0])
-      to = channel_name(changeset[1]) 
-    when "dev_status_id"
-      from = status_name(changeset[0])
-      to = status_name(changeset[1])      
-    when "status_id"
-      from = status_name(changeset[0])
-      to = status_name(changeset[1])
-    when "priority_id"
-      from = priority_name(changeset[0])
-      to = priority_name(changeset[1]) 
-    when "project_id"
-      from = project_name(changeset[0])
-      to = project_name(changeset[1]) 
-    when "user_id","ic_user_id"
-      from = user_name(changeset[0])
-      to = user_name(changeset[1]) 
+    when 'dt_to', 'dt_from'
+      from = changeset[0].try('strftime',"%Y.%m.%d %H:%M" )
+      to = changeset[1].try('strftime',"%Y.%m.%d %H:%M" )
+
+    when "channel_id", 'reason_id','new_reason_id','target_id','dev_status_id','status_id', 'priority_id', 'project_id',"user_id","ic_user_id"
+
+      attrib = event.gsub('_id','').gsub('new_','')
+      cls = obj["item_type"].constantize.find(obj["item_id"]).try(attrib).class
+
+      if !changeset[0].nil? && changeset[0]!=0
+        from = cls.where(id: changeset[0]).first_or_initialize.try(:name)
+      end
+      if !changeset[1].nil? && changeset[1]!=0
+        to = cls.where(id: changeset[1]).first_or_initialize.try(:name)
+      end
+
     else
+
       from = changeset[0]
       to = changeset[1]
     end
@@ -65,8 +66,8 @@ module CommonHelper
         ch = Hash.new
         desc = []
         changeset.keys.each_with_index do |k,index| 
-          
-          from_to = from_to_from_changeset(changeset[k],k)
+         # p 'k',k
+          from_to = from_to_from_changeset(version,changeset[k],k)
           from = from_to['from'] 
           to = from_to['to']
           if from.present? || to.present?
@@ -91,19 +92,27 @@ module CommonHelper
     history
   end
 
-  def get_all_history
-    pt = PaperTrail::Version.order(created_at: :desc).limit(50) #.where('created_at > ?',Date.yesterday)
-  end
+  # def get_all_history
+  #   pt = PaperTrail::Version.order(created_at: :desc).limit(50) #.where('created_at > ?',Date.yesterday)
+  # end
 
   def link_to_obj(obj, id)
-    "<a href=" + [nil,obj.downcase.pluralize,id,'edit'].join('/')+ ">" + t(obj) +' #' + id.to_s + "</a>"
+     lnk =  t(obj) +' #' + id.to_s
+    "<a href=" + [nil,obj.tableize,id,'edit'].join('/')+ ">" + lnk + "</a>"
+  end
+
+  def link_to_file(obj)
+    type = obj['owner_type']
+    id   = obj['owner_id'][1]
+    name = obj['name'][1]
+    "<a href=" + [nil,'download',type,id,name].join('/')+ ">" + name + "</a>"
   end
 
   def changeset_detail(version)
     obj = YAML.load(version['object_changes']) if !version['object_changes'].nil?
-    p version['object_changes']
+    #p version['object_changes']
     obj = YAML.load(version['object']) if obj.nil?
-    p obj
+
     info = {}
     case version[:event]
     when "update" 
@@ -111,8 +120,8 @@ module CommonHelper
         ch = Hash.new
         desc = []
         changeset.keys.each_with_index do |k,index| 
-          
-          from_to = from_to_from_changeset(changeset[k],k)
+          #p version['object_changes']
+          from_to = from_to_from_changeset(version,changeset[k],k)
           from = from_to['from'] 
           to = from_to['to']
           if from.present? || to.present?
@@ -124,53 +133,43 @@ module CommonHelper
     when "create"
         ch = {}
         case version['item_type']
-        when 'Attachment'
-          desc = 'Прикреплен файл '+obj['name'][1]
+        when 'Attachment' #['name'][1]
+          desc = 'Прикреплен файл '+link_to_file(obj)  + ' к объекту: ' + link_to_obj(obj['owner_type'][1],obj['owner_id'][1])
         when 'Develop'
           desc = 'Создана ' +link_to_obj(version["item_type"], version['item_id'])
+        when 'Absence'
+          desc = 'Создано ' + link_to_obj(version["item_type"], version['item_id'])
         else
           desc = 'Создан ' + link_to_obj(version["item_type"], version['item_id'])
         end
+
     when "destroy"    
       ch = {}
       ch.store(0,'Удален')
       desc = 'Удален ' + link_to_obj(version["item_type"], version['item_id'])
     else
-      STDERR.puts "version[:event]",version[:event]
+      p "version[:event]",version[:event]
       ch = {}
-      desc = {}
+      desc = {"version[:event]"=> version[:event]}
     end
-    {'ch' => ch, 'desc' => desc}
+    obj['inf'] = {'ch' => ch, 'desc' => desc}
+    obj
   end
 
   def get_version_details(version)
-    #p "version",version
-    obj = YAML.load(version['object_changes']) if !version['object_changes'].nil?
-    obj = YAML.load(version['object']) if obj.nil?
-    
-    #p version
-    # if version['item_type'] == 'Attachment'
-    #   info = {:desc => 'Прикреплен файл '+obj['name'][1]}
-    # else
-       info = changeset_detail(version)
-       p info
-    # end
-    obj['inf'] = info
-    p "obj",obj
-    obj
-    
+    info = changeset_detail(version)
   end
 
   def get_history_with_files(obj)
     history = Hash.new
+    p "----1"
     # изменения в самом объекте
     obj.versions.reverse.each do |version|
       if version[:event]!="create" && version != obj.versions.first 
         author = find_version_author_name(version) 
         at = version.created_at.localtime.strftime("%Y.%m.%d %H:%M:%S") 
         at_hum = version.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 
-        info = changeset_detail(version)
-
+        info = changeset_detail(version)['inf']
         history.store( at.to_s, {'at' => at_hum,'type'=> 'ch','author' => author,'changeset' => info['ch'], 'description' => info['desc']})
       end
     end

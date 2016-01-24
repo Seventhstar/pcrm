@@ -1,0 +1,31 @@
+.pagination { display: block; overflow: hidden;	padding: 0 20px 2px 0;}
+
+.pagination a, .pagination span, .pagination em {
+	float: left;
+	color: #666;
+	font-size:14px;
+	line-height:24px;
+	font-weight: normal;
+	font-style: normal;
+	text-align: center;
+	border: 1px solid #BBB;
+	min-width: 14px;
+	padding: 0 7px;
+	margin: 0 3px 0 0;
+	text-decoration: none;
+}
+
+.pagination a:hover, .pagination .current {
+		text-decoration: none;
+		background: #ff8411;
+	  color: #fff;
+	  border: 1px solid #ff8411;
+}
+
+.pagination .disabled {
+	background: #c3c3c3;
+	color: #fff;
+	cursor: default;
+}
+
+.pagination .gap{ border: none;}

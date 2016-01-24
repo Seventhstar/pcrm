@@ -8,23 +8,27 @@ module ApplicationHelper
   def is_admin?
     current_user.admin? 
   end
-  
+
+  def date_ago( day )
+    now = Date.today
+    days = (now-day.to_date).to_i
+    case days
+    when 0
+      'Сегодня'
+    when 1
+      'Вчера'
+    else
+      time_ago_in_words(day)  + ' назад ('+ day.try('strftime',"%d.%m.%Y") + ')' 
+    end
+    
+  end
+
   def opt_page
      if self.controller_name =='leads' 
         'statuses'
      else
         'budgets'
      end
-  end
-
-  def will_paginate(collection_or_options = nil, options = {})
-    if collection_or_options.is_a? Hash
-      options, collection_or_options = collection_or_options, nil
-    end
-    unless options[:renderer]
-      options = options.merge :renderer => BootstrapPagination::Rails
-    end
-    super *[collection_or_options, options].compact
   end
 
   def calls_color

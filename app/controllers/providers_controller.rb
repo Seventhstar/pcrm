@@ -41,6 +41,7 @@ class ProvidersController < ApplicationController
 
     if params[:goodstype] && params[:goodstype]!="" && params[:goodstype]!='0'
         gtp = Goodstype.find(params[:goodstype]).providers.ids
+        @goodstypes = [Goodstype.find(params[:goodstype])]
     end
 
     #if @param_p_status && @param_p_status!="" && @param_p_status!='0'

@@ -1,9 +1,10 @@
 class HistoryController < ApplicationController
   before_action :logged_in_user
   include CommonHelper
+
   
   def show
-    @h = get_all_history
+    @h = PaperTrail::Version.paginate(:page => params[:page], :per_page => 30).order('created_at DESC') #order(created_at: :desc).limit(50) #get_all_history
   end
 end
 

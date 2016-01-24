@@ -9,6 +9,7 @@ ru:
   will_paginate:
     next_label: "вперед"
     previous_label: "назад"
+    page_gap: '...'
   Status: "статус"
   January: "Январь"
   February: "Февраль"
@@ -31,6 +32,12 @@ ru:
   ic_user_id: Ответственный
   priority_id: Приоритет
   project_id: Проект 
+  reason_id: Причина
+  new_reason_id: Новая причина
+  target_id: Цель
+  dt_from: с
+  dt_to: по
+
   boss: Проверено
   coder: Выполнено
   info: Информация о запросе
@@ -61,6 +68,7 @@ ru:
   Absence: Отсутствие
   Develop: Задача
   Provider: Поставщик
+  Reason: Причина
 
   new_Priority: Новый приоритет
   new_ProjectType: Новый вид проекта

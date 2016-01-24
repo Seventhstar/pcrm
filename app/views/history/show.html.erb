@@ -1,45 +1,40 @@
 <% cur_day = nil %>
 <% first_table = true %>
 
-<div class="hl hl_a">История изменений <span class="grey">(<%= @h.count %>)</span></div>
+<div class="hl hl_a bd">История изменений <span class="grey"></span></div>
 <div class="historyChange_list_a">
 
   <% @h.each do |version| %>
-
-  <% day = version['created_at'].beginning_of_day %>
-  <% if cur_day != day %>
-
-    <% if !first_table %>
-      </ul></div>
-      
-    <% end %>
-    <div class="item">
-    <div class="head"><%= day.try('strftime',"%d.%m.%Y") %>, <span class="date"><%= version['at'] %></span></div>
-    <ul>
-    <% first_table = false %>
-    <% cur_day = day %>
-  <% end %>
-    <% author = find_version_author_name(version) %>    
-    <% p version %>
-    <% _obj = get_version_details(version) %> 
     
-  <li><span><%= version['created_at'].try('strftime',"%H:%M:%S") %></span> 
-    <% if version['event'] == 'create' %>
-        <span><%= author %></span> <span><%= raw(_obj['inf']['desc']) %></span>
-    <% elsif version['event'] == 'update' %>
-        <% p "_obj", version %>
-          <% v = _obj['inf']['ch'][0] %>
-          <%= author %>, <span class="date"><%= raw(link_to_obj(version["item_type"], version['item_id'])) %></span>
-            <ul>
-                <% v['description'].each do |descr| %>
-                 <li><%= raw(descr) %></li>
-                <% end %>
-            </ul>
-        
-    <% else %>
-        <span><%= author %></span> <span><%= raw(_obj['inf']['desc']) %></span>  
+    <% day = version['created_at'].beginning_of_day %>
+    
+    <% if cur_day != day %>
+      <% if !first_table %> </ul></div> <% end %>
+      <% first_table = false %>
+      <% cur_day = day %>
+      <div class="item">
+        <div class="head"><%= date_ago(day) %></div>
+        <ul>     
     <% end %>
-  
-  </li>
+
+    <% author = find_version_author_name(version) %>    
+    <% _obj = get_version_details(version) %> 
+      
+    <li><span><%= version['created_at'].try('strftime',"%H:%M:%S") %></span> 
+      <% if version['event'] == 'update' %>
+        <% v = _obj['inf']['ch'][0] %>
+        - <%= author %>. Изменения в объекте: <span class="date"><%= raw(link_to_obj(version["item_type"], version['item_id'])) %></span>
+        <ul>
+          <% v['description'].each do |descr| %>
+            <li><%= raw(descr) %></li>
+          <% end %>
+        </ul>          
+      <% else %>
+          <span> - <%= author %></span>. <span><%= raw(_obj['inf']['desc']) %></span>  
+      <% end %>  
+    </li>
+    
   <% end %>
 </div>
+<div class="sep_3"></div>
+<%= will_paginate @h %>
