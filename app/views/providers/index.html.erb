@@ -2,13 +2,7 @@
 <div class="panel-left">
 <%= form_tag providers_path, :method => 'get', :id => "p_search" do %>
 
-<label class="combobox">
-<%= select_tag "style", content_tag(:option,'Стиль...',:value=>0)+options_from_collection_for_select(@styles, "id", "name",:selected=>@param_style) %>
-</label>
 
-<label class="combobox">
-<%= select_tag "budget", content_tag(:option,'Бюджет...',:value=>0)+options_from_collection_for_select(@budgets, "id", "name",:selected=>@param_budget) %> 
-</label>
 
 <label class="combobox">
 <%= select_tag "goodstype", content_tag(:option,'Вид товара...',:value=>0)+options_from_collection_for_select(Goodstype.order(:name), "id", "name",:selected=>@param_goodstype) %> 

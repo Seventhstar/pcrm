@@ -14,9 +14,6 @@
     <tr>
       <th>Название</th>
       <th width="160px">Специализация</th>
-      <% if !@only_actual %>
-        <th width="130px">Статус</th>
-      <% end %>
       <th width="130px">Телефон</th>
       <th width="170px">Сайт</th>
       <th width="220px">Адрес</th>
@@ -27,12 +24,9 @@
   <tbody>
     
       <% prv.each do |provider| %>
-        <tr>
+        <tr class=<%= provider.p_status_id ==5 ? "": "nonactual" %> >
           <td><%= provider.name %></td>
           <td><%= provider.spec %></td>
-          <% if !@only_actual %>
-            <td><%= colored_status(provider.p_status) %></td>
-          <% end %>
           <td><%= provider.phone %></td>
           <td><%= site_link(provider.url) %></td>
           <td><%= provider.address %></td>

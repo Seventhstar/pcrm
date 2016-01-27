@@ -11,14 +11,6 @@
       <td><div class="inp_w"><%= f.input el, label: false %></div></td></tr>
     <% end %>
 
-    <tr><td class="caption">Стили:</td>
-      <td><div class="select_custom select">
-      <%= f.collection_select(:style_ids, Style.all, :id, :name, {}, {multiple: true,  class: "chosen-select"}) %>  </div>
-      </td></tr>
-    <tr><td class="caption">Бюджеты:</td>
-      <td><div class="select_custom select">
-      <%= f.collection_select(:budget_ids, Budget.all, :id, :name, {}, {multiple: true,  class: "chosen-select", :include_blank => 'None'}) %>  </div>
-        </td></tr>
     <tr><td class="caption">Виды товаров:</td>
       <td><div class="select_custom select">
       <%= f.collection_select(:goodstype_ids, Goodstype.all, :id, :name, {}, {multiple: true,  class: "chosen-select", :include_blank => 'None'}) %>    </div>

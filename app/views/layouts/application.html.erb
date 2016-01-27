@@ -21,7 +21,7 @@
     <div class="header">
       <div class="bw_i">
        
-        <div class="time_h">20:06:28</div>
+        
 
         <% if controller.action_name == 'index' %>
         <div class="navsearch"> 
@@ -30,6 +30,7 @@
         <% end -%>
 
         <div class="user_h">
+        <div class="time_h">20:06:28</div>
           <span class="name"><%= current_user.name %></span>
           <%= link_to logout_path, method: :delete, class: "orange logout" do %>
           <span class="icon icon_logout"></span>выйти
@@ -37,6 +38,7 @@
         </div>
        
       </div>
+      <div class="pic avatar"><%= avatar_for(current_user) %></div>
        <div class="menu_main menu_h">
           <%= render_navigation :level => 1 %>
         </div>

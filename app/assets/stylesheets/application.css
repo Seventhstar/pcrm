@@ -15,9 +15,8 @@
  *= require_self
   */
 
-#leads_chart{
-  min-height: 450px;
-}
+#leads_chart{ min-height: 450px;}
+.avatar{position: absolute; right: 0; top: 10px;}
 
 #password_reset_email{width:60%;}
 input.password_resets{ margin: 0 !important;}
@@ -65,13 +64,8 @@ li.flash_danger {}
   margin-top: 0 !important;
 }
 
-.li-right a {
- padding: 6px 8px !important; line-height: 32px !important; 
- /*height: 32px !important;*/ 
-}
-/*.li-right a img{
-  margin-top: 6px !important;
-  }*/
+.li-right a { padding: 6px 8px !important; line-height: 32px !important;}
+
 .li-right a span {padding: 6px 16px; margin: 0;}
 
 #charts1 span{ background: url('tools.png') no-repeat 0 0; background-position: -32px 0;}
@@ -89,8 +83,7 @@ li.flash_danger {}
 #options span { margin-right: 6px; }
 /* #charts1 a, #develops a {padding: 6px 10px; line-height: 32px; height: 32px;}*/
 
-#p_search {
-  float: left;
+#p_search {  float: left;
 }
 
 .td_right {text-align: right; padding-right: 10px;}
@@ -100,7 +93,7 @@ li.disabled a{
   cursor: not-allowed;
 }
 
-#search{ margin: 0 auto; }
+/*#search{ margin: 0 auto; }*/
 .navsearch { display: flex;}
 
 .panel {
@@ -116,16 +109,7 @@ li.disabled a{
   border-color: #ddd;
 }
 
-.panel-default>.panel-heading {
-  //color: #333;
-  //background-color: #f5f5f5;
-  //border-color: #ddd;
-}
-
-
-tr.nonactual td{
-  color: #ccc;
-}
+tr.nonactual td, tr.nonactual td a{ color: #ccc; }
 
 
 .img_link img{
