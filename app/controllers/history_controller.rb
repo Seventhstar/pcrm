@@ -4,7 +4,8 @@ class HistoryController < ApplicationController
 
   
   def show
-    @h = PaperTrail::Version.paginate(:page => params[:page], :per_page => 30).order('created_at DESC') #order(created_at: :desc).limit(50) #get_all_history
+    @h = PaperTrail::Version.where(item_type: 'Lead').paginate(:page => params[:page], :per_page => 30).order('created_at DESC') #order(created_at: :desc).limit(50) #get_all_history
+    @types = [['Все', ""], ['Лиды', "Lead"], ['Поставщики', "Providers"]]
   end
 end
 

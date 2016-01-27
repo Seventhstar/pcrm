@@ -1,4 +1,4 @@
-.pagination { display: block; overflow: hidden;	padding: 0 20px 2px 0;}
+.pagination { display: block; overflow: hidden;	padding: 0 20px 2px 0; float: left; }
 
 .pagination a, .pagination span, .pagination em {
 	float: left;

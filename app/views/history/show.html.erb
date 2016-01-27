@@ -2,6 +2,17 @@
 <% first_table = true %>
 
 <div class="hl hl_a bd">История изменений <span class="grey"></span></div>
+
+<div class="items_box_head">
+<%= will_paginate @h %> 
+
+<label class="combobox">
+  <%= select "obj", "type", options_for_select(@types),{},{class: 'chosen'} %>
+</label>
+</div>
+
+<div class="sep_3"></div>
+
 <div class="historyChange_list_a">
 
   <% @h.each do |version| %>
@@ -36,5 +47,3 @@
     
   <% end %>
 </div>
-<div class="sep_3"></div>
-<%= will_paginate @h %>
