@@ -425,7 +425,7 @@ input[type='number']::-webkit-inner-spin-button {
 
 
 .hl_a {font-size: 17px; color: #000; line-height: 1.2; margin:0 0 14px 0; font-weight: 500;}
-.head {font-size: 15px; color: #888; line-height: 1.2; margin:0 0 14px 0; font-weight: 500;     background: #f7f7f7 ; padding: 5px;}
+.historyChange_list_a .head {font-size: 15px; color: #888; line-height: 1.2; margin:0 0 14px 0; font-weight: 500;     background: #f7f7f7 ; padding: 5px;}
 .hl_a.bd {border-bottom: 2px solid #e5e5e5; padding: 0 0 16px 0; margin:0 0 30px 0;}
 
 .box_wrap {}

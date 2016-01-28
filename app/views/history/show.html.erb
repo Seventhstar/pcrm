@@ -3,12 +3,16 @@
 
 <div class="hl hl_a bd">История изменений <span class="grey"></span></div>
 
-<div class="items_box_head">
-<%= will_paginate @h %> 
 
-<label class="combobox">
+<div class="items_box_head">
+
+<label class="left">
   <%= select "obj", "type", options_for_select(@types),{},{class: 'chosen'} %>
 </label>
+
+<%= will_paginate @h %> 
+
+
 </div>
 
 <div class="sep_3"></div>

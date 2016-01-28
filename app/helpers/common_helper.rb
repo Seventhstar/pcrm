@@ -16,8 +16,9 @@ module CommonHelper
   end
 
   def from_to_from_changeset(obj,changeset,event)
-      
-    to=""
+    
+    from = ""  
+    to = ""
 
     case event 
     when "updated_at"
@@ -38,11 +39,9 @@ module CommonHelper
       attrib = event.gsub('_id','').gsub('new_','')
       cls = obj["item_type"].constantize.find(obj["item_id"]).try(attrib).class
 
-      if !changeset[0].nil? && changeset[0]!=0
-        from = cls.where(id: changeset[0]).first_or_initialize.try(:name)
-      end
-      if !changeset[1].nil? && changeset[1]!=0
-        to = cls.where(id: changeset[1]).first_or_initialize.try(:name)
+      if !cls.nil? && cls != NilClass
+        from = cls.where(id: changeset[0]).first_or_initialize.try(:name) if !changeset[0].nil? && changeset[0]!=0
+        to = cls.where(id: changeset[1]).first_or_initialize.try(:name) if !changeset[1].nil? && changeset[1]!=0
       end
 
     else

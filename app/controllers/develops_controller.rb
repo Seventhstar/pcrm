@@ -9,11 +9,8 @@ class DevelopsController < ApplicationController
   def index
     page = params[:page].nil? ? 1 : params[:page]
     search = params[:search]
-    if search.nil?
-      @develops = Develop.order('project_id desc') #.paginate(:page => page, :per_page => 20)
-    else
-      @develops = Develop.search(search).order('project_id desc') #.paginate(:page => page, :per_page => 20)
-    end
+    @develops = Develop.search(search).order('project_id desc') #.paginate(:page => page, :per_page => 20)
+
     
     show = params[:show]
     show_dev = %w[check new all].include?(show) ? show : "check" 

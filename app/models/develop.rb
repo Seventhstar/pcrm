@@ -14,7 +14,7 @@ class Develop < ActiveRecord::Base
   def self.search(search)
     if search
       se = search.mb_chars.downcase
- 	where('name LIKE ? ', "%#{se}%")
+ 	    where('LOWER(name) LIKE LOWER(?) ', "%#{se}%")
     else
       all
     end
