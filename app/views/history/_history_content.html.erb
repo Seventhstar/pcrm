@@ -1,0 +1,44 @@
+<% cur_day = nil %>
+<% first_table = true %>
+
+<div id="history_content">
+
+  <div class="panel-right right"> <%= will_paginate @h %> </div>
+
+<div class="sep_3"></div>
+<div class="sep_3"></div>
+<div class="historyChange_list_a">
+
+  <% @h.each do |version| %>
+    
+    <% day = version['created_at'].beginning_of_day %>
+    
+    <% if cur_day != day %>
+      <% if !first_table %> </ul></div> <% end %>
+      <% first_table = false %>
+      <% cur_day = day %>
+      <div class="item">
+        <div class="head"><%= date_ago(day) %></div>
+        <ul>     
+    <% end %>
+
+    <% author = find_version_author_name(version) %>    
+    <% _obj = get_version_details(version) %> 
+      
+    <li><span><%= version['created_at'].try('strftime',"%H:%M:%S") %></span> 
+      <% if version['event'] == 'update' %>
+        <% v = _obj['inf']['ch'][0] %>
+        - <%= author %>. Изменения в объекте: <span class="date"><%= raw(link_to_obj(version["item_type"], version['item_id'])) %></span>
+        <ul>
+          <% v['description'].each do |descr| %>
+            <li><%= raw(descr) %></li>
+          <% end %>
+        </ul>          
+      <% else %>
+          <span> - <%= author %></span>. <span><%= raw(_obj['inf']['desc']) %></span>  
+      <% end %>  
+    </li>
+    
+  <% end %>
+</div>
+</div>
