@@ -19,9 +19,9 @@ $(document).ready ->
   
   params = width: '99.5%', disable_search: 'true'
   $('#develop_project_id').chosen(params)
-  $('#develop_priority_id').chosen(width: '99.5%', disable_search: 'true') 
-  $('#develop_ic_user_id').chosen(width: '99.5%', disable_search: 'true') 
-  $('#develop_dev_status_id').chosen(width: '99.5%', disable_search: 'true') 
+  $('#develop_priority_id').chosen(params) 
+  $('#develop_ic_user_id').chosen(params) 
+  $('#develop_dev_status_id').chosen(params) 
   $('#dev_project').chosen(params).on 'change', ->
     updateDev()
 

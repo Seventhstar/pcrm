@@ -18,7 +18,7 @@
     <table class="tbl_fc">
     	<tr><td class="caption">Проект:</td>
 			<td><div class="inp_w">
-			<%= f.select :project_id, options_for_select(@dprojects.collect{ |u| [u.name, u.id] },@develop.project_id) %></div>
+			<%= f.select :project_id, options_for_select(@projects.collect{ |u| [u.name, u.id] },@develop.project_id) %></div>
 			</td></tr>
 		<tr><td class="caption">Статус:</td>
 			<td><div class="inp_w">
