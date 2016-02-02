@@ -38,13 +38,18 @@ module CommonHelper
     when "channel_id", 'reason_id','new_reason_id','target_id','dev_status_id','status_id', 'priority_id', 'project_id',"user_id","ic_user_id"
       #p "--!--"
       attrib = event.gsub('_id','').gsub('new_','')
-      cls = obj["item_type"].constantize.find(obj["item_id"]).try(attrib).class
-      #p  "obj,cls", obj["item_type"], obj["item_id"], attrib,cls
-      if !cls.nil? && cls != NilClass
-        from = cls.where(id: changeset[0]).first_or_initialize.try(:name) if !changeset[0].nil? && changeset[0]!=0
-        to = cls.where(id: changeset[1]).first_or_initialize.try(:name) if !changeset[1].nil? && changeset[1]!=0
+      cls = obj["item_type"].constantize.find_by_id(obj["item_id"])
+      if !cls.nil?
+        cls = cls.try(attrib).class
+        #p  "obj,cls", obj["item_type"], obj["item_id"], attrib,cls
+        if !cls.nil? && cls != NilClass
+          from = cls.where(id: changeset[0]).first_or_initialize.try(:name) if !changeset[0].nil? && changeset[0]!=0
+          to = cls.where(id: changeset[1]).first_or_initialize.try(:name) if !changeset[1].nil? && changeset[1]!=0
+        end
+      else
+        from = changeset[0]
+        to = changeset[1]
       end
-
     else
 
       from = changeset[0]

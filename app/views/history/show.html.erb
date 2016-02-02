@@ -1,10 +1,14 @@
 <div class="hl hl_a bd">История изменений <span class="grey"></span></div>
 
 <div class="items_box_head panel-left">
-  <label class="left"> <%= select "obj", "type", options_for_select(@types) %> </label>
+  <label class="left"> <%= select "obj", "type", options_for_select(@types, @item_type) %> </label>
   <label class="left"> <%= select_options_with_special('obj[user_id]','Пользователи...',nil, User.order(:name), @user_id) %> </label>
 
 </div>
+
+  <div id="pagination">
+  <%= render 'shared/pagination' %>
+  </div>
 
 
 <%= render 'history_content' %>

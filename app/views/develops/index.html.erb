@@ -3,9 +3,7 @@
 <div class="items_box_head">
 
   <div class="left">
-    <!-- <label class="combobox"> -->
-      <%= select_tag "dev_project", content_tag(:option,'Проект...',:value=>0)+options_from_collection_for_select(DevProject.order(:name), "id", "name",0) %>
-    <!-- </label> -->
+      <%= select_tag "dev_project", content_tag(:option,'Проект...',:value=>0)+options_from_collection_for_select(DevProject.order(:name), "id", "name",@project_id) %>
 
   </div>
 

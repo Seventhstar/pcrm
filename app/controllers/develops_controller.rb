@@ -10,7 +10,7 @@ class DevelopsController < ApplicationController
     page = params[:page].nil? ? 1 : params[:page]
     search = params[:search]
     @develops = Develop.search(search).order('project_id desc')#.paginate(:page => page, :per_page => 5)
-
+    @project_id = params['project_id']
     
     show = params[:show]
     show_dev = %w[check new all].include?(show) ? show : "check" 
@@ -26,7 +26,7 @@ class DevelopsController < ApplicationController
       @develops = @develops.where(project_id: params['project_id'] ) 
     end
 
-    @develops = @develops.paginate(:page => page, :per_page => 20)
+    @develops = @develops.paginate(:page => page, :per_page => 2)
       
   end
 

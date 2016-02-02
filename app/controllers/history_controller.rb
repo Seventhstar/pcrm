@@ -4,10 +4,10 @@ class HistoryController < ApplicationController
 
   
   def show
-    @types = [['Все', nil], ['Лиды', "Lead"], ['Поставщики', "Providers"], ['База знаний','WikiRecords'],['Задачи на разработку','Develops']]
-    item_type = @types.detect{ |srch,_| srch == params['type'] }
-    if !item_type.nil? && !item_type[1].nil? 
-      @history = PaperTrail::Version.where(item_type: item_type[1].classify ) #order(created_at: :desc).limit(50) #get_all_history
+    @types = [['Все', nil], ['Лиды', "Lead"], ['Поставщики', "Provider"], ['База знаний','WikiRecord'],['Задачи на разработку','Develop']]
+    @item_type = @types.detect{ |srch,_| srch == params['type'] }
+    if !@item_type.nil? && !@item_type[1].nil? 
+      @history = PaperTrail::Version.where(item_type: @item_type[1].classify ) #order(created_at: :desc).limit(50) #get_all_history
     else 
       @history = PaperTrail::Version.all
     end 
