@@ -26,7 +26,7 @@ class DevelopsController < ApplicationController
       @develops = @develops.where(project_id: params['project_id'] ) 
     end
 
-    @develops = @develops.paginate(:page => page, :per_page => 2)
+    @develops = @develops.paginate(:page => page, :per_page => 20)
       
   end
 
