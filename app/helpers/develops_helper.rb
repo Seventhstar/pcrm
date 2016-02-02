@@ -13,8 +13,8 @@ module DevelopsHelper
  def project_name(dev_id)
     if dev_id.present?
        dev = Develop.find(dev_id)
-       if dev.project_id.present? && !dev.dev_project.nil?
-          dev.dev_project.name
+       if dev.project_id.present? && !dev.project.nil?
+          dev.project.name
        else
           "Без проекта"
        end

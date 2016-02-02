@@ -3,7 +3,7 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 @updateDev = ->
-  param = {'search': $('#search').val(), 'show': $('.btn-group .btn.active').attr('show')}
+  param = {'search': $('#search').val(), 'show': $('.btn-group .btn.active').attr('show'), project_id: $('#dev_project :selected').val()}
 
   $.get 'develops/', param, null, 'script'
   setLoc("develops?"+ajx2q(param));
@@ -17,11 +17,13 @@
 # меняем отметки coder и boss непосредственно в index
 $(document).ready ->
   
-  $('#develop_project_id').chosen(width: '99.5%', disable_search: 'true')
+  params = width: '99.5%', disable_search: 'true'
+  $('#develop_project_id').chosen(params)
   $('#develop_priority_id').chosen(width: '99.5%', disable_search: 'true') 
   $('#develop_ic_user_id').chosen(width: '99.5%', disable_search: 'true') 
   $('#develop_dev_status_id').chosen(width: '99.5%', disable_search: 'true') 
-
+  $('#dev_project').chosen(params).on 'change', ->
+    updateDev()
 
   $('.develops').on 'click', 'span.sw_check', ->
     checked = if $(this).hasClass('checked') then false else true

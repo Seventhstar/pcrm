@@ -19,7 +19,8 @@ module CommonHelper
     
     from = ""  
     to = ""
-
+    #p "event",event
+   # p "changeset",changeset
     case event 
     when "updated_at"
     when "coder"
@@ -35,10 +36,10 @@ module CommonHelper
       to = changeset[1].try('strftime',"%Y.%m.%d %H:%M" )
 
     when "channel_id", 'reason_id','new_reason_id','target_id','dev_status_id','status_id', 'priority_id', 'project_id',"user_id","ic_user_id"
-
+      #p "--!--"
       attrib = event.gsub('_id','').gsub('new_','')
       cls = obj["item_type"].constantize.find(obj["item_id"]).try(attrib).class
-
+      #p  "obj,cls", obj["item_type"], obj["item_id"], attrib,cls
       if !cls.nil? && cls != NilClass
         from = cls.where(id: changeset[0]).first_or_initialize.try(:name) if !changeset[0].nil? && changeset[0]!=0
         to = cls.where(id: changeset[1]).first_or_initialize.try(:name) if !changeset[1].nil? && changeset[1]!=0
@@ -65,23 +66,23 @@ module CommonHelper
         ch = Hash.new
         desc = []
         changeset.keys.each_with_index do |k,index| 
-         # p 'k',k
+          # p 'k',k
           from_to = from_to_from_changeset(version,changeset[k],k)
           from = from_to['from'] 
           to = from_to['to']
+          
           if from.present? || to.present?
             from = from.nil? ? "" : from.to_s
             to = to.nil?  ? "" : to.to_s
           	#puts k,k == 'description'
           	if k == 'description' || k == 'info'
-          	  
-          	  from.gsub!(/\n/, '<br>')
-          	  
+          	  from.gsub!(/\n/, '<br>')  
           	  to.gsub!(/\n/, '<br>')
               desc << (from.empty? ? ('Заполнено поле <b>'+t(k)+':</b> «'+to+'»') : ('Изменено поле <b>'+t(k)+'</b> c<br> «'+from+'»<br><b> на </b><br>«'+to+'»') )
             else
               desc << (from.empty? ?  ('Заполнено поле <b>'+t(k)+':</b> «'+to+'»'): ('Изменено поле <b>'+t(k)+'</b> c «'+from+'» на «'+to+'»') )
-        	end
+            end
+
             ch.store( index, {'field' => t(k), 'from' => from, 'to' => to, 'description' => desc } )
           end
         end
@@ -120,6 +121,7 @@ module CommonHelper
         desc = []
         changeset.keys.each_with_index do |k,index| 
           #p version['object_changes']
+          #p 'k,',k, changeset[k], ch
           from_to = from_to_from_changeset(version,changeset[k],k)
           from = from_to['from'] 
           to = from_to['to']
@@ -127,6 +129,7 @@ module CommonHelper
             from = from.nil? ? "" : from.to_s
             desc << (from.empty? ? ('Заполнено поле <b>'+t(k)+':</b> «'+to.to_s+'»') : ('Изменено поле <b>'+t(k)+'</b> c «'+from.to_s+'» на «'+to.to_s+'»') )
             ch.store( index, {'field' => t(k), 'from' => from, 'to' => to, 'description' => desc } )
+            #p 'ch,', ch
           end
         end
     when "create"

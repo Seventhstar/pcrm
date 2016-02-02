@@ -9,7 +9,7 @@ class DevelopsController < ApplicationController
   def index
     page = params[:page].nil? ? 1 : params[:page]
     search = params[:search]
-    @develops = Develop.search(search).order('project_id desc') #.paginate(:page => page, :per_page => 20)
+    @develops = Develop.search(search).order('project_id desc')#.paginate(:page => page, :per_page => 5)
 
     
     show = params[:show]
@@ -21,6 +21,12 @@ class DevelopsController < ApplicationController
     when "new"
       @develops = @develops.where(:dev_status_id => [1,4])      
     end
+
+    if !params['project_id'].nil? && params['project_id'].to_i>0 
+      @develops = @develops.where(project_id: params['project_id'] ) 
+    end
+
+    @develops = @develops.paginate(:page => page, :per_page => 20)
       
   end
 
@@ -37,7 +43,7 @@ class DevelopsController < ApplicationController
   # GET /develops/new
   def new
     @develop      = Develop.new
-    @dev_projects = DevProject.all
+    @projects = DevProject.all
     @dev_statuses = DevStatus.order(:id)
     @priorities   = Priority.order(:name)
     @users        = User.order(:name)
@@ -48,7 +54,7 @@ class DevelopsController < ApplicationController
   # GET /develops/1/edit
   def edit
     @dev_statuses = DevStatus.order(:id)
-    @dev_projects = DevProject.all
+    @projects = DevProject.all
     @priorities   = Priority.order(:name)
     @users        = User.order(:name)
 

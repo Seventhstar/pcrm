@@ -1,9 +1,9 @@
 class Develop < ActiveRecord::Base
-  belongs_to :dev_project, foreign_key: :project_id
+  belongs_to :project, class_name: 'DevProject', foreign_key: :project_id
   belongs_to :priority
   belongs_to :dev_status
   belongs_to :ic_user, foreign_key: :ic_user_id, class_name: 'User'
-  has_many :files, foreign_key: :develop_id, class_name: 'DevelopsFile'
+  has_many :files, class_name: 'DevelopsFile', foreign_key: :develop_id
   has_many :attachments, :as => :owner
   validates :name, :length => { :minimum => 3 }
   has_paper_trail
