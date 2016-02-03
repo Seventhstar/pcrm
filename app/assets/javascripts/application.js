@@ -70,11 +70,6 @@ var show_ajax_message = function(msg, type) {
     showNotifications();
 };
 
-var fixEncode = function(loc) {
-    var h = loc.split('#');
-    var l = h[0].split('?');
-    return l[0] + (l[1] ? ('?' + ajx2q(q2ajx(l[1]))) : '') + (h[1] ? ('#' + h[1]) : '');
-  };
 
 $(function() {
 

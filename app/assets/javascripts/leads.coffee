@@ -58,6 +58,12 @@
     search: $('#search').val()
   }
   
+  l = window.location.toString().split('?');
+  p = q2ajx(l[1])
+
+  each p, (i, a) ->
+    url[i] = a
+
   each params, (i, a) ->
     url[i] = a
 

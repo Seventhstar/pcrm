@@ -7,9 +7,9 @@
   return
 
 @provider_query = ->
-  p_params = $("#p_search").serialize()
+  p_params = {goodstype : $('#goodstype :selected').val(), only_actual : $('.only_actual').hasClass('on')}
   $.get 'providers', p_params, null, 'script'
-  setLoc("providers?"+p_params)
+  setLoc("providers?"+ajx2q(p_params))
 
 $(document).ready ->
 
