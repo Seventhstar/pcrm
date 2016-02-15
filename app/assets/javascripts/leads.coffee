@@ -146,7 +146,7 @@ $(document).ready ->
     else
       $('.sort-span').removeClass('active')
       $(this).addClass('active')
-    sortable_query({sort2: srt,dir2:dir})
+    sortable_query({sort: srt,direction:dir})
     return
 
   # сортировка 2го уровня

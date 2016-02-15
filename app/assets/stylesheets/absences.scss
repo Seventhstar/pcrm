@@ -1,3 +1,15 @@
 // Place all the styles related to the Absences controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.day {
+    min-width: 67px; 
+    min-height:    20px;
+    border: 1px solid #ebebeb;
+    padding: 3px;
+    vertical-align: top;}
+
+th.day{text-align: center;}
+td.day{height: 70px; font-size: 12px;}
+.nday {color: #ccc;}
+.day_a {display: block;background-color: #3b91ad; color: white; border-radius: 4px; padding: 1px 5px; margin: 1px;}

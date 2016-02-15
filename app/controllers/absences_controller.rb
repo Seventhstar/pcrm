@@ -6,6 +6,9 @@ class AbsencesController < ApplicationController
   # GET /absences
   # GET /absences.json
   def index
+    @wdays = ['пн','вт','ср','чт','пт','сб','вс']
+    @current_month = Date.today
+    @curr_day = @current_month.beginning_of_month.beginning_of_week
     query_str = "absences.*, date_trunc('month', dt_from) AS month"
     @sort_column = sort_column
 
@@ -15,6 +18,8 @@ class AbsencesController < ApplicationController
       @absences = Absence.select(query_str)
     end
 
+    @absences = @absences.where("dt_from >= ?",@curr_day)
+
     if params[:sort] == 'users.name'
       sort_1 = "users.name"
       @absences = @absences.joins(:user)      
@@ -22,6 +27,7 @@ class AbsencesController < ApplicationController
 
     sort_1 = @sort_column == 'dt_from' ? 'month' : @sort_column
     order = sort_1 + " " + sort_direction + ", "+ sort_2  + " " + dir_2 + ", absences.created_at desc"
+    p "order",order
     @absences = @absences.order(order)
   end
 
@@ -125,13 +131,14 @@ class AbsencesController < ApplicationController
     end
 
     def sort_column
+      p "params[:sort]",params[:sort]
       default_column = "dt_from"
       (Absence.column_names.include?(params[:sort]) || params[:sort] == 'users.name' ) ? params[:sort] : default_column
     end
 
     def sort_direction
-      defaul_dir = sort_column =='dt_from' ? "asc": "desc"
-      %w[asc desc].include?(params[:direction]) ? params[:direction] : defaul_dir
+      default_dir = sort_column =='dt_from' ? "asc": "desc"
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : default_dir
     end
 
     def sort_2

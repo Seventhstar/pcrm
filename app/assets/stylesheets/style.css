@@ -333,7 +333,8 @@ label.select_custom_ext:after {	background-position: -18px -9px; }
 .ui-datepicker:after {content: ' '; display: block; width: 27px; height: 60px; background: url('m2.png') no-repeat 0 0; position:absolute; left: -27px; top: 0;}
 .ui-datepicker .ui-datepicker-header{text-align: center; position:relative; margin:0 0 18px 0; font-weight: 500;}
 .ui-datepicker .ui-datepicker-prev,
-.ui-datepicker .ui-datepicker-next{font-size: 0; display: block; width: 7px; height: 12px; background: url('arr1.png') no-repeat; position:absolute; top: 0; cursor:pointer;}
+.ui-datepicker .ui-datepicker-next{ font-size: 0; display: block; width: 7px; height: 12px; 
+                                    background: url('arr1.png') no-repeat; position:absolute; top: 0; cursor:pointer;}
 .ui-datepicker .ui-datepicker-prev{background-position:-32px 0; left: 7px;}
 .ui-datepicker .ui-datepicker-next{background-position:-41px 0; right: 7px;}
 .ui-datepicker .ui-datepicker-calendar{border-collapse:collapse; }

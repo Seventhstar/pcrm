@@ -3,6 +3,8 @@
 <% cur_reason = nil %>
 <% first_table = true %>
 
+
+
 <% @absences.each do |abs| %>
     <% new_date = abs.dt_from? ? abs.dt_from : Date.today %>
 
@@ -21,12 +23,13 @@
       <% end %>
         <% first_table = false %>        
 
-        <tr class="<%= class_for_abs(abs) %>" >   
+        <tr class="<%= class_for_abs(abs) %>" >
+        <td class="center"><%= abs.dt_from.try('strftime',"%d") %></td>   
         <td><%= abs.user_name %></td>   
         <td><%= abs.reason_name %></td>
         <td><%= abs.project_name %></td>
-        <td class="center"><%= abs.dt_from.try('strftime',"%d.%m.%Y %H:%M") %></td>
-         <td class="center"><%= abs.dt_to.try('strftime',"%d.%m.%Y %H:%M") %></td>
+        <td class="center"><%= abs.dt_from.try('strftime',"%H:%M") %></td>
+         <td class="center"><%= abs.dt_to.try('strftime',"%H:%M") %></td>
 
           <%= td_tool_icons(abs,'edit,show','href') %>
 
@@ -34,3 +37,5 @@
 <% end %>
 </tbody></table></div>
 <br>
+
+</div>

@@ -77,7 +77,7 @@ $(function() {
 
   $('.timepicker').timepicker({ 'timeFormat': 'H:i' });
 
- $('.switcher_a').each(function(){
+  $('.switcher_a').each(function(){
         var switcher = $(this);
         var link = $(this).find('.link_a');
         var scale = $(this).find('.scale');

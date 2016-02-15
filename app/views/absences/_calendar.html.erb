@@ -1,0 +1,29 @@
+
+ 
+  <div class="panel panel-default">
+  <div class="panel-heading table-heading head month"> <%= t(@current_month.try('strftime',"%B"))+" "+@current_month.try('strftime',"%Y") %></div>
+    <table>
+      <thead><tr> 
+      <% @wdays.each do |day| %>
+         <th class="day"><%= day %></th>
+      <% end %>
+      </tr></thead>
+      <body>
+        <% while @curr_day <= @current_month.end_of_month %>
+          <tr>
+          <% 7.times do |day| %>
+            <td class="day <%= @curr_day.beginning_of_month == @current_month.beginning_of_month ? '':'nday' %>"><%= @curr_day.strftime('%d') %> 
+            <% abs = day_abs(@curr_day) %>
+            <% abs.each do |a|%>
+                <span class="day_a" title="<%= a.reason_name %> [ <%= a.user_name %> ]"><%= a.dt_from.try('strftime',"%H:%M") %></span>
+            <% end %>
+            </td>
+            <% @curr_day=@curr_day+1 %>
+          <% end %>
+          </tr>
+        <% end %>
+      </body>
+    </table>    
+  </div>
+
+

@@ -3,27 +3,28 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $(document).ready ->
+  chosen_params = undefined
   chosen_params =
     width: '99.5%'
     disable_search: 'true'
-  $('#shop_shop_id').chosen(chosen_params)
+  $('#shop_shop_id').chosen chosen_params
   $('#absence_reason_id').chosen(chosen_params).on 'change', ->
-    if $(this).val()=='2' 
+    if $(this).val() == '2'
       $('.p_obj').show()
     else
       $('.p_obj').hide()
-    if $(this).val()=='3'
+    if $(this).val() == '3'
       $('#dshops').show()
     else
       $('#dshops').hide()
-
-  $('.edit_absence').on 'click', '#dt_to_check', ->
-    $(this).toggleClass('checked')
-    $('#absence_checked').val($(this).hasClass('checked'))
+  $('#dt_to_check').on 'click', ->
+    $(this).toggleClass 'checked'
+    $('#absence_checked').val $(this).hasClass('checked')
     if $(this).hasClass('checked')
-      $('#absence_dt_to').addClass('datepicker')
-      $('#absence_dt_to').prop('disabled', false)
+      $('#absence_dt_to').addClass 'datepicker'
+      $('#absence_dt_to').prop 'disabled', false
     else
-      $('#absence_dt_to').removeClass('datepicker')
-      $('#absence_dt_to').attr('disabled',"disabled")
+      $('#absence_dt_to').removeClass 'datepicker'
+      $('#absence_dt_to').attr 'disabled', 'disabled'
     return
+  return
