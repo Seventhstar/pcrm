@@ -1,1 +1,6 @@
-$("#div_tabsences").html("<%= escape_javascript(render("absences")) %>");
+	<% if params['sort']=='calendar' %>
+		$("#div_tabsences").html("<%= escape_javascript(render("calendar")) %>");
+	<% else %>
+		$("#div_tabsences").html("<%= escape_javascript(render("absences")) %>");
+	<% end %>  
+

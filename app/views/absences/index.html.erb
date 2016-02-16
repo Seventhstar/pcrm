@@ -1,14 +1,10 @@
 <%= render "sortmenu" %>
 <%= hidden_field_tag :sort, params[:sort] %>
 
-<div class="panel-left">
-	<div id='calendar'>
+<div id="div_tabsences">
+	<% if params['sort']=='calendar' %>
 		<%= render "calendar" %>
-	</div>
-</div>
-
-<div class="panel-right">
-	<div id="div_tabsences">
-	  <%= render "absences" %>
-	</div>
+	<% else %>
+		<%= render "absences" %>
+	<% end %>  
 </div>
