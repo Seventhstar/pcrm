@@ -25,13 +25,14 @@
 
         <tr class="<%= class_for_abs(abs) %>" >
         <td class="center"><%= abs.dt_from.try('strftime',"%d.%m.%Y") %></td>   
+        <td class="center"><%= abs.dt_from.beginning_of_day!=abs.dt_to.beginning_of_day ? abs.dt_to.try('strftime',"%d.%m.%Y") : '' %></td>   
         <td><%= abs.user_name %></td>   
         <td><%= abs.reason_name %></td>
         <td><%= abs.project_name %></td>
         <td class="center"><%= abs.dt_from.try('strftime',"%H:%M") %></td>
-         <td class="center"><%= abs.dt_to.try('strftime',"%H:%M") %></td>
+        <td class="center"><%= abs.dt_to.try('strftime',"%H:%M") %></td>
 
-          <%= td_tool_icons(abs,'edit,show','href') %>
+        <%= td_tool_icons(abs,'edit,show','href') %>
 
       </tr>
 <% end %>
