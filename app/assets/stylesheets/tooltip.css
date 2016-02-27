@@ -1,24 +1,18 @@
-
-.tooltip{
-/*  background: url('bg0_1.png') repeat;*/
-  /*padding: 26px 22px 20px 22px;*/
-  /*margin: -50px 0 0 108px;*/
-  border-radius: 5px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.2);
-  /*position: relative;*/
-  line-height: 1;
-/*  font-size: 14px;*/
-}
-
 .tooltip {
   position: absolute;
   z-index: 1030;
   display: block;
   font-size: 13px;
   line-height: 1.4;
+  border-radius: 5px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+   transition: opacity 1s, visibility 1s linear 1s;
  /* opacity: 0;*/
-/*  filter: alpha(opacity=0);
-  visibility: visible;*/
+  filter: alpha(opacity=0);
+  visibility: visible;
+  /* opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;*/
 }
 
 /*.tooltip.in {
@@ -54,7 +48,8 @@
   text-decoration: none;
   background-color: #fefefe;
   border-radius: 6px;
-  //border: #aaa solid 1px;
+  /*-webkit-backface-visibility: hidden;*/
+  /*//border: #aaa solid 1px;*/
 }
 
 .tooltip-arrow {

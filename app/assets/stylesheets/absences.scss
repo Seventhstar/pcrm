@@ -2,20 +2,56 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.day {
+.tleads .day {
     width: 14%; 
-    min-height:    20px;
     border: 1px solid #ebebeb;
-    padding: 3px;
+    padding: 3px; 
     vertical-align: top;}
 
-th.day{text-align: center;}
-td.day{height: 70px; font-size: 12px;}
+th.day{text-align: center; }
+td.day{font-size: 13px;}
 .nday {color: #ccc;}
-.day_a { display: block; 
-				background-color: #3b91ad; 
-				color: white; 
-				border-radius: 4px; 
-				padding: 1px 5px;
-				font-size: 10px; 
-				margin: 1px;}
+.inday {min-height: 100px;}
+
+
+.day li {
+    // color: red; /* Цвет маркеров */
+    //font-size: 20px; 	
+    list-style-type: none;
+    margin: 5px 0;
+   }
+
+.day li:before {
+    color: red; /* Цвет маркера */
+    content: "●"; /* Сам маркер */
+    padding-right: 5px; /* Расстояние от маркера до текста */
+    height: 12px;
+   //font-size: 20px;
+}
+
+.day a{text-decoration: none;font-size: 12px;  }
+// .pst1 { background-color: #7ffe00; }
+.day li.abs1:before { color: #fe0000; }
+.day li.abs6:before { color: #00aaff; }
+.day li.abs3:before { color: #ff8411; }
+.day li.abs2:before { color: #0000ff; }
+
+
+.numday {display: block; }
+// .abs1{background-color: red;}
+
+.day .tooltip-inner {
+    white-space:pre;
+    
+    //max-width:none;
+}
+
+.cal-next{
+		border: 1px solid #f2f2f2;
+		padding: 5px;
+		cursor: pointer;
+    &:hover{background: #6acc00;
+    border: 1px solid #6acc00;
+    border-radius: 4px;
+    color: #fff !important; }
+}

@@ -27,4 +27,6 @@ $(document).ready ->
       $('#absence_dt_to').removeClass 'datepicker'
       $('#absence_dt_to').attr 'disabled', 'disabled'
     return
+  $('#div_tabsences').on 'click','.cal-next',->
+    sortable_query({m: $(this).attr('cur-period')})
   return

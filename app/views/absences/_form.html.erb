@@ -18,11 +18,10 @@
           <div class="inp_w">
           <%= f.select :project_id, content_tag(:option,'Выберите...',:value=>0)+options_for_select(@projects.collect{ |u| [u.address, u.id] },@absence.project_id), {},{class: 'chosen'} %>  
           </div></td>
-          <td class="caption">Цель:</td>
+          <td class="caption caption_sm">Цель:</td>
           <td><%= f.select :target_id, content_tag(:option,'Выберите...',:value=>0)+options_for_select(@targets.collect{ |u| [u.name, u.id] },@absence.target_id), {},{class: 'chosen'} %></td>
       </tr>
-    <tr><td class="caption">Комментарий:</td>
-      <td colspan="3"><div class="inp_w" ><%= f.text_area :comment, class: 'txt alone',label: false %></div></td></tr>
+
           <tr><td class="caption">Дата c:</td>
       <td width='200px;'><div class="inp_"><%= f.text_field :dt_from, :value => @dt_from, label: false, class: "txt datepicker" %></div></td>
 
@@ -45,11 +44,12 @@
             <td width='490px;' colspan="3"><div class="inp_w" >
              <%= f.select :user_id, options_for_select(User.order(:name).collect{ |u| [u.name, u.id] },@absence.user_id), {},{class: 'chosen'} %></div>
         </td></tr>
-
-            <% if controller.action_name == 'edit' %>
-      <tr><td class="caption">Изменить причину на:</td>
-      <td colspan="3"><div class="inp_w"><%= f.select 'new_reason_id', options_for_select(@reasons.collect{ |u| [u.name, u.id] },@absence.new_reason_id), {},{class: 'chosen'} %>
-      </div></td></tr>
+            <tr><td class="caption">Комментарий:</td>
+      <td colspan="3"><div class="inp_w" ><%= f.text_area :comment, class: 'txt alone',label: false %></div></td></tr>
+      <% if controller.action_name == 'edit' %>
+        <tr><td class="caption">Изменить причину на:</td>
+        <td colspan="3"><div class="inp_w"><%= f.select 'new_reason_id', options_for_select(@reasons.collect{ |u| [u.name, u.id] },@absence.new_reason_id), {},{class: 'chosen'} %>
+        </div></td></tr>
       <% end -%>
 
     <tr><td class="last_td"></td>

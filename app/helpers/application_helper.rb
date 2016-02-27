@@ -177,6 +177,24 @@ module ApplicationHelper
       end
   end
 
+  def span_tooltip(info, full_info, cls, a )
+    #content_tag( :span, info, {'data-toggle' =>"tooltip", 'data-placement' => "top", :title => full_info, :class => cls})
+    b = link_to info, [:edit, a], {'data-toggle' =>"tooltip", 'data-placement' => "top", :title => full_info}
+    c = content_tag(:span,' ',{:class => cls})
+    content_tag(:span,' ',{class: "numday"}) do 
+      content_tag(:li,{class: cls}) do 
+        content_tag(:span) do 
+          b
+        end
+      end
+    end
+  end
+
+  def tooltip_str_from_hash(h)
+    a = h.collect{ |k,v| [k,v].join(' ')}.join("\n")
+    #puts a
+  end
+
   def avatar_for( user )
      if user.present? && user.avatar.present?
         user.avatar.url.empty? ? image_tag('unknown.png') : image_tag(user.avatar) 

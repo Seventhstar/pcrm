@@ -24,7 +24,7 @@
         <% first_table = false %>        
 
         <tr class="<%= class_for_abs(abs) %>" >
-        <td class="center"><%= abs.dt_from.try('strftime',"%d") %></td>   
+        <td class="center"><%= abs.dt_from.try('strftime',"%d.%m.%Y") %></td>   
         <td><%= abs.user_name %></td>   
         <td><%= abs.reason_name %></td>
         <td><%= abs.project_name %></td>

@@ -7,7 +7,9 @@ class AbsencesController < ApplicationController
   # GET /absences.json
   def index
     @wdays = ['пн','вт','ср','чт','пт','сб','вс']
-    @current_month = Date.today
+    
+    @current_month = Date.parse(params['m']) if !params['m'].nil?
+    @current_month = Date.today if @current_month.nil? 
     @curr_day = @current_month.beginning_of_month.beginning_of_week
     query_str = "absences.*, date_trunc('month', dt_from) AS month"
     @sort_column = sort_column
@@ -133,7 +135,7 @@ class AbsencesController < ApplicationController
     def sort_column
       p "params[:sort]",params[:sort]
       default_column = "dt_from"
-      (Absence.column_names.include?(params[:sort]) || params[:sort] == 'users.name' ) ? params[:sort] : default_column
+      (Absence.column_names.include?(params[:sort]) || params[:sort] == 'users.name' || params[:sort] == 'calendar' ) ? params[:sort] : default_column
     end
 
     def sort_direction
