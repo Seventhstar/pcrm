@@ -7,7 +7,6 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
-      
     @sort_column = sort_column
 
     if !current_user.admin?

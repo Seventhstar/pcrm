@@ -2,7 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.tleads .day {
+.tcalendar .day {
     width: 14%; 
     border: 1px solid #ebebeb;
     padding: 3px; 
@@ -32,9 +32,9 @@ td.day{font-size: 13px;}
 .day a{text-decoration: none;font-size: 12px;  }
 // .pst1 { background-color: #7ffe00; }
 .day li.abs1:before { color: #fe0000; }
-.day li.abs6:before { color: #00aaff; }
+.day li.abs2:before { color: #6acc00; }
 .day li.abs3:before { color: #ff8411; }
-.day li.abs2:before { color: #0000ff; }
+.day li.abs6:before { color: #00aaff; }
 
 
 .numday {display: block; }

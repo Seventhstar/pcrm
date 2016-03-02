@@ -4,7 +4,7 @@
       <%= t(@current_month.try('strftime',"%B"))+" "+@current_month.try('strftime',"%Y") %> 
       <span class='cal-next' cur-period='<%= @current_month+1.month %>'>>></span>
   </div>
-  <table class="tleads">
+  <table class="tcalendar">
     <thead><tr> 
     <% @wdays.each do |day| %>
        <th class="day <%= ['сб','вс'].include?(day) ? 'red':''%>"><%= day %></th>

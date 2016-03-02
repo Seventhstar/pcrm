@@ -2,17 +2,18 @@ class AbsencesController < ApplicationController
   before_action :set_absence, only: [:show, :edit, :update, :destroy]
   helper_method :sort_2, :dir_2
   helper_method :sort_column, :sort_direction
-
+  before_action :logged_in_user
   # GET /absences
   # GET /absences.json
   def index
     @wdays = ['пн','вт','ср','чт','пт','сб','вс']
-    
+    @sort_column = sort_column
+    params['m'] = nil if  @sort_column!='calendar'
     @current_month = Date.parse(params['m']) if !params['m'].nil?
-    @current_month = Date.today if @current_month.nil? 
+    @current_month = Date.today.beginning_of_month if @current_month.nil? 
     @curr_day = @current_month.beginning_of_month.beginning_of_week
     query_str = "absences.*, date_trunc('month', dt_from) AS month"
-    @sort_column = sort_column
+    
 
     if !current_user.admin?
       @absences = current_user.absences.select(query_str)
@@ -20,7 +21,11 @@ class AbsencesController < ApplicationController
       @absences = Absence.select(query_str)
     end
 
-    @absences = @absences.where("dt_from >= ?",@curr_day)
+    if @sort_column!='calendar'  
+      @absences = @absences.where("dt_from >= ?",@curr_day-1.month)
+    else
+      @absences = @absences.where("dt_from >= ?",@curr_day)
+    end
 
     if params[:sort] == 'users.name'
       sort_1 = "users.name"
@@ -144,10 +149,11 @@ class AbsencesController < ApplicationController
     end
 
     def sort_2
-      "dt_from"
+      Absence.column_names.include?(params[:sort2]) ? params[:sort2] : "dt_from"
     end
 
     def dir_2 
-      "desc"
+      defaul_dir = sort_column =='dt_from' ? "asc": "desc"
+      %w[asc desc].include?(params[:dir2]) ? params[:dir2] : defaul_dir
     end
 end
