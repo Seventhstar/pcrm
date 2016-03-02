@@ -190,6 +190,10 @@ module ApplicationHelper
     end
   end
 
+  def ttip(info, full_info, cls, a )
+    b = link_to info, [:edit, a], {'data-toggle' =>"tooltip", 'data-placement' => "top", :title => full_info}
+  end
+
   def tooltip_str_from_hash(h)
     a = h.collect{ |k,v| [k,v].join(' ')}.join("\n")
     #puts a
