@@ -29,8 +29,10 @@
         <% v = _obj['inf']['ch'][0] %>
         - <%= author %>. Изменения в объекте: <span class="date"><%= raw(link_to_obj(version["item_type"], version['item_id'])) %></span>
         <ul>
-          <% v['description'].each do |descr| %>
-            <li><%= raw(descr) %></li>
+          <% if !v.nil? %>
+            <% v['description'].each do |descr| %>
+              <li><%= raw(descr) %></li>
+            <% end %>
           <% end %>
         </ul>          
       <% else %>
