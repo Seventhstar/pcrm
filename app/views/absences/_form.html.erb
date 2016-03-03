@@ -1,33 +1,30 @@
-<div>
 <%= simple_form_for(@absence) do |f| %>
-
+<%= f.hidden_field :reopen,{action_name: action_name} %>
   <table class="tbl_fc tbl_fc_1">
-      <tr><td class="caption">Причина:</td>
-      <td  colspan="3">         
-          <div class="inp_w" >
-            <%= f.select 'reason_id', options_for_select(@reasons.collect{ |u| [u.name, u.id] },@absence.reason_id) %>
-          </div>
-      </td>
-      <td></td>
-      </tr>
-      <% disp = @absence.reason_id==2 ? 'table-row;' : 'none;' %>
-      <tr class="p_obj" style="display: <%= disp %>">
-     
-          <td class="caption">Проект:</td>
-          <td colspan="3">
-          <div class="inp_w">
-          <%= f.select :project_id, content_tag(:option,'Выберите...',:value=>0)+options_for_select(@projects.collect{ |u| [u.address, u.id] },@absence.project_id), {},{class: 'chosen'} %>  
-          </div></td>
-          <td class="caption caption_sm">Цель:</td>
-          <td><%= f.select :target_id, content_tag(:option,'Выберите...',:value=>0)+options_for_select(@targets.collect{ |u| [u.name, u.id] },@absence.target_id), {},{class: 'chosen'} %></td>
-      </tr>
+    <tr><td class="caption">Причина:</td>
+    <td  colspan="3">         
+        <div class="inp_w" >
+          <%= f.select 'reason_id', options_for_select(@reasons.collect{ |u| [u.name, u.id] },@absence.reason_id) %>
+        </div>
+    </td>
+    <td></td>
+    </tr>
+    <% disp_obj = @absence.reason_id==2 || @absence.reason_id==3 ? 'table-row;' : 'none;' %>
+    <% disp_trgt = @absence.reason_id==2 ? ' ' : 'display: none;' %>
+    <tr style="display: <%= disp_obj %>" class='p_obj'>
+      <td class="caption p_obj">Проект:</td>
+      <td colspan="3" class="p_obj">
+      <div class="inp_w">
+      <%= f.select :project_id, content_tag(:option,'Выберите...',:value=>0)+options_for_select(@projects.collect{ |u| [u.address, u.id] },@absence.project_id),{},{class:'chosen'} %></div></td>
+      <td class="caption caption_sm"><span style="<%= disp_trgt %>" class="p_trgt"> Цель: </span></td>
+      <td ><span style="<%= disp_trgt %>" class="p_trgt">
+      <%= f.select :target_id, content_tag(:option,'Выберите...',:value=>0)+options_for_select(@targets.collect{ |u| [u.name, u.id] },@absence.target_id), {},{class: 'chosen'} %></span></td>
+    </tr>
 
-          <tr><td class="caption">Дата c:</td>
+    <tr><td class="caption">Дата c:</td>
       <td width='200px;'><div class="inp_"><%= f.text_field :dt_from, :value => @dt_from, label: false, class: "txt datepicker" %></div></td>
-
       <td class="caption caption_to"><%= f.hidden_field :checked %><span class="check_img <%= @checked ? 'checked' : '' %>" id='dt_to_check'></span> по:</td>
-      <td width='180px;'>
-        <div class="inp_">
+      <td width='180px;'><div class="inp_">
         <% if @checked %>
           <%= f.text_field :dt_to, :value => @dt_to, label: false, class: "txt datepicker" %>
         <% else %>
@@ -35,44 +32,32 @@
         <% end %>
         </div></td>
       <td class="caption caption_sm">Время:</td>
-      <td ><div class="inp_w"><%= f.text_field :t_from, :value => @t_from, label: false, class: "txt timepicker" %></div>
-      <span class="time_separator">–</span>
-      <div class="inp_w"><%= f.text_field :t_to, :value => @t_to, label: false, class: "txt timepicker" %></div></td>
-      <td ></td></tr>
-      <% if is_admin? %>
-        <tr><td class="caption">Создатель:</td>
-            <td width='490px;' colspan="3"><div class="inp_w" >
-             <%= f.select :user_id, options_for_select(User.order(:name).collect{ |u| [u.name, u.id] },@absence.user_id), {},{class: 'chosen'} %></div>
-        </td></tr>
-            <tr><td class="caption">Комментарий:</td>
-      <td colspan="3"><div class="inp_w" ><%= f.text_area :comment, class: 'txt alone',label: false %></div></td></tr>
-      <% if controller.action_name == 'edit' %>
+      <td >
+        <div class="inp_w"><%= f.text_field :t_from, :value => @t_from, label: false, class: "txt timepicker" %></div>
+        <span class="time_separator">–</span>
+        <div class="inp_w"><%= f.text_field :t_to, :value => @t_to, label: false, class: "txt timepicker" %></div></td>
+      <td></td>
+    </tr>
+    <% if is_admin? %>
+      <tr><td class="caption">Сотрудник:</td>
+          <td width='490px;' colspan="3"><div class="inp_w" >
+           <%= f.select :user_id, options_for_select(User.order(:name).collect{ |u| [u.name, u.id] },@absence.user_id), {},{class: 'chosen'} %></div>
+      </td></tr>
+      <tr><td class="caption">Комментарий:</td>
+        <td colspan="3"><div class="inp_w" ><%= f.text_area :comment, class: 'txt alone',label: false %></div></td></tr>
+      <% if controller.action_name == 'edit'  %>
         <tr><td class="caption">Изменить причину на:</td>
-        <td colspan="3"><div class="inp_w"><%= f.select 'new_reason_id', options_for_select(@reasons.collect{ |u| [u.name, u.id] },@absence.new_reason_id), {},{class: 'chosen'} %>
-        </div></td></tr>
+          <td colspan="3"><div class="inp_w"><%= f.select 'new_reason_id', content_tag(:option,'Выберите...',:value=>0)+options_for_select(@reasons.collect{ |u| [u.name, u.id] },@absence.new_reason_id), {},{class: 'chosen'} %>
+          </div></td></tr>
       <% end -%>
-
-    <tr><td class="last_td"></td>
-      <td class="last_td" colspan="3"><%= link_to 'Отмена', absences_url, :class => "sub btn_a btn_reset"%>
-        <%= f.button :submit, value: 'Сохранить', :class => 'sub btn_a' %></td></tr>
+      <tr><td class="last_td"></td>
+        <td class="last_td" colspan="3">
+          <%= link_to 'Отмена', absences_url, :class => "sub btn_a btn_reset"%><%= f.button :submit, value: 'Сохранить', :class => 'sub btn_a' %></td></tr>
     <% end %>
-
   </table>
-
-    <div class="panel-left">
-    <table class="tbl_fc tbl_fc_1">
-
-
-
-
-
-    </table>
-  </div>
-
 <% end %>
-</div>
-<div class="sep_3"></div>
 
+<div class="sep_3"></div>
 
 <div class='shops' id='dshops' style="display:<%= @absence.reason_id==3 ? 'block;' : 'none;'%>" >
 <% if !@absence.id.nil? %>

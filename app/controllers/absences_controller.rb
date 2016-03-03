@@ -34,7 +34,7 @@ class AbsencesController < ApplicationController
 
     sort_1 = @sort_column == 'dt_from' ? 'month' : @sort_column
     order = sort_1 + " " + sort_direction + ", "+ sort_2  + " " + dir_2 + ", absences.created_at desc"
-    p "order",order
+    #p "order",order
     @absences = @absences.order(order)
   end
 
@@ -50,8 +50,8 @@ class AbsencesController < ApplicationController
   # GET /absences/new
   def new
     @absence = Absence.new
-    @reasons = AbsenceReason.all
-    @targets = AbsenceTarget.all
+    @reasons = AbsenceReason.order(:id)
+    @targets = AbsenceTarget.order(:name)
     @projects = Project.all
     @dt_from = DateTime.now.try('strftime',"%d.%m.%Y")
     @dt_to = @dt_from
@@ -65,9 +65,9 @@ class AbsencesController < ApplicationController
 
   # GET /absences/1/edit
   def edit
-    @reasons = AbsenceReason.all
+    @reasons = AbsenceReason.order(:id)
     @projects = Project.all
-    @targets = AbsenceTarget.all
+    @targets = AbsenceTarget.order(:name)
     @shops  = @absence.shops
     @shop  = AbsenceShop.new
     @shop_targets = AbsenceShopTarget.all
@@ -82,10 +82,15 @@ class AbsencesController < ApplicationController
   # POST /absences.json
   def create
     @absence = Absence.new(absence_params)
-
+    #p 'absence_params[:reopen]', absence_params[:reopen]
+    
     respond_to do |format|
       if @absence.save
-        format.html { redirect_to absences_url, notice: 'Отсутствие успешно создано.' }
+        if absence_params[:reopen]
+          format .html { redirect_to action: "edit", id: @absence.id }
+        else
+          format .html { redirect_to absences_url, notice: 'Отсутствие успешно создано.' }
+        end
         format.json { render :show, status: :created, location: @absence }
       else
         format.html { render :new }
@@ -97,9 +102,13 @@ class AbsencesController < ApplicationController
   # PATCH/PUT /absences/1
   # PATCH/PUT /absences/1.json
   def update
+    ap = absence_params
+    ap[:project_id]=0 if ap[:reason_id].to_i<2 || ap[:reason_id].to_i>3
+    ap[:target_id]=0 if ap[:reason_id].to_i!=2
+    #p ap
     respond_to do |format|
 
-      if @absence.update(absence_params)
+      if @absence.update(ap)
         format.html { redirect_to absences_url, notice: 'Отсутствие успешно обновлено.' }
         format.json { render :show, status: :ok, location: @absence }
       else
@@ -128,7 +137,7 @@ class AbsencesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def absence_params
-      a = params.require(:absence).permit(:user_id, :dt_from, :dt_to, :reason_id, :new_reason_id, :comment, :project_id,:t_from,:t_to,:checked, :target_id)
+      a = params.require(:absence).permit(:user_id, :dt_from, :dt_to, :reason_id, :new_reason_id, :comment, :project_id,:t_from,:t_to,:checked, :target_id,:reopen)
       a['dt_to'] = a['dt_from'] if a['checked']=='false' || a['dt_to'].nil?
       a['dt_from'] = a['dt_from'].gsub("00:00", '')+ ' ' + a['t_from']
       
@@ -138,7 +147,7 @@ class AbsencesController < ApplicationController
     end
 
     def sort_column
-      p "params[:sort]",params[:sort]
+      #p "params[:sort]",params[:sort]
       default_column = "dt_from"
       (Absence.column_names.include?(params[:sort]) || params[:sort] == 'users.name' || params[:sort] == 'calendar' ) ? params[:sort] : default_column
     end

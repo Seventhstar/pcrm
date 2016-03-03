@@ -4,7 +4,7 @@ class Absence < ActiveRecord::Base
 	belongs_to :user
 	belongs_to :project
 	has_many :shops, class_name: "AbsenceShop", foreign_key: :absence_id
-	attr_accessor :t_from,:t_to, :checked
+	attr_accessor :t_from,:t_to, :checked, :reopen
 	has_paper_trail
 
 	def reason_name

@@ -9,14 +9,22 @@ $(document).ready ->
     disable_search: 'true'
   $('#shop_shop_id').chosen chosen_params
   $('#absence_reason_id').chosen(chosen_params).on 'change', ->
-    if $(this).val() == '2'
-      $('.p_obj').show()
-    else
-      $('.p_obj').hide()
-    if $(this).val() == '3'
-      $('#dshops').show()
-    else
-      $('#dshops').hide()
+    switch $(this).val()
+      when '2'
+        $('.p_obj').show()
+        $('.p_trgt').show()
+        $('#dshops').hide()
+      when '3'
+        $('.p_obj').show()
+        $('.p_trgt').hide()
+        $('#dshops').show()
+        if $('#absence_reopen').attr('action_name')=='new'
+          $('#absence_reopen').val = true
+          $('#new_absence').submit()
+      else
+        $('.p_obj').hide()
+        $('.p_trgt').hide()
+        $('#dshops').hide()      
   $('#dt_to_check').on 'click', ->
     $(this).toggleClass 'checked'
     $('#absence_checked').val $(this).hasClass('checked')
