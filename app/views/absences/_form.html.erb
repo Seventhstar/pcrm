@@ -1,11 +1,18 @@
 <%= simple_form_for(@absence) do |f| %>
 <%= f.hidden_field :reopen,{action_name: action_name} %>
+
+<% if !is_admin? %>
+  <%= f.hidden_field :user_id,  :value => @absence.user_id ||= current_user.id %>
+<% end %>
+
   <table class="tbl_fc tbl_fc_1">
     <tr><td class="caption">Причина:</td>
     <td  colspan="3">         
-        <div class="inp_w" >
-          <%= f.select 'reason_id', options_for_select(@reasons.collect{ |u| [u.name, u.id] },@absence.reason_id) %>
-        </div>
+      <% if is_admin? || action_name == 'new' || (@absence.user_id == current_user.id && @absence.created_at > (Date.today-1.day) && @absence.new_reason_id.nil? )  %>
+        <div class="inp_w"><%= f.select 'reason_id', options_for_select(@reasons.collect{ |u| [u.name, u.id] },@absence.reason_id) %></div>
+      <% else %>
+        <div class="lbl"><%= @absence.reason_name %></div>
+      <% end %>
     </td>
     <td></td>
     </tr>
@@ -43,6 +50,8 @@
           <td width='490px;' colspan="3"><div class="inp_w" >
            <%= f.select :user_id, options_for_select(User.order(:name).collect{ |u| [u.name, u.id] },@absence.user_id), {},{class: 'chosen'} %></div>
       </td></tr>
+
+    <% end %>
       <tr><td class="caption">Комментарий:</td>
         <td colspan="3"><div class="inp_w" ><%= f.text_area :comment, class: 'txt alone',label: false %></div></td></tr>
       <% if controller.action_name == 'edit'  %>
@@ -52,8 +61,9 @@
       <% end -%>
       <tr><td class="last_td"></td>
         <td class="last_td" colspan="3">
-          <%= link_to 'Отмена', absences_url, :class => "sub btn_a btn_reset"%><%= f.button :submit, value: 'Сохранить', :class => 'sub btn_a' %></td></tr>
-    <% end %>
+          <% if is_admin? || action_name == 'new' || @absence.user_id == current_user.id %>
+            <%= link_to 'Отмена', absences_url, :class => "sub btn_a btn_reset"%><%= f.button :submit, value: 'Сохранить', :class => 'sub btn_a' %></td></tr>
+          <% end %>
   </table>
 <% end %>
 

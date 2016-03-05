@@ -18,7 +18,7 @@ class LeadsController < ApplicationController
   # GET /leads
   # GET /leads.json
   def index
-
+    @only_actual = params[:only_actual].nil? ? true : params[:only_actual]=='true'
     @sort_column = sort_column
     if @sort_column == "status_date"
       query_str = "leads.*, date_trunc('month', status_date) AS month"
@@ -39,7 +39,7 @@ class LeadsController < ApplicationController
       @leads = @leads.where('LOWER(info) like LOWER(?) or LOWER(phone) like LOWER(?) or LOWER(fio) like LOWER(?)','%'+info+'%','%'+info+'%','%'+info+'%')
     end
 
-    if !params[:only_actual] || params[:only_actual] == "true"
+    if @only_actual
       @s_status_ids = Status.where(:actual => true).ids
       @leads = @leads.where(:status => @s_status_ids)
     end

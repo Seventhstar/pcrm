@@ -15,12 +15,7 @@
 </div>
 
 <%= link_to 'Добавить', new_provider_path, class: "btn_a btn-add btn_slim right space20" %>
-  <div class="switcher_a toggled">
-    <a href="#" class="link_a left on only_actual" off="Все" on="Актуальные">Актуальные</a>
-    <div class="scale">
-      <div class="handle active"></div>
-    </div>
-  </div>
+<%= only_actual_btn %>
 
 </div>
 </div>

@@ -2,13 +2,13 @@ class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy]
   before_action :logged_in_user
   before_action :check_sum, only: [:create,:update]
-    helper_method :sort_2, :dir_2
+  helper_method :sort_2, :dir_2
   helper_method :sort_column, :sort_direction
   # GET /projects
   # GET /projects.json
   def index
     @sort_column = sort_column
-
+    @only_actual = params[:only_actual].nil? ? true : params[:only_actual]=='true'
     if !current_user.admin?
       @projects = current_user.projects
     else
@@ -19,7 +19,7 @@ class ProjectsController < ApplicationController
       @projects = @projects.where('LOWER(address) like LOWER(?)','%'+params[:search]+'%')
     end
 
-    if !params[:only_actual] || params[:only_actual] == "true"
+    if @only_actual
       @projects = @projects.where('pstatus_id in (1,2)')
     end
 
@@ -56,8 +56,9 @@ class ProjectsController < ApplicationController
   # POST /projects
   # POST /projects.json
   def create
-    
-    @project = Project.new(project_params)
+    pp = project_params
+    pp['pstatus_id'] ||= 1
+    @project = Project.new(pp)
     @client = @project.create_client(project_params[:client_attributes])
 
     @client.save

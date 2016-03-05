@@ -1,19 +1,14 @@
 <div class="subnav">
 
 	<%= sortable_pil "number", "По № договора" %>
-	<%= sortable_pil "users.name", "По исполнителям", 'asc' %>
+	<% if is_admin? %>	
+		<%= sortable_pil "users.name", "По исполнителям", 'asc' %>
+	<% end %>
 	<%= sortable_pil "reason_id", "По статусам" %>
 
-<%= link_to 'Добавить', new_project_path, class: "btn_a btn-add btn_slim right space20" %>
-
-<div class="switcher_a toggled">
-    <a href="#" class="link_a left on only_actual" off="Все" on="Актуальные">Актуальные</a>
-    <div class="scale">
-      <div class="handle active"></div>
-    </div>
-  </div>
-
-
+	<%= link_to 'Добавить', new_project_path, class: "btn_a btn-add btn_slim right space20" %>
+  <%= only_actual_btn %>
+ 
 </div>
 
 	

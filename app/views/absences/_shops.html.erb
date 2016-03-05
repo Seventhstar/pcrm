@@ -27,7 +27,7 @@
       
       <td> <%= select "shop", :target_id, content_tag(:option,'Выберите...',:value=>0)+options_for_select(@shop_targets.collect{ |u| [u.name, u.id] },0),{},{class: 'chosen'} %>
       </td>
-      <td><span class="sub btn_a" id="btn-sub-send" absid="<%= @absence.id %>" action='/absence_shops/' prm='shop'> Добавить</span></td>
+      <td><span class="sub btn_a" id="btn-sub-send" absid="<%= @absence.id %>" action='/absence_shops/' prm='shop'> Сохранить</span></td>
     </tr>
 
   </tbody>

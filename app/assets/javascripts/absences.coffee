@@ -19,8 +19,9 @@ $(document).ready ->
         $('.p_trgt').hide()
         $('#dshops').show()
         if $('#absence_reopen').attr('action_name')=='new'
-          $('#absence_reopen').val = true
+          $('#absence_reopen').val( true)
           $('#new_absence').submit()
+        return
       else
         $('.p_obj').hide()
         $('.p_trgt').hide()

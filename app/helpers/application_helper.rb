@@ -106,6 +106,21 @@ module ApplicationHelper
     end
   end
 
+  def only_actual_btn()
+    #<a href="#" class="link_a left on only_actual" off="Все" on="Актуальные">Актуальные</a>
+    txt = @only_actual == false ? 'Все' : "Актуальные"
+    cls = @only_actual ? ' on only_actual' : ''
+    active = @only_actual ?  'active' : ''
+    a = content_tag :a, txt,{ class: "link_a left"+cls, off: "Все", on: "Актуальные"}
+    b = content_tag :div, { class: 'scale'} do
+        content_tag :div, '',{class:"handle "+ active}
+      end
+    cls = @only_actual ? ' toggled' : ''
+    content_tag :div, {class: 'switcher_a'+ cls} do
+      a+b
+    end
+  end
+
   def set_only_actual(actual,title = nil)  
 		css_class = actual == "false" ? "passive" : "active"
 		css_class.concat(" only_actual li-right")
@@ -131,9 +146,10 @@ module ApplicationHelper
     actual
   end
 
-  def class_for_abs( absence )
-      
-      absence.reason_id == 1 ? "hot" : ""
+  def class_for_abs( absence )      
+      cls = absence.reason_id == 1 ? "hot" : ""
+      cls = "info" if ( absence.reason_id != absence.new_reason_id && !absence.new_reason_id.nil? )
+      cls
   end
 
   def option_link( page,title )

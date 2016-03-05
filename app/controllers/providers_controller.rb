@@ -22,7 +22,7 @@ class ProvidersController < ApplicationController
 
     @param_search = params[:search]
     @only_actual = !params[:only_actual] || params[:only_actual] == "true"
-
+ 
     all_ids = Provider.order(:name).ids
     sp,bp,gtp,ps,s_ids = all_ids,all_ids,all_ids,all_ids,all_ids
 

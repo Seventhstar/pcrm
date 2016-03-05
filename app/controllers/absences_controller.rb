@@ -86,7 +86,7 @@ class AbsencesController < ApplicationController
     
     respond_to do |format|
       if @absence.save
-        if absence_params[:reopen]
+        if absence_params[:reopen]=='true' 
           format .html { redirect_to action: "edit", id: @absence.id }
         else
           format .html { redirect_to absences_url, notice: 'Отсутствие успешно создано.' }

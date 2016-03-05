@@ -7,7 +7,7 @@
 
 .time_separator{ padding: 7px; float: left; display: inline-block; width: 14px; text-align: center; color: #737373; }
 
-.datepicker { background: url('ico-date.png') 95% 8px no-repeat; }
+.datepicker { background: url('ico-date.png') 95% 8px no-repeat; cursor: pointer;}
 .inp_w .datepicker{ background: url('ico-date.png') 98% 8px no-repeat; }
 .datepicker.slim_txt{ background: url('ico-date.png') 98% 3px no-repeat; }
 

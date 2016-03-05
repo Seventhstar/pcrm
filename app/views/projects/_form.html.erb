@@ -1,5 +1,7 @@
 <%= simple_form_for(@project) do |f| %>
-
+<% if !is_admin? %>
+  <%= f.hidden_field :executor_id,  :value => @project.executor_id ||= current_user.id %>
+<% end %>
     <h3>Данные</h3>
 
     <div class="box_wrap box_wrap_1">
@@ -27,9 +29,13 @@
               <%= f.select :project_type_id, options_for_select(ProjectType.order(:name).collect{ |u| [u.name, u.id] }) %>
             </div></td>
             <td><div class="inp_w"><%= f.select :style_id, options_for_select(Style.order(:name).collect{ |u| [u.name, u.id] }) %></div></td>
-            <td colspan="2"><div class="inp_w">
-              <%= f.select :executor_id, options_for_select(User.order(:name).collect{ |u| [u.name, u.id] }) %>
-            </div></td>
+            <td colspan="2">
+            <% if is_admin? %>
+              <div class="inp_w">
+                <%= f.select :executor_id, options_for_select(User.order(:name).collect{ |u| [u.name, u.id] }) %>
+              </div>
+            <% end %>
+            </td>
           </tr>
           
 
