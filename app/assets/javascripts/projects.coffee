@@ -11,12 +11,30 @@
         ndateArr = str.toString().split(' ');
         Months = 'Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec';
         return (parseInt(Months.indexOf(ndateArr[1])/4)+1)+'.'+ndateArr[2]+'.'+ndateArr[3];
-      
+
+@calculateDays = (d0, d1) ->
+  ndays = 1 + Math.round((d1.getTime() - d0.getTime()) / (24 * 3600 * 1000))
+  nsaturdays = Math.floor((ndays + d0.getDay()) / 7)
+  ndays - (2 * nsaturdays) + (d0.getDay() == 6) - (d1.getDay() == 5)    
+
+@workday_count = (start, end) ->
+  first = start.clone().endOf('week')   # end of first week
+  alert (first)
+  last = end.clone().startOf('week')   # start of last week
+  days = last.diff(first, 'days') * 5 / 7   # this will always multiply of 7
+  wfirst = first.day() - start.day()   # check first week
+  if start.day() == 0
+    --wfirst   # -1 if start with sunday 
+  wlast = end.day() - last.day()   # check last week
+  if end.day() == 6 
+    --wlast   # -1 if end with saturday
+  wfirst + days + wlast   # get the total
+
 @changeDTP = (ptr,el) ->
 	if ptr.name == 'project[date_end_plan]' or ptr.name == 'project[date_start]'
 		d1 = dateFromString($('#project_date_start').val())
 		d2 = dateFromString($('#project_date_end_plan').val())
-		$('#days').val((d2-d1)/24/3600/1000 )
+		$('#days').val(calculateDays(d1,d2) )
 		return
 
 @calc_debt =() ->

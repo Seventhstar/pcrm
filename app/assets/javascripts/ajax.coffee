@@ -76,6 +76,10 @@ $(document).ready ->
       if e.keyCode == 13
         apply_opt_change($('span.icon_apply'))
       return
+   $('body').on 'keyup keypress','.edit_project input', (e)->
+      if e.keyCode == 13 || e.keyCode == 8
+        e.preventDefault()
+      return 
    $('body').on 'keyup keypress', '.simple_options_form',(e) ->
     code = e.keyCode or e.which
     if code == 13

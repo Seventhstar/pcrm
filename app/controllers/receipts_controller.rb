@@ -14,19 +14,21 @@ class ReceiptsController < ApplicationController
     all_ids = Receipt.all.ids
     p_ids = s_ids = pt_ids = prj_ids = all_ids
 
+    @receipts = Receipt.select("receipts.*, date_trunc('month', date) AS month" )
+
     if ![nil,'','0','-1'].include? params[:receipts_provider] 
         p_ids = Provider.find(params[:receipts_provider]).receipts.ids
     elsif @param_provider == 0
-        p_ids = Receipt.where(provider_id: 0).ids
+        p_ids = @receipts.where(provider_id: 0).ids
     end
 
     if ![nil,''].include? params[:search]
        _prj_ids = Project.where('LOWER(address) like LOWER(?)', '%'+params[:search]+'%').ids
-       s_ids   = Receipt.where(project_id: _prj_ids).ids
+       s_ids   = @receipts.where(project_id: _prj_ids).ids
     end
 
     if ![nil,'','0'].include? params[:receipts_project_id]
-       prj_ids   = Receipt.where(project_id: params[:receipts_project_id]).ids
+       prj_ids   = @receipts.where(project_id: params[:receipts_project_id]).ids
     end
 
     if ![nil,'','0'].include? params[:receipts_payment_type]
@@ -35,8 +37,8 @@ class ReceiptsController < ApplicationController
 
     ids = p_ids & s_ids & pt_ids & prj_ids
       
-    @receipts = Receipt.where(:id => ids).order(:date)
-    @sum = @receipts.sum(:sum)
+    @receipts = @receipts.where(:id => ids).order(:date)
+    #@sum = @receipts.sum(:sum)
   end
 
   # GET /receipts/1

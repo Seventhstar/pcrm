@@ -1,0 +1,26 @@
+<% if first_table == false %>
+<%= render 'bottom' %>
+</tbody></table></div>
+<% end %>
+<% first_table = false %>
+<div class="panel panel-default">
+<div class="panel-heading table-heading head month"> <%= heading %></div>
+
+<table class="tleads">
+  <thead>
+    <tr>
+    	<th>Дата</th>
+    	<th>Тип оплаты</th>
+    	<th>Исполнитель</th>
+      <th>Основание</th>
+      
+      <th>Контрагент</th>
+      <th>Адрес</th>
+      
+      <th width="70px;">Сумма</th>
+      <th>Комментарий</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>

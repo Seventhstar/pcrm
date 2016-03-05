@@ -1,22 +1,30 @@
-<div class="panel panel-default">
-<table class="tleads projects">
-  <thead>
-    <tr> 
-      <th width="40px">Номер</th>
-      <th>Адрес</th>
-      <th>Вид проекта</th>
-      <th>Заказчик</th>
-      <th>Исполнитель</th>
-      <th width="87px">Дата начала</th>
-      <th width="112px">Дата окончания</th>
-      <th width="40px">1/м2</th>
-      <th width="70px">Стоимость</th>
-      <th></th>
-    </tr>
-  </thead>
+<% cur_month  = "" %>
+<% cur_user   = nil %>
+<% cur_status = nil %>
+<% first_table = true %>
 
-  <tbody>
+
     <% @projects.each do |project| %>
+        <% new_date = project.date_start? ? project.date_start : Date.today %>
+
+      
+      <% if cur_month != new_date.month && (params[:sort] == "date_start") %> 
+          <% cur_month = new_date.month %>
+          <%= render "head", {:first_table => first_table, :heading => t(new_date.try('strftime',"%B"))+" "+new_date.try('strftime',"%Y") } %>
+          <% first_table = false %> 
+      <% elsif cur_user != user_name(project.executor_id) && (params[:sort] == "users.name")%>
+        <% cur_user = user_name(project.executor_id) %>
+          <%= render "head", {:first_table => first_table, :heading => user_name(project.executor_id) } %>
+          <% first_table = false %> 
+      <% elsif cur_status != project.status_name && (params[:sort] == "pstatus_id") %>
+        <% cur_status = project.status_name %>
+        <%= render "head", {:first_table => first_table, :heading => t(project.status_name) } %>
+        <% first_table = false %>
+      <% elsif first_table %>
+          <%= render "head", {:first_table => first_table, :heading => '' } %>
+          <% first_table = false %> 
+      <% end %>
+      
       <tr class="<%= class_for_project(project) %>">
         <td class="center"><%= project.number %></td>
 
@@ -25,13 +33,17 @@
         <td><%= project.client_name %></td>
         <td><%= project.executor_name %></td>
         
-        <td class="center"><%= project.date_start %></td>
-        <td class="center"><%= project.date_end_plan %></td>
+        <td ><%= project.date_start %></td>
+        <td ><%= project.date_end_plan %></td>
  
-        <td class="td_right"><%= project.price %></td>
+        <td><%= project.price %></td>
         <td class="td_right <%= project.sum_total_real ==0 ? '':'red' %>" title="<%= project.sum_total.to_sum %>"><%= project.total.to_sum %></td>
         <%= td_tool_icons(project,'edit,show','href') %>
       </tr>
     <% end %>
   </tbody>
 </table>
+</div>
+<br>
+
+</div>

@@ -24,8 +24,8 @@
         <% first_table = false %>        
 
         <tr class="<%= class_for_abs(abs) %>" >
-        <td class="center"><%= abs.dt_from.try('strftime',"%d.%m.%Y") %></td>   
-        <td class="center"><%= abs.dt_from.beginning_of_day!=abs.dt_to.beginning_of_day ? abs.dt_to.try('strftime',"%d.%m.%Y") : '' %></td>   
+        <td ><%= abs.dt_from.try('strftime',"%d.%m.%Y") %></td>   
+        <td ><%= abs.dt_from.beginning_of_day!=abs.dt_to.beginning_of_day ? abs.dt_to.try('strftime',"%d.%m.%Y") : '' %></td>   
         <td ><%= abs.user_name %></td>   
         <td class="day"><%= abs.reason_id!=3 ? abs.reason_name : ttip( abs.reason_name, raw(abs.shops.collect{ |a| [a.shop_name,a.target_name].join(' ')}.join("\n")),"abs"+abs.reason_id.to_s , abs) %></td>
         <td><%= abs.project_name %></td>

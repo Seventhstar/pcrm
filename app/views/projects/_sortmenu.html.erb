@@ -4,7 +4,7 @@
 	<% if is_admin? %>	
 		<%= sortable_pil "users.name", "По исполнителям", 'asc' %>
 	<% end %>
-	<%= sortable_pil "reason_id", "По статусам" %>
+	<%= sortable_pil "pstatus_id", "По статусам" %>
 
 	<%= link_to 'Добавить', new_project_path, class: "btn_a btn-add btn_slim right space20" %>
   <%= only_actual_btn %>

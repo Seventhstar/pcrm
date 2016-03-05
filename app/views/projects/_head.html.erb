@@ -1,0 +1,25 @@
+<% if first_table == false %>
+</tbody></table></div>
+<% end %>
+<% first_table = false %>
+<div class="panel panel-default">
+<% if !heading.empty? %>
+  <div class="panel-heading table-heading head month"> <%= heading %></div>
+<% end %>
+<table class="tleads projects">
+  <thead>
+    <tr> 
+      <th width="40px">Номер</th>
+      <th>Адрес</th>
+      <th width='140px'>Вид проекта</th>
+      <th width='150px'>Заказчик</th>
+      <th width='120px'>Исполнитель</th>
+      <th width="72px">Начало</th>
+      <th width="72px">Конец</th>
+      <th width="37px">1/м2</th>
+      <th width="70px">Стоимость</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
