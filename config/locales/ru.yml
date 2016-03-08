@@ -35,6 +35,29 @@ ru:
   reason_id: Причина
   new_reason_id: Новая причина
   target_id: Цель
+  executor_id: Исполнитель
+  project_type_id: Вид проекта
+  
+  number: Номер
+  footage: Метраж
+  footage_2: Метраж 2
+  footage_real: Метраж факт
+  footage_2_real: Метраж факт 2
+
+  sum: Сумма
+  sum_2: Сумма 2
+  sum_real: Сумма по факту
+  sum_2_real: Сумма по факту 2
+  sum_total: Общая стоимость
+  sum_total_real: Общая стоимость факт
+  pstatus_id: Статус
+  date_sign: Дата подписания
+  date_end_plan: Дата завершения план
+  price: Цена
+  price_2: Цена 2
+  price_real: Цена факт
+  price_2_real: Цена факт 2
+  
   dt_from: с
   dt_to: по
 
@@ -45,7 +68,7 @@ ru:
   start_date: Дата создания
   fio: ФИО
   phone: Телефон
-  footage: Метраж
+  
   address: Адрес
   email: "E-Mail" 
   url: Сайт
@@ -69,6 +92,8 @@ ru:
   Develop: Задача
   Provider: Поставщик
   Reason: Причина
+  Project: Проект
+  Receipt: Поступление (ден. средств)
   WikiRecord: Запись базы знаний
 
   new_Priority: Новый приоритет
@@ -312,76 +337,6 @@ ru:
       create: Создать %{model}
       submit: Сохранить %{model}
       update: Сохранить %{model}
-  number:
-    currency:
-      format:
-        delimiter: ! ' '
-        format: ! '%n %u'
-        precision: 2
-        separator: ','
-        significant: false
-        strip_insignificant_zeros: false
-        unit: руб.
-    format:
-      delimiter: ! ' '
-      precision: 3
-      separator: ','
-      significant: false
-      strip_insignificant_zeros: false
-    human:
-      decimal_units:
-        format: ! '%n %u'
-        units:
-          billion:
-            few: миллиардов
-            many: миллиардов
-            one: миллиард
-            other: миллиардов
-          million:
-            few: миллионов
-            many: миллионов
-            one: миллион
-            other: миллионов
-          quadrillion:
-            few: квадриллионов
-            many: квадриллионов
-            one: квадриллион
-            other: квадриллионов
-          thousand:
-            few: тысяч
-            many: тысяч
-            one: тысяча
-            other: тысяч
-          trillion:
-            few: триллионов
-            many: триллионов
-            one: триллион
-            other: триллионов
-          unit: ''
-      format:
-        delimiter: ''
-        precision: 1
-        significant: false
-        strip_insignificant_zeros: false
-      storage_units:
-        format: ! '%n %u'
-        units:
-          byte:
-            few: байта
-            many: байт
-            one: байт
-            other: байта
-          gb: ГБ
-          kb: КБ
-          mb: МБ
-          tb: ТБ
-    percentage:
-      format:
-        delimiter: ''
-        format: "%n%"
-    precision:
-      format:
-        delimiter: ''
   support:
     array:
       last_word_connector: ! ' и '

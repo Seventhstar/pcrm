@@ -35,7 +35,9 @@ module CommonHelper
       from = changeset[0].try('strftime',"%Y.%m.%d %H:%M" )
       to = changeset[1].try('strftime',"%Y.%m.%d %H:%M" )
 
-    when "channel_id", 'reason_id','new_reason_id','target_id','dev_status_id','status_id', 'priority_id', 'project_id',"user_id","ic_user_id"
+    when "channel_id", 'reason_id','new_reason_id','target_id','dev_status_id','status_id', 'priority_id', 'project_id',"user_id","ic_user_id",
+         "executor_id","pstatus_id", "project_type_id"
+
       #p "--!--"
       attrib = event.gsub('_id','').gsub('new_','')
       cls = obj["item_type"].constantize.find_by_id(obj["item_id"])
@@ -132,6 +134,9 @@ module CommonHelper
           to = from_to['to']
           if from.present? || to.present?
             from = from.nil? ? "" : from.to_s
+           # p "from", from
+           # p "to", to
+           # p "k",k,t(k)
             desc << (from.empty? ? ('Заполнено поле <b>'+t(k)+':</b> «'+to.to_s+'»') : ('Изменено поле <b>'+t(k)+'</b> c «'+from.to_s+'» на «'+to.to_s+'»') )
             ch.store( index, {'field' => t(k), 'from' => from, 'to' => to, 'description' => desc } )
             #p 'ch,', ch

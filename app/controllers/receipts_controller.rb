@@ -8,11 +8,12 @@ class ReceiptsController < ApplicationController
     
     @providers = Provider.order(:name)
     @projects  = Project.order(:address)
+    @executors = User.where(:id => Project.uniq.pluck(:executor_id))
     @param_provider = params[:receipts_provider]
     @param_provider = @param_provider.to_i if !@param_provider.nil?
 
     all_ids = Receipt.all.ids
-    p_ids = s_ids = pt_ids = prj_ids = all_ids
+    p_ids = s_ids = pt_ids = prj_ids =  u_ids = all_ids
 
     @receipts = Receipt.select("receipts.*, date_trunc('month', date) AS month" )
 
@@ -35,7 +36,14 @@ class ReceiptsController < ApplicationController
       pt_ids = PaymentType.find(params[:receipts_payment_type]).receipts.ids
     end
 
-    ids = p_ids & s_ids & pt_ids & prj_ids
+    if ![nil,'','0'].include? params[:receipts_executor_id]
+      _prj_ids = User.find(params[:receipts_executor_id]).projects.ids
+      p _prj_ids
+      u_ids   = @receipts.where(project_id: _prj_ids).ids
+      p "u_ids",u_ids
+    end
+
+    ids = p_ids & s_ids & pt_ids & prj_ids & u_ids
       
     @receipts = @receipts.where(:id => ids).order(:date)
     #@sum = @receipts.sum(:sum)

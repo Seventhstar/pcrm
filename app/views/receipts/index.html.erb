@@ -18,6 +18,9 @@
 <%= select_tag "receipts_project_id", content_tag(:option,'Проект...',:value=>0)+options_from_collection_for_select(@projects, "id", "address",:selected=>params[:receipts_project_id]) %> 
 </label>
 
+<label class="combobox left">
+<%= select_tag "receipts_executor_id", content_tag(:option,'Исполнитель...',:value=>0)+options_from_collection_for_select(@executors, "id", "name",:selected=>params[:receipts_executor_id]) %> 
+</label>
 
 </div>
 <% end %>

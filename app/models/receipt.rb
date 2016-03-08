@@ -14,6 +14,10 @@ class Receipt < ActiveRecord::Base
 		user.try(:name)
 	end
 
+	def executor_name
+		project.try(:executor).try(:name)
+	end
+
 	def project_address
 		project.try(:address)
 	end

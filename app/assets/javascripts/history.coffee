@@ -5,7 +5,7 @@
 
 $(document).ready ->
   
-  chosen_params = {width: '170px'}
+  chosen_params = width: '170px'
   
   $('#obj_type').chosen(chosen_params).on 'change', ->
     history_query()

@@ -22,6 +22,7 @@ $(document).ready ->
   $('#develop_priority_id').chosen(params) 
   $('#develop_ic_user_id').chosen(params) 
   $('#develop_dev_status_id').chosen(params) 
+  params = width: '200px', disable_search: 'true'
   $('#dev_project').chosen(params).on 'change', ->
     updateDev()
 

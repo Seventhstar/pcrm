@@ -2,7 +2,7 @@ class Project < ActiveRecord::Base
 	belongs_to :client
   belongs_to :executor, class_name: 'User', foreign_key: :executor_id
 	belongs_to :project_type
-  belongs_to :project_status, foreign_key: :pstatus_id
+  belongs_to :pstatus, class_name: 'ProjectStatus',foreign_key: :pstatus_id
   has_many :receipts
   has_many :absence
 	accepts_nested_attributes_for :client
@@ -25,7 +25,7 @@ class Project < ActiveRecord::Base
   end
 
   def status_name
-    project_status.try(:name)
+    pstatus.try(:name)
   end
 
   def days_plan

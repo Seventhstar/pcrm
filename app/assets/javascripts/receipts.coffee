@@ -44,7 +44,7 @@ $(document).ready ->
     maxlength: false
   $('#receipt_payment_type_id').chosen chosen_params
   chosen_params =
-    width: '170px'
+    width: '160px'
     allow_single_deselect: true
   $('#receipts_provider').chosen(chosen_params).on 'change', ->
     receipt_query()
@@ -55,6 +55,9 @@ $(document).ready ->
   $('#receipts_payment_type').chosen(chosen_params).on 'change', ->
     receipt_query()
     return
+  $('#receipts_executor_id').chosen(chosen_params).on 'change', ->
+    receipt_query()
+    return  
   $('.container').on 'keyup', '#rcpt_search', ->
     receipt_query()
     return
