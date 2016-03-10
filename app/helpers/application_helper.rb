@@ -148,7 +148,7 @@ module ApplicationHelper
 
   def class_for_abs( absence )      
       cls = absence.reason_id == 1 ? "hot" : ""
-      cls = "info" if ( absence.reason_id != absence.new_reason_id && !absence.new_reason_id.nil? )
+      cls = "info" if ( absence.reason_id != absence.new_reason_id && absence.new_reason_id.to_i != 0 )
       cls
   end
 
