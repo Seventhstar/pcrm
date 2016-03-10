@@ -110,6 +110,7 @@ ru:
   new_PaymentType: Новый вид оплаты
   new_ProjectStatus: Новый статус
   new_AbsenceReason: Новая причина
+  new_AbsenceTarget: Новая цель
 
   list_Priority: Список приоритетов
   list_ProjectType: Список видов проектов
@@ -125,6 +126,7 @@ ru:
   list_PaymentType: Список видов оплаты
   list_ProjectStatus: Список статусов
   list_AbsenceReason: Список причин 
+  list_AbsenceTarget: Список целей 
 
   Password: Пароль
   "true": Да

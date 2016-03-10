@@ -14,28 +14,27 @@ td.day{font-size: 13px;}
 .inday {min-height: 100px;}
 
 
-.day li {
-    // color: red; /* Цвет маркеров */
-    //font-size: 20px; 	
-    list-style-type: none;
-    margin: 5px 0;
-   }
+.day li {list-style-type: none;}
 
 .day li:before {
     color: red; /* Цвет маркера */
     content: "●"; /* Сам маркер */
     padding-right: 5px; /* Расстояние от маркера до текста */
     height: 12px;
-   //font-size: 20px;
+   font-size: 22px;
 }
 
+.curday { background-color: #f5f5f5;}
+
 .day a{text-decoration: none;font-size: 12px;  }
-// .pst1 { background-color: #7ffe00; }
+
 .day li.abs1:before { color: #fe0000; }
 .day li.abs2:before { color: #6acc00; }
-.day li.abs3:before { color: #ff8411; }
-.day li.abs4:before { color: #00aaff; }
+.day li.abs3:before { color: #00ccff; }
+.day li.abs4:before { color: #ffbc73; } 
 .day li.abs5:before { color: #0000ff; }
+.day li.abs6:before { color: #bf6520; }
+.day li.abs7:before { color: #009060; } //#7f70d8
 
 
 .numday {display: block; }

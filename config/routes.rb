@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'project_status/name'
 
   resources :absence_reasons
+  resources :absence_targets
   resources :absence_shops
   resources :absences
 
