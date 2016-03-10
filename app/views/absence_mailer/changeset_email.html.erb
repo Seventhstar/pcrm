@@ -1,0 +1,14 @@
+<h3>Пользователь "<%= find_version_author_name(@version) %>" изменил данные об отсутствии:</h3>
+
+<p>Изменения:</p>
+
+<ul>
+<%- @history.each do |version_fields| %>
+  <%- version = version_fields[1] %>
+	<%- version['description'].each do |descr| %>
+	       <li><%= raw(descr) %></li>
+        <% end %>
+<% end %>
+    </ul>
+
+  <%= link_to 'Перейти к отсутствию', [:edit, @abs] %>

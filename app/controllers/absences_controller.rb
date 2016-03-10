@@ -3,6 +3,9 @@ class AbsencesController < ApplicationController
   helper_method :sort_2, :dir_2
   helper_method :sort_column, :sort_direction
   before_action :logged_in_user
+  include CommonHelper
+  after_filter  :send_changeset_email, only: [:update,:create]
+
   # GET /absences
   # GET /absences.json
   def index
@@ -65,6 +68,9 @@ class AbsencesController < ApplicationController
 
   # GET /absences/1/edit
   def edit
+    if !current_user.admin? && @absence.user != current_user
+      redirect_to absences_path
+    end
     @reasons = AbsenceReason.order(:id)
     @projects = Project.all
     @targets = AbsenceTarget.order(:name)
@@ -165,4 +171,14 @@ class AbsencesController < ApplicationController
       defaul_dir = sort_column =='dt_from' ? "asc": "desc"
       %w[asc desc].include?(params[:dir2]) ? params[:dir2] : defaul_dir
     end
+
+    def send_changeset_email
+      @version = @absence.versions.last
+      if @version.event == "create"
+        AbsenceMailer.created_email(@absence.id).deliver_now 
+      else
+        AbsenceMailer.changeset_email(@absence.id,current_user).deliver_now
+      end
+    end
+
 end

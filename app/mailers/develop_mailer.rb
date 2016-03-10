@@ -7,8 +7,7 @@ class DevelopMailer < ActionMailer::Base
 
   def send_mail_to_admins( subj)
     if Rails.env.production?
-      admins = User.where('admin = true and id <> 10')
-      emails = admins.collect(&:email).join(",")
+      emails = User.where('admin = true and id <> 10').pluck(:email)
       mail(:to => emails, :subject => subj) do |format|
         format.html 
       end

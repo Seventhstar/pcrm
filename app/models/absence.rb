@@ -7,6 +7,7 @@ class Absence < ActiveRecord::Base
 	attr_accessor :t_from,:t_to, :checked, :reopen
 	has_paper_trail
 
+
 	def reason_name
 		reason.try(:name)
 	end

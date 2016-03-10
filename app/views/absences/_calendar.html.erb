@@ -23,7 +23,7 @@
               tooltip_str_from_hash(
                 {a.user_name => ' ', 'причина:' => a.reason_name, 'объект:' => a.project_name, 
                   'c  ' => a.dt_from.try('strftime',"%d.%m.%Y %H:%M"),'по'=>a.dt_to.try('strftime',"%d.%m.%Y %H:%M")}
-                ),"abs"+a.reason_id.to_s , a) %>
+                ),"abs"+a.reason_id.to_s , a, is_admin? || a.user == current_user) %>
           <% end %>
           </div></td>
           <% @curr_day=@curr_day+1 %>

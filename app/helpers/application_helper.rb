@@ -193,9 +193,13 @@ module ApplicationHelper
       end
   end
 
-  def span_tooltip(info, full_info, cls, a )
+  def span_tooltip(info, full_info, cls, a, is_link = true )
     #content_tag( :span, info, {'data-toggle' =>"tooltip", 'data-placement' => "top", :title => full_info, :class => cls})
-    b = link_to info, [:edit, a], {'data-toggle' =>"tooltip", 'data-placement' => "top", :title => full_info}
+    if is_link
+      b = link_to info, [:edit, a], {'data-toggle' =>"tooltip", 'data-placement' => "top", :title => full_info}
+    else
+      b = content_tag :span, info, {'data-toggle' =>"tooltip", 'data-placement' => "top", :title => full_info}
+    end
     c = content_tag(:span,' ',{:class => cls})
     content_tag(:span,' ',{class: "numday"}) do 
       content_tag(:li,{class: cls}) do 
