@@ -18,10 +18,13 @@ td.day{font-size: 13px;}
 
 .day li:before {
     color: red; /* Цвет маркера */
-    content: "●"; /* Сам маркер */
+    //content: "●"; /* Сам маркер */
+    content: "\25cf";
+    //content: "\25d1"; Полузакрашеный круг
+    //content: "\25e9"; Полузакрашеный квадрат
     padding-right: 5px; /* Расстояние от маркера до текста */
     height: 12px;
-   font-size: 22px;
+   font-size: 20px;
 }
 
 .curday { background-color: #f5f5f5;}
