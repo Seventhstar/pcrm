@@ -18,15 +18,15 @@ td.day{font-size: 13px;}
 
 .day li:before {
     color: red;    
-    content: "\25cf";
-    content: "\26AB";
+    content: "●";
+    //content: "\26AB";
     //content: "\25e9";
     /* content: "\25e9"; Полузакрашеный квадрат*/ 
     padding-right: 5px; /* Расстояние от маркера до текста */
     height: 12px;
-    font-size: 18px;
+    font-size: 22px;
 }
-.day li.half:before{ content: "\25d1"; /* Полузакрашеный круг */ }
+.day li.half:before{ content: "\25d1"; font-size: 23px;/* Полузакрашеный круг */ }
 .day li.birthday:before{ 
     content: ""; color: #ff8411; 
     display: inline-block;

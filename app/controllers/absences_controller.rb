@@ -175,7 +175,7 @@ class AbsencesController < ApplicationController
     def send_changeset_email
       @version = @absence.versions.last
       if @version.event == "create"
-        AbsenceMailer.created_email(@absence.id).deliver_now 
+        AbsenceMailer.created_email(@absence.id,current_user).deliver_now 
       else
         AbsenceMailer.changeset_email(@absence.id,current_user).deliver_now
       end
