@@ -146,11 +146,7 @@ module ApplicationHelper
     actual
   end
 
-  def class_for_abs( absence )      
-      cls = absence.reason_id == 1 ? "hot" : ""
-      cls = "info" if ( absence.reason_id != absence.new_reason_id && absence.new_reason_id.to_i != 0 )
-      cls
-  end
+
 
   def option_link( page,title )
     css_class = @page_data == page ? "active" : nil

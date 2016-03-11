@@ -4,6 +4,7 @@
       <%= t(@current_month.try('strftime',"%B"))+" "+@current_month.try('strftime',"%Y") %> 
       <span class='cal-next' cur-period='<%= @current_month+1.month %>'>>></span>
   </div>
+  <% day_births =User.where('date_birth is NOT NULL').pluck(:name,:date_birth).map{|a,b| [b.try('strftime','%d.%m'),a] }.to_h %>
   <table class="tcalendar">
     <thead><tr> 
     <% @wdays.each do |day| %>
@@ -14,17 +15,14 @@
       <% while @curr_day <= @current_month.end_of_month %>
         <tr>
         <% 7.times do |day| %>
-          <td class="day <%= @curr_day.beginning_of_month == @current_month.beginning_of_month ? '':'nday' %> <%= @curr_day.beginning_of_day == Date.today ? 'curday' : '' %>">
+          <td class="<%= day_class(@curr_day,@current_month) %>">
           <div class="inday">
           <span class="numday"><%= @curr_day.strftime('%d') %></span> 
           <% abs = day_abs(@curr_day) %>
           <% abs.each do |a|%>
-              <%= span_tooltip( [a.user_name,a.reason_name].join(' '), 
-              tooltip_str_from_hash(
-                {a.user_name => ' ', 'причина:' => a.reason_name, 'объект:' => a.project_name, 
-                  'c  ' => a.dt_from.try('strftime',"%d.%m.%Y %H:%M"),'по'=>a.dt_to.try('strftime',"%d.%m.%Y %H:%M")}
-                ),"abs"+a.reason_id.to_s , a, is_admin? || a.user == current_user) %>
+              <%= span_tooltip( [a.user_name,a.reason_name].join(' '), abs_description(a), abs_class(a), a, is_admin? || a.user == current_user) %>
           <% end %>
+          <%= date_birth_li(day_births, @curr_day) %>
           </div></td>
           <% @curr_day=@curr_day+1 %>
         <% end %>

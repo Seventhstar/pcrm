@@ -23,7 +23,7 @@
       <% end %>
         <% first_table = false %>        
 
-        <tr class="<%= class_for_abs(abs) %>" >
+        <tr class="<%= abs_class_td(abs) %>" >
         <td ><%= abs.dt_from.try('strftime',"%d.%m.%Y") %></td>   
         <td ><%= abs.dt_from.beginning_of_day!=abs.dt_to.beginning_of_day ? abs.dt_to.try('strftime',"%d.%m.%Y") : '' %></td>   
         <td ><%= abs.user_name %></td>   
