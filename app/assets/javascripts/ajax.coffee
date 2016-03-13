@@ -39,7 +39,8 @@
   upd_param(inputs.serialize()+'&model='+model+'&id='+item_id)  
 
 $(document).ready ->
-
+  $('.schosen').chosen(width: '99.5%')
+  $('.chosen').chosen(width: '99.5%', disable_search: 'true')
 # редактирование данных в таблице
   $('.container').on 'click', 'span.icon_edit', ->
     item_id = $(this).attr('item_id')

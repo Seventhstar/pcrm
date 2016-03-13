@@ -22,7 +22,7 @@
       <td class="caption p_obj">Проект:</td>
       <td colspan="3" class="p_obj">
       <div class="inp_w">
-      <%= f.select :project_id, content_tag(:option,'Выберите...',:value=>0)+options_for_select(@projects.collect{ |u| [u.address, u.id] },@absence.project_id),{},{class:'chosen'} %></div></td>
+      <%= f.select :project_id, content_tag(:option,'Выберите...',:value=>0)+options_for_select(@projects.collect{ |u| [u.address, u.id] },@absence.project_id),{},{class:'schosen'} %></div></td>
       <td class="caption caption_sm"><span style="<%= disp_trgt %>" class="p_trgt"> Цель: </span></td>
       <td ><span style="<%= disp_trgt %>" class="p_trgt">
       <%= f.select :target_id, content_tag(:option,'Выберите...',:value=>0)+options_for_select(@targets.collect{ |u| [u.name, u.id] },@absence.target_id), {},{class: 'chosen'} %></span></td>

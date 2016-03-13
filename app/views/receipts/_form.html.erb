@@ -9,7 +9,7 @@
         <td><div class="inp_w"><%= f.text_field :date, :value => @date, label: false, class: "txt datepicker" %></div></td></tr>
       <tr><td class="caption">Вид платежа:</td>
         <td><div class="inp_w">
-        <%= f.select :payment_type_id, options_for_select(PaymentType.order(:name).collect{ |u| [u.name, u.id] },@receipt.payment_type_id) %>
+        <%= chosen_src :payment_type_id, PaymentType.all, @receipt.payment_type_id %>
       </div></td></tr>
 
 
@@ -18,25 +18,25 @@
             <%= receipt_procents_div %>
         </td></tr>
 
-    <tr><td class="caption">Комментарий:</td>
-      <td><div class="inp_w"><%= f.text_area :description, class: 'txt alone',label: false %></div></td></tr>
+    <tr><td class="last_td"></td><td class="last_td"><%= link_to 'Отмена', receipts_url, :class => "sub btn_a btn_reset"%>
+        <%= f.button :submit, value: 'Сохранить', :class => 'sub btn_a' %></td></tr>
       </table>
   </div>
     <div class="panel-right">
     <table class="tbl_fc tbl_fc">
       <tr><td class="caption">Проект:</td>
-        <td><div class="inp_w"><%= f.select :project_id, content_tag(:option,'Выберите...',:value=>0)+options_for_select(@projects.collect{ |u| [u.address, u.id] },@receipt.project_id) %>  
+        <td><div class="inp_w"><%= chosen_src :project_id, @projects, @receipt.project_id %>  
         </div></td></tr>
       <tr><td class="caption">Контрагент:</td>
         <td><div class="inp_w">        
-        <%= select_options_with_special('receipt[provider_id]','Выберите...','* Клиент', Provider.order(:name), @receipt.provider_id) %>
+        <%= chosen_src 'receipt[provider_id]', Provider.all, @receipt.provider_id,{nil_value: 'Выберите...', special_value: '* Клиент'} %>
       </div></td></tr>
       <tr><td class="caption">Создатель:</td>
-        <td><div class="inp_w"><%= f.select :user_id, options_for_select(User.order(:name).collect{ |u| [u.name, u.id] },@receipt_user.id) %>
+        <td><div class="inp_w"><%= chosen_src :user_id, User.all,@receipt_user.id %>
       </div></td></tr>
-      <tr><td class="last_td"></td>
-      <td class="last_td"><%= link_to 'Отмена', receipts_url, :class => "sub btn_a btn_reset"%>
-        <%= f.button :submit, value: 'Сохранить', :class => 'sub btn_a' %></td></tr>
+      
+      <td class="caption">Комментарий:</td>
+      <td><div class="inp_w"><%= f.text_area :description, class: 'txt alone',label: false %></div></td></tr>
     </table>
     </div>
 

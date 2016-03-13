@@ -5,10 +5,12 @@
 
 $(document).ready ->
   
-  chosen_params = width: '170px'
+  chosen_params = 
+  	width: '170px'
+  	disable_search: true
   
   $('#obj_type').chosen(chosen_params).on 'change', ->
     history_query()
 
-  $('#obj_user_id').chosen(chosen_params).on 'change', ->
+  $('#obj_user_id').chosen({width: '220px'}).on 'change', ->
     history_query()

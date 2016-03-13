@@ -47,9 +47,26 @@ module ApplicationHelper
 
   def activeClassIfModel( model )
     if model && model == self.controller_name.classify
-	"class=""active_li"""
+	    "class=""active_li"""
     else ""
     end
+  end
+
+  #def chosen_src( id, collection, param_id, nil_value = 'Выберите...', special_value = '', p_name = 'name', order = 'name', cls = nil  )
+  def chosen_src( id, collection, param_id, options = {})  
+    p_name    = options[:p_name].nil? ? 'name' : options[:p_name]
+    order     = options[:order].nil? ? p_name : options[:order]
+    nil_value = options[:nil_value].nil? ? 'Выберите...' : options[:nil_value]
+    
+    coll = collection.class.ancestors.include?(ActiveRecord::Relation) ? collection : collection
+    coll = coll.collect{ |u| [u[p_name], u.id] }
+    coll.insert(0,[nil_value,-1]) if nil_value != ''
+    coll.insert(1,[options[:special_value],0]) if !options[:special_value].nil?
+
+    def_cls   = coll.count < 8 ? 'chosen' : 'schosen'
+    cls       = options[:class].nil? ? def_cls : options[:class]
+
+    select_tag id, options_for_select(coll, :selected => param_id), class: cls
   end
 
   def sortable_pil(column, title = nil, default_dir = 'desc')
@@ -66,9 +83,6 @@ module ApplicationHelper
     if (direction == false)
       direction = default_dir
     end
-
-    
-
     content_tag :span, title,{ :class => css_class, :sort => column, :direction => direction } 
   end
   

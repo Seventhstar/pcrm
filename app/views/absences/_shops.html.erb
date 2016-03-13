@@ -22,10 +22,10 @@
  
     <tr><%= hidden_field 'shop','absence_id', value: @absence.id %>
       <td class="caption3"><span>Новый магазин: </span><div class="inp2" >
-      <%= select_options_with_special('shop[shop_id]','Выберите...','* другой', Provider.order(:name), @shop.shop_id) %>
+      <%= chosen_src 'shop[shop_id]',Provider.order(:name), @shop.shop_id, {nil_value: 'Выберите...',special_value: '* другой'} %>
       </div> </td>
       
-      <td> <%= select "shop", :target_id, content_tag(:option,'Выберите...',:value=>0)+options_for_select(@shop_targets.collect{ |u| [u.name, u.id] },0),{},{class: 'chosen'} %>
+      <td> <%= chosen_src "shop[target_id]", @shop_targets, 0 %>
       </td>
       <td><span class="sub btn_a" id="btn-sub-send" absid="<%= @absence.id %>" action='/absence_shops/' prm='shop'> Сохранить</span></td>
     </tr>

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  resources :payments
+
   get 'project_status/name'
 
   resources :absence_reasons
@@ -13,8 +15,14 @@ Rails.application.routes.draw do
   resources :wiki_files
 
   resources :payment_purposes
-
   resources :payment_types
+
+  resources :receipts do
+    collection do
+      get :to_move
+      put :to_update
+    end
+  end
 
   resources :receipts
 
@@ -34,15 +42,7 @@ Rails.application.routes.draw do
   resources :budgets
   resources :styles
   resources :provider_managers
-
  
-#  resources :budgets, only: [:edit, :update]
-#  get 'budgets' => redirect('options/budgets'), only: [:index, :new, :create]
-
-#  resources :styles, only: [:edit, :update]
-#  get 'styles' => redirect('options/styles'), only: [:index, :new, :create]
-#  get 'styles/new' => redirect('options/styles')
-
   resources :develops
   resources :providers
 
@@ -100,21 +100,6 @@ Rails.application.routes.draw do
   get "/history/" => "history#show"
   get "/history/:period" => "history#show"
 
-
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
-
-  # You can have the root of your site routed with "root"
-  # root 'welcome#index'
-
-  # Example of regular route:
-  #   get 'products/:id' => 'catalog#view'
-
-  # Example of named route that can be invoked with purchase_url(id: product.id)
-  #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
-
-  # Example resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
 
   # Example resource route with options:
   #   resources :products do

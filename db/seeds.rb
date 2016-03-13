@@ -11,6 +11,9 @@
 #     DevStatus.create([{name: 'Новая'},{name: 'Выполнена'},{name: 'Проверена'},{name: 'В доработке'}])
 #     Priority.create([{name: 'Обычный'},{name: 'Срочно'},{name: 'Низкий'}])
 
+    PaymentPurpose.delete_all
+    PaymentPurpose.create([{id: 1,name: 'Выплата дизайнеру'},{id: 2, name: 'Выплата визуализатору'},{id: 3, name:'Штраф'},{id: 4, name:'Откат'}])
+
     if ProjectStatus.all.count==0  
       ProjectStatus.create([{name: 'В работе'},{name: 'Приостановлен'},{name: 'Завершен'}])
     end

@@ -1,0 +1,39 @@
+<%= simple_form_for(@payment) do |f| %>
+  <%= f.error_notification %>
+
+<div class="box_wrap box_wrap_1">
+  <div class="panel-left">
+    <table class="tbl_fc tbl_fc">
+      <tr><td class="caption">Проект:</td>
+        <td><div class="inp_w">
+         <%= chosen_src "payment_project_id", @projects, @payment.project_id,{nil_value: 'Проект...', p_name: 'address'} %>  
+        </div></td></tr>
+    <tr><td class="caption">Вид платежа:</td>
+        <td><div class="inp_w">
+        <%= chosen_src "payment_payment_type", PaymentType.all, @payment.payment_type_id,{nil_value: 'Вид платежа...',order: 'id'} %> 
+      </div></td></tr>
+    
+    <tr><td class="caption">Сумма:</td>
+        <td><div class="left"><%= f.text_field :sum,  class: "txt sum_mask" %></div>
+
+        </td></tr>
+
+    <tr><td class="last_td"></td><td class="last_td"><%= link_to 'Отмена', receipts_url, :class => "sub btn_a btn_reset"%>
+        <%= f.button :submit, value: 'Сохранить', :class => 'sub btn_a' %></td></tr>
+      </table>
+</div>
+    <div class="panel-right">
+    <table class="tbl_fc tbl_fc">
+
+      <tr><td class="caption">Вид выплаты:</td>
+        <td><div class="inp_w">
+        <%= chosen_src :payment_purpose_id, PaymentPurpose.all, @payment.payment_purpose_id,{order: 'id'} %>  
+        </div></td></tr>
+      <td class="caption">Комментарий:</td>
+      <td><div class="inp_w"><%= f.text_area :description, class: 'txt alone',label: false %></div></td></tr>
+    </table>
+    </div>
+
+  </div>
+
+<% end %>

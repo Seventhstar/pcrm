@@ -7,19 +7,19 @@
 
 <div class="combobox short_search left"> 
 <label class="combobox left">
-	<%= select_options_with_special('receipts_provider','Все контрагенты...','* Клиенты *', @providers, @param_provider) %></label>
-
-
-<label class="combobox left">
-<%= select_tag "receipts_payment_type", content_tag(:option,'Вид платежа...',:value=>0)+options_from_collection_for_select(PaymentType.all, "id", "name",:selected=>params[:receipts_payment_type]) %> 
+	<%= chosen_src('receipts_provider', @providers, @param_provider,{nil_value: 'Все контрагенты...',special_value: '* Клиенты *'}) %>
 </label>
 
 <label class="combobox left">
-<%= select_tag "receipts_project_id", content_tag(:option,'Проект...',:value=>0)+options_from_collection_for_select(@projects, "id", "address",:selected=>params[:receipts_project_id]) %> 
+	<%= chosen_src "receipts_payment_type", PaymentType.order(:id), params[:receipts_payment_type],{nil_value:'Вид платежа...',class: 'chosen'} %> 
 </label>
 
 <label class="combobox left">
-<%= select_tag "receipts_executor_id", content_tag(:option,'Исполнитель...',:value=>0)+options_from_collection_for_select(@executors, "id", "name",:selected=>params[:receipts_executor_id]) %> 
+	<%= chosen_src "receipts_project_id", @projects, params[:receipts_project_id],{nil_value: 'Проект...',p_name: 'address'} %> 
+</label>
+
+<label class="combobox left">
+	<%= chosen_src "receipts_executor_id", @executors, params[:receipts_executor_id],{nil_value:'Исполнитель...'} %> 
 </label>
 
 </div>

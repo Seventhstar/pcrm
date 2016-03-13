@@ -19,19 +19,6 @@ module ReceiptsHelper
 	end
 
 
-	def select_options_with_special(id, nil_value, special_value = nil,collection,param_id)
-		spc = special_value
-		if special_value.nil?
-			spc = ''
-		else 
-			if param_id==0 
-				 spc = content_tag(:option,special_value,:value=>0, selected: 'selected' ) 
-			else
-				spc = content_tag(:option,special_value,:value=>0 )
-			end
-		end
-		select_tag id, content_tag(:option,nil_value,:value=>-1)+ spc + 
-				options_from_collection_for_select(collection, "id", "name", :selected => param_id)
-	end
+
 
 end
