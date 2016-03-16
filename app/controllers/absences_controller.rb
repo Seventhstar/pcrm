@@ -25,7 +25,7 @@ class AbsencesController < ApplicationController
     end
 
     if @sort_column!='calendar'  
-      @absences = @absences.where("dt_from >= ?",@curr_day-1.month)
+      @absences = @absences.where("dt_from >= ?",@curr_day.beginning_of_month-1.month)
     else
       @absences = @absences.where("dt_from >= ?",@curr_day)
     end

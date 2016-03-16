@@ -204,11 +204,12 @@ module ApplicationHelper
   end
 
   def span_tooltip(info, full_info, cls, a, is_link = true )
-    #content_tag( :span, info, {'data-toggle' =>"tooltip", 'data-placement' => "top", :title => full_info, :class => cls})
+    #content_tag( :span, info, {'data-toggle' =>"tooltip", 'data-placement' => "top", :title => full_info, :class => cls})''
+    t_hash = {'data-toggle' =>"tooltip", 'data-placement' => "top", :title => full_info}
     if is_link
-      b = link_to info, [:edit, a], {'data-toggle' =>"tooltip", 'data-placement' => "top", :title => full_info}
+      b = link_to info.html_safe, [:edit, a], t_hash
     else
-      b = content_tag :span, info, {'data-toggle' =>"tooltip", 'data-placement' => "top", :title => full_info}
+      b = content_tag :span, info.html_safe, t_hash
     end
     c = content_tag(:span,' ',{:class => cls})
     content_tag(:span,' ',{class: "numday"}) do 

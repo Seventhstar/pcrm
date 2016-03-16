@@ -8,7 +8,8 @@
   <table class="tbl_fc tbl_fc_1">
     <tr><td class="caption">Причина:</td>
     <td  colspan="3">         
-      <% if is_admin? || action_name == 'new' || (@absence.user_id == current_user.id && @absence.created_at > (Date.today-1.day) && @absence.new_reason_id.nil? )  %>
+      <% if is_admin? || action_name == 'new' || 
+            (@absence.user_id == current_user.id && @absence.created_at > (Date.today-1.day) && @absence.new_reason_id.nil? )  %>
         <div class="inp_w"><%= f.select 'reason_id', options_for_select(@reasons.collect{ |u| [u.name, u.id] },@absence.reason_id) %></div>
       <% else %>
         <div class="lbl"><%= @absence.reason_name %></div>
