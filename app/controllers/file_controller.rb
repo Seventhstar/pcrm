@@ -1,10 +1,11 @@
 class FileController < ApplicationController
+require 'uri'
 before_action :logged_in_user
    def del_file
      if params[:file_id]
         file = Attachment.find(params[:file_id])
         num_to_s = file.owner_id.to_s
-        filename = Rails.root.join('public', 'uploads',file.owner_type,num_to_s,file.name)
+        filename = Rails.root.join('public', 'uploads',file.owner_type,num_to_s,file.id.to_s+File.extname(file.name))
         File.delete(filename) if File.exist?(filename)
         file.destroy
      end
@@ -22,11 +23,12 @@ before_action :logged_in_user
       dir = Rails.root.join('public', 'uploads',folder,subfolder)
 
       FileUtils.mkdir_p(dir) unless File.exists?(dir)
-      File.open(dir + name, 'wb') do |file|
+      id = append_file(name)
+      open(dir+(id.to_s+File.extname(name)), 'wb') do |file|
          file.write(uploaded_io.read)
       end
 
-        append_file(name)
+        
     end
     render layout: false, content_type: "text/html"
   end
@@ -60,11 +62,13 @@ before_action :logged_in_user
     f.user_id = current_user.id
     f.name = filename
     f.save
+    f.id
   end
 
   def download
     dir = Rails.root.join('public', 'uploads',params[:type],params[:id],params[:basename]+"."+params[:extension])
-    send_file dir, :disposition => 'attachment'
+    f = Attachment.find(params[:basename])
+    send_file dir, :disposition => 'attachment', :filename => f.name
     flash[:notice] = "Файл успешно загружен"
   end
 
