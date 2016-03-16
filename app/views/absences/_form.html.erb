@@ -45,6 +45,9 @@
         <div class="inp_w"><%= f.text_field :t_to, :value => @t_to, label: false, class: "txt timepicker" %></div></td>
       <td></td>
     </tr>
+
+      <tr><td class="caption">Комментарий:</td>
+        <td colspan="5"><div class="inp_w" ><%= f.text_area :comment, class: 'txt alone',label: false %></div></td></tr>
     <% if is_admin? %>
       <tr><td class="caption">Сотрудник:</td>
           <td width='490px;' colspan="3"><div class="inp_w" >
@@ -52,8 +55,7 @@
       </td></tr>
 
     <% end %>
-      <tr><td class="caption">Комментарий:</td>
-        <td colspan="3"><div class="inp_w" ><%= f.text_area :comment, class: 'txt alone',label: false %></div></td></tr>
+        
       <% if controller.action_name == 'edit'  %>
         <tr><td class="caption">Изменить причину на:</td>
           <td colspan="3"><div class="inp_w"><%= f.select 'new_reason_id', content_tag(:option,'Выберите...',:value=>0)+options_for_select(@reasons.collect{ |u| [u.name, u.id] },@absence.new_reason_id), {},{class: 'chosen'} %>

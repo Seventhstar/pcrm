@@ -3,14 +3,18 @@ class AbsenceMailer < ActionMailer::Base
   include CommonHelper
   include DevelopsHelper
   add_template_helper(CommonHelper)
-#  add_template_helper(DevelopsHelper)
 
-  def send_mail_to( subj, curr_user = nil )
+  def send_mail_to( subj, curr_user = nil, user_option = nil)
     if Rails.env.production?
-      emails = User.where('admin = true and id <> 10').pluck(:email)
-      if !curr_user.nil? && curr_user.id != @abs.user_id
-        emails << @abs.user.email
-      end 
+
+      if user_option.nil?
+        emails = User.where('admin = true and id <> 10').pluck(:email)
+      else
+        emails = User.joins(:options).where('admin = true and option_id = ?',user_option).pluck(:email)
+      end
+
+      emails << @abs.user.email if !curr_user.nil? && curr_user.id != @abs.user_id
+
       mail(:to => emails, :subject => subj) do |format|
         format.html 
       end
@@ -21,7 +25,7 @@ class AbsenceMailer < ActionMailer::Base
     @abs = Absence.find(a_id)
     @history = get_last_history_item(@abs) 
     @version = @abs.versions.last
-    send_mail_to("Изменения в отсутствии",curr_user)
+    send_mail_to("Изменения в отсутствии",curr_user,21)
   end
 
 
@@ -29,7 +33,7 @@ class AbsenceMailer < ActionMailer::Base
     @abs = Absence.find(a_id)
     @history = get_last_history_item(@abs) 
     @version = @abs.versions.last
-    send_mail_to("Создано отсутствие",curr_user)
+    send_mail_to("Создано отсутствие",curr_user,20)
   end
 
 end
