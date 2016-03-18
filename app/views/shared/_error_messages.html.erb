@@ -1,11 +1,11 @@
-<% if object.errors.any? %>
+<% if !object.errors.nil? && object.errors.any? %>
   <div id="error_explanation">
-    <div class="alert alert-danger">
-      Форма содержит <%= t('error', :count => object.errors.count) %>.
-    </div>
+    <span>
+      Форма содержит <%= t('error', :count => object.errors.count) %>:
+    </span>
     <ul>
     <% object.errors.full_messages.each do |msg| %>
-      <li class="flash_danger"><%= msg %></li>
+      <li class="f_danger"><%= msg %></li>
     <% end %>
     </ul>
   </div>

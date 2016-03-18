@@ -33,8 +33,8 @@ function intFromSum(sum){
 
 var showNotifications = function(){ 
   $nt = $(".alert"); 
-  if (!$nt.hasClass('alert-danger')){
-    setTimeout(function() {$nt.removeClass("in").addClass('out'); setTimeout('$nt.remove();',1000);}, 3000);
+  if ($nt.hasClass('flash_success')){
+     setTimeout(function() {$nt.removeClass("in").addClass('out'); setTimeout('$nt.remove();',1000);}, 3000);
   }
 }
 

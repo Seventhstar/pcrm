@@ -8,7 +8,7 @@ $(document).ready ->
     width: '99.5%'
     disable_search: 'true'
   $('#shop_shop_id').chosen({width: '99.5%'})
-  $('#absence_reason_id').chosen(chosen_params).on 'change', ->
+  $('#absence_reason_id:not(input[type=hidden])').chosen(chosen_params).on 'change', ->
     switch $(this).val()
       when '2'
         $('.p_obj').show()

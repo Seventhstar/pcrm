@@ -1,9 +1,9 @@
 class AbsencesController < ApplicationController
+  include CommonHelper
   before_action :set_absence, only: [:show, :edit, :update, :destroy]
   helper_method :sort_2, :dir_2
   helper_method :sort_column, :sort_direction
   before_action :logged_in_user
-  include CommonHelper
   after_filter  :send_changeset_email, only: [:update,:create]
 
   # GET /absences
@@ -50,46 +50,50 @@ class AbsencesController < ApplicationController
 
   end
 
-  # GET /absences/new
-  def new
-    @absence = Absence.new
+  def abs_params(ap = nil)
     @reasons = AbsenceReason.order(:id)
     @targets = AbsenceTarget.order(:name)
     @projects = Project.all
+    @shop  = AbsenceShop.new
+    @shop_targets = AbsenceShopTarget.all
+    @reopen = false
+    if !@absence.nil?
+      @shops  = @absence.shops
+      @dt_from = @absence.dt_from.try('strftime',"%d.%m.%Y")
+      @dt_to = @absence.dt_to.try('strftime',"%d.%m.%Y")
+      @t_from = @absence.dt_from.try('strftime',"%H:%M")
+      @t_to = @absence.dt_to.try('strftime',"%H:%M")
+      @checked = @absence.dt_from.beginning_of_day != @absence.dt_to.beginning_of_day 
+    end
+  end
+  # GET /absences/new
+  def new
+    abs_params
+    @absence = Absence.new
     @dt_from = DateTime.now.try('strftime',"%d.%m.%Y")
     @dt_to = @dt_from
     @t_from = "10:00"
     @t_to = '19:00'
     @checked = false
     @shops = {}
-    @shop  = AbsenceShop.new
-    @shop_targets = AbsenceShopTarget.all
   end
 
   # GET /absences/1/edit
   def edit
+
     if !current_user.admin? && @absence.user != current_user
       redirect_to absences_path
     end
-    @reasons = AbsenceReason.order(:id)
-    @projects = Project.all
-    @targets = AbsenceTarget.order(:name)
-    @shops  = @absence.shops
-    @shop  = AbsenceShop.new
-    @shop_targets = AbsenceShopTarget.all
-    @dt_from = @absence.dt_from.try('strftime',"%d.%m.%Y")
-    @dt_to = @absence.dt_to.try('strftime',"%d.%m.%Y")
-    @t_from = @absence.dt_from.try('strftime',"%H:%M")
-    @t_to = @absence.dt_to.try('strftime',"%H:%M")
-    @checked = @absence.dt_from.beginning_of_day != @absence.dt_to.beginning_of_day 
+    abs_params
+
   end
 
   # POST /absences
   # POST /absences.json
   def create
     @absence = Absence.new(absence_params)
-    #p 'absence_params[:reopen]', absence_params[:reopen]
-    
+    reopen = absence_params[:reopen]
+  
     respond_to do |format|
       if @absence.save
         if absence_params[:reopen]=='true' 
@@ -97,9 +101,11 @@ class AbsencesController < ApplicationController
         else
           format .html { redirect_to absences_url, notice: 'Отсутствие успешно создано.' }
         end
-        format.json { render :show, status: :created, location: @absence }
+        format.json { render :edit, status: :created, location: @absence }
       else
-        format.html { render :new }
+        abs_params
+        @reopen = reopen
+        format .html { render "new" }
         format.json { render json: @absence.errors, status: :unprocessable_entity }
       end
     end
@@ -111,12 +117,12 @@ class AbsencesController < ApplicationController
     ap = absence_params
     ap[:project_id]=0 if ap[:reason_id].to_i<2 || ap[:reason_id].to_i>3
     ap[:target_id]=0 if ap[:reason_id].to_i!=2
-    #p ap
-    respond_to do |format|
 
-      if @absence.update(ap)
+    abs_params
+    respond_to do |format|
+      if @absence.update(ap) 
         format.html { redirect_to absences_url, notice: 'Отсутствие успешно обновлено.' }
-        format.json { render :show, status: :ok, location: @absence }
+        format.json { render :edit, status: :ok, location: @absence }
       else
         format.html { render :edit }
         format.json { render json: @absence.errors, status: :unprocessable_entity }
@@ -146,9 +152,7 @@ class AbsencesController < ApplicationController
       a = params.require(:absence).permit(:user_id, :dt_from, :dt_to, :reason_id, :new_reason_id, :comment, :project_id,:t_from,:t_to,:checked, :target_id,:reopen)
       a['dt_to'] = a['dt_from'] if a['checked']=='false' || a['dt_to'].nil?
       a['dt_from'] = a['dt_from'].gsub("00:00", '')+ ' ' + a['t_from']
-      
       a['dt_to'] = a['dt_to'].gsub("00:00", '') +' ' + a['t_to'] 
-      
       a
     end
 
@@ -174,10 +178,12 @@ class AbsencesController < ApplicationController
 
     def send_changeset_email
       @version = @absence.versions.last
-      if @version.event == "create"
-        AbsenceMailer.created_email(@absence.id,current_user).deliver_now 
-      else
-        AbsenceMailer.changeset_email(@absence.id,current_user).deliver_now
+      if !@version.nil?
+        if @version.event == "create"
+          AbsenceMailer.created_email(@absence.id,current_user).deliver_now 
+        else
+          AbsenceMailer.changeset_email(@absence.id,current_user).deliver_now
+        end
       end
     end
 
