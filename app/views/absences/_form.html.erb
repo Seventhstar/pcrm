@@ -17,7 +17,14 @@
         <div class="lbl"><%= @absence.reason_name %><%= f.hidden_field :reason_id %></div>
       <% end %>
     </td>
-    <td></td>
+    <% if controller.action_name == 'edit'  %>
+      <td class="caption caption_sm">=></td>
+        <td ><div class="inp_w"><%= chosen_src 'absence[new_reason_id]', @reasons,@absence.new_reason_id,{nil_value: 'Новая причина...'} %>
+        </div></td>
+    <% else %>
+        <td colspan="2"></td>
+    <% end -%>
+    
     </tr>
     <% disp_obj = @absence.reason_id==2 || @absence.reason_id==3 ? 'table-row;' : 'none;' %>
     <% disp_trgt = @absence.reason_id==2 ? ' ' : 'display: none;' %>
@@ -54,30 +61,29 @@
     <% if is_admin? %>
       <tr><td class="caption">Сотрудник:</td>
           <td width='490px;' colspan="3"><div class="inp_w" >
-           <%= f.select :user_id, options_for_select(User.order(:name).collect{ |u| [u.name, u.id] },@absence.user_id), {},{class: 'chosen'} %></div>
+           <%= chosen_src 'absence[user_id]', User.all, @absence.user_id %></div>
       </td></tr>
 
     <% end %>
         
-      <% if controller.action_name == 'edit'  %>
-        <tr><td class="caption">Изменить причину на:</td>
-          <td colspan="3"><div class="inp_w"><%= f.select 'new_reason_id', content_tag(:option,'Выберите...',:value=>0)+options_for_select(@reasons.collect{ |u| [u.name, u.id] },@absence.new_reason_id), {},{class: 'chosen'} %>
-          </div></td></tr>
-      <% end -%>
-      <tr><td class="last_td"></td>
-        <td class="last_td" colspan="3">
-          <% if is_admin? || action_name == 'new' || @absence.user_id == current_user.id %>
-            <%= link_to 'Отмена', absences_url, :class => "sub btn_a btn_reset"%><%= f.button :submit, value: 'Сохранить', :class => 'sub btn_a' %></td></tr>
-          <% end %>
+    
+
   </table>
-<% end %>
+
 
 <div class="sep_3"></div>
 
 <div class='shops' id='dshops' style="display:<%= @absence.reason_id==3 ? 'block;' : 'none;'%>" >
 <% if !@absence.id.nil? %>
     <%= render "shops" %>
+    <div class="sep_3"></div>
 <% end %>    
 </div>
 
-<div class="sep_3"></div>
+
+
+<% if is_admin? || action_name == 'new' || @absence.user_id == current_user.id %>
+  <%= submit_cancel absences_url %>          
+<% end %>
+
+<% end %>

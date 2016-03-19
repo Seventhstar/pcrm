@@ -20,7 +20,7 @@
         <td><%= receipt.project_address %></td>
         <td class="td_right"><%= receipt.sum.to_sum %></td>
         <td><%= receipt.description %></td>
-        <%= td_tool_icons(receipt, 'edit,delete','href' )%>
+        <%= td_tool_icons(receipt, 'edit,delete' )%>
         <% @sum = @sum + receipt.sum %>
       </tr>
     <% end %>

@@ -38,7 +38,7 @@
  
         <td><%= project.price %></td>
         <td class="td_right <%= project.sum_total_real ==0 ? '':'red' %>" title="<%= project.sum_total.to_sum %>"><%= project.total.to_sum %></td>
-        <%= td_tool_icons(project,'edit,show','href') %>
+        <%= td_tool_icons(project,'edit,show') %>
       </tr>
     <% end %>
   </tbody>

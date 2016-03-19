@@ -174,20 +174,32 @@ module ApplicationHelper
     end
   end
 
-  def td_tool_icons(element,str_icons='edit,delete',tag='span',subcount=nil)
+
+  def submit_cancel(back_url)
+    # <%= link_to 'Отмена', absences_url, :class => "sub btn_a btn_reset"%><%= f.button :submit, value: 'Сохранить', :class => 'sub btn_a' %>
+      s = submit_tag  'Сохранить', class: 'btn btn-default sub btn_a' 
+      c = link_to 'Отмена', back_url, class: "sub btn_a btn_reset" 
+      c+s
+  end
+
+
+  def td_tool_icons(element,str_icons='edit,delete',params = nil)
     
-    all_icons = {} #['edit','delete','show']
+    all_icons = {} #['edit','delete','show'] tag='span',subcount=nil
+    params ||= {}
+    params[:tag] ||= 'href' 
     icons = str_icons.split(',')
-    subcount ||= 0
-    dilable_cls = subcount>0 ? '_disabled' : ''
-    if tag == 'span' 
+    params[:subcount] ||= 0
+    params[:add_cls] ||= ''
+    dilable_cls = params[:subcount]>0 ? '_disabled' : ''
+    if params[:tag] == 'span' 
       all_icons['edit'] = content_tag :span, "", {class: 'icon icon_edit', item_id: element.id}
-      all_icons['delete'] = content_tag( :span,"",{class: 'icon icon_remove'.concat(dilable_cls), item_id: element.id})
+      all_icons['delete'] = content_tag( :span,"",{class: ['icon icon_remove',dilable_cls,' ',params[:add_cls]].join, item_id: element.id})
     else
       all_icons['edit'] = link_to "", edit_polymorphic_path(element), class: "icon icon_edit"
       all_icons['show'] = link_to "", polymorphic_path(element), class: "icon icon_show", data: { modal: true }
-      all_icons['delete'] = link_to "", element, method: :delete, data: { confirm: 'Действительно удалить?' }, class: "icon icon_remove " if subcount==0
-      all_icons['delete'] = content_tag(:span,"",{class: 'icon icon_remove_disabled'}) if subcount>0
+      all_icons['delete'] = link_to "", element, method: :delete, data: { confirm: 'Действительно удалить?' }, class: "icon icon_remove " if params[:subcount]==0
+      all_icons['delete'] = content_tag(:span,"",{class: 'icon icon_remove_disabled'}) if params[:subcount]>0
     end
     content_tag :td,{:class=>"edit_delete"} do
       icons.collect{ |i| all_icons[i] }.join.html_safe

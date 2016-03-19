@@ -63,7 +63,7 @@ $(document).on 'click', '#btn-sub-send', (e) ->
       return
     error: (evt, xhr, status, error) ->      
       errors = evt.responseText
-      #alert(errors)
+      #alert(typeof(errors))
       show_ajax_message(errors,'error')
       showNotifications();
   return

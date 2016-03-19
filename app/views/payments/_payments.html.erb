@@ -19,7 +19,7 @@
         <td><%= payment.project_address %></td>
         <td class="td_right"><%= payment.sum.to_sum %></td>
         <td><%= payment.description %></td>
-        <%= td_tool_icons(payment, 'edit,delete','href' )%>
+        <%= td_tool_icons(payment, 'edit,delete' )%>
         <% @sum = @sum + payment.sum %>
       </tr>
     <% end %>

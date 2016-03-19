@@ -1,33 +1,26 @@
 
 <div class="panel panel-default">
+<div class="panel-heading table-heading">Список магазинов: </div>
 <table class="tleads" id="ashops" model="AbsenceShops" action="absence_shops">
-  <thead>
-    <tr>
-      <th width="380px" class="center">Магазин</th>
-      <th class="center">Цель</th>
-      <th class="edit_delete"></th>
-    </tr>
-  </thead>
-
   <tbody>
 
     <% @shops.each do |shop| %>
       <tr>
-        <td><%= shop.shop_name %></td>
-        <td><%= shop.target_name %></td>
-        <%= td_tool_icons(shop, 'delete','span') %>
+        <td class="caption3"><%= shop.shop_name %></td>
+        <td class="caption3"><%= shop.target_name %></td>
+        <%= td_tool_icons(shop, 'delete',{tag: 'span', add_cls: 'right'}) %>
       </tr>
     <% end %>
 
  
     <tr><%= hidden_field 'shop','absence_id', value: @absence.id %>
-      <td class="caption3"><span>Новый магазин: </span><div class="inp2" >
-      <%= chosen_src 'shop[shop_id]',Provider.order(:name), @shop.shop_id, {nil_value: 'Выберите...',special_value: '* другой'} %>
+      <td class="caption3 w_60"><div class="inp_l inp_w" >
+      <%= chosen_src 'shop[shop_id]',Provider.order(:name), @shop.shop_id, {nil_value: 'Магазин...',special_value: '* другой'} %>
       </div> </td>
       
-      <td> <%= chosen_src "shop[target_id]", @shop_targets, 0 %>
+      <td class="w_30"> <%= chosen_src "shop[target_id]", @shop_targets, 0,{nil_value: 'Цель...'} %>
       </td>
-      <td><span class="sub btn_a" id="btn-sub-send" absid="<%= @absence.id %>" action='/absence_shops/' prm='shop'> Сохранить</span></td>
+      <td ><span class="btn_a" id="btn-sub-send" absid="<%= @absence.id %>" action='/absence_shops/' prm='shop' width=''>Добавить магазин</span></td>
     </tr>
 
   </tbody>

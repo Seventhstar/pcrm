@@ -32,10 +32,13 @@ function intFromSum(sum){
 }
 
 var showNotifications = function(){ 
+  var time = 5000;
   $nt = $(".alert"); 
-  if ($nt.hasClass('flash_success')){
-     setTimeout(function() {$nt.removeClass("in").addClass('out'); setTimeout('$nt.remove();',1000);}, 3000);
-  }
+  if ($nt.hasClass('flash_success')){ time = 2000; }
+  setTimeout(function() {
+    $nt.removeClass("in"); 
+    setTimeout("$nt.addClass('out')",1000);
+  }, time);
 }
 
 function checkTime(i){

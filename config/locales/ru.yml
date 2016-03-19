@@ -1,5 +1,11 @@
 ru:
   activerecord:
+    errors:
+      models:
+        absence:
+          attributes:
+            shop: 
+              blank: 'Магазин'
     models:
       place: "Place"
     successful:

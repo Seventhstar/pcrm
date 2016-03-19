@@ -80,20 +80,19 @@ class AbsencesController < ApplicationController
 
   # GET /absences/1/edit
   def edit
-
     if !current_user.admin? && @absence.user != current_user
       redirect_to absences_path
     end
     abs_params
-
   end
 
   # POST /absences
   # POST /absences.json
   def create
     @absence = Absence.new(absence_params)
-    reopen = absence_params[:reopen]
-  
+    reopen = absence_params[:reopen]=='true'
+    @reopen = reopen
+    byebug
     respond_to do |format|
       if @absence.save
         if absence_params[:reopen]=='true' 

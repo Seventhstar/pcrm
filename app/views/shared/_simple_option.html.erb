@@ -36,7 +36,7 @@
             <td><%= item[attr[0]].to_s %></td>
           <% end %>
         <% end %>
-        <%= td_tool_icons(item, 'edit,delete','span', item.try(:parents_count) )%>
+        <%= td_tool_icons(item, 'edit,delete',{tag: 'span', subcount: item.try(:parents_count)} )%>
       </tr>
     <% end %>
   </tbody>

@@ -146,9 +146,7 @@ tr.nonactual td, tr.nonactual td a{ color: #ccc; }
 .progress-bar-info {
   background-color: #5bc0de;
 }
-
-
-.fullwidth{ width: 100%} 
+ 
 
 .page-wrapper {
     min-height: 100%;
