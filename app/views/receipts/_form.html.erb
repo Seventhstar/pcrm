@@ -25,7 +25,7 @@
     <div class="panel-right">
     <table class="tbl_fc tbl_fc">
       <tr><td class="caption">Проект:</td>
-        <td><div class="inp_w"><%= chosen_src :project_id, @projects, @receipt.project_id %>  
+        <td><div class="inp_w"><%= chosen_src :project_id, Project.all, @receipt.project_id %>  
         </div></td></tr>
       <tr><td class="caption">Контрагент:</td>
         <td><div class="inp_w">        

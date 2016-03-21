@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :absence_reasons
   resources :absence_targets
   resources :absence_shops
+  resources :absence_shop_targets
   resources :absences
 
   resources :wiki_records do

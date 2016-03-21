@@ -11,7 +11,7 @@ module OptionsHelper
       2
   	when 'providers','budgets','goodstypes','styles','p_statuses'
   		3
-    when 'absence_reasons', 'absence_targets'
+    when 'absence_reasons', 'absence_targets','absence_shop_targets'
       5
   	else
   		4

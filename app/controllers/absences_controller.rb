@@ -92,7 +92,7 @@ class AbsencesController < ApplicationController
     @absence = Absence.new(absence_params)
     reopen = absence_params[:reopen]=='true'
     @reopen = reopen
-    byebug
+    
     respond_to do |format|
       if @absence.save
         if absence_params[:reopen]=='true' 

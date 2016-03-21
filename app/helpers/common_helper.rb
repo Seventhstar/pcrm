@@ -6,7 +6,7 @@ module CommonHelper
  end
 
   def user_name(id)
-    if !id.nil? && id!=0
+    if !id.nil? && id!=0 && id!=0-1
      user = User.find(id)
      user ? user.name : ''
     else
