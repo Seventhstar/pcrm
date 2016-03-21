@@ -16,12 +16,14 @@ class ReceiptsController < ApplicationController
     p_ids = s_ids = pt_ids = prj_ids =  u_ids = all_ids
 
     @receipts = Receipt.select("receipts.*, date_trunc('month', date) AS month" )
-
+    p "params[:receipts_provider]",params[:receipts_provider]
+    #p oeo
     if ![nil,'','0'].include? params[:receipts_provider] 
         p_ids = Provider.find(params[:receipts_provider]).receipts.ids
     elsif @param_provider == 0
         p_ids = @receipts.where(provider_id: 0).ids
     end
+    p p_ids
 
     if ![nil,''].include? params[:search]
        _prj_ids = Project.where('LOWER(address) like LOWER(?)', '%'+params[:search]+'%').ids

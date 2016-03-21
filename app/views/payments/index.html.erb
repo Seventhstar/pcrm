@@ -9,11 +9,11 @@
 <div class="combobox short_search left"> 
 
 <label class="combobox left">
-	<%= chosen_src "payments_payment_type", PaymentType.all, params[:payments_payment_type], {nil_value: 'Вид платежа...'} %> 
+	<%= chosen_src "payments[payment_type]", PaymentType.all, params[:payments_payment_type], {nil_value: 'Вид платежа...'} %> 
 </label>
 
 <label class="combobox left">
-	<%= chosen_src "payments_project_id", @projects, params[:payments_project_id], {nil_value:'Проект...', p_name: "address"} %> 
+	<%= chosen_src "payments[project_id]", @projects, params[:payments_project_id], {nil_value:'Проект...', p_name: "address"} %> 
 </label>
 
 </div>

@@ -9,7 +9,7 @@
         <td><div class="inp_w"><%= f.text_field :date, :value => @date, label: false, class: "txt datepicker" %></div></td></tr>
       <tr><td class="caption">Вид платежа:</td>
         <td><div class="inp_w">
-        <%= chosen_src :payment_type_id, PaymentType.all, @receipt.payment_type_id %>
+        <%= chosen_src 'receipt[payment_type_id]', PaymentType.all, @receipt.payment_type_id %>
       </div></td></tr>
 
 
@@ -25,14 +25,14 @@
     <div class="panel-right">
     <table class="tbl_fc tbl_fc">
       <tr><td class="caption">Проект:</td>
-        <td><div class="inp_w"><%= chosen_src :project_id, Project.all, @receipt.project_id %>  
+        <td><div class="inp_w"><%= chosen_src 'receipt[project_id]', Project.all, @receipt.project_id,{p_name: 'address'} %>  
         </div></td></tr>
       <tr><td class="caption">Контрагент:</td>
         <td><div class="inp_w">        
         <%= chosen_src 'receipt[provider_id]', Provider.all, @receipt.provider_id,{nil_value: 'Выберите...', special_value: '* Клиент'} %>
       </div></td></tr>
       <tr><td class="caption">Создатель:</td>
-        <td><div class="inp_w"><%= chosen_src :user_id, User.all,@receipt_user.id %>
+        <td><div class="inp_w"><%= chosen_src 'receipt[user_id]', User.all,@receipt_user.id %>
       </div></td></tr>
       
       <td class="caption">Комментарий:</td>

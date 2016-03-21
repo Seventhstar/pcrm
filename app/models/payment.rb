@@ -11,7 +11,11 @@ class Payment < ActiveRecord::Base
 		payment_type.try(:name)
 	end
 
-	def payment_purpose_name
+	def project_address
+		try(:project).try(:address)
+	end
+
+	def purpose_name
 		payment_purpose.try(:name)
 	end
 

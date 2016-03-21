@@ -1,6 +1,6 @@
 class PaymentsController < ApplicationController
   before_action :set_payment, only: [:show, :edit, :update, :destroy]
-
+  before_action :check_sum, only: [:create,:update]
   # GET /payments
   # GET /payments.json
   def index
@@ -18,12 +18,14 @@ class PaymentsController < ApplicationController
       @projects = Project.order(:address)
       @pp = PaymentPurpose.order(:id)
       @payment = Payment.new
+      @date = Date.today.try('strftime',"%d.%m.%Y")
   end
 
   # GET /payments/1/edit
   def edit
       @projects = Project.order(:address)
       @pp = PaymentPurpose.order(:id)
+      @date = @payment.date.try('strftime',"%d.%m.%Y")
   end
 
   # POST /payments
@@ -33,7 +35,7 @@ class PaymentsController < ApplicationController
 
     respond_to do |format|
       if @payment.save
-        format.html { redirect_to @payment, notice: 'Payment was successfully created.' }
+        format.html { redirect_to payments_url, notice: 'Payment was successfully created.' }
         format.json { render :show, status: :created, location: @payment }
       else
         format.html { render :new }
@@ -47,7 +49,7 @@ class PaymentsController < ApplicationController
   def update
     respond_to do |format|
       if @payment.update(payment_params)
-        format.html { redirect_to @payment, notice: 'Payment was successfully updated.' }
+        format.html { redirect_to payments_url, notice: 'Payment was successfully updated.' }
         format.json { render :show, status: :ok, location: @payment }
       else
         format.html { render :edit }
@@ -71,7 +73,9 @@ class PaymentsController < ApplicationController
     def set_payment
       @payment = Payment.find(params[:id])
     end
-
+    def check_sum
+      payment_params[:sum] = payment_params[:sum].gsub!(' ','')
+    end
     # Never trust parameters from the scary internet, only allow the white list through.
     def payment_params
       params.require(:payment).permit(:project_id, :user_id, :whom_id, :whom_type, :payment_type_id, :payment_purpose_id, :date, :sum, :verified, :description)
