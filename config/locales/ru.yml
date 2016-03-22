@@ -43,8 +43,12 @@ ru:
   target_id: Цель
   executor_id: Исполнитель
   project_type_id: Вид проекта
+  payment_purpose_id: Вид выплаты
+  payment_type_id: Вид платежа
   
   number: Номер
+  pdate: Дата
+  verified: Проверен
   footage: Метраж
   footage_2: Метраж 2
   footage_real: Метраж факт
@@ -99,6 +103,7 @@ ru:
   Provider: Поставщик
   Reason: Причина
   Project: Проект
+  Payment: Платеж
   Receipt: Поступление (ден. средств)
   WikiRecord: Запись базы знаний
   comment: Комментарий

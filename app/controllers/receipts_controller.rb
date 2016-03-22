@@ -51,6 +51,31 @@ class ReceiptsController < ApplicationController
     #@sum = @receipts.sum(:sum)
   end
 
+  def to_move
+    @receipts = Receipt.where(paid: false).order(:date)
+  end
+
+  def to_update
+    @receipts = Receipt.find(params[:receipts_ids])
+
+    #Lead.where(id: params[:leads_ids]).update_all(user_id: params[:user_id])
+    @receipts.each do |r|
+       p = Payment.new
+       p.date = DateTime.now
+       p.project_id = r.project_id
+       p.user = current_user
+       p.whom_type = 'User'
+       p.whom_id = r.project.executor_id
+       p.payment_type_id = 1
+       p.payment_purpose_id = 1
+       p.sum = r.sum
+       p.description = '# перенос из поступления'
+       p.save
+    end
+     Receipt.where(id: params[:receipts_ids]).update_all(paid: true)
+    redirect_to payments_url
+  end
+
   # GET /receipts/1
   # GET /receipts/1.json
   def show
@@ -134,6 +159,6 @@ class ReceiptsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def receipt_params
-      params.require(:receipt).permit(:project_id, :user_id, :provider_id, :payment_type_id, :date, :sum,:description)
+      params.require(:receipt).permit(:project_id, :user_id, :provider_id, :payment_type_id, :date, :sum,:description, :receipts_ids)
     end
 end

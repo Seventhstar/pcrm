@@ -1,33 +1,4 @@
-<div class="items_box_head">
-<div class="panel-left">
-<%= render_navigation(:level => 2) %>
-</div>
-
-<%= form_tag receipts_path, :method => 'get', :id => "rcpt_search" do %>
-
-<div class="combobox short_search left"> 
-<label class="combobox left">
-	<%= chosen_src('receipts_provider', @providers, @param_provider,{nil_value: 'Все контрагенты...',special_value: '* Клиенты *'}) %>
-</label>
-
-<label class="combobox left">
-	<%= chosen_src "receipts_payment_type", PaymentType.order(:id), params[:receipts_payment_type],{nil_value:'Вид платежа...',class: 'chosen'} %> 
-</label>
-
-<label class="combobox left">
-	<%= chosen_src "receipts_project_id", @projects, params[:receipts_project_id],{nil_value: 'Проект...',p_name: 'address'} %> 
-</label>
-
-<label class="combobox left">
-	<%= chosen_src "receipts_executor_id", @executors, params[:receipts_executor_id],{nil_value:'Исполнитель...'} %> 
-</label>
-
-</div>
-<% end %>
-<%= link_to 'Добавить',new_receipt_path, class: "btn_a btn-add btn_slim right" %>
-
-</div>
-
+<%= render "sortmenu" %>
 <div class ="container">
   <div id="div_treceipts">
     <%= render "receipts" %>

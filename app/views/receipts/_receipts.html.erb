@@ -2,7 +2,6 @@
 <% first_table = true %>
 <% @sum = 0 %>
 
-
   <% @receipts.each do |receipt| %>
     <% new_date = receipt.date? ? receipt.date : Date.today %>
       <% if cur_month != new_date.month && (params[:sort] == "date" || (params[:sort] == nil)) %> 
@@ -12,15 +11,20 @@
           <% @sum = 0 %>
       <% end %>
       <tr>
-      	<td><%= receipt.date %></td>
+      	<td><%= receipt.date.try('strftime',"%d.%m.%Y") %></td>
       	<td><%= receipt.payment_type_name %></td>
       	<td><%= receipt.executor_name %></td>
       	<td><%= receipt.purpose %></td>
       	<td><%= receipt.provider_name %></td>
         <td><%= receipt.project_address %></td>
         <td class="td_right"><%= receipt.sum.to_sum %></td>
-        <td><%= receipt.description %></td>
+        <td><%= tooltip_if_big receipt.description, 25 %></td>
+
+        <% if action_name=='to_move' %>
+          <td><%= check_box_tag "receipts_ids[]", receipt.id %></td>
+        <% else %>
         <%= td_tool_icons(receipt, 'edit,delete' )%>
+        <% end %>
         <% @sum = @sum + receipt.sum %>
       </tr>
     <% end %>

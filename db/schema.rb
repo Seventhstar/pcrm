@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160313072035) do
+ActiveRecord::Schema.define(version: 20160322031650) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -201,10 +201,10 @@ ActiveRecord::Schema.define(version: 20160313072035) do
     t.integer  "payment_purpose_id"
     t.date     "date"
     t.integer  "sum"
-    t.boolean  "verified"
+    t.boolean  "verified",           default: false
     t.string   "description"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
   end
 
   create_table "priorities", force: :cascade do |t|
@@ -323,9 +323,12 @@ ActiveRecord::Schema.define(version: 20160313072035) do
     t.date     "date"
     t.integer  "sum"
     t.string   "description"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.boolean  "paid",            default: false
   end
+
+  add_index "receipts", ["paid"], name: "index_receipts_on_paid", using: :btree
 
   create_table "statuses", force: :cascade do |t|
     t.string   "name"

@@ -12,13 +12,13 @@
           <% @sum = 0 %>
       <% end %>
       <tr>
-      	<td><%= payment.date %></td>
+      	<td><%= payment.date.try('strftime',"%d.%m.%Y") %></td>
       	<td><%= payment.payment_type_name %></td>
       	<td><%= payment.purpose_name %></td>
       	<td><%= payment.whom_name %></td>
         <td><%= payment.project_address %></td>
         <td class="td_right"><%= payment.sum.to_sum %></td>
-        <td><%= payment.description %></td>
+        <td><%= tooltip_if_big payment.description, 40 %></td>
         <%= td_tool_icons(payment, 'edit,delete' )%>
         <% @sum = @sum + payment.sum %>
       </tr>

@@ -1,0 +1,15 @@
+<%= form_tag to_update_receipts_path, method: :put do %>
+<div class="items_box_head">
+<div class="panel-left">
+<ul> <li><%= link_to 'Приходы',receipts_url %></li>
+<li><%= link_to 'Расходы',payments_url %></li>
+</ul>
+</div>
+	<%= submit_tag "Перенести в расходы", :class => 'sub btn_a btn_slim right' %>
+</div>
+<div class ="container">
+  <div id="div_treceipts">
+    <%= render "receipts" %>
+  </div>
+</div>
+<% end %>

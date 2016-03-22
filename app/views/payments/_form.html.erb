@@ -8,19 +8,25 @@
         <td colspan="3"><div class="inp_w">
          <%= chosen_src "payment[project_id]", @projects, @payment.project_id,{nil_value: 'Проект...', p_name: 'address'} %>  
         </div></td></tr>
-    <tr><td class="caption">Вид платежа:</td>
-        <td><div class="inp_w">
-        <%= chosen_src "payment[payment_type_id]", PaymentType.all, @payment.payment_type_id,{nil_value: 'Вид платежа...',order: 'id'} %> 
-      </div></td></tr>
+    <tr><td class="caption">Дата:</td>
+        <td width="140px;"><div class="inp_w"><%= f.text_field :date, :value => @date, label: false, class: "txt datepicker" %></div></td>
+        <td></td>
+        <td ><label class="inp_btn_label">
+              <div class="inp_btn checkbox <%= @payment.verified ? 'active' :'' %>"><%= f.check_box :verified %></div>Проверен</label></td>
+        </tr>
     
+                
     <tr><td class="caption">Сумма:</td>
         <td><div class="left"><%= f.text_field :sum,  class: "txt sum_mask" %></div>
 
         </td>
-        <td class="caption">Дата:</td>
-        <td><div class="inp_w"><%= f.text_field :date, :value => @date, label: false, class: "txt datepicker" %></div></td></tr>
+        <td class="caption">Вид платежа:</td>
+        <td><div class="inp_w">
+        <%= chosen_src "payment[payment_type_id]", PaymentType.all, @payment.payment_type_id,{nil_value: 'Вид платежа...',order: 'id'} %> 
+      </div></td>
+        </tr>
 
-    <tr><td class="last_td"></td><td class="last_td" colspan="3"><%= submit_cancel payments_url %></td></tr>
+        <tr><td class="last_td"></td><td class="last_td" colspan="3"><%= submit_cancel payments_url %></td></tr>
       </table>
 </div>
     <div class="panel-right">
