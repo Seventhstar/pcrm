@@ -69,7 +69,7 @@ class ReceiptsController < ApplicationController
        p.payment_type_id = 1
        p.payment_purpose_id = 1
        p.sum = r.sum
-       p.description = '# перенос из поступления'
+       p.description = r.description
        p.save
 
        r.payment_id = p.id
