@@ -6,6 +6,7 @@ class Payment < ActiveRecord::Base
 	belongs_to :project
 	belongs_to :whom, :polymorphic => true
 	has_paper_trail
+	has_one :receipt, dependent: :nullify
 
 	def payment_type_name
 		payment_type.try(:name)

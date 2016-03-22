@@ -52,7 +52,7 @@ class ReceiptsController < ApplicationController
   end
 
   def to_move
-    @receipts = Receipt.where(paid: false).order(:date)
+    @receipts = Receipt.where(payment_id: nil).order(:date)
   end
 
   def to_update
@@ -71,8 +71,11 @@ class ReceiptsController < ApplicationController
        p.sum = r.sum
        p.description = '# перенос из поступления'
        p.save
+
+       r.payment_id = p.id
+       r.save
     end
-     Receipt.where(id: params[:receipts_ids]).update_all(paid: true)
+     #Receipt.where(id: params[:receipts_ids]).update_all(paid: true)
     redirect_to payments_url
   end
 
