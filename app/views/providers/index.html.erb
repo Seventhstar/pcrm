@@ -5,7 +5,7 @@
 
 
 <label class="combobox">
-<%= select_tag "goodstype", content_tag(:option,'Вид товара...',:value=>0)+options_from_collection_for_select(Goodstype.order(:name), "id", "name",:selected=>@param_goodstype) %>
+<%= chosen_src "goodstype", Goodstype.order(:name), @param_goodstype, {nil_value: 'Вид товара...',class: ''} %>
 </label>
 
 

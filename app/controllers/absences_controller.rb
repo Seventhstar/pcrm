@@ -64,7 +64,9 @@ class AbsencesController < ApplicationController
     @shop  = AbsenceShop.new
     @shop_targets = AbsenceShopTarget.all
     @reopen = false
+    @user = current_user.id
     if !@absence.nil?
+      @user = @absence.user_id
       @shops  = @absence.shops
       @dt_from = @absence.dt_from.try('strftime',"%d.%m.%Y")
       @dt_to = @absence.dt_to.try('strftime',"%d.%m.%Y")
@@ -83,6 +85,7 @@ class AbsencesController < ApplicationController
     @t_to = '19:00'
     @checked = false
     @shops = {}
+
   end
 
   # GET /absences/1/edit
@@ -91,6 +94,7 @@ class AbsencesController < ApplicationController
       redirect_to absences_path
     end
     abs_params
+   
 
   end
 

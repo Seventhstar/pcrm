@@ -35,6 +35,7 @@
 	$.browser = browser;
 // BROWSER DETECTION
 
+
 $(document).ready(function(){
 	
 	$('.file_inp .btn_add').click(function(event){

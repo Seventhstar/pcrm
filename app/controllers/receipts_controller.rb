@@ -5,7 +5,8 @@ class ReceiptsController < ApplicationController
   # GET /receipts
   # GET /receipts.json
   def index
-    params.delete_if{|k,v| v=='-1' } 
+    p "params",params
+    params.delete_if{|k,v| v=='' } 
     @providers = Provider.order(:name)
     @projects  = Project.order(:address)
     @executors = User.where(:id => Project.uniq.pluck(:executor_id))
@@ -17,10 +18,11 @@ class ReceiptsController < ApplicationController
 
     @receipts = Receipt.select("receipts.*, date_trunc('month', date) AS month" )
     p "params[:receipts_provider]",params[:receipts_provider]
-    #p oeo
-    if ![nil,'','0'].include? params[:receipts_provider] 
+    
+    if ![nil,'','-1'].include? params[:receipts_provider] 
         p_ids = Provider.find(params[:receipts_provider]).receipts.ids
-    elsif @param_provider == 0
+        p p_ids
+    elsif @param_provider == -1
         p_ids = @receipts.where(provider_id: 0).ids
     end
     p p_ids

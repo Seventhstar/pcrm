@@ -1,10 +1,11 @@
 class MyValidator < ActiveModel::Validator
   def validate(record)
+  	record.errors.add('Причина:','не указана') if record.reason_id.nil?
   	record.errors.add('Сотрудник:', "не указан") if record.user_id.to_i<1 
-  	if !(record.id.nil? && record.reason_id==3) 
-      record.errors.add('Проект:', "не указан") if record.project_id.to_i==0 && (record.reason_id==2 || record.reason_id==3)
-      record.errors.add('Магазины:', "добавьте хотя бы один") if record.shops.count==0 && record.reason_id==3 
-      record.errors.add('Цель:', "не указана") if record.target_id.to_i==0 && record.reason_id==2
+  	record.errors.add('Проект:', "не указан") if record.project_id.to_i==0 && (record.reason_id==2 || record.reason_id==3)
+  	record.errors.add('Цель:', "не указана") if record.target_id.to_i==0 && record.reason_id==2
+  	if !(record.id.nil? && record.reason_id==3)     
+      record.errors.add('Магазины:', "добавьте хотя бы один") if record.shops.count==0 && record.reason_id==3   
      end
   end
 end

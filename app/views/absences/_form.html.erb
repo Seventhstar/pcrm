@@ -61,7 +61,7 @@
     <% if is_admin? %>
       <tr><td class="caption">Сотрудник:</td>
           <td width='490px;' colspan="3"><div class="inp_w" >
-           <%= chosen_src 'absence[user_id]', User.all, @absence.user_id %></div>
+           <%= chosen_src 'absence[user_id]', User.all, @user %></div>
       </td></tr>
 
     <% end %>

@@ -6,7 +6,9 @@
 @fixEncode = (loc) ->
   h = loc.split('#')
   l = h[0].split('?')
-  l[0] + (if l[1] then '?' + ajx2q(q2ajx(l[1])) else '') + (if h[1] then '#' + h[1] else '')
+  p = ajx2q(q2ajx(l[1]))
+  p = if p.length>0 then '?' + p else ''
+  l[0] + (if l[1] then p else '') + (if h[1] then '#' + h[1] else '')
 
 
 @setLoc = (loc) ->
@@ -45,7 +47,8 @@
     return
 
   for key of qa
-    if qa[key] == null or isFunction(qa[key])
+    #alert qa[key]==''
+    if qa[key] == null or qa[key]=='' or key == 'utf8' or isFunction(qa[key])
       continue
     if isArray(qa[key])
       i = 0
