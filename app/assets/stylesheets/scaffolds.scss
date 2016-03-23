@@ -39,8 +39,8 @@ border-color:rgba(255,132,17,0.8);
 
 .subsort {cursor: pointer;}
 
-a.current.asc .sortArrow, span.current.asc .sortArrow{ background-image: url('arrow_asc.png'); }
-a.current.desc .sortArrow, span.current.desc .sortArrow{ background-image: url('arrow_desc.png'); }
+a.current.asc .sortArrow, span.current.asc .sortArrow{ background-image: asset-url('arrow_asc.png'); }
+a.current.desc .sortArrow, span.current.desc .sortArrow{ background-image: asset-url('arrow_desc.png'); }
 
 .switcher_a { margin-top: 2px; width: 140px; float: right; }
 .switcher_a .link_a { text-decoration: none; text-align: right; padding: 0 5px; min-width: 78px; }

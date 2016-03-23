@@ -13,6 +13,7 @@ class Absence < ActiveRecord::Base
 	extend ActiveModel::Naming
 
 	belongs_to :reason, class_name: "AbsenceReason", foreign_key: :reason_id
+	belongs_to :new_reason, class_name: "AbsenceReason", foreign_key: :new_reason_id
 	belongs_to :target, class_name: "AbsenceTarget", foreign_key: :target_id
 	belongs_to :user
 	belongs_to :project
@@ -25,12 +26,20 @@ class Absence < ActiveRecord::Base
 		reason.try(:name)
 	end
 
+	def new_reason_name
+		new_reason.try(:name)
+	end
+
 	def user_name
 		user.try(:name)
 	end
 
 	def project_name
 		project.try(:address) 
+	end
+
+	def target_name
+		target.try(:name)
 	end
 
 end

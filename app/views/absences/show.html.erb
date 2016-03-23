@@ -1,39 +1,70 @@
-<p id="notice"><%= notice %></p>
+  <table class="tbl_fc tbl_fc_1">
+    <tr><td class="caption">Причина:</td>
+    <td  colspan="3">         
+        <div class="lbl"><%= @absence.reason_name %></div>
+    </td>
 
-<p>
-  <strong>User:</strong>
-  <%= @absence.user_id %>
-</p>
+      <td class="caption caption_sm">=></td>
+        <td ><div class="lbl"><%= @absence.new_reason_name %>
+        </div></td>
 
-<p>
-  <strong>From:</strong>
-  <%= @absence.from %>
-</p>
+    
+    </tr>
+    <% disp_obj = @absence.reason_id==2 || @absence.reason_id==3 ? 'table-row;' : 'none;' %>
+    <% disp_trgt = @absence.reason_id==2 ? ' ' : 'display: none;' %>
+    <tr style="display: <%= disp_obj %>" class='p_obj'>
+      <td class="caption p_obj">Проект:</td>
+      <td colspan="3" class="p_obj">
+      <div class="lbl"><%= @absence.project_name %></div></td>
+      <td class="caption caption_sm"><span style="<%= disp_trgt %>" class="p_trgt"> Цель: </span></td>
+      <td ><div class="lbl"> <%= @absence.target_name %></div></td>
+    </tr>
 
-<p>
-  <strong>To:</strong>
-  <%= @absence.to %>
-</p>
+    <tr><td class="caption">Дата c:</td>
+      <td width='200px;'><div class="lbl"><%=  @dt_from %></div></td>
+      
+      <% if @checked %>
+        <td class="caption caption_to"> по:</td>
+        <td width='180px;'><div class="lbl"><%= @dt_to%> </div></td>  
+      <% else %>
+        <td class="caption caption_to"></td><td width='180px;'>
+      <% end %>
+      
+      
+      <td class="caption caption_sm">Время:</td>
+      <td >
+        <div class="lbl left" style="width: 40px;"><%= @t_from %></div>
+        <span class="time_separator left">–</span>
+        <div class="lbl left" style="width: 40px;"><%= @t_to %></div></td>
+      <td></td>
+    </tr>
 
-<p>
-  <strong>Reason:</strong>
-  <%= @absence.reason_id %>
-</p>
+      <tr><td class="caption">Комментарий:</td>
+        <td colspan="5"><div class="lbl" ><%= @absence.comment %></div></td></tr>
 
-<p>
-  <strong>New reason:</strong>
-  <%= @absence.new_reason_id %>
-</p>
+  </table>
 
-<p>
-  <strong>Comment:</strong>
-  <%= @absence.comment %>
-</p>
 
-<p>
-  <strong>Project:</strong>
-  <%= @absence.project_id %>
-</p>
+  <% if @shops.count>0 %>
+  
+  <div class="panel panel-default">
+    <div class="panel-heading table-heading">Магазины: </div>
+    <table class="tleads" id="ashops" model="AbsenceShops" action="absence_shops">
+      <tbody>
 
-<%= link_to 'Edit', edit_absence_path(@absence) %> |
-<%= link_to 'Back', absences_path %>
+        <% @shops.each do |shop| %>
+        <tr>
+          <td class="caption3"><%= shop.shop_name %></td>
+          <td class="caption3"><%= shop.target_name %></td>
+        </tr>
+        <% end %>
+
+      </tbody>
+    </table>
+
+  </div>
+
+  <% end %>
+
+
+

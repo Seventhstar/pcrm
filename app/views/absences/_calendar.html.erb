@@ -22,7 +22,7 @@
           <% abs.each do |a|%>
               <%= span_tooltip( ['<b>',a.user_name,'</b><br>',a.reason_name].join(' '), abs_description(a), abs_class(a), a, is_admin? || a.user == current_user) %>
           <% end %>
-          <%= date_birth_li(day_births, @curr_day) %>
+              <%= date_birth_li(day_births, @curr_day) %>
           </div></td>
           <% @curr_day=@curr_day+1 %>
         <% end %>

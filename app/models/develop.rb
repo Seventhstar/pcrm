@@ -32,7 +32,7 @@ class Develop < ActiveRecord::Base
   end
 
   def project_name
-    dev_project.try(:name)
+    project.try(:name)
   end
 
   def priority_name

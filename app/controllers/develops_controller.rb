@@ -43,7 +43,7 @@ class DevelopsController < ApplicationController
   # GET /develops/new
   def new
     @develop      = Develop.new
-    @projects = DevProject.all
+    @projects     = DevProject.all
     @dev_statuses = DevStatus.order(:id)
     @priorities   = Priority.order(:name)
     @users        = User.order(:name)

@@ -33,7 +33,7 @@ p {margin:0 0 14px 0; padding: 0 0 0 0; }
 .red {color: #cd1010; }
 .grey {color: #aeaeae; }
 
-.icon,li.icon a {display: inline-block; background: url('pict01.png') no-repeat; vertical-align:middle; position:relative;}
+.icon,li.icon a {display: inline-block; background: asset-url('pict01.png') no-repeat; vertical-align:middle; position:relative;}
 .icon_logout {background-position:0 0; width: 16px; height: 16px; }
 .icon_user {background-position:-18px 0; width: 14px; height: 16px; }
 a:hover .icon_user, .active .icon_user {background-position:-18px -18px; }
@@ -104,13 +104,13 @@ label a.btn_c:hover{cursor: pointer;}
 .user_h .logout{margin:0 0 0 20px; }
 .user_h .logout .icon{margin:0 7px 0 0;}
 
-.menu_main {height: 44px; background: #f1f1f1 url('bg1_1.png') no-repeat 0 0; border-radius: 5px; position:relative; margin-bottom: 40px;}
+.menu_main {height: 44px; background: #f1f1f1 asset-url('bg1_1.png') no-repeat 0 0; border-radius: 5px; position:relative; margin-bottom: 40px;}
 .menu_main ul, .submenu ul, .items_box_head ul{margin:0 0 0 0; padding: 0 0 0 0; list-style:none; overflow:hidden;}
 .menu_main ul li, .submenu ul li, .items_box_head ul li{margin:0 0 0 0; padding: 0 0 0 0; background:none; float:left;}
 .menu_main ul li a{display: inline-block; font-size: 15px; color: #000; text-decoration:none; }
 .menu_main ul li a {display: inline-block; 
   line-height: 44px;
-  background: url('bg1_2.png') no-repeat 100% -100px; padding: 0 14px 0 14px; }
+  background: asset-url('bg1_2.png') no-repeat 100% -100px; padding: 0 14px 0 14px; }
 .menu_main ul li:not(.disabled) a:hover, .menu_main ul li.active a,
 .menu_main .btn_options:hover {background: #59c600; background: linear-gradient(to top, #59c600, #61c900); color: #fff; }
 .menu_main ul li:not(.disabled) a:hover , .menu_main ul li.active a {background-position: 100% 0;}
@@ -120,14 +120,14 @@ label a.btn_c:hover{cursor: pointer;}
 .submenu ul li a, .items_box_head ul li a{text-decoration:none;}
 
 
-li.icon_options a {display: inline-block; background: url('pict0.png') no-repeat !important; 
+li.icon_options a {display: inline-block; background: asset-url('pict0.png') no-repeat !important; 
 vertical-align:middle; position:relative;
 background-position:-34px 0 !important; width: 16px; height: 16px;}
 
 .options { overflow: auto; border-radius: 0 5px 5px 0; margin-top: 1px !important; }
 
 
-.btn_call_a {display: block; width: 85px; height: 85px; background: url('pict_call.png') no-repeat 0 0; position:relative;}
+.btn_call_a {display: block; width: 85px; height: 85px; background: asset-url('pict_call.png') no-repeat 0 0; position:relative;}
 .btn_call_a:hover {background-position:0 -87px;}
 .btn_call_a.orange {background-position:-87px 0;}
 .btn_call_a.orange:hover {background-position:-87px -87px;}
@@ -163,7 +163,7 @@ background-position:-34px 0 !important; width: 16px; height: 16px;}
 .menu_sb_a ul li {margin:-1px 0 0 0;}
 .menu_sb_a ul li a {border-radius: 0;}
 .menu_sb_a ul li:last-child a{border-radius: 0 0 5px 5px;}
-.menu_sb_a ul li a:after{content: ' '; display: none; width: 16px; height: 39px; background: url('arr1.png') no-repeat 0 0; position:absolute; top: 0; left: 100%;}
+.menu_sb_a ul li a:after{content: ' '; display: none; width: 16px; height: 39px; background: asset-url('arr1.png') no-repeat 0 0; position:absolute; top: 0; left: 100%;}
 .menu_sb_a ul li.active a{}
 .menu_sb_a ul li.active a:after{display: block; }
 .menu_sb_a ul li:first-child a{border-radius: 0;}
@@ -243,13 +243,13 @@ textarea.txt, #lead_first_comment {padding: 5px 10px 5px 10px; margin:0 0 0 0; v
 
 .body.sb_left .box_wide {margin-left: -254px;}
 
-.inp_btn, span.check_img {display: inline-block; background: url('pict0.png') no-repeat -87px 0; position:relative; cursor:pointer; overflow:hidden; vertical-align:top;}
+.inp_btn, span.check_img {display: inline-block; background: asset-url('pict0.png') no-repeat -87px 0; position:relative; cursor:pointer; overflow:hidden; vertical-align:top;}
 
 .inp_btn.checkbox, span.check_img {width: 18px; height: 18px; background-position: -87px 0; }
 .inp_btn.checkbox.active, span.check_img.checked {background-position:-87px -20px;}
 .inp_btn.checkbox input {position:absolute; top: 0; left: -50px;}
 
-.inp_btn.checkbox, span.check_img { background: url('pict01.png'); width: 18px; height: 18px; background-position: -87px 0; }
+.inp_btn.checkbox, span.check_img { background: asset-url('pict01.png'); width: 18px; height: 18px; background-position: -87px 0; }
 
 
 span.check_img{ text-align: center; }
@@ -259,7 +259,7 @@ span.check_img{ text-align: center; }
 .inp_btn.radio input{position:absolute; top: 0; left: -50px;}
 
 
-.inp {display: inline-block; background: url('pict01.png') no-repeat -87px 0; position:relative; cursor:pointer; overflow:hidden; vertical-align:top;}
+.inp {display: inline-block; background: asset-url('pict01.png') no-repeat -87px 0; position:relative; cursor:pointer; overflow:hidden; vertical-align:top;}
 .inp.radio {width: 18px; height: 18px; background-position: -193px 0; }
 label.active .inp.radio {background-position:-193px -20px;}
 .inp.radio input{position:absolute; top: 0; left: -50px;}
@@ -330,12 +330,12 @@ label.select_custom_ext:after {	background-position: -18px -9px; }
 .jspVerticalBar .jspArrow:focus{outline: none; }
 .jspCorner{background: #eeeef4; float: left; height: 100%; }
 
-.ui-datepicker {background: url('bg0_1.png') repeat; padding: 26px 22px 20px 22px; margin: -50px 0 0 108px; border-radius: 5px; box-shadow: 0 0 20px rgba(0,0,0,0.2); position:relative; line-height: 1; font-size: 14px;}
-.ui-datepicker:after {content: ' '; display: block; width: 27px; height: 60px; background: url('m2.png') no-repeat 0 0; position:absolute; left: -27px; top: 0;}
+.ui-datepicker {background: asset-url('bg0_1.png') repeat; padding: 26px 22px 20px 22px; margin: -50px 0 0 108px; border-radius: 5px; box-shadow: 0 0 20px rgba(0,0,0,0.2); position:relative; line-height: 1; font-size: 14px;}
+.ui-datepicker:after {content: ' '; display: block; width: 27px; height: 60px; background: asset-url('m2.png') no-repeat 0 0; position:absolute; left: -27px; top: 0;}
 .ui-datepicker .ui-datepicker-header{text-align: center; position:relative; margin:0 0 18px 0; font-weight: 500;}
 .ui-datepicker .ui-datepicker-prev,
 .ui-datepicker .ui-datepicker-next{ font-size: 0; display: block; width: 7px; height: 12px; 
-                                    background: url('arr1.png') no-repeat; position:absolute; top: 0; cursor:pointer;}
+                                    background: asset-url('arr1.png') no-repeat; position:absolute; top: 0; cursor:pointer;}
 .ui-datepicker .ui-datepicker-prev{background-position:-32px 0; left: 7px;}
 .ui-datepicker .ui-datepicker-next{background-position:-41px 0; right: 7px;}
 .ui-datepicker .ui-datepicker-calendar{border-collapse:collapse; }
@@ -509,7 +509,7 @@ th.center,td.center {text-align:center;}
 .historyChange_list_a .item{margin:0 0 15px 0; font-size: 13px;}
 .historyChange_list_a .item .head{margin:0 0 2px 0;}
 .historyChange_list_a .item .head .date{color: #aeaeae; }
-.historyChange_list_a .item .cont{padding: 0 0 0 12px; margin:0 0 0 20px; background: url('m1.png') no-repeat 0 6px; }
+.historyChange_list_a .item .cont{padding: 0 0 0 12px; margin:0 0 0 20px; background: asset-url('m1.png') no-repeat 0 6px; }
 
 .files_list_a {}
 .files_list_a .item{border-top:1px solid #e5e5e5; padding: 7px 0 0 0; margin: 7px 0 0 0; position:relative; }

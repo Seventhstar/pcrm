@@ -36,7 +36,7 @@ module AbsencesHelper
   def date_birth_li(day_births, day)
   	dm = day.try('strftime','%d.%m')
   	if day_births.keys.include? dm 
-  		 content_tag :li, day_births[dm], {class: 'birthday ', 'data-toggle' =>"tooltip", 'data-placement' => "top", :title => 'День рождения'}
+  		 content_tag :li, ['<b>',day_births[dm],'</b><br>','День рождения'].join.html_safe, {class: 'birthday ', 'data-toggle' =>"tooltip", 'data-placement' => "top", :title => 'День рождения'}
   	end
 
   end

@@ -154,7 +154,7 @@ font-size: 13px;
   display: block;
   width: 12px;
   height: 12px;
-  background: url('chosen-sprite.png') -42px 1px no-repeat;
+  background: asset-url('chosen-sprite.png') -42px 1px no-repeat;
 
   font-size: 1px;
 }
@@ -181,7 +181,7 @@ font-size: 13px;
   height: 8px;
   //background: url('chosen-sprite.png') no-repeat 0px 2px;
 
-  background: url('arr1.png') no-repeat -18px 0;
+  background: asset-url('arr1.png') no-repeat -18px 0;
 }
 
 .items_box_head .chosen-container-single .chosen-single div b{  margin-top: 8px; }
@@ -369,13 +369,13 @@ font-size: 13px;
   display: block;
   //background: url('chosen-sprite.png') -42px 1px no-repeat;
   
-  background: url('pict01.png') -119px 0 no-repeat;
+  background: asset-url('pict01.png') -119px 0 no-repeat;
   width: 9px; height: 9px; 
   font-size: 1px;
 }
 .chosen-container-multi .chosen-choices li.search-choice .search-choice-close:hover {
   //background-position: -42px -10px;
-  background: url('pict01.png') -119px -9px no-repeat;
+  background: asset-url('pict01.png') -119px -9px no-repeat;
 }
 .chosen-container-multi .chosen-choices li.search-choice-disabled {
   padding-right: 5px;
@@ -531,7 +531,7 @@ font-size: 13px;
   .chosen-container-multi .chosen-choices .search-choice .search-choice-close,
   .chosen-container .chosen-results-scroll-down span,
   .chosen-container .chosen-results-scroll-up span {
-    background-image: url('chosen-sprite@2x.png') !important;
+    background-image: asset-url('chosen-sprite@2x.png') !important;
     background-size: 52px 37px !important;
     background-repeat: no-repeat !important;
   }

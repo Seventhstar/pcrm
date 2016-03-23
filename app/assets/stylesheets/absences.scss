@@ -28,11 +28,11 @@ td.day{font-size: 13px;}
     height: 12px;
     font-size: 22px;
 }
-.day li.half:before{ content: "\25d1"; font-size: 23px;/* Полузакрашеный круг */ }
+.day li.half:before{ content: "\25d1"; font-size: 19px;/* Полузакрашеный круг */ }
 .day li.birthday:before{ 
     content: ""; color: #ff8411; 
     display: inline-block;
-    background: url('pict01.png') no-repeat;
+    background: asset-url('pict01.png') no-repeat;
     vertical-align: middle;
     position: relative;
     background-position: -163px -23px;

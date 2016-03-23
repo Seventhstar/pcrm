@@ -71,16 +71,16 @@ li.flash_danger {}
 
 .li-right a span {padding: 6px 16px; margin: 0;}
 
-#charts1 span{ background: url('tools.png') no-repeat 0 0; background-position: -32px 0;}
+#charts1 span{ background: asset-url('tools.png') no-repeat 0 0; background-position: -32px 0;}
 #charts1:hover span, #charts1 .active span{ background-position: -32px -32px;}
 
-#options span{ background: url('tools.png') no-repeat 0 0; background-position: 0 0;}
+#options span{ background: asset-url('tools.png') no-repeat 0 0; background-position: 0 0;}
 #options:hover span, #options .active span{ background-position: 0 -32px;}
 
-#develops span{ background: url('tools.png') no-repeat 0 0; background-position: -64px 0;}
+#develops span{ background: asset-url('tools.png') no-repeat 0 0; background-position: -64px 0;}
 #develops:hover span, #develops .active span{ background-position: -64px -32px;}
 
-#history span{ background: url('tools.png') no-repeat 0 0; background-position: -96px 0;}
+#history span{ background: asset-url('tools.png') no-repeat 0 0; background-position: -96px 0;}
 #history:hover span, #history .active span{ background-position: -96px -32px;}
 
 #options span { margin-right: 6px; }

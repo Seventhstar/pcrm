@@ -1,5 +1,6 @@
 class AbsencesController < ApplicationController
   include CommonHelper
+  respond_to :html, :json
   before_action :set_absence, only: [:show, :edit, :update, :destroy]
   helper_method :sort_2, :dir_2
   helper_method :sort_column, :sort_direction
@@ -11,7 +12,7 @@ class AbsencesController < ApplicationController
   def index
     @wdays = ['пн','вт','ср','чт','пт','сб','вс']
     @sort_column = sort_column
-    params['m'] = nil if  @sort_column!='calendar'
+    params['m'] = nil if  params[:sort]!='calendar'
     @current_month = Date.parse(params['m']) if !params['m'].nil?
     @current_month = Date.today.beginning_of_month if @current_month.nil? 
     @curr_day = @current_month.beginning_of_month.beginning_of_week
@@ -24,7 +25,7 @@ class AbsencesController < ApplicationController
       @absences = Absence.select(query_str)
     end
 
-    if @sort_column!='calendar'  
+    if params[:sort]!='calendar'  
       @absences = @absences.where("dt_from >= ?",@curr_day.beginning_of_month-1.month)
     else
       @absences = @absences.where("dt_from >= ?",@curr_day)
@@ -44,10 +45,16 @@ class AbsencesController < ApplicationController
   # GET /absences/1
   # GET /absences/1.json
   def show
+    @title = 'Просмотр данных об отсутствии'
     @shops  = @absence.shops
     @shop  = AbsenceShop.new
     @shop_targets = AbsenceShopTarget.all
-
+    @dt_from = @absence.dt_from.try('strftime',"%d.%m.%Y")
+      @dt_to = @absence.dt_to.try('strftime',"%d.%m.%Y")
+      @t_from = @absence.dt_from.try('strftime',"%H:%M")
+      @t_to = @absence.dt_to.try('strftime',"%H:%M")
+      @checked = @absence.dt_from.beginning_of_day != @absence.dt_to.beginning_of_day 
+    respond_modal_with @absence, location: root_path
   end
 
   def abs_params(ap = nil)
@@ -84,6 +91,7 @@ class AbsencesController < ApplicationController
       redirect_to absences_path
     end
     abs_params
+
   end
 
   # POST /absences
@@ -158,7 +166,7 @@ class AbsencesController < ApplicationController
     def sort_column
       #p "params[:sort]",params[:sort]
       default_column = "dt_from"
-      (Absence.column_names.include?(params[:sort]) || params[:sort] == 'users.name' || params[:sort] == 'calendar' ) ? params[:sort] : default_column
+      (Absence.column_names.include?(params[:sort]) || params[:sort] == 'users.name'  ) ? params[:sort] : default_column
     end
 
     def sort_direction
