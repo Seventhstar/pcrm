@@ -69,12 +69,6 @@
   calc_debt()
   return
 
-    
-@projects_query = ->
-  params = $("#prj_search").serialize()
-  $.get 'projects', params, null, 'script'
-  setLoc("projects?"+params)
-
 $(document).ready ->
   $('#add_footage').click ->
     $(this).hide()
@@ -106,7 +100,5 @@ $(document).ready ->
     calc_debt()
   $('#project_sum_total_real').change ->
     calc_debt()
-  $('.container').on 'keyup', '#prj_search', ->
-    projects_query()
-    return
+
   return

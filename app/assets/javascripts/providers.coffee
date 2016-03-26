@@ -2,25 +2,10 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-@update_provider = (p_id)->
-  $.get '/providers/'+p_id+'/edit', "", null, "script"
-  return
-
-@provider_query = ->
-  p_params = {goodstype : $('#goodstype :selected').val(), only_actual : $('.only_actual').hasClass('on')}
-  $.get 'providers', p_params, null, 'script'
-  setLoc("providers?"+ajx2q(p_params))
-
 $(document).ready ->
 
-  chosen_params = {width: '370px', allow_single_deselect: true}
-  $('#goodstype').chosen(chosen_params ).on 'change', ->
-    provider_query()
-
+  $('#goodstype').chosen({width: '370px', allow_single_deselect: true} )
   $('.chosen-select').chosen({width: '452px', display_selected_options: false, display_disabled_options:false})
-
-  $('#provider_p_status_id').chosen({width: '452px', display_selected_options: false, display_disabled_options:false})
-
   	
   $('.page-wrapper').on 'click','.managers #btn-send', ->
     pr_id = $(this).attr('providerid')

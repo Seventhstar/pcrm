@@ -3,11 +3,11 @@
 <%= render_navigation(:level => 2) %>
 </div>
 
-<%= form_tag receipts_path, :method => 'get', :id => "rcpt_search" do %>
+<%= form_tag receipts_path, :method => 'get', :id => "rcpt_search", class: 'index_filter' do %>
 
 <div class="combobox short_search left"> 
 <label class="combobox left">
-	<%= chosen_src('receipts_provider', @providers, @param_provider,{nil_value: 'Все контрагенты...',special_value: '* Клиенты *'}) %>
+	<%= chosen_src 'receipts_provider', @providers, @param_provider,{nil_value: 'Все контрагенты...',special_value: '* Клиенты *'} %>
 </label>
 
 <label class="combobox left">
@@ -29,8 +29,10 @@
 	<!-- <%= link_to 'Перенести в расходы',to_update_receipts_path, class: "btn_a btn-add btn_slim right" %> -->
 	<%= submit_tag "Перенести в расходы", :class => 'sub btn_a btn_slim right' %>
 <% else %>
-	<%= link_to 'Добавить',new_receipt_path, class: "btn_a btn-add btn_slim right space20" %>	
-	<%= link_to 'В расходы',to_move_receipts_path, class: "btn_a btn-add btn_slim right", title: 'Перенести в расходы' %>
+
+	<%= link_to 'Добавить',new_receipt_path, class: "btn_a btn-add btn_slim right space10" %>	
+	<%= link_to '=>',to_move_receipts_path, class: "btn_a btn-add btn_slim right space10", title: 'Перенести в расходы' %>
+	<%= only_actual_btn %>
 <% end %>
 
 

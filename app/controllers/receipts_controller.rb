@@ -5,49 +5,45 @@ class ReceiptsController < ApplicationController
   # GET /receipts
   # GET /receipts.json
   def index
-    p "params",params
-    params.delete_if{|k,v| v=='' } 
+    #p "params",params
+    params.delete_if{|k,v| v=='' || v=='0' } 
     @providers = Provider.order(:name)
     @projects  = Project.order(:address)
     @executors = User.where(:id => Project.uniq.pluck(:executor_id))
     @param_provider = params[:receipts_provider]
     @param_provider = @param_provider.to_i if !@param_provider.nil?
-
+    @only_actual = params[:only_actual].nil? ? true : params[:only_actual]=='true'
     all_ids = Receipt.all.ids
-    p_ids = s_ids = pt_ids = prj_ids =  u_ids = all_ids
+    p_ids = s_ids = pt_ids = prj_ids =  u_ids = a_ids = all_ids 
 
     @receipts = Receipt.select("receipts.*, date_trunc('month', date) AS month" )
-    p "params[:receipts_provider]",params[:receipts_provider]
-    
-    if ![nil,'','-1'].include? params[:receipts_provider] 
-        p_ids = Provider.find(params[:receipts_provider]).receipts.ids
-        p p_ids
-    elsif @param_provider == -1
+   
+    if @param_provider == -1
         p_ids = @receipts.where(provider_id: 0).ids
+    elsif !params[:receipts_provider].nil? 
+        p_ids = Provider.find(params[:receipts_provider]).receipts.ids
     end
-    p p_ids
 
-    if ![nil,''].include? params[:search]
+
+    if @only_actual
+      a_ids = Receipt.where(payment_id: nil).ids
+    end
+
+    if !params[:search].nil?
        _prj_ids = Project.where('LOWER(address) like LOWER(?)', '%'+params[:search]+'%').ids
        s_ids   = @receipts.where(project_id: _prj_ids).ids
     end
 
-    if ![nil,'','0'].include? params[:receipts_project_id]
-       prj_ids   = @receipts.where(project_id: params[:receipts_project_id]).ids
-    end
+    
+    prj_ids = @receipts.where(project_id: params[:receipts_project_id]).ids if !params[:receipts_project_id].nil?   
+    pt_ids = PaymentType.find(params[:receipts_payment_type]).receipts.ids if !params[:receipts_payment_type].nil?
 
-    if ![nil,'','0'].include? params[:receipts_payment_type]
-      pt_ids = PaymentType.find(params[:receipts_payment_type]).receipts.ids
-    end
-
-    if ![nil,'','0'].include? params[:receipts_executor_id]
+    if !params[:receipts_executor_id].nil?
       _prj_ids = User.find(params[:receipts_executor_id]).projects.ids
-      p _prj_ids
       u_ids   = @receipts.where(project_id: _prj_ids).ids
-      p "u_ids",u_ids
     end
 
-    ids = p_ids & s_ids & pt_ids & prj_ids & u_ids
+    ids = p_ids & s_ids & pt_ids & prj_ids & u_ids & a_ids
       
     @receipts = @receipts.where(:id => ids).order(:date)
     #@sum = @receipts.sum(:sum)

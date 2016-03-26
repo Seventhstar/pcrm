@@ -1,4 +1,6 @@
-<div class="subnav">
+<div class="subnav submenu">
+
+	<div class="panel-left"> <ul><li id="clients" class="selected ">	<%= link_to 'Клиенты',:clients %> </li> </ul></div>
 
 	<%= sortable_pil "number", "По № договора" %>
 	<% if is_admin? %>	

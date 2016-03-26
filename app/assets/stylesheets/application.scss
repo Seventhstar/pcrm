@@ -77,8 +77,8 @@ li.flash_danger {}
 #options span{ background: asset-url('tools.png') no-repeat 0 0; background-position: 0 0;}
 #options:hover span, #options .active span{ background-position: 0 -32px;}
 
-#develops span{ background: asset-url('tools.png') no-repeat 0 0; background-position: -64px 0;}
-#develops:hover span, #develops .active span{ background-position: -64px -32px;}
+li#develops span{ background: asset-url('tools.png') no-repeat 0 0; background-position: -64px 0;}
+li#develops:hover span, #develops .active span{ background-position: -64px -32px;}
 
 #history span{ background: asset-url('tools.png') no-repeat 0 0; background-position: -96px 0;}
 #history:hover span, #history .active span{ background-position: -96px -32px;}

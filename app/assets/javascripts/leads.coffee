@@ -46,37 +46,7 @@
       return
   return
 
-@sortable_query = (params)->
-  actual = if $('.only_actual').length==0 then null else $('.only_actual').hasClass('on')
 
-  url = {    
-    only_actual: actual
-    sort: $('span.active').attr('sort')
-    direction: $('span.active').attr('direction')
-    sort2: $('span.subsort.current').attr('sort2')
-    dir2: $('span.subsort.current').attr('dir2')
-    search: $('#search').val()
-  }
-  
-  l = window.location.toString().split('?');
-  p = q2ajx(l[1])
-
-  each p, (i, a) ->
-    url[i] = a
-
-  each params, (i, a) ->
-    url[i] = a
-
-  each url, (i, a) -> 
-    if a == undefined || a == null || a == ''
-       delete url[i] 
-  
-  method = if $('#cur_method').val() == 'edit_multiple' then '/edit_multiple' else ''
-  controller = $('#search').attr('cname')
-
-  $.get '/'+controller+method, url, null, 'script'
-  setLoc(""+controller+method+"?"+ajx2q(url));
-  return
 
 $(document).ready ->
 
@@ -124,16 +94,6 @@ $(document).ready ->
       return false;
     return
 
-  # поиск 
-  $('#search').on 'keyup', (e)-> 
-    #alert e.which
-    c= String.fromCharCode(event.keyCode);
-    isWordCharacter = c.match(/\w/);
-    isBackspaceOrDelete = (event.keyCode == 8 || event.keyCode == 46);
-    if (isWordCharacter || isBackspaceOrDelete)
-       delay('sortable_query({})',700)
-    return
-
   # основновная сортировка
   $('.container').on 'click', 'span.sort-span', ->
     #alert(12)
@@ -158,16 +118,4 @@ $(document).ready ->
     sortable_query({sort2:srt2,dir2:dir2})
     return
 
-  # вкл/откл лидов с неактуальными статусами
-  #$('.container').on 'click', '.only_actual, .switcher_a', ->
-  #  alert('dd')
-  #  if $(this).hasClass('active')
-  #    $(this).removeClass('active')
-  #    $(this).text('Все')
-  #    actual = false
-  #  else 
-  #    $(this).addClass('active')
-  #    $(this).text('Актуальные')
-  #    actual = true
-  #  lead_query({only_actual:actual})
-    return
+  return

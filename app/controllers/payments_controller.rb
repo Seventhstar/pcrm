@@ -4,8 +4,24 @@ class PaymentsController < ApplicationController
   # GET /payments
   # GET /payments.json
   def index
+    params.delete_if{|k,v| v=='' || v=='0' }
     @projects = Project.order(:address)
     @payments = Payment.all
+
+    all_ids = Payment.all.ids
+    pt_ids = s_ids = pp_ids = prj_ids =  all_ids
+    if !params[:search].nil?
+       _prj_ids = Project.where('LOWER(address) like LOWER(?)', '%'+params[:search]+'%').ids
+       s_ids   = @payments.where(project_id: _prj_ids).ids
+    end
+
+    prj_ids = @payments.where(project_id: params[:payments_project_id]).ids if !params[:payments_project_id].nil?
+    pp_ids = PaymentPurpose.find(params[:payments_purpose_id]).payments.ids if !params[:payments_purpose_id].nil?
+    pt_ids = PaymentType.find(params[:payments_payment_type]).payments.ids if !params[:payments_payment_type].nil?
+
+    ids = pt_ids & s_ids & pp_ids & prj_ids
+      
+    @payments = @payments.where(:id => ids).order(:date)
   end
 
 

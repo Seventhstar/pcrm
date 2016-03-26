@@ -52,6 +52,18 @@ module ApplicationHelper
     end
   end
 
+  def switch_active(show, label)
+    active = show == @show_dev ? "active" : nil
+    css_class = "btn #{active}" 
+    r = content_tag :input,'',{type: 'radio', value: show, name: 'show', id: show}
+    t = content_tag :div, '',{class: "inp radio"} do 
+        r 
+    end
+    content_tag :label, '',{class: css_class, show: show} do
+       t + ' '+label
+    end
+  end
+
   #def chosen_src( id, collection, param_id, nil_value = 'Выберите...', special_value = '', p_name = 'name', order = 'name', cls = nil  )
   def chosen_src( id, collection, param_id, options = {})  
     p_name    = options[:p_name].nil? ? 'name' : options[:p_name]

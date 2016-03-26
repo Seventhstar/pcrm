@@ -2,6 +2,9 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+
+
+
 @upd_param = (param)->
   $.ajax
       url: '/ajax/upd_param'
@@ -38,7 +41,61 @@
   inputs = $('input[name^=upd]')
   upd_param(inputs.serialize()+'&model='+model+'&id='+item_id)  
 
+# @index_table_update =->
+#   p_params = $('.index_filter').serialize()
+#   actn = $('.index_filter').attr('action')
+#   setLoc actn.replace('/','')+'?'+ p_params
+#   $.get actn, p_params, null, 'script'    
+
+@sortable_query = (params)->
+  actual = if $('.only_actual').length==0 then null else $('.only_actual').hasClass('on')
+
+  url = {    
+    only_actual: actual
+    sort: $('span.active').attr('sort')
+    direction: $('span.active').attr('direction')
+    sort2: $('span.subsort.current').attr('sort2')
+    dir2: $('span.subsort.current').attr('dir2')
+    search: $('#search').val()
+  }
+  
+  l = window.location.toString().split('?');
+  p = q2ajx(l[1])
+  p_params = q2ajx($('.index_filter').serialize())
+  #alert $('.index_filter').serialize()
+  # alert 1
+  each p, (i, a) ->
+    if ['search','page','_'].include? i 
+      url[i] = a
+  each p_params, (i, a) ->
+    url[i] = a
+  each params, (i, a) ->
+    url[i] = a
+
+  method = if $('#cur_method').val() == 'edit_multiple' then '/edit_multiple' else ''
+  controller =  $('#search').attr('cname')
+
+  $.get '/'+controller+method, url, null, 'script'
+  setLoc(""+controller+method+"?"+ajx2q(url));
+  return
+
 $(document).ready ->
+# поиск 
+  $('#search').on 'keyup', (e)-> 
+    #alert e.which
+    c= String.fromCharCode(event.keyCode);
+    isWordCharacter = c.match(/\w/);
+    isBackspaceOrDelete = (event.keyCode == 8 || event.keyCode == 46);
+    if (isWordCharacter || isBackspaceOrDelete)
+       delay('sortable_query({})',700)
+    return
+# обновление данных в таблицах страниц index
+  $('.index_filter select,.index_filter input[type="radio"]').on 'change', ->
+    sortable_query({})
+    return
+  # $('#search').on 'keyup', ->
+  #   delay 'index_table_update()',500
+  #   return
   $('.schosen').chosen(width: '99.5%')
   $('.chosen').chosen(width: '99.5%', disable_search: 'true')
 # редактирование данных в таблице

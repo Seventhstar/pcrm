@@ -1,19 +1,19 @@
 <%= simple_form_for(@client) do |f| %>
-  <%= f.error_notification %>
 
-  <div class="form-inputs">
+<div class="box_wrap box_wrap_1">
+  <div class="panel-left">
+    <table class="tbl_fc tbl_fc">
 
-    <%= f.input :name %>
+    <% a = [:name,:address,:phone, :email ] %>
+    <% a.each do |el| %>
 
-    <%= f.input :address %>
-
-    <%= f.input :phone %>
-
-    <%= f.input :email %>
-
+      <tr><td class="caption"> <%= t(el) %>:</td>
+      <td><div class="inp_w"><%= f.input el, label: false %></div></td></tr>
+    <% end %>
+    <tr><td class="caption"></td>
+      <td><%= submit_cancel clients_url %></td></tr>
+  
+  </table>
   </div>
-
-  <div class="form-actions">
-    <%= f.button :submit %>
   </div>
 <% end %>

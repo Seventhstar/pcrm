@@ -6,7 +6,8 @@ class ClientsController < ApplicationController
   def index
    # @clients = Client.all
     if !params[:search].nil?
-      @clients = Client.where('LOWER(name) like LOWER(?)','%'+params[:search]+'%').order(:name)
+      s = '%'+params[:search]+'%'
+      @clients = Client.where('LOWER(name) like LOWER(?) or LOWER(address) like LOWER(?)',s,s).order(:name)
     else
       @clients = Client.order(:name)
     end

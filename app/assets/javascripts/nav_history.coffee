@@ -19,8 +19,6 @@
   if !l
     l = (location.pathname or '') + (location.search or '')
   l = fixEncode(l)
-  #alert(navPrefix + curLoc)
-  #l = l.replace(/#/, '')
   if l.replace(/^(\/|!)/, '') != curLoc
     try
       history.pushState {}, '', '/' + curLoc
@@ -47,8 +45,7 @@
     return
 
   for key of qa
-    #alert qa[key]==''
-    if qa[key] == null or qa[key]=='' or key == 'utf8' or isFunction(qa[key])
+    if qa[key] == null or qa[key] == undefined or qa[key]=='' or key == 'utf8' or isFunction(qa[key])
       continue
     if isArray(qa[key])
       i = 0
@@ -56,7 +53,7 @@
       l = qa[key].length
       while i < l
         if qa[key][i] == null or isFunction(qa[key][i])
-                    ++i
+          ++i
           continue
         query.push enc(key) + '[' + c + ']=' + enc(qa[key][i])
         ++c

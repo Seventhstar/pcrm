@@ -2,30 +2,22 @@
 
 <div class="items_box_head">
 
+
+
+<%= form_tag develops_path, :method => 'get', :id => "develops", class: 'index_filter' do %>
   <div class="left">
-      <%= select_tag "dev_project", content_tag(:option,'Проект...',:value=>0)+options_from_collection_for_select(DevProject.order(:name), "id", "name",@project_id) %>
-
+      <%= chosen_src "develops_project_id", DevProject.all,@project_id,{nil_value: 'Проект...',class:''} %>
   </div>
-
-   <%= form_tag develops_path, :method => 'get', :id => "develops_search" do %>
-
-  <%= link_to 'Добавить', new_develop_path, class: "btn_a btn-add btn_slim right space20" %> 
 
   <div class="btn-group left space20" data-toggle="buttons">
-    <label class="<%= switch_active "check" %>" show="check">
-      <div class="inp radio"><input type="radio" name="options" id="dev_check1" autocomplete="off"></div> К проверке
-    </label>
-    <label class="<%= switch_active "new" %>" show="new">
-      <div class="inp radio"><input type="radio" name="options" id="dev_new1" autocomplete="off"></div> Новые
-    </label>
-    <label class="<%= switch_active "all" %>" show="all">
-      <div class="inp radio"><input type="radio" name="options" id="dev_all" autocomplete="off"></div> Все
-    </label>
+    <%= switch_active 'check','К проверке' %>
+    <%= switch_active 'new','Новые' %>
+    <%= switch_active 'all','Все' %> 
   </div>
 
+  <%= link_to 'Добавить', new_develop_path, class: "btn_a btn-add btn_slim right space20" %>
 
-
-  <% end %>
+<% end %>
 
   <div id="pagination">
   <%= render 'shared/pagination' %>

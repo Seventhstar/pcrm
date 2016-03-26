@@ -17,8 +17,7 @@
         </td></tr>
     <tr><td class="caption">Статус:</td>
       <td><div class="inp_w">
-      
-      <%= f.select :p_status_id, content_tag(:option,'Выберите...',:value=>nil)+options_for_select(@p_statuses.collect{ |u| [u.name, u.id] }, @provider.p_status_id) %></div>
+      <%= chosen_src 'provider[p_status_id]', @p_statuses, @provider.p_status_id %></div>
       </div></td></tr>   
         <tr><td class="caption">Примечание:</td>
       <td><div class="inp_w"><%= f.text_field :komment, class: :txt %></div></td> </tr> 

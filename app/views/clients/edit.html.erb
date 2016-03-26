@@ -1,6 +1,5 @@
-<h1>Editing Client</h1>
+<div class="hl hl_a bd">Редактирование клиента
+<%= link_to "", @client, method: :delete, data: { confirm: 'Действительно удалить клиента?' }, :class=>"icon icon_remove right" %>
+</div>
 
 <%= render 'form' %>
-
-<%= link_to 'Show', @client %> |
-<%= link_to 'Back', clients_path %>

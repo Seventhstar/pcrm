@@ -7,13 +7,13 @@ class DevelopsController < ApplicationController
   # GET /develops
   # GET /develops.json
   def index
+    params.delete_if{|k,v| v=='' || v=='0' }
     page = params[:page].nil? ? 1 : params[:page]
     search = params[:search]
     @develops = Develop.search(search).order('project_id desc')#.paginate(:page => page, :per_page => 5)
-    @project_id = params['project_id']
-    
+    @project_id = params['develops_project_id']
     show = params[:show]
-    show_dev = %w[check new all].include?(show) ? show : "check" 
+    @show_dev = %w[check new all].include?(show) ? show : "check" 
     #show_dev = ''
     case  show_dev
     when "check"
@@ -22,8 +22,8 @@ class DevelopsController < ApplicationController
       @develops = @develops.where(:dev_status_id => [1,4])      
     end
 
-    if !params['project_id'].nil? && params['project_id'].to_i>0 
-      @develops = @develops.where(project_id: params['project_id'] ) 
+    if !params['develops_project_id'].nil? 
+      @develops = @develops.where(project_id: params['develops_project_id'] ) 
     end
 
     @develops = @develops.paginate(:page => page, :per_page => 20)
