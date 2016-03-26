@@ -6,7 +6,7 @@
 <div class="panel panel-default">
 <div class="panel-heading table-heading head month"> <%= heading %></div>
 
-<table class="tleads">
+<table class="tleads" model="Payment" action="payments">
   <thead>
     <tr>
     	<th width="85px">Дата</th>
@@ -16,7 +16,7 @@
       <th width='160px'>Контрагент</th>
       <th width="200px">Адрес</th>
       
-      <th class="td_right" width="70px;">Сумма</th>
+      <th class="td_right" width="70px;" fld='sum'>Сумма</th>
       <th >Комментарий</th>
       <th colspan="3"></th>
     </tr>

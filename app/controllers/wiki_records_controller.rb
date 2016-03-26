@@ -1,6 +1,6 @@
 class WikiRecordsController < ApplicationController
   before_action :set_wiki_record, only: [:show, :edit, :update, :destroy]
-
+  before_action :logged_in_user
   # GET /wiki_records
   # GET /wiki_records.json
   def index

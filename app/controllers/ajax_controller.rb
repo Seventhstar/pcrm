@@ -70,16 +70,15 @@ before_action :logged_in_user
 
   def upd_param
   	if params['model'] && params['model']!='undefined'
-  		#puts params        
-  		obj = Object.const_get(params['model']).find(params['id'])
-   	 	#puts obj.class
-   	 	new_name = params['upd']['name'].present? ? params['upd']['name'] : params['upd']['undefined']
-      #puts "obj.name: " + obj.name+ ", new_name: " + new_name + "obj.name.to_s != new_name: " + (obj.name.to_s != new_name).to_s
-   	 	if obj.name != new_name
-   	 		obj.name  = new_name
-   	 		obj.save
-   	 	end
 
+  		obj = Object.const_get(params['model']).find(params['id'])
+      params[:upd].each do |p|
+        #p "p",p,obj[p[0]]
+        new_value = p[1]
+        new_value.gsub!(' ','') if p[0]=='sum'  
+        obj[p[0]] = new_value
+      end
+      obj.save
    	 end
    	 render :nothing => true 
    	end

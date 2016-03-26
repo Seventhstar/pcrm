@@ -38,9 +38,10 @@
 @apply_opt_change = (item)->
   model = item.closest('table').attr('model')
   item_id = item.attr('item_id')
-  inputs = $('input[name^=upd]')
-  upd_param(inputs.serialize()+'&model='+model+'&id='+item_id)  
-
+  inputs = $('input[name^=upd]').serialize()
+  upd_param(inputs+'&model='+model+'&id='+item_id)  
+  if item.closest('td').hasClass('l_edit') then sortable_query({})
+  return
 # @index_table_update =->
 #   p_params = $('.index_filter').serialize()
 #   actn = $('.index_filter').attr('action')
@@ -67,11 +68,13 @@
   each p, (i, a) ->
     if ['search','page','_'].include? i 
       url[i] = a
+    return
   each p_params, (i, a) ->
     url[i] = a
+    return
   each params, (i, a) ->
     url[i] = a
-
+    return
   method = if $('#cur_method').val() == 'edit_multiple' then '/edit_multiple' else ''
   controller =  $('#search').attr('cname')
 
@@ -98,6 +101,26 @@ $(document).ready ->
   #   return
   $('.schosen').chosen(width: '99.5%')
   $('.chosen').chosen(width: '99.5%', disable_search: 'true')
+
+# редактирование ячейки в таблице
+  $('.container').on 'dblclick', 'td.l_edit', ->  
+      _cell = $(this)
+      if _cell.hasClass('editable')  then return
+      table = $(this).closest('table')
+      disable_input()
+      _cell.addClass('editable')
+      val = _cell.html()      
+      _cell.data('text', val).html ''
+      _cell.attr('last_val',val)
+      _cell.attr('ind', table.find('th:eq('+_cell.index()+')').attr('fld'))
+      type = _cell.attr('type')
+      type = if type == undefined then 'text' else type      
+      $input = $('<input type="'+type+'" name=upd['+table.find('th:eq('+_cell.index()+')').attr('fld')+'] />').val(_cell.data('text')).width(_cell.width() - 16)
+      _cell.append $input
+      _cell.context.firstChild.focus();
+      #alert(22)
+    # $input = $('<input type="'+type+'" name=upd['+table.find('th:eq('+_cell.index()+')').attr('fld')+'] />').val(_cell.data('text')).width(_cell.width() - 16)
+
 # редактирование данных в таблице
   $('.container').on 'click', 'span.icon_edit', ->
     item_id = $(this).attr('item_id')
@@ -132,7 +155,8 @@ $(document).ready ->
  
    $('body').on 'keyup', '.editable input', (e) ->
       if e.keyCode == 13
-        apply_opt_change($('span.icon_apply'))
+        if $(this).closest('td').hasClass('l_edit') then i = $('.l_edit.editable') else i = $('span.icon_apply')
+        apply_opt_change(i)
       return
    $('body').on 'keyup keypress','.edit_project input', (e)->
       if e.keyCode == 13 || e.keyCode == 8

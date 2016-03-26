@@ -17,10 +17,10 @@
       	<td><%= payment.purpose_name %></td>
       	<td><%= payment.whom_name %></td>
         <td><%= payment.project_address %></td>
-        <td class="td_right"><%= payment.sum.to_sum %></td>
+        <td class="td_right l_edit" item_id="<%= payment.id %>" attr='sum'><%= payment.sum.nil? ? 0 : payment.sum.to_sum  %></td>
         <td><%= tooltip_if_big payment.description, 40 %></td>
         <%= td_tool_icons(payment, 'edit,delete' )%>
-        <% @sum = @sum + payment.sum %>
+        <% @sum = @sum + payment.sum.to_i %>
       </tr>
     <% end %>
     <%= render 'bottom' %>

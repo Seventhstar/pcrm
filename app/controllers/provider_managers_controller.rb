@@ -1,6 +1,6 @@
 class ProviderManagersController < ApplicationController
 	before_action :set_shop, only: [:show, :edit, :update, :destroy]  
-
+  before_action :logged_in_user
   def create
     @pm = ProviderManager.new(pm_params)
      respond_to do |format|

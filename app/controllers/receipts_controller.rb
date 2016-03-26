@@ -1,7 +1,7 @@
 class ReceiptsController < ApplicationController
   before_action :set_receipt, only: [:show, :edit, :update, :destroy]
   before_action :check_sum, only: [:create,:update]
-
+  before_action :logged_in_user
   # GET /receipts
   # GET /receipts.json
   def index

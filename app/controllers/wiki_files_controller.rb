@@ -1,4 +1,5 @@
 class WikiFilesController < ApplicationController
+	before_action :logged_in_user
 	def index
 
 			if current_user.admin?

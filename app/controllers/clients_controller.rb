@@ -1,4 +1,5 @@
 class ClientsController < ApplicationController
+  respond_to :html, :json
   before_action :set_client, only: [:show, :edit, :update, :destroy]
   before_action :logged_in_user
   # GET /clients
@@ -16,6 +17,7 @@ class ClientsController < ApplicationController
   # GET /clients/1
   # GET /clients/1.json
   def show
+    respond_modal_with @client, location: root_path
   end
 
   # GET /clients/new

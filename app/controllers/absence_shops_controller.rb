@@ -1,6 +1,6 @@
 class AbsenceShopsController < ApplicationController
 	before_action :set_shop, only: [:show, :edit, :update, :destroy]  
-
+  before_action :logged_in_user
   def create
 		@as = AbsenceShop.new(as_params)
      respond_to do |format|

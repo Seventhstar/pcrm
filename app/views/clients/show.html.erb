@@ -1,24 +1,16 @@
-<p id="notice"><%= notice %></p>
+  <div class="box_wide">
+  <div class="box_wrap box_wrap_1">
 
-<p>
-  <strong>Name:</strong>
-  <%= @client.name %>
-</p>
+    <div class="panel-left">  
+    <table class="tbl_fc tbl_fc_1">
+    <% a = [:name,:address,:phone, :email ] %>
+    <% a.each do |el| %>
+        <tr><td class="caption"><%= t(el) %>:</td>
+            <td><div class="lbl"><%= @client[el] %></div></td></tr>
+     <% end %>  
 
-<p>
-  <strong>Address:</strong>
-  <%= @client.address %>
-</p>
+	</table>
+    </div>
 
-<p>
-  <strong>Phone:</strong>
-  <%= @client.phone %>
-</p>
-
-<p>
-  <strong>Email:</strong>
-  <%= @client.email %>
-</p>
-
-<%= link_to 'Edit', edit_client_path(@client) %> |
-<%= link_to 'Back', clients_path %>
+  </div>
+  </div>

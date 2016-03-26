@@ -1,6 +1,7 @@
 class PaymentsController < ApplicationController
   before_action :set_payment, only: [:show, :edit, :update, :destroy]
   before_action :check_sum, only: [:create,:update]
+  before_action :logged_in_user
   # GET /payments
   # GET /payments.json
   def index
