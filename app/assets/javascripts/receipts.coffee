@@ -3,7 +3,7 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 @receipt_procent_visibility = (prov_id) ->
-	if (prov_id=='0') then $('.calc_div').removeClass 'invisible' else $('.calc_div').addClass 'invisible' 
+	if (prov_id=='-1') then $('.calc_div').removeClass 'invisible' else $('.calc_div').addClass 'invisible' 
 
 $(document).ready ->
   chosen_params =
@@ -17,7 +17,7 @@ $(document).ready ->
 
   $('#receipt_project_id').chosen(chosen_params).on 'change', ->
     prj_id = $(this).val()
-    if prj_id && prj_id >0
+    if prj_id && (prj_id >0 || prj_id == -1)
      dt = $('#receipt_date').val()
      $.getJSON('/projects/' + prj_id + '.json',{'data': dt}, (data) ->
         $('#prj_sum').val data.total
