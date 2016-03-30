@@ -42,11 +42,20 @@
   upd_param(inputs+'&model='+model+'&id='+item_id)  
   if item.closest('td').hasClass('l_edit') then sortable_query({})
   return
-# @index_table_update =->
-#   p_params = $('.index_filter').serialize()
-#   actn = $('.index_filter').attr('action')
-#   setLoc actn.replace('/','')+'?'+ p_params
-#   $.get actn, p_params, null, 'script'    
+
+@cell_to_edit = (cl)->
+  cl.addClass('editable')
+  table = cl.closest('table')
+  val = cl.html()      
+  cl.data('text', val).html ''
+  cl.attr('last_val',val)  
+  fld = table.find('th:eq('+cl.index()+')').attr('fld')
+  cl.attr('ind', fld)
+  type = cl.attr('type')
+  type = if type == undefined then 'text' else type      
+  $input = $('<input type="'+type+'" name=upd['+fld+'] />').val(cl.data('text')).width(cl.width() - 16)
+  cl.append $input
+  cl.context.firstChild.focus()
 
 @sortable_query = (params)->
   actual = if $('.only_actual').length==0 then null else $('.only_actual').hasClass('on')
@@ -104,41 +113,19 @@ $(document).ready ->
 
 # редактирование ячейки в таблице
   $('.container').on 'dblclick', 'td.l_edit', ->  
-      _cell = $(this)
-      if _cell.hasClass('editable')  then return
-      table = $(this).closest('table')
+      if $(this).hasClass('editable')  then return      
       disable_input()
-      _cell.addClass('editable')
-      val = _cell.html()      
-      _cell.data('text', val).html ''
-      _cell.attr('last_val',val)
-      _cell.attr('ind', table.find('th:eq('+_cell.index()+')').attr('fld'))
-      type = _cell.attr('type')
-      type = if type == undefined then 'text' else type      
-      $input = $('<input type="'+type+'" name=upd['+table.find('th:eq('+_cell.index()+')').attr('fld')+'] />').val(_cell.data('text')).width(_cell.width() - 16)
-      _cell.append $input
-      _cell.context.firstChild.focus();
-      #alert(22)
-    # $input = $('<input type="'+type+'" name=upd['+table.find('th:eq('+_cell.index()+')').attr('fld')+'] />').val(_cell.data('text')).width(_cell.width() - 16)
+      cell_to_edit($(this))      
+      return
 
 # редактирование данных в таблице
   $('.container').on 'click', 'span.icon_edit', ->
     item_id = $(this).attr('item_id')
     $row = $(this).parents('')
     disable_input()
-    $cells = $row.children('td').not('.edit_delete,.state')
-    table = $(this).closest('table')
+    $cells = $row.children('td').not('.edit_delete,.state')    
     $cells.each ->
-      _cell = $(this)
-      _cell.addClass('editable')
-      val = _cell.html()      
-      _cell.data('text', val).html ''
-      _cell.attr('last_val',val)
-      _cell.attr('ind', table.find('th:eq('+_cell.index()+')').attr('fld'))
-      type = _cell.attr('type')
-      type = if type == undefined then 'text' else type      
-      $input = $('<input type="'+type+'" name=upd['+table.find('th:eq('+_cell.index()+')').attr('fld')+'] />').val(_cell.data('text')).width(_cell.width() - 16)
-      _cell.append $input
+      cell_to_edit($(this))
       return
 
     $cell = $row.children('td.edit_delete')  
@@ -148,6 +135,7 @@ $(document).ready ->
    # отмена редактирования
    $('.container').on 'click', 'span.icon_cancel', ->   
      disable_input()
+     return
 
    # отправка новых данных
    $('.container').on 'click', 'span.icon_apply', ->  
@@ -157,6 +145,8 @@ $(document).ready ->
       if e.keyCode == 13
         if $(this).closest('td').hasClass('l_edit') then i = $('.l_edit.editable') else i = $('span.icon_apply')
         apply_opt_change(i)
+      else if e.keyCode == 27 
+        disable_input()
       return
    $('body').on 'keyup keypress','.edit_project input', (e)->
       if e.keyCode == 13 || e.keyCode == 8
@@ -168,7 +158,6 @@ $(document).ready ->
       e.preventDefault()
       if e.type == 'keyup'
         $('#btn-send').trigger('click');
-        
         return
       return false
     return
