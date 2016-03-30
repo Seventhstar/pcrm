@@ -9,6 +9,7 @@ module AbsencesHelper
   	cls = "day"
   	cls = cls + ' nday' if day.beginning_of_month != month.beginning_of_month
   	cls = cls + ' curday' if day.beginning_of_day == Date.today
+    cls = cls + ' nonactual' if day.beginning_of_day < Date.today
   	cls
   end
 
@@ -20,6 +21,7 @@ module AbsencesHelper
 
   def abs_class_td( abs )      
       cls = abs.reason_id == 1 ? "hot" : ""
+      cls = cls + ' nonactual' if abs.try(:dt_from) < Date.today
       cls = "info" if ( abs.reason_id != abs.new_reason_id && abs.new_reason_id.to_i != 0 )
       cls
   end

@@ -124,6 +124,7 @@ ru:
   new_AbsenceReason: Новая причина
   new_AbsenceTarget: Новая цель
   new_AbsenceShopTarget: Новая цель для магазина
+  new_LeadSource: Новый источник
 
   list_Priority: Список приоритетов
   list_ProjectType: Список видов проектов
@@ -141,6 +142,7 @@ ru:
   list_AbsenceReason: Список причин 
   list_AbsenceTarget: Список целей 
   list_AbsenceShopTarget: Список целей для магазина
+  list_LeadSource: Список источников
 
   Password: Пароль
   "true": Да

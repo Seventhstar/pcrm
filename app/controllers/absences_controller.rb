@@ -38,7 +38,7 @@ class AbsencesController < ApplicationController
 
     sort_1 = @sort_column == 'dt_from' ? 'month' : @sort_column
     order = sort_1 + " " + sort_direction + ", "+ sort_2  + " " + dir_2 + ", absences.created_at desc"
-    #p "order",order
+    p "sort",sort_1,sort_direction
     @absences = @absences.order(order)
   end
 
@@ -168,13 +168,12 @@ class AbsencesController < ApplicationController
     end
 
     def sort_column
-      #p "params[:sort]",params[:sort]
-      default_column = "dt_from"
-      (Absence.column_names.include?(params[:sort]) || params[:sort] == 'users.name'  ) ? params[:sort] : default_column
+      col_names = Absence.column_names + ['users.name','calendar']
+      col_names.include?(params[:sort]) ? params[:sort] : "dt_from"
     end
 
     def sort_direction
-      default_dir = sort_column =='dt_from' ? "asc": "desc"
+      default_dir = 'desc'#sort_column =='dt_from' ? "asc": "desc"
       %w[asc desc].include?(params[:direction]) ? params[:direction] : default_dir
     end
 

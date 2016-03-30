@@ -38,17 +38,18 @@ $(document).ready ->
  $('.menu_sb li a').click ->
    $('.menu_sb li.active').removeClass 'active', 1000
    $(this).parent().addClass 'active' , {duration:500}
-   url = '/' + $(this).attr('controller')
+   url = 'options/' + $(this).attr('controller')
+   #alert url
    if url != '/undefined'
-     $.get url, null, null, 'script'
-     setLoc 'options' + url
+     $.get '/'+url, null, null, 'script'
+     setLoc url
 
 $(document).on 'click', '#btn-sub-send', (e) ->
   attr_url = $(this).attr('action')
   prm = $(this).attr('prm')
   values = $('[name^='+prm+']').serialize()
   url = document.URL
-  #alert values
+  #alert attr_url
   $.ajax
     type: 'POST'
     url: attr_url
@@ -72,7 +73,7 @@ $(document).on 'click', '#btn-sub-send', (e) ->
 $(document).on 'click', '#btn-send', (e) ->
   valuesToSubmit = $('form').serialize()
   values = $('form').serialize()
-  url = $('form').attr('action')
+  url = '/options'+$('form').attr('action')
   empty_name = false
   #alert values
   each q2ajx(values), (i, a) ->
@@ -105,12 +106,12 @@ $(document).on 'click', '#btn-send', (e) ->
 $(document).on 'click', ' span.icon_remove', ->
     item_id = $(this).attr('item_id')
     url = document.URL.replace('#', '') #$('form').attr('action')
-    attr_url = $(this).parents('table').attr('action')
+    attr_url = $(this).parents('table').attr('action') 
     if attr_url!=undefined
       del_url = '/'+attr_url + '/' + item_id
     else
       del_url = url + '/' + item_id
-    url = url.replace('options/','')  
+   # url = url.replace('options/','')  
     del = confirm('Действительно удалить?')
     if !del
       return

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+
   resources :payments
 
   get 'project_status/name'
@@ -49,6 +50,10 @@ Rails.application.routes.draw do
 
   get    'options'  => 'options#edit'
   get    'options/:options_page'  => 'options#edit',:constraints => {:format => /(json|html)/}
+  post   'options/:options_page' => 'options#create'
+  # resource :options do
+  #   resource :lead_sources
+  # end
 
   delete 'options/:options_page/:id' => 'options#destroy'
 
@@ -69,7 +74,7 @@ Rails.application.routes.draw do
   end
 
   resources :leads
-
+  resources :lead_sources
 #  resources :leads_comments
   resources :channels
   resources :statuses
