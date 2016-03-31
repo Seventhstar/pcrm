@@ -34,10 +34,13 @@
 		<tr><td class="caption">Дата создания:</td>
 			<td><div class="inp_w"><%= f.text_field :start_date, class: "txt datepicker" %></div></td></tr>
 		<tr><td class="caption">Канал:</td>
-			<td><div class="select_custom select"><%= f.select 'channel_id', options_for_select(@channels.collect{ |u| [u.name, u.id] }) %>
+			<td><div class="select_custom select"><%= chosen_src 'lead[channel_id]', @channels %>
+			</td></tr>
+		<tr><td class="caption">Источник:</td>
+			<td><div class="select_custom select"><%= chosen_src 'lead[source_id]', LeadSource.all %>
 			</td></tr>
 		<tr><td class="caption">Статус:</td>
-			<td><div class="select_custom select"><%= f.select 'status_id', options_for_select(@statuses.collect{ |u| [u.name, u.id] },@lead.status_id) %>
+			<td><div class="select_custom select"><%= chosen_src 'lead[status_id]', @statuses, 1 %>
 		<tr><td class="caption">Дата статуса:</td>
 			<td><div class="inp_w"><%= f.text_field :status_date, class: "txt datepicker" %></div></td>	</tr>		
 				</td></tr>

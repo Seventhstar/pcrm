@@ -65,7 +65,7 @@ module ApplicationHelper
   end
 
   #def chosen_src( id, collection, param_id, nil_value = 'Выберите...', special_value = '', p_name = 'name', order = 'name', cls = nil  )
-  def chosen_src( id, collection, param_id, options = {})  
+  def chosen_src( id, collection, param_id = nil, options = {})  
     p_name    = options[:p_name].nil? ? 'name' : options[:p_name]
     order     = options[:order].nil? ? p_name : options[:order]
     nil_value = options[:nil_value].nil? ? 'Выберите...' : options[:nil_value]

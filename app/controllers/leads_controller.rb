@@ -84,7 +84,7 @@ class LeadsController < ApplicationController
     @files = @lead.attachments
 
     @history = get_history_with_files(@lead)
-    @comm_height = 444
+    @comm_height = 488
     respond_modal_with @lead, location: root_path
   end
 
@@ -101,7 +101,7 @@ class LeadsController < ApplicationController
     @statuses = Status.all
     @comments = @lead.comments.order('created_at asc')
     @files    = @lead.attachments
-    @comm_height = 356
+    @comm_height = 400
     @history = get_history_with_files(@lead)
     @owner = @lead
   end
@@ -162,7 +162,7 @@ class LeadsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def lead_params
-      params.require(:lead).permit(:info, :fio, :footage, :phone, :email, :address, :channel_id, 
+      params.require(:lead).permit(:info, :fio, :footage, :phone, :email, :address, :channel_id, :source_id,
                       :status_id, :user_id, :status_date,:start_date, :first_comment,:leads_ids, :ic_user_id)
     end
 

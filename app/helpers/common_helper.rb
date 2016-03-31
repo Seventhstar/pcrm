@@ -39,7 +39,7 @@ module CommonHelper
       to = changeset[1].try('strftime',"%Y.%m.%d %H:%M" )
 
     when "channel_id", 'reason_id','new_reason_id','target_id','dev_status_id','status_id', 'priority_id', 'project_id',"user_id","ic_user_id",
-         "executor_id","pstatus_id", "project_type_id", 'payment_purpose_id', 'payment_type_id'
+         "executor_id","pstatus_id", "project_type_id", 'payment_purpose_id', 'payment_type_id', 'source_id'
 
       #p "--!--"
       attrib = event.gsub('_id','').gsub('new_','')

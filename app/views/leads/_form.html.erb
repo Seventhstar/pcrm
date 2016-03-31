@@ -27,9 +27,11 @@
 			<td><div class="inp_w"><%= f.text_field :status_date,:value => @lead.status_date.try('strftime',"%d.%m.%Y"), label: false, class: "txt datepicker" %>
 			</div></td></tr>
 		<tr><td class="caption">Канал:</td>
-			<td><div class="inp_w"><%= f.select 'channel_id', options_for_select(@channels.collect{ |u| [u.name, u.id] },@lead.channel_id) %>
+			<td><div class="inp_w"><%= chosen_src 'lead[channel_id]', @channels ,@lead.channel_id %>
 		</div></td></tr>
-		
+		<tr><td class="caption">Источник:</td>
+			<td><div class="inp_w"><%= chosen_src 'lead[source_id]', LeadSource.all ,@lead.source_id %>
+		</div></td></tr>
 		
 		<% if is_admin? %>
 			<tr><td class="caption">Создатель:</td>

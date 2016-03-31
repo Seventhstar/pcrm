@@ -17,7 +17,7 @@
       	<td><%= receipt.purpose %></td>
       	<td><%= receipt.provider_name %></td>
         <td><%= receipt.project_address %></td>
-        <td class="td_right"><%= receipt.sum.to_sum %></td>
+        <td class="td_right l_edit" item_id="<%= receipt.id %>" attr='sum'><%= receipt.sum.to_sum %></td>
         <td><%= tooltip_if_big receipt.description, 25 %></td>
 
         <% if action_name=='to_move' %>
