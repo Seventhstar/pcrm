@@ -9,6 +9,7 @@ class Lead < ActiveRecord::Base
   has_paper_trail
   attr_accessor :first_comment
   after_save :send_changeset_email
+  validates :channel, presence: true
 
 
   def send_changeset_email

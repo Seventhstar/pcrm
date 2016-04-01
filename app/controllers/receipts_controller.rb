@@ -86,7 +86,7 @@ class ReceiptsController < ApplicationController
   def new
     @receipt = Receipt.new
     @projects =  Project.all
-    @receipt_user = current_user
+    @receipt_user = current_user.id
     @date = Date.today.try('strftime',"%d.%m.%Y")
 
     get_debt
@@ -95,7 +95,7 @@ class ReceiptsController < ApplicationController
   # GET /receipts/1/edit
   def edit
     @projects =  Project.all
-    @receipt_user = @receipt.user
+    @receipt_user = @receipt.user.try(:id)
     @date = @receipt.date.try('strftime',"%d.%m.%Y")
 
     get_debt

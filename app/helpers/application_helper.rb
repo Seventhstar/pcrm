@@ -65,20 +65,32 @@ module ApplicationHelper
   end
 
   #def chosen_src( id, collection, param_id, nil_value = 'Выберите...', special_value = '', p_name = 'name', order = 'name', cls = nil  )
-  def chosen_src( id, collection, param_id = nil, options = {})  
+  def chosen_src( id, collection, obj = nil, options = {})  
     p_name    = options[:p_name].nil? ? 'name' : options[:p_name]
     order     = options[:order].nil? ? p_name : options[:order]
     nil_value = options[:nil_value].nil? ? 'Выберите...' : options[:nil_value]
     
-    coll = collection.class.ancestors.include?(ActiveRecord::Relation) ? collection : collection
+  	coll = collection.class.ancestors.include?(ActiveRecord::Relation) ? collection : collection
     coll = coll.collect{ |u| [u[p_name], u.id] }
     coll.insert(0,[nil_value,nil]) if nil_value != ''
     coll.insert(1,[options[:special_value],-1]) if !options[:special_value].nil?
 
-    def_cls   = coll.count < 8 ? 'chosen' : 'schosen'
+		is_attr = (obj.class != Class::Fixnum && obj.class != Class::String && !obj.nil?)
+		
+		#p "sel",id, obj, is_attr, obj.class!= Class::Fixnum
+		#p obj[id]
+    sel = is_attr ? obj[id] : obj
+    sel = options[:selected] if !options[:selected].nil?
+    
+
+    	n = is_attr ? obj.model_name.singular+'['+ id.to_s+']' : id
+
+    def_cls = coll.count < 8 ? 'chosen' : 'schosen'
     cls       = options[:class].nil? ? def_cls : options[:class]
+    
+    cls = cls+" has-error" if is_attr && ( obj.errors[id].any? || obj.errors[id.to_s.gsub('_id','')].any? )
     l = label_tag options[:label]
-    s = select_tag id, options_for_select(coll, :selected => param_id), class: cls
+    s = select_tag n, options_for_select(coll, :selected => sel), class: cls
     options[:label].nil? ? s : l+s
   end
 

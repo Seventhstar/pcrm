@@ -1,8 +1,8 @@
 <div class="hl hl_a bd">Новый лид</div>
 
 <%= simple_form_for(@lead) do |f| %>
-<%= f.error_notification %>
 
+<%= render 'shared/error_messages', object: f.object %>
 
 <div class="box_wrap box_wrap_1">
 	<table class="tbl_fc tbl_fc_1">
@@ -22,10 +22,9 @@
 		<tr><td class="caption">Адрес объекта:</td>
 			<td><div class="inp_w"><%= f.input :address, label: false %></div></td></tr>
 		<tr><td class="caption">Ответственный:</td>
-			<td><div class="inp_w"><%= f.select :ic_user_id, options_for_select(User.order(:name).collect{ |u| [u.name, u.id] },current_user.id) %>			
+			<td><div class="inp_w"><%= chosen_src :ic_user_id, User.all, @lead, {selected:current_user.id} %>			
 		<tr><td class="caption"></td>
-			<td><%= link_to 'Отмена', leads_path, :class => "sub btn_a btn_reset"%>
-				<%= f.button :submit, value: 'Сохранить', :class => 'sub btn_a' %></td></tr>
+			<td><%= submit_cancel leads_path %> </td></tr>
 		</table>
 	</div>
 
@@ -34,13 +33,13 @@
 		<tr><td class="caption">Дата создания:</td>
 			<td><div class="inp_w"><%= f.text_field :start_date, class: "txt datepicker" %></div></td></tr>
 		<tr><td class="caption">Канал:</td>
-			<td><div class="select_custom select"><%= chosen_src 'lead[channel_id]', @channels %>
+			<td><div class="select_custom select"><%= chosen_src :channel_id, @channels, @lead %>
 			</td></tr>
 		<tr><td class="caption">Источник:</td>
-			<td><div class="select_custom select"><%= chosen_src 'lead[source_id]', LeadSource.all %>
+			<td><div class="select_custom select"><%= chosen_src :source_id, LeadSource.all, @lead %>
 			</td></tr>
 		<tr><td class="caption">Статус:</td>
-			<td><div class="select_custom select"><%= chosen_src 'lead[status_id]', @statuses, 1 %>
+			<td><div class="select_custom select"><%= chosen_src :status_id, @statuses, @lead, {selected: 1} %>
 		<tr><td class="caption">Дата статуса:</td>
 			<td><div class="inp_w"><%= f.text_field :status_date, class: "txt datepicker" %></div></td>	</tr>		
 				</td></tr>

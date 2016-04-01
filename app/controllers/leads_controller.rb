@@ -88,17 +88,19 @@ class LeadsController < ApplicationController
     respond_modal_with @lead, location: root_path
   end
 
+  def def_params
+    @channels = Channel.all
+    @statuses = Status.all
+  end
   # GET /leads/new
   def new
     @lead = Lead.new
-    @channels = Channel.all
-    @statuses = Status.all
+    def_params
   end
 
   # GET /leads/1/edit
   def edit
-    @channels = Channel.all
-    @statuses = Status.all
+    def_params
     @comments = @lead.comments.order('created_at asc')
     @files    = @lead.attachments
     @comm_height = 400
@@ -123,6 +125,7 @@ class LeadsController < ApplicationController
        format.html { redirect_to leads_page_url, notice: 'Лид успешно создан.'}
        format.json { render :show, status: :created, location: @lead }
       else
+       def_params
        format.html { render :new }
        format.json { render json: @lead.errors, status: :unprocessable_entity }
       end

@@ -12,14 +12,14 @@
     <td  colspan="3">         
       <% if is_admin? || action_name == 'new' || 
             (!@absence.created_at.nil? && @absence.user_id == current_user.id && @absence.created_at > (Date.today-3.day) && @absence.new_reason_id.nil? )  %>
-        <div class="inp_w"><%= chosen_src 'absence[reason_id]',@reasons, @absence.reason_id, class: ("has-error" if @absence.errors[:reason_id].any?) %></div>
+        <div class="inp_w"><%= chosen_src 'reason_id',@reasons, @absence %></div>
       <% else %>
         <div class="lbl"><%= @absence.reason_name %><%= f.hidden_field :reason_id %></div>
       <% end %>
     </td>
     <% if controller.action_name == 'edit'  %>
       <td class="caption caption_sm">=></td>
-        <td ><div class="inp_w"><%= chosen_src 'absence[new_reason_id]', @reasons,@absence.new_reason_id,{nil_value: 'Новая причина...'} %>
+        <td ><div class="inp_w"><%= chosen_src 'new_reason_id', @reasons,@absence,{nil_value: 'Новая причина...'} %>
         </div></td>
     <% else %>
         <td colspan="2"></td>
@@ -32,10 +32,10 @@
       <td class="caption p_obj">Проект:</td>
       <td colspan="3" class="p_obj">
       <div class="inp_w">
-      <%= chosen_src 'absence[project_id]', @projects,@absence.project_id,{p_name: 'address'} %></div></td>
+      <%= chosen_src 'project_id', @projects,@absence,{p_name: 'address'} %></div></td>
       <td class="caption caption_sm"><span style="<%= disp_trgt %>" class="p_trgt"> Цель: </span></td>
       <td ><span style="<%= disp_trgt %>" class="p_trgt">
-      <%= chosen_src 'absence[target_id]', @targets, @absence.target_id %></span></td>
+      <%= chosen_src 'target_id', @targets, @absence %></span></td>
     </tr>
 
     <tr><td class="caption">Дата c:</td>
@@ -61,7 +61,7 @@
     <% if is_admin? %>
       <tr><td class="caption">Сотрудник:</td>
           <td width='490px;' colspan="3"><div class="inp_w" >
-           <%= chosen_src 'absence[user_id]', User.all, @user %></div>
+           <%= chosen_src 'user_id', User.all, @absence, {selected: @user} %></div>
       </td></tr>
 
     <% end %>

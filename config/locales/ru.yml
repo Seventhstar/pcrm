@@ -276,24 +276,26 @@ ru:
       second: Секунд
       year: Год
   activerecord:
-    models:
-      project: Проект
     attributes:
-      reason: причина
-      reason_id: причина  
-      Reason: ghbxb
+      budget:
+        name: Наименование
+      lead:
+        channel: Канал
+      absence:
+        reason_id: Причина
+        user: Сотрудник
+      client: 
+        name: Клиент
       project:
-        Reason: ghbxb
-        reason: причина
-        reason_id: причина
+        address: Адрес
+        client: Клиент
+        footage: Метраж
       user:
         password: "Пароль"
         login: "Имя пользователя"
         password_confirmation: "Подтверждение пароля"
     errors:
       models:
-        project:
-          reason: gh
         user:
           attributes:
             password_confirmation:

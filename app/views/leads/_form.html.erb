@@ -21,27 +21,23 @@
 			<td><div class="inp_w"><%= f.input :address, label: false %></div></td></tr>
 			
 		<tr><td class="caption">Статус:</td>
-			<td><div class="inp_w"><%= f.select 'status_id', options_for_select(@statuses.collect{ |u| [u.name, u.id] },@lead.status_id) %>
+			<td><div class="inp_w"><%= chosen_src 'status_id', @statuses, @lead %>
 			</div></td></tr>
 		<tr><td class="caption">Дата для статуса:</td>
 			<td><div class="inp_w"><%= f.text_field :status_date,:value => @lead.status_date.try('strftime',"%d.%m.%Y"), label: false, class: "txt datepicker" %>
 			</div></td></tr>
 		<tr><td class="caption">Канал:</td>
-			<td><div class="inp_w"><%= chosen_src 'lead[channel_id]', @channels ,@lead.channel_id %>
+			<td><div class="inp_w"><%= chosen_src 'channel_id', @channels ,@lead %>
 		</div></td></tr>
 		<tr><td class="caption">Источник:</td>
-			<td><div class="inp_w"><%= chosen_src 'lead[source_id]', LeadSource.all ,@lead.source_id %>
+			<td><div class="inp_w"><%= chosen_src 'source_id', LeadSource.all ,@lead %>
 		</div></td></tr>
 		
 		<% if is_admin? %>
-			<tr><td class="caption">Создатель:</td>
-				<td><div class="inp_w"><%= f.select :user_id, options_for_select(User.order(:name).collect{ |u| [u.name, u.id] },@lead.user_id) %>
-			</div></td></tr>
+			<tr><td class="caption">Создатель:</td><td><div class="inp_w"><%= chosen_src :user_id, User.all,@lead %></div></td></tr>
 		<% end %>
 		
-		<tr><td class="caption">Ответственный:</td>
-			<td><div class="inp_w"><%= f.select :ic_user_id, options_for_select(User.order(:name).collect{ |u| [u.name, u.id] },@lead.ic_user_id) %>
-		</div></td></tr>
+		<tr><td class="caption">Ответственный:</td><td><div class="inp_w"><%= chosen_src :ic_user_id, User.all, @lead %></div></td></tr>
 
 		<tr><td class="last_td"></td>
 			<td class="last_td"><%= link_to 'Отмена', leads_page_url, :class => "sub btn_a btn_reset"%>

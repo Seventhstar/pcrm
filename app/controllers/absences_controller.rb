@@ -64,6 +64,7 @@ class AbsencesController < ApplicationController
     @shop  = AbsenceShop.new
     @shop_targets = AbsenceShopTarget.all
     @reopen = false
+    p  "current_user.id",current_user.id
     @user = current_user.id
     if !@absence.nil?
       @user = @absence.user_id
@@ -83,6 +84,7 @@ class AbsencesController < ApplicationController
     @dt_to = @dt_from
     @t_from = "10:00"
     @t_to = '19:00'
+
     @checked = false
     @shops = {}
 

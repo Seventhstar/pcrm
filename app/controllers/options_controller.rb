@@ -13,7 +13,7 @@ class OptionsController < ApplicationController
     @items  = option_model.order(:name)  
     respond_to do |format|
        if @item.save
-         format.json { render 'options/index', status: :created, location: @item }
+         format.json { render 'options/index', status: :created, location: @item, notice: 'Лид успешно создан.' }
        else
          format.json { render json: @item.errors, status: :unprocessable_entity }
        end
@@ -42,7 +42,7 @@ class OptionsController < ApplicationController
   private
   # Never trust parameters from the scary internet, only allow the white list through.
     def options_params
-      i = option_model.new.class.name.underscore
+      i = option_model.model_name.singular
       params.require(i).permit(:name,:actual)
     end
 

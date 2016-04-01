@@ -90,17 +90,14 @@ $(document).on 'click', '#btn-send', (e) ->
       beforeSend: (xhr) ->
         xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
         return
-      success: ->
+      success: (xhr, data, response) ->
         $.get url, null, null, 'script'
-        show_ajax_message 'Успешно добавлено'
+        show_ajax_message 'Успешно записано'
         return
       error: (evt, xhr, status, error) ->
-        #alert(status)
-        errors = evt.responseText
-        #alert(errors)
-        show_ajax_message(errors,'error')
-        showNotifications();
-  false
+        show_ajax_message(evt.responseText,'error')
+    return
+  return
 
 # удаляем элемент справочника
 $(document).on 'click', ' span.icon_remove', ->

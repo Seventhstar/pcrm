@@ -15,10 +15,10 @@
  
     <tr><%= hidden_field 'shop','absence_id', value: @absence.id %>
       <td class="caption3 w_60"><div class="inp_l inp_w" >
-      <%= chosen_src 'shop[shop_id]',Provider.order(:name), @shop.shop_id, {nil_value: 'Магазин...',special_value: '* другой'} %>
+      <%= chosen_src 'shop_id',Provider.all, @shop, {nil_value: 'Магазин...',special_value: '* другой'} %>
       </div> </td>
       
-      <td class="w_30"> <%= chosen_src "shop[target_id]", @shop_targets, 0,{nil_value: 'Цель...'} %>
+      <td class="w_30"> <%= chosen_src "target_id", @shop_targets, @shop,{nil_value: 'Цель...'} %>
       </td>
       <td ><span class="btn_a" id="btn-sub-send" absid="<%= @absence.id %>" action='/absence_shops/' prm='shop' width=''>Добавить магазин</span></td>
     </tr>

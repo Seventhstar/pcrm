@@ -18,20 +18,20 @@
     <table class="tbl_fc">
     	<tr><td class="caption">Проект:</td>
 			<td><div class="inp_w">
-			<%= f.select :project_id, options_for_select(@projects.collect{ |u| [u.name, u.id] },@develop.project_id) %></div>
+			<%= chosen_src :project_id, @projects, @develop %></div>
 			</td></tr>
 		<tr><td class="caption">Статус:</td>
 			<td><div class="inp_w">
-			<%= f.select :dev_status_id, options_for_select(@dev_statuses.collect{ |u| [u.name, u.id] },@develop.dev_status_id) %></div>
+			<%= chosen_src :dev_status_id, @dev_statuses, @develop %></div>
 			</td></tr>			
 
 		<tr><td class="caption">Приоритет:</td>
 			<td><div class="inp_w">
-			<%= f.select :priority_id, options_for_select(@priorities.collect{ |u| [u.name, u.id] },@develop.priority_id) %></div>
+			<%= chosen_src :priority_id, @priorities, @develop %></div>
 			</td></tr>			
 		<tr><td class="caption">Ответственный:</td>
 			<td><div class="inp_w">
-			<%= f.select :ic_user_id, options_for_select(@users.collect{ |u| [u.name, u.id] },@develop.ic_user_id || 1) %></div>
+			<%= chosen_src :ic_user_id, @users, @develop ) %></div>
 			</td></tr>						
 		<tr><td class="caption">Описание:</td>
 		    <td><div class="inp_w"><%= f.text_area :description, class: :txt, label: false %></div></td></tr>

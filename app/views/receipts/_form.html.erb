@@ -9,7 +9,7 @@
         <td><div class="inp_w"><%= f.text_field :date, :value => @date, label: false, class: "txt datepicker" %></div></td></tr>
       <tr><td class="caption">Вид платежа:</td>
         <td><div class="inp_w">
-        <%= chosen_src 'receipt[payment_type_id]', PaymentType.all, @receipt.payment_type_id %>
+        <%= chosen_src 'payment_type_id', PaymentType.all, @receipt %>
       </div></td></tr>
 
 
@@ -18,21 +18,20 @@
             <%= receipt_procents_div %>
         </td></tr>
 
-    <tr><td class="last_td"></td><td class="last_td"><%= link_to 'Отмена', receipts_url, :class => "sub btn_a btn_reset"%>
-        <%= f.button :submit, value: 'Сохранить', :class => 'sub btn_a' %></td></tr>
+    <tr><td class="last_td"></td><td class="last_td"><%= submit_cancel receipts_url %></td></tr>
       </table>
   </div>
     <div class="panel-right">
     <table class="tbl_fc tbl_fc">
       <tr><td class="caption">Проект:</td>
-        <td><div class="inp_w"><%= chosen_src 'receipt[project_id]', Project.all, @receipt.project_id,{p_name: 'address'} %>  
+        <td><div class="inp_w"><%= chosen_src 'project_id', Project.all, @receipt,{p_name: 'address'} %>  
         </div></td></tr>
       <tr><td class="caption">Контрагент:</td>
         <td><div class="inp_w">        
-        <%= chosen_src 'receipt[provider_id]', Provider.all, @receipt.provider_id,{nil_value: 'Выберите...', special_value: '* Клиент'} %>
+        <%= chosen_src 'provider_id', Provider.all, @receipt,{nil_value: 'Выберите...', special_value: '* Клиент'} %>
       </div></td></tr>
       <tr><td class="caption">Создатель:</td>
-        <td><div class="inp_w"><%= chosen_src 'receipt[user_id]', User.all,@receipt_user.id %>
+        <td><div class="inp_w"><%= chosen_src 'user_id', User.all, @receipt, {selected: @receipt_user } %>
       </div></td></tr>
       
       <td class="caption">Комментарий:</td>
