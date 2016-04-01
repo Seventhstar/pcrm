@@ -16,9 +16,13 @@
       <th width='120px'>Исполнитель</th>
       <th width="85px">Начало</th>
       <th width="85px">Конец</th>
-      <th width="37px">1/м2</th>
-      <th class="td_right" width="70px">Стоимость</th>
-      <th></th>
+      <% if is_admin? %>
+        <th width="37px">1/м2</th>
+        <th class="td_right" width="70px">Стоимость</th>  
+        <th></th>
+      <% end %>
+      
+      
     </tr>
   </thead>
 

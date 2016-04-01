@@ -1,17 +1,4 @@
 ru:
-  activerecord:
-    errors:
-      models:
-        absence:
-          attributes:
-            shop: 
-              blank: 'Магазин'
-    models:
-      place: "Place"
-    successful:
-      messages:
-        created: "%{model} was successfully created."
-        updated: "%{model} was successfully updated."
   will_paginate:
     next_label: "вперед"
     previous_label: "назад"
@@ -289,20 +276,30 @@ ru:
       second: Секунд
       year: Год
   activerecord:
+    models:
+      project: Проект
     attributes:
-      Password: "Пароль"
+      reason: причина
+      reason_id: причина  
+      Reason: ghbxb
+      project:
+        Reason: ghbxb
+        reason: причина
+        reason_id: причина
       user:
         password: "Пароль"
         login: "Имя пользователя"
         password_confirmation: "Подтверждение пароля"
     errors:
       models:
+        project:
+          reason: gh
         user:
           attributes:
             password_confirmation:
               confirmation: 'не совпадает со значением поля %{attribute}'
   errors:
-    format: ! '%{attribute} %{message}'
+    format: '%{attribute}: %{message}'
     messages:
       accepted: нужно подтвердить
       blank: не может быть пустым

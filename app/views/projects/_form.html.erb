@@ -1,13 +1,11 @@
 <%= simple_form_for(@project) do |f| %>
+<%= render 'shared/error_messages', object: f.object %>
 <% if !is_admin? %>
   <%= f.hidden_field :executor_id,  :value => (@project.executor_id ||= current_user.id) %>
 <% end %>
     <h3>Данные</h3>
-
     <div class="box_wrap box_wrap_1">
-      <div class="fullwidth">
-        <table class="fullwidth tbl_fc fw_form projects">
-        <thead>
+      <div class="fullwidth"><table class="fullwidth tbl_fc fw_form projects"><thead>
         <tr><th width="20%"></th><th width="20%"></th><th width="20%"></th><th width="20%"></th><th width="20%"></th></tr></thead>
         <tbody>
           <tr>
@@ -15,13 +13,13 @@
             <td><div class="inp_w"><label>Дата</label><%= f.text_field :date_sign, value: Date.today.try('strftime',"%d.%m.%Y"), class: "txt datepicker" %></div></td>
             <td colspan="3"><div class="inp_w"><%= f.input :address, label: 'Адрес' %></div></td>
           </tr>
-          <% f.simple_fields_for  :client do |c| %>
+          <%= f.simple_fields_for  :client do |c| %>
           <tr>
             <td colspan="2"><div class="inp_w"><%= c.input :name, label: 'ФИО' %></div></td>
             <td><div class="inp_w"><%= c.input :phone, label: 'Телефон' %></div></td>
             <td colspan="2"><div class="inp_w"><%= c.input :email, label: 'E-mail' %></div></td>
           </tr>
-          <% end -%> 
+          <% end %> 
 
           <tr><td class="gr_caption">Вид работы и исполнитель</td></tr>
           <tr>
@@ -44,9 +42,9 @@
             <td><div class="inp_w"><%= f.input :footage, label: 'Метраж' %></div></td>
             <%= td_sum_field(f, :price, 'Цена за м2') %>
             <%= td_sum_field(f, :sum, 'Сумма') %>
-            <td class="va_bottom"><span class="sub btn_a" id="add_footage">+</span></td>
+            <td class="va_top"><span class="sub btn_a" id="add_footage">+</span></td>
             <%= td_sum_field(f, :sum_total, 'Общая стоимость' ) %> 
-          </tr>=
+          </tr>
           <tr style="display:none;" id="tr_footage_2">
             <td><div class="inp_w"><%= f.input :footage_2, label: 'Метраж 2' %></div></td>
             <%= td_sum_field(f, :price_2, 'Цена за м2') %>

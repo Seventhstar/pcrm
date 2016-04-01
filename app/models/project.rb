@@ -5,6 +5,9 @@ class Project < ActiveRecord::Base
   belongs_to :pstatus, class_name: 'ProjectStatus',foreign_key: :pstatus_id
   has_many :receipts
   has_many :absence
+  validates :address, :length => { :minimum => 3 }
+  validates :footage, presence: true
+  validates_numericality_of :footage, greater_than: 1 
 	accepts_nested_attributes_for :client
   has_paper_trail
 

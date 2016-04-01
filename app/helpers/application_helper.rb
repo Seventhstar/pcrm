@@ -77,8 +77,9 @@ module ApplicationHelper
 
     def_cls   = coll.count < 8 ? 'chosen' : 'schosen'
     cls       = options[:class].nil? ? def_cls : options[:class]
-
-    select_tag id, options_for_select(coll, :selected => param_id), class: cls
+    l = label_tag options[:label]
+    s = select_tag id, options_for_select(coll, :selected => param_id), class: cls
+    options[:label].nil? ? s : l+s
   end
 
   def sortable_pil(column, title = nil, default_dir = 'desc')

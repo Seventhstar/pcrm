@@ -26,12 +26,13 @@
           <tr>
             <td><div class="inp_w"><%= f.input :number,label: 'Номер' %></div></td>
             <td><div class="inp_w"><label>Дата</label><%= f.text_field :date_sign, value: @project.date_sign.try('strftime',"%d.%m.%Y"), class: "txt datepicker" %></div></td>
-            <td colspan="3"><div class="inp_w"><%= f.input :address, label: 'Адрес' %></div></td>
+            <td><div class="inp_w"><%= chosen_src :project_client_id, Client.all, @project.client_id,{label: 'Клиент'} %></div></td>
+            <td colspan="2"><div class="inp_w"><%= f.input :address, label: 'Адрес' %></div></td>
           </tr>
 
           <tr><td class="gr_caption">Вид работы и исполнитель</td></tr>
           <tr>
-            <td colspan="2"><div class="inp_w"><%= f.select :project_type_id, options_for_select(ProjectType.order(:name).collect{ |u| [u.name, u.id] }, @project.project_type_id) %></div></td>
+            <td colspan="2"><div class="inp_w"><%= chosen_src :project_type_id, ProjectType.all, @project.project_type_id %></div></td>
             <td><div class="inp_w"><%= f.select :style_id, options_for_select(Style.order(:name).collect{ |u| [u.name, u.id] }, @project.style_id) %></div></td>
             <td colspan="2"><div class="inp_w"><%= f.select :executor_id, options_for_select(User.order(:name).collect{ |u| [u.name, u.id] }, @project.executor_id) %></div></td>
           </tr>

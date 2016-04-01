@@ -12,7 +12,7 @@
     <td  colspan="3">         
       <% if is_admin? || action_name == 'new' || 
             (!@absence.created_at.nil? && @absence.user_id == current_user.id && @absence.created_at > (Date.today-3.day) && @absence.new_reason_id.nil? )  %>
-        <div class="inp_w"><%= chosen_src 'absence[reason_id]',@reasons, @absence.reason_id %></div>
+        <div class="inp_w"><%= chosen_src 'absence[reason_id]',@reasons, @absence.reason_id, class: ("has-error" if @absence.errors[:reason_id].any?) %></div>
       <% else %>
         <div class="lbl"><%= @absence.reason_name %><%= f.hidden_field :reason_id %></div>
       <% end %>
