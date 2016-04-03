@@ -23,14 +23,6 @@ module ApplicationHelper
     
   end
 
-  def opt_page
-     if self.controller_name =='leads' 
-        'statuses'
-     else
-        'budgets'
-     end
-  end
-
   def calls_color
     if params[:controller] && params[:controller]=="leads" && params[:action] 
       if params[:action]=="new"
@@ -64,7 +56,6 @@ module ApplicationHelper
     end
   end
 
-  #def chosen_src( id, collection, param_id, nil_value = 'Выберите...', special_value = '', p_name = 'name', order = 'name', cls = nil  )
   def chosen_src( id, collection, obj = nil, options = {})  
     p_name    = options[:p_name].nil? ? 'name' : options[:p_name]
     order     = options[:order].nil? ? p_name : options[:order]
@@ -76,13 +67,8 @@ module ApplicationHelper
     coll.insert(1,[options[:special_value],-1]) if !options[:special_value].nil?
 
 		is_attr = (obj.class != Class::Fixnum && obj.class != Class::String && !obj.nil?)
-		
-		#p "sel",id, obj, is_attr, obj.class!= Class::Fixnum
-		#p obj[id]
     sel = is_attr ? obj[id] : obj
     sel = options[:selected] if !options[:selected].nil?
-    
-
     	n = is_attr ? obj.model_name.singular+'['+ id.to_s+']' : id
 
     def_cls = coll.count < 8 ? 'chosen' : 'schosen'
@@ -193,7 +179,8 @@ module ApplicationHelper
   end
 
   def option_li( page,title )
-    css_class = @page_data == page ? "active" : nil
+    #p "page",page,"@page_data",@page
+    css_class = @page == page ? "active" : nil
     content_tag :li, {:class =>css_class } do
       link_to title, '#',{:class =>"list-group-item #{css_class}", :controller => page}
     end
@@ -219,8 +206,8 @@ module ApplicationHelper
     dilable_cls = params[:subcount]>0 ? '_disabled' : ''
     if params[:tag] == 'span' 
       all_icons['edit'] = content_tag :span, "", {class: 'icon icon_edit', item_id: element.id}
-      all_icons['delete'] = content_tag( :span,"",{class: ['icon icon_remove',dilable_cls,' ',params[:add_cls]].join, item_id: element.id})
-    else
+      all_icons['delete'] = content_tag( :span,"",{class: ['icon icon_remove',dilable_cls,' ',params[:add_cls]].join, item_id: params[:subcount]>0 ? '' : element.id})
+     else
       all_icons['edit'] = link_to "", edit_polymorphic_path(element), class: "icon icon_edit"
       all_icons['show'] = link_to "", polymorphic_path(element), class: "icon icon_show", data: { modal: true }
       all_icons['delete'] = link_to "", element, method: :delete, data: { confirm: 'Действительно удалить?' }, class: "icon icon_remove " if params[:subcount]==0

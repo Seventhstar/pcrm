@@ -2,7 +2,7 @@ module OptionsHelper
 
   def get_active_option_page
 
-  	case params['options_page']
+  	case @page
   	when 'leads','statuses','channels','lead_sources'
   		0
     when 'project_statuses','project_types'

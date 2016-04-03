@@ -1,6 +1,6 @@
 $(document).ready ->
 
- $('.container').on 'click', 'span.sw_check', ->
+ $('.container').on 'click', 'span.sw_check',  ->
   model = $(this).parents('table').attr('model')
   if $(this).hasClass('checked')
     $(this).removeClass 'checked'
@@ -11,7 +11,10 @@ $(document).ready ->
     
   item_id = $(this).attr('item_id')
   chk = $(this).attr('chk')
-  
+  if !chk
+    table = $(this).closest('table')
+    chk = table.find('th:eq('+$(this).closest('td')[0].cellIndex+')').attr('fld')
+
   $.ajax
     url: '/ajax/switch_check'
     data:
@@ -38,18 +41,24 @@ $(document).ready ->
  $('.menu_sb li a').click ->
    $('.menu_sb li.active').removeClass 'active', 1000
    $(this).parent().addClass 'active' , {duration:500}
-   url = 'options/' + $(this).attr('controller')
-   #alert url
+   url = $(this).attr('controller')
+   if url.indexOf('options')<1
+    url = 'options/' + url
+   url= url.replace('#','')
    if url != '/undefined'
-     $.get '/'+url, null, null, 'script'
-     setLoc url
+     $.ajax
+       url: '/'+url
+       dataType: 'script'
+       success: ->
+        setLoc url
 
 $(document).on 'click', '#btn-sub-send', (e) ->
   attr_url = $(this).attr('action')
   prm = $(this).attr('prm')
   values = $('[name^='+prm+']').serialize()
   url = document.URL
-  #alert attr_url
+  if url.indexOf('edit')<1 then url = url + '/edit'
+  #alert url
   $.ajax
     type: 'POST'
     url: attr_url
@@ -108,6 +117,7 @@ $(document).on 'click', ' span.icon_remove', ->
       del_url = '/'+attr_url + '/' + item_id
     else
       del_url = url + '/' + item_id
+    if url.indexOf('edit')<1 && url.indexOf('options')<1 then url = url + '/edit'
    # url = url.replace('options/','')  
     del = confirm('Действительно удалить?')
     if !del

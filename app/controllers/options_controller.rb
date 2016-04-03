@@ -22,8 +22,8 @@ class OptionsController < ApplicationController
 
  def edit
     
-    # @page_data = params[:options_page]
-    # @page_data ||= "statuses"
+    @page = params[:options_page]
+    @page ||= "statuses"
     
     @items = option_model.order(:name)
     @item = option_model.new
@@ -47,6 +47,8 @@ class OptionsController < ApplicationController
     end
 
     def option_model
-      m = params[:options_page].classify.constantize
+      page = params[:options_page]
+      page ||= "statuses"
+      page.classify.constantize
     end
 end

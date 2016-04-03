@@ -284,6 +284,8 @@ ru:
       absence:
         reason_id: Причина
         user: Сотрудник
+        project_id: Проект
+        target_id: Цель
       client: 
         name: Клиент
       project:
@@ -301,10 +303,10 @@ ru:
             password_confirmation:
               confirmation: 'не совпадает со значением поля %{attribute}'
   errors:
-    format: '%{attribute}: %{message}'
+    format: 'Поле "%{attribute}" %{message}'
     messages:
       accepted: нужно подтвердить
-      blank: не может быть пустым
+      blank: должно быть заполнено
       present: нужно оставить пустым
       confirmation: 'не совпадает со значением поля %{t attribute}'
       empty: не может быть пустым

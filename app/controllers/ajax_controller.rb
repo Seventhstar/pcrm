@@ -60,12 +60,15 @@ before_action :logged_in_user
   end
 
   def switch_check
+    p "params[:model]",params[:model]
+    if params[:model]
       item = params[:model].classify.constantize.find(params[:item_id])
       if !item.nil?
           item[params[:field]] = params[:checked]
           item.save
       end
-      render :nothing => true 
+    end
+    render :nothing => true 
   end
 
   def upd_param

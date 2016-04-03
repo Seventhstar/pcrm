@@ -29,6 +29,6 @@ class AbsenceShopsController < ApplicationController
     end
 
     def as_params
-      params.require(:shop).permit(:shop_id, :target_id, :absence_id )
+      params.require(:absence_shop).permit(:shop_id, :target_id, :absence_id )
     end
 end

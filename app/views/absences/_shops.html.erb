@@ -1,8 +1,8 @@
-
 <div class="panel panel-default">
 <div class="panel-heading table-heading">Список магазинов: </div>
 <table class="tleads" id="ashops" model="AbsenceShops" action="absence_shops">
   <tbody>
+<% p 1231234 %>
 
     <% @shops.each do |shop| %>
       <tr>
@@ -13,14 +13,14 @@
     <% end %>
 
  
-    <tr><%= hidden_field 'shop','absence_id', value: @absence.id %>
+    <tr><%= hidden_field 'absence_shop','absence_id', value: @absence.id %>
       <td class="caption3 w_60"><div class="inp_l inp_w" >
       <%= chosen_src 'shop_id',Provider.all, @shop, {nil_value: 'Магазин...',special_value: '* другой'} %>
       </div> </td>
       
       <td class="w_30"> <%= chosen_src "target_id", @shop_targets, @shop,{nil_value: 'Цель...'} %>
       </td>
-      <td ><span class="btn_a" id="btn-sub-send" absid="<%= @absence.id %>" action='/absence_shops/' prm='shop' width=''>Добавить магазин</span></td>
+      <td ><span class="btn_a" id="btn-sub-send" absid="<%= @absence.id %>" action='/absence_shops/' prm='absence_shop' width=''>Добавить магазин</span></td>
     </tr>
 
   </tbody>

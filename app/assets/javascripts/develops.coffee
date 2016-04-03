@@ -13,7 +13,7 @@ $(document).ready ->
   params = width: '200px', disable_search: 'true'
   $('#develops_project_id').chosen(params)
 
-  $('.develops').on 'click', 'span.sw_check', ->
+  $('.develops').on 'click', 'span.dev_check', ->
     checked = if $(this).hasClass('checked') then false else true
     dev_id = $(this).attr('developid')
     chk = $(this).attr('chk')

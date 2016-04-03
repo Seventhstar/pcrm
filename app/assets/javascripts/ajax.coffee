@@ -2,9 +2,6 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-
-
-
 @upd_param = (param)->
   $.ajax
       url: '/ajax/upd_param'
@@ -21,6 +18,7 @@
 
 @disable_input = (cancel=true) -> 
  item_id = $('.icon_apply').attr('item_id')
+ item_rm_id = $('.icon_cancel').attr('item_id')
  $cells = $('.editable')
  $cells.each ->
   _cell = $(this)
@@ -33,7 +31,11 @@
  
  $cell = $('td.app_cancel')  
  $cell.removeClass('app_cancel')
- $cell.html '<span class="icon icon_edit" item_id="'+item_id+'"></span><span class="icon icon_remove" item_id="'+item_id+'"></span>' 
+ if item_rm_id == 'undefined' || item_rm_id == ''  
+  del_span = '<span class="icon icon_remove_disabled"></span>' 
+ else 
+  del_span = '<span class="icon icon_remove" item_id="'+item_id+'"></span>'
+ $cell.html ('<span class="icon icon_edit" item_id="'+item_id+'"></span>'+del_span)
 
 @apply_opt_change = (item)->
   model = item.closest('table').attr('model')
@@ -72,8 +74,6 @@
   l = window.location.toString().split('?');
   p = q2ajx(l[1])
   p_params = q2ajx($('.index_filter').serialize())
-  #alert $('.index_filter').serialize()
-  # alert 1
   each p, (i, a) ->
     if ['search','page','_'].include? i 
       url[i] = a
@@ -94,7 +94,6 @@
 $(document).ready ->
 # поиск 
   $('#search').on 'keyup', (e)-> 
-    #alert e.which
     c= String.fromCharCode(event.keyCode);
     isWordCharacter = c.match(/\w/);
     isBackspaceOrDelete = (event.keyCode == 8 || event.keyCode == 46);
@@ -105,9 +104,7 @@ $(document).ready ->
   $('.index_filter select,.index_filter input[type="radio"]').on 'change', ->
     sortable_query({})
     return
-  # $('#search').on 'keyup', ->
-  #   delay 'index_table_update()',500
-  #   return
+
   $('.schosen').chosen(width: '99.5%')
   $('.chosen').chosen(width: '99.5%', disable_search: 'true')
 
@@ -121,6 +118,7 @@ $(document).ready ->
 # редактирование данных в таблице
   $('.container').on 'click', 'span.icon_edit', ->
     item_id = $(this).attr('item_id')
+    item_rm_id= $(this).next().attr('item_id')
     $row = $(this).parents('')
     disable_input()
     $cells = $row.children('td').not('.edit_delete,.state')    
@@ -130,7 +128,7 @@ $(document).ready ->
 
     $cell = $row.children('td.edit_delete')  
     $cell.addClass('app_cancel')
-    $cell.html '<span class="icon icon_apply" item_id="'+item_id+'"></span><span class="icon icon_cancel" item_id="'+item_id+'"></span>'
+    $cell.html '<span class="icon icon_apply" item_id="'+item_id+'"></span><span class="icon icon_cancel" item_id="'+item_rm_id+'"></span>'
     
    # отмена редактирования
    $('.container').on 'click', 'span.icon_cancel', ->   

@@ -181,14 +181,6 @@ $( "#tabs" ).tabs();
 
   showNotifications();
 
-  /*$('.menu_sb li a').click(function(){ 
-      $('.menu_sb li.active').removeClass("active", 150, "easeInQuint");
-      $(this).parent().addClass("active");
-      var url = "/" + $(this).attr("controller");
-      $.get(url, null, null, "script");
-      if (url!="/undefined") setLoc("options"+url);
-  });*/
-
 });
 
 

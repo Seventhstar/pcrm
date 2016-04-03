@@ -81,7 +81,7 @@ SimpleNavigation::Configuration.run do |navigation|
     end
 
     if current_user.admin? 
-      primary.item :options,  content_tag(:span,' '), '/options/'+opt_page, html: {class: 'li-right options', title: 'Настройки'}
+      primary.item :options,  content_tag(:span,' '), options_path, html: {class: 'li-right options', title: 'Настройки'}
       primary.item :develops, content_tag(:span), develops_path, html: {class: 'li-right develops',title: 'Разработка'} 
       primary.item :charts1,  content_tag(:span), statistics_path, html: {class: 'li-right', title: 'Статистика'} 
       primary.item :history,  content_tag(:span), history_path, html: {class: 'li-right', title: 'История'} 

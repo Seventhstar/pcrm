@@ -1,4 +1,3 @@
-$(".shops").html("<%= escape_javascript(render("absences/shops.html.erb")) %>");
-chosen_params ={   width: '99.5%',    disable_search: 'true'}
-$('#shop_shop_id').chosen(chosen_params);
-$('#shop_target_id').chosen(chosen_params);
+$(".shops").html("<%= escape_javascript(render("shops")) %>");
+$('.schosen').chosen({width: '99.5%'}); 
+$('.chosen').chosen({width: '99.5%', disable_search: 'true'});

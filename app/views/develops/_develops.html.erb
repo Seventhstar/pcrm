@@ -15,8 +15,8 @@
 
   <tr class="dev_priority<%=develop.priority_id%>">
     <td ><%= develop.name %></td>
-    <td class="state"><span class="check_img sw_check <%= [2,3].include?(develop.dev_status_id) ? "checked" :"" %>" developid="<%=develop.id%>" chk="coder"></span></td>
-    <td class="state"><span class="check_img sw_check <%= develop.dev_status_id==3 ? "checked" :"" %>" developid="<%=develop.id%>" chk="boss"></span></td>
+    <td class="state"><span class="check_img dev_check <%= [2,3].include?(develop.dev_status_id) ? "checked" :"" %>" developid="<%=develop.id%>" chk="coder"></span></td>
+    <td class="state"><span class="check_img dev_check <%= develop.dev_status_id==3 ? "checked" :"" %>" developid="<%=develop.id%>" chk="boss"></span></td>
     <%= td_tool_icons(develop,'edit,show') %>
   </tr>
 <% end %>
