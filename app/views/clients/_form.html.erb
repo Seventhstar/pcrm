@@ -1,5 +1,7 @@
 <%= simple_form_for(@client) do |f| %>
 
+<%= render 'shared/error_messages', object: f.object %>
+
 <div class="box_wrap box_wrap_1">
   <div class="panel-left">
     <table class="tbl_fc tbl_fc">
