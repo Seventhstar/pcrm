@@ -21,14 +21,19 @@
 //= require jquery.fileupload
 //= require jquery.timepicker
 //= require nprogress
+
 //= require_tree .
 
 function to_sum(d){ 
-    return d.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1 "); 
+    if (isNaN(d)) return 0;
+    s = d.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1 ");  
+    return s;
 }
 
 function intFromSum(sum){
-  return parseInt(sum.replace(' ',''))
+  if (sum === undefined) return 0;
+  s = sum.replace(/ /g,'')
+  return parseInt(s)
 }
 
 var showNotifications = function(){ 
@@ -72,6 +77,7 @@ var show_ajax_message = function(msg, type) {
     $(".js-notes").html( '<div class="alert fade-in flash_'+type+'">'+msg+'</div>');    
     showNotifications();
 };
+
 
 
 $(function() {

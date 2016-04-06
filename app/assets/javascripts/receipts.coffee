@@ -37,6 +37,13 @@ $(document).ready ->
   $('.sum_mask').mask '# ##0',
     reverse: true
     maxlength: false 
+  #$.mask.definitions['~']='[+-]';
+  $('.float_mask1').mask '# ##0.0',
+    reverse: true
+    maxlength: false 
+  $('.float_mask').mask "# ##0,0", 
+    reverse: true
+    maxlength: false
 
   $('.container').on 'click','.calc_proc.enabled', ->
     delim = $(this).attr('delim')

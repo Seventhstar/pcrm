@@ -2,6 +2,17 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+@onBlur = (el)->
+    if (el.value == '') 
+        el.value = el.defaultValue;
+    
+
+@onFocus = (el)->
+    if (el.value == el.defaultValue || el.value=='0,0')
+        el.value = '';
+
+
+
 @upd_param = (param)->
   $.ajax
       url: '/ajax/upd_param'

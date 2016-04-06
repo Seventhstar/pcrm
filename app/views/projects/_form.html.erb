@@ -40,7 +40,8 @@
 
           <tr><td class="gr_caption">Площадь и стоимость</td></tr>
           <tr>
-            <td><div class="inp_w"><%= f.input :footage, label: 'Метраж' %></div></td>
+            <%= td_sum_field(f, :footage, 'Метраж', true) %>
+            <!-- <%= f.input :footage, label: 'Метраж', onblur: "onBlur(this)", onfocus:"onFocus(this)", value: '0,0' %></div></td> -->
             <%= td_sum_field(f, :price, 'Цена за м2') %>
             <%= td_sum_field(f, :sum, 'Сумма') %>
             <td class="va_top"><span class="sub btn_a" id="add_footage">+</span></td>
