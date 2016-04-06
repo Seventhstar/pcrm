@@ -56,8 +56,8 @@
   return
 
 @calc_proj_sum =() ->
-  $('#project_sum').val( to_sum(intFromSum($('#project_price').val()) * parseInt($('#project_footage').val()*10)/10 ))
-  $('#project_sum_2').val( to_sum(intFromSum($('#project_price_2').val()) * parseInt($('#project_footage_2').val()*10)/10 ))
+  $('#project_sum').val( to_sum(intFromSum($('#project_price').val()) * parseFloat($('#project_footage').val()*10)/10 ))
+  $('#project_sum_2').val( to_sum(intFromSum($('#project_price_2').val()) * parseFloat($('#project_footage_2').val()*10)/10 ))
   $('#project_sum_total').val( to_sum(intFromSum($('#project_sum_2').val()) + intFromSum($('#project_sum').val())))
   calc_debt()
   return

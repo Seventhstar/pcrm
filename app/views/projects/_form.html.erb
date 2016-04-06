@@ -25,13 +25,13 @@
           <tr><td class="gr_caption">Вид работы и исполнитель</td></tr>
           <tr>
             <td colspan="2"><div class="inp_w">
-              <%= f.select :project_type_id, options_for_select(ProjectType.order(:name).collect{ |u| [u.name, u.id] }) %>
+              <%= chosen_src :project_type_id, ProjectType.all, @project %>
             </div></td>
-            <td><div class="inp_w"><%= f.select :style_id, options_for_select(Style.order(:name).collect{ |u| [u.name, u.id] }) %></div></td>
+            <td><div class="inp_w"><%= chosen_src :style_id, Style.all, @project %></div></td>
             <td colspan="2">
             <% if is_admin? %>
               <div class="inp_w">
-                <%= f.select :executor_id, options_for_select(User.order(:name).collect{ |u| [u.name, u.id] }) %>
+                <%= chosen_src :executor_id, User.all, @project %>
               </div>
             <% end %>
             </td>
@@ -41,14 +41,14 @@
           <tr><td class="gr_caption">Площадь и стоимость</td></tr>
           <tr>
             <%= td_sum_field(f, :footage, 'Метраж', true) %>
-            <!-- <%= f.input :footage, label: 'Метраж', onblur: "onBlur(this)", onfocus:"onFocus(this)", value: '0,0' %></div></td> -->
             <%= td_sum_field(f, :price, 'Цена за м2') %>
             <%= td_sum_field(f, :sum, 'Сумма') %>
             <td class="va_top"><span class="sub btn_a" id="add_footage">+</span></td>
             <%= td_sum_field(f, :sum_total, 'Общая стоимость' ) %> 
           </tr>
           <tr style="display:none;" id="tr_footage_2">
-            <td><div class="inp_w"><%= f.input :footage_2, label: 'Метраж 2' %></div></td>
+            <%= td_sum_field(f, :footage_2, 'Метраж 2', true) %>
+            
             <%= td_sum_field(f, :price_2, 'Цена за м2') %>
             <%= td_sum_field(f, :sum_2, 'Сумма') %>
             <td></td>

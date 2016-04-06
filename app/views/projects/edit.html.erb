@@ -53,7 +53,7 @@
 
           <tr><td class="gr_caption" colspan="5">Заявленная площадь и стоимость</td></tr>
           <tr>
-          <td><div class="inp_w"><%= f.input :footage, label: 'Метраж' %></div></td>
+          <%= td_sum_field(f, :footage, 'Метраж', true) %>
           <%= td_sum_field(f, :price, 'Цена за м2') %>
           <%= td_sum_field(f, :sum, 'Сумма') %>
           <td class="va_bottom"> 
@@ -64,7 +64,7 @@
           <%= td_sum_field(f, :sum_total, 'Общая стоимость') %>         
           </tr>
           <tr <%= @project.footage_2==0 ? 'style=display:none;' : '' %>  id="tr_footage_2">
-          <td><div class="inp_w"><%= f.input :footage_2, label: 'Метраж 2' %></div></td>
+           <%= td_sum_field(f, :footage_2, 'Метраж 2', true) %>
           <%= td_sum_field(f, :price_2, 'Цена за м2') %>
           <%= td_sum_field(f, :sum_2, 'Сумма') %>
           <td></td>
@@ -73,14 +73,14 @@
           <tr><td class="gr_caption" colspan="5">Фактическая площадь и стоимость</td></tr>
           <tr>
 
-          <td><div class="inp_w"><%= f.input :footage_real, label: 'Метраж' %></div></td>
+          <%= td_sum_field(f, :footage_real, 'Метраж', true) %>
           <%= td_sum_field(f, :price_real, 'Цена за м2') %>
           <%= td_sum_field(f, :sum_real, 'Сумма') %>
           <td></td>
           <%= td_sum_field(f, :sum_total_real, 'Общая стоимость') %>
           </tr>
           <tr <%= @project.footage_2==0 ? 'style=display:none;' : '' %>  id="tr_footage_2_real">
-          <td><div class="inp_w"><%= f.input :footage_2_real, label: 'Метраж 2' %></div></td>
+          <%= td_sum_field(f, :footage_2_real, 'Метраж 2', true) %>
           <%= td_sum_field(f, :price_2_real, 'Цена за м2') %>
           <%= td_sum_field(f, :sum_2_real, 'Сумма') %>
           <td></td>
