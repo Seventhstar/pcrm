@@ -13,7 +13,7 @@
     <% end %>
 
  
-    <tr><%= hidden_field 'absence_shop','absence_id', value: @absence.id %>
+    <tr class="new_item"><%= hidden_field 'absence_shop','absence_id', value: @absence.id %>
       <td class="caption3 w_60"><div class="inp_l inp_w" >
       <%= chosen_src 'shop_id',Provider.all, @shop, {nil_value: 'Магазин...',special_value: '* другой'} %>
       </div> </td>

@@ -59,7 +59,7 @@ td.edit_delete, th.edit_delete{
 
 .tleads tr.month td{ 	padding: 10px; }
 
-.tleads tr:hover:not(.month) {
+.tleads tr:hover:not(.month):not(.new_item) {
 	background-color: #f5f5f5;
 	border-radius: 4px;
 }

@@ -1,0 +1,30 @@
+
+<div class="panel panel-default">
+<div class="panel-heading table-heading head month"> Продления сроков:</div>
+<table class="tleads" id="project_elongations"  model="ProjectElongation" action="project_elongations">
+<!--   <thead>
+    <tr>
+      <th width="80px" class="center">Дата</th>
+      <th class="center">Описание</th>
+      <th class="edit_delete"></th>
+    </tr>
+  </thead> -->
+    <%= hidden_field 'elongation','project_id', value: @project.id %>
+  <tbody>
+    <% @project.elongations.each do |pe| %>
+      <tr>
+        <td><%= pe.new_date.try('strftime','%d.%m.%Y') %></td>
+        <td><%= pe.description %></td>
+        <%= td_tool_icons(pe, 'delete',{tag:'span'}) %>
+      </tr>
+    <% end %>
+
+
+     <tr class="new_item"><td class="caption3" width='120px'><%= text_field "elongation",:new_date, {:class => 'txt datepicker'} %></td>
+      <td><%= text_field "elongation",:description, {:class => 'txt fullwidth'} %></td>
+      <td><span class="sub btn_a" id="btn-sub-send" pe_id="<%= @project.id %>" action='/project_elongations/' prm='elongation'> Добавить</span></td></tr>
+
+  </tbody>
+</table>
+
+</div>

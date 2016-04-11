@@ -7,8 +7,8 @@
 		<%= sortable_pil "users.name", "По сотрудникам", 'asc' %>
 	<% end %>
 	<%= sortable_pil "reason_id", "По причинам" %>
-	<%= link_to 'Добавить', new_absence_path, class: "btn_a btn-add btn_slim right" %>
-
+	<%= link_to 'Добавить', new_absence_path, class: "btn_a btn-add btn_slim right space20" %>
+	<%= only_actual_btn %>
 </div>
 
 	

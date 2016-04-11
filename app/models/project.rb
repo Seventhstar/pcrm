@@ -5,6 +5,7 @@ class Project < ActiveRecord::Base
   belongs_to :pstatus, class_name: 'ProjectStatus',foreign_key: :pstatus_id
   has_many :receipts
   has_many :absence
+  has_many :elongations, class_name: 'ProjectElongation'
   
   validates :address, :length => { :minimum => 3 }
   validates :footage, presence: true

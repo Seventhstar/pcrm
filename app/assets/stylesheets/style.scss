@@ -184,7 +184,7 @@ background-position:-34px 0 !important; width: 16px; height: 16px;}
 .tbl_a table .disabled td{color: #aeaeae; }
 .tbl_a table .disabled td a{color: #aeaeae; }
 .tbl_a table tr:nth-child(even) td, table.tleads tr:nth-child(even) td {background: #fafafa;}
-.tbl_a table tr:hover, table.tleads tr:hover td{ background-color: #f5f5f5;}
+.tbl_a table tr:hover, table.tleads tr:hover:not(.new_item) td{ background-color: #f5f5f5;}
 
 
 

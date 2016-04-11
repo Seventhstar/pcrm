@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   
-
   resources :payments
 
   get 'project_status/name'
@@ -31,6 +30,7 @@ Rails.application.routes.draw do
   resources :projects
   resources :project_types
   resources :project_statuses
+  resources :project_elongations
   resources :clients
 
   resources :p_statuses

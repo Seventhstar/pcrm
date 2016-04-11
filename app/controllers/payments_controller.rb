@@ -8,9 +8,9 @@ class PaymentsController < ApplicationController
     params.delete_if{|k,v| v=='' || v=='0' }
     @projects = Project.order(:address)
     @payments = Payment.all
-
+    @only_actual = params[:only_actual].nil? ? true : params[:only_actual]=='true'
     all_ids = Payment.all.ids
-    pt_ids = s_ids = pp_ids = prj_ids =  all_ids
+    pt_ids = s_ids = pp_ids = prj_ids = a_ids =  all_ids
     if !params[:search].nil?
        _prj_ids = Project.where('LOWER(address) like LOWER(?)', '%'+params[:search]+'%').ids
        s_ids   = @payments.where(project_id: _prj_ids).ids
@@ -19,8 +19,11 @@ class PaymentsController < ApplicationController
     prj_ids = @payments.where(project_id: params[:payments_project_id]).ids if !params[:payments_project_id].nil?
     pp_ids = PaymentPurpose.find(params[:payments_purpose_id]).payments.ids if !params[:payments_purpose_id].nil?
     pt_ids = PaymentType.find(params[:payments_payment_type]).payments.ids if !params[:payments_payment_type].nil?
+    if @only_actual
+      a_ids = Payment.where('date > ?',(Date.today.end_of_month-2.month)).ids
+    end
 
-    ids = pt_ids & s_ids & pp_ids & prj_ids
+    ids = pt_ids & s_ids & pp_ids & prj_ids & a_ids
       
     @payments = @payments.where(:id => ids).order(:date)
   end

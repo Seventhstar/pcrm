@@ -11,7 +11,7 @@
           <% first_table = false %>  
           <% @sum = 0 %>
       <% end %>
-      <tr>
+      <tr class=<%= 'nonactual' if payment.date < (Date.today.beginning_of_month-1.month) %>>
       	<td><%= payment.date.try('strftime',"%d.%m.%Y") %></td>
       	<td><%= payment.payment_type_name %></td>
       	<td><%= payment.purpose_name %></td>
