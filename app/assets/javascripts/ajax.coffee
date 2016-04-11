@@ -8,7 +8,7 @@
     
 
 @onFocus = (el)->
-    if (el.value == '0' || el.value=='0,0')
+    if (el.value == '0' || el.value=='0,0' || el.value=='0.0' )
         el.value = '';
 
 
