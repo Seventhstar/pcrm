@@ -37,11 +37,7 @@ $(document).ready ->
   $('.sum_mask').mask '# ##0',
     reverse: true
     maxlength: false 
-  #$.mask.definitions['~']='[+-]';
-  $('.float_mask1').mask '# ##0.0',
-    reverse: true
-    maxlength: false 
-  $('.float_mask').mask "# ##0,0", 
+  $('.float_mask').mask "# ##0.0", 
     reverse: true
     maxlength: false
 
