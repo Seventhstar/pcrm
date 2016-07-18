@@ -20,7 +20,7 @@
         <td class="td_right l_edit" item_id="<%= payment.id %>" attr='sum'><%= payment.sum.nil? ? 0 : payment.sum.to_sum  %></td>
         <td class="state"><span class="check_img sw_check <%= payment.verified ? 'checked' : '' %>" item_id="<%= payment.id %>"></span></td>
         <td><%= tooltip_if_big payment.description, 40 %></td>
-        <%= td_tool_icons(payment, 'edit,delete' )%>
+        <%= tool_icons(payment)%>
         <% @sum = @sum + payment.sum.to_i %>
       </tr>
     <% end %>

@@ -31,7 +31,7 @@
   <td class="state"><span class="check_img sw_check <%= user.admin ? "checked" :"" %>" item_id="<%=user.id%>" chk="admin"></span></td>
   
   <% if current_user.admin? %>
-     <%= td_tool_icons(user, 'edit,delete',{subcount: current_user?(user) ? 1:nil} ) %>
+     <%= tool_icons(user, {subcount: current_user?(user) ? 1:nil} ) %>
   <% end %>
   
 </td>

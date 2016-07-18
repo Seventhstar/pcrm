@@ -32,7 +32,7 @@
         <td class="center"><%= abs.dt_from.try('strftime',"%H:%M") %></td>
         <td class="center"><%= abs.dt_to.try('strftime',"%H:%M") %></td>
 
-        <%= td_tool_icons(abs,'edit,show') %>
+        <%= tool_icons(abs,{icons:'edit,show'}) %>
 
       </tr>
 <% end %>

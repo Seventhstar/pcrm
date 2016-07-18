@@ -23,7 +23,7 @@
         <% if action_name=='to_move' %>
           <td><%= check_box_tag "receipts_ids[]", receipt.id %></td>
         <% else %>
-        <%= td_tool_icons(receipt, 'edit,delete' )%>
+        <%= tool_icons(receipt )%>
         <% end %>
         <% @sum = @sum + receipt.sum %>
       </tr>

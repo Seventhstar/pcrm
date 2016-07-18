@@ -39,7 +39,7 @@
         <% if is_update_form? %>
           <td><%= check_box_tag "leads_ids[]", lead.id %></td>
         <% else %>
-          <%= td_tool_icons(lead,'edit,show') %>
+          <%= tool_icons(lead,{icons:'edit,show'}) %>
         <% end %>
 
       </tr>
