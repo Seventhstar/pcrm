@@ -25,44 +25,9 @@ td.right_icon { width: 18px;
 
 .lead_comments{ width: 500px; float: right; }
 
-.tleads, .tcalendar{
-	width: 100%;
-	border-radius: 4px;
-	-webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
-	box-shadow: 0 1px 1px rgba(0,0,0,.05);
-}
-
-.tleads thead{ border-radius: 0 3px 3px 0; }
 
 
-.tleads th{ padding: 8px;	border-bottom: 1px solid #ddd;}
-.tleads td { border-top: 1px solid #ebebeb; padding: 8px; 
-	&.editable{padding: 4px;}
-}
-
-
-td.edit_delete, th.edit_delete{
-	width: 45px;
-	padding-right: 4px !important;
-	padding-left: 4px !important;
-}
-
-.tleads tr.month, .month{
-	border-right-color: white; 
-	border-left-color: white; 
-	vertical-align: bottom;
-	margin-bottom: 0;
-	font-size: 20px !important;
-	font-weight: normal !important;
-	background-color: #fafafa;
-}
-
-.tleads tr.month td{ 	padding: 10px; }
-
-.tleads tr:hover:not(.month):not(.new_item) {
-	background-color: #f5f5f5;
-	border-radius: 4px;
-}
+// .tleads tr:hover:not(.month):not(#new_item) { background-color: #f5f5f5; 	border-radius: 4px; }
 
 .hotlead, .hot{	color: red; }
 .info, .info a {color: #009DDD;}

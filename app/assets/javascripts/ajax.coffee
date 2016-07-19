@@ -66,7 +66,7 @@
   cl.attr('ind', fld)
   type = cl.attr('type')
   type = if type == undefined then 'text' else type      
-  $input = $('<input type="'+type+'" name=upd['+fld+'] />').val(cl.data('text')).width(cl.width() - 16)
+  $input = $('<input type="'+type+'" name=upd['+fld+'] />').val(cl.data('text')).width(cl.width() )
   cl.append $input
   cl.context.firstChild.focus()
 

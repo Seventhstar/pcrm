@@ -8,17 +8,17 @@
       <tr>
         <td class="caption3"><%= shop.shop_name %></td>
         <td class="caption3"><%= shop.target_name %></td>
-        <%= td_tool_icons(shop, 'delete',{tag: 'span', add_cls: 'right'}) %>
+        <%= tool_icons(shop,{icons: 'delete',tag: 'span', content_class: 'right'}) %>
       </tr>
     <% end %>
 
  
-    <tr class="new_item"><%= hidden_field 'absence_shop','absence_id', value: @absence.id %>
+    <tr id="new_item"><%= hidden_field 'absence_shop','absence_id', value: @absence.id %>
       <td class="caption3 w_60"><div class="inp_l inp_w" >
-      <%= chosen_src 'shop_id',Provider.all, @shop, {nil_value: 'Магазин...',special_value: '* другой'} %>
+      <%= chosen_src 'shop_id',Provider.all, @shop, {nil_value: 'Выберите магазин...',special_value: '* другой'} %>
       </div> </td>
       
-      <td class="w_30"> <%= chosen_src "target_id", @shop_targets, @shop,{nil_value: 'Цель...'} %>
+      <td class="w_30"> <%= chosen_src "target_id", @shop_targets, @shop,{nil_value: 'Выберите цель...'} %>
       </td>
       <td ><span class="btn_a" id="btn-sub-send" absid="<%= @absence.id %>" action='/absence_shops/' prm='absence_shop' width=''>Добавить магазин</span></td>
     </tr>

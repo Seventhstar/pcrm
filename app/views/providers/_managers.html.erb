@@ -1,12 +1,12 @@
 
-<div class="panel panel-default">
-<div class="panel-heading table-heading head month"> Менеджеры:</div>
+<div class="tbl_a">
+<div class="head"> Менеджеры:</div>
 <table class="tleads" id="pmanagers"  model="ProviderManager" action="provider_managers">
   <thead>
     <tr>
-      <th width="380px" class="center">ФИО</th>
-      <th class="center">Телефон</th>
-      <th class="center">E-mail</th>
+      <th width="380px" class="center" fld='name'>ФИО</th>
+      <th width="330px" class="center" fld='phone'>Телефон</th>
+      <th class="center" fld='email'>E-mail</th>
       <th class="edit_delete"></th>
     </tr>
   </thead>
@@ -17,13 +17,14 @@
         <td><%= manager.name %></td>
         <td><%= manager.phone %></td>
         <td><%= manager.email %></td>
-        <%= td_tool_icons(manager, 'delete',{tag:'span'}) %>
+        <%= tool_icons manager,{tag:'span'} %>
       </tr>
     <% end %>
 
 
-     <tr class="new_item">
-      <td class="caption3"><span>Новый менеджер: </span><div class="inp2" ><%= text_field "manager",:name, {:class => 'txt fullwidth'} %></div> </td>
+     <tr id="new_item">
+      <td class="caption3"><span>Новый менеджер: </span>
+        <div class="left" style="width:258px;" ><%= text_field "manager",:name, {:class => 'txt fullwidth'} %></div> </td>
       <td><%= text_field "manager",:phone, {:class => 'txt fullwidth'} %></td>
       <td><%= text_field "manager",:email, {:class => 'txt fullwidth'} %></td>
       <td><span class="sub btn_a" id="btn-sub-send" providerid="<%= @provider.id %>" action='/provider_managers/' prm='manager'> Добавить</span></td></tr>
