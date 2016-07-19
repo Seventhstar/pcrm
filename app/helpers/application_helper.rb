@@ -72,8 +72,8 @@ module ApplicationHelper
     	n = is_attr ? obj.model_name.singular+'['+ id.to_s+']' : id
 
     def_cls = coll.count < 8 ? 'chosen' : 'schosen'
-    cls       = options[:class].nil? ? def_cls : options[:class]
-    
+    cls       = options[:class].nil? ? def_cls : options[:class]    
+
     cls = cls+" has-error" if is_attr && ( obj.errors[id].any? || obj.errors[id.to_s.gsub('_id','')].any? )
     l = label_tag options[:label]
     s = select_tag n, options_for_select(coll, :selected => sel), class: cls

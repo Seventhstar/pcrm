@@ -2,8 +2,6 @@
 <div class="panel-left">
 <%= form_tag providers_path, :method => 'get', :id => "p_search" ,class: 'index_filter' do %>
 
-
-
 <label class="combobox">
 <%= chosen_src "goodstype", Goodstype.order(:name), @param_goodstype, {nil_value: 'Вид товара...',class: ''} %>
 </label>
