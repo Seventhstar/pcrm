@@ -37,7 +37,7 @@
           <tr><td class="gr_caption">Статус:</td></tr>
           <tr>
             <td><div class="inp_w"><%= chosen_src :pstatus_id, ProjectStatus.all, @project %></div></td>
-            <td></td>
+            <td class='va_middle'><%= f.input :attention, :as => :boolean, label: 'Особое внимание', class: 'inp_btn checkbox'  %></td>
             <td></td>
             </tr>
 

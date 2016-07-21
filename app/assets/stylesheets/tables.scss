@@ -80,3 +80,9 @@ td.edit_delete, th.edit_delete{ width: 45px;	padding-right: 4px !important;	padd
 }
 
 .tleads tr.month td{ 	padding: 10px; }
+.tleads th.inf{padding:2px; width: 20px;}
+td.va_middle {vertical-align: middle !important;}
+tr.attention td:first-child {background: asset-url('attention.png') no-repeat !important; 
+														 background-position-y: 5px !important; background-position-x: 2px !important;}
+														
+tr.bg_red:nth-child(even) td:first-child {background-color: #fae5e5 !important;}
