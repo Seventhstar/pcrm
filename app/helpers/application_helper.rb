@@ -167,8 +167,12 @@ module ApplicationHelper
   end
 
   def class_for_project (prj)
-    actual = prj.pstatus_id == 3  ? "nonactual" : ""
-    actual
+    cls = ''
+    cls = 'hot' if !prj.date_end_plan.nil? && prj.date_end_plan <= Date.today+1 
+    cls = "nonactual" if prj.pstatus_id == 3
+    cls = 'bg_red' if prj.pstatus_id == 2
+    cls = cls + ' attention' if prj.attention
+    cls
   end
 
 

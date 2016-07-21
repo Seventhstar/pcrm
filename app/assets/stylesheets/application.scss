@@ -20,9 +20,7 @@
 #password_reset_email{width:60%;}
 input.password_resets{ margin: 0 !important;}
 
-#p_search .chosen-container-single{
-  margin-right: 7px;
-}
+#p_search .chosen-container-single{ margin-right: 7px;}
 
 /*span.current span{ background-color: #eee;}*/
 span.current{ border-radius: 2px; color: #50aa00;}
@@ -50,29 +48,12 @@ li.flash_danger {}
   border-color: #b94a48;
 }
 
-.subnav{
-	display: block;
-	max-width: 1200px;
-	padding: 0;
-	margin-bottom: 10px;
-	height: 28px;
-}
-
-.subnav .active {
-  background: #6acc00;
-  color: #fff;
-  border-color: #6acc00;
-
-}
+.subnav{ display: block; max-width: 1200px; padding: 0; margin-bottom: 10px; height: 28px; }
+.subnav .active { background: #6acc00; color: #fff; border-color: #6acc00; }
 
 
-.li-right, .right {
-  float: right !important;
-  margin-top: 0 !important;
-}
-
+.li-right, .right { float: right !important; margin-top: 0 !important;}
 .li-right a { padding: 6px 8px !important; line-height: 32px !important;}
-
 .li-right a span {padding: 6px 16px; margin: 0;}
 
 #charts1 span{ background: asset-url('tools.png') no-repeat 0 0; background-position: -32px 0;}
@@ -90,15 +71,11 @@ li#develops:hover span, #develops .active span{ background-position: -64px -32px
 #options span { margin-right: 6px; }
 /* #charts1 a, #develops a {padding: 6px 10px; line-height: 32px; height: 32px;}*/
 
-#p_search {  float: left;
-}
+#p_search {  float: left;}
 
 .td_right {text-align: right; padding-right: 10px;}
 
-li.disabled a{
-  color: #ccc !important; 
-  cursor: not-allowed;
-}
+li.disabled a{ color: #ccc !important; cursor: not-allowed; }
 
 /*#search{ margin: 0 auto; }*/
 .navsearch { display: flex;}
@@ -112,17 +89,12 @@ li.disabled a{
   box-shadow: 0 1px 1px rgba(0,0,0,0.05);
 }
 
-.panel-default {
-  border-color: #ddd;
-}
+.panel-default { border-color: #ddd; }
 
 tr.nonactual td, tr.nonactual td a, td.nonactual a{ color: #ccc; }
 
 
-.img_link img{
-  width: 16px;
-  height: 16px;
-}
+.img_link img{ width: 16px; height: 16px;}
 
 .progress-bar {
   float: left;
@@ -147,31 +119,15 @@ tr.nonactual td, tr.nonactual td a, td.nonactual a{ color: #ccc; }
   background-size: 40px 40px;
 }
 
-.progress-bar-info {
-  background-color: #5bc0de;
-}
+.progress-bar-info { background-color: #5bc0de; }
  
+.page-wrapper { min-height: 100%; margin-bottom: -50px; }
+* html .page-wrapper {height: 100%;}
+.page-buffer { height: 200px; } 
 
-.page-wrapper {
-    min-height: 100%;
-    margin-bottom: -50px;
-}
-* html .page-wrapper {
-    height: 100%;
-}
-.page-buffer {
-    height: 200px;
-} 
-
-.fw_form td:not(:first-child) { 
-  // padding: 0 0 10px 20px !important;
-  padding-left: 20px;
-}
+.fw_form td:not(:first-child) { padding-left: 20px; }
 .va_bottom{vertical-align: bottom !important; }
-.va_top{
-vertical-align: top !important;
-    padding-top: 18px !important;
-}  
+.va_top{ vertical-align: top !important; padding-top: 18px !important; }  
 .gr_caption { font-size: 17px; color: #000; line-height: 1.2; margin: 0 0 14px 0; font-weight: 500;}
 
 li.btn-success {  background: #ff8411 !important; border: 1px solid #ff8411 !important; margin-right: 0 !important; margin-bottom: 16px !important;}

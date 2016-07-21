@@ -129,7 +129,7 @@ class ProjectsController < ApplicationController
         :date_start, :date_end_plan, :date_end_real, :number, :date_sign, 
         :footage, :footage_2, :footage_real, :footage_2_real, :style_id, 
         :sum, :sum_real, :price, :price_2, :price_real, :sum_total, :sum_2, :sum_total_real, :sum_2_real, :price_2_real, 
-        :month_in_gift, :act, :delay_days,  :pstatus_id,
+        :month_in_gift, :act, :delay_days,  :pstatus_id, :attention,
         :client_attributes => [:name, :address, :phone, :email] )
     end
 

@@ -30,10 +30,10 @@
       <tr>
         <% attrs.each do |attr| %>
           <% if attr_boolean?(@item,attr[0]) %>
-            <td class="state"><span class="check_img sw_check <%= item[attr[0]] ? "checked" :"" %>" item_id="<%= item.id%>" chk="<%= attr[0] %>"></span>
+            <td class="state"><span class="check_img sw_check <%= item[attr[0]] ? "checked" :"" %>" item_id="<%= item.id %>" chk="<%= attr[0] %>"></span>
             </td> 
           <% else %>
-            <td><%= item[attr[0]].to_s %></td>
+            <td title='<%= item.id %>'><%= item[attr[0]].to_s %></td>
           <% end %>
         <% end %>
         <%= tool_icons(item,{tag: 'span', subcount: item.try(:parents_count)} )%>
