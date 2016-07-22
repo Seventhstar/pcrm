@@ -18,7 +18,15 @@ class DevelopMailer < ActionMailer::Base
     @dev = Develop.find(dev_id)
     @history = get_last_history_item(@dev) 
     @version = @dev.versions.last
-    send_mail_to_admins("Изменения в задаче")
+    
+    subj = "Изменения в задаче"
+    if !@version['object_changes'].nil?
+       o = YAML.load(@version['object_changes'])
+       if o.keys[0]=='dev_status_id'
+          subj = "Задача "+ DevStatus.find(o['dev_status_id'][1]).name
+       end
+    end
+    send_mail_to_admins(subj)
   end
 
 
