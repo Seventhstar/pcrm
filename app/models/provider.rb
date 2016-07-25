@@ -19,7 +19,7 @@ class Provider < ActiveRecord::Base
     end
 
     def style_names
-      self.styles.collect{ |t| t.name}.join(", ")
+      self.styles.pluck(:name).join(", ")
     end
 
     def budget_tokens=(tokens)
@@ -27,7 +27,7 @@ class Provider < ActiveRecord::Base
     end
 
     def budget_names
-      self.budgets.collect{ |t| t.name}.join(", ")
+      self.budgets.pluck(:name).join(", ")
     end
 
     def goods_types_tokens=(tokens)
@@ -35,7 +35,7 @@ class Provider < ActiveRecord::Base
     end
 
     def goods_type_names
-      self.goodstypes.collect{ |t| t.name}.join(", ")
+      self.goodstypes.pluck(:name).join("\n")
     end
 
     def p_status_name

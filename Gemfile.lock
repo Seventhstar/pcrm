@@ -106,6 +106,8 @@ GEM
     mini_magick (4.5.1)
     mini_portile2 (2.1.0)
     minitest (5.9.0)
+    momentjs-rails (2.11.0)
+      railties (>= 3.1)
     multi_json (1.12.1)
     nokogiri (1.6.8-x64-mingw32)
       mini_portile2 (~> 2.1.0)
@@ -238,6 +240,7 @@ DEPENDENCIES
   jquery-ui-rails
   jquery.fileupload-rails
   mini_magick
+  momentjs-rails
   nokogiri
   nprogress-rails
   paper_trail (~> 4.0.0)

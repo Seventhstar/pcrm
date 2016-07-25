@@ -26,7 +26,7 @@
       <% prv.each do |provider| %>
         <tr class=<%= provider.p_status_id ==5 ? "": "nonactual" %> >
           <td><%= provider.name %></td>
-          <td><%= provider.spec %></td>
+          <td class='n_wrap'><%= provider.goods_type_names %></td>
           <td><%= provider.phone %></td>
           <td><%= site_link(provider.url) %></td>
           <td><%= provider.address %></td>

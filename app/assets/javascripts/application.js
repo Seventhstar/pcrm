@@ -21,7 +21,7 @@
 //= require jquery.fileupload
 //= require jquery.timepicker
 //= require nprogress
-
+//= require moment
 //= require_tree .
 
 function to_sum(d){ 

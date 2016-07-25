@@ -34,7 +34,8 @@
 	if ptr.name == 'project[date_end_plan]' or ptr.name == 'project[date_start]'
 		d1 = dateFromString($('#project_date_start').val())
 		d2 = dateFromString($('#project_date_end_plan').val())
-		$('#days').val(calculateDays(d1,d2) )
+		$('#days').val( moment(d1).isoWeekdayCalc(d2,[1,2,3,4,5]) )
+
 		return
 
 @calc_debt =() ->
@@ -85,7 +86,13 @@ $(document).ready ->
     width: '99.5%'
     disable_search: 'true'
   $('#days').change ->
-    d = dateFromString($('#project_date_start').val(), $(this).val())
+    d_st = dateFromString $('#project_date_start').val()
+    add  = $(this).val()-1
+    d = moment(d_st).isoAddWeekdaysFromSet
+      'workdays': add
+      'weekdays': [1,2,3,4,5]
+      'exclusions': [ '2015-05-09' ]
+    # d = dateFromString(, )
     dd = $.datepicker.formatDate('dd.mm.yy', new Date(d))
     $('#project_date_end_plan').val dd
   $('#project_price,#project_footage,#project_price_2,#project_footage_2').change ->
