@@ -63,7 +63,7 @@ module ApplicationHelper
     
   	coll = collection.class.ancestors.include?(ActiveRecord::Relation) ? collection : collection
     coll = coll.collect{ |u| [u[p_name], u.id] }
-    coll.insert(0,[nil_value,nil]) if nil_value != ''
+    coll.insert(0,[nil_value,nil,{class: 'def_value'}]) if nil_value != ''
     coll.insert(1,[options[:special_value],-1]) if !options[:special_value].nil?
 
 		is_attr = (obj.class != Fixnum && obj.class != String && !obj.nil?)

@@ -15,10 +15,10 @@ td.right_icon { width: 18px;
 
 .comments_list_a{ width: 528px; }
 
-::-webkit-scrollbar { width: 10px;}
+::-webkit-scrollbar { width: 10px; background: #f5f5f5;}
 ::-webkit-scrollbar-thumb {
     background: #ccc;
-    border-radius: 8px;
+    border-radius: 4px;
     border:1px solid #ccc; 
 }
 
