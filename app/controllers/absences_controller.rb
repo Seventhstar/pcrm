@@ -15,18 +15,18 @@ class AbsencesController < ApplicationController
     @only_actual = params[:only_actual].nil? ? true : params[:only_actual]=='true'
     params['m'] = nil if  params[:sort]!='calendar'
     @current_month = Date.parse(params['m']) if !params['m'].nil?
-    @current_month = Date.today.beginning_of_month if @current_month.nil? 
+    @current_month = Date.today.beginning_of_month if @current_month.nil?
     @curr_day = @current_month.beginning_of_month.beginning_of_week
     query_str = "absences.*, date_trunc('month', dt_from) AS month"
-    
+
     if !current_user.admin?
       @absences = current_user.absences.select(query_str)
     else
       @absences = Absence.select(query_str)
     end
 
-    if params[:sort]!='calendar' 
-      if @only_actual   
+    if params[:sort]!='calendar'
+      if @only_actual
         @absences = @absences.where("dt_from >= ?", (Date.today-2.week))
       end
     else
@@ -35,12 +35,12 @@ class AbsencesController < ApplicationController
 
     if params[:sort] == 'users.name'
       sort_1 = "users.name"
-      @absences = @absences.joins(:user)      
+      @absences = @absences.joins(:user)
     end
 
     sort_1 = @sort_column == 'dt_from' ? 'month' : @sort_column
     order = sort_1 + " " + sort_direction + ", "+ sort_2  + " " + dir_2 + ", absences.created_at desc"
-    p "sort",sort_1,sort_direction
+    # p "sort",sort_1,sort_direction
     @absences = @absences.order(order)
   end
 
@@ -55,7 +55,7 @@ class AbsencesController < ApplicationController
       @dt_to = @absence.dt_to.try('strftime',"%d.%m.%Y")
       @t_from = @absence.dt_from.try('strftime',"%H:%M")
       @t_to = @absence.dt_to.try('strftime',"%H:%M")
-      @checked = @absence.dt_from.beginning_of_day != @absence.dt_to.beginning_of_day 
+      @checked = @absence.dt_from.beginning_of_day != @absence.dt_to.beginning_of_day
     respond_modal_with @absence, location: root_path
   end
 
@@ -75,7 +75,7 @@ class AbsencesController < ApplicationController
       @dt_to = @absence.dt_to.try('strftime',"%d.%m.%Y")
       @t_from = @absence.dt_from.try('strftime',"%H:%M")
       @t_to = @absence.dt_to.try('strftime',"%H:%M")
-      @checked = @absence.dt_from.beginning_of_day != @absence.dt_to.beginning_of_day 
+      @checked = @absence.dt_from.beginning_of_day != @absence.dt_to.beginning_of_day
     end
   end
   # GET /absences/new
@@ -98,7 +98,7 @@ class AbsencesController < ApplicationController
       redirect_to absences_path
     end
     abs_params
-   
+
 
   end
 
@@ -108,10 +108,10 @@ class AbsencesController < ApplicationController
     @absence = Absence.new(absence_params)
     reopen = absence_params[:reopen]=='true'
     @reopen = reopen
-    
+
     respond_to do |format|
       if @absence.save
-        if absence_params[:reopen]=='true' 
+        if absence_params[:reopen]=='true'
           format .html { redirect_to action: "edit", id: @absence.id }
         else
           format .html { redirect_to absences_url, notice: 'Отсутствие успешно создано.' }
@@ -135,7 +135,7 @@ class AbsencesController < ApplicationController
 
     abs_params
     respond_to do |format|
-      if @absence.update(ap) 
+      if @absence.update(ap)
         format.html { redirect_to absences_url, notice: 'Отсутствие успешно обновлено.' }
         format.json { render :edit, status: :ok, location: @absence }
       else
@@ -167,7 +167,7 @@ class AbsencesController < ApplicationController
       a = params.require(:absence).permit(:user_id, :dt_from, :dt_to, :reason_id, :new_reason_id, :comment, :project_id,:t_from,:t_to,:checked, :target_id,:reopen)
       a['dt_to'] = a['dt_from'] if a['checked']=='false' || a['dt_to'].nil?
       a['dt_from'] = a['dt_from'].gsub("00:00", '')+ ' ' + a['t_from']
-      a['dt_to'] = a['dt_to'].gsub("00:00", '') +' ' + a['t_to'] 
+      a['dt_to'] = a['dt_to'].gsub("00:00", '') +' ' + a['t_to']
       a
     end
 
@@ -185,7 +185,7 @@ class AbsencesController < ApplicationController
       Absence.column_names.include?(params[:sort2]) ? params[:sort2] : "dt_from"
     end
 
-    def dir_2 
+    def dir_2
       defaul_dir = sort_column =='dt_from' ? "asc": "desc"
       %w[asc desc].include?(params[:dir2]) ? params[:dir2] : defaul_dir
     end
@@ -194,7 +194,7 @@ class AbsencesController < ApplicationController
       @version = @absence.versions.last
       if !@version.nil?
         if @version.event == "create"
-          AbsenceMailer.created_email(@absence.id,current_user).deliver_now 
+          AbsenceMailer.created_email(@absence.id,current_user).deliver_now
         else
           AbsenceMailer.changeset_email(@absence.id,current_user).deliver_now
         end

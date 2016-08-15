@@ -13,21 +13,23 @@ class DevelopsController < ApplicationController
     @develops = Develop.search(search).order('project_id desc')#.paginate(:page => page, :per_page => 5)
     @project_id = params['develops_project_id']
     show = params[:show]
-    @show_dev = %w[check new all].include?(show) ? show : "check" 
+    @show_dev = %w[check new info all].include?(show) ? show : "check"
     #show_dev = ''
-    case  show_dev
+    case  @show_dev
     when "check"
-      @develops = @develops.where(:dev_status_id => 2)      
+      @develops = @develops.where(:dev_status_id => 2).where.not(priority_id: 4)
     when "new"
-      @develops = @develops.where(:dev_status_id => [1,4])      
+      @develops = @develops.where(:dev_status_id => [1,4]).where.not(priority_id: 4)
+    when "info"
+      @develops = @develops.where(priority_id: 4)
     end
 
-    if !params['develops_project_id'].nil? 
-      @develops = @develops.where(project_id: params['develops_project_id'] ) 
+    if !params['develops_project_id'].nil?
+      @develops = @develops.where(project_id: params['develops_project_id'] )
     end
 
     @develops = @develops.paginate(:page => page, :per_page => 20)
-      
+
   end
 
   # GET /develops/1
@@ -114,4 +116,4 @@ class DevelopsController < ApplicationController
       params.require(:develop).permit(:name, :coder, :boss, :project_id, :description, :ic_user_id, :priority_id, :dev_status_id)
     end
 
-end 
+end

@@ -6,7 +6,7 @@ module ApplicationHelper
   end
 
   def is_admin?
-    current_user.admin? 
+    current_user.admin?
   end
 
   def date_ago( day )
@@ -18,13 +18,13 @@ module ApplicationHelper
     when 1
       'Вчера'
     else
-      time_ago_in_words(day)  + ' назад ('+ day.try('strftime',"%d.%m.%Y") + ')' 
+      time_ago_in_words(day)  + ' назад ('+ day.try('strftime',"%d.%m.%Y") + ')'
     end
-    
+
   end
 
   def calls_color
-    if params[:controller] && params[:controller]=="leads" && params[:action] 
+    if params[:controller] && params[:controller]=="leads" && params[:action]
       if params[:action]=="new"
          "red"
 	    elsif params[:action]=="edit"
@@ -46,21 +46,21 @@ module ApplicationHelper
 
   def switch_active(show, label)
     active = show == @show_dev ? "active" : nil
-    css_class = "btn #{active}" 
+    css_class = "btn #{active}"
     r = content_tag :input,'',{type: 'radio', value: show, name: 'show', id: show}
-    t = content_tag :div, '',{class: "inp radio"} do 
-        r 
+    t = content_tag :div, '',{class: "inp radio"} do
+        r
     end
     content_tag :label, '',{class: css_class, show: show} do
        t + ' '+label
     end
   end
 
-  def chosen_src( id, collection, obj = nil, options = {})  
+  def chosen_src( id, collection, obj = nil, options = {})
     p_name    = options[:p_name].nil? ? 'name' : options[:p_name]
     order     = options[:order].nil? ? p_name : options[:order]
     nil_value = options[:nil_value].nil? ? 'Выберите...' : options[:nil_value]
-    
+
   	coll = collection.class.ancestors.include?(ActiveRecord::Relation) ? collection : collection
     coll = coll.collect{ |u| [u[p_name], u.id] }
     coll.insert(0,[nil_value,nil,{class: 'def_value'}]) if nil_value != ''
@@ -72,7 +72,7 @@ module ApplicationHelper
     	n = is_attr ? obj.model_name.singular+'['+ id.to_s+']' : id
 
     def_cls = coll.count < 8 ? 'chosen' : 'schosen'
-    cls       = options[:class].nil? ? def_cls : options[:class]    
+    cls       = options[:class].nil? ? def_cls : options[:class]
 
     cls = cls+" has-error" if is_attr && ( obj.errors[id].any? || obj.errors[id.to_s.gsub('_id','')].any? )
     l = label_tag options[:label]
@@ -81,7 +81,7 @@ module ApplicationHelper
   end
 
   def sortable_pil(column, title = nil, default_dir = 'desc')
-    
+
     title ||= column.titleize
     sort_col = @sort_column == 'month' ?  "start_date": @sort_column
     css_class = column == sort_col ? "active #{sort_direction}" : ""
@@ -89,14 +89,14 @@ module ApplicationHelper
 
     direction = column == @sort_column && sort_direction
     if (column == "month" && column != @sort_column)
-      direction = "desc"    
-    end  
+      direction = "desc"
+    end
     if (direction == false)
       direction = default_dir
     end
-    content_tag :span, title,{ :class => css_class, :sort => column, :direction => direction } 
+    content_tag :span, title,{ :class => css_class, :sort => column, :direction => direction }
   end
-  
+
   def sortable_th(column, title = nil)
 
     title ||= column.titleize
@@ -107,10 +107,10 @@ module ApplicationHelper
 
     content_tag :span,{:class => css_class, :sort2 => column, :dir2 => dir_2} do
        b + a
-    end  
+    end
 
   end
-  
+
   def sortable(column, title = nil)
 
     title ||= column.titleize
@@ -146,7 +146,7 @@ module ApplicationHelper
     end
   end
 
-  def set_only_actual(actual,title = nil)  
+  def set_only_actual(actual,title = nil)
 		css_class = actual == "false" ? "passive" : "active"
 		css_class.concat(" only_actual li-right")
 		p_active = only_actual == "false"
@@ -163,12 +163,12 @@ module ApplicationHelper
     elsif (st_date <= Date.today+1 )
       "hotlead"
     end
-    
+
   end
 
   def class_for_project (prj)
     cls = ''
-    cls = 'hot' if !prj.date_end_plan.nil? && prj.date_end_plan <= Date.today+1 
+    cls = 'hot' if !prj.date_end_plan.nil? && prj.date_end_plan <= Date.today+1
     cls = "nonactual" if prj.pstatus_id == 3
     cls = 'bg_red' if prj.pstatus_id == 2
     cls = cls + ' attention' if prj.attention
@@ -193,8 +193,8 @@ module ApplicationHelper
 
   def submit_cancel(back_url)
     # <%= link_to 'Отмена', absences_url, :class => "sub btn_a btn_reset"%><%= f.button :submit, value: 'Сохранить', :class => 'sub btn_a' %>
-      s = submit_tag  'Сохранить', class: 'btn btn-default sub btn_a' 
-      c = link_to 'Отмена', back_url, class: "sub btn_a btn_reset" 
+      s = submit_tag  'Сохранить', class: 'btn btn-default sub btn_a'
+      c = link_to 'Отмена', back_url, class: "sub btn_a btn_reset"
       c+s
   end
 
@@ -243,9 +243,9 @@ module ApplicationHelper
       b = content_tag :span, info.html_safe, t_hash
     end
     c = content_tag(:span,' ',{:class => cls})
-    content_tag(:span,' ',{class: "numday"}) do 
-      content_tag(:li,{class: cls}) do 
-        content_tag(:span) do 
+    content_tag(:span,' ',{class: "numday"}) do
+      content_tag(:li,{class: cls}) do
+        content_tag(:span) do
           b
         end
       end
@@ -263,7 +263,7 @@ module ApplicationHelper
 
   def avatar_for( user )
      if user.present? && user.avatar.present?
-        user.avatar.url.empty? ? image_tag('unknown.png') : image_tag(user.avatar) 
+        user.avatar.url.empty? ? image_tag('unknown.png') : image_tag(user.avatar)
      else
         image_tag('unknown.png')
      end
