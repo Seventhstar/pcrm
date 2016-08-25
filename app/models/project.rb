@@ -10,7 +10,7 @@ class Project < ActiveRecord::Base
   validates :address, :length => { :minimum => 3 }
   validates :footage, presence: true
   #validates_numericality_of :footage, greater_than: 1 
-
+  include ProjectsHelper
 	accepts_nested_attributes_for :client
   has_paper_trail
 
@@ -36,7 +36,16 @@ class Project < ActiveRecord::Base
 
   def days_plan
      if date_end_plan? && date_start?
-      (date_end_plan.to_date-date_start.to_date).to_i
+      business_days_between(date_start.to_datetime,date_end_plan.to_datetime)+1
+     end
+  end
+
+  def last_elongation
+     if !elongations.nil?
+        new_date = elongations.last 
+        if new_date
+          new_date.new_date
+        end
      end
   end
 

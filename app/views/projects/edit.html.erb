@@ -97,7 +97,7 @@
               <tr>
               <td><div class="inp_w"><label>Начало</label><%= f.text_field :date_start, value: @project.date_start.try('strftime',"%d.%m.%Y"), class: "txt datepicker" %></div></td>
               <td><div class="inp_w"><label>Окончание</label><%= f.text_field :date_end_plan, value: @project.date_end_plan.try('strftime',"%d.%m.%Y"), class: "txt datepicker" %></div></td>
-              <td><div class="inp_w"><label>Дней</label> <%= number_field_tag :days, @project.days_plan, {class: 'form-control'} %></div></td>
+              <td><div class="inp_w"><label>Рабоч. дней без уч. праздников</label> <%= number_field_tag :days, @project.days_plan, {class: 'form-control'} %></div></td>
               <td></td>
               <td></td>
             </tr>

@@ -2,7 +2,7 @@ button.close { -webkit-appearance: none; padding: 0; cursor: pointer; background
 .close { float: right; font-size: 13px; line-height: 1.2; color: #000; text-shadow: 0 1px 0 #fff; }
 .close.text{ filter: alpha(opacity=20); opacity: .4; padding: 2px 0 0 4px; }
 .close_grp:hover .close{ color: red; }
-.close_grp:hover .icon_close {background-position:-52px 0; }
+.close_grp:hover .icon_close {background-position:-52px 1px; }
 
 
 

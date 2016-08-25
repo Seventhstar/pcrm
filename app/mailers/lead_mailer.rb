@@ -19,26 +19,17 @@ class LeadMailer < ActionMailer::Base
 
   def send_lead_mail( subj, to = nil, user_exclude = nil, only_admins = false, id = nil )
     
-    admins = User.where('admin = true').ids
-      
-    if !id.nil?
-      opt_users = User.joins(:options).where('option_id = ?',id).ids
-      admins = admins & opt_users
+    admins = User.where(admin: true).ids
+    admins = admins & UserOption.where(option_id: id).pluck(:user_id) if !id.nil?
+    
+    if !only_admins    
+      admins << @lead.user.id if !@lead.user.nil?
+      admins << @lead.ic_user_id if !@lead.ic_user.nil? 
     end
 
-    if !only_admins 
-      admins = @lead.user.nil? ? admins : admins | [@lead.user.id]
-      admins = @lead.ic_user.nil? ? admins : admins | [@lead.ic_user_id]
-    end
-
-    if to.nil? 
-      admins = User.find(admins)
-      emails = ""
-      if admins.class.name == 'User' 
-         emails = admins==user_exclude ? "": admins.email
-      else
-        emails = admins.collect(&:email).join(",")
-      end
+    if to.nil?
+      emails = User.where(id: admins).pluck(:email) 
+      emails.delete(user_exclude)
     else
       emails = to
     end

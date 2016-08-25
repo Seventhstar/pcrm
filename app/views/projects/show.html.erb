@@ -1,124 +1,38 @@
-<p id="notice"><%= notice %></p>
+<div class="box_wrap box_wrap_1">
 
-<p>
-  <strong>Client:</strong>
-  <%= @project.client_id %>
-</p>
+	<div class="panel-left">
+		<table class="tbl_fc tbl_fc_1">
+		<tr><td class="caption">Клиент:</td>
+		    <td><div class="lbl"><%= @project.client_name %></div></td></tr>
+		<tr><td class="caption">Адрес:</td>
+			<td><div class="lbl"><%= @project.address %></div></td></tr>
 
-<p>
-  <strong>Address:</strong>
-  <%= @project.address %>
-</p>
+		<tr><td class="caption">Исполнитель:</td>
+		    <td><div class="lbl"><%= @project.executor_name %></div></td></tr>
+		<tr><td class="caption">Вид работы:</td>
+			<td><div class="lbl"><%= @project.project_type_name %></div></td></tr>    
+		
+		</div></td></tr>
 
-<p>
-  <strong>Owner:</strong>
-  <%= @project.owner_id %>
-</p>
+		</table>
+	</div>
 
-<p>
-  <strong>Executor:</strong>
-  <%= @project.executor_id %>
-</p>
+  <div class="panel-right">
+	<table class="tbl_fc tbl_fc_1">
+		<tr><td class="caption">Метраж (1/2):</td>
+		    <td><div class="lbl"><%= @project.footage %> / <%= @project.footage_2 %></div></td></tr>
+		<tr><td class="caption">Цена за м2:</td>
+			<td><div class="lbl"><%= @project.price %> / <%= @project.price_2 %></div></td></tr>
 
-<p>
-  <strong>Designer:</strong>
-  <%= @project.designer_id %>
-</p>
+		<tr><td class="caption">Сроки:</td>
+		    <td><div class="lbl"><%= @project.date_start.try('strftime',"%d.%m.%Y") %> / <%= @project.date_end_plan.try('strftime',"%d.%m.%Y") %> = <%= @project.days_plan %>дн.</div></td></tr>
+		<tr><td class="caption">Последнее продление:</td>
+			<td><div class="lbl"><%= @project.last_elongation %></div></td></tr>    
+		
+		</div></td></tr>
 
-<p>
-  <strong>Project type:</strong>
-  <%= @project.project_type_id %>
-</p>
+		</table>
+  </div>
 
-<p>
-  <strong>Date start:</strong>
-  <%= @project.date_start %>
-</p>
+</div>
 
-<p>
-  <strong>Date end plan:</strong>
-  <%= @project.date_end_plan %>
-</p>
-
-<p>
-  <strong>Date end real:</strong>
-  <%= @project.date_end_real %>
-</p>
-
-<p>
-  <strong>Number:</strong>
-  <%= @project.number %>
-</p>
-
-<p>
-  <strong>Footage:</strong>
-  <%= @project.footage %>
-</p>
-
-<p>
-  <strong>Footage2:</strong>
-  <%= @project.footage2 %>
-</p>
-
-<p>
-  <strong>Footage real:</strong>
-  <%= @project.footage_real %>
-</p>
-
-<p>
-  <strong>Footage2 real:</strong>
-  <%= @project.footage2_real %>
-</p>
-
-<p>
-  <strong>Style:</strong>
-  <%= @project.style_id %>
-</p>
-
-<p>
-  <strong>Sum:</strong>
-  <%= @project.sum %>
-</p>
-
-<p>
-  <strong>Sum real:</strong>
-  <%= @project.sum_real %>
-</p>
-
-<p>
-  <strong>Price m:</strong>
-  <%= @project.price_m %>
-</p>
-
-<p>
-  <strong>Price 2:</strong>
-  <%= @project.price_2 %>
-</p>
-
-<p>
-  <strong>Price real m:</strong>
-  <%= @project.price_real_m %>
-</p>
-
-<p>
-  <strong>Price real 2:</strong>
-  <%= @project.price_real_2 %>
-</p>
-
-<p>
-  <strong>Month in gift:</strong>
-  <%= @project.month_in_gift %>
-</p>
-
-<p>
-  <strong>Act:</strong>
-  <%= @project.act %>
-</p>
-
-<p>
-  <strong>Delay days:</strong>
-  <%= @project.delay_days %>
-</p>
-
-<%= link_to 'Edit', edit_project_path(@project) %> |
-<%= link_to 'Back', projects_path %>

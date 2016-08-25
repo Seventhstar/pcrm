@@ -9,6 +9,8 @@ module ApplicationHelper
     current_user.admin?
   end
 
+
+
   def date_ago( day )
     now = Date.today
     days = (now-day.to_date).to_i

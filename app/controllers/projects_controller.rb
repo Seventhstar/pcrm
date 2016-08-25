@@ -4,6 +4,7 @@ class ProjectsController < ApplicationController
   before_action :check_sum, only: [:create,:update]
   helper_method :sort_2, :dir_2
   helper_method :sort_column, :sort_direction
+  respond_to :html, :json
   # GET /projects
   # GET /projects.json
   def index
@@ -38,6 +39,10 @@ class ProjectsController < ApplicationController
   # GET /projects/1
   # GET /projects/1.json
   def show
+    @title = 'Просмотр проекта'
+
+    @comm_height = 488
+    respond_modal_with @project, location: root_path
     data = params[:data]
     get_debt(data)
   end
