@@ -94,6 +94,8 @@ class Lead < ActiveRecord::Base
                    .where('start_date between ? and ?',start_date,end_date)
                    .order(:status_id)
                    .collect{ |lead| {label: lead.status_name, value: lead.count, present: lead.percent}}
+                   .sort_by { |hsh| hsh[:value] }.reverse!
+      
       headers = ['Статус','Количество','%']
       el = 'Donut'
     when 'created_at'
@@ -106,7 +108,7 @@ class Lead < ActiveRecord::Base
       data = period.each.collect{ |p|  {month:I18n.t(p.try('strftime',"%B")),
                                             'Всего' => Lead.where("date_trunc('month', start_date) = ?",p).sum(:footage),
                                              'Заключили договор' => st.leads.where("date_trunc('month', start_date) = ?",p).sum(:footage) } }
-      data.map {|t| t["Процент"] = t["Заключили договор"] * 100 / t["Всего"] }
+      data.map {|t| t["Заключили договор"].nil? || t["Заключили договор"]==0 ? 0 : t["Процент"] = t["Заключили договор"] * 100 / t["Всего"] }
 
       headers = ['Всего','Заключили договор','Процент']
       el= 'Area'
