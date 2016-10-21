@@ -15,7 +15,7 @@
 .tbl_a table tr:hover td, table.tleads tr:hover:not(#new_item) td{ background-color: #f5f5f5;}
 
 table.tbl_fc{border-collapse:collapse; width: 100%; }
-table.tbl_fc td{vertical-align:top; padding: 0 0 10px 0; }
+table.tbl_fc td{vertical-align:top; padding-bottom: 10px; }
 table.tbl_fc td.last_td{padding: 0 !important; }
 
 table.tbl_fc td.caption{width: 115px; padding-right: 15px; padding-top: 7px; text-align:right; font-weight: 500; }

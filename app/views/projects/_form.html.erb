@@ -25,13 +25,13 @@
           <tr><td class="gr_caption">Вид работы и исполнитель</td></tr>
           <tr>
             <td colspan="2"><div class="inp_w">
-              <%= chosen_src :project_type_id, ProjectType.all, @project %>
+              <%= chosen_src :project_type_id, ProjectType.all, @project, {nil_value: 'Вид работы...' } %>
             </div></td>
-            <td><div class="inp_w"><%= chosen_src :style_id, Style.all, @project %></div></td>
+            <td></td>
             <td colspan="2">
             <% if is_admin? %>
               <div class="inp_w">
-                <%= chosen_src :executor_id, User.all, @project %>
+                <%= chosen_src :executor_id, User.all, @project, {nil_value: 'Исполнитель...' } %>
               </div>
             <% end %>
             </td>
@@ -39,26 +39,15 @@
           
 
           <tr><td class="gr_caption">Площадь и стоимость</td></tr>
-          <tr>
-            <%= td_sum_field(f, :footage, 'Метраж', true) %>
-            <%= td_sum_field(f, :price, 'Цена за м2') %>
-            <%= td_sum_field(f, :sum, 'Сумма') %>
-            <td class="va_top"><span class="sub btn_a" id="add_footage">+</span></td>
-            <%= td_sum_field(f, :sum_total, 'Общая стоимость' ) %> 
-          </tr>
-          <tr style="display:none;" id="tr_footage_2">
-            <%= td_sum_field(f, :footage_2, 'Метраж 2', true) %>
-            
-            <%= td_sum_field(f, :price_2, 'Цена за м2') %>
-            <%= td_sum_field(f, :sum_2, 'Сумма') %>
-            <td></td>
-          </tr>
+          <%= render 'footage', f: f %>
+          <%= render 'executor', f: f %>
+
           <tr><td class="gr_caption">Сроки</td></tr>
             <tr>
             <td><div class="inp_w"><label>Начало</label>
                 <%= f.text_field :date_start, value: Date.today.try('strftime',"%d.%m.%Y"), class: "txt datepicker" %></div></td>
             <td><div class="inp_w"><label>Окончание</label><%= f.text_field :date_end_plan, class: "txt datepicker" %></div></td>
-            <td><div class="inp_w"><label>Рабоч. дней без уч. празднико<в/label> <%= number_field_tag :days, 0, {class: 'form-control'} %></div></td>
+            <td><div class="inp_w"><label>Рабоч. дней без уч. праздников</label> <%= number_field_tag :days, 0, {class: 'form-control'} %></div></td>
             <td></td>
             <td></td>
             <tr><td><%= link_to 'Отмена', projects_url, :class => "sub btn_a btn_reset"%>

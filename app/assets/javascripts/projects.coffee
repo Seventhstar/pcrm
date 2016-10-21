@@ -42,6 +42,7 @@
   sum_total = intFromSum($('#project_sum_total').val())  
   calc_sum_total = intFromSum($('#project_sum_2').val()) + intFromSum($('#project_sum').val())
   $('#project_sum_total').attr('title',sum_total)
+  $('#project_sum_total').attr('title',sum_total)
   if calc_sum_total != sum_total 
      $('#project_sum_total').addClass('red')
   else
@@ -56,25 +57,37 @@
   $('#cl_debt').html(to_sum(sum_total-intFromSum($('#cl_total').html())))
   return
 
+@fp_sum =(price, footage ) ->
+  to_sum( intFromSum($(price).val()) * parseFloat($(footage).val()*10)/10 )
+
 @calc_proj_sum =() ->
-  $('#project_sum').val( to_sum(intFromSum($('#project_price').val()) * parseFloat($('#project_footage').val()*10)/10 ))
-  $('#project_sum_2').val( to_sum(intFromSum($('#project_price_2').val()) * parseFloat($('#project_footage_2').val()*10)/10 ))
+  $('#project_sum').val( fp_sum('#project_price','#project_footage'))
+  $('#project_sum_2').val( fp_sum('#project_price_2','#project_footage_2'))
   $('#project_sum_total').val( to_sum(intFromSum($('#project_sum_2').val()) + intFromSum($('#project_sum').val())))
+  
   calc_debt()
   return
 
 @calc_proj_sum_real =() ->
-  $('#project_sum_real').val( to_sum(intFromSum($('#project_price_real').val()) * parseInt($('#project_footage_real').val()*10)/10 ))
-  $('#project_sum_2_real').val( to_sum(intFromSum($('#project_price_2_real').val()) * parseInt($('#project_footage_2_real').val()*10)/10 ))
+  $('#project_sum_real').val( fp_sum('#project_price_real','#project_footage_real'))
+  $('#project_sum_2_real').val( fp_sum('#project_price_2_real','#project_footage_2_real'))
   $('#project_sum_total_real').val( to_sum(intFromSum($('#project_sum_2_real').val()) + intFromSum($('#project_sum_real').val()) ))
   calc_debt()
   return
 
+@calc_executor_sum =() ->
+  footage = parseFloat($('#project_footage').val()*10)
+  designer_sum = (intFromSum($('#project_designer_price').val()) * footage ) / 10 
+  visual_sum   = (intFromSum($('#project_visualer_price').val()) * footage) / 10
+  $('#project_sum_total_executor').val( to_sum( designer_sum + visual_sum) )
+  $('#project_sum_rest').val( to_sum(intFromSum($('#project_sum_total').val()) - designer_sum - visual_sum) )
+  return
+
 $(document).ready ->
+  $( "#tabs" ).tabs({ active: 1});
   $('#add_footage').click ->
     $(this).hide()
-    $('#tr_footage_2').show()
-    $('#tr_footage_2_real').show()
+    $('.invisible').removeClass('invisible')
     return
   $('#project_project_type_id').chosen
     width: '99.5%'
@@ -107,5 +120,6 @@ $(document).ready ->
     calc_debt()
   $('#project_sum_total_real').change ->
     calc_debt()
-
+  $('#project_designer_price,#project_designer_price_2,#project_visualer_price').change ->
+    calc_executor_sum()
   return

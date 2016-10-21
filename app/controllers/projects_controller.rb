@@ -83,6 +83,7 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1
   # PATCH/PUT /projects/1.json
   def update
+    p project_params
     respond_to do |format|
       if @project.update(project_params)
         format.html { redirect_to projects_url, notice: 'Проект успешно сохранен' }
@@ -92,6 +93,7 @@ class ProjectsController < ApplicationController
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end
+    p @project
   end
 
   # DELETE /projects/1
@@ -117,9 +119,10 @@ class ProjectsController < ApplicationController
     end
 
     def check_sum
-      prms = ['price','price_2','price_real','price_2_real','sum','sum_2','sum_real','sum_2_real','sum_total','sum_total_real']
+      prms = ['price','price_2','price_real','price_2_real','sum','sum_2','sum_real','sum_2_real','sum_total','sum_total_real','designer_price', 'designer_price_2','visualer_price']
       prms.each do |p|
         project_params[p] = project_params[p].gsub!(' ','') if !project_params[p].nil?
+        p p,project_params[p]
       end
     end
 
@@ -133,8 +136,9 @@ class ProjectsController < ApplicationController
       params.require(:project).permit(:client_id, :address, :owner_id, :executor_id, :designer_id, :project_type_id, 
         :date_start, :date_end_plan, :date_end_real, :number, :date_sign, 
         :footage, :footage_2, :footage_real, :footage_2_real, :style_id, 
-        :sum, :sum_real, :price, :price_2, :price_real, :sum_total, :sum_2, :sum_total_real, :sum_2_real, :price_2_real, 
-        :month_in_gift, :act, :delay_days,  :pstatus_id, :attention,
+        :sum, :sum_total, :sum_real, :price, :price_2, :price_real,  :sum_2, :sum_total_real, :sum_2_real, :price_2_real, 
+        :month_in_gift, :act, :delay_days,  :pstatus_id, :attention, 
+        :designer_price, :designer_price_2,:visualer_price,
         :client_attributes => [:name, :address, :phone, :email] )
     end
 

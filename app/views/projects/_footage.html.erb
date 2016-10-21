@@ -1,0 +1,20 @@
+  <tr>
+    <%= td_sum_field(f, :footage, 'Метраж', {mask: true}) %>
+    <%= td_sum_field(f, :price, 'Цена за м2') %>
+    <%= td_sum_field(f, :sum, 'Сумма') %>
+    <td class="va_top">
+      <% if (@project.footage_2.ceil==0 || @project.footage_2.nil?) %>
+        <span class="sub btn_a" id="add_footage">+</span>
+      <% end %>
+    </td>
+    <%= td_sum_field(f, :sum_total, 'Общая стоимость',{simple: true} ) %>
+
+  </tr>
+  
+  <tr <%= (@project.footage_2.ceil==0 || @project.footage_2.nil?) ? "class=invisible" : "" %> >
+    <%= td_sum_field(f, :footage_2, 'Метраж 2', {mask: true}) %>
+    
+    <%= td_sum_field(f, :price_2, 'Цена за м2') %>
+    <%= td_sum_field(f, :sum_2, 'Сумма') %>
+    <td></td>
+  </tr>

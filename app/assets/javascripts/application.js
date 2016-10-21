@@ -32,8 +32,10 @@ function to_sum(d){
 
 function intFromSum(sum){
   if (sum === undefined) return 0;
-  s = sum.replace(/ /g,'')
-  return parseInt(s)
+  var s = sum.replace(/ /g,'')
+  var i = parseInt(s)
+  if (isNaN(i)) return 0;
+  return i;
 }
 
 var showNotifications = function(){ 

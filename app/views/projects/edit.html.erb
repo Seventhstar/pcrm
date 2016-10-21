@@ -11,6 +11,9 @@
     <li><a href="#tabs-3">Сроки</a></li>
     <li><a href="#tabs-4">Выплаты</a></li>
     <li><a href="#tabs-5">Заказы</a></li>
+    <% if is_admin? %>
+      <li><a href="#tabs-6">Комментарии</a></li>
+    <% end %>
   </ul>
 
 <div id="tabs-1" class="ptab">
@@ -30,13 +33,13 @@
 
           <tr><td class="gr_caption">Вид работы и исполнитель</td></tr>
           <tr>
-            <td colspan="2"><div class="inp_w"><%= chosen_src :project_type_id, ProjectType.all, @project %></div></td>
-            <td><div class="inp_w"><%= chosen_src :style_id, Style.all, @project %></div></td>
-            <td colspan="2"><div class="inp_w"><%= chosen_src :executor_id, User.all, @project %></div></td>
+            <td colspan="2"><div class="inp_w"><%= chosen_src :project_type_id, ProjectType.all, @project, {nil_value: 'Вид работы...' } %></div></td>
+            <td></td>
+            <td colspan="2"><div class="inp_w"><%= chosen_src :executor_id, User.all, @project, {nil_value: 'Исполнитель...' } %></div></td>
           </tr>
           <tr><td class="gr_caption">Статус:</td></tr>
           <tr>
-            <td><div class="inp_w"><%= chosen_src :pstatus_id, ProjectStatus.all, @project %></div></td>
+            <td><div class="inp_w"><%= chosen_src :pstatus_id, ProjectStatus.all, @project, {nil_value: 'Статус...' } %></div></td>
             <td class='va_middle'><%= f.input :attention, :as => :boolean, label: 'Особое внимание', class: 'inp_btn checkbox'  %></td>
             <td></td>
             </tr>
@@ -52,39 +55,24 @@
         <tbody>
 
           <tr><td class="gr_caption" colspan="5">Заявленная площадь и стоимость</td></tr>
-          <tr>
-          <%= td_sum_field(f, :footage, 'Метраж', true) %>
-          <%= td_sum_field(f, :price, 'Цена за м2') %>
-          <%= td_sum_field(f, :sum, 'Сумма') %>
-          <td class="va_bottom"> 
-            <% if @project.footage_2==0 %>
-              <span class="sub btn_a" id="add_footage">+</span>
-            <% end %> 
-          </td>
-          <%= td_sum_field(f, :sum_total, 'Общая стоимость') %>         
-          </tr>
-          <tr <%= @project.footage_2==0 ? 'style=display:none;' : '' %>  id="tr_footage_2">
-           <%= td_sum_field(f, :footage_2, 'Метраж 2', true) %>
-          <%= td_sum_field(f, :price_2, 'Цена за м2') %>
-          <%= td_sum_field(f, :sum_2, 'Сумма') %>
-          <td></td>
-          <td><div class="inp_w"><%= f.input :month_in_gift, label: 'Месяцев в подарок' %></div></td>
-          </tr>
+          <%= render 'footage', f: f %>
           <tr><td class="gr_caption" colspan="5">Фактическая площадь и стоимость</td></tr>
           <tr>
 
-          <%= td_sum_field(f, :footage_real, 'Метраж', true) %>
+          <%= td_sum_field(f, :footage_real, 'Метраж',  {mask: true}) %>
           <%= td_sum_field(f, :price_real, 'Цена за м2') %>
           <%= td_sum_field(f, :sum_real, 'Сумма') %>
           <td></td>
           <%= td_sum_field(f, :sum_total_real, 'Общая стоимость') %>
           </tr>
           <tr <%= @project.footage_2==0 ? 'style=display:none;' : '' %>  id="tr_footage_2_real">
-          <%= td_sum_field(f, :footage_2_real, 'Метраж 2', true) %>
+          <%= td_sum_field(f, :footage_2_real, 'Метраж 2',  {mask: true}) %>
           <%= td_sum_field(f, :price_2_real, 'Цена за м2') %>
           <%= td_sum_field(f, :sum_2_real, 'Сумма') %>
           <td></td>
           </tr>
+
+          <%= render 'executor', f: f %>
 
 </tbody></table></div></div></div>
 <div id="tabs-3" class="ptab">
