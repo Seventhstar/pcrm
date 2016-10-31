@@ -22,7 +22,7 @@
           </tr>
           <% end %> 
 
-          <tr><td class="gr_caption">Вид работы и исполнитель</td></tr>
+          <tr><td class="gr_caption">Вид работы и исполнители</td></tr>
           <tr>
             <td colspan="2"><div class="inp_w">
               <%= chosen_src :project_type_id, ProjectType.all, @project, {nil_value: 'Вид работы...' } %>
@@ -31,7 +31,17 @@
             <td colspan="2">
             <% if is_admin? %>
               <div class="inp_w">
-                <%= chosen_src :executor_id, User.all, @project, {nil_value: 'Исполнитель...' } %>
+                <%= chosen_src :executor_id, User.all, @project, {nil_value: 'Дизайнер...' } %>
+              </div>
+            <% end %>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3"></td>
+            <td colspan="2">
+            <% if is_admin? %>
+              <div class="inp_w">
+                <%= chosen_src :visualer_id, User.all, @project, {nil_value: 'Визуализатор...' } %>
               </div>
             <% end %>
             </td>
