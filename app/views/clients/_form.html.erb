@@ -12,7 +12,8 @@
       <td><div class="inp_w"><%= f.input el, label: false %></div></td></tr>
     <% end %>
     <tr><td class="caption"></td>
-      <td><%= submit_cancel clients_url %></td></tr>
+
+      <td><%= submit_cancel clients_url, params[:sub] %></td></tr>
 
   </table>
   </div>

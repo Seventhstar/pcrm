@@ -1,4 +1,4 @@
-  
+<% @comments = @owner.comments.order('created_at asc') %>  
   <div class="box_i">
   <div class="hl"><span class="icon icon_chat"></span>Комментарии: </div>  
    <div class="jspContainer" style="height:<%= @comm_height %>px;">

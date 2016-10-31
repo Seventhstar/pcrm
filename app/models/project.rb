@@ -3,6 +3,7 @@ class Project < ActiveRecord::Base
   belongs_to :executor, class_name: 'User', foreign_key: :executor_id
 	belongs_to :project_type
   belongs_to :pstatus, class_name: 'ProjectStatus',foreign_key: :pstatus_id
+  has_many :comments, :as => :owner
   has_many :receipts
   has_many :absence
   has_many :elongations, class_name: 'ProjectElongation'

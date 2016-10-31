@@ -84,7 +84,7 @@
   return
 
 $(document).ready ->
-  $( "#tabs" ).tabs({ active: 1});
+  $( "#tabs" ).tabs();# { active: 1}
   $('#add_footage').click ->
     $(this).hide()
     $('.invisible').removeClass('invisible')

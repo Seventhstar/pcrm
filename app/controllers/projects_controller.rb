@@ -57,6 +57,8 @@ class ProjectsController < ApplicationController
   # GET /projects/1/edit
   def edit
     get_debt
+    @comm_height = 350
+    @owner = @project
   end
 
   # POST /projects
@@ -133,7 +135,7 @@ class ProjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      params.require(:project).permit(:client_id, :address, :owner_id, :executor_id, :designer_id, visualer_id, :project_type_id, 
+      params.require(:project).permit(:client_id, :address, :owner_id, :executor_id, :designer_id, :visualer_id, :project_type_id, 
         :date_start, :date_end_plan, :date_end_real, :number, :date_sign, 
         :footage, :footage_2, :footage_real, :footage_2_real, :style_id, 
         :sum, :sum_total, :sum_real, :price, :price_2, :price_real,  :sum_2, :sum_total_real, :sum_2_real, :price_2_real, 
