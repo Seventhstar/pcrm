@@ -193,10 +193,12 @@ module ApplicationHelper
   end
 
 
-  def submit_cancel(back_url)
+  def submit_cancel(back_url, modal = false)
     # <%= link_to 'Отмена', absences_url, :class => "sub btn_a btn_reset"%><%= f.button :submit, value: 'Сохранить', :class => 'sub btn_a' %>
-      s = submit_tag  'Сохранить', class: 'btn btn-default sub btn_a'
-      c = link_to 'Отмена', back_url, class: "sub btn_a btn_reset"
+      add_cls = modal ? ' update' : ''
+      dd      = modal ? "modal" : ''
+      s = submit_tag  'Сохранить', class: 'btn btn-default sub btn_a' + add_cls
+      c = link_to 'Отмена', back_url, class: "sub btn_a btn_reset", "data-dismiss" => dd
       c+s
   end
 
@@ -213,12 +215,15 @@ module ApplicationHelper
     params[:content_class] ||= ''
     params[:content_tag] ||= :td
     content = params[:content_tag]
+    modal = params[:modal] ||= false
     dilable_cls = params[:subcount]>0 ? '_disabled' : ''
     if params[:tag] == 'span'
       all_icons['edit'] = content_tag :span, "", {class: 'icon icon_edit', item_id: element.id}
       all_icons['delete'] = content_tag( :span,"",{class: ['icon icon_remove',dilable_cls,' ',params[:class]].join, item_id: params[:subcount]>0 ? '' : element.id})
      else
-      all_icons['edit'] = link_to "", edit_polymorphic_path(element), class: "icon icon_edit " + params[:class]
+      datap = modal ? {modal: true} : {}
+
+      all_icons['edit'] = link_to "", edit_polymorphic_path(element), class: "icon icon_edit " + params[:class], data: datap
       all_icons['show'] = link_to "", polymorphic_path(element), class: "icon icon_show", data: { modal: true }
       all_icons['delete'] = link_to "", element, method: :delete, data: { confirm: 'Действительно удалить?' }, class: "icon icon_remove " + params[:class] if params[:subcount]==0
       all_icons['delete'] = content_tag(:span,"",{class: 'icon icon_remove_disabled'}) if params[:subcount]>0

@@ -10,6 +10,10 @@ $ ->
       find(modal_selector).modal()
     false
 
+  $(document).on 'click','.update', ->
+    $('.close').click()
+    # hideModal
+
   $(document).on 'ajax:success',
     'form[data-modal]', (event, data, status, xhr)->
       url = xhr.getResponseHeader('Location')
