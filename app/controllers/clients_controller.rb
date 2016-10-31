@@ -27,6 +27,7 @@ class ClientsController < ApplicationController
 
   # GET /clients/1/edit
   def edit
+    respond_modal_with @client, location: root_path
   end
 
   # POST /clients
@@ -50,7 +51,8 @@ class ClientsController < ApplicationController
   def update
     respond_to do |format|
       if @client.update(client_params)
-        format.html { redirect_to clients_url, notice: 'Client was successfully updated.' }
+        #format.html { redirect_to clients_url, notice: 'Client was successfully updated.' }
+        format.html { head :no_content }
         format.json { render :show, status: :ok, location: @client }
       else
         format.html { render :edit }

@@ -17,7 +17,7 @@
         <td><%= client.address %></td>
         <td><%= client.phone %></td>
         <td><%= client.email %></td>
-        <%= tool_icons(client,{icons:'edit,show'}) %>
+        <%= tool_icons(client,{icons:'edit,show', modal: true}) %>
       </tr>
     <% end %>
   </tbody>

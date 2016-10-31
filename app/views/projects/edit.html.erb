@@ -17,7 +17,7 @@
   </ul>
 
 <div id="tabs-1" class="ptab">
-    
+
     <div class="box_wrap box_wrap_1">
       <div class="fullwidth">
         <table class="fullwidth tbl_fc fw_form">
@@ -27,7 +27,9 @@
           <tr>
             <td><div class="inp_w"><%= f.input :number,label: 'Номер' %></div></td>
             <td><div class="inp_w"><label>Дата</label><%= f.text_field :date_sign, value: @project.date_sign.try('strftime',"%d.%m.%Y"), class: "txt datepicker" %></div></td>
-            <td><div class="inp_w"><%= chosen_src :client_id, Client.all, @project,{label: 'Клиент'} %></div></td>
+            <td><div class="inp_w"><%= chosen_src :client_id, Client.all, @project,{label: 'Клиент'} %></div>
+              <%= link_to "Edit", edit_client_path(@project.client_id), data: {modal: true} %>
+            </td>
             <td colspan="2"><div class="inp_w"><%= f.input :address, label: 'Адрес' %></div></td>
           </tr>
 
@@ -46,7 +48,7 @@
 
 </tbody></table></div></div></div>
 <div id="tabs-2" class="ptab">
-    
+
     <div class="box_wrap box_wrap_1">
       <div class="fullwidth">
         <table class="fullwidth tbl_fc fw_form">
