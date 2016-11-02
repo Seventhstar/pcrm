@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:show, :edit, :update, :destroy, :update_client]
   before_action :logged_in_user
   before_action :check_sum, only: [:create,:update]
   helper_method :sort_2, :dir_2
@@ -82,10 +82,21 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def update_client
+    @clients = Client.order(:name)
+    # respond_to do |format|
+    #   format.json { head :no_content }
+    # end
+    # respond_to do |format|
+    #   format.js {}
+    # end
+  end
+
+
   # PATCH/PUT /projects/1
   # PATCH/PUT /projects/1.json
   def update
-    p project_params
+    # p project_params
     respond_to do |format|
       if @project.update(project_params)
         format.html { redirect_to projects_url, notice: 'Проект успешно сохранен' }
@@ -95,7 +106,7 @@ class ProjectsController < ApplicationController
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end
-    p @project
+    # p @project
   end
 
   # DELETE /projects/1

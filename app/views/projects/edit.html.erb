@@ -33,6 +33,7 @@
             <tr>
             <td colspan="2"><div class="inp_90 left"><%= chosen_src :client_id, Client.all, @project,{label: 'Клиент'} %></div>
               <%= link_to "", edit_client_path(@project.client_id, sub: true),data: {modal: true}, class: 'icon icon_edit left' %>
+              
             </td>
             <td colspan="2"><div class="inp_w"><%= f.input :address, label: 'Адрес' %></div></td>
           </tr>

@@ -28,6 +28,8 @@ Rails.application.routes.draw do
   resources :receipts
 
   resources :projects
+  get 'projects/:id/:update_client' => 'projects#update_client'
+
   resources :project_types
   resources :project_statuses
   resources :project_elongations

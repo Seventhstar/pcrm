@@ -1,3 +1,12 @@
+@upd_ch_client =() ->
+  $.ajax 'update_',
+      type: 'GET'
+      dataType: 'script'
+      # data: {
+      #   client_id: $("#project_client_id option:selected").val()
+      # }
+
+
 $ ->
   modal_holder_selector = '#modal-holder'
   modal_selector = '.modal'
@@ -11,6 +20,10 @@ $ ->
 
   $(document).on 'click','.update', ->
     $('.close').click()
+    delay('upd_ch_client({})',100)
+
+  # $(document).on 'click','.test_cl', ->
+    # delay('upd_ch_client({})',70)
 
   $(document).on 'ajax:success', 'form[data-modal]', (event, data, status, xhr)->
       url = xhr.getResponseHeader('Location')
