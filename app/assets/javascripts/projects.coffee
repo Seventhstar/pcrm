@@ -2,11 +2,11 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-@dateFromString = (str, add =0) -> 
+@dateFromString = (str, add =0) ->
         str = str.split('.');
         str = new Date(parseInt(str[2],10),parseInt(str[1], 10)-1,(parseInt(str[0]))+parseInt(add));
         return str
-    
+
 @DDMMYYYY = (str) ->
         ndateArr = str.toString().split(' ');
         Months = 'Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec';
@@ -15,7 +15,7 @@
 @calculateDays = (d0, d1) ->
   ndays = 1 + Math.round((d1.getTime() - d0.getTime()) / (24 * 3600 * 1000))
   nsaturdays = Math.floor((ndays + d0.getDay()) / 7)
-  ndays - (2 * nsaturdays) + (d0.getDay() == 6) - (d1.getDay() == 5)    
+  ndays - (2 * nsaturdays) + (d0.getDay() == 6) - (d1.getDay() == 5)
 
 @workday_count = (start, end) ->
   first = start.clone().endOf('week')   # end of first week
@@ -24,9 +24,9 @@
   days = last.diff(first, 'days') * 5 / 7   # this will always multiply of 7
   wfirst = first.day() - start.day()   # check first week
   if start.day() == 0
-    --wfirst   # -1 if start with sunday 
+    --wfirst   # -1 if start with sunday
   wlast = end.day() - last.day()   # check last week
-  if end.day() == 6 
+  if end.day() == 6
     --wlast   # -1 if end with saturday
   wfirst + days + wlast   # get the total
 
@@ -39,17 +39,17 @@
 		return
 
 @calc_debt =() ->
-  sum_total = intFromSum($('#project_sum_total').val())  
+  sum_total = intFromSum($('#project_sum_total').val())
   calc_sum_total = intFromSum($('#project_sum_2').val()) + intFromSum($('#project_sum').val())
   $('#project_sum_total').attr('title',sum_total)
   $('#project_sum_total').attr('title',sum_total)
-  if calc_sum_total != sum_total 
+  if calc_sum_total != sum_total
      $('#project_sum_total').addClass('red')
   else
      $('#project_sum_total').removeClass('red')
   sum_total_real = intFromSum($('#project_sum_total_real').val())
   calc_sum_total_real = intFromSum($('#project_sum_2_real').val()) + intFromSum($('#project_sum_real').val())
-  if calc_sum_total_real != sum_total_real 
+  if calc_sum_total_real != sum_total_real
      $('#project_sum_total_real').addClass('red')
   else
      $('#project_sum_total_real').removeClass('red')
@@ -64,7 +64,7 @@
   $('#project_sum').val( fp_sum('#project_price','#project_footage'))
   $('#project_sum_2').val( fp_sum('#project_price_2','#project_footage_2'))
   $('#project_sum_total').val( to_sum(intFromSum($('#project_sum_2').val()) + intFromSum($('#project_sum').val())))
-  
+
   calc_debt()
   return
 
@@ -77,13 +77,18 @@
 
 @calc_executor_sum =() ->
   footage = parseFloat($('#project_footage').val()*10)
-  designer_sum = (intFromSum($('#project_designer_price').val()) * footage ) / 10 
+  designer_sum = (intFromSum($('#project_designer_price').val()) * footage ) / 10
   visual_sum   = (intFromSum($('#project_visualer_price').val()) * footage) / 10
   $('#project_sum_total_executor').val( to_sum( designer_sum + visual_sum) )
   $('#project_sum_rest').val( to_sum(intFromSum($('#project_sum_total').val()) - designer_sum - visual_sum) )
   return
 
 $(document).ready ->
+  $('#project_client_id').change ->
+    # подменяем id клиента и в ссылке на редактирование после выбора
+    new_href = $('#client_link').attr('href').split('/')
+    new_href[2] = $(this).val()
+    $('#client_link').attr('href',new_href.join('/'))
   $( "#tabs" ).tabs();# { active: 1}
   $('#add_footage').click ->
     $(this).hide()

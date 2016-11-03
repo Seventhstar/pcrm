@@ -2,9 +2,9 @@
   $.ajax 'update_',
       type: 'GET'
       dataType: 'script'
-      # data: {
-      #   client_id: $("#project_client_id option:selected").val()
-      # }
+      data: {
+        client_id: $("#project_client_id option:selected").val()
+      }
 
 
 $ ->

@@ -32,8 +32,8 @@
             </tr>
             <tr>
             <td colspan="2"><div class="inp_90 left"><%= chosen_src :client_id, Client.all, @project,{label: 'Клиент'} %></div>
-              <%= link_to "", edit_client_path(@project.client_id, sub: true),data: {modal: true}, class: 'icon icon_edit left' %>
-              
+              <%= link_to "", edit_client_path(@project.client_id, sub: true),data: {modal: true}, class: 'icon icon_edit left', id: 'client_link' %>
+
             </td>
             <td colspan="2"><div class="inp_w"><%= f.input :address, label: 'Адрес' %></div></td>
           </tr>
@@ -57,7 +57,7 @@
             <td><div class="inp_w"><%= chosen_src :pstatus_id, ProjectStatus.all, @project, {nil_value: 'Статус...' } %></div></td>
             <td></td>
             <td class='va_middle'><%= f.input :attention, :as => :boolean, label: 'Особое внимание', class: 'inp_btn checkbox'  %></td>
-            
+
             </tr>
 
 </tbody></table></div>
@@ -171,7 +171,7 @@
 <div id="tabs-5" class="ptab">
 </div>
 
-</div> 
+</div>
 
 <%= submit_cancel projects_url %>
 <% end %>
