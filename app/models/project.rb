@@ -8,10 +8,10 @@ class Project < ActiveRecord::Base
   has_many :absence
   attr_accessor :first_comment
   has_many :elongations, class_name: 'ProjectElongation'
-  
+
   validates :address, :length => { :minimum => 3 }
   validates :footage, presence: true
-  #validates_numericality_of :footage, greater_than: 1 
+  #validates_numericality_of :footage, greater_than: 1
   include ProjectsHelper
 	accepts_nested_attributes_for :client
   has_paper_trail
@@ -44,11 +44,20 @@ class Project < ActiveRecord::Base
 
   def last_elongation
      if !elongations.nil?
-        new_date = elongations.last 
+        new_date = elongations.last
         if new_date
           new_date.new_date
         end
      end
+  end
+
+  def footage_info
+    if !footage_real.nil? && footage_real!=0 && footage_real!= '0.0'
+        f = footage_2_real.to_s=='0.0' ? footage_real : ['<b>',footage_real,'+',footage_2_real,'</b>'].join
+    else
+        f = footage_2.to_s=='0.0' ? footage : [footage,'+',footage_2].join
+    end
+    ['<span>',f,'</span>'].join
   end
 
   def sum_plan
@@ -62,13 +71,13 @@ class Project < ActiveRecord::Base
   def sum_real
     (footage_real.to_f*price_real).to_i
   end
- 
+
   def sum_2_real
     (footage_2_real*price_2_real).to_i
   end
-  
+
   def total
-     sum_total_real==0 ? sum_total : sum_total_real 
+     sum_total_real==0 ? sum_total : sum_total_real
   end
 
 end

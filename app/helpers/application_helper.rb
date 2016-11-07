@@ -173,9 +173,16 @@ module ApplicationHelper
     cls = 'hot' if !prj.date_end_plan.nil? && prj.date_end_plan <= Date.today+1
     cls = "nonactual" if prj.pstatus_id == 3
     cls = 'bg_red' if prj.pstatus_id == 2
-    cls = cls + ' attention' if prj.attention
     cls
   end
+
+  def icon_for_project (prj)
+    cls = ''
+    cls = cls + ' attention' if prj.attention
+    cls = cls + ' comment' if is_admin? && prj.comments.count>0
+    cls
+  end
+
 
 
 
@@ -204,7 +211,7 @@ module ApplicationHelper
 
 
   def tool_icons(element,params = nil)
-                
+
     all_icons = {} #['edit','delete','show'] tag='span',subcount=nil
     params ||= {}
     params[:tag] ||= 'href'
@@ -233,9 +240,14 @@ module ApplicationHelper
     end
   end
 
+  def tooltip( s_info, info )
+    content_tag(:span,s_info,{'data-toggle' =>"tooltip", 'data-placement' => "top", :title => info})
+  end
+
   def tooltip_if_big( info, length = 50 )
       if info.length >length
-         content_tag(:span,'   '+info[0..length]+' ...',{'data-toggle' =>"tooltip", 'data-placement' => "top", :title => info})
+         # content_tag(:span,'   '+info[0..length]+' ...',{'data-toggle' =>"tooltip", 'data-placement' => "top", :title => info})
+         tooltip( '   '+info[0..length] + ' ...', info)
       else
          info
       end

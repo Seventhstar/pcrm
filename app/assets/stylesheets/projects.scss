@@ -19,3 +19,14 @@ input::-webkit-inner-spin-button { padding-right:0}
 .space10 {margin-left: 10px !important;}
 
 #add_footage {font-size: 18px; font-weight: bold;}
+
+td.inf.attention, td.inf.comment {background: asset-url('p_inf.png') no-repeat !important;
+                             background-position-y: 5px !important; background-position-x: 7px !important;
+                              height: 32px; }
+
+// td.inf {padding-left: 4px;}
+
+td.inf.comment {  background-position-x: -17px !important;}
+td.inf.attention.comment {  background-position-x: -38px !important;}
+
+.icon_comment {background: asset-url('comment.png') no-repeat;}
