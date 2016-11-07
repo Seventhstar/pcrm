@@ -73,6 +73,12 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       if @project.save
+        if params[:project][:first_comment] && !params[:project][:first_comment].empty?
+          comm = @project.comments.new
+          comm.comment = params[:project][:first_comment]
+          comm.user_id = params[:project][:owner_id]
+          comm.save
+        end
         format.html { redirect_to projects_url, notice: 'Проект успешно создан' }
         format.json { render :show, status: :created, location: @project }
       else

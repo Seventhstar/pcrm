@@ -6,6 +6,7 @@ class Project < ActiveRecord::Base
   has_many :comments, :as => :owner
   has_many :receipts
   has_many :absence
+  attr_accessor :first_comment
   has_many :elongations, class_name: 'ProjectElongation'
   
   validates :address, :length => { :minimum => 3 }
