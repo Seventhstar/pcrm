@@ -49,7 +49,7 @@ class Project < ActiveRecord::Base
      if !elongations.nil?
         new_date = elongations.last
         if new_date
-          new_date.new_date
+          new_date.new_date.try('strftime',"%d.%m.%Y")
         end
      end
   end
