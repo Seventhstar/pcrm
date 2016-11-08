@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161018041706) do
+ActiveRecord::Schema.define(version: 20161107192340) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 20161018041706) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "attachments", ["owner_id"], name: "index_files_on_owner_id", using: :btree
+  add_index "attachments", ["owner_id"], name: "index_attachments_on_owner_id", using: :btree
 
   create_table "budgets", force: :cascade do |t|
     t.string   "name"
@@ -134,6 +134,12 @@ ActiveRecord::Schema.define(version: 20161018041706) do
   end
 
   add_index "develops_files", ["develop_id"], name: "index_develops_files_on_develop_id", using: :btree
+
+  create_table "elongation_types", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "goodstypes", force: :cascade do |t|
     t.string   "name"
@@ -222,10 +228,10 @@ ActiveRecord::Schema.define(version: 20161018041706) do
 
   create_table "project_elongations", force: :cascade do |t|
     t.date     "new_date"
-    t.string   "description"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.integer  "project_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "elongation_type_id"
   end
 
   create_table "project_statuses", force: :cascade do |t|
@@ -412,6 +418,16 @@ ActiveRecord::Schema.define(version: 20161018041706) do
   end
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
+
+  create_table "wiki_files", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "wiki_record_id"
+    t.string   "name"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "wiki_files", ["wiki_record_id"], name: "index_wiki_files_on_wiki_record_id", using: :btree
 
   create_table "wiki_records", force: :cascade do |t|
     t.string   "name"

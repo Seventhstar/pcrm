@@ -30,6 +30,6 @@ class ProjectElongationsController < ApplicationController
     end
 
     def pe_params
-      params.require(:elongation).permit(:new_date, :description,:project_id)
+      params.require(:project_elongation).permit(:new_date, :elongation_type_id,:project_id)
     end
 end

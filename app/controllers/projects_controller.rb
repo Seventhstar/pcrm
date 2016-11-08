@@ -40,8 +40,9 @@ class ProjectsController < ApplicationController
   # GET /projects/1.json
   def show
     @title = 'Просмотр проекта'
-
-    @comm_height = 488
+    # @comments = @project.comments.order('created_at asc')
+    @owner = @project
+    @comm_height = 268
     respond_modal_with @project, location: root_path
     data = params[:data]
     get_debt(data)
@@ -59,6 +60,8 @@ class ProjectsController < ApplicationController
     get_debt
     @comm_height = 350
     @owner = @project
+    @elongation_types = ElongationType.all
+    @new_et  = ProjectElongation.new
   end
 
   # POST /projects

@@ -8,7 +8,12 @@
 .time_separator{ padding: 7px; float: left; display: inline-block; width: 14px; text-align: center; color: #737373; }
 
 .datepicker { background: asset-url('ico-date.png') 95% 8px no-repeat; cursor: pointer;}
-.inp_w .datepicker{ background: asset-url('ico-date.png') 98% 8px no-repeat; }
+
+.inp_w .datepicker{ background: asset-url('ico-date.png') 93% 8px no-repeat; }
+.tbl_fc_1 .inp_w .datepicker{ background: asset-url('ico-date.png') 98% 8px no-repeat; }
+
+
+
 .datepicker.slim_txt{ background: asset-url('ico-date.png') 98% 3px no-repeat; }
 
 .caption_to{ width: 95px !important;}

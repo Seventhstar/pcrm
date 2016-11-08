@@ -113,6 +113,7 @@ ru:
   new_AbsenceTarget: Новая цель
   new_AbsenceShopTarget: Новая цель для магазина
   new_LeadSource: Новый источник
+  new_ElongationType: Новая причина продления
 
   list_Priority: Список приоритетов
   list_ProjectType: Список видов проектов
@@ -131,6 +132,7 @@ ru:
   list_AbsenceTarget: Список целей 
   list_AbsenceShopTarget: Список целей для магазина
   list_LeadSource: Список источников
+  list_ElongationType: Список причин продления
 
   Password: Пароль
   "true": Да

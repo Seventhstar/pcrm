@@ -60,7 +60,8 @@ class ProvidersController < ApplicationController
   def show    
     @title = 'Просмотр поставщика'
     @owner = @provider
-    @comments = @provider.comments.order('created_at asc')
+    # @comments = @provider.comments.order('created_at asc')
+    @owner = @provider
     @comm_height = 313
     respond_modal_with @lead, location: root_path
   end
@@ -82,7 +83,7 @@ class ProvidersController < ApplicationController
     @p_statuses = PStatus.order(:name)
     
     @comm_height = 310
-    @comments = @provider.comments.order('created_at asc')
+    # @comments = @provider.comments.order('created_at asc')
     @owner = @provider
   end
 

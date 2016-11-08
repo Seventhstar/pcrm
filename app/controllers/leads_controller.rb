@@ -78,12 +78,8 @@ class LeadsController < ApplicationController
   def show
     @title = 'Просмотр лида'
 
-    @channels = Channel.all
-    @statuses = Status.all
-    @comments = @lead.comments.order('created_at asc')
-    @files = @lead.attachments
+    def_params
 
-    @history = get_history_with_files(@lead)
     @comm_height = 488
     respond_modal_with @lead, location: root_path
   end
@@ -91,6 +87,9 @@ class LeadsController < ApplicationController
   def def_params
     @channels = Channel.all
     @statuses = Status.all
+    @owner    = @lead
+    @files    = @lead.attachments
+    @history  = get_history_with_files(@lead)
   end
   # GET /leads/new
   def new
@@ -101,11 +100,9 @@ class LeadsController < ApplicationController
   # GET /leads/1/edit
   def edit
     def_params
-    @comments = @lead.comments.order('created_at asc')
-    @files    = @lead.attachments
     @comm_height = 400
-    @history = get_history_with_files(@lead)
-    @owner = @lead
+    
+    
   end
 
   # POST /leads

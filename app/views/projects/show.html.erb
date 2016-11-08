@@ -12,13 +12,17 @@
 		<tr><td class="caption">Вид работы:</td>
 			<td><div class="lbl"><%= @project.project_type_name %></div></td></tr>    
 		
-		</div></td></tr>
+		</div>
+		</td></tr>
 
+<% if !is_admin? %>
 		</table>
 	</div>
 
   <div class="panel-right">
 	<table class="tbl_fc tbl_fc_1">
+<% end %>
+
 		<tr><td class="caption">Метраж (1/2):</td>
 		    <td><div class="lbl"><%= @project.footage %> / <%= @project.footage_2 %></div></td></tr>
 		<tr><td class="caption">Цена за м2:</td>
@@ -34,5 +38,12 @@
 		</table>
   </div>
 
-</div>
 
+<% if is_admin? %>
+  <div class="panel-right">
+    <div class="comments_box">
+      <%= render "shared/comments" %>
+    </div>
+  </div>
+<% end %>
+</div>

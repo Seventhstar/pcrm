@@ -83,7 +83,7 @@ $(document).on 'click', '#btn-send', (e) ->
   valuesToSubmit = $('form').serialize()
   values = $('form').serialize()
   url = '/options'+$('form').attr('action')
-  alert url
+  #alert url
   empty_name = false
   #alert values
   each q2ajx(values), (i, a) ->

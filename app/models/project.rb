@@ -6,6 +6,7 @@ class Project < ActiveRecord::Base
   has_many :comments, :as => :owner
   has_many :receipts
   has_many :absence
+  
   attr_accessor :first_comment
   has_many :elongations, class_name: 'ProjectElongation'
 
@@ -41,6 +42,8 @@ class Project < ActiveRecord::Base
       business_days_between(date_start.to_datetime,date_end_plan.to_datetime)+1
      end
   end
+
+
 
   def last_elongation
      if !elongations.nil?
