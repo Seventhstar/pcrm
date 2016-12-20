@@ -77,10 +77,12 @@
 
 @calc_executor_sum =() ->
   footage = parseFloat($('#project_footage').val()*10)
+  footage2 = parseFloat($('#project_footage_2').val()*10)
   designer_sum = (intFromSum($('#project_designer_price').val()) * footage ) / 10
+  designer_sum2 = (intFromSum($('#project_designer_price_2').val()) * footage2 ) / 10
   visual_sum   = (intFromSum($('#project_visualer_price').val()) * footage) / 10
-  $('#project_sum_total_executor').val( to_sum( designer_sum + visual_sum) )
-  $('#project_sum_rest').val( to_sum(intFromSum($('#project_sum_total').val()) - designer_sum - visual_sum) )
+  $('#project_sum_total_executor').val( to_sum( designer_sum + designer_sum2 + visual_sum) )
+  $('#project_sum_rest').val( to_sum(intFromSum($('#project_sum_total').val()) - designer_sum - designer_sum2 - visual_sum) )
   return
 
 $(document).ready ->
@@ -89,7 +91,7 @@ $(document).ready ->
     new_href = $('#client_link').attr('href').split('/')
     new_href[2] = $(this).val()
     $('#client_link').attr('href',new_href.join('/'))
-  $( "#tabs" ).tabs();# { active: 1}
+  $("#tabs").tabs();# { active: 1}
   $('#add_footage').click ->
     $(this).hide()
     $('.invisible').removeClass('invisible')

@@ -25,10 +25,8 @@
           <% first_table = false %>
       <% end %>
 
-      <tr class="<%= class_for_project(project) %>">
-        <td class="inf<%= icon_for_project(project) %>"></td>
+      <tr class="<%= icon_for_project(project) %>">
         <td class="center"><%= project.number %></td>
-
         <td><%= project.address %></td>
         <td><%= project.project_type_name %></td>
         <td><%= project.client_name %></td>

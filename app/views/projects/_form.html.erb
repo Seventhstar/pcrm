@@ -34,7 +34,7 @@
             <% if is_admin? %>
               <div class="inp_w">
                 <label>Дизайнер</label>
-                <%= chosen_src :executor_id, User.all, @project, {nil_value: 'Дизайнер...' } %>
+                <%= chosen_src :executor_id, User.order(:name), @project, {nil_value: 'Дизайнер...' } %>
               </div>
             <% end %>
             </td>
@@ -43,7 +43,7 @@
             <% if is_admin? %>
               <div class="inp_w">
                 <label>Визуализатор</label>
-                <%= chosen_src :visualer_id, User.all, @project, {nil_value: 'Визуализатор...' } %>
+                <%= chosen_src :visualer_id, User.order(:name), @project, {nil_value: 'Визуализатор...' } %>
               </div>
             <% end %>
             </td>

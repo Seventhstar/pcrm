@@ -26,7 +26,32 @@ td.inf.attention, td.inf.comment {background: asset-url('p_inf.png') no-repeat !
 
 // td.inf {padding-left: 4px;}
 
-td.inf.comment {  background-position-x: -17px !important;}
+td.inf.comment {  background-position-x: -17px !important; }
+tr:before {content: '';} 
+tr.comment:before {    
+    content: '';
+		position: absolute;
+    z-index: -1;
+    overflow: hidden;
+    left: -37px;
+    right: 206px;
+    width: 32px;
+    height: 26px;
+    margin-top: 10px;
+    background:url('conversation.png');
+  }
+tr.attention:before {    
+    content: '';
+		position: absolute;
+    z-index: -1;
+    overflow: hidden;
+    left: -74px;
+    right: 206px;
+    width: 32px;
+    height: 32px;
+    margin-top: 10px;
+    background:url('intrestig.png');
+  }  
 td.inf.attention.comment {  background-position-x: -38px !important;}
 
 .icon_comment {background: asset-url('comment.png') no-repeat;}
