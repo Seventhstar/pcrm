@@ -46,17 +46,22 @@ class Project < ActiveRecord::Base
   def designer_sum()
     s = designer_price.to_i * footage.to_f
     s = s + designer_price_2.to_i * footage_2.to_f if footage_2>0
-    s
+    s.to_i
   end
 
   def executor_sum()
-    designer_sum + visualer_price.to_i * footage.to_f
+    (designer_sum + visualer_price.to_i * footage.to_f).to_i
   end
 
   def rest()
     sum_total_real==0 ? sum_total - executor_sum : sum_total_real - executor_sum
   end
 
+  def prices()
+    p = price.to_s
+    p = p +'/'+ price_2.to_s if price_2>0
+    p
+  end
 
   def last_elongation
      if !elongations.nil?

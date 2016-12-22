@@ -1,9 +1,9 @@
+<% if is_admin? %>
 <%= simple_form_for(@project) do |f| %>
 <%= render 'shared/error_messages', object: f.object %>
 
-<% if !is_admin? %>
-  <%= f.hidden_field :executor_id,  :value => (@project.executor_id ||= current_user.id) %>
-<% end %>
+
+  
     <h3>Данные</h3>
     <div class="box_wrap box_wrap_1">
       <div class="fullwidth"><table class="fullwidth tbl_fc fw_form projects"><thead>
@@ -59,19 +59,14 @@
             <td><div class="inp_w"><label>Начало</label>
                 <%= f.text_field :date_start, value: Date.today.try('strftime',"%d.%m.%Y"), class: "txt datepicker" %></div></td>
             <td><div class="inp_w"><label>Окончание</label><%= f.text_field :date_end_plan, class: "txt datepicker" %></div></td>
-            <td><div class="inp_w"><label>Рабоч. дней без уч. праздников</label> <%= number_field_tag :days, 0, {class: 'form-control'} %></div></td>
-            <td></td>
-            <td></td>
+            <td><div class="inp_w">
+            <label>Рабоч. дней без уч. праздников</label> <%= number_field_tag :days, 0, {class: 'form-control'} %></div></td>
+            <td></td><td></td>
             </tr>
-
-            <tr>
-                <td colspan="5"><div class="inp_w"><label>Примечание</label><%= f.text_area :first_comment, class: :txt, label: false, rows: "2" %></div></td></tr>
-
+            <tr><td colspan="5">
+            <div class="inp_w"><label>Примечание</label><%= f.text_area :first_comment, class: :txt, label: false, rows: "2" %></div></td></tr>
             <tr><td><%= link_to 'Отмена', projects_url, :class => "sub btn_a btn_reset"%>
             <%= f.button :submit, value: 'Сохранить', :class => 'sub btn_a ' %></td></tr>
-            
-            
-          
         </tbody>
         </table>
       </div>
@@ -84,4 +79,5 @@
 
   <%= f.hidden_field :owner_id, value: current_user.id %>
 
+<% end %>
 <% end %>

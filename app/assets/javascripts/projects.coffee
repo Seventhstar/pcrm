@@ -117,6 +117,7 @@ $(document).ready ->
     $('#project_date_end_plan').val dd
   $('#project_price,#project_footage,#project_price_2,#project_footage_2').change ->
     calc_proj_sum()
+    calc_executor_sum()
   $('#project_price_real,#project_price_2_real,#project_footage_2_real,#project_footage_real').change ->
     calc_proj_sum_real()
   $('#project_sum_2_real').change ->

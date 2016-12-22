@@ -13,12 +13,12 @@
       <th>Адрес</th>
       <th width='140px'>Вид проекта</th>
       <th width='150px'>Заказчик</th>
-      <th width='120px'>Исполнитель</th>
+      <% if is_admin? %><th width='120px'>Исполнитель</th><% end %>
       <th width="85px">Начало</th>
       <th width="85px">Конец / Продления</th>
+      <th width="37px">пл.</br> 1/м2</th>
+      <th class="td_right" width="70px">Стоимость<%= is_admin? ? '' : ' для дизайнера' %></th>
       <% if is_admin? %>
-        <th width="37px">пл.</br> 1/м2</th>
-        <th class="td_right" width="70px">Стоимость</th>
         <th></th>
       <% end %>
 

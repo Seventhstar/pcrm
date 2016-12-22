@@ -31,14 +31,16 @@
         <td><%= project.address %></td>
         <td><%= project.project_type_name %></td>
         <td><%= project.client_name %></td>
-        <td><%= project.executor_name %></td>
+        <% if is_admin? %><td><%= project.executor_name %></td> <% end %>
 
         <td ><%= project.date_start.try('strftime',"%d.%m.%Y") %></td>
         <td ><%= project.date_end_plan.try('strftime',"%d.%m.%Y") %></br> <%= project.last_elongation %></td>
+        <td><%= project.footage_info.html_safe %></br><%= project.prices %></td>
         <% if is_admin? %>
-          <td><%= project.footage_info.html_safe %></br><%= project.price %> <%= project.price_2 %></td>
           <td class="td_right <%= project.sum_total_real ==0 ? '':'red' %>" title="<%= project.sum_total.to_sum %>"><%= project.total.to_sum %></td>
           <%= tool_icons(project,{icons:'edit,show'}) %>
+        <% else %>
+        <td class="td_right <%= project.sum_total_real ==0 ? '':'red' %>"><%= project.executor_sum %></td>
         <% end %>
 
       </tr>

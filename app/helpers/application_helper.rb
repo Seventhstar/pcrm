@@ -1,6 +1,5 @@
 module ApplicationHelper
 
-
   def attr_boolean?(item,attr)
     item.class.column_types[attr.to_s].class == ActiveRecord::Type::Boolean
   end
@@ -8,8 +7,6 @@ module ApplicationHelper
   def is_admin?
     current_user.admin?
   end
-
-
 
   def date_ago( day )
     now = Date.today
@@ -22,7 +19,6 @@ module ApplicationHelper
     else
       time_ago_in_words(day)  + ' назад ('+ day.try('strftime',"%d.%m.%Y") + ')'
     end
-
   end
 
   def calls_color
@@ -51,10 +47,10 @@ module ApplicationHelper
     css_class = "btn #{active}"
     r = content_tag :input,'',{type: 'radio', value: show, name: 'show', id: show}
     t = content_tag :div, '',{class: "inp radio"} do
-        r
+      r
     end
     content_tag :label, '',{class: css_class, show: show} do
-       t + ' '+label
+      t + ' '+label
     end
   end
 
@@ -134,7 +130,6 @@ module ApplicationHelper
   end
 
   def only_actual_btn()
-    #<a href="#" class="link_a left on only_actual" off="Все" on="Актуальные">Актуальные</a>
     txt = @only_actual == false ? 'Все' : "Актуальные"
     cls = @only_actual ? ' on only_actual' : ''
     active = @only_actual ?  'active' : ''
@@ -177,8 +172,7 @@ module ApplicationHelper
   end
 
   def icon_for_project (prj)
-      cntnt = '<div class="icons-indicate">'
-      
+      cntnt = '<div class="icons-indicate">'   
       cntnt = cntnt + image_tag('debt.png') if prj.debt
       cntnt = cntnt + image_tag('hammer.png') if prj.interest
       cntnt = cntnt + image_tag('comment.png') if is_admin? && prj.comments.count>0
@@ -196,7 +190,6 @@ module ApplicationHelper
   end
 
   def option_li( page,title )
-    #p "page",page,"@page_data",@page
     css_class = @page == page ? "active" : nil
     content_tag :li, {:class =>css_class } do
       link_to title, '#',{:class =>"list-group-item #{css_class}", :controller => page}
@@ -205,7 +198,6 @@ module ApplicationHelper
 
 
   def submit_cancel(back_url, modal = false)
-    # <%= link_to 'Отмена', absences_url, :class => "sub btn_a btn_reset"%><%= f.button :submit, value: 'Сохранить', :class => 'sub btn_a' %>
       add_cls = modal ? ' update' : ''
       dd      = modal ? "modal" : ''
       s = submit_tag  'Сохранить', class: 'btn btn-default sub btn_a' + add_cls
@@ -250,7 +242,6 @@ module ApplicationHelper
 
   def tooltip_if_big( info, length = 50 )
       if info.length >length
-         # content_tag(:span,'   '+info[0..length]+' ...',{'data-toggle' =>"tooltip", 'data-placement' => "top", :title => info})
          tooltip( '   '+info[0..length] + ' ...', info)
       else
          info
@@ -258,7 +249,6 @@ module ApplicationHelper
   end
 
   def span_tooltip(info, full_info, cls, a, is_link = true )
-    #content_tag( :span, info, {'data-toggle' =>"tooltip", 'data-placement' => "top", :title => full_info, :class => cls})''
     t_hash = {'data-toggle' =>"tooltip", 'data-placement' => "top", :title => full_info}
     if is_link
       b = link_to info.html_safe, [:edit, a], t_hash
@@ -281,7 +271,6 @@ module ApplicationHelper
 
   def tooltip_str_from_hash(h)
     a = h.collect{ |k,v| [k,v].join(' ')}.join("\n")
-    #puts a
   end
 
   def avatar_for( user )

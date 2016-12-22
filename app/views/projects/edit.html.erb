@@ -1,3 +1,4 @@
+<% if is_admin? %>
 <div class="hl hl_a bd">Редактирование проекта
 <%= link_to "", @project, method: :delete, data: { confirm: 'Действительно удалить проект?' }, :class=>"icon icon_remove right" %>
 </div>
@@ -11,9 +12,7 @@
     <li><a href="#tabs-3">Сроки</a></li>
     <li><a href="#tabs-4">Выплаты</a></li>
     <li><a href="#tabs-5">Заказы</a></li>
-    <% if is_admin? %>
-      <!-- <li><a href="#tabs-6">Комментарии</a></li> -->
-    <% end %>
+
   </ul>
   <div class="right" style="width: 100%"></div>
 <div class="box_wrap">
@@ -66,14 +65,14 @@
 
 </tbody></table></div>
 </div>
-<% if is_admin? %>
+
   <div class="right">
     <div class="sep_3"></div>
     <div class="comments_box">
       <%= render "shared/comments" %>
     </div>
   </div>
-  <% end %>
+
 </div>
 <div id="tabs-2" class="ptab">
 
@@ -181,5 +180,6 @@
 <% end %>
 
 </div>
+<% end %>
 
 
