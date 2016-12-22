@@ -27,7 +27,7 @@ td.caption3{ font-weight: 500; }
 td.caption3 span{ float: left; padding-top: 8px; padding-right: 15px;}
 td.caption3 .chosen-container span, td.caption3 .chosen-container li { font-weight: normal;}
 td.caption3 .chosen-container span {padding-top: 0px;}
-.inp2{ width: 245px; float: left;}  
+.inp2{ width: 245px; float: left;}
 .btn_reset {margin-right: 10px;}
 
 table.tbl_fc_1 td.caption{width: 160px; }
@@ -60,7 +60,7 @@ table td{font-size: 13px;}
 
 
 .tleads th{ padding: 8px;	border-bottom: 1px solid #ddd;}
-.tleads td{ border-top: 1px solid #ebebeb; padding: 8px; 
+.tleads td{ border-top: 1px solid #ebebeb; padding: 8px;
 	&.editable,&.app_cancel{padding: 8px 4px}
 }
 .shops td{padding: 8px 12px;  }
@@ -70,8 +70,8 @@ td.edit_delete, th.edit_delete{ width: 45px;	padding-right: 4px !important;	padd
 // td.edit_delete .icon{float: right;}
 
 .tleads tr.month, .month{
-	border-right-color: white; 
-	border-left-color: white; 
+	border-right-color: white;
+	border-left-color: white;
 	vertical-align: bottom;
 	margin-bottom: 0;
 	font-size: 20px !important;
@@ -81,6 +81,6 @@ td.edit_delete, th.edit_delete{ width: 45px;	padding-right: 4px !important;	padd
 
 .tleads tr.month td{ 	padding: 10px; }
 .tleads th.inf{padding:2px; width: 20px;}
-td.va_middle {vertical-align: middle !important;}
-														
+tr.va_middle td, td.va_middle {vertical-align: middle !important;}
+
 tr.bg_red:nth-child(even) td:first-child {background-color: #fae5e5 !important;}

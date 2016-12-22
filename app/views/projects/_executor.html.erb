@@ -4,12 +4,6 @@
   <%= td_sum_field(f, :designer_price_2, 'Цена 2 для дизайнера', {class: @project.designer_price_2.nil? ? 'invisible' : nil }  ) %>
   <%= td_sum_field(f, :visualer_price, 'Цена для визуализатора (за м2)') %>
 
-  <% ex_total = 0 %>
-  <% ex_total = (@project.designer_price * @project.footage).to_i if !@project.designer_price.nil? && !@project.footage.nil? %>
-  <% ex_total = ex_total + (@project.designer_price_2 * @project.footage_2).to_i if !@project.designer_price_2.nil? && !@project.footage_2.nil? %>
-  <% ex_total = ex_total + (@project.visualer_price * @project.footage).to_i if !@project.visualer_price.nil?  && !@project.footage.nil?%>
-
-
-  <%= td_sum_field(f, :sum_total_executor, 'Общая стоимость', {value: ex_total } ) %>
-  <%= td_sum_field(f, :sum_rest, 'Остаток', {value: @project.sum_total_real==0 ? @project.sum_total - ex_total : @project.sum_total_real - ex_total} ) %>
+    <%= td_sum_field(f, :sum_total_executor, 'Общая стоимость', {value: @project.executor_sum } ) %>
+  <%= td_sum_field(f, :sum_rest, 'Остаток', {value: @project.rest}) %>
 </tr>

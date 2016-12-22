@@ -6,7 +6,7 @@ class Project < ActiveRecord::Base
   has_many :comments, :as => :owner
   has_many :receipts
   has_many :absence
-  
+
   attr_accessor :first_comment
   has_many :elongations, class_name: 'ProjectElongation'
 
@@ -43,6 +43,19 @@ class Project < ActiveRecord::Base
      end
   end
 
+  def designer_sum()
+    s = designer_price.to_i * footage.to_f
+    s = s + designer_price_2.to_i * footage_2.to_f if footage_2>0
+    s
+  end
+
+  def executor_sum()
+    designer_sum + visualer_price.to_i * footage.to_f
+  end
+
+  def rest()
+    sum_total_real==0 ? sum_total - executor_sum : sum_total_real - executor_sum
+  end
 
 
   def last_elongation
