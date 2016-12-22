@@ -24,42 +24,45 @@
       <div class="sep_15"></div>
         <table class="fullwidth tbl_fc fw_form">
         <thead>
-        <tr><th width="25%"></th><th width="25%"></th><th width="50%"></th></tr></thead>
+        <tr><th width="50%"></th><th width="50%"></th></tr></thead>
         <tbody>
           <tr>
             <td><div class="inp_w"><%= f.input :number,label: 'Номер' %></div></td>
-            <td><div class="inp_w"><label>Дата</label><%= f.text_field :date_sign, value: @project.date_sign.try('strftime',"%d.%m.%Y"), class: "txt datepicker" %></div></td>
+            <td class='va_pt15'><%= f.input :interest, :as => :boolean, label: 'Интерес к стройке', class: 'inp_btn checkbox'  %>
+              <%= f.input :debt, :as => :boolean, label: 'Должен денег', class: 'inp_btn checkbox'  %>
+            </td>
             </tr>
+            <tr><td class="gr_caption">Статус:</td></tr>
+          <tr>
+            <td><div class="inp_w"><%= chosen_src :pstatus_id, ProjectStatus.all, @project, {nil_value: 'Статус...' } %></div></td>
+            <td class='va_middle'><%= f.input :attention, :as => :boolean, label: 'Особое внимание', class: 'inp_btn checkbox'  %></td>
+
+            </tr>
+            <tr><td class="gr_caption">Клиент</td></tr>
             <tr>
-            <td colspan="2"><div class="inp_90 left"><%= chosen_src :client_id, Client.all, @project,{label: 'Клиент'} %></div>
+            <td ><div class="inp_90 left"><%= chosen_src :client_id, Client.all, @project,{label: ' '} %></div>
               <% if @project.client_id %> 
                 <%= link_to "", edit_client_path(@project.client_id, sub: true),data: {modal: true}, class: 'icon icon_edit left', id: 'client_link' %>
               <% end %>
             </td>
-            <td colspan="2"><div class="inp_w"><%= f.input :address, label: 'Адрес' %></div></td>
+            <td ><div class="inp_w"><%= f.input :address, label: 'Адрес' %></div></td>
           </tr>
 
-          <tr><td class="gr_caption" colspan="2">Вид работы и исполнитель</td></tr>
+          <tr><td class="gr_caption">Вид работы и исполнитель</td></tr>
           <tr>
-            <td colspan="2"><div class="inp_w"><%= chosen_src :project_type_id, ProjectType.all, @project, {nil_value: 'Вид работы...' } %></div></td>
+            <td ><div class="inp_w"><%= chosen_src :project_type_id, ProjectType.all, @project, {nil_value: 'Вид работы...' } %></div></td>
             <td></td>
           </tr>
           <tr>
-            <td colspan="2"><div class="inp_w"><label>Дизайнер</label><%= chosen_src :executor_id, User.all, @project, {nil_value: 'Исполнитель...' } %></div>
+            <td ><div class="inp_w"><label>Дизайнер</label><%= chosen_src :executor_id, User.all, @project, {nil_value: 'Исполнитель...' } %></div>
             </td>
           </tr>
           <tr>
-            <td colspan="2"><div class="inp_w"><label>Визуализатор</label><%= chosen_src :visualer_id, User.all, @project, {nil_value: 'Визуализатор...' } %>
+            <td ><div class="inp_w"><label>Визуализатор</label><%= chosen_src :visualer_id, User.all, @project, {nil_value: 'Визуализатор...' } %>
             </div>
             </td>
           </tr>
-          <tr><td class="gr_caption">Статус:</td></tr>
-          <tr>
-            <td><div class="inp_w"><%= chosen_src :pstatus_id, ProjectStatus.all, @project, {nil_value: 'Статус...' } %></div></td>
-            <td></td>
-            <td class='va_middle'><%= f.input :attention, :as => :boolean, label: 'Особое внимание', class: 'inp_btn checkbox'  %></td>
-
-            </tr>
+          
 
 </tbody></table></div>
 </div>
@@ -114,7 +117,7 @@
               <td><div class="inp_w"><label>Окончание</label><%= f.text_field :date_end_plan, value: @project.date_end_plan.try('strftime',"%d.%m.%Y"), class: "txt datepicker" %></div></td>
               <td><div class="inp_w"><label>Рабоч. дней без уч. праздников</label> <%= number_field_tag :days, @project.days_plan, {class: 'form-control'} %></div></td>
               <td></td>
-              <td></td>
+              <td><div class="inp_w"><label>Дата подписания</label><%= f.text_field :date_sign, value: @project.date_sign.try('strftime',"%d.%m.%Y"), class: "txt datepicker" %></div></td>
             </tr>
           </tbody>
           </table>

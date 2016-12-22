@@ -161,6 +161,7 @@ class ProjectsController < ApplicationController
         :sum, :sum_total, :sum_real, :price, :price_2, :price_real,  :sum_2, :sum_total_real, :sum_2_real, :price_2_real, 
         :month_in_gift, :act, :delay_days,  :pstatus_id, :attention, 
         :designer_price, :designer_price_2,:visualer_price,
+        :debt, :interest,
         :client_attributes => [:name, :address, :phone, :email] )
     end
 

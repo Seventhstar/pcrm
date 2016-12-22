@@ -19,39 +19,17 @@ input::-webkit-inner-spin-button { padding-right:0}
 .space10 {margin-left: 10px !important;}
 
 #add_footage {font-size: 18px; font-weight: bold;}
+.va_pt15{padding-top: 16px;}
 
 td.inf.attention, td.inf.comment {background: asset-url('p_inf.png') no-repeat !important;
                              background-position-y: 5px !important; background-position-x: 7px !important;
                               height: 32px; }
 
-// td.inf {padding-left: 4px;}
+
+#div_tprojects .cell-inner {position:relative;}
+#div_tprojects .icons-indicate {position:absolute; top: 0; right: 100%; white-space:nowrap; margin:10px 10px 0 0; font-size: 0;}
+#div_tprojects .icons-indicate img {margin:0 5px 0 0;}
 
 td.inf.comment {  background-position-x: -17px !important; }
-tr:before {content: '';} 
-tr.comment:before {    
-    content: '';
-		position: absolute;
-    z-index: -1;
-    overflow: hidden;
-    left: -37px;
-    right: 206px;
-    width: 32px;
-    height: 26px;
-    margin-top: 10px;
-    background:url('conversation.png');
-  }
-tr.attention:before {    
-    content: '';
-		position: absolute;
-    z-index: -1;
-    overflow: hidden;
-    left: -74px;
-    right: 206px;
-    width: 32px;
-    height: 32px;
-    margin-top: 10px;
-    background:url('intrestig.png');
-  }  
-td.inf.attention.comment {  background-position-x: -38px !important;}
 
 .icon_comment {background: asset-url('comment.png') no-repeat;}

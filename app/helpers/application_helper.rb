@@ -177,10 +177,14 @@ module ApplicationHelper
   end
 
   def icon_for_project (prj)
-    cls = ''
-    cls = cls + ' attention' if prj.attention
-    cls = cls + ' comment' if is_admin? && prj.comments.count>0
-    cls
+      cntnt = '<div class="icons-indicate">'
+      
+      cntnt = cntnt + image_tag('debt.png') if prj.debt
+      cntnt = cntnt + image_tag('hammer.png') if prj.interest
+      cntnt = cntnt + image_tag('comment.png') if is_admin? && prj.comments.count>0
+      cntnt = cntnt + image_tag('attention.png') if prj.attention
+      cntnt = cntnt + image_tag('stopped.png') if prj.pstatus_id == 2
+      cntnt = cntnt + '</div>'
   end
 
 
