@@ -24,9 +24,19 @@
 <% end %>
 
 		<tr><td class="caption">Метраж (1/2):</td>
-		    <td><div class="lbl"><%= @project.footage %> / <%= @project.footage_2 %></div></td></tr>
+		    <td><div class="lbl">
+		    <%= @project.footage_info.html_safe %>
+		    
+		    	
+		    </div></td></tr>
 		<tr><td class="caption">Цена за м2:</td>
-			<td><div class="lbl"><%= @project.price %> / <%= @project.price_2 %></div></td></tr>
+			<td><div class="lbl">
+			<% if is_admin? %>
+				<%= @project.prices %>
+			<% else %>
+			  <%= @project.executor_prices %>
+			<% end %>	
+			</div></td></tr>
 
 		<tr><td class="caption">Сроки:</td>
 		    <td><div class="lbl"><%= @project.date_start.try('strftime',"%d.%m.%Y") %> / <%= @project.date_end_plan.try('strftime',"%d.%m.%Y") %> = <%= @project.days_plan %>дн.</div></td></tr>

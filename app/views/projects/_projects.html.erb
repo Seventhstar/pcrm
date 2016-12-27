@@ -41,8 +41,10 @@
           <td class="td_right <%= project.sum_total_real ==0 ? '':'red' %>" title="<%= project.sum_total.to_sum %>"><%= project.total.to_sum %></td>
           <%= tool_icons(project,{icons:'edit,show'}) %>
         <% else %>
+
           <td><%= project.footage_info.html_safe %></br><%= project.executor_prices %></td>
-          <td class="td_right <%= project.sum_total_real ==0 ? '':'red' %>"><%= project.executor_sum %></td>
+        <td class="td_right <%= project.sum_total_real ==0 ? '':'red' %>"><%= project.executor_sum.to_sum %></td>
+
         <% end %>
 
       </tr>

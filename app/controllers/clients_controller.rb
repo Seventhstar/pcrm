@@ -17,6 +17,7 @@ class ClientsController < ApplicationController
   # GET /clients/1
   # GET /clients/1.json
   def show
+    @title = 'Просмотр клиента'
     respond_modal_with @client, location: root_path
   end
 

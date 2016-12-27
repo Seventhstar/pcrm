@@ -2,10 +2,10 @@
 <div class="panel-left">
 <%= render_navigation(:level => 2) %>
 </div>
-<%= link_to 'Добавить',new_client_path, class: "btn_a btn-add btn_slim right" %>
+<% if is_admin? %>
+  <%= link_to 'Добавить',new_client_path, class: "btn_a btn-add btn_slim right" %>
+<% end %>
 </div>
-
-
 
 <div class ="container">
 
@@ -13,4 +13,5 @@
  <%= render "clients" %>
 </div>
 </div>
+
 
