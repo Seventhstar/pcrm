@@ -89,7 +89,7 @@ label a.btn_c:hover{cursor: pointer;}
 .page_wrapper {min-height: 100%; position:relative;}
 
 
-.bw_i:after {content: ' '; clear:both; display: block; width: 0; height: 0; overflow: hidden; font-size: 0;}
+// .bw_i:after {content: ' '; clear:both; display: block; width: 0; height: 0; overflow: hidden; font-size: 0;}
 
 
 .header {margin: 0 auto; position:relative; width: 1200px; }
@@ -108,7 +108,9 @@ label a.btn_c:hover{cursor: pointer;}
 .user_h .logout{margin:0 0 0 20px; }
 .user_h .logout .icon{margin:0 7px 0 0;}
 
-.menu_main {height: 44px; background: #f1f1f1 asset-url('bg1_1.png') no-repeat 0 0; border-radius: 5px; position:relative; margin-bottom: 40px;}
+.menu_main {height: 44px; background: #f1f1f1 asset-url('bg1_1.png') no-repeat 0 0; border-radius: 5px; position:relative; margin-bottom: 40px;
+margin-left: 128px; //ny
+}
 .menu_main ul, .submenu ul, .items_box_head ul{margin:0 0 0 0; padding: 0 0 0 0; list-style:none; overflow:hidden;}
 .menu_main ul li, .submenu ul li, .items_box_head ul li{margin:0 0 0 0; padding: 0 0 0 0; background:none; float:left;}
 .menu_main ul li a{display: inline-block; font-size: 15px; color: #000; text-decoration:none; }

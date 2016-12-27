@@ -57,9 +57,15 @@ class Project < ActiveRecord::Base
     sum_total_real==0 ? sum_total - executor_sum : sum_total_real - executor_sum
   end
 
+  def executor_prices()
+    p = designer_price.to_s
+    p = p +'/'+ designer_price_2.to_s if designer_price_2.to_i>0
+    p
+  end
+
   def prices()
     p = price.to_s
-    p = p +'/'+ price_2.to_s if price_2>0
+    p = p +'/'+ price_2.to_s if price_2.to_i>0
     p
   end
 

@@ -94,7 +94,7 @@
           <td></td>
           <%= td_sum_field(f, :sum_total_real, 'Общая стоимость') %>
           </tr>
-          <tr <%= @project.footage_2==0 ? 'style=display:none;' : '' %>  id="tr_footage_2_real">
+          <tr <%= @project.footage_2.to_i==0 ? "class=invisible" : "" %>  id="tr_footage_2_real">
           <%= td_sum_field(f, :footage_2_real, 'Метраж 2',  {mask: true}) %>
           <%= td_sum_field(f, :price_2_real, 'Цена за м2') %>
           <%= td_sum_field(f, :sum_2_real, 'Сумма') %>
