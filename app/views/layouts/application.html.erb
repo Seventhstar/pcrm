@@ -11,10 +11,7 @@
   <title><%= content_for?(:title) ? yield(:title) : "Pcrm" %></title>
   <%= csrf_meta_tags %>
   <%= stylesheet_link_tag "application", :media => "all" %>
-  <script type='text/javascript' src='http://mvcreative.ru/example/6/1/snow.js'></script> 
-  <script type='text/javascript'> 
-  var aaSnowConfig = {snowflakes: '200'}; 
-  </script> 
+
 </head>
 
 <body>
@@ -23,26 +20,12 @@
 
   <% if current_user %>
     <div class="header">
-    <div id="ny" style="
-    width: 128px;
-    height: 128px;
-    float: left;
-    background-image: url('http://mvcreative.ru/example/7/elki/tree.png');">
-    <div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-
-  </div>
+      <!-- <%= render 'layouts/ny' %>  -->
       <div class="bw_i">
-       
-        
-
         <% if controller.action_name == 'index' %>
-        <div class="navsearch"> 
+          <div class="navsearch"> 
             <%= text_field_tag :search, params[:search], :class => "search_area txt slim_txt", :placeholder=>"Поиск...", aname: controller.action_name, cname: controller.controller_name %>
-        </div>
+          </div>
         <% end -%>
 
         <div class="user_h">

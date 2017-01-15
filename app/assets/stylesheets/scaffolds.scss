@@ -5,6 +5,12 @@ $nprogress-color: #ff8411;
 * html .page-wrapper { height: 95%; }
 .page-buffer { height: 50px; }
 
+#ny{
+    width: 128px;
+    height: 128px;
+    float: left;
+    background-image: url('http://mvcreative.ru/example/7/elki/tree.png');
+}
 
 input[type="submit"], input[type="reset"], input[type="text"], input[type="tel"], input[type="url"], input[type="email"], input[type="search"], input[type="password"], 
 textarea,.comment_area, .txt, #datepicker {	

@@ -109,7 +109,7 @@ label a.btn_c:hover{cursor: pointer;}
 .user_h .logout .icon{margin:0 7px 0 0;}
 
 .menu_main {height: 44px; background: #f1f1f1 asset-url('bg1_1.png') no-repeat 0 0; border-radius: 5px; position:relative; margin-bottom: 40px;
-margin-left: 128px; //ny
+//margin-left: 128px; //ny
 }
 .menu_main ul, .submenu ul, .items_box_head ul{margin:0 0 0 0; padding: 0 0 0 0; list-style:none; overflow:hidden;}
 .menu_main ul li, .submenu ul li, .items_box_head ul li{margin:0 0 0 0; padding: 0 0 0 0; background:none; float:left;}
@@ -241,6 +241,7 @@ label.active .inp.radio {background-position:-193px -20px;}
 .inp.radio input{position:absolute; top: 0; left: -50px;}
 
 label.inp_btn_label {padding: 0 0 0 25px; position:relative;}
+label.inp_btn_label span {margin-left: 25px;}
 label.inp_btn_label .inp_btn {position:absolute; top: -1px; left: 0;}
 
 .select_custom {position:relative;}
