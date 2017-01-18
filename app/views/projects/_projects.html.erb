@@ -35,7 +35,7 @@
 
         <td ><%= project.date_start.try('strftime',"%d.%m.%Y") %></td>
         <td ><%= project.date_end_plan.try('strftime',"%d.%m.%Y") %></br> <%= project.last_elongation %></td>
-        
+
         <% if is_admin? %>
           <td><%= project.footage_info.html_safe %></br><%= project.prices %></td>
           <td class="td_right <%= project.sum_total_real ==0 ? '':'red' %>" title="<%= project.sum_total.to_sum %>"><%= project.total.to_sum %></td>
@@ -43,7 +43,7 @@
         <% else %>
 
           <td><%= project.footage_info.html_safe %></br><%= project.executor_prices %></td>
-        <td class="td_right <%= project.sum_total_real ==0 ? '':'red' %>"><%= project.executor_sum.to_sum %></td>
+          <td class="td_right <%= project.sum_total_real ==0 ? '':'red' %>"><%= project.designer_sum.to_sum %></td>
 
         <% end %>
 
