@@ -54,7 +54,6 @@ class LeadsController < ApplicationController
     
     order = sort_1 + " " + sort_direction + ", "+ sort_2  + " " + dir_2 + ", leads.created_at desc"
     @leads = @leads.order(order)
-
     store_leads_path
   end
 

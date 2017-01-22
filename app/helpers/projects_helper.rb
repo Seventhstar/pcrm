@@ -23,6 +23,11 @@ module ProjectsHelper
     business_days
   end
 
+  def project_stored_page_url
+      sess_url  = session[:last_prj_page]
+      sess_url || projects_url
+      p sess_url
+  end
 
 
 end

@@ -31,7 +31,7 @@
         <td><%= project.address %></td>
         <td><%= project.project_type_name %></td>
         <td><%= project.client_name %></td>
-        <% if is_admin? %><td><%= project.executor_name %></td> <% end %>
+        <% if is_admin? && @sort!="users.name" %><td><%= project.executor_name %></td> <% end %>
 
         <td ><%= project.date_start.try('strftime',"%d.%m.%Y") %></td>
         <td ><%= project.date_end_plan.try('strftime',"%d.%m.%Y") %></br> <%= project.last_elongation %></td>

@@ -5,6 +5,9 @@ class ProjectsController < ApplicationController
   helper_method :sort_2, :dir_2
   helper_method :sort_column, :sort_direction
   respond_to :html, :json
+
+  include ProjectsHelper
+
   # GET /projects
   # GET /projects.json
   def index
@@ -31,9 +34,13 @@ class ProjectsController < ApplicationController
     end
 
     sort_1 = @sort_column #== 'date_end_plan' ? 'month' : @sort_column
-    p sort_1
-    order = sort_1 + " " + sort_direction + ", "+ sort_2  + " " + dir_2 + ", projects.created_at desc"
+    
+    order = sort_1 + " " + sort_direction + ", "+ sort_2  + " " + dir_2 + ", projects.number desc"
+    # p sort_2, order
     @projects = @projects.order(order)
+    store_prj_path
+    @sort = sort_1
+    # p project_stored_page_url
   end
 
   # GET /projects/1
@@ -82,7 +89,7 @@ class ProjectsController < ApplicationController
           comm.user_id = params[:project][:owner_id]
           comm.save
         end
-        format.html { redirect_to projects_url, notice: 'Проект успешно создан' }
+        format.html { redirect_to project_stored_page_url, notice: 'Проект успешно создан' }
         format.json { render :show, status: :created, location: @project }
       else
         format.html { render :new }
@@ -108,7 +115,7 @@ class ProjectsController < ApplicationController
     # p project_params
     respond_to do |format|
       if @project.update(project_params)
-        format.html { redirect_to projects_url, notice: 'Проект успешно сохранен' }
+        format.html { redirect_to project_stored_page_url, notice: 'Проект успешно сохранен' }
         format.json { render :show, status: :ok, location: @project }
       else
         format.html { render :edit }
@@ -123,7 +130,7 @@ class ProjectsController < ApplicationController
   def destroy
     @project.destroy
     respond_to do |format|
-      format.html { redirect_to projects_url, notice: 'Проект успешно удален' }
+      format.html { redirect_to project_stored_page_url, notice: 'Проект успешно удален' }
       format.json { head :no_content }
     end
   end
@@ -140,11 +147,17 @@ class ProjectsController < ApplicationController
       @cl_debt  =  (@project.total - @cl_total).to_i
     end
 
+    def store_prj_path
+      session[:last_prj_page] = request.url || projects_url if request.get?
+    end
+
+
+
     def check_sum
       prms = ['price','price_2','price_real','price_2_real','sum','sum_2','sum_real','sum_2_real','sum_total','sum_total_real','designer_price', 'designer_price_2','visualer_price']
       prms.each do |p|
         project_params[p] = project_params[p].gsub!(' ','') if !project_params[p].nil?
-        p p,project_params[p]
+        # p p,project_params[p]
       end
     end
 
@@ -176,11 +189,12 @@ class ProjectsController < ApplicationController
     end
 
     def sort_2
-      "date_end_plan"
+      Project.column_names.include?(params[:sort2]) ? params[:sort2] : "number"
     end
 
     def dir_2 
-      "desc"
+      defaul_dir = sort_column =='number' ? "asc": "desc"
+      %w[asc desc].include?(params[:dir2]) ? params[:dir2] : defaul_dir
     end
 
 end

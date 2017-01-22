@@ -101,7 +101,7 @@ module ApplicationHelper
     css_class = column.to_s().include?(sort_2) ? "subsort current #{dir_2}" : "subsort"
 
     a = content_tag :div, "",{class: "sortArrow"}
-    b = content_tag :span,title
+    b = content_tag :span, title.html_safe
 
     content_tag :span,{:class => css_class, :sort2 => column, :dir2 => dir_2} do
        b + a
