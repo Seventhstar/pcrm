@@ -22,7 +22,7 @@ class ProvidersController < ApplicationController
 
     @param_search = params[:search]
     @only_actual = !params[:only_actual] || params[:only_actual] == "true"
- 
+
     all_ids = Provider.order(:name).ids
     sp,bp,gtp,ps,s_ids = all_ids,all_ids,all_ids,all_ids,all_ids
 
@@ -30,7 +30,7 @@ class ProvidersController < ApplicationController
       s_ids = Provider.where('LOWER(name) like LOWER(?) or LOWER(address) like LOWER(?)','%'+params[:search]+'%','%'+params[:search]+'%').ids
     end
 
-    
+
     if params[:style] && params[:style]!="" && params[:style]!='0'
         sp = Style.find(params[:style]).providers.ids
     end
@@ -50,14 +50,14 @@ class ProvidersController < ApplicationController
     end
 
     @ids = sp & bp & gtp & ps & s_ids
-      
+
     @providers = Provider.where(:id => @ids).order(:name) # find(ids, :order => :name)
     store_providers_path
   end
 
   # GET /providers/1
   # GET /providers/1.json
-  def show    
+  def show
     @title = 'Просмотр поставщика'
     @owner = @provider
     # @comments = @provider.comments.order('created_at asc')
@@ -72,7 +72,7 @@ class ProvidersController < ApplicationController
     @managers = {}
     @manager  = ProviderManager.new
     @p_statuses = PStatus.order(:name)
-    
+    @owner = @provider
   end
 
   # GET /providers/1/edit
@@ -81,7 +81,7 @@ class ProvidersController < ApplicationController
     @managers = @provider.provider_managers
     @manager  = ProviderManager.new
     @p_statuses = PStatus.order(:name)
-    
+
     @comm_height = 310
     # @comments = @provider.comments.order('created_at asc')
     @owner = @provider
@@ -100,7 +100,7 @@ class ProvidersController < ApplicationController
         format.html { render :new }
         format.json { render json: @provider.errors, status: :unprocessable_entity }
       end
-    end 
+    end
   end
 
   # PATCH/PUT /providers/1
@@ -144,7 +144,7 @@ class ProvidersController < ApplicationController
   def sort_column
     Provider.column_names.include?(params[:sort]) ? params[:sort] : "name"
   end
-  
+
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end

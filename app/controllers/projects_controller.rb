@@ -30,11 +30,11 @@ class ProjectsController < ApplicationController
 
     if params[:sort] == 'users.name'
       sort_1 = "executor.name"
-      @projects = @projects.joins(:executor)      
+      @projects = @projects.joins(:executor)
     end
 
     sort_1 = @sort_column #== 'date_end_plan' ? 'month' : @sort_column
-    
+
     order = sort_1 + " " + sort_direction + ", "+ sort_2  + " " + dir_2 + ", projects.number desc"
     # p sort_2, order
     @projects = @projects.order(order)
@@ -55,16 +55,24 @@ class ProjectsController < ApplicationController
     get_debt(data)
   end
 
+  def def_params
+    @owner = @project
+    # @files    = @lead.attachments
+    # @history  = get_history_with_files(@lead)
+  end
+
   # GET /projects/new
   def new
     @project = Project.new
     @client =  @project.build_client
     get_debt
+    def_params
   end
 
   # GET /projects/1/edit
   def edit
     get_debt
+    def_params
     @comm_height = 350
     @owner = @project
     @elongation_types = ElongationType.all
@@ -142,7 +150,7 @@ class ProjectsController < ApplicationController
       else
         @cl_payments = @project.receipts.where('provider_id = 0 and date < ?', to_date).order(:date)
       end
-        
+
       @cl_total = @cl_payments.sum(:sum)
       @cl_debt  =  (@project.total - @cl_total).to_i
     end
@@ -168,11 +176,11 @@ class ProjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      params.require(:project).permit(:client_id, :address, :owner_id, :executor_id, :designer_id, :visualer_id, :project_type_id, 
-        :date_start, :date_end_plan, :date_end_real, :number, :date_sign, 
-        :footage, :footage_2, :footage_real, :footage_2_real, :style_id, 
-        :sum, :sum_total, :sum_real, :price, :price_2, :price_real,  :sum_2, :sum_total_real, :sum_2_real, :price_2_real, 
-        :month_in_gift, :act, :delay_days,  :pstatus_id, :attention, 
+      params.require(:project).permit(:client_id, :address, :owner_id, :executor_id, :designer_id, :visualer_id, :project_type_id,
+        :date_start, :date_end_plan, :date_end_real, :number, :date_sign,
+        :footage, :footage_2, :footage_real, :footage_2_real, :style_id,
+        :sum, :sum_total, :sum_real, :price, :price_2, :price_real,  :sum_2, :sum_total_real, :sum_2_real, :price_2_real,
+        :month_in_gift, :act, :delay_days,  :pstatus_id, :attention,
         :designer_price, :designer_price_2,:visualer_price,
         :debt, :interest,
         :client_attributes => [:name, :address, :phone, :email] )
@@ -192,7 +200,7 @@ class ProjectsController < ApplicationController
       Project.column_names.include?(params[:sort2]) ? params[:sort2] : "number"
     end
 
-    def dir_2 
+    def dir_2
       defaul_dir = sort_column =='number' ? "asc": "desc"
       %w[asc desc].include?(params[:dir2]) ? params[:dir2] : defaul_dir
     end
