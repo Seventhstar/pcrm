@@ -57,32 +57,62 @@ class Project < ActiveRecord::Base
     sum_total_real==0 ? sum_total - executor_sum : sum_total_real - executor_sum
   end
 
+  def executor_info()
+     i = [f1_info,'м.',' - ',designer_price.to_s,'р.'].join
+     i = i + '</br>'+ [f2_info,'м.',' - ',designer_price_2.to_s,'р.'].join if !nil_footage(f2_info)
+     i
+  end
+
   def executor_prices()
     p = designer_price.to_s
-    p = p +'/'+ designer_price_2.to_s if designer_price_2.to_i>0
+    p = p +' / '+ designer_price_2.to_s if designer_price_2.to_i>0
     p
   end
 
   def prices()
     p = price.to_s
-    p = p +'/'+ price_2.to_s if price_2.to_i>0
+    p = p +' / '+ price_2.to_s if price_2.to_i>0
     p
   end
 
   def last_elongation
-     if !elongations.nil?
-        new_date = elongations.last
-        if new_date
-          new_date.new_date.try('strftime',"%d.%m.%Y")
-        end
+    new_date = ""
+     if !elongations.nil? && elongations.count>0
+        new_date = elongations.last.new_date
      end
+     new_date
+  end
+
+  def date_end
+    elongations.count==0 ? date_end_plan : last_elongation #elongations.last.new_date
+  end
+
+  def admin_info()
+
+     i = [f1_info,'м.',' - ',price.to_s,'р.'].join
+     i = i + '</br>'+ [f2_info,'м.',' - ',price_2.to_s,'р.'].join if !nil_footage(f2_info)
+     i
+  end
+
+  def f1_info
+    f1 = nil_footage(footage_real) ? footage : footage_real
+    f1 = f1.to_s[0..-3] if f1.to_s[-2,2] == '.0'
+    f1 = f1.to_s.sub('.',',')
+    f1
+  end
+
+  def f2_info
+    f = nil_footage(footage_2_real) ? footage_2 : footage_2_real
+    f = f.to_s[0..-3] if f.to_s[-2,2] == '.0'
+    f = f.to_s.sub('.',',')
+    f
   end
 
   def footage_info
     if !footage_real.nil? && footage_real!=0 && footage_real!= '0.0'
-        f = footage_2_real.to_s=='0.0' ? footage_real : ['<b>',footage_real,'+',footage_2_real,'</b>'].join
+        f = footage_2_real.to_s=='0.0' ? footage_real : ['<b>',footage_real,' - ',designer_price,'</b>'].join
     else
-        f = footage_2.to_s=='0.0' ? footage : [footage,'+',footage_2].join
+        f = footage_2.to_s=='0.0' ? [footage,' - ',designer_price].join : [footage,' - ',designer_price].join
     end
     ['<span>',f,'</span>'].join
   end

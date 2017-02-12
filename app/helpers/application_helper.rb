@@ -8,6 +8,10 @@ module ApplicationHelper
     current_user.admin?
   end
 
+
+
+
+
   def date_ago( day )
     now = Date.today
     days = (now-day.to_date).to_i
@@ -163,21 +167,21 @@ module ApplicationHelper
 
   end
 
-  def class_for_project (prj)
-    cls = ''
-    cls = 'hot' if !prj.date_end_plan.nil? && prj.date_end_plan <= Date.today+1
-    cls = "nonactual" if prj.pstatus_id == 3
-    cls = 'bg_red' if prj.pstatus_id == 2
-    cls
-  end
+  # def class_for_project (prj)
+  #   cls = ''
+  #   cls = 'hot' if !prj.date_end_plan.nil? && prj.date_end_plan <= Date.today+1
+  #   cls = "nonactual" if prj.pstatus_id == 3
+  #   cls = 'bg_red' if prj.pstatus_id == 2
+  #   cls
+  # end
 
   def icon_for_project (prj)
       cntnt = '<div class="icons-indicate">'   
-      cntnt = cntnt + image_tag('debt.png') if prj.debt
-      cntnt = cntnt + image_tag('hammer.png') if prj.interest
-      cntnt = cntnt + image_tag('comment.png') if is_admin? && prj.comments.count>0
-      cntnt = cntnt + image_tag('attention.png') if prj.attention
-      cntnt = cntnt + image_tag('stopped.png') if prj.pstatus_id == 2
+      cntnt = cntnt + image_tag('debt.png', title: 'Заказчик должен денег') if prj.debt
+      cntnt = cntnt + image_tag('hammer.png', title: 'Интерес к стройке') if prj.interest
+      cntnt = cntnt + image_tag('comment.png', title: 'Добавлен комментарий') if is_admin? && prj.comments.count>0
+      cntnt = cntnt + image_tag('attention.png', title: 'Особое внимание') if prj.attention
+      cntnt = cntnt + image_tag('stopped.png', title: 'Проект приостановлен') if prj.pstatus_id == 2
       cntnt = cntnt + '</div>'
   end
 

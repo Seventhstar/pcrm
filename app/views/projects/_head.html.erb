@@ -9,24 +9,24 @@
 <table class="tleads projects">
   <thead>
     <tr>
-      <th width="40px"><%= sortable_th(:number,'Номер') %></th>
+      <th width="25px"><%= sortable_th(:number,'№') %></th>
       <th><%= sortable_th(:address,'Адрес') %></th>
 
       <% if is_admin? %>
-        <th width='140px'><%= sortable_th(:project_type_id,'Вид проекта') %></th>
+        <th width='110px'><%= sortable_th(:project_type_id,'Вид проекта') %></th>
         <th width='150px'><%= sortable_th( :client_id,'Заказчик') %></th>
       
         <% if @sort!="users.name" %>
           <th width='120px'><%= sortable_th( :executor_id,'Исполнитель') %></th>
         <% end %>
       <% else %>
-        <th width='200px'><%= sortable_th(:project_type_id,'Вид проекта') %></th>
+        <th width='200px'><%= sortable_th( :project_type_id,'Вид проекта') %></th>
         <th width='220px'><%= sortable_th( :client_id,'Заказчик') %></th>
       <% end %>
-      <th style="width: 67px;"><%= sortable_th(:date_start,'Начало') %></th>
-      <th width="85px"><%= sortable_th(:date_end_plan,'Конец / Продления') %> </th>
-      <th style="width: 67px;" class="center"><%= sortable_th(:footage, 'пл.<br> ₽/м2') %></th>
-      <th class="td_right" style="width: 77px;"><%= sortable_th(:sum_total,'Стоимость общая') %></th>
+      <th style="width: 75px;"><%= sortable_th(:date_start,'Начало') %></th>
+      <th width="85px"><%= sortable_th(:date_end_plan,'Оконч.') %> </th>
+      <th style="width: 105px;" class=""><%= sortable_th(:footage, 'м2 / Цена') %></th>
+      <th class="td_right" style="width: 77px;"><%= sortable_th(:sum_total,'Стоимость') %></th>
       <% if is_admin? %>
         <th></th>
       <% end %>

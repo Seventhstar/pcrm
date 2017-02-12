@@ -29,12 +29,12 @@
 
         <tr class="<%= class_for_lead(lead) %>" >      
         <td><%= lead.status_name %></td>
-        <td class="center"><%= lead.status_date.try('strftime',"%d.%m.%Y") %></td>
+        <td class=""><%= lead.status_date.try('strftime',"%d.%m.%Y") %></td>
         <td><%= lead.fio %></td>
         <td><%= lead.phone %></td>
         <td><%= tooltip_if_big( lead.info ) %></td>
-        <td class="center"><%= lead.footage %></td>
-        <td class="center"><%= lead.start_date.try('strftime',"%d.%m.%Y") %></td>
+        <td class=""><%= lead.footage %></td>
+        <td class=""><%= lead.start_date.try('strftime',"%d.%m.%Y") %></td>
 
         <% if is_update_form? %>
           <td><%= check_box_tag "leads_ids[]", lead.id %></td>

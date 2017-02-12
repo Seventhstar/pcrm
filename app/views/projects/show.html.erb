@@ -41,7 +41,7 @@
 		<tr><td class="caption">Сроки:</td>
 		    <td><div class="lbl"><%= @project.date_start.try('strftime',"%d.%m.%Y") %> / <%= @project.date_end_plan.try('strftime',"%d.%m.%Y") %> = <%= @project.days_plan %>дн.</div></td></tr>
 		<tr><td class="caption">Последнее продление:</td>
-			<td><div class="lbl"><%= @project.last_elongation %></div></td></tr>    
+			<td><div class="lbl"><%= @project.last_elongation.try('strftime',"%d.%m.%Y") %></div></td></tr>    
 		
 		</div></td></tr>
 

@@ -13,6 +13,19 @@ module ProjectsHelper
 		end
 	end
 
+  def nil_footage(f)
+    i = !f.nil? && f!=0 && f!='0.0' && f!='0'
+    !i
+  end
+
+  def class_for_project (prj)
+    cls = ''
+    cls = 'hot_date' if !prj.date_end.nil? && prj.date_end <= Date.today+1
+    # cls = "nonactual" if prj.pstatus_id == 3
+    cls = 'hot ' if prj.pstatus_id == 2
+    cls
+  end
+
   def business_days_between(date1, date2)
     business_days = 0
     date = date2
