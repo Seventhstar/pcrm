@@ -8,6 +8,9 @@
 	<% end %>
 	<%= sortable_pil "pstatus_id", "По статусам" %>
 
+	
+	<!-- <%= select_tag 'year', options_for_select(@years, :selected => 1), class: 'chosen' %> -->
+
 	<% if is_admin? %><%= link_to 'Добавить', new_project_path, class: "btn_a btn-add btn_slim right space20" %><% end %>
   <%= only_actual_btn %>
  

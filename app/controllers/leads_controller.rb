@@ -18,6 +18,15 @@ class LeadsController < ApplicationController
   # GET /leads
   # GET /leads.json
   def index
+
+    years = Lead.select("leads.*, date_trunc('year', status_date) AS year").where('not status_date is null').order('status_date')
+    year_from = years.first.year
+    year_to = years.last.year
+
+    @years = [year_from.to_s[0..3],year_to.to_s[0..3]]
+    @years = [2015,2016]
+
+
     @only_actual = params[:only_actual].nil? ? true : params[:only_actual]=='true'
     @sort_column = sort_column
     if @sort_column == "status_date"
@@ -28,8 +37,13 @@ class LeadsController < ApplicationController
       sort_1 = @sort_column == 'start_date' ? 'month' : @sort_column
     end
 
-    if @sort_column == "status_date" && !current_user.admin?
-      @leads = current_user.ic_leads.select(query_str)
+    # if @sort_column == "status_date" && !current_user.admin?
+    if !current_user.admin?
+      if params[:sort] == 'users.name'
+        @leads = current_user.leads.select(query_str)
+      else
+        @leads = current_user.ic_leads.select(query_str)
+      end
     else
       @leads = Lead.select(query_str)
     end
