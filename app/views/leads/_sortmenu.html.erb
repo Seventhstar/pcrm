@@ -8,7 +8,9 @@
 	<%= sortable_pil "users.name", "По создателям", 'asc' %>
 	<%= sortable_pil "status_id", "По статусам" %>
 
-	<%= select_tag 'year', options_for_select(@years, :selected => 1), class: 'chosen' %>
+	<%= chosen_src 'year', @years, nil,{class: 'ychosen',nil_value: 'Год'} %>
+	<!-- <%= select_tag 'year', options_for_select(@years, :selected => 1), class: 'ychosen' %> -->
+
 
 	<%= link_to 'Добавить', new_lead_path, class: "btn_a btn-add btn_slim right space20" %>
 	<%= only_actual_btn %>

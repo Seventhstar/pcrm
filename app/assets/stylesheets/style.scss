@@ -5,7 +5,7 @@ body {background: #fff; font: normal 14px 'Pragmatica', sans-serif; color: #0000
 a {outline: none; color: #000000; }
 a:hover {text-decoration:none;}
 
-.sub, .btn, .btn_a,.subnav span, .splink{background: none; padding: 0 0 0 0; margin: 0 0 0 0; width: auto; overflow: visible; border: 0; cursor: pointer;}
+.sub, .btn, .btn_a,.subnav>span, .splink{background: none; padding: 0 0 0 0; margin: 0 0 0 0; width: auto; overflow: visible; border: 0; cursor: pointer;}
 .sub::-moz-focus-inner, .btn::-moz-focus-inner{border: 0; padding: 0; margin: 0;}
 
 input, textarea , button , select {font: normal 14px 'Pragmatica', sans-serif;}
@@ -362,16 +362,16 @@ input[type='number']::-webkit-inner-spin-button {
 .menu_c {}
 .menu_c ul {margin:0 0 0 -10px; padding: 0 0 0 0; list-style:none; overflow:hidden;}
 .menu_c ul li{margin:0 0 0 10px; padding: 0 0 0 0; background:none; float:left;}
-.menu_c ul li a, .subnav span, .submenu ul li, .items_box_head ul li a{display: inline-block; 
+.menu_c ul li a, .subnav>span, .submenu ul li, .items_box_head ul li a{display: inline-block; 
   border:1px solid #e5e5e5; font-size: 13px; padding: 5px 12px; color: #000000; position:relative; text-decoration:none; 
   border-radius: 5px;
   line-height: 1;}
 
 .menu_c ul li a:hover,
 .menu_c ul li.active a,
-.subnav span.active, .submenu ul li.active, .submenu ul li:hover, .items_box_head ul li a:hover, .items_box_head ul li.active a,
-.subnav span:hover{background: #6acc00; border: 1px solid #6acc00; color: #fff !important; }
-.subnav span:not(.li-right), .submenu ul li, .items_box_head ul li{margin:0 10px 0 0; float: left;}
+.subnav>span.active, .submenu ul li.active, .submenu ul li:hover, .items_box_head ul li a:hover, .items_box_head ul li.active a,
+.subnav>span:hover{background: #6acc00; border: 1px solid #6acc00; color: #fff !important; }
+.subnav>span:not(.li-right), .submenu ul li, .items_box_head ul li{margin:0 10px 0 0; float: left;}
 
 .submenu ul li:hover a, .submenu ul li.active a, .items_box_head ul li.active a, .items_box_head ul li:hover a{color: #fff !important; cursor: pointer;}
 

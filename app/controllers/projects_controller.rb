@@ -11,6 +11,14 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
+
+    years = Project.select("projects.*, date_trunc('year', date_end_plan) AS year").where('not date_end_plan is null').order('date_end_plan')
+    year_from = years.first.year
+    year_to = years.last.year
+
+    @years = [year_from.to_s[0..3],year_to.to_s[0..3]]
+
+
     @sort_column = sort_column
     @only_actual = params[:only_actual].nil? ? true : params[:only_actual]=='true'
     query_str = "projects.*, date_trunc('month', date_start) AS month"
