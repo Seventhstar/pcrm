@@ -178,6 +178,9 @@ module ApplicationHelper
   def icon_for_project (prj)
       cntnt = '<div class="icons-indicate">'   
       cntnt = cntnt + image_tag('debt.png', title: 'Заказчик должен денег') if prj.debt
+      
+      cntnt = cntnt + image_tag('25.png', title: '25% процентов оплаты') if prj.payd_q
+
       cntnt = cntnt + image_tag('hammer.png', title: 'Интерес к стройке') if prj.interest
       cntnt = cntnt + image_tag('comment.png', title: 'Добавлен комментарий') if is_admin? && prj.comments.count>0
       cntnt = cntnt + image_tag('attention.png', title: 'Особое внимание') if prj.attention

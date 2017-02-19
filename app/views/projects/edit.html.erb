@@ -34,7 +34,8 @@
             <tr><td class="gr_caption">Статус:</td></tr>
           <tr>
             <td><div class="inp_w"><%= chosen_src :pstatus_id, ProjectStatus.all, @project, {nil_value: 'Статус...' } %></div></td>
-            <td class='va_middle'><%= f.input :attention, :as => :boolean, label: 'Особое внимание', class: 'inp_btn checkbox'  %></td>
+            <td class='va_middle'><%= f.input :attention, :as => :boolean, label: 'Особое внимание', class: 'inp_btn checkbox'  %>
+            <%= f.input :payd_q, :as => :boolean, label: '25%', class: 'inp_btn checkbox'  %></td>
 
             </tr>
             <tr><td class="gr_caption">Клиент</td></tr>
@@ -122,7 +123,7 @@
           </table>
           <div class="sep_3"></div>
           <div id='prj_elongations'>
-          <%= render 'elongations' %>
+          <%= render partial: 'elongations', locals: { f: f } %>
           </div>
         </div>
    </div>

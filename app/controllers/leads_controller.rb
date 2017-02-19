@@ -58,6 +58,11 @@ class LeadsController < ApplicationController
       @leads = @leads.where(:status => @s_status_ids)
     end
 
+    y = params[:year]
+    if !y.nil? && y!=''
+      @leads = @leads.where('EXTRACT(year FROM "status_date") = ?', y)
+    end
+
     if params[:sort] == 'ic_users.name'
       sort_1 = "users.name"
       @leads = @leads.joins(:ic_user)

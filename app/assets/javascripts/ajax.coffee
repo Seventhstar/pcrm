@@ -80,6 +80,7 @@
     sort2: $('span.subsort.current').attr('sort2')
     dir2: $('span.subsort.current').attr('dir2')
     search: $('#search').val()
+    year: $('#year').val()
   }
   
   l = window.location.toString().split('?');
@@ -118,6 +119,11 @@ $(document).ready ->
 
   $('.schosen').chosen(width: '99.5%')
   $('.chosen').chosen(width: '99.5%', disable_search: 'true')
+
+  $('.ychosen').chosen(width:' 65px', disable_search: 'true').on 'change', ->
+    sortable_query({})
+    return
+
 
 # редактирование ячейки в таблице
   $('.container').on 'dblclick', 'td.l_edit', ->  

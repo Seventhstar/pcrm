@@ -4,6 +4,7 @@ class ProjectsController < ApplicationController
   before_action :check_sum, only: [:create,:update]
   helper_method :sort_2, :dir_2
   helper_method :sort_column, :sort_direction
+  attr_accessor :sum_total_executor,:sum_rest
   respond_to :html, :json
 
   include ProjectsHelper
@@ -12,11 +13,11 @@ class ProjectsController < ApplicationController
   # GET /projects.json
   def index
 
-    years = Project.select("projects.*, date_trunc('year', date_end_plan) AS year").where('not date_end_plan is null').order('date_end_plan')
+    years = Project.select("projects.*, date_trunc('year', date_start) AS year").order('date_start')
     year_from = years.first.year
     year_to = years.last.year
 
-    @years = [year_from.to_s[0..3],year_to.to_s[0..3]]
+    @years = (year_from.year..year_to.year).step(1).to_a.reverse
 
 
     @sort_column = sort_column
@@ -39,6 +40,11 @@ class ProjectsController < ApplicationController
     if params[:sort] == 'users.name'
       sort_1 = "executor.name"
       @projects = @projects.joins(:executor)
+    end
+
+    y = params[:year] 
+    if !y.nil? && y!=''
+      @projects = @projects.where('EXTRACT(year FROM "date_start") = ?', y)
     end
 
     sort_1 = @sort_column #== 'date_end_plan' ? 'month' : @sort_column
@@ -128,7 +134,9 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1
   # PATCH/PUT /projects/1.json
   def update
-    # p project_params
+    elgtn =  ProjectElongation.new(pe_params[:project_elongation])    
+    elgtn.save if !elgtn.new_date.nil?
+
     respond_to do |format|
       if @project.update(project_params)
         format.html { redirect_to project_stored_page_url, notice: 'Проект успешно сохранен' }
@@ -183,6 +191,10 @@ class ProjectsController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
+    def pe_params
+      params.permit(:project_elongation => [:project_id,:new_date,:elongation_type_id] )
+    end
+
     def project_params
       params.require(:project).permit(:client_id, :address, :owner_id, :executor_id, :designer_id, :visualer_id, :project_type_id,
         :date_start, :date_end_plan, :date_end_real, :number, :date_sign,
@@ -190,7 +202,7 @@ class ProjectsController < ApplicationController
         :sum, :sum_total, :sum_real, :price, :price_2, :price_real,  :sum_2, :sum_total_real, :sum_2_real, :price_2_real,
         :month_in_gift, :act, :delay_days,  :pstatus_id, :attention,
         :designer_price, :designer_price_2,:visualer_price,
-        :debt, :interest,
+        :debt, :interest, :payd_q,
         :client_attributes => [:name, :address, :phone, :email] )
     end
 
