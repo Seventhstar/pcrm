@@ -4,8 +4,12 @@
 
 	<%= sortable_pil "status_date", "По приоритету" %>
 	<%= sortable_pil "start_date", "По месяцам" %>
-	<%= sortable_pil "ic_users.name", "По ответственным", 'asc' %>
-	<%= sortable_pil "users.name", "По создателям", 'asc' %>
+
+	<% if is_admin? %>
+		<%= sortable_pil "ic_users.name", "По ответственным", 'asc' %>
+		<%= sortable_pil "users.name", "По создателям", 'asc' %>
+	<% end %>
+	
 	<%= sortable_pil "status_id", "По статусам" %>
 
 	<%= chosen_src 'year', @years, nil,{class: 'ychosen',nil_value: 'Год'} %>
