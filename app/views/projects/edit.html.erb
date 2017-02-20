@@ -1,5 +1,5 @@
 <% if is_admin? %>
-<div class="hl hl_a bd">Редактирование проекта
+<div class="hl hl_a bd">Редактирование проекта <%= @project.address %>
 <%= link_to "", @project, method: :delete, data: { confirm: 'Действительно удалить проект?' }, :class=>"icon icon_remove right" %>
 </div>
 
@@ -12,6 +12,7 @@
     <li><a href="#tabs-3">Сроки</a></li>
     <li><a href="#tabs-4">Выплаты</a></li>
     <li><a href="#tabs-5">Заказы</a></li>
+    <li><a href="#tabs-6">Файлы</a></li>
 
   </ul>
   <div class="right" style="width: 100%"></div>
@@ -175,6 +176,19 @@
 <div id="tabs-5" class="ptab">
 </div>
 
+
+<div id="tabs-6" class="ptab">
+<div class="box_wide">
+<div class="box_wrap box_wrap_1">
+  <div class="panel-left lead_files">  
+    <div class="sep_15"></div>
+    	<% if !@owner.nil? %>	
+    		<%= render "shared/attach_list" %>
+    	<% end -%>
+  </div>
+</div>
+</div>
+</div>
 </div>
 
 <%= submit_cancel project_stored_page_url %>

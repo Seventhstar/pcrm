@@ -15,7 +15,7 @@ before_action :logged_in_user
   def create_file
 
     if params[:file] || params[:files]
-      folder = params[:owner_type]
+      folder = params[:owner_type].classify
       subfolder = params[:owner_id]
       uploaded_io = params[:file]
 
@@ -58,7 +58,7 @@ before_action :logged_in_user
   def append_file(filename) #,lead_id
     f = Attachment.new
     f.owner_id = params[:owner_id]
-    f.owner_type = params[:owner_type]
+    f.owner_type = params[:owner_type].classify
     f.user_id = current_user.id
     f.name = filename
     f.save

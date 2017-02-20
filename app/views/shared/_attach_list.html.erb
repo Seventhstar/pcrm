@@ -7,7 +7,7 @@
     		</div>
     	</div>
 
-<input id="attach_list" type="file" owner_id="<%= @owner.id %>" owner_type="<%= self.controller_name.classify %>" name="file" data-url="/file" multiple="" style="display: none;">
+<input id="attach_list" type="file" owner_id="<%= @owner.id %>" owner_type="<%= self.controller_name %>" name="file" data-url="/file" multiple="" style="display: none;">
 <div class="files_list_a">
  <%= render "shared/files" %>
 </div>

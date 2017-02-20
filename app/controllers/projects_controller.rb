@@ -89,6 +89,7 @@ class ProjectsController < ApplicationController
     def_params
     @comm_height = 350
     @owner = @project
+    @files        = @project.attachments
     @elongation_types = ElongationType.all
     @new_et  = ProjectElongation.new
   end

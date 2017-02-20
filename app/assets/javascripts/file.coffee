@@ -2,6 +2,9 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+@update_owner = (owner,id) ->
+  $.get '/'+owner+'/'+id+'/edit', "", null, "script"
+  return
 
 $(document).ready ->
 
@@ -12,7 +15,7 @@ $(document).ready ->
     done: (e, data) ->
       owner_id = $('#attach_list').attr('owner_id')
       owner_type = $('#attach_list').attr('owner_type')
-      setTimeout 'update_'+owner_type+'('+owner_id+')',200
+      setTimeout 'update_owner("'+owner_type+'",'+owner_id+')',200
       $('.progress').hide()
       return
     progressall: (e, data) ->
@@ -38,7 +41,7 @@ $(document).ready ->
       success: ->
         owner_id = $('#attach_list').attr('owner_id')
         owner_type = $('#attach_list').attr('owner_type')
-        setTimeout 'update_'+owner_type+'('+owner_id+')',200
+        setTimeout 'update_owner("'+owner_type+'",'+owner_id+')',200
         show_ajax_message "Успешно удален"
         return
     return      
