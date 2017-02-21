@@ -19,7 +19,7 @@ class LeadsController < ApplicationController
   # GET /leads.json
   def index
 
-    years = Lead.select("leads.*, date_trunc('year', status_date) AS year").where('not status_date is null').order('status_date')
+    years = Lead.select("leads.*, date_trunc('year', start_date) AS year").where('not start_date is null').order('start_date')
     year_from = years.first.year
     year_to = years.last.year
 
@@ -60,7 +60,7 @@ class LeadsController < ApplicationController
 
     y = params[:year]
     if !y.nil? && y!=''
-      @leads = @leads.where('EXTRACT(year FROM "status_date") = ?', y)
+      @leads = @leads.where('EXTRACT(year FROM "start_date") = ?', y)
     end
 
     if params[:sort] == 'ic_users.name'
