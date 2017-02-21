@@ -16,10 +16,6 @@
   a.search = (if a.search.substring(0, 1) == '?' then '' else '?') + str.join('&')
   a.href
 
-@update_Lead = (lead_id)->
-#  alert 'leadid'+lead_id
-  $.get '/leads/'+lead_id+'/edit', "", null, "script"
-
 @add_comment = ->
   comment_id = $('.microposts p:first').attr('ownerid')
   comment = $('#comment_comment').val()
@@ -42,7 +38,6 @@
     success: ->
       $('#comment_comment').val ''
       $.get '/'+upd_url+'/' + owner_id + '/edit', '', null, 'script'
-      #$('.panel-body').scrollTop(-9999);
       return
   return
 
@@ -50,7 +45,6 @@
 
 $(document).ready ->
 
-  #$('#lead_channel_id').chosen(width: '352px', disable_search: 'true')
   $('#lead_channel_id').chosen(width: '99.5%', disable_search: 'true')
   $('#lead_status_id').chosen(width: '99.5%', disable_search: 'true')
   $('.inp_w #lead_user_id').chosen(width: '99.5%', disable_search: 'true')

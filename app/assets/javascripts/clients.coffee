@@ -2,9 +2,6 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-# @update_clients = (cl_id)->
-#   $.get '/clients/'+cl_id+'/edit', "", null, "script"
-#   return
 
 # @clients_query = ->
 #   params = $("#cl_search").serialize()

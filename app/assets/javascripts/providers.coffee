@@ -18,7 +18,7 @@ $(document).ready ->
         xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
         return
       success: ->
-        update_provider(pr_id)
+        update_owner('providers',pr_id)
         return
      return
 
