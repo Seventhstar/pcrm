@@ -1,13 +1,14 @@
-<div class="hl hl_a bd">Описание задачи:
+<%= simple_form_for(@develop) do |f| %>
+<div class="hl hl_b bd"><span>Описание задачи:</span><div class="inp_h"><%= f.input :name, label: false %></div>
 <%= link_to "", @develop, method: :delete, data: { confirm: 'Действительно удалить задачу?' }, :class=>"icon icon_remove right" %>
 </div>
 
 
-<%= simple_form_for(@develop) do |f| %>
+
 	<div >
 		<table class="tbl_fc tbl_fc">
-		<tr><td class="caption">Наименование:</td>
-		    <td><div class="inp_w"><%= f.input :name, label: false %></div></td></tr>
+		<tr><td class="caption">Описание:</td>
+		    <td><div class="inp_w"><%= f.text_area :description, class: :txt, label: false %></div></td></tr>
 	    </table>
 	</div>
 
@@ -33,8 +34,7 @@
 			<td><div class="inp_w">
 			<%= chosen_src :ic_user_id, @users, @develop %></div>
 			</td></tr>						
-		<tr><td class="caption">Описание:</td>
-		    <td><div class="inp_w"><%= f.text_area :description, class: :txt, label: false %></div></td></tr>
+		<tr>
 
 		    		<tr><td class="caption"></td>
 			<td>

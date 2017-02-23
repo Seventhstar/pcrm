@@ -1,10 +1,11 @@
 module ProjectsHelper
 	def td_sum_field( f, val = 0, label='', params = {})
 		mask_cls = params[:mask] ? 'float_mask' : 'sum_mask'
+    inp_add_mask = params[:inp_class].nil? ? '' : ' '+params[:inp_class]
 		lbl = content_tag 'label', params[:translate] ? t(label) : label
     v = params[:value]
     v ||= @project[val]
-		txt = content_tag 'input', '', value: v, onblur:"onBlur(this)", onfocus:"onFocus(this)", class: 'txt '+mask_cls, type: 'text', name: "#{f.object_name}[#{val}]" , id: "#{f.object_name}_#{val}"
+		txt = content_tag 'input', '', value: v, onblur:"onBlur(this)", onfocus:"onFocus(this)", class: 'txt '+mask_cls + inp_add_mask, type: 'text', name: "#{f.object_name}[#{val}]" , id: "#{f.object_name}_#{val}"
 		add_class = params[:class].nil? ? '' : ' '+params[:class]
 		content_tag 'td' do
 			content_tag 'div', class: 'inp_w'+add_class do
