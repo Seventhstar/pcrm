@@ -29,14 +29,20 @@
 		    
 		    	
 		    </div></td></tr>
+
+		<% if is_admin? %>    
 		<tr><td class="caption">Цена за м2:</td>
 			<td><div class="lbl">
-			<% if is_admin? %>
 				<%= @project.prices %>
-			<% else %>
-			  <%= @project.executor_prices %>
-			<% end %>	
 			</div></td></tr>
+		<% end %>
+			  
+		<tr><td class="caption">Цена дизайнера:</td>
+			<td><div class="lbl">
+				<%= @project.executor_prices %>
+			</div></td></tr>
+
+			
 
 		<tr><td class="caption">Сроки:</td>
 		    <td><div class="lbl"><%= @project.date_start.try('strftime',"%d.%m.%Y") %> / <%= @project.date_end_plan.try('strftime',"%d.%m.%Y") %> = <%= @project.days_plan %>дн.</div></td></tr>

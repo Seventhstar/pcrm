@@ -36,7 +36,7 @@ class DevelopsController < ApplicationController
   # GET /develops/1.json
   def show
 
-    @title = @develop.name
+    @title = @develop.name + " ("+ @develop.status_name + ")"
     @history      = get_history_with_files(@develop)
     @owner        = @develop
     respond_modal_with @develop, location: root_path
