@@ -109,8 +109,8 @@ $(function() {
         //         details.slideUp(300);
            
         //     }
-        //     alert($(this));
-        //     //sortable_query({only_actual:link.hasClass('on')});
+        //     //alert($(this));
+        //     sortable_query({only_actual:link.hasClass('on')});
         //     return false;
         // });
 
@@ -118,6 +118,7 @@ $(function() {
             switcher.toggleClass('toggled');
             link.toggleClass('on');
             link[0].innerHTML = link.attr(link.hasClass('on') ? 'on' : 'off');
+            
             handle.toggleClass('active');
 
             if(switcher.hasClass('toggled')){
@@ -125,8 +126,8 @@ $(function() {
             } else {
                 details.slideUp(300);
             }
-            // al(ert($(this).attr('id'));
-            if ($(this).hasClass('link_a'))
+            
+            if (link.hasClass('link_a'))
               sortable_query({only_actual:link.hasClass('on')});
             else{
               if (link.hasClass('on')){

@@ -43,7 +43,7 @@ class ProjectsController < ApplicationController
     end
 
     y = params[:year] 
-    if !y.nil? && y!=''
+    if !y.nil? && y!='' && y.to_i>0
       @projects = @projects.where('EXTRACT(year FROM "date_start") = ?', y)
     end
 

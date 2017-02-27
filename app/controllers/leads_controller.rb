@@ -59,7 +59,7 @@ class LeadsController < ApplicationController
     end
 
     y = params[:year]
-    if !y.nil? && y!=''
+    if !y.nil? && y!='' && y.to_i>0
       @leads = @leads.where('EXTRACT(year FROM "start_date") = ?', y)
     end
 
