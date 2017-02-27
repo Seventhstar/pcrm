@@ -90,28 +90,29 @@ $(function() {
 
   $('.switcher_a').each(function(){
         var switcher = $(this);
-        var link = $(this).find('.link_a');
+        var link = $(this).find('.link_a,.link_c');
         var scale = $(this).find('.scale');
         var handle = $(this).find('.handle');
         var details = switcher.parent().find('.details');
 
-        $(link).click(function(event){
-            switcher.toggleClass('toggled');
-            link.toggleClass('on');
-            var attr = link.hasClass('on') ? 'on' : 'off'
-            link[0].innerHTML = link.attr(attr);
-            handle.toggleClass('active');
+        // $(link).click(function(event){
+        //     switcher.toggleClass('toggled');
+        //     link.toggleClass('on');
+        //     var attr = link.hasClass('on') ? 'on' : 'off'
+        //     link[0].innerHTML = link.attr(attr);
+        //     handle.toggleClass('active');
 
-            if(switcher.hasClass('toggled')){
-                details.slideDown(300);
+        //     if(switcher.hasClass('toggled')){
+        //         details.slideDown(300);
                 
-            } else {
-                details.slideUp(300);
+        //     } else {
+        //         details.slideUp(300);
            
-            }
-            sortable_query({only_actual:link.hasClass('on')});
-            return false;
-        });
+        //     }
+        //     alert($(this));
+        //     //sortable_query({only_actual:link.hasClass('on')});
+        //     return false;
+        // });
 
         $(scale).click(function(event){
             switcher.toggleClass('toggled');
@@ -124,7 +125,23 @@ $(function() {
             } else {
                 details.slideUp(300);
             }
-            sortable_query({only_actual:link.hasClass('on')});
+            // al(ert($(this).attr('id'));
+            if ($(this).hasClass('link_a'))
+              sortable_query({only_actual:link.hasClass('on')});
+            else{
+              if (link.hasClass('on')){
+                $('tr.new_client').hide();
+                $('tr.ex_client').show();
+              }else{
+                $('tr.new_client').show();
+                $('tr.ex_client').hide();
+                // alert(
+                $('#project_client_id').val(0);
+                $('#project_client_id').trigger("chosen:updated")
+                  //alert($('#project_client_id').val());
+                  // );
+              }
+            }
             return false;
         });
        

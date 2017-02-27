@@ -78,7 +78,8 @@ class ProjectsController < ApplicationController
   # GET /projects/new
   def new
     @project = Project.new
-    @client =  @project.build_client
+    # @client =  @project.build_client
+    p :client_id
     get_debt
     def_params
   end
@@ -100,9 +101,15 @@ class ProjectsController < ApplicationController
     pp = project_params
     pp['pstatus_id'] ||= 1
     @project = Project.new(pp)
-    @client = @project.create_client(project_params[:client_attributes])
-
-    @client.save
+    p "project_params[:client_id]",project_params[:client_id]
+    if project_params[:client_id] == "0" 
+      p "@client.save"
+      @client = @project.create_client(client_params)
+      @client.save
+      @project.client_id = @client.id
+    else
+      @client = Client.find(project_params[:client_id])
+    end
 
     respond_to do |format|
       if @project.save
@@ -196,6 +203,10 @@ class ProjectsController < ApplicationController
       params.permit(:project_elongation => [:project_id,:new_date,:elongation_type_id] )
     end
 
+    def client_params
+      params.require(:client).permit(:name, :address, :phone, :email)
+    end
+
     def project_params
       params.require(:project).permit(:client_id, :address, :owner_id, :executor_id, :designer_id, :visualer_id, :project_type_id,
         :date_start, :date_end_plan, :date_end_real, :number, :date_sign,
@@ -203,7 +214,7 @@ class ProjectsController < ApplicationController
         :sum, :sum_total, :sum_real, :price, :price_2, :price_real,  :sum_2, :sum_total_real, :sum_2_real, :price_2_real,
         :month_in_gift, :act, :delay_days,  :pstatus_id, :attention,
         :designer_price, :designer_price_2,:visualer_price,
-        :debt, :interest, :payd_q,
+        :debt, :interest, :payd_q, :sum_rest, :sum_total_executor, :first_comment,
         :client_attributes => [:name, :address, :phone, :email] )
     end
 

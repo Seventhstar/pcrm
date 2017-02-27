@@ -8,10 +8,11 @@ class Project < ActiveRecord::Base
   has_many :receipts
   has_many :absence
 
-  attr_accessor :first_comment
+  attr_accessor :first_comment, :sum_total_executor, :sum_rest
   has_many :elongations, class_name: 'ProjectElongation'
 
   validates :address, :length => { :minimum => 3 }
+  validates :client_id, presence: true
   validates :footage, presence: true
   #validates_numericality_of :footage, greater_than: 1
   include ProjectsHelper
