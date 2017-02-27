@@ -99,7 +99,7 @@ module ApplicationHelper
     content_tag :span, title,{ :class => css_class, :sort => column, :direction => direction }
   end
 
-  def sortable_th(column, title = nil)
+  def sortable_th(column, title = nil, nosort = false)
 
     title ||= column.titleize
     css_class = column.to_s().include?(sort_2) ? "subsort current #{dir_2}" : "subsort"
@@ -107,8 +107,12 @@ module ApplicationHelper
     a = content_tag :div, "",{class: "sortArrow"}
     b = content_tag :span, title.html_safe
 
-    content_tag :span,{:class => css_class, :sort2 => column, :dir2 => dir_2} do
-       b + a
+    if nosort 
+      title
+    else
+      content_tag :span,{:class => css_class, :sort2 => column, :dir2 => dir_2} do
+        b + a
+      end
     end
 
   end

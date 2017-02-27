@@ -45,17 +45,25 @@ class Project < ActiveRecord::Base
      end
   end
 
-  def designer_sum()
-    s = designer_price.to_i * footage.to_f
-    s = s + designer_price_2.to_i * footage_2.to_f if footage_2>0
+  def f1
+    nil_footage(footage_real) ? footage.to_f : footage_real.to_f
+  end
+
+  def f2
+    nil_footage(footage_real) ? footage_2.to_f : footage_2_real.to_f
+  end
+
+  def designer_sum
+    s = designer_price.to_i * f1
+    s = s + designer_price_2.to_i * f2 if footage_2>0
     s.to_i
   end
 
-  def executor_sum()
-    (designer_sum + visualer_price.to_i * footage.to_f).to_i
+  def executor_sum
+    (designer_sum + visualer_price.to_i * f1).to_i
   end
 
-  def rest()
+  def rest
     sum_total_real==0 ? sum_total - executor_sum : sum_total_real - executor_sum
   end
 
@@ -97,14 +105,14 @@ class Project < ActiveRecord::Base
   end
 
   def f1_info
-    f1 = nil_footage(footage_real) ? footage : footage_real
-    f1 = f1.to_s[0..-3] if f1.to_s[-2,2] == '.0'
-    f1 = f1.to_s.sub('.',',')
-    f1
+    f = f1
+    f = f.to_s[0..-3] if f.to_s[-2,2] == '.0'
+    f = f.to_s.sub('.',',')
+    f
   end
 
   def f2_info
-    f = nil_footage(footage_2_real) ? footage_2 : footage_2_real
+    f = f2
     f = f.to_s[0..-3] if f.to_s[-2,2] == '.0'
     f = f.to_s.sub('.',',')
     f

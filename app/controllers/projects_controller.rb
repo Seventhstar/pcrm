@@ -39,7 +39,7 @@ class ProjectsController < ApplicationController
 
     if params[:sort] == 'users.name'
       sort_1 = "executor.name"
-      @projects = @projects.joins(:executor)
+      @projects = @projects.includes(:executor)
     end
 
     y = params[:year] 
@@ -47,7 +47,11 @@ class ProjectsController < ApplicationController
       @projects = @projects.where('EXTRACT(year FROM "date_start") = ?', y)
     end
 
+
+
     sort_1 = @sort_column #== 'date_end_plan' ? 'month' : @sort_column
+    @numsort = (sort_1 == "number") 
+    # p "@numsort",@numsort, sort_1
 
     order = sort_1 + " " + sort_direction + ", "+ sort_2  + " " + dir_2 + ", projects.number desc"
     # p sort_2, order
@@ -101,9 +105,9 @@ class ProjectsController < ApplicationController
     pp = project_params
     pp['pstatus_id'] ||= 1
     @project = Project.new(pp)
-    p "project_params[:client_id]",project_params[:client_id]
+    # p "project_params[:client_id]",project_params[:client_id]
     if project_params[:client_id] == "0" 
-      p "@client.save"
+      # p "@client.save"
       @client = @project.create_client(client_params)
       @client.save
       @project.client_id = @client.id

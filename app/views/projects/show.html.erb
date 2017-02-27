@@ -23,18 +23,25 @@
 	<table class="tbl_fc tbl_fc_1">
 <% end %>
 
-		<tr><td class="caption">Метраж (1/2):</td>
+		<% if is_admin? %> 
+		<tr><td class="caption">Метраж * Цена:</td>
 		    <td><div class="lbl">
-		    <%= @project.footage_info.html_safe %>
+		    <%= [@project.f1_info,'м.',' х ',@project.price.to_sum,'р. = ', (@project.f1 * @project.price.to_i).to_i.to_sum,'р.' ].join %>
 		    
 		    	
 		    </div></td></tr>
 
-		<% if is_admin? %>    
-		<tr><td class="caption">Цена за м2:</td>
+		   
+		<tr><td class="caption">Метраж2 * Цена2:</td>
 			<td><div class="lbl">
-				<%= @project.prices %>
+				<%= [@project.f2_info,'м.',' x ',@project.price_2.to_s,'р. = ', (@project.f2 * @project.price_2.to_i).to_i.to_sum,'р.' ].join if !nil_footage(@project.f2) %>
 			</div></td></tr>
+		
+		<tr><td class="caption">Всего / Остаток:</td>
+			<td><div class="lbl">
+				<%= @project.total.to_sum + ' - '+ @project.executor_sum.to_sum + ' = ' + @project.rest.to_sum %>
+			</div></td></tr>
+
 		<% end %>
 			  
 		<tr><td class="caption">Цена дизайнера:</td>

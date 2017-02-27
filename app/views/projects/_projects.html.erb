@@ -14,7 +14,8 @@
           <% first_table = false %>
       <% elsif cur_user != user_name(project.executor_id) && (params[:sort] == "users.name")%>
         <% cur_user = user_name(project.executor_id) %>
-          <%= render "head", {:first_table => first_table, :heading => user_name(project.executor_id) } %>
+        
+          <%= render "head", {:first_table => first_table, :heading => (project.executor_id==0 ? 'Без исполнителя' : user_name(project.executor_id)) } %>
           <% first_table = false %>
       <% elsif cur_status != project.status_name && (params[:sort] == "pstatus_id") %>
         <% cur_status = project.status_name %>
