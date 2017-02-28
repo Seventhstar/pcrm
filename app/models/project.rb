@@ -60,22 +60,24 @@ class Project < ActiveRecord::Base
   end
 
   def executor_sum
-    (designer_sum + visualer_price.to_i * f1).to_i
+    # p 'visualer_price',visualer_price,'designer_sum',designer_sum
+    s = (designer_sum + visualer_price.to_i * f1).to_i
   end
 
   def rest
     sum_total_real==0 ? sum_total - executor_sum : sum_total_real - executor_sum
   end
 
-  def executor_info()
+  def executor_info
      i = [f1_info,'м.',' - ',designer_price.to_s,'р.'].join
      i = i + '</br>'+ [f2_info,'м.',' - ',designer_price_2.to_s,'р.'].join if !nil_footage(f2_info)
      i
   end
 
-  def executor_prices()
-    p = designer_price.to_s
-    p = p +' / '+ designer_price_2.to_s if designer_price_2.to_i>0
+  def executor_prices
+    p = ''
+    p = designer_price.to_sum + 'р./м2' if designer_price.to_i>0
+    p = p +' + '+ designer_price_2.to_sum + 'р./м2' if designer_price_2.to_i>0
     p
   end
 
