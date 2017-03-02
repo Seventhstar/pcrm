@@ -1,4 +1,5 @@
 ru:
+  day: День
   will_paginate:
     next_label: "вперед"
     previous_label: "назад"
@@ -133,6 +134,7 @@ ru:
   list_AbsenceShopTarget: Список целей для магазина
   list_LeadSource: Список источников
   list_ElongationType: Список причин продления
+  list_Holiday: Список праздничных дней
 
   Password: Пароль
   "true": Да

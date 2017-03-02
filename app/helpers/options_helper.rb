@@ -5,7 +5,7 @@ module OptionsHelper
   	case @page
   	when 'leads','statuses','channels','lead_sources'
   		0
-    when 'project_statuses','project_types','elongation_types'
+    when 'holidays','project_statuses','project_types','elongation_types'
       1
     when 'payment_types','payment_purposes'
       2

@@ -1,10 +1,10 @@
-<%= form_for(@item) do |f| %>
+<%= form_for(@item, :html => {:class => 'simple_options_form'}) do |f| %>
 <div class="itemAdd_form">
   <table><tbody>
   <tr><td class="caption">Новый статус:</td>
       <td><label class="inp_btn_label"><div class="inp_btn checkbox"><%= f.check_box :actual, {}, "true", "false" %></div>Актуальный
       </label></td>
-      <td><div class="inp">
+      <td><div class="inp_w">
           <%= f.text_field :name, :class => 'txt' %>
           <span class="sub btn_a" id="btn-send"> Добавить</span>
       </td></tr>

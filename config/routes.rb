@@ -37,6 +37,7 @@ Rails.application.routes.draw do
   resources :clients
 
   resources :p_statuses
+  resources :holidays
 
   resources :priorities
 

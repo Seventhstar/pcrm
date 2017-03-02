@@ -43,7 +43,7 @@ class OptionsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
     def options_params
       i = option_model.model_name.singular
-      params.require(i).permit(:name,:actual)
+      params.require(i).permit(:name,:actual,:day)
     end
 
     def option_model

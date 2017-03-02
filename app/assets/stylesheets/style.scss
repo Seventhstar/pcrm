@@ -204,7 +204,7 @@ background-position:-34px 0 !important; width: 16px; height: 16px;}
 /*----Элементы формы_start----*/
 .txt,.form-control {height: 34px; padding: 3px 10px 0 10px; background: #fff; border:1px solid #e5e5e5; border-top:1px solid #d9d9d9; box-shadow: inset 0 2px 0 #f2f2f2; border-radius: 5px; box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box;}
 .slim_txt {height: 24px; font-size: 13px;}
-.inp_w .txt, .inp_w, .inp_w input{width: 100%; }
+.inp_w .txt, .inp_w, .inp_w input{width: 100%; vertical-align: top;}
 .inp_90 {width: 90%;}
 
 /*.inp_70 {float: left; width: 305px;}*/
@@ -240,7 +240,7 @@ span.check_img{ text-align: center; }
 label.active .inp.radio {background-position:-193px -20px;}
 .inp.radio input{position:absolute; top: 0; left: -50px;}
 
-label.inp_btn_label {padding: 0 0 0 25px; position:relative;}
+label.inp_btn_label {padding: 0 0 0 25px; position: relative; float: left;}
 label.inp_btn_label span {margin-left: 25px;}
 label.inp_btn_label .inp_btn {position:absolute; top: -1px; left: 0;}
 

@@ -1,8 +1,10 @@
 <div class="sep_05"></div>
 
 <div class="option_list">
-<% if @item.class.name =='Status' %>
-  <%= render 'statuses/new_item' %>
+<% fn = ''+@item.class.name.underscore.pluralize %>
+<% if lookup_context.find_all(fn+'/_new_item.html.erb').any? %>
+  <% p fn.to_s %>
+  <%= render fn+'/new_item' %>
 <% else %>
   <%= render 'shared/new_item' %>
 <% end %>

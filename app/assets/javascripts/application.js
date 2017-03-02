@@ -88,6 +88,9 @@ $(function() {
 
   $('.timepicker').timepicker({ 'timeFormat': 'H:i' });
 
+  //.try('strftime',"%d.%m.%Y")
+  //alert(v[0]);
+
   $('.switcher_a').each(function(){
         var switcher = $(this);
         var link = $(this).find('.link_a,.link_c');

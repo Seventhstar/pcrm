@@ -28,10 +28,11 @@ module ProjectsHelper
   end
 
   def business_days_between(date1, date2)
+    hdays = Holiday.pluck(:day)
     business_days = 0
     date = date2
     while date > date1
-     business_days = business_days + 1 unless date.saturday? or date.sunday?
+     business_days = business_days + 1 unless date.saturday? or date.sunday? or hdays.include?(date)
      date = date - 1.day
     end
     business_days

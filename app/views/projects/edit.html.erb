@@ -3,6 +3,8 @@
 <%= link_to "", @project, method: :delete, data: { confirm: 'Действительно удалить проект?' }, :class=>"icon icon_remove right" %>
 </div>
 
+<%= hidden_field_tag 'holidays', Holiday.pluck(:day).collect{|d| d.try('strftime',"%Y-%m-%d")} %> 
+
 <%= simple_form_for(@project) do |f| %>
 
 <div id="tabs">
