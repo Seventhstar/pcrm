@@ -1,4 +1,7 @@
 <% if is_admin? %>
+
+<%= hidden_field_tag 'holidays', @holidays %> 
+
 <%= simple_form_for(@project) do |f| %>
 <%= render 'shared/error_messages', object: f.object %>
 

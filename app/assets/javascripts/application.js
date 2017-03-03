@@ -90,6 +90,10 @@ $(function() {
 
   //.try('strftime',"%d.%m.%Y")
   //alert(v[0]);
+  $(document).on('focus', '.datepicker', function () {
+        var me = $(".datepicker");
+        me.mask('99.99.9999');
+    });
 
   $('.switcher_a').each(function(){
         var switcher = $(this);
@@ -97,25 +101,6 @@ $(function() {
         var scale = $(this).find('.scale');
         var handle = $(this).find('.handle');
         var details = switcher.parent().find('.details');
-
-        // $(link).click(function(event){
-        //     switcher.toggleClass('toggled');
-        //     link.toggleClass('on');
-        //     var attr = link.hasClass('on') ? 'on' : 'off'
-        //     link[0].innerHTML = link.attr(attr);
-        //     handle.toggleClass('active');
-
-        //     if(switcher.hasClass('toggled')){
-        //         details.slideDown(300);
-                
-        //     } else {
-        //         details.slideUp(300);
-           
-        //     }
-        //     //alert($(this));
-        //     sortable_query({only_actual:link.hasClass('on')});
-        //     return false;
-        // });
 
         $(scale).click(function(event){
             switcher.toggleClass('toggled');
@@ -193,8 +178,7 @@ $( "#tabs" ).tabs();
 
   // дата по умолчанию для нового лида - сегодня
   if (!$("#lead_start_date").val()){
-	    $("#lead_start_date").val($.datepicker.formatDate('dd.mm.yy', new Date()));
-     // $("#lead_status_date").val($.datepicker.formatDate('dd.mm.yy', new Date()));
+      $("#lead_start_date").val($.datepicker.formatDate('dd.mm.yy', new Date()));
   }
 
  $('.sel_val').click(function(){

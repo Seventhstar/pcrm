@@ -75,6 +75,7 @@ class ProjectsController < ApplicationController
 
   def def_params
     @owner = @project
+    @holidays =  Holiday.pluck(:day).collect{|d| d.try('strftime',"%Y-%m-%d")}
     # @files    = @lead.attachments
     # @history  = get_history_with_files(@lead)
   end
