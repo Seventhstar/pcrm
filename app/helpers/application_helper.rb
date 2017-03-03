@@ -3,6 +3,9 @@ module ApplicationHelper
   def attr_boolean?(item,attr)
     item.class.column_types[attr.to_s].class == ActiveRecord::Type::Boolean
   end
+    def attr_date?(item,attr)
+    item.class.column_types[attr.to_s].class == ActiveRecord::ConnectionAdapters::PostgreSQL::OID::Date
+  end
 
   def is_admin?
     current_user.admin?

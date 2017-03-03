@@ -23,7 +23,7 @@
 <table class="tleads" model="<%= @item.class.name %>">
   <thead>
   <% attrs.each do |attr| %>
-  	<th <%= attr_boolean?(@item,attr[0]) ? 'width=60px;':'' %> fld='<%= attr[0] %>'><%= t(attr[0]) %></th>
+  	<th <%= attr_boolean?(@item,attr[0])||attr_date?(@item,attr[0]) ? 'width=60px;':'' %> fld='<%= attr[0] %>'><%= t(attr[0]) %></th>
   <% end %>
   <th></th>
   </thead>
@@ -34,6 +34,8 @@
           <% if attr_boolean?(@item,attr[0]) %>
             <td class="state"><span class="check_img sw_check <%= item[attr[0]] ? "checked" :"" %>" item_id="<%= item.id %>" chk="<%= attr[0] %>"></span>
             </td> 
+          <% elsif attr_date?(@item,attr[0]) %>  
+            <td><%= item[attr[0]].try('strftime',"%d.%m.%Y") %></td>
           <% else %>
             <td title='<%= item.id %>'><%= item[attr[0]].to_s %></td>
           <% end %>
