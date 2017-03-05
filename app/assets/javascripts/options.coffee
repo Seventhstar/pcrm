@@ -79,6 +79,15 @@ $(document).on 'click', '#btn-sub-send', (e) ->
   return
 
 # запись нового элемента простого справочника
+$(document).on 'click', '#get-holidays', (e) ->
+  url = '/options'+$('form').attr('action')
+  $.ajax
+      type: 'POST'
+      url: '/ajax/update_holidays'
+      success: (xhr, data, response) ->
+        $.get url, null, null, 'script'
+
+# запись нового элемента простого справочника
 $(document).on 'click', '#btn-send', (e) ->
   valuesToSubmit = $('form').serialize()
   values = $('form').serialize()

@@ -2,9 +2,22 @@ class OptionsController < ApplicationController
  before_action :logged_in_user
  include OptionsHelper
   
-  def index
-    @items = option_model.order(:name)
+  def _sort
+    o = option_model.name
+    case o
+    when "Holiday"
+
+        sort = :day
+    else
+        sort = :name 
+    end
+    p "sort",sort
+    @items = option_model.order(sort)
     @item = option_model.new
+  end
+
+  def index
+    _sort
   end
 
   def create
@@ -20,13 +33,10 @@ class OptionsController < ApplicationController
      end
   end
 
- def edit
-    
+  def edit
     @page = params[:options_page]
     @page ||= "statuses"
-    
-    @items = option_model.order(:name)
-    @item = option_model.new
+    _sort
   end
 
   # DELETE /absences/1

@@ -97,6 +97,7 @@ Rails.application.routes.draw do
   post "ajax/status_check" 
   post "ajax/switch_check" 
   post "ajax/upd_param"
+  post "ajax/update_holidays"
 
   post "file/del_file"
   post '/file' => 'file#create_file'

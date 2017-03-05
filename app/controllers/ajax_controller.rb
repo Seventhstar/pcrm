@@ -1,6 +1,29 @@
 class AjaxController < ApplicationController
+  before_action :logged_in_user
 
-before_action :logged_in_user
+  def update_holidays
+    # if params[:year]
+    y = Date.today.year.to_s
+    url = "http://xmlcalendar.ru/data/ru/"+y+"/calendar.xml"
+    xml = Nokogiri::XML(open(url))
+
+    xml.xpath('//days/day').each do |d|
+      dt = d.attr('d')
+      h  = d.attr('h')
+      hn = xml.xpath('//holidays/holiday[@id='+h+']').attr('title').value if !h.nil?
+      p [dt,h,hn]
+      day = Date.parse(y+'.'+dt)
+      dd = Holiday.find_by_day(day)
+      if dd.nil? 
+        new_d = Holiday.new
+        new_d.day = day
+        new_d.name = hn 
+        new_d.save
+      end
+    end
+    render :nothing => true
+  end
+
   def channels
     if params[:term]
       like= "%".concat(params[:term].concat("%"))
@@ -60,7 +83,7 @@ before_action :logged_in_user
   end
 
   def switch_check
-    p "params[:model]",params[:model]
+    # p "params[:model]",params[:model]
     if params[:model]
       item = params[:model].classify.constantize.find(params[:item_id])
       if !item.nil?

@@ -12,6 +12,11 @@ class ClientsController < ApplicationController
     else
       @clients = Client.order(:name)
     end
+
+    if !current_user.admin?
+      @clients = @clients.where('id in (?)', current_user.projects.pluck(:client_id))
+
+    end
   end
 
   # GET /clients/1
