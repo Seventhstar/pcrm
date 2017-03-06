@@ -32,6 +32,14 @@ class DevelopsController < ApplicationController
 
   end
 
+  def def_params
+    @projects     = DevProject.all
+    @dev_statuses = DevStatus.order(:id)
+    @priorities   = Priority.order(:name)
+    @users        = User.order(:name)
+    
+  end
+
   # GET /develops/1
   # GET /develops/1.json
   def show
@@ -45,20 +53,14 @@ class DevelopsController < ApplicationController
   # GET /develops/new
   def new
     @develop      = Develop.new
-    @projects     = DevProject.all
-    @dev_statuses = DevStatus.order(:id)
-    @priorities   = Priority.order(:name)
-    @users        = User.order(:name)
+    def_params
     @files        = {}
     @history      = {}
   end
 
   # GET /develops/1/edit
   def edit
-    @dev_statuses = DevStatus.order(:id)
-    @projects = DevProject.all
-    @priorities   = Priority.order(:name)
-    @users        = User.order(:name)
+    def_params
 
     @files        = @develop.attachments
     @history 	    = get_history_with_files(@develop)
@@ -68,6 +70,9 @@ class DevelopsController < ApplicationController
   # POST /develops
   # POST /develops.json
   def create
+    def_params
+    @files        = {}
+    @history      = {}
     @develop = Develop.new(develop_params)
 
     respond_to do |format|
