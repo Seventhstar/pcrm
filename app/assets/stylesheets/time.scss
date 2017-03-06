@@ -15,6 +15,7 @@
 .sum_total { border-left: 5px solid #ff8411;}
 .tbl_fc_1 .inp_w .datepicker{ background: asset-url('ico-date.png') 98% 8px no-repeat; }
 
+input[disabled].datepicker { background: asset-url('ico-date.png') 95% -27px no-repeat; cursor: pointer;}
 
 
 .datepicker.slim_txt{ background: asset-url('ico-date.png') 98% 3px no-repeat; }

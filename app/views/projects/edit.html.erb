@@ -115,12 +115,11 @@
           <thead>
           <tr><th width="20%"></th><th width="20%"></th><th width="20%"></th><th width="20%"></th><th width="20%"></th></tr></thead>
           <tbody>
-              <tr>
-              <td><div class="inp_w"><label>Начало</label><%= f.text_field :date_start, value: @project.date_start.try('strftime',"%d.%m.%Y"), class: "txt datepicker" %></div></td>
-              <td><div class="inp_w"><label>Окончание</label><%= f.text_field :date_end_plan, value: @project.date_end_plan.try('strftime',"%d.%m.%Y"), class: "txt datepicker" %></div></td>
-              <td><div class="inp_w"><label>Рабоч. дней без уч. праздников</label> <%= number_field_tag :days, @project.days_plan, {class: 'form-control'} %></div></td>
-              <td></td>
-              <td><div class="inp_w"><label>Дата подписания</label><%= f.text_field :date_sign, value: @project.date_sign.try('strftime',"%d.%m.%Y"), class: "txt datepicker" %></div></td>
+              <tr id="lday">
+              
+               <%= render "day" %>
+              
+              
             </tr>
           </tbody>
           </table>

@@ -1,0 +1,23 @@
+<td><div class="inp_w"><label>Начало</label><%= text_field_tag "project[date_start]", @project.date_start.try('strftime',"%d.%m.%Y"), class: "txt datepicker" %></div></td>
+<% if @project.elongations.count>0 %> 
+
+<td><div class="inp_w"><label>Окончание</label>
+<%= text_field_tag "project[date_end_plan]", @project.date_end_plan.try('strftime',"%d.%m.%Y"), {class: "txt datepicker" , disabled: "disabled"} %>
+</div></td>
+
+<td><div class="inp_w"><label>Рабоч. дней без уч. праздников</label>
+<%= number_field_tag "project[days]", @project.days_duration, {class: 'form-control', disabled: "disabled" } %></div></td>
+
+<% else %>
+<td><div class="inp_w"><label>Окончание</label>
+<%= text_field_tag "project[date_end_plan]", @project.date_end_plan.try('strftime',"%d.%m.%Y"), {class: "txt datepicker" } %>
+</div></td>
+
+<td><div class="inp_w"><label>Рабоч. дней без уч. праздников</label>
+<%= number_field_tag "project[days]", @project.days_duration, {class: 'form-control' } %></div></td>
+
+<% end %>
+
+<td></td>
+<td><div class="inp_w"><label>Дата подписания</label>
+<%= text_field_tag "project[date_sign]", @project.date_sign.try('strftime',"%d.%m.%Y"), class: "txt datepicker" %></div></td>

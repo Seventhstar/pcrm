@@ -39,10 +39,12 @@ class Project < ActiveRecord::Base
     pstatus.try(:name)
   end
 
-  def days_plan
-     if date_end_plan? && date_start?
+  def days_duration
+    if elongations.count>0
+      business_days_between(date_start.to_datetime,last_elongation.to_datetime)+1
+    elsif date_end_plan? && date_start?
       business_days_between(date_start.to_datetime,date_end_plan.to_datetime)+1
-     end
+    end
   end
 
   def f1
@@ -100,7 +102,6 @@ class Project < ActiveRecord::Base
   end
 
   def admin_info()
-
      i = [f1_info,'м.',' - ',price.to_s,'р.'].join
      i = i + '</br>'+ [f2_info,'м.',' - ',price_2.to_s,'р.'].join if !nil_footage(f2_info)
      i

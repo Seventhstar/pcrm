@@ -5,7 +5,8 @@ class ProjectElongationsController < ApplicationController
   def create
     @pe = ProjectElongation.new(pe_params)
      respond_to do |format|
-        if @pe.save
+      # !@pe.new_date.nil? &&
+        if @pe.save 
           format.html { redirect_to absences_url, notice: 'Менеджер успешно создан.' }
           format.json { render json: @pe.errors, status: :ok, location: @pe }
         else
@@ -30,6 +31,6 @@ class ProjectElongationsController < ApplicationController
     end
 
     def pe_params
-      params.require(:project_elongation).permit(:new_date, :elongation_type_id,:project_id)
+      params.require(:project_elongation).permit(:new_date,:elongation_type_id,:project_id)
     end
 end
