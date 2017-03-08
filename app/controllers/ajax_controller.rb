@@ -48,12 +48,21 @@ class AjaxController < ApplicationController
 
   def add_comment
    if params[:owner_id]
-     com = Comment.new
-     com.comment = params[:comment]
-     com.user_id = current_user.id
-     com.owner_id = params[:owner_id]
-     com.owner_type= params[:owner_type]
-     com.save
+      com = Comment.new
+      com.comment = params[:comment]
+      com.user_id = current_user.id
+      com.owner_id = params[:owner_id]
+      com.owner_type= params[:owner_type]
+      com.save
+      admins = User.where(admin: true).ids # помечаем сообщения непрочитанными
+      admins.delete(current_user.id) # кроме себя
+      admins.each do |a|
+        cu = CommentUnread.new
+        cu.user_id = a
+        cu.comment_id = com.id
+        cu.save
+      end
+
    end
 	 render :nothing => true
   end
@@ -64,6 +73,14 @@ class AjaxController < ApplicationController
    end
   	render :nothing => true
    end
+
+  def read_comment
+    if params[:comment_id]
+      p "params[:comment_id]",params[:comment_id]
+      CommentUnread.where(comment_id: params[:comment_id], user_id: current_user.id).destroy_all
+    end
+    render :nothing => true
+  end
 
   def dev_check
    if params[:develop_id]

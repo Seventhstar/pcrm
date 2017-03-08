@@ -9,7 +9,7 @@
     <div class="comments_list_a">
         <% if @comments != nil %>
          <% @comments.each do |comment| %>
-            <div class="item">
+            <div class="item <%= comment.receivers.find_by_user_id(current_user.id).nil? ? '' : 'new' %>" commentid="<%= comment.id %>" > 
               <div class="pic"><%= avatar_for(comment.user) %></div>
               <div class="cont">
                 <div class="head">
@@ -23,8 +23,8 @@
                     </div>
                 </div>
               </div>
-              <div class="text">
-                <span ownerid=<%= comment.owner.id %>><%= simple_format(comment.comment) %></span>
+              <div class="text" ownerid=<%= comment.owner.id %>>
+                <span><%= simple_format(comment.comment) %></span>
               </div>
            </div>
          <% end %>

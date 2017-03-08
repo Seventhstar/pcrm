@@ -17,14 +17,12 @@
   a.href
 
 @add_comment = ->
-  comment_id = $('.microposts p:first').attr('ownerid')
   comment = $('#comment_comment').val()
   owner_id = $('#btn-chat').attr('ownerid')
   owner_type = $('#btn-chat').attr('ownertype');
   upd_url = owner_type.toLowerCase()+'s';
   if comment == ''
     return
-  #return;
   $.ajax
     url: '/ajax/add_comment'
     data:
