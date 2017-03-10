@@ -52,7 +52,7 @@ class AjaxController < ApplicationController
       com.comment = params[:comment]
       com.user_id = current_user.id
       com.owner_id = params[:owner_id]
-      com.owner_type= params[:owner_type]
+      com.owner_type = params[:owner_type]
       com.save
       admins = User.where(admin: true).ids # помечаем сообщения непрочитанными
       admins.delete(current_user.id) # кроме себя
@@ -76,7 +76,7 @@ class AjaxController < ApplicationController
 
   def read_comment
     if params[:comment_id]
-      p "params[:comment_id]",params[:comment_id]
+      # p "params[:comment_id]",params[:comment_id]
       CommentUnread.where(comment_id: params[:comment_id], user_id: current_user.id).destroy_all
     end
     render :nothing => true

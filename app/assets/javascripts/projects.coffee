@@ -17,7 +17,7 @@
     d1 = dateFromString($('#project_date_start').val())
     d2 = dateFromString($('#project_date_end_plan').val())
     v  = $('#holidays').val().split(" ")
-    $('#days').val( moment().isoWeekdayCalc(d1,d2,[1,2,3,4,5],v) )
+    $('#project_days').val( moment().isoWeekdayCalc(d1,d2,[1,2,3,4,5],v)+1 )
 
 		return
 
@@ -64,8 +64,12 @@
   designer_sum = (intFromSum($('#project_designer_price').val()) * footage ) / 10
   designer_sum2 = (intFromSum($('#project_designer_price_2').val()) * footage2 ) / 10
   visual_sum   = (intFromSum($('#project_visualer_price').val()) * footage) / 10
-  $('#project_sum_total_executor').val( to_sum( designer_sum + designer_sum2 + visual_sum) )
-  $('#project_sum_rest').val( to_sum(intFromSum($('#project_sum_total').val()) - designer_sum - designer_sum2 - visual_sum) )
+  if (designer_sum>0)
+    $('#project_sum_total_executor').val( to_sum( designer_sum + designer_sum2 + visual_sum) )
+    ex_sum = designer_sum + designer_sum2 + visual_sum
+  else
+    ex_sum = intFromSum($('#project_sum_total_executor').val())
+  $('#project_sum_rest').val( to_sum(intFromSum($('#project_sum_total').val()) - ex_sum) )
   return
 
 $(document).ready ->
@@ -88,7 +92,7 @@ $(document).ready ->
   $('#project_style_id').chosen
     width: '99.5%'
     disable_search: 'true'
-  $('#days').change ->
+  $('#project_days').change ->
     d_st = dateFromString $('#project_date_start').val()
     add  = $(this).val()-1
     v = $('#holidays').val().split(" ")
@@ -112,6 +116,8 @@ $(document).ready ->
     calc_debt()
   $('#project_sum_total_real').change ->
     calc_debt()
+  $('#project_sum_total_executor').change ->
+    $('#project_sum_rest').val( to_sum(intFromSum($('#project_sum_total').val()) - intFromSum($(this).val())) )
   $('#project_designer_price,#project_designer_price_2,#project_visualer_price').change ->
     calc_executor_sum()
   return

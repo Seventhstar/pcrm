@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170308145553) do
+ActiveRecord::Schema.define(version: 20170310025545) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -275,25 +275,25 @@ ActiveRecord::Schema.define(version: 20170308145553) do
     t.date     "date_start"
     t.date     "date_end_plan"
     t.date     "date_end_real"
-    t.float    "footage",          default: 0.0
-    t.float    "footage_2",        default: 0.0
-    t.float    "footage_real",     default: 0.0
-    t.float    "footage_2_real",   default: 0.0
-    t.integer  "price",            default: 0
-    t.integer  "price_2",          default: 0
-    t.integer  "price_real",       default: 0
-    t.integer  "price_2_real",     default: 0
-    t.integer  "sum",              default: 0
-    t.integer  "sum_2",            default: 0
-    t.integer  "sum_real",         default: 0
-    t.integer  "sum_2_real",       default: 0
-    t.integer  "sum_total",        default: 0
-    t.integer  "sum_total_real",   default: 0
+    t.float    "footage",            default: 0.0
+    t.float    "footage_2",          default: 0.0
+    t.float    "footage_real",       default: 0.0
+    t.float    "footage_2_real",     default: 0.0
+    t.integer  "price",              default: 0
+    t.integer  "price_2",            default: 0
+    t.integer  "price_real",         default: 0
+    t.integer  "price_2_real",       default: 0
+    t.integer  "sum",                default: 0
+    t.integer  "sum_2",              default: 0
+    t.integer  "sum_real",           default: 0
+    t.integer  "sum_2_real",         default: 0
+    t.integer  "sum_total",          default: 0
+    t.integer  "sum_total_real",     default: 0
     t.integer  "month_in_gift"
     t.boolean  "act"
     t.integer  "delay_days"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.integer  "pstatus_id"
     t.boolean  "attention"
     t.integer  "designer_price"
@@ -303,6 +303,7 @@ ActiveRecord::Schema.define(version: 20170308145553) do
     t.boolean  "debt"
     t.boolean  "interest"
     t.boolean  "payd_q"
+    t.integer  "sum_total_executor"
   end
 
   create_table "provider_budgets", force: :cascade do |t|

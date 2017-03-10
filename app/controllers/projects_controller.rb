@@ -4,7 +4,7 @@ class ProjectsController < ApplicationController
   before_action :check_sum, only: [:create,:update]
   helper_method :sort_2, :dir_2
   helper_method :sort_column, :sort_direction
-  attr_accessor :sum_total_executor,:sum_rest
+  # attr_accessor :days,:sum_rest
   respond_to :html, :json
 
   include ProjectsHelper
@@ -191,7 +191,8 @@ class ProjectsController < ApplicationController
 
 
     def check_sum
-      prms = ['price','price_2','price_real','price_2_real','sum','sum_2','sum_real','sum_2_real','sum_total','sum_total_real','designer_price', 'designer_price_2','visualer_price']
+      prms = ['price','price_2','price_real','price_2_real','sum','sum_2','sum_real','sum_2_real',
+        'sum_total','sum_total_real','designer_price', 'designer_price_2','visualer_price','sum_total_executor']
       prms.each do |p|
         project_params[p] = project_params[p].gsub!(' ','') if !project_params[p].nil?
         # p p,project_params[p]
@@ -218,7 +219,7 @@ class ProjectsController < ApplicationController
         :footage, :footage_2, :footage_real, :footage_2_real, :style_id,
         :sum, :sum_total, :sum_real, :price, :price_2, :price_real,  :sum_2, :sum_total_real, :sum_2_real, :price_2_real,
         :month_in_gift, :act, :delay_days,  :pstatus_id, :attention,
-        :designer_price, :designer_price_2,:visualer_price,
+        :designer_price, :designer_price_2,:visualer_price, :days,
         :debt, :interest, :payd_q, :sum_rest, :sum_total_executor, :first_comment,
         :client_attributes => [:name, :address, :phone, :email] )
     end

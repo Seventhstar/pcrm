@@ -31,6 +31,11 @@ class AbsenceMailer < ActionMailer::Base
 
   def created_email(a_id, curr_user)
     @abs = Absence.find(a_id)
+    
+    if @abs.reason_id == 3 && @abs.project_id == 0 
+      return
+    end
+    p "@abs",@abs
     @history = get_last_history_item(@abs) 
     @version = @abs.versions.last
     send_mail_to("Создано отсутствие",curr_user,20)

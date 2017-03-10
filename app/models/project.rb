@@ -8,7 +8,7 @@ class Project < ActiveRecord::Base
   has_many :receipts
   has_many :absence
 
-  attr_accessor :first_comment, :sum_total_executor, :sum_rest
+  attr_accessor :first_comment, :days, :sum_rest
   has_many :elongations, class_name: 'ProjectElongation'
 
   validates :address, :length => { :minimum => 3 }
@@ -62,8 +62,9 @@ class Project < ActiveRecord::Base
   end
 
   def executor_sum
-    # p 'visualer_price',visualer_price,'designer_sum',designer_sum
-    s = (designer_sum + visualer_price.to_i * f1).to_i
+    s = sum_total_executor
+    s = (designer_sum + visualer_price.to_i * f1).to_i if s.nil?
+    s
   end
 
   def rest
