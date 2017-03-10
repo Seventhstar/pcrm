@@ -17,7 +17,7 @@
     d1 = dateFromString($('#project_date_start').val())
     d2 = dateFromString($('#project_date_end_plan').val())
     v  = $('#holidays').val().split(" ")
-    $('#project_days').val( moment().isoWeekdayCalc(d1,d2,[1,2,3,4,5],v)+1 )
+    $('#project_days').val( moment().isoWeekdayCalc(d1,d2,[1,2,3,4,5],v) )
 
 		return
 
