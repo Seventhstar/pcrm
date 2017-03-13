@@ -76,8 +76,16 @@ class AjaxController < ApplicationController
 
   def read_comment
     if params[:comment_id]
-      # p "params[:comment_id]",params[:comment_id]
-      CommentUnread.where(comment_id: params[:comment_id], user_id: current_user.id).destroy_all
+      c = CommentUnread.where(comment_id: params[:comment_id], user_id: current_user.id)
+      # p "c.count",c.count
+      if c.count >0
+        c.destroy_all
+      else
+        c = CommentUnread.new
+        c.comment_id = params[:comment_id]
+        c.user_id = current_user.id
+        c.save 
+      end
     end
     render :nothing => true
   end

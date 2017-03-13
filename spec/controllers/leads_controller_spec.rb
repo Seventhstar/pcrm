@@ -25,7 +25,7 @@ RSpec.describe LeadsController, type: :controller do
   # adjust the attributes here as well.
   let(:valid_attributes) {
     #skip("Add a hash of attributes valid for your model")
-    {info: 'new lead'}
+    {info: 'new lead', channel_id: 3}
   }
 
   let(:invalid_attributes) {
@@ -44,7 +44,8 @@ RSpec.describe LeadsController, type: :controller do
   describe "GET #index" do
     it "assigns all leads as @leads" do
       lead = Lead.create! valid_attributes
-      get :index, {sort: 'status_date', direction: 'asc', sort2: 'status_date', dir2: 'asc', only_actual: false}, valid_session
+      get :index, {sort: 'status_date', direction: 'asc', sort2: 'status_date', dir2: 'asc', only_actual: true}, valid_session
+      p assigns(:leads)
       expect(assigns(:leads)).to eq([lead])
     end
   end

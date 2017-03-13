@@ -157,8 +157,8 @@ ActiveRecord::Schema.define(version: 20170310025545) do
   end
 
   create_table "holidays", force: :cascade do |t|
-    t.string   "name"
     t.date     "day"
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -244,9 +244,9 @@ ActiveRecord::Schema.define(version: 20170310025545) do
 
   create_table "project_elongations", force: :cascade do |t|
     t.date     "new_date"
+    t.integer  "project_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
-    t.integer  "project_id"
     t.integer  "elongation_type_id"
   end
 
@@ -438,16 +438,6 @@ ActiveRecord::Schema.define(version: 20170310025545) do
   end
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
-
-  create_table "wiki_files", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "wiki_record_id"
-    t.string   "name"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-  end
-
-  add_index "wiki_files", ["wiki_record_id"], name: "index_wiki_files_on_wiki_record_id", using: :btree
 
   create_table "wiki_records", force: :cascade do |t|
     t.string   "name"

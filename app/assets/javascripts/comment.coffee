@@ -5,7 +5,7 @@
 $(document).ready ->
 	$('.comments_box').on 'click', '.item', ->
 		comm_id = $(this).attr('commentid')  
-		$(this).removeClass('new')  
+		$(this).toggleClass('new')  
 		$.ajax
 			url: '/ajax/read_comment'
 			data:
