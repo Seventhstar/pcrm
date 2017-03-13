@@ -47,7 +47,6 @@
   $('#project_sum').val( fp_sum('#project_price','#project_footage'))
   $('#project_sum_2').val( fp_sum('#project_price_2','#project_footage_2'))
   $('#project_sum_total').val( to_sum(intFromSum($('#project_sum_2').val()) + intFromSum($('#project_sum').val())))
-
   calc_debt()
   return
 
@@ -61,9 +60,25 @@
 @calc_executor_sum =() ->
   footage = parseFloat($('#project_footage').val()*10)
   footage2 = parseFloat($('#project_footage_2').val()*10)
-  designer_sum = (intFromSum($('#project_designer_price').val()) * footage ) / 10
-  designer_sum2 = (intFromSum($('#project_designer_price_2').val()) * footage2 ) / 10
-  visual_sum   = (intFromSum($('#project_visualer_price').val()) * footage) / 10
+
+  d_price  = intFromSum($('#project_designer_price').val())
+  d_price2 = intFromSum($('#project_designer_price_2').val())
+  v_price  = intFromSum($('#project_visualer_price').val())
+  designer_sum = ( d_price * footage ) / 10
+  designer_sum2 = ( d_price2 * footage2 ) / 10
+  visual_sum   = ( v_price * footage) / 10
+  
+  if d_price>0
+    $('#project_designer_sum').val(to_sum(designer_sum + designer_sum2))
+  else
+    designer_sum = intFromSum($('#project_designer_sum').val())
+    designer_sum2 = 0    
+
+  if v_price>0
+    $('#project_visualer_sum').val(to_sum(visual_sum))
+  else
+    visual_sum = intFromSum($('#project_visualer_sum').val())
+  
   if (designer_sum>0)
     $('#project_sum_total_executor').val( to_sum( designer_sum + designer_sum2 + visual_sum) )
     ex_sum = designer_sum + designer_sum2 + visual_sum
@@ -78,7 +93,7 @@ $(document).ready ->
     new_href = $('#client_link').attr('href').split('/')
     new_href[2] = $(this).val()
     $('#client_link').attr('href',new_href.join('/'))
-  $("#tabs").tabs();# { active: 1}
+  $("#tabs").tabs({ active: 1});# 
   $('#add_footage').click ->
     $(this).hide()
     $('.invisible').removeClass('invisible')
@@ -118,6 +133,7 @@ $(document).ready ->
     calc_debt()
   $('#project_sum_total_executor').change ->
     $('#project_sum_rest').val( to_sum(intFromSum($('#project_sum_total').val()) - intFromSum($(this).val())) )
-  $('#project_designer_price,#project_designer_price_2,#project_visualer_price').change ->
+  $('#project_designer_price,#project_designer_price_2,#project_visualer_price,#project_designer_sum,#project_visualer_sum').change ->
     calc_executor_sum()
+    return
   return

@@ -55,15 +55,28 @@ class Project < ActiveRecord::Base
     nil_footage(footage_real) ? footage_2.to_f : footage_2_real.to_f
   end
 
-  def designer_sum
-    s = designer_price.to_i * f1
-    s = s + designer_price_2.to_i * f2 if footage_2>0
+  def designer_sum_calc
+    if !designer_sum.nil? && designer_sum > 0
+      s = designer_sum 
+    else
+      s = designer_price.to_i * f1
+      s = s + designer_price_2.to_i * f2 if footage_2>0
+    end
     s.to_i
   end
 
+  def visualer_sum_calc
+    if visualer_sum > 0
+      s = visualer_sum 
+    else
+      s = visualer_price.to_i * f1
+    end
+    s.to_i
+  end  
+
   def executor_sum
     s = sum_total_executor
-    s = (designer_sum + visualer_price.to_i * f1).to_i if s.nil?
+    s = (designer_sum_calc + visualer_sum_calc).to_i if s.nil?
     s
   end
 
@@ -72,8 +85,10 @@ class Project < ActiveRecord::Base
   end
 
   def executor_info
-     i = [f1_info,'м.',' - ',designer_price.to_s,'р.'].join
-     i = i + '</br>'+ [f2_info,'м.',' - ',designer_price_2.to_s,'р.'].join if !nil_footage(f2_info)
+     i = f1_info + 'м.'
+     i = [i,' - ',designer_price.to_s,'р.'].join if !designer_price.nil? && designer_price>0
+     i = [i,'</br>',f2_info,'м.'].join if !nil_footage(f2_info)
+     i = [i,' - ',designer_price_2.to_s,'р.'].join if !designer_price_2.nil? && designer_price_2>0
      i
   end
 

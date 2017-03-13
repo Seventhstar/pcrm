@@ -48,7 +48,7 @@
         <% else %>
 
           <td><%= project.executor_info.html_safe %></td>
-          <td class=" <%= project.sum_total_real ==0 ? '':'red' %>"><%= project.designer_sum.to_sum %></td>
+          <td class=" <%= project.sum_total_real ==0 ? '':'red' %>"><%= project.designer_sum_calc.to_sum %></td>
 
         <% end %>
 
