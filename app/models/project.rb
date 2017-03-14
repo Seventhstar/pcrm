@@ -66,7 +66,7 @@ class Project < ActiveRecord::Base
   end
 
   def visualer_sum_calc
-    if visualer_sum > 0
+    if !visualer_sum.nil? && visualer_sum > 0
       s = visualer_sum 
     else
       s = visualer_price.to_i * f1

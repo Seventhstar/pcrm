@@ -191,9 +191,9 @@ module ApplicationHelper
       cntnt = cntnt + image_tag('hammer.png', title: 'Интерес к стройке') if prj.interest
       
       if is_admin? && prj.comments.count>0
-        if prj.comments.last.receivers.find_by_user_id(current_user.id).nil?
-           cntnt = cntnt + image_tag('comment_unread.png', title: 'Есть комментарии') 
-         else
+        if !prj.comments.last.receivers.find_by_user_id(current_user.id).nil?
+         #   cntnt = cntnt + image_tag('comment_unread.png', title: 'Есть комментарии') 
+         # else
           cntnt = cntnt + image_tag('comment.png', title: 'Новый комментарий')
         end
       end
