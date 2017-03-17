@@ -19,8 +19,6 @@ class UsersController < ApplicationController
   
   def new
     @user = User.new
-    p "i`m in users"
-    return redirect_to projects_url if current_user.admin?
   end
 
 
