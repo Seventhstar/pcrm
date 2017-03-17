@@ -1,15 +1,21 @@
 class SessionsController < ApplicationController
   
   def new
+
   end
   
   def create
     user = User.find_by(email: params[:session][:email])
     if user && user.authenticate(params[:session][:password])
+      # p "i`m in session"
       if user.activated?
         log_in user
         params[:session][:remember_me] == '1' ? remember(user) : forget(user)
-        redirect_back_or user
+        if current_user.projects.count >0
+          redirect_to projects_url 
+        else
+          redirect_back_or user
+        end
       else
         message  = "Аккаунт не активирован. "
 #        message += "Проверьте свой почтовый ящик на наличие ссылки активации."
