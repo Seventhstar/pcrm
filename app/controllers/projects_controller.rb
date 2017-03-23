@@ -13,7 +13,7 @@ class ProjectsController < ApplicationController
   # GET /projects.json
   def index
 
-    years = Project.select("projects.*, date_trunc('year', date_start) AS year").order('date_start')
+    years = Project.select("projects.*, date_trunc('year', date_start) AS year").where('date_start IS NOT NULL').order('date_start')
     year_from = years.first.year
     year_to = years.last.year
 

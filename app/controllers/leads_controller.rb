@@ -24,8 +24,6 @@ class LeadsController < ApplicationController
     year_to = years.last.year
 
     @years = (year_from.year..year_to.year).step(1).to_a.reverse
-    # @years = [2015,2016]
-
 
     @only_actual = params[:only_actual].nil? ? true : params[:only_actual]=='true'
     @sort_column = sort_column
