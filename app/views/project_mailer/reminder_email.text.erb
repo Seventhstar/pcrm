@@ -1,0 +1,19 @@
+Сроки завершения проектов:
+
+<% if @p_today.count>0 %>
+   Сегодня:
+   <% @p_today.each do |p_id| %>
+   		<% prj = Project.find(p_id) %>
+   		<%= link_to prj.address, [:edit, prj] %>
+   <% end %>
+   <br>
+<% end %>
+
+<% if @p_tomorrow.count>0 %>
+  Завтра:
+  <% @p_tomorrow.each do |p_id| %>
+   		<% prj = Project.find(p_id) %>
+   		<%= link_to prj.address, [:edit, prj] %>
+
+   <% end %>
+<% end %>

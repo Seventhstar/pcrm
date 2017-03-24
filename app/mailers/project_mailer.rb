@@ -6,12 +6,14 @@ class ProjectMailer < ActionMailer::Base
 
 
   def reminder_email(user, prj_today, prj_tomorrow)
-       @l_today =leads_today
-       @l_tomorrow = leads_tomorrow
-  	  subj = '[CRM] Напоминание о событии'
-  	  email = User.find(user).email
-  	  if Rails.env.production? && !email.empty?
-      mail(:to => email, :subject => subj) do |format|
+       @p_today = prj_today
+       @p_tomorrow = prj_tomorrow
+  	  subj = '[CRM] Напоминание о проектах'
+      to = [user,5]
+  	  # email = User.find(user).email
+      emails = User.where(id: to).pluck(:email)
+  	  if Rails.env.production? && !emails.empty?
+        mail(:to => emails, :subject => subj) do |format|
         format.html 
       end
     end

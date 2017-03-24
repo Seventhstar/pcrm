@@ -1,6 +1,7 @@
 <% cur_month  = "" %>
 <% cur_user   = nil %>
 <% cur_status = nil %>
+<% cur_type = nil %>
 <% first_table = true %>
 
 
@@ -21,9 +22,9 @@
         <% cur_status = project.status_name %>
         <%= render "head", {:first_table => first_table, :heading => t(project.status_name) } %>
         <% first_table = false %>
-      <% elsif cur_status != project.project_type && (params[:sort] == "project_type_id") %>
-        <% cur_status = project.project_type %>
-        <%= render "head", {:first_table => first_table, :heading => t(project.project_type.try(:name)) } %>
+      <% elsif cur_type != project.project_type && (params[:sort] == "project_type_id") %>
+        <% cur_type = project.project_type %>
+        <%= render "head", {:first_table => first_table, :heading => t(project.project_type_name) } %>
         <% first_table = false %>        
       <% elsif first_table %>
           <%= render "head", {:first_table => first_table, :heading => '' } %>

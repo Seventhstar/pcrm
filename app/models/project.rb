@@ -28,7 +28,9 @@ class Project < ActiveRecord::Base
   end
 
   def project_type_name
-  	project_type.try(:name)
+  	n = project_type.try(:name)
+    n = 'Вид не указан' if n.nil?
+    n
   end
 
   def executor_name
