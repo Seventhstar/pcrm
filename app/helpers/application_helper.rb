@@ -187,6 +187,7 @@ module ApplicationHelper
       cntnt = cntnt + image_tag('debt.png', title: 'Заказчик должен денег') if prj.debt
       
       cntnt = cntnt + image_tag('25.png', title: '25% процентов оплаты') if prj.payd_q
+      cntnt = cntnt + image_tag('100.png', title: 'Оплачен, но не сдан') if prj.payd_full
 
       cntnt = cntnt + image_tag('hammer.png', title: 'Интерес к стройке') if prj.interest
       

@@ -88,6 +88,16 @@
   return
 
 $(document).ready ->
+  $('#project_payd_full,#project_payd_q').click ->
+    f = $('#project_payd_full')
+    q = $('#project_payd_q')
+
+    if f.is(':checked') && $(this)[0]==f[0]
+      $('#project_payd_q').attr('checked', false)
+    else if q.is(':checked') && $(this)[0]==q[0]
+      $('#project_payd_full').attr('checked', false)
+    return
+
   $('#project_client_id').change ->
     # подменяем id клиента и в ссылке на редактирование после выбора
     new_href = $('#client_link').attr('href').split('/')

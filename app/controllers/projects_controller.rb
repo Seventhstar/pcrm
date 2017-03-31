@@ -223,7 +223,7 @@ class ProjectsController < ApplicationController
         :month_in_gift, :act, :delay_days,  :pstatus_id, :attention,
         :designer_price, :designer_price_2, :visualer_price, :days, 
         :designer_sum, :visualer_sum, :sum_total_executor, :sum_rest,
-        :debt, :interest, :payd_q,  :first_comment,
+        :debt, :interest, :payd_q, :payd_full, :first_comment,
         :client_attributes => [:name, :address, :phone, :email] )
     end
 

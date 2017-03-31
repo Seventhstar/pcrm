@@ -37,8 +37,12 @@
             <tr><td class="gr_caption">Статус:</td></tr>
           <tr>
             <td><div class="inp_w"><%= chosen_src :pstatus_id, ProjectStatus.all, @project, {nil_value: 'Статус...' } %></div></td>
-            <td class='va_middle'><%= f.input :attention, :as => :boolean, label: 'Особое внимание', class: 'inp_btn checkbox'  %>
-            <%= f.input :payd_q, :as => :boolean, label: '25%', class: 'inp_btn checkbox'  %></td>
+            <td class='va_middle'>
+            <%= f.input :attention, :as => :boolean, label: 'Особое внимание', class: 'inp_btn checkbox'  %>
+            <div class="left">
+            <%= f.input :payd_q, :as => :boolean, label: '25%', class: 'inp_btn checkbox left' %>
+            </div>
+            <%= f.input :payd_full, :as => :boolean, label: '100%', class: 'inp_btn checkbox left'  %></td>
 
             </tr>
             <tr><td class="gr_caption">Клиент</td></tr>
