@@ -115,6 +115,7 @@ ru:
   new_AbsenceShopTarget: Новая цель для магазина
   new_LeadSource: Новый источник
   new_ElongationType: Новая причина продления
+  new_WikiCat: Новая категория
 
   list_Priority: Список приоритетов
   list_ProjectType: Список видов проектов
@@ -135,6 +136,7 @@ ru:
   list_LeadSource: Список источников
   list_ElongationType: Список причин продления
   list_Holiday: Список праздничных дней
+  list_WikiCat: Список категорий базы знаний
 
   Password: Пароль
   "true": Да

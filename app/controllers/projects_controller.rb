@@ -29,6 +29,10 @@ class ProjectsController < ApplicationController
       @projects = Project.select(query_str)
     end
 
+    if !params[:executor_id].nil? && params[:executor_id]!='0'
+      @projects = @projects.where(:id => User.find(params[:executor_id]).projects.ids)
+    end
+
     if !params[:search].nil?
       @projects = @projects.where('LOWER(address) like LOWER(?)','%'+params[:search]+'%')
     end
@@ -47,7 +51,7 @@ class ProjectsController < ApplicationController
       @projects = @projects.where('EXTRACT(year FROM "date_start") = ?', y)
     end
 
-
+    @executors = User.order(:name)
 
     sort_1 = @sort_column #== 'date_end_plan' ? 'month' : @sort_column
     @numsort = (sort_1 == "number") 

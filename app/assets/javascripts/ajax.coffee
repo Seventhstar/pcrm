@@ -124,6 +124,10 @@ $(document).ready ->
     sortable_query({})
     return
 
+  $('.srtchosen').chosen(width:'165px', disable_search: 'true').on 'change', ->
+    sortable_query({})
+    return
+
 
 # редактирование ячейки в таблице
   $('.container').on 'dblclick', 'td.l_edit', ->  

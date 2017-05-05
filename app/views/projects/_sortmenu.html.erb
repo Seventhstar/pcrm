@@ -10,10 +10,17 @@
 	<%= sortable_pil "project_type_id", "По видам" %>
 
 	<%= chosen_src 'year', @years, nil,{class: 'ychosen',nil_value: 'Год'} %>
+	<%= form_tag receipts_path, :method => 'get', :id => "rcpt_search", class: 'index_filter left' do %>
+	
+		<div class="combobox short_search left items_box_head"> 
+		<%= chosen_src 'executor_id', @executors, params[:executor_id],{nil_value: 'Все исполнители'} %>
+		</div>
+		<% end %>
+
 
 	<% if is_admin? %><%= link_to 'Добавить', new_project_path, class: "btn_a btn-add btn_slim right space20" %><% end %>
   <%= only_actual_btn %>
- 
+
 </div>
 
 	

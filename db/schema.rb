@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170331023626) do
+ActiveRecord::Schema.define(version: 20170602163421) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -442,6 +442,12 @@ ActiveRecord::Schema.define(version: 20170331023626) do
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
 
+  create_table "wiki_cats", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "wiki_files", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "wiki_record_id"
@@ -459,6 +465,9 @@ ActiveRecord::Schema.define(version: 20170331023626) do
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
     t.boolean  "admin",       default: false
+    t.integer  "wiki_cat_id"
   end
+
+  add_index "wiki_records", ["wiki_cat_id"], name: "index_wiki_records_on_wiki_cat_id", using: :btree
 
 end

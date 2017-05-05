@@ -18,6 +18,10 @@
 			<td><div class="inp_w">
 			<%= f.select :parent_id, content_tag(:option,'Корневая папка',:value=>0)+options_for_select(@wiki_folders.collect{ |u| [u.name, u.id] },@wiki_record.parent_id) %></div>
 			</td></tr>
+			<tr><td class="caption">Категория:</td>
+			<td><div class="inp_w">
+			<%= f.select :wiki_cat_id, content_tag(:option,'Без категорий',:value=>0)+options_for_select(@wiki_cats.collect{ |u| [u.name, u.id] },@wiki_record.wiki_cat_id),{}, {class: 'schosen'} %></div>
+			</td></tr>
 			<tr><td></td><td><%= f.input :admin, :as => :boolean, label: 'Только для админов' %></td></tr>
 			<tr><td class="caption"></td>
 			<td>

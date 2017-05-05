@@ -13,6 +13,8 @@ module OptionsHelper
   		3
     when 'absence_reasons', 'absence_targets','absence_shop_targets'
       5
+    when 'wiki_cats'
+      6
   	else
   		4
   	end

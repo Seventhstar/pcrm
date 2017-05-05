@@ -6,6 +6,7 @@ class WikiRecordsController < ApplicationController
   def index
     @parent_id = params[:wiki_record_id]
     @parent_id = 0 if @parent_id.nil?
+    @wiki_record = WikiRecord.find(@parent_id) if @parent_id != 0 
     if current_user.admin? 
       @wiki_records = WikiRecord.where(:parent_id => @parent_id ).order(:name)
     else
@@ -18,10 +19,15 @@ class WikiRecordsController < ApplicationController
   def show
   end
 
+  def def_params
+    @wiki_folders = WikiRecord.where(:parent_id =>0)
+    @wiki_cats    = WikiCat.order(:name)
+  end
+
   # GET /wiki_records/new
   def new
     @wiki_record = WikiRecord.new
-    @wiki_folders = WikiRecord.where(:parent_id =>0)
+    def_params
   end
 
   # GET /wiki_records/1/edit
@@ -29,7 +35,7 @@ class WikiRecordsController < ApplicationController
     if !current_user.admin? 
       redirect_to wiki_records_url
     end
-    @wiki_folders = WikiRecord.where(:parent_id =>0)
+    def_params
     @files = @wiki_record.attachments.order(:name)
     @owner = @wiki_record
   end
@@ -82,6 +88,6 @@ class WikiRecordsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def wiki_record_params
-      params.require(:wiki_record).permit(:name, :description, :parent_id, :admin)
+      params.require(:wiki_record).permit(:name, :description, :parent_id, :admin, :wiki_cat_id)
     end
 end

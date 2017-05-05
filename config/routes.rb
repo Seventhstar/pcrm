@@ -82,6 +82,7 @@ Rails.application.routes.draw do
 #  resources :leads_comments
   resources :channels
   resources :statuses
+  resources :wiki_cats
 
   resources :users
 
