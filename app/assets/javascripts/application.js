@@ -88,12 +88,12 @@ $(function() {
 
     tinyMCE.init({
       selector: 'textarea',  // change this value according to your HTML
-      plugins: "textcolor",
+      plugins: "textcolor,lists",
 
       toolbar_items_size : 'small',
       branding: false,
       menubar: '',
-      toolbar: 'undo redo | styleselect | bold italic underline | alignleft aligncenter alignright alignjustify | forecolor backcolor fontselect fontsizeselect'
+      toolbar: 'undo redo | styleselect | bold italic underline | alignleft aligncenter alignright alignjustify | forecolor backcolor fontselect fontsizeselect | bullist numlist '
       
     });
 
