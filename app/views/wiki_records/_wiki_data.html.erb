@@ -4,7 +4,10 @@
 
 <% if !@wiki_record.nil? %>
   
-<div class="hl hl_a bd"><%= @wiki_record.name %> / <%= @wiki_record.wiki_cat.try(:name) %>
+<% cat_name = @wiki_record.wiki_cat.try(:name) %>
+<% cat_name = " / " + cat_name if !cat_name.nil? %>
+
+<div class="hl hl_a bd"><%= [@wiki_record.name,cat_name].join %>  
   <%= link_to "", [:edit,@wiki_record], :class=>"icon icon_edit right" %>
 </div>
 
