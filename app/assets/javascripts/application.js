@@ -22,6 +22,7 @@
 //= require jquery.timepicker
 //= require nprogress
 //= require moment
+//= require tinymce-jquery
 //= require_tree .
 
 function to_sum(d){ 
@@ -81,10 +82,21 @@ var show_ajax_message = function(msg, type) {
 };
 
 
-
 $(function() {
 
   startTime();
+
+    tinyMCE.init({
+      selector: 'textarea',  // change this value according to your HTML
+      plugins: "textcolor",
+
+      toolbar_items_size : 'small',
+      branding: false,
+      menubar: '',
+      toolbar: 'undo redo | styleselect | bold italic underline | alignleft aligncenter alignright alignjustify | forecolor backcolor fontselect fontsizeselect'
+      
+    });
+
 
   $('.timepicker').timepicker({ 'timeFormat': 'H:i' });
 

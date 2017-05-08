@@ -1,4 +1,8 @@
-$("#chitem_"+<%= @parent_id%>).html("<td></td><td><%= escape_javascript(render("wiki_records")) %></td>");
+<% if (params[:search].nil? || params[:search]=="") && @parent_id!=0 %>
+  $("#chitem_"+<%= @parent_id%>).html("<td></td><td><%= escape_javascript(render("wiki_records")) %></td>");
+<% else %>
+  $("#wiki_panel").html("<td></td><td><%= escape_javascript(render("wiki_records")) %></td>");
+<% end %>
 $("#wiki_data").html("<%= escape_javascript(render("wiki_data")) %>");
 
 

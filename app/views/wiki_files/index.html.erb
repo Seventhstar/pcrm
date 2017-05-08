@@ -1,7 +1,5 @@
 <%= render 'wiki_records/wiki_menu' %>
 
-<ul class="files_ul">
-	<% @wiki_files.each do |file| %>
-	<li><a href="/download/WikiRecord/<%= file.owner_id %>/<%= file.id.to_s+File.extname(file.name) %>" target="_blank"><%= file.name %> (<%= file.created_at.try('strftime',"%d.%m.%Y") %>)</a></li>
-	<% end -%>
-</ul>
+<div id="wiki_files">
+	<%= render 'wiki_files' %>
+</div>

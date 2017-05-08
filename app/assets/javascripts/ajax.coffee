@@ -85,7 +85,12 @@
   
   l = window.location.toString().split('?');
   p = q2ajx(l[1])
-  p_params = q2ajx($('.index_filter').serialize())
+  ser = $('.index_filter').serialize()
+  if ser == ""
+    ser = $('.index_filter select').serialize()
+  p_params = q2ajx(ser)
+  
+
   each p, (i, a) ->
     if ['search','page','_'].include? i 
       url[i] = a

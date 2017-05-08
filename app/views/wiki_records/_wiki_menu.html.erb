@@ -1,6 +1,11 @@
 <div class="items_box_head">
 <div class="panel-left">
-<%= render_navigation(:level => 2) %>
+	<div class="left">
+		<%= render_navigation(:level => 2) %>
+	</div>
+	<div class="left index_filter"> 
+		<%= chosen_src 'wiki_cat_id', @wiki_cats, params[:wiki_cat_id],{nil_value: 'Все категории'} %>
+	</div>
 </div>
 
 <% if is_admin? %>

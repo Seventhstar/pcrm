@@ -4,13 +4,26 @@ class WikiRecordsController < ApplicationController
   # GET /wiki_records
   # GET /wiki_records.json
   def index
+    @wiki_cats    = WikiCat.order(:name)
     @parent_id = params[:wiki_record_id]
     @parent_id = 0 if @parent_id.nil?
+    params.delete_if{|k,v| v=='' || v=='0' }
     @wiki_record = WikiRecord.find(@parent_id) if @parent_id != 0 
     if current_user.admin? 
       @wiki_records = WikiRecord.where(:parent_id => @parent_id ).order(:name)
     else
       @wiki_records = WikiRecord.where(parent_id: @parent_id, admin: false).order(:name)
+    end
+
+    if !params[:wiki_cat_id].nil? && params[:wiki_cat_id]!=0
+      @wiki_records = @wiki_records.where(wiki_cat_id: params[:wiki_cat_id])
+    end
+
+    if !params[:search].nil? && params[:search]!=""
+      info =params[:search]
+
+      @wiki_records = @wiki_records.where('LOWER(description) like LOWER(?) or LOWER(name) like LOWER(?) ','%'+info+'%','%'+info+'%')
+      # p "wjehfwk", info, @wiki_records
     end
   end
 
