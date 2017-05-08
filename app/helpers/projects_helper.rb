@@ -19,11 +19,23 @@ module ProjectsHelper
     !i
   end
 
+
+  def class_prj_td (prj)
+    cls = ''
+    cls = 'green '     if prj.pstatus_id == 4
+    cls = 'hot_date'  if !prj.date_end.nil? && prj.date_end <= Date.today+1
+    cls = 'hot '      if prj.pstatus_id == 2
+
+    cls
+  end
+
+
   def class_for_project (prj)
     cls = ''
-    cls = 'hot_date'  if !prj.date_end.nil? && prj.date_end <= Date.today+1
+    cls = 'green '    if prj.pstatus_id == 4
     cls = "nonactual" if prj.pstatus_id == 3
     cls = 'hot '      if prj.pstatus_id == 2
+
     cls
   end
 

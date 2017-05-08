@@ -87,13 +87,13 @@ $(function() {
   startTime();
 
     tinyMCE.init({
-      selector: 'textarea',  // change this value according to your HTML
+      selector: '.tinymce textarea',  // change this value according to your HTML
       plugins: "textcolor,lists",
 
       toolbar_items_size : 'small',
       branding: false,
       menubar: '',
-      toolbar: 'undo redo | styleselect | bold italic underline | alignleft aligncenter alignright alignjustify | forecolor backcolor fontselect fontsizeselect | bullist numlist '
+      toolbar: 'bold italic underline | forecolor backcolor  fontsizeselect | bullist numlist '
       
     });
 

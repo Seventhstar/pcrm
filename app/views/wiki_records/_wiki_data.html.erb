@@ -8,10 +8,12 @@
 <% cat_name = " / " + cat_name if !cat_name.nil? %>
 
 <div class="hl hl_a bd"><%= [@wiki_record.name,cat_name].join %>  
-  <%= link_to "", [:edit,@wiki_record], :class=>"icon icon_edit right" %>
+  <%= link_to "", [:edit,@wiki_record], :class=>"icon icon_edit right" if current_user.admin? %>
 </div>
-
-  <%= RedCloth.new(@wiki_record.description).to_html.html_safe %>
+    
+  <div class="tinymce">
+    <%= RedCloth.new(@wiki_record.description).to_html.html_safe %>
+  </div>
   <ul class="files_ul">
         <% @wiki_record.attachments.order(:name).each do |file| %>
         <li><a href="/download/WikiRecord/<%= @wiki_record.id %>/<%= file.id.to_s+File.extname(file.name) %>" target="_blank">

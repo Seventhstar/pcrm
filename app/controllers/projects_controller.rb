@@ -38,7 +38,7 @@ class ProjectsController < ApplicationController
     end
 
     if @only_actual
-      @projects = @projects.where('pstatus_id in (1,2)')
+      @projects = @projects.where('not pstatus_id = 3')
     end
 
     if params[:sort] == 'users.name'

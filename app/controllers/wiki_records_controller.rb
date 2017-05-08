@@ -21,10 +21,9 @@ class WikiRecordsController < ApplicationController
 
     if !params[:search].nil? && params[:search]!=""
       info =params[:search]
-
       @wiki_records = @wiki_records.where('LOWER(description) like LOWER(?) or LOWER(name) like LOWER(?) ','%'+info+'%','%'+info+'%')
-      # p "wjehfwk", info, @wiki_records
     end
+
   end
 
   # GET /wiki_records/1
@@ -51,6 +50,7 @@ class WikiRecordsController < ApplicationController
     def_params
     @files = @wiki_record.attachments.order(:name)
     @owner = @wiki_record
+       
   end
 
   # POST /wiki_records

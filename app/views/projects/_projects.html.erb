@@ -34,13 +34,13 @@
       <tr class="va_middle <%= class_for_project(project) %>">
 
         <td class="cell-inner"><%= icon_for_project(project).html_safe %><%= project.number %></td>
-        <td><%= project.address %></td>
+        <td><%= tooltip(project.address,project.pstatus.try(:name)) %></td>
         <td><%= project.project_type_name %></td>
         <td><%= project.client_name %></td>
         <% if is_admin? && @sort!="users.name" %><td><%= project.executor_name %></td> <% end %>
 
         <td ><%= project.date_start.try('strftime',"%d.%m.%Y") %></td>
-        <td class=<%= class_for_project(project) %>><%= project.date_end.try('strftime',"%d.%m.%Y") %></td>
+        <td class=<%= class_prj_td(project) %>><%= project.date_end.try('strftime',"%d.%m.%Y") %></td>
 
         <% if is_admin? %>
           <td><%= project.admin_info.html_safe %></td>
