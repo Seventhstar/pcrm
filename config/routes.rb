@@ -34,6 +34,8 @@ Rails.application.routes.draw do
   resources :project_statuses
   resources :project_elongations
   resources :elongation_types
+  resources :project_g_types
+  resources :project_goods
   resources :clients
 
   resources :p_statuses

@@ -127,7 +127,7 @@ class AjaxController < ApplicationController
         #p "p",p,obj[p[0]]
         new_value = p[1]
         new_value.gsub!(' ','') if p[0]=='sum'  
-        obj[p[0]] = new_value
+        obj[p[0]] = new_value if p[0]!='undefined'
       end
       obj.save
    	 end

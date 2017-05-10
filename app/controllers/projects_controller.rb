@@ -80,6 +80,7 @@ class ProjectsController < ApplicationController
   def def_params
     @owner = @project
     @holidays =  Holiday.pluck(:day).collect{|d| d.try('strftime',"%Y-%m-%d")}
+    @gtypes = Goodstype.all
     # @files    = @lead.attachments
     # @history  = get_history_with_files(@lead)
   end
@@ -88,7 +89,7 @@ class ProjectsController < ApplicationController
   def new
     @project = Project.new
     # @client =  @project.build_client
-    p :client_id
+    # p :client_id
     get_debt
     def_params
   end
@@ -102,6 +103,8 @@ class ProjectsController < ApplicationController
     @files        = @project.attachments
     @elongation_types = ElongationType.all
     @new_et  = ProjectElongation.new
+    @new_gt  = Goodstype.new
+    @gtypes = Goodstype.where('not id in (?)',@project.project_g_types.pluck(:g_type_id))
   end
 
   # POST /projects

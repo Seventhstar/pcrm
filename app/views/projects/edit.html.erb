@@ -12,8 +12,8 @@
     <li><a href="#tabs-1">Данные</a></li>
     <li><a href="#tabs-2">Площадь и стоимость</a></li>
     <li><a href="#tabs-3">Сроки</a></li>
-    <li><a href="#tabs-4">Выплаты</a></li>
-    <li><a href="#tabs-5">Заказы</a></li>
+    <li><a href="#tabs-4">Предложения</a></li>
+    <li><a href="#tabs-5">Выплаты</a></li>
     <li><a href="#tabs-6">Файлы</a></li>
 
   </ul>
@@ -129,12 +129,19 @@
           </table>
           <div class="sep_3"></div>
           <div id='prj_elongations'>
-          <%= render partial: 'elongations', locals: { f: f } %>
+            <%= render partial: 'elongations', locals: { f: f } %>
           </div>
         </div>
    </div>
 </div>
+
 <div id="tabs-4" class="ptab">
+  <div id="pgoods">
+    <%= render partial: 'pgoods', locals: { f: f } %>
+  </div>
+</div>
+
+<div id="tabs-5" class="ptab">
 
 
   <div class="box_wrap box_wrap_1">
@@ -178,8 +185,7 @@
     </div>
   </div>
 </div>
-<div id="tabs-5" class="ptab">
-</div>
+
 
 
 <div id="tabs-6" class="ptab">

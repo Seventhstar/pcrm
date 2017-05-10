@@ -6,6 +6,7 @@ class Project < ActiveRecord::Base
   has_many :comments, :as => :owner
   has_many :attachments, :as => :owner
   has_many :receipts
+  has_many :project_g_types
   has_many :absence
 
   attr_accessor :first_comment, :days, :sum_rest

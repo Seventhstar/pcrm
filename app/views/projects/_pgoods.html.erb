@@ -1,0 +1,20 @@
+<div class="box_wrap items_box_param">
+<%= hidden_field 'g_type','project_id', value: @project.id %>
+<div class="left" style="width:270px">
+<%= chosen_src "g_type[g_type_id]", @gtypes,"g_type",{nil_value: 'Выберите вид товара...'} %>
+</div>
+<span class="sub btn_a" id="btn-sub-send" pe_id="<%= @project.id %>" action='/project_g_types/' prm='g_type'> Добавить</span>
+
+</div>
+
+<% first_col = true %>
+
+<% @project.project_g_types.each do |pgt| %>
+<div class="panel panel-default">
+<div class="panel-heading table-heading head month" name="pgt<%= pgt.id %>"><%= pgt.goodstype_name %></div>
+  <%= render partial: 'goods', locals: { pgt: pgt, first_col: first_col } %>
+  <% first_col = false %>
+</div>
+<% end %>
+
+

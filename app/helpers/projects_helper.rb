@@ -5,7 +5,13 @@ module ProjectsHelper
 		lbl = content_tag 'label', params[:translate] ? t(label) : label
     v = params[:value]
     v ||= @project[val]
-		txt = content_tag 'input', '', value: v, onblur:"onBlur(this)", onfocus:"onFocus(this)", class: 'txt '+mask_cls + inp_add_mask, type: 'text', name: "#{f.object_name}[#{val}]" , id: "#{f.object_name}_#{val}"
+    if f.class == String
+      obj_name = f
+    else
+      obj_name = f.object_name
+    end 
+
+		txt = content_tag 'input', '', value: v, onblur:"onBlur(this)", onfocus:"onFocus(this)", class: 'txt '+mask_cls + inp_add_mask, type: 'text', name: "#{obj_name}[#{val}]" , id: "#{obj_name}_#{val}"
 		add_class = params[:class].nil? ? '' : ' '+params[:class]
 		content_tag 'td' do
 			content_tag 'div', class: 'inp_w'+add_class do

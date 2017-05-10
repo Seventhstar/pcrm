@@ -1,5 +1,6 @@
 module ApplicationHelper
-
+  include CurrencyHelper
+  
   def attr_boolean?(item,attr)
     item.class.column_types[attr.to_s].class == ActiveRecord::Type::Boolean
   end
@@ -65,6 +66,7 @@ module ApplicationHelper
     p_name    = options[:p_name].nil? ? 'name' : options[:p_name]
     order     = options[:order].nil? ? p_name : options[:order]
     nil_value = options[:nil_value].nil? ? 'Выберите...' : options[:nil_value]
+    add_name  = options[:add_name]
 
   	coll = collection.class.ancestors.include?(ActiveRecord::Relation) ? collection : collection
     coll = coll.collect{ |u| [u[p_name], u.id] } if coll.class.name != 'Array'
@@ -76,9 +78,11 @@ module ApplicationHelper
     sel = options[:selected] if !options[:selected].nil?
     	n = is_attr ? obj.model_name.singular+'['+ id.to_s+']' : id
 
+    n = [add_name,'[',n,']',].join if !add_name.nil?
+
     def_cls = coll.count < 8 ? 'chosen' : 'schosen'
     cls       = options[:class].nil? ? def_cls : options[:class]
-
+    cls = cls + ' '+ options[:add_class] if !options[:add_class].nil?
     cls = cls+" has-error" if is_attr && ( obj.errors[id].any? || obj.errors[id.to_s.gsub('_id','')].any? )
     l = label_tag options[:label]
     s = select_tag n, options_for_select(coll, :selected => sel), class: cls
