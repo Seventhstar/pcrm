@@ -5,7 +5,7 @@ body {background: #fff; font: normal 14px 'Pragmatica', sans-serif; color: #0000
 a {outline: none; color: #000000; }
 a:hover {text-decoration:none;}
 
-.sub, .btn, .btn_a,.subnav>span, .splink{background: none; padding: 0 0 0 0; margin: 0 0 0 0; width: auto; overflow: visible; border: 0; cursor: pointer;}
+.sub, .btn, .btn_a, .btn_add,.subnav>span, .splink{background: none; padding: 0 0 0 0; margin: 0 0 0 0; width: auto; overflow: visible; border: 0; cursor: pointer;}
 .sub::-moz-focus-inner, .btn::-moz-focus-inner{border: 0; padding: 0; margin: 0;}
 
 input, textarea , button , select {font: normal 14px 'Pragmatica', sans-serif;}
@@ -64,10 +64,11 @@ a:hover .icon_user, .active .icon_user {background-position:-18px -18px; }
 .icon_birthday {background-position:-163px 0; width: 15px; height: 20px;}
 .icon_file {background-position:-180px 0; width: 12px; height: 16px;}
 
-.btn_a,.form-actions .btn-success, a.btn-success, 
+.btn_a, .btn_add,.form-actions .btn-success, a.btn-success, 
 .input-group .btn-warning {display: inline-block; background: #ff8411; height: 34px; line-height: 34px; padding: 0 19px 0 19px; text-decoration:none; font-size: 14px; color: #fff; 
   border-radius: 5px; 
   position:relative;}
+span.btn_add{ height: 24px; width: 12px; padding: 0px 60px 7px 8px; margin-top: -3px !important;}
 .btn_slim{ height: 24px; font-size: 13px; padding: 0 12px; line-height: 24px;} 
 .btn_a:hover {opacity: 0.7;}
 .icon:hover,.btn:hover {opacity: 0.7;}

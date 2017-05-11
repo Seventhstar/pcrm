@@ -21,11 +21,11 @@
         <td><%= g.description %></td>
         <td></td>
         <td><%= g.currency_name %></td>
-				<td><%= g.gsum.to_sum %></td>
+				<td><%= g.gsum.to_sum if !g.gsum.nil? %></td>
         <%= tool_icons(g, {icons:'edit,delete',tag:'span'}) %>
       </tr>
     <% end %>
-       <tr id="new_item">
+       <tr id="new_pgt_item<%= pgt.id %>" class="invisible">
        	<% iname = ['project_good',pgt.id].join %>
         <%= hidden_field iname,'project_g_type_id', value: pgt.id %>
         <td class="fw" width='190px'><%= text_field iname,:name, {:class => 'txt'} %></td>

@@ -11,7 +11,8 @@
 
 <% @project.project_g_types.each do |pgt| %>
 <div class="panel panel-default">
-<div class="panel-heading table-heading head month" name="pgt<%= pgt.id %>"><%= pgt.goodstype_name %></div>
+<div class="panel-heading table-heading head month" name="pgt<%= pgt.id %>"><%= pgt.goodstype_name %> 
+<span class="sub btn_add right" itm="new_pgt_item<%= pgt.id %>">Добавить</span></div>
   <%= render partial: 'goods', locals: { pgt: pgt, first_col: first_col } %>
   <% first_col = false %>
 </div>

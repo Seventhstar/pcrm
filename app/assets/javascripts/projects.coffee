@@ -88,6 +88,9 @@
   return
 
 $(document).ready ->
+  $(".container").on 'click','.btn_add', ->
+    id = $(this).attr('itm')
+    $('#'+id).show()
   $('#project_payd_full,#project_payd_q').click ->
     f = $('#project_payd_full')
     q = $('#project_payd_q')
