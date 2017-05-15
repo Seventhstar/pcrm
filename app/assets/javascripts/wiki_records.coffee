@@ -17,8 +17,8 @@ jQuery ->
     $('#folder'+itm_id).toggleClass 'opened'
     $('#sub'+itm_id).toggleClass('hidden')
     $('#files'+itm_id).toggleClass('hidden')
-    if ($('#chitem_'+itm_id).html() =='') 
-      get_child_wiki(itm_id)
+    # if ($('#chitem_'+itm_id).html() =='') 
+    get_child_wiki(itm_id)
     $('#chitem_'+itm_id).toggleClass('hidden')
     return
   $('.container').on 'dblclick', '.wiki_name span',->

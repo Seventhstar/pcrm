@@ -73,11 +73,14 @@ module ApplicationHelper
     coll.insert(0,[nil_value,0,{class: 'def_value'}]) if nil_value != ''
     coll.insert(1,[options[:special_value],-1]) if !options[:special_value].nil?
 
-		is_attr = (obj.class != Fixnum && obj.class != String && !obj.nil?)
-    sel = is_attr ? obj[id] : obj
-    sel = options[:selected] if !options[:selected].nil?
-    	n = is_attr ? obj.model_name.singular+'['+ id.to_s+']' : id
-
+    if !options[:selected].nil?
+      sel = options[:selected]
+    else
+  		is_attr = (obj.class != Fixnum && obj.class != String && !obj.nil?)
+      sel = is_attr ? obj[id] : obj
+    end 
+    
+    n = is_attr ? obj.model_name.singular+'['+ id.to_s+']' : id
     n = [add_name,'[',n,']',].join if !add_name.nil?
 
     def_cls = coll.count < 8 ? 'chosen' : 'schosen'
