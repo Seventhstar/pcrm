@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170602163426) do
+ActiveRecord::Schema.define(version: 20170602163427) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -249,6 +249,8 @@ ActiveRecord::Schema.define(version: 20170602163426) do
     t.integer  "project_id"
     t.integer  "elongation_type_id"
   end
+
+  add_index "project_elongations", ["project_id"], name: "index_project_elongations_on_project_id", using: :btree
 
   create_table "project_g_types", force: :cascade do |t|
     t.integer  "g_type_id"
