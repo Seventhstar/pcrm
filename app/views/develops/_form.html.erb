@@ -1,11 +1,8 @@
 <%= simple_form_for(@develop) do |f| %>
-<div class="hl hl_b bd"><span>Описание задачи:</span><div class="inp_h"><%= f.input :name, label: false %></div>
+<div class="hl hl_b bd"><span>Описание задачи:</span><div class="inp_h"><%= f.input :name, label: false, input_html: {class: 'inp_hide'} %></div>
 <%= link_to "", @develop, method: :delete, data: { confirm: 'Действительно удалить задачу?' }, :class=>"icon icon_remove right" %>
 </div>
-
-
-
-	<div >
+	<div>
 		<table class="tbl_fc tbl_fc">
 		<tr><td class="caption">Описание:</td>
 		    <td><div class="inp_w"><%= f.text_area :description, class: :txt, label: false %></div></td></tr>
@@ -24,7 +21,8 @@
 			</td></tr>
 		<tr><td class="caption">Статус:</td>
 			<td><div class="inp_w">
-			<%= chosen_src :dev_status_id, @dev_statuses, @develop, {selected: 1} %></div>
+ 			<% sel = (@develop.new_record? ? 1 : @develop.dev_status_id) %>
+			<%= chosen_src :dev_status_id, @dev_statuses, @develop, {selected: sel} %></div>
 			</td></tr>			
 
 		<tr><td class="caption">Приоритет:</td>

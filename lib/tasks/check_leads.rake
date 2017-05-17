@@ -27,24 +27,23 @@ namespace :check_leads do
     p_todtom = Project.where('date_end_plan between ? and ?',Date.today,Date.today+1).pluck(:id)
     p_todtom = p_todtom - pe + pe_todtom
     projects = Project.where(:id => [p_todtom]).order('executor_id')
-    # p projects.count
-    ex_user = nil
-    p_today  = []
-    p_tomorrow = []
+   
     projects.each do |prj|
-      if ex_user != prj.executor_id
-         ProjectMailer.reminder_email(ex_user,p_today,p_tomorrow).deliver if !ex_user.nil?
-         p_today = []
-         p_tomorrow = []
-         ex_user = prj.executor_id 
-      end
-      if prj.date_end == today
-         p_today << prj.id
-      else
-         p_tomorrow << prj.id
-      end
+      ProjectMailer.reminder_email(prj).deliver
     end
-    ProjectMailer.reminder_email(ex_user,p_today,p_tomorrow).deliver if !ex_user.nil?
+
+
+    prj = Project.where(" pstatus_id =  1 and date_end_plan < ?",Date.today).pluck(:id)
+    all_pe = ProjectElongation.where(project_id: prj).pluck(:project_id).uniq
+    pe = ProjectElongation.select(:id, :project_id,:new_date).where('project_id in (?)',prj).group(:project_id).maximum(:new_date)
+    
+    prj_wo_pe = prj - all_pe
+
+    all = prj_wo_pe + pe.select{|k, v| v < Date.today }.keys
+	all.each do |prj_id|
+		ProjectMailer.overdue_email(prj_id).deliver
+	end
+
 
   end
 
