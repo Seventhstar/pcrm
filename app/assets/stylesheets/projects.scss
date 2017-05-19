@@ -29,9 +29,9 @@ td.inf.attention, td.inf.comment {background: asset-url('p_inf.png') no-repeat !
 #div_tprojects .cell-inner {position:relative;}
 
 // #div_tprojects .icons-indicate {position:absolute; top: 0; right: 100%; white-space:nowrap; margin:10px 10px 0 0; font-size: 0;}
-#div_tprojects .icons-indicate {position:absolute; right: 100%; white-space:nowrap; margin:-4px 10px 0 0; font-size: 0;}
+.icons-indicate {position:absolute; right: 100%; white-space:nowrap; margin:-4px 10px 0 0; font-size: 0;}
 
-#div_tprojects .icons-indicate img {margin:0 5px 0 0;}
+.icons-indicate img {margin:0 5px 0 0;}
 
 td.inf.comment {  background-position-x: -17px !important; }
 

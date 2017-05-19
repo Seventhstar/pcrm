@@ -1,6 +1,6 @@
 <div class="box_wrap items_box_param">
 <%= hidden_field 'g_type','project_id', value: @project.id %>
-<div class="left" style="width:270px">
+<div class="left mgn_right15" style="width:270px ">
 <%= chosen_src "g_type[g_type_id]", @gtypes,"g_type",{nil_value: 'Выберите вид товара...'} %>
 </div>
 <span class="sub btn_a" id="btn-sub-send" pe_id="<%= @project.id %>" action='/project_g_types/' prm='g_type'> Добавить</span>

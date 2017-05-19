@@ -46,7 +46,7 @@ class ProvidersController < ApplicationController
 
     #if @param_p_status && @param_p_status!="" && @param_p_status!='0'
     if  @only_actual
-        ps = PStatus.find(@param_p_status).providers.ids
+        ps = Provider.where('p_status_id > 2').ids
     end
 
     @ids = sp & bp & gtp & ps & s_ids

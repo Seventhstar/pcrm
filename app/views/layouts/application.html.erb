@@ -17,7 +17,7 @@
 <body>
   
 <div class="page-wrapper">
-
+ <div class="h_container">
   <% if current_user %>
     <div class="header">
       <!-- <%= render 'layouts/ny' %>  -->
@@ -61,9 +61,11 @@
   </div>
 
 
+ 
   <div class="container">
   <div id="modal-holder" class="slide"></div>
   <%= yield %>
+  </div>
   </div>
 
 

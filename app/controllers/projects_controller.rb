@@ -104,7 +104,8 @@ class ProjectsController < ApplicationController
     @elongation_types = ElongationType.all
     @new_et  = ProjectElongation.new
     @new_gt  = Goodstype.new
-    @gtypes = Goodstype.where('not id in (?)',@project.project_g_types.pluck(:g_type_id))
+    gt = @project.project_g_types.pluck(:g_type_id)
+    @gtypes = gt.empty? ? Goodstype.order(:name) : Goodstype.where('not id in (?)',gt)
   end
 
   # POST /projects

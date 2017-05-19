@@ -11,13 +11,25 @@ module ProvidersHelper
     end
   end
 
- def providers_page_url
+  def providers_page_url
     session[:last_providers_page] || providers_url
- end
+  end
 
 
- def store_providers_path
+  def store_providers_path
     session[:last_providers_page] = request.url || providers_url if request.get?
- end
+  end
 
+  def icon_for_provider(provider)
+      cntnt = '<div class="icons-indicate">'   
+      cntnt = cntnt + image_tag('pri_prov.png', title: 'Приоритетный поставщик') if provider.p_status_id == 5
+      cntnt = cntnt + '</div>'
+  end
+
+  def class_for_provider(provider)
+    cls = ""
+    cls = "nonactual" if provider.p_status_id == 2 
+    cls = "info" if provider.p_status_id == 5
+    cls
+  end
 end

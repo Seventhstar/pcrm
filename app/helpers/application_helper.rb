@@ -181,39 +181,6 @@ module ApplicationHelper
 
   end
 
-  # def class_for_project (prj)
-  #   cls = ''
-  #   cls = 'hot' if !prj.date_end_plan.nil? && prj.date_end_plan <= Date.today+1
-  #   cls = "nonactual" if prj.pstatus_id == 3
-  #   cls = 'bg_red' if prj.pstatus_id == 2
-  #   cls
-  # end
-
-  def icon_for_project (prj)
-      cntnt = '<div class="icons-indicate">'   
-      cntnt = cntnt + image_tag('debt.png', title: 'Заказчик должен денег') if prj.debt
-      
-      cntnt = cntnt + image_tag('25.png', title: '25% процентов оплаты') if prj.payd_q
-      cntnt = cntnt + image_tag('100.png', title: 'Оплачен, но не сдан') if prj.payd_full
-
-      cntnt = cntnt + image_tag('hammer.png', title: 'Интерес к стройке') if prj.interest
-      
-      if is_admin? && prj.comments.count>0
-        if !prj.comments.last.receivers.find_by_user_id(current_user.id).nil?
-         #   cntnt = cntnt + image_tag('comment_unread.png', title: 'Есть комментарии') 
-         # else
-          cntnt = cntnt + image_tag('comment.png', title: 'Новый комментарий')
-        end
-      end
-
-      cntnt = cntnt + image_tag('attention.png', title: 'Особое внимание') if prj.attention
-      cntnt = cntnt + image_tag('stopped.png', title: 'Проект приостановлен') if prj.pstatus_id == 2
-      cntnt = cntnt + '</div>'
-  end
-
-
-
-
   def option_link( page,title )
     css_class = @page_data == page ? "active" : nil
     link_to title, '#',{:class =>"list-group-item #{css_class}", :controller => page}
