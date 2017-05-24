@@ -6,7 +6,7 @@ class ProjectMailer < ActionMailer::Base
   def reminder_email(prj)
       @prj = prj
   	  @subj = 'У проекта '+@prj.address+' подошел срок сдачи!'
-      emails = User.where(id: [1,5,@prj.executor_id]).pluck(:email)
+      emails = User.where(id: [@prj.executor_id]).pluck(:email)
   	  if Rails.env.production? && !emails.empty?
         mail(:to => emails, :subject => @subj) do |format|
         format.html 
@@ -17,7 +17,7 @@ class ProjectMailer < ActionMailer::Base
   def overdue_email(prj_id)
     @prj = Project.find(prj_id)
     @subj = 'У проекта '+@prj.address+' истек срок сдачи (не продлен)!'
-    emails = User.where(id: [1,5,@prj.executor_id]).pluck(:email)
+    emails = User.where(id: [@prj.executor_id]).pluck(:email)
     if Rails.env.production? && !emails.empty?
       mail(:to => emails, :subject => @subj) do |format|
         format.html 

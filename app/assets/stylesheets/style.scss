@@ -81,6 +81,8 @@ span.btn_add{ height: 24px; width: 12px; padding: 0px 60px 7px 8px; margin-top: 
 .btn_b:hover,
 .btn_b.active{background: #6acc00; border-color:#6acc00; padding-left: 20px; padding-right: 20px; color: #fff; border-left: 0; border-right: 0; text-decoration:none;}
 
+.attach_list .btn_add{background-color: white; color: #ff8411; border: 1px solid #ff8411;}
+
 .btn_c{display: inline-block; border:1px solid #e5e5e5; padding: 9px 19px 9px 19px; color: #ff8411; position:relative; text-decoration:none; 
   border-radius: 5px; 
   line-height: 1;  text-decoration:underline;}

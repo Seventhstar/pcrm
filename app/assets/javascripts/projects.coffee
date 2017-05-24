@@ -106,7 +106,7 @@ $(document).ready ->
     new_href = $('#client_link').attr('href').split('/')
     new_href[2] = $(this).val()
     $('#client_link').attr('href',new_href.join('/'))
-  $("#tabs").tabs { active: 3}
+  # $("#tabs").tabs { active: 3}
   $('#add_footage').click ->
     $(this).hide()
     $('.invisible').removeClass('invisible')
