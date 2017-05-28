@@ -110,6 +110,8 @@ class LeadsController < ApplicationController
   # GET /leads/new
   def new
     @lead = Lead.new
+    @lead.status_id = 1
+    @lead.ic_user_id = current_user.id
     def_params
   end
 

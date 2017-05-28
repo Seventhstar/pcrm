@@ -1,5 +1,5 @@
-<% @files.each do |file| %>
-<div class="item">
+<% @files.each_with_index do |file,i| %>
+<div class="item <%= i.odd? ? 'odd':'' %>">
 	<div class="fname">
 		<a href="/download/<%= self.controller_name.classify %>/<%= @owner.id %>/<%= file.id.to_s+File.extname(file.name) %>" target="_blank"><%= file.name %></a>
 	</div>

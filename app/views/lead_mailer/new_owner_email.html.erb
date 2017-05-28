@@ -1,4 +1,4 @@
-<h3><%= find_version_author_name(@version) %> назначил(а) ответственным пользователя "<%= @lead.ic_user.name %>" по лиду <%= link_to '#'+@lead.id.to_s, [:edit, @lead] %></h3>
+<h3><%= find_version_author_name(@version) %> назначил(а) ответственным пользователя "<%= @lead.ic_user_name %>" по лиду <%= link_to '#'+@lead.id.to_s, [:edit, @lead] %></h3>
 
 <b>ФИО:</b> <%= @lead.fio %><br>
 <b>Телефон:</b> <%= @lead.phone %><br>

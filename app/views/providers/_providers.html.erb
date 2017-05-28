@@ -12,9 +12,9 @@
 <table class="tleads">
   <thead>
     <tr>
-      <th>Название</th>
-      <th width="290px">Специализация</th>
-      <th width="130px">Телефон</th>
+      <th width="280px">Название</th>
+      <th width="300px">Специализация</th>
+      <th width="140px">Телефон</th>
       <th width="170px">Сайт</th>
       <th width="220px">Адрес</th>
       <th></th>
@@ -26,7 +26,7 @@
       <% prv.each do |provider| %>
         <tr class=<%= class_for_provider(provider) %> >
           <td class="cell-inner"><%= icon_for_provider(provider).html_safe %><%= provider.name %></td>
-          <td class='n_wrap'><%= provider.goods_type_names %></td>
+          <td><%= provider.goods_type_names.html_safe %></td>
           <td><%= provider.phone %></td>
           <td><%= site_link(provider.url) %></td>
           <td><%= provider.address %></td>

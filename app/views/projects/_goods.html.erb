@@ -3,37 +3,37 @@
   <tbody>
   <% if first_col %>
   	<tr>
-	  	<th width='190px'>Позиция</th>
-	  	<th width='150px'>Поставщик</th>
-	  	<th width='80px'>Срок поставки</th>
-	  	<th width='190px'>Примечание</th>
-	  	<th alt="Предложено / заказано"></th>
+	  	<th width='230px'>Позиция</th>
+	  	<th width='216px'>Поставщик</th>
+	  	<th width='115px'>Срок поставки</th>
+	  	<th width='230px'>Примечание</th>
+	  	<th width='40px' alt="Предложено / заказано"> Зак.</th>
 	  	<th width='58px'>Валюта</th>
-	  	<th fld='gsum'>Стоимость</th>
+	  	<th fld='gsum' width='90px'>Стоимость</th>
 	  	<th></th>
 		</tr>
   <% end %>
     <% pgt.goods.each do |g| %>
       <tr>
-        <td><%= g.name %></td>
-        <td><%= g.provider_name %></td>
-        <td><%= g.date_supply.try('strftime',"%d.%m.%Y") %></td>
-        <td><%= g.description %></td>
+        <td width='230px'><%= g.name %></td>
+        <td width='210px'><%= g.provider_name %></td>
+        <td width='115px'><%= g.date_supply.try('strftime',"%d.%m.%Y") %></td>
+        <td width='230px'><%= g.description %></td>
         <td></td>
         <td><%= g.currency_name %></td>
-				<td><%= g.gsum.to_sum if !g.gsum.nil? %></td>
+				<td width='90px'><%= g.gsum.to_sum if !g.gsum.nil? %></td>
         <%= tool_icons(g, {icons:'edit,delete',tag:'span'}) %>
       </tr>
     <% end %>
-       <tr id="new_pgt_item<%= pgt.id %>" class="invisible">
+       <tr id="new_pgt_item<%= pgt.id %>" class="invisible new_row">
        	<% iname = ['project_good',pgt.id].join %>
         <%= hidden_field iname,'project_g_type_id', value: pgt.id %>
-        <td class="fw" width='190px'><%= text_field iname,:name, {:class => 'txt'} %></td>
-        <td>
+        <td class="fw" width='230px'><%= text_field iname,:name, {:class => 'txt'} %></td>
+        <td width='220px'>
         <%= chosen_src "provider_id", Goodstype.find(pgt.g_type_id).providers, nil,{nil_value: 'Выберите поставщика...',add_name: iname} %></td>
         <td class="caption3" width='80px'><%= text_field iname,:date_supply, {:class => 'txt datepicker'} %></td>
-        <td class="caption3" width='190px'><%= text_field iname,:description, {:class => 'txt'} %></td>
-				<td></td>
+        <td class="caption3" width='238px'><%= text_field iname,:description, {:class => 'txt fullwidth'} %></td>
+				<td width='40px'><div class="inp_btn checkbox"><%= check_box_tag :actual, "true", "false" %></td>
         <td width='60px'><%= chosen_src "currency_id", currency_src,1,{nil_value: '',add_name: iname, add_class: 'currency_src'} %></td>
         <%= td_sum_field('project_good', :gsum) %>
         <td><span class="sub btn_a" id="btn-sub-send" pe_id="<%= pgt.id %>" action='/project_goods/' prm='project_good<%= pgt.id %>'> +</span></td>

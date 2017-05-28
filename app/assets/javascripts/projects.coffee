@@ -91,6 +91,7 @@ $(document).ready ->
   $(".container").on 'click','.btn_add', ->
     id = $(this).attr('itm')
     $('#'+id).show()
+    $(this).hide()
   $('#project_payd_full,#project_payd_q').click ->
     f = $('#project_payd_full')
     q = $('#project_payd_q')
@@ -106,7 +107,7 @@ $(document).ready ->
     new_href = $('#client_link').attr('href').split('/')
     new_href[2] = $(this).val()
     $('#client_link').attr('href',new_href.join('/'))
-  # $("#tabs").tabs { active: 3}
+    #$("#tabs").tabs { active: 3}
   $('#add_footage').click ->
     $(this).hide()
     $('.invisible').removeClass('invisible')

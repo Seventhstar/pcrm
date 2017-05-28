@@ -35,7 +35,7 @@ class Provider < ActiveRecord::Base
     end
 
     def goods_type_names
-      self.goodstypes.pluck(:name).join("\n")
+      self.goodstypes.pluck(:name).join("<br>")
     end
 
     def p_status_name

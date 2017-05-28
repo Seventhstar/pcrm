@@ -39,7 +39,7 @@
 			<td><div class="select_custom select"><%= chosen_src :source_id, LeadSource.all, @lead %>
 			</td></tr>
 		<tr><td class="caption">Статус:</td>
-			<td><div class="select_custom select"><%= chosen_src :status_id, @statuses, @lead, {selected: 1} %>
+			<td><div class="select_custom select"><%= chosen_src :status_id, @statuses, @lead %>
 		<tr><td class="caption">Дата статуса:</td>
 			<td><div class="inp_w"><%= f.text_field :status_date, class: "txt datepicker" %></div></td>	</tr>		
 				</td></tr>

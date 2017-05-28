@@ -185,7 +185,7 @@ $(function() {
 
 $('.progress').hide();
 $('#file').hide();
-$( "#tabs" ).tabs();
+$( "#tabs" ).tabs({active: 3});
  
 
   // дата по умолчанию для нового лида - сегодня
