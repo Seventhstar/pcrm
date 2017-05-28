@@ -21,7 +21,7 @@
 //= require jquery.fileupload
 //= require jquery.timepicker
 //= require nprogress
-//= require tinymce.min
+//= require tinymce-jquery
 //= require moment
 //= require_tree .
 

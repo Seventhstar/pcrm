@@ -35,6 +35,7 @@ module Pcrm
 
      # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
      # config.i18n.default_locale = :de
+     config.tinymce.install = :compile
      config.i18n.enforce_available_locales = true
      config.i18n.available_locales = %i(en ja zh ru)
      config.i18n.default_locale = :ru
