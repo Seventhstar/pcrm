@@ -21,8 +21,8 @@
 //= require jquery.fileupload
 //= require jquery.timepicker
 //= require nprogress
+//= require tinymce.min
 //= require moment
-//= require tinymce-jquery
 //= require_tree .
 
 function to_sum(d){ 
@@ -88,13 +88,13 @@ $(function() {
 
     tinyMCE.init({
       selector: '.tinymce textarea',  // change this value according to your HTML
-      plugins: "textcolor,lists",
+      plugins: "textcolor,lists,spellchecker",
 
       toolbar_items_size : 'small',
       branding: false,
       menubar: '',
-      toolbar: 'bold italic underline | forecolor backcolor  fontsizeselect | bullist numlist '
-      
+      gecko_spellcheck:true,
+      toolbar: 'bold italic underline | forecolor backcolor fontsizeselect | bullist numlist '
     });
 
 
@@ -185,7 +185,7 @@ $(function() {
 
 $('.progress').hide();
 $('#file').hide();
-$( "#tabs" ).tabs({active: 3});
+$( "#tabs" ).tabs(); //{active: 3}
  
 
   // дата по умолчанию для нового лида - сегодня

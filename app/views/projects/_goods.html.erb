@@ -33,7 +33,7 @@
         <%= chosen_src "provider_id", Goodstype.find(pgt.g_type_id).providers, nil,{nil_value: 'Выберите поставщика...',add_name: iname} %></td>
         <td class="caption3" width='80px'><%= text_field iname,:date_supply, {:class => 'txt datepicker'} %></td>
         <td class="caption3" width='238px'><%= text_field iname,:description, {:class => 'txt fullwidth'} %></td>
-				<td width='40px'><div class="inp_btn checkbox"><%= check_box_tag :actual, "true", "false" %></td>
+				<td width='40px'><div class="inp_btn checkbox"><%= check_box_tag :actual  , "true", "false" %></td>
         <td width='60px'><%= chosen_src "currency_id", currency_src,1,{nil_value: '',add_name: iname, add_class: 'currency_src'} %></td>
         <%= td_sum_field('project_good', :gsum) %>
         <td><span class="sub btn_a" id="btn-sub-send" pe_id="<%= pgt.id %>" action='/project_goods/' prm='project_good<%= pgt.id %>'> +</span></td>
