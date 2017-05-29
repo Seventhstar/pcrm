@@ -1,6 +1,6 @@
 <% cur_month  = "" %>
-<% cur_user   = nil %>
-<% cur_status = nil %>
+<% cur_user   = "" %>
+<% cur_status = "" %>
 <% first_table = true %>
 
 <% @leads.each do |lead| %>
@@ -21,9 +21,9 @@
       <% elsif cur_user != user_name(lead.ic_user_id) && (params[:sort] == "ic_users.name")%>
           <% cur_user = user_name(lead.ic_user_id) %>
           <%= render "head", {:first_table => first_table, :heading => user_name(lead.ic_user_id) } %>          
-      <% elsif cur_status != lead.status.try(:name) && (params[:sort] == "status_id")%>
+      <% elsif cur_status != lead.status.try(:name) && (params[:sort] == "status_id") %>
         <% cur_status = lead.status.try(:name) %>
-        <%= render "head", {:first_table => first_table, :heading => t(lead.status.name) } %>
+        <%= render "head", {:first_table => first_table, :heading => t(lead.status.try(:name)) } %>
       <% end %>
         <% first_table = false %>        
 

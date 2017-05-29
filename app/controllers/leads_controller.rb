@@ -34,7 +34,7 @@ class LeadsController < ApplicationController
       query_str = "leads.*, date_trunc('month', start_date) AS month"
       sort_1 = @sort_column == 'start_date' ? 'month' : @sort_column
     end
-
+    
     # if @sort_column == "status_date" && !current_user.admin?
     if !current_user.admin?
       if params[:sort] == 'users.name'
