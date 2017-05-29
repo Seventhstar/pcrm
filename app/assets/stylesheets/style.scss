@@ -39,6 +39,8 @@ p {margin:0 0 14px 0; padding: 0 0 0 0; }
 .icon_logout {background-position:0 0; }
 .icon_user {background-position:-18px 0; width: 14px;  }
 a:hover .icon_user, .active .icon_user {background-position:-18px -18px; }
+.active:hover {opacity: 0.9;}
+
 .icon_options,li.icon_options a{background-position:-228px 0; width: 24px; height: 24px; }
 .icon_edit {background-position:-69px -16px; }
 .icon_show {background-position:-212px -16px; margin: 0 4px 0 0 !important;}
@@ -70,9 +72,10 @@ a:hover .icon_user, .active .icon_user {background-position:-18px -18px; }
   position:relative;}
 span.btn_add{ height: 24px; width: 12px; padding: 0px 60px 7px 8px; margin-top: -3px !important;}
 .btn_slim{ height: 24px; font-size: 13px; padding: 0 12px; line-height: 24px;} 
-.btn_a:hover {opacity: 0.7; transition: All 0.5s ease;}
+//.btn_a:hover {opacity: 0.7; transition: All 0.5s ease;}
+.btn_a:hover { opacity: 0.7; background: asset-url('xbg1_2.png'); transition: All 0.5s ease;}
 .icon:hover {opacity: 0.7;}
-.btn:hover {opacity: 0.7; transition: All 0.5s ease;}
+.btn:hover {opacity: 0.8; transition: All 0.5s ease;}
 .only_actual:hover {opacity: 0.8;}
 .btn_a.btn_reset {background: #c3c3c3;}
 
@@ -82,8 +85,10 @@ span.btn_add{ height: 24px; width: 12px; padding: 0px 60px 7px 8px; margin-top: 
 .btn_b:hover,
 .btn_b.active{background: #6acc00; border-color:#6acc00; padding-left: 20px; padding-right: 20px; color: #fff; border-left: 0; border-right: 0; text-decoration:none;}
 
-.attach_list .btn_add{background-color: white; color: #ff8411; border: 1px solid #e5e5e5;}
-.attach_list .btn_add:hover {transition: All 0.5s ease; box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2);}
+.attach_list .btn_add{background-color: white; color: #ff8411; border: 1px solid #e5e5e5; transition: color .2s ease;}
+// .attach_list .btn_add:hover {transition: All 0.5s ease; box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2);}
+.attach_list .btn_add:hover { color: #fff; background: asset-url('xbg1_1.png');}//background-color: #ff8411;}
+.attach_list .btn_add:hover .pict .icon_file{ background: asset-url('file_hover.png');}
 
 .btn_c{display: inline-block; border:1px solid #e5e5e5; padding: 9px 19px 9px 19px; color: #ff8411; position:relative; text-decoration:none; 
   border-radius: 5px; 

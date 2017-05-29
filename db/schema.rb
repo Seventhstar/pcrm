@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170602163427) do
+ActiveRecord::Schema.define(version: 20170602163428) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -157,8 +157,8 @@ ActiveRecord::Schema.define(version: 20170602163427) do
   end
 
   create_table "holidays", force: :cascade do |t|
-    t.string   "name"
     t.date     "day"
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -186,6 +186,9 @@ ActiveRecord::Schema.define(version: 20170602163427) do
     t.integer  "ic_user_id"
     t.integer  "source_id"
   end
+
+  add_index "leads", ["ic_user_id"], name: "index_leads_on_ic_user_id", using: :btree
+  add_index "leads", ["status_id"], name: "index_leads_on_status_id", using: :btree
 
   create_table "leads_comments", force: :cascade do |t|
     t.text     "comment"
@@ -244,9 +247,9 @@ ActiveRecord::Schema.define(version: 20170602163427) do
 
   create_table "project_elongations", force: :cascade do |t|
     t.date     "new_date"
+    t.integer  "project_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
-    t.integer  "project_id"
     t.integer  "elongation_type_id"
   end
 
@@ -469,16 +472,6 @@ ActiveRecord::Schema.define(version: 20170602163427) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
-
-  create_table "wiki_files", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "wiki_record_id"
-    t.string   "name"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-  end
-
-  add_index "wiki_files", ["wiki_record_id"], name: "index_wiki_files_on_wiki_record_id", using: :btree
 
   create_table "wiki_records", force: :cascade do |t|
     t.string   "name"
