@@ -53,6 +53,7 @@ class DevelopsController < ApplicationController
   # GET /develops/new
   def new
     @develop      = Develop.new
+    @develop.dev_status_id = 1
     def_params
     @files        = {}
     @history      = {}

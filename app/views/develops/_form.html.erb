@@ -21,8 +21,7 @@
 			</td></tr>
 		<tr><td class="caption">Статус:</td>
 			<td><div class="inp_w">
- 			<% sel = (@develop.new_record? ? 1 : @develop.dev_status_id) %>
-			<%= chosen_src :dev_status_id, @dev_statuses, @develop, {selected: sel} %></div>
+			<%= chosen_src :dev_status_id, @dev_statuses, @develop %></div>
 			</td></tr>			
 
 		<tr><td class="caption">Приоритет:</td>
