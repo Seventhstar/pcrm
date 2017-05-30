@@ -1,6 +1,7 @@
 class ProjectGoodsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy]  
   before_action :logged_in_user
+  before_action :check_sum, only: [:create,:update]
 
   def create
     @pe = ProjectGood.new(pg_params)
@@ -26,12 +27,20 @@ class ProjectGoodsController < ApplicationController
 
    private
 
+   def check_sum
+      prms = ['gsum']
+      prms.each do |p|
+        pg_params[p] = pg_params[p].gsub!(' ','') if !pg_params[p].nil?
+        # p p,project_params[p]
+      end
+    end
+
     def set_project
       @pe = ProjectGood.find(params[:id])
     end
 
     def pg_params
       prm = params.first[0] 
-      params.require(prm).permit(:project_g_type_id,:provider_id,:date_supply,:currency_id,:gsum,:name,:description)
+      params.require(prm).permit(:project_g_type_id,:provider_id,:date_supply,:currency_id,:gsum,:order,:name,:description)
     end
 end

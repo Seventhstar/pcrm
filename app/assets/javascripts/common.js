@@ -129,6 +129,7 @@ $(document).ready(function(){
 			} else {
 				$inp_btn.removeClass('active');
 			}
+			$(this).val($(this).prop('checked'));
 		}
 	})
 

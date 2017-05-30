@@ -236,6 +236,8 @@ textarea.txt, #lead_first_comment {padding: 5px 10px 5px 10px; margin:0 0 0 0; v
 .inp_btn.checkbox input {position:absolute; top: 0; left: -50px;}
 
 .inp_btn.checkbox, span.check_img  { background: asset-url('pict01.png'); width: 18px; height: 18px; background-position: -87px 0; }
+.inp_btn.checkbox.bigcheck { background: asset-url('big_check.png'); width: 32px; height: 32px; }
+.inp_btn.checkbox.bigcheck.active { background: asset-url('big_check.png'); background-position: -32px 0;}
 
 
 span.check_img{ text-align: center; }
