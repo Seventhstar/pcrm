@@ -28,10 +28,10 @@ class Lead < ActiveRecord::Base
     end
   end
 
-
   def source_name
     source.try(:name)
   end
+
   def channel_name
     channel.try(:name)
   end
@@ -40,15 +40,17 @@ class Lead < ActiveRecord::Base
     self.channel = Channel.find_or_create_by_name(name) if name.present?
   end
 
-
   def status_name
     status.try(:name)
+  end
+
+  def status_wname
+    status_id.nil? ? 'Без статуса' : status.try(:name)
   end
 
   def status_name=(name)
     self.status = Status.find_or_create_by_name(name) if name.present?
   end
-
 
   def user_name
     user.try(:name)

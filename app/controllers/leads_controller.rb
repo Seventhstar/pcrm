@@ -63,7 +63,8 @@ class LeadsController < ApplicationController
 
     if params[:sort] == 'ic_users.name'
       sort_1 = "users.name"
-      @leads = @leads.joins(:ic_user)
+       # @leads = @leads.joins(:ic_user)
+       @leads = @leads.join('LEFT JOIN "users" u on lead.ic_user_id = u.id')
     elsif params[:sort] == 'users.name'
       sort_1 = "users.name"
       @leads = @leads.joins(:user)      
@@ -112,6 +113,8 @@ class LeadsController < ApplicationController
     @lead = Lead.new
     @lead.status_id = 1
     @lead.ic_user_id = current_user.id
+    @lead.channel_id = 1
+
     def_params
   end
 

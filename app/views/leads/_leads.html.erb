@@ -15,15 +15,15 @@
           
           <% cur_month = p_date %>
           <%= render "head", {:first_table => first_table, :heading =>  m_head} %>    
-      <% elsif cur_user != user_name(lead.user_id) && (params[:sort] == "users.name")%>
-        <% cur_user = user_name(lead.user_id) %>
-          <%= render "head", {:first_table => first_table, :heading => user_name(lead.user_id) } %>
-      <% elsif cur_user != user_name(lead.ic_user_id) && (params[:sort] == "ic_users.name")%>
-          <% cur_user = user_name(lead.ic_user_id) %>
-          <%= render "head", {:first_table => first_table, :heading => user_name(lead.ic_user_id) } %>          
-      <% elsif cur_status != lead.status.try(:name) && (params[:sort] == "status_id") %>
-        <% cur_status = lead.status.try(:name) %>
-        <%= render "head", {:first_table => first_table, :heading => t(lead.status.try(:name)) } %>
+      <% elsif cur_user != user_wname(lead,'user_id') && (params[:sort] == "users.name")%>
+        <% cur_user = user_name(lead,'user_id') %>
+          <%= render "head", {:first_table => first_table, :heading => cur_user } %>
+      <% elsif cur_user != user_wname(lead,'ic_user_id') && (params[:sort] == "ic_users.name")%>
+          <% cur_user = user_wname(lead,'ic_user_id') %>
+          <%= render "head", {:first_table => first_table, :heading => cur_user } %>          
+      <% elsif cur_status != lead.status_wname && (params[:sort] == "status_id") %>
+        <% cur_status = lead.status_wname %>
+        <%= render "head", {:first_table => first_table, :heading => lead.status_wname } %>
       <% end %>
         <% first_table = false %>        
 

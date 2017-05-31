@@ -22,7 +22,7 @@
 		<tr><td class="caption">Адрес объекта:</td>
 			<td><div class="inp_w"><%= f.input :address, label: false %></div></td></tr>
 		<tr><td class="caption">Ответственный:</td>
-			<td><div class="inp_w"><%= chosen_src :ic_user_id, User.all, @lead, {selected:current_user.id} %>			
+			<td><div class="inp_w"><%= chosen_src :ic_user_id, User.all, @lead %>			
 		<tr><td class="caption"></td>
 			<td><%= submit_cancel leads_path %> </td></tr>
 		</table>

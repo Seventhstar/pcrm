@@ -12,8 +12,26 @@ module CommonHelper
     else
       ""
     end
-    
   end
+
+  def user_wname(obj,id_name)
+    id = obj[id_name]
+    if !id.nil? && id!=0 && id!=0-1
+     user = User.find(id)
+     user ? user.name : ''
+    else
+      case id_name
+      when 'executor_id'
+        n = 'Без исполнителя'
+      when 'ic_user_id'
+        n = 'Без ответственного'
+      when 'user_id'
+        n = 'Без владельца'
+      end    
+      n
+    end
+  end
+
 
   def from_to_from_changeset(obj,changeset,event)
     
@@ -164,7 +182,7 @@ module CommonHelper
       ch.store(0,'Удален')
       desc = 'Удален ' + link_to_obj(version["item_type"], version['item_id'])
     else
-      p "version[:event]",version[:event]
+      # p "version[:event]",version[:event]
       ch = {}
       desc = {"version[:event]"=> version[:event]}
     end
@@ -178,7 +196,7 @@ module CommonHelper
 
   def get_history_with_files(obj)
     history = Hash.new
-    p "----1"
+    # p "----1"
     # изменения в самом объекте
     obj.versions.reverse.each do |version|
       if version[:event]!="create" && version != obj.versions.first 

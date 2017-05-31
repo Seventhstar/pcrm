@@ -1,7 +1,7 @@
 <% cur_month  = "" %>
-<% cur_user   = nil %>
-<% cur_status = nil %>
-<% cur_type = nil %>
+<% cur_user   = "" %>
+<% cur_status = "" %>
+<% cur_type = "" %>
 <% first_table = true %>
 
 
@@ -13,14 +13,14 @@
           <% cur_month = new_date.month %>
           <%= render "head", {:first_table => first_table, :heading => t(new_date.try('strftime',"%B"))+" "+new_date.try('strftime',"%Y") } %>
           <% first_table = false %>
-      <% elsif cur_user != user_name(project.executor_id) && (params[:sort] == "users.name")%>
-        <% cur_user = user_name(project.executor_id) %>
+      <% elsif cur_user != user_wname(project,'executor_id') && (params[:sort] == "users.name")%>
+        <% cur_user = user_wname(project,'executor_id') %>
         
-          <%= render "head", {:first_table => first_table, :heading => (project.executor_id==0 ? 'Без исполнителя' : user_name(project.executor_id)) } %>
+          <%= render "head", {:first_table => first_table, :heading => cur_user } %>
           <% first_table = false %>
-      <% elsif cur_status != project.status_name && (params[:sort] == "pstatus_id") %>
-        <% cur_status = project.status_name %>
-        <%= render "head", {:first_table => first_table, :heading => t(project.status_name) } %>
+      <% elsif cur_status != project.status_wname && (params[:sort] == "pstatus_id") %>
+        <% cur_status = project.status_wname %>
+        <%= render "head", {:first_table => first_table, :heading => project.status_wname } %>
         <% first_table = false %>
       <% elsif cur_type != project.project_type && (params[:sort] == "project_type_id") %>
         <% cur_type = project.project_type %>

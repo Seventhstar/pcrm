@@ -42,6 +42,11 @@ class Project < ActiveRecord::Base
     pstatus.try(:name)
   end
 
+  def status_wname
+    pstatus_id.nil? ? 'Без статуса' : pstatus.try(:name)
+  end
+
+
   def days_duration
     if elongations.count>0
       business_days_between(date_start.to_datetime,last_elongation.to_datetime)+1

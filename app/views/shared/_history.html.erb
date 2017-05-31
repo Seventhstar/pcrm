@@ -7,9 +7,11 @@
   <div class="item">
     <div class="head"><%= version['author'] %>, <span class="date"><%= version['at'] %></span></div>
     <ul>
-	<%- version['description'].each do |descr| %>
-	       <li><%= raw(descr) %></li>
+      <% if version['description'].class == Array %>
+        <%- version['description'].each do |descr| %>
+          <li><%= raw(descr) %></li>
         <% end %>
+      <% end %>
     </ul>
   </div>
 
