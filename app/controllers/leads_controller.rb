@@ -63,8 +63,8 @@ class LeadsController < ApplicationController
 
     if params[:sort] == 'ic_users.name'
       sort_1 = "users.name"
-       # @leads = @leads.joins(:ic_user)
-       @leads = @leads.join('LEFT JOIN "users" u on lead.ic_user_id = u.id')
+       @leads = @leads.joins(:ic_user)
+       # @leads = @leads.join('LEFT JOIN "users" u on lead.ic_user_id = u.id')
     elsif params[:sort] == 'users.name'
       sort_1 = "users.name"
       @leads = @leads.joins(:user)      

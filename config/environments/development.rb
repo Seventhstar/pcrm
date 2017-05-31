@@ -19,7 +19,8 @@ Rails.application.configure do
   host = 'rails-tutorial-c9-mhartl.c9.io'
   config.action_mailer.default_url_options = { host: host }
 
-
+  #config.logger = Logger.new('error.log', 'daily')
+ 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
