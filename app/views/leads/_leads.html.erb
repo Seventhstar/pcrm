@@ -1,30 +1,13 @@
-<% cur_month  = "" %>
-<% cur_user   = "" %>
-<% cur_status = "" %>
+<% cur_head = "" %>
 <% first_table = true %>
 
 <% @leads.each do |lead| %>
-    <% new_date = lead.start_date? ? lead.start_date : Date.today %>
-    <% p_date = lead.status_date? ? lead.status_date.try('strftime',"%B") : "Без даты статуса" %>
-    <% m_head = lead.status_date? ? t(lead.status_date.try('strftime',"%B"))+" "+lead.status_date.try('strftime',"%Y"): "Без даты статуса" %>
-      
-      <% if cur_month != new_date.month && (params[:sort] == "start_date" || (params[:sort] == nil && !is_admin?)) %> 
-          <% cur_month = new_date.month %>
-          <%= render "head", {first_table: first_table, :heading => t(new_date.try('strftime',"%B"))+" "+new_date.try('strftime',"%Y") } %>
-      <% elsif cur_month != p_date && (params[:sort] == "status_date" || (params[:sort] == nil && is_admin?))%>
-          <% cur_month = p_date %>
-          <%= render "head", {first_table: first_table, heading:  m_head} %>    
-      <% elsif cur_user != user_wname(lead,'user_id') && (params[:sort] == "users.name")%>
-        <% cur_user = user_wname(lead,'user_id') %>
-          <%= render "head", {first_table: first_table, heading: cur_user } %>
-      <% elsif cur_user != user_wname(lead,'ic_user_id') && (params[:sort] == "ic_users.name")%>
-          <% cur_user = user_wname(lead,'ic_user_id') %>
-          <%= render "head", {first_table: first_table, heading: cur_user } %>          
-      <% elsif cur_status != lead.status_wname && (params[:sort] == "status_id") %>
-        <% cur_status = lead.status_wname %>
-        <%= render "head", {:first_table => first_table, :heading => lead.status_wname } %>
-      <% end %>
-
+  
+        <% c = check_new_head(lead,cur_head) %> 
+        <% if c[:need_head] %>
+          <% cur_head = c[:cur_head] %>
+          <%= render "head", {first_table: first_table, heading:  cur_head} %>
+        <% end %>
         <% first_table = false %>        
 
         <tr class="<%= class_for_lead(lead) %>" >      

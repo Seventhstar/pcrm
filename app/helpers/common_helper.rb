@@ -14,7 +14,46 @@ module CommonHelper
     end
   end
 
-  def user_wname(obj,id_name)
+  def month_year(date)
+    t(date.try('strftime',"%B"))+" "+date.try('strftime',"%Y")
+  end
+
+  def check_new_head( obj, cur_head )
+
+    
+    case params[:sort]
+    when "users.name"
+      new_head = head_name(obj,'user_id')
+    when "ic_users.name"
+      new_head = head_name(obj,'ic_user_id')
+    when "status_id"
+      new_head = obj.status_wname
+    when "start_date"
+      new_head = obj.start_date? ? month_year(obj.start_date) : "Без даты статуса"
+    when "status_date"
+      new_head = obj.status_date? ? month_year(obj.status_date) : "Без даты статуса"   
+    else
+      if is_admin?
+        new_head = obj.status_date? ? month_year(obj.status_date) : "Без даты статуса"
+      else
+        new_head = obj.start_date? ? month_year(obj.start_date) : "Без даты статуса"
+      end
+      
+    end
+      
+    need_head = false
+    if cur_head != new_head 
+      cur_head = new_head
+      need_head = true
+    end
+    a = {need_head: need_head, cur_head: cur_head}
+    a
+    
+  end
+
+
+
+  def head_name(obj,id_name)
     id = obj[id_name]
     if !id.nil? && id!=0 && id!=0-1
      user = User.find(id)
@@ -26,7 +65,9 @@ module CommonHelper
       when 'ic_user_id'
         n = 'Без ответственного'
       when 'user_id'
-        n = 'Без владельца'
+        n = 'Без владельца'    
+      when 'start_date'
+        
       end    
       n
     end
