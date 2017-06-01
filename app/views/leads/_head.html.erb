@@ -1,22 +1,2 @@
-<% if !first_table %>
-  </tbody></table></div>
-<% end %>
 
-<div class="panel panel-default">
-  <div class="panel-heading table-heading head month"> <%= @cur_head %></div>
-  <table class="tleads ">
-   <thead>
-    <tr>
-    <th width="110px"><%= sortable_th(:status_id,'Статус') %> </th>
-      <th width="108px"><%= sortable_th(:status_date,'Дата статуса') %></th>
-      <th width="140px"><%= sortable_th(:fio,'ФИО') %></th>
-      <th width="120px"><%= sortable_th(:phone,'Телефон') %></th>
-      
-      <th >Информация о запросе</th>
-      <th width="7%" class="center"><%= sortable_th(:footage,'Метраж') %></th>
-      <th class="center" width="9%"><%= sortable_th(:start_date,'Дата') %></th>
-      <th class="edit_delete"></th>
-    </tr>
-  </thead>
-  <tbody>
 

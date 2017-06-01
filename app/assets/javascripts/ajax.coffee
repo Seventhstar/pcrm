@@ -51,7 +51,13 @@
 @apply_opt_change = (item)->
   model = item.closest('table').attr('model')
   item_id = item.attr('item_id')
-  inputs = $('input[name^=upd]').serialize()
+  upd_pref = 'upd'+item_id
+  inputs = $('input[name^='+upd_pref+']').serialize()
+  if inputs.length == 0
+    upd_pref = 'upd'
+    inputs = $('input[name^=upd]').serialize()
+  sel = $('select[name^='+upd_pref+']').serialize()
+  inputs = inputs + "&"+sel if sel.length>0
   upd_param(inputs+'&model='+model+'&id='+item_id)  
   if item.closest('td').hasClass('l_edit') then sortable_query({})
   return

@@ -41,12 +41,7 @@ class ProjectsController < ApplicationController
       @projects = @projects.where('not pstatus_id = 3')
     end
 
-    p "sort #{params[:sort]}"
-    if params[:sort] == 'executor_id'
-      sort_1 = "executor.name"
 
-      @projects = @projects.includes(:executor)
-    end
 
     y = params[:year] 
     if !y.nil? && y!='' && y.to_i>0
@@ -57,10 +52,16 @@ class ProjectsController < ApplicationController
 
     sort_1 = @sort_column #== 'date_end_plan' ? 'month' : @sort_column
     @numsort = (sort_1 == "number") 
-    # p "@numsort",@numsort, sort_1
+        
+
+    if params[:sort] == 'executor_id'
+      sort_1 = "users.name"
+
+      @projects = @projects.includes(:executor)
+    end
 
     order = sort_1 + " " + sort_direction + ", "+ sort_2  + " " + dir_2 + ", projects.number desc"
-    # p sort_2, order
+    p "sort_2, order #{order}"
     @projects = @projects.order(order)
     store_prj_path
     @sort = sort_1

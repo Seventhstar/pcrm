@@ -219,6 +219,7 @@ module ApplicationHelper
     dilable_cls = params[:subcount]>0 ? '_disabled' : ''
     if params[:tag] == 'span'
       all_icons['edit'] = content_tag :span, "", {class: 'icon icon_edit', item_id: element.id}
+      all_icons['inline_edit'] = content_tag :span, "", {class: 'icon inline_edit', item_id: element.id}
       all_icons['delete'] = content_tag( :span,"",{class: ['icon icon_remove',dilable_cls,' ',params[:class]].join, item_id: params[:subcount]>0 ? '' : element.id})
      else
       datap = modal ? {modal: true} : {}

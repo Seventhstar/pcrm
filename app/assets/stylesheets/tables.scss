@@ -67,6 +67,22 @@ table td{font-size: 13px;}
 }
 .shops td{padding: 8px 12px;  }
 
+.cut {
+	float: right;
+	width: 24px;
+	height: 24px;
+	border-radius: 5px;
+	background-color: white;
+	    border: 1px solid #ddd;
+}
+span.cut b { display: block;
+  margin-top: 9px;
+  margin-left: 5px;
+  width: 12px;
+  height: 8px;
+  background: asset-url('arr1.png') no-repeat -18px -9px;
+}
+.cut.cutted b {background-position: -18px 0;}
 
 td.edit_delete, th.edit_delete{ width: 45px;	padding-right: 4px !important;	padding-left: 4px !important; }
 // td.edit_delete .icon{float: right;}
@@ -86,3 +102,37 @@ td.edit_delete, th.edit_delete{ width: 45px;	padding-right: 4px !important;	padd
 tr.va_middle td, td.va_middle {vertical-align: middle !important;}
 
 // tr.bg_red:nth-child(even) td:first-child {background-color: #fae5e5 !important;}
+
+#back-top, #to_bottom{ position:fixed; bottom:70px; right: 40px; display: none; }
+#to_bottom {top: 200px;}
+
+#back-top a, #to_bottom a {
+    width:32px;
+    display:block;
+    text-align:center;
+    font:11px/100% Arial, Helvetica, sans-serif;
+    text-transform:uppercase;
+    text-decoration:none;
+    color:#bbb;
+    /*при наведении мышки меняем фон медленно*/
+    -webkit-transition:1s;
+    -moz-transition:1s;
+    transition:1s;
+}
+#back-top span, #to_bottom span{
+    width:32px;
+    height:32px;
+    display:block;
+    margin-bottom:7px;
+    background:#ddd url(arrscroll.png) no-repeat center center;
+    background-position: 0 -32px;
+
+    border-radius:8px;
+    /*при наведении мышки меняем фон медленно*/
+    -webkit-transition:1s;
+    -moz-transition:1s;
+    transition:1s;
+}
+#back-top span {background-position: 0 0px;}
+#back-top a:hover, #to_bottom a:hover{ color:#777; }
+#back-top a:hover span, #to_bottom a:hover span{background-color:#999;}

@@ -123,10 +123,12 @@ class AjaxController < ApplicationController
   	if params['model'] && params['model']!='undefined'
 
   		obj = Object.const_get(params['model']).find(params['id'])
-      params[:upd].each do |p|
-        #p "p",p,obj[p[0]]
+      prms = params[:upd]
+      prms = params['upd'+params[:id]] if prms.nil?
+
+      prms.each do |p|
         new_value = p[1]
-        new_value.gsub!(' ','') if p[0]=='sum'  
+        new_value.gsub!(' ','') if p[0]=='sum' || p[0]=='gsum'
         obj[p[0]] = new_value if p[0]!='undefined'
       end
       obj.save

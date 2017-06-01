@@ -27,7 +27,11 @@ module CommonHelper
     when "status_id","pstatus_id","start_date", "status_date", "executor_id", "project_type_id"
       new_head = head_name(obj,params[:sort])
     else
-      new_head = is_admin? ? head_name(obj,'status_date') : head_name(obj,'start_date') 
+      if obj.class.name == "Lead"
+        new_head = is_admin? ? head_name(obj,'status_date') : head_name(obj,'start_date') 
+      else
+        new_head = nil
+      end
     end
     
     need_head = false
@@ -48,7 +52,7 @@ module CommonHelper
     else
       prop_name = id_name[0..-4]+'_name'
       val = obj.try(prop_name)
-      p "val #{obj.try(prop_name)} prop_name #{prop_name}"
+      # p "val #{obj.try(prop_name)} prop_name #{prop_name}"
     end
     n = (id.nil? || id==0) ? t('without_'+id_name) : val
     n

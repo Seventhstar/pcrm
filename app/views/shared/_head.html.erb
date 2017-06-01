@@ -1,0 +1,15 @@
+<% if !@first_table %>
+  <% @no=@no+1 %>
+  </tbody></table></div></div>
+<% end %>
+
+<% @first_table = false %>
+
+<div class="panel panel-default">
+<% if !@cur_head.nil? %>
+	<div class="panel-heading table-heading head month"><%= @cur_head %><span class="cut" cut_id="<%= @no %>"><b></b></span></div>	
+<% end %>
+
+<div id="table<%= @no %>">
+<table class="tleads">
+  <thead>
