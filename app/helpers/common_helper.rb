@@ -18,59 +18,40 @@ module CommonHelper
     t(date.try('strftime',"%B"))+" "+date.try('strftime',"%Y")
   end
 
-  def check_new_head( obj, cur_head )
-
-    
+  def check_new_table_head( obj )
     case params[:sort]
     when "users.name"
       new_head = head_name(obj,'user_id')
     when "ic_users.name"
       new_head = head_name(obj,'ic_user_id')
-    when "status_id"
-      new_head = obj.status_wname
-    when "start_date"
-      new_head = obj.start_date? ? month_year(obj.start_date) : "Без даты статуса"
-    when "status_date"
-      new_head = obj.status_date? ? month_year(obj.status_date) : "Без даты статуса"   
+    when "status_id","pstatus_id","start_date", "status_date", "executor_id", "project_type_id"
+      new_head = head_name(obj,params[:sort])
     else
-      if is_admin?
-        new_head = obj.status_date? ? month_year(obj.status_date) : "Без даты статуса"
-      else
-        new_head = obj.start_date? ? month_year(obj.start_date) : "Без даты статуса"
-      end
-      
+      new_head = is_admin? ? head_name(obj,'status_date') : head_name(obj,'start_date') 
     end
-      
+    
     need_head = false
-    if cur_head != new_head 
-      cur_head = new_head
+    if @cur_head != new_head 
+      @cur_head = new_head
       need_head = true
     end
-    a = {need_head: need_head, cur_head: cur_head}
-    a
-    
+    need_head
   end
-
-
 
   def head_name(obj,id_name)
     id = obj[id_name]
-    if !id.nil? && id!=0 && id!=0-1
-     user = User.find(id)
-     user ? user.name : ''
+    case id_name
+    when 'executor_id', 'ic_user_id', 'user_id'
+      val = User.find(id).try(:name) if !id.nil? && id>0 
+    when 'start_date','status_date'
+      val = month_year(id)
     else
-      case id_name
-      when 'executor_id'
-        n = 'Без исполнителя'
-      when 'ic_user_id'
-        n = 'Без ответственного'
-      when 'user_id'
-        n = 'Без владельца'    
-      when 'start_date'
-        
-      end    
-      n
+      prop_name = id_name[0..-4]+'_name'
+      val = obj.try(prop_name)
+      p "val #{obj.try(prop_name)} prop_name #{prop_name}"
     end
+    n = (id.nil? || id==0) ? t('without_'+id_name) : val
+    n
   end
 
 

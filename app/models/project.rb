@@ -41,6 +41,9 @@ class Project < ActiveRecord::Base
   def status_name
     pstatus.try(:name)
   end
+  def pstatus_name
+    pstatus.try(:name)
+  end
 
   def status_wname
     pstatus_id.nil? ? 'Без статуса' : pstatus.try(:name)

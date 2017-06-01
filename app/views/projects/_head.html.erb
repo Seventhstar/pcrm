@@ -1,11 +1,9 @@
-<% if first_table == false %>
-</tbody></table></div>
+<% if !first_table %>
+  </tbody></table></div>
 <% end %>
 <% first_table = false %>
 <div class="panel panel-default">
-<% if !heading.empty? %>
-  <div class="panel-heading table-heading head month"> <%= heading %></div>
-<% end %>
+<div class="panel-heading table-heading head month"> <%= @cur_head %><span class="cut" cut_id="<%= cut_id %>"></span></div>
 <table class="tleads projects">
   <thead>
     <tr>

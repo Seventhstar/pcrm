@@ -1,31 +1,28 @@
-<% cur_head = "" %>
+<% @cur_head = "" %>
 <% first_table = true %>
 
 <% @leads.each do |lead| %>
-  
-        <% c = check_new_head(lead,cur_head) %> 
-        <% if c[:need_head] %>
-          <% cur_head = c[:cur_head] %>
-          <%= render "head", {first_table: first_table, heading:  cur_head} %>
-        <% end %>
-        <% first_table = false %>        
 
-        <tr class="<%= class_for_lead(lead) %>" >      
-        <td><%= lead.status_name %></td>
-        <td class=""><%= lead.status_date.try('strftime',"%d.%m.%Y") %></td>
-        <td><%= lead.fio %></td>
-        <td><%= lead.phone %></td>
-        <td><%= tooltip_if_big( lead.info ) %></td>
-        <td class=""><%= lead.footage %></td>
-        <td class=""><%= lead.start_date.try('strftime',"%d.%m.%Y") %></td>
+  <% if check_new_table_head(lead) %>
+    <%= render "head",{first_table: first_table} %>
+    <% first_table = false %> 
+  <% end %>
 
-        <% if is_update_form? %>
-          <td><%= check_box_tag "leads_ids[]", lead.id %></td>
-        <% else %>
-          <%= tool_icons(lead,{icons:'edit,show'}) %>
-        <% end %>
+  <tr class="<%= class_for_lead(lead) %>">      
+    <td><%= lead.status_name %></td>
+    <td><%= lead.status_date.try('strftime',"%d.%m.%Y") %></td>
+    <td><%= lead.fio %></td>
+    <td><%= lead.phone %></td>
+    <td><%= tooltip_if_big( lead.info ) %></td>
+    <td><%= lead.footage %></td>
+    <td><%= lead.start_date.try('strftime',"%d.%m.%Y") %></td>
 
-      </tr>
+    <% if is_update_form? %>
+      <td><%= check_box_tag "leads_ids[]", lead.id %></td>
+    <% else %>
+      <%= tool_icons(lead,{icons:'edit,show'}) %>
+    <% end %>
+  </tr>
 <% end %>
 </tbody></table></div>
 <br>

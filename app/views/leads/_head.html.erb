@@ -1,10 +1,9 @@
-
-<% if first_table == false %>
-</tbody></table></div>
+<% if !first_table %>
+  </tbody></table></div>
 <% end %>
 
 <div class="panel panel-default">
-  <div class="panel-heading table-heading head month"> <%= heading %></div>
+  <div class="panel-heading table-heading head month"> <%= @cur_head %></div>
   <table class="tleads ">
    <thead>
     <tr>
@@ -19,6 +18,5 @@
       <th class="edit_delete"></th>
     </tr>
   </thead>
-
   <tbody>
 

@@ -4,7 +4,7 @@
 
 	<%= sortable_pil "number", "По № договора" %>
 	<% if is_admin? %>	
-		<%= sortable_pil "users.name", "По исполнителям", 'asc' %>
+		<%= sortable_pil "executor_id", "По исполнителям", 'asc' %>
 	<% end %>
 	<%= sortable_pil "pstatus_id", "По статусам" %>
 	<%= sortable_pil "project_type_id", "По видам" %>

@@ -138,6 +138,16 @@ ru:
   list_Holiday: Список праздничных дней
   list_WikiCat: Список категорий базы знаний
 
+
+  without_start_date: Без даты старта
+  without_status_date: Без даты статуса
+  without_executor_id: Без исполнителя
+  without_user_id: Без создателя
+  without_ic_user_id: Без ответственного
+  without_pstatus_id: Без статуса
+  without_status_id: Без статуса
+  without_project_type_id: Вид не указан
+
   Password: Пароль
   "true": Да
   "false": Нет

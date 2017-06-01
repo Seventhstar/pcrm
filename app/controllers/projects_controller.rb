@@ -41,8 +41,10 @@ class ProjectsController < ApplicationController
       @projects = @projects.where('not pstatus_id = 3')
     end
 
-    if params[:sort] == 'users.name'
+    p "sort #{params[:sort]}"
+    if params[:sort] == 'executor_id'
       sort_1 = "executor.name"
+
       @projects = @projects.includes(:executor)
     end
 

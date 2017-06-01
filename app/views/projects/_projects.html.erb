@@ -1,60 +1,40 @@
-<% cur_month  = "" %>
-<% cur_user   = "" %>
-<% cur_status = "" %>
-<% cur_type = "" %>
+<% @cur_head = "" %>
 <% first_table = true %>
 
+<% @projects.each do |project| %>
 
-    <% @projects.each do |project| %>
-        <% new_date = project.date_start? ? project.date_start : Date.today %>
+  <% new_date = project.date_start? ? project.date_start : Date.today %>
 
 
-      <% if cur_month != new_date.month && (params[:sort] == "date_start") %>
-          <% cur_month = new_date.month %>
-          <%= render "head", {:first_table => first_table, :heading => t(new_date.try('strftime',"%B"))+" "+new_date.try('strftime',"%Y") } %>
-          <% first_table = false %>
-      <% elsif cur_user != user_wname(project,'executor_id') && (params[:sort] == "users.name")%>
-        <% cur_user = user_wname(project,'executor_id') %>
-        
-          <%= render "head", {:first_table => first_table, :heading => cur_user } %>
-          <% first_table = false %>
-      <% elsif cur_status != project.status_wname && (params[:sort] == "pstatus_id") %>
-        <% cur_status = project.status_wname %>
-        <%= render "head", {:first_table => first_table, :heading => project.status_wname } %>
-        <% first_table = false %>
-      <% elsif cur_type != project.project_type && (params[:sort] == "project_type_id") %>
-        <% cur_type = project.project_type %>
-        <%= render "head", {:first_table => first_table, :heading => t(project.project_type_name) } %>
-        <% first_table = false %>        
-      <% elsif first_table %>
-          <%= render "head", {:first_table => first_table, :heading => '' } %>
-          <% first_table = false %>
-      <% end %>
+  <% if check_new_table_head(project) %>
+    <%= render "head",{first_table: first_table, cut_id: project[params[:sort]]} %>
+    <% first_table = false %> 
+  <% end %>
 
-      <tr class="va_middle <%= class_for_project(project) %>">
+  <tr class="va_middle <%= class_for_project(project) %>">
 
-        <td class="cell-inner"><%= icon_for_project(project).html_safe %><%= project.number %></td>
-        <td><%= tooltip(project.address,project.pstatus.try(:name)) %></td>
-        <td><%= project.project_type_name %></td>
-        <td><%= project.client_name %></td>
-        <% if is_admin? && @sort!="users.name" %><td><%= project.executor_name %></td> <% end %>
+    <td class="cell-inner"><%= icon_for_project(project).html_safe %><%= project.number %></td>
+    <td><%= tooltip(project.address,project.pstatus.try(:name)) %></td>
+    <td><%= project.project_type_name %></td>
+    <td><%= project.client_name %></td>
+    <% if is_admin? && @sort!="users.name" %><td><%= project.executor_name %></td> <% end %>
 
-        <td ><%= project.date_start.try('strftime',"%d.%m.%Y") %></td>
-        <td class=<%= class_prj_td(project) %>><%= project.date_end.try('strftime',"%d.%m.%Y") %></td>
+    <td ><%= project.date_start.try('strftime',"%d.%m.%Y") %></td>
+    <td class=<%= class_prj_td(project) %>><%= project.date_end.try('strftime',"%d.%m.%Y") %></td>
 
-        <% if is_admin? %>
-          <td><%= project.admin_info.html_safe %></td>
-          <td class="" <%= project.sum_total_real ==0 ? '':'red' %>" title="<%= project.sum_total.to_sum %>"><%= project.total.to_sum %></td>
-          <%= tool_icons(project,{icons:'edit,show'}) %>
-        <% else %>
+    <% if is_admin? %>
+      <td><%= project.admin_info.html_safe %></td>
+      <td class="" <%= project.sum_total_real ==0 ? '':'red' %>" title="<%= project.sum_total.to_sum %>"><%= project.total.to_sum %></td>
+      <%= tool_icons(project,{icons:'edit,show'}) %>
+    <% else %>
 
-          <td><%= project.executor_info.html_safe %></td>
-          <td class=" <%= project.sum_total_real ==0 ? '':'red' %>"><%= project.designer_sum_calc.to_sum %></td>
+      <td><%= project.executor_info.html_safe %></td>
+      <td class=" <%= project.sum_total_real ==0 ? '':'red' %>"><%= project.designer_sum_calc.to_sum %></td>
 
-        <% end %>
-
-      </tr>
     <% end %>
+
+  </tr>
+<% end %>
   </tbody>
 </table>
 </div>
