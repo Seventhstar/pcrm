@@ -181,6 +181,18 @@ module ApplicationHelper
 
   end
 
+  def total_info(t_array)
+    s = ''
+    currency = ['Руб: ','$','€']
+    i = 1
+    currency.each do |c|
+        tsum = t_array[i]
+        s = s + '  ' + c + tsum.to_sum if tsum>0
+        i = i + 1 
+    end
+    s
+  end
+
   def option_link( page,title )
     css_class = @page_data == page ? "active" : nil
     link_to title, '#',{:class =>"list-group-item #{css_class}", :controller => page}
@@ -214,6 +226,7 @@ module ApplicationHelper
     params[:class] ||= ''
     params[:content_class] ||= ''
     params[:content_tag] ||= :td
+    add_cls = ' '+params[:add_class] ||= ''
     content = params[:content_tag]
     modal = params[:modal] ||= false
     dilable_cls = params[:subcount]>0 ? '_disabled' : ''
@@ -229,7 +242,7 @@ module ApplicationHelper
       all_icons['delete'] = link_to "", element, method: :delete, data: { confirm: 'Действительно удалить?' }, class: "icon icon_remove " + params[:class] if params[:subcount]==0
       all_icons['delete'] = content_tag(:span,"",{class: 'icon icon_remove_disabled'}) if params[:subcount]>0
     end
-    content_tag content,{:class=>["edit_delete",' ',params[:content_class]].join} do
+    content_tag content,{:class=>["edit_delete"+add_cls,' ',params[:content_class]].join} do
       icons.collect{ |i| all_icons[i] }.join.html_safe
     end
   end

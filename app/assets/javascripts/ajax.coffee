@@ -13,7 +13,7 @@
 
 
 
-@upd_param = (param)->
+@upd_param = (param,reload=false)->
   $.ajax
       url: '/ajax/upd_param'
       data: param
@@ -23,9 +23,12 @@
         return
       success: ->
         disable_input(false)
+        if reload then update_page()
         show_ajax_message('Успешно обновлено')
      return
 
+@update_page = ->
+  $.get document.URL, null, null, 'script'
 
 @disable_input = (cancel=true) -> 
  item_id = $('.icon_apply').attr('item_id')
@@ -58,7 +61,7 @@
     inputs = $('input[name^=upd]').serialize()
   sel = $('select[name^='+upd_pref+']').serialize()
   inputs = inputs + "&"+sel if sel.length>0
-  upd_param(inputs+'&model='+model+'&id='+item_id)  
+  upd_param(inputs+'&model='+model+'&id='+item_id,true)  
   if item.closest('td').hasClass('l_edit') then sortable_query({})
   return
 

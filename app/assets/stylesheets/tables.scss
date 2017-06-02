@@ -4,7 +4,7 @@
 .tbl_a .head {padding: 8px 12px;}
 
 .tbl_a table{border-collapse:collapse; width: 100%; }
-.tbl_a table th, table th{vertical-align:top;   font-weight: 500;}
+.tbl_a table th, table th, tr.total{vertical-align:top;   font-weight: 500;}
 .tbl_a table th{ border-bottom: 2px solid #e5e5e5; padding: 12px;}
 
 .tbl_a table td{vertical-align: top; padding: 12px; border-bottom:1px solid #e5e5e5; }

@@ -1,7 +1,8 @@
 <table class="tleads twfixed" id="project_goods"  model="ProjectGood" action="project_goods">
   
-  <tbody>
+  
   <% if first_col %>
+  <thead>
   	<tr>
 	  	<th width='220px'>Позиция</th>
 	  	<th width='216px'>Поставщик</th>
@@ -12,7 +13,10 @@
 	  	<th fld='gsum' width='90px'>Стоимость</th>
 	  	<th></th>
 		</tr>
+  </thead>
   <% end %>
+  <%  total = [0,0,0,0] %>
+  <tbody>
     <% pgt.goods.order(:id).each do |g| %>
       <tr id="pgt_item<%= g.id %>">
         <td width='220px'><%= g.name %></td>
@@ -22,7 +26,8 @@
         <td><%= g.currency_name %>  </td>
         <td><%= g.currency_name %></td>
 				<td width='90px'><%= g.gsum.to_sum if !g.gsum.nil? %></td>
-        <%= tool_icons(g, {icons:'inline_edit,delete',tag:'span'}) %>
+        <%= tool_icons(g, {icons:'inline_edit,delete',tag:'span', add_class:'td_right'}) %>
+        <%  total[g.currency_id] = total[g.currency_id] + g.gsum %>
       </tr>
       <tr id="new_pgt_item<%= g.id %>" class="invisible new_row">
         <% iname = ['upd',g.id].join %>
@@ -34,24 +39,20 @@
         <td class="caption3" width='238px'><%= text_field iname,:description, {value: g.description ,:class => 'txt fullwidth'} %></td>
         <td width='40px'><div class="inp_btn checkbox bigcheck <%= g.order ? 'active' : '' %>">
         <%= check_box_tag iname+'[order]', g.order, g.order %></td>
-        <td width='60px'><%= chosen_src "currency_id", currency_src,g,{nil_value: '',add_name: iname, add_class: 'currency_src'} %></td>
+        <td width='60px'><%= chosen_src "currency_id", currency_src,g.currency_id,{nil_value: '',add_name: iname, add_class: 'currency_src'} %></td>
         <%= td_sum_field(iname, :gsum ,'',{value: g.gsum}) %>
-        <td><span class="icon icon_apply" item_id="<%= g.id %>"></span><span class="icon icon_cancel" item_id="'+item_rm_id+'"></span>'
+        <td class="e_edit td_right"><span class="icon icon_apply" item_id="<%= g.id %>"></span><span class="icon icon_cancel" item_id="'+item_rm_id+'"></span>'
         </td>
       </tr>
     <% end %>
-       <tr id="new_pgt_item<%= pgt.id %>" class="invisible new_row">
-       	<% iname = ['project_good',pgt.id].join %>
-        <%= hidden_field iname,'project_g_type_id', value: pgt.id %>
-        <td class="fw" width='220px'><%= text_field iname,:name, {:class => 'txt'} %></td>
-        <td width='220px'>
-        <%= chosen_src "provider_id", Goodstype.find(pgt.g_type_id).providers, nil,{nil_value: 'Выберите поставщика...',add_name: iname} %></td>
-        <td class="caption3" width='115px'><%= text_field iname,:date_supply, {:class => 'txt datepicker'} %></td>
-        <td class="caption3" width='238px'><%= text_field iname,:description, {:class => 'txt fullwidth'} %></td>
-				<td width='40px'><div class="inp_btn checkbox bigcheck"><%= check_box_tag iname+'[order]', 'false', false %></td>
-        <td width='60px'><%= chosen_src "currency_id", currency_src,1,{nil_value: '',add_name: iname, add_class: 'currency_src'} %></td>
-        <%= td_sum_field(iname, :gsum) %>
-        <td><span class="sub btn_a" id="btn-sub-send" pe_id="<%= pgt.id %>" action='/project_goods/' prm='project_good<%= pgt.id %>'> ok</span></td>
+      <tr class="total">
+        <td>Итого: </td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td colspan="3" class="td_right"><%= total_info(total).html_safe %></td>
+        
       </tr>
   </tbody>
 </table>
