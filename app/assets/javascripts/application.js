@@ -171,7 +171,8 @@ $(function() {
 
   $( document ).ajaxStop( function() {
     $('[data-toggle="tooltip"]').tooltip({'placement': 'top', fade: false});
-    NProgress.done();
+    NProgress.done(); 
+    apply_mask();
   });
 
   $('[data-toggle="tooltip"]').tooltip({'placement': 'top', fade: false});
@@ -185,7 +186,7 @@ $(function() {
 
 $('.progress').hide();
 $('#file').hide();
-$( "#tabs" ).tabs({active: 3}); //
+$( "#tabs" ).tabs(); //{active: 3}
  
 
   // дата по умолчанию для нового лида - сегодня

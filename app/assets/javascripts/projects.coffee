@@ -89,6 +89,7 @@
 
 $(document).ready ->
   $(document).on 'click', '.inline_edit', ->
+    disable_input_row()
     itm = $(this).attr('item_id')
     $('#new_pgt_item'+itm).show()
     $('#pgt_item'+itm).hide()

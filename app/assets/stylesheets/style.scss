@@ -44,11 +44,12 @@ a:hover .icon_user, .active .icon_user {background-position:-18px -18px; }
 .icon_options,li.icon_options a{background-position:-228px 0; width: 24px; height: 24px; }
 .icon_edit, .inline_edit {background-position:-69px -16px; }
 .icon_show {background-position:-212px -16px; margin: 0 4px 0 0 !important;}
-.icon_apply {background-position:-69px -33px; }
+.icon_apply {background-position:-69px -32px; }
 // .icon_apply:hover {background-position:-69px -48px;}
-.icon_cancel {background-position:-51px -33px; margin: 0 4px 0 0 !important;}
-.icon_cancel:hover {background-position:-51px 0px;}
-.app_cancel .icon{margin: 5px 9px 0 0 !important;}
+.icon_cancel, .icon_hide_edit {background-position:-52px -32px; }
+.icon_cancel:hover, .icon_hide_edit:hover {background-position:-52px 1px;}
+//.app_cancel .icon, .icon_hide_edit .icon {margin: 5px 9px 0 0 !important;}
+
 
 .icon_remove {background-position:-52px 0; width: 15px; height: 15px;}
 .icon_remove_disabled {background-position:-52px -16px;}
@@ -70,8 +71,9 @@ a:hover .icon_user, .active .icon_user {background-position:-18px -18px; }
 .input-group .btn-warning {display: inline-block; background: #ff8411; height: 34px; line-height: 34px; padding: 0 19px 0 19px; text-decoration:none; font-size: 14px; color: #fff; 
   border-radius: 5px; 
   position:relative;}
+tr.editable .btn_a {line-height: 30px; height: 30px;}
 span.btn_add{ height: 24px; width: 12px; padding: 0px 60px 7px 8px; margin-top: -3px !important;}
-.btn_slim{ height: 24px; font-size: 13px; padding: 0 12px; line-height: 24px;} 
+.btn_slim{ height: 26px; font-size: 13px; padding: 0 12px; line-height: 24px;} 
 //.btn_a:hover {opacity: 0.7; transition: All 0.5s ease;}
 .btn_a:hover { opacity: 0.7; background: asset-url('xbg1_2.png'); transition: All 0.5s ease;}
 .icon:hover {opacity: 0.7;}
@@ -212,8 +214,8 @@ background-position:-34px 0 !important; width: 16px; height: 16px;}
 
 
 /*----Элементы формы_start----*/
-.txt,.form-control {height: 34px; padding: 3px 10px 0 10px; background: #fff; border:1px solid #e5e5e5; border-top:1px solid #d9d9d9; box-shadow: inset 0 2px 0 #f2f2f2; border-radius: 5px; box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box;}
-.slim_txt {height: 24px; font-size: 13px;}
+.txt,.form-control {height: 34px; padding: 2px 10px 0 10px; background: #fff; border:1px solid #e5e5e5; border-top:1px solid #d9d9d9; box-shadow: inset 0 2px 0 #f2f2f2; border-radius: 5px; box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box;}
+.slim_txt {height: 26px; font-size: 13px;}
 .inp_w .txt, .inp_w, .inp_w input{width: 100%; vertical-align: top;}
 .inp_90 {width: 90%;}
 
@@ -235,9 +237,9 @@ textarea.txt, #lead_first_comment {padding: 5px 10px 5px 10px; margin:0 0 0 0; v
 .inp_btn.checkbox.active, span.check_img.checked {background-position:-87px -20px;}
 .inp_btn.checkbox input {position:absolute; top: 0; left: -50px;}
 
-.inp_btn.checkbox, span.check_img  { background: asset-url('pict01.png'); width: 18px; height: 18px; background-position: -87px 0; }
-.inp_btn.checkbox.bigcheck { background: asset-url('big_check.png'); width: 32px; height: 32px; }
-.inp_btn.checkbox.bigcheck.active { background: asset-url('big_check.png'); background-position: -32px 0;}
+.inp_btn.checkbox, span.check_img { background: asset-url('pict01.png'); width: 18px; height: 18px; background-position: -87px 0; }
+.inp_btn.checkbox.bigcheck {        background: asset-url('big_check24.png'); width: 24px; height: 24px; } //height: 32px;
+.inp_btn.checkbox.bigcheck.active { background: asset-url('big_check24.png'); background-position: -24px 0;}
 
 
 span.check_img{ text-align: center; }

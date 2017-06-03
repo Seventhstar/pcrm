@@ -20,6 +20,7 @@ ru:
   Channel: Канал
   Status: Статус
   status_id: Статус
+  p_status_id: Статус
   dev_status_id: Статус
   channel_id: Канал
   source_id: Источник
@@ -34,6 +35,14 @@ ru:
   project_type_id: Вид проекта
   payment_purpose_id: Вид выплаты
   payment_type_id: Вид платежа
+  designer_price: Цена для дизайнера
+  designer_sum: Сумма для дизайнера
+  sum_total_executor: Общая стоимость исполнителей
+  payd_q: Оплачено 25%
+  attention: Особое внимание
+  debt: Должен денег
+  interest: Интерес к стройке
+  payd_full: Оплачено 100%  
   
   number: Номер
   pdate: Дата

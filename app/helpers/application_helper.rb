@@ -187,7 +187,8 @@ module ApplicationHelper
     i = 1
     currency.each do |c|
         tsum = t_array[i]
-        s = s + '  ' + c + tsum.to_sum if tsum>0
+        s = s + ' | ' if s.length >0 && tsum>0
+        s = s + c + tsum.to_sum if tsum>0
         i = i + 1 
     end
     s

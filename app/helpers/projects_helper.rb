@@ -2,7 +2,7 @@ module ProjectsHelper
 	def td_sum_field( f, val = 0, label='', params = {})
 		mask_cls = params[:mask] ? 'float_mask' : 'sum_mask'
     inp_add_mask = params[:inp_class].nil? ? '' : ' '+params[:inp_class]
-		lbl = content_tag 'label', params[:translate] ? t(label) : label
+		lbl = content_tag 'label', params[:translate] ? t(label) : label if !label.nil?
     v = params[:value]
     v ||= @project[val]
     if f.class == String
@@ -15,7 +15,7 @@ module ProjectsHelper
 		add_class = params[:class].nil? ? '' : ' '+params[:class]
 		content_tag 'td' do
 			content_tag 'div', class: 'inp_w'+add_class do
-				lbl + txt
+				lbl.nil? ? txt : lbl+txt
 			end
 		end
 	end

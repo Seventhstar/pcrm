@@ -30,6 +30,12 @@
 @update_page = ->
   $.get document.URL, null, null, 'script'
 
+@disable_input_row = () ->
+ $('.icon_hide_edit').each ->
+  item_id = $(this).attr('item_id')
+  $('#new_pgt_item'+item_id).hide()
+  $('#pgt_item'+item_id).show()
+
 @disable_input = (cancel=true) -> 
  item_id = $('.icon_apply').attr('item_id')
  item_rm_id = $('.icon_cancel').attr('item_id')
@@ -42,7 +48,7 @@
   else
     _cell.html _cell.find('input').val()    
   return
- 
+
  $cell = $('td.app_cancel')  
  $cell.removeClass('app_cancel')
  if item_rm_id == 'undefined' || item_rm_id == ''  
@@ -117,7 +123,13 @@
   setLoc(""+controller+method+"?"+ajx2q(url));
   return
 
+@apply_mask = ->
+  $('.sum_mask').mask '# ##0',
+    reverse: true
+    maxlength: false
+
 $(document).ready ->
+  apply_mask()
 # поиск 
   $('#search').on 'keyup', (e)-> 
     c= String.fromCharCode(event.keyCode);
@@ -170,8 +182,12 @@ $(document).ready ->
      disable_input()
      return
 
+   $('.container').on 'click', 'span.icon_hide_edit', ->   
+     disable_input_row()
+     return
+
    # отправка новых данных
-   $('.container').on 'click', 'span.icon_apply', ->  
+   $('.container').on 'click', 'span.icon_apply', -> 
     apply_opt_change($(this))
  
    $('body').on 'keyup', '.editable input', (e) ->

@@ -8,7 +8,7 @@
 .time_separator{ padding: 7px; float: left; display: inline-block; width: 14px; text-align: center; color: #737373; }
 
 .datepicker { background: asset-url('ico-date.png') 95% 8px no-repeat; cursor: pointer;}
-
+.editable input[type="text"].datepicker { background: asset-url('ico-date.png') 95% 5px no-repeat; cursor: pointer; }
 .inp_w .datepicker{ background: asset-url('ico-date.png') 93% 8px no-repeat; }
 .inp_w .sum_mask { background: asset-url('rub.png') 98% 8px no-repeat; padding-right: 22px; }
 .inp_w .float_mask { background: asset-url('m2.png') 98% 8px no-repeat; padding-right: 24px; }
@@ -22,6 +22,6 @@
 input[disabled].datepicker { background: asset-url('ico-date.png') 95% -27px no-repeat; cursor: pointer;}
 
 
-.datepicker.slim_txt{ background: asset-url('ico-date.png') 98% 3px no-repeat; }
+.datepicker.slim_txt{ background: asset-url('ico-date.png') 94% 4px no-repeat; }
 
 .caption_to{ width: 95px !important;}

@@ -51,6 +51,8 @@ table td{font-size: 13px;}
 .tbl_a table td.tools .icon.disabled:hover {opacity: 1;}
 .tbl_a table .actual {text-align: center; }
 
+// .e_edit, .editable td.edit_delete { padding-top: 5px; }
+
 .items_box {margin:0 0 40px 0;}
 .items_box_head {margin:0 0 16px 0;}
 .items_box_head:after {content: ' '; clear:both; display: block; width: 0; height: 0; overflow: hidden; font-size: 0;}
@@ -63,9 +65,13 @@ table td{font-size: 13px;}
 
 .tleads th{ padding: 8px;	border-bottom: 1px solid #ddd;}
 .tleads td{ border-top: 1px solid #ebebeb; padding: 8px;
-	&.editable,&.app_cancel{padding: 4px 4px}
+	&.editable,&.app_cancel{padding: 4px 4px;}
 }
+tr.editable td { padding: 3px 2px; vertical-align: middle;}
+tr.editable td.e_edit { padding: 3px 7px; }
+
 .shops td{padding: 8px 12px;  }
+.tbl_a span.check_img{    width: 18px; height: 18px; }
 
 .cut {
 	float: right;
@@ -84,7 +90,11 @@ span.cut b { display: block;
 }
 .cut.cutted b {background-position: -18px 0;}
 
-td.edit_delete, th.edit_delete{ width: 45px;	padding-right: 4px !important;	padding-left: 4px !important; }
+td.edit_delete, th.edit_delete, .tbl_a table td.edit_delete{  width: 45px; vertical-align: middle;} //, td.e_edit padding: 12px 4px !important;
+.tbl_a table td.edit_delete {    padding-left: 12px;}
+tr.editable input[type="text"]{ height: 28px; }
+td.app_cancel {}
+
 // td.edit_delete .icon{float: right;}
 
 .tleads tr.month, .month{

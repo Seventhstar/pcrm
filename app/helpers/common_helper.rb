@@ -67,7 +67,7 @@ module CommonHelper
    # p "changeset",changeset
     case event 
     when "updated_at"
-    when "verified"
+    when "verified", "payd_q", "attention", "debt", "interest", "payd_full"
       from = changeset[0] ? 'Да' : 'Нет'
       to =  changeset[1] ? 'Да' : 'Нет'
     when "coder"
@@ -82,7 +82,7 @@ module CommonHelper
       from = changeset[0].try('strftime',"%Y.%m.%d %H:%M" )
       to = changeset[1].try('strftime',"%Y.%m.%d %H:%M" )
 
-    when "channel_id", 'reason_id','new_reason_id','target_id','dev_status_id','status_id', 'priority_id', 'project_id',"user_id","ic_user_id",
+    when "channel_id", 'reason_id','new_reason_id','target_id','dev_status_id','status_id','p_status_id', 'priority_id', 'project_id',"user_id","ic_user_id",
          "executor_id","pstatus_id", "project_type_id", 'payment_purpose_id', 'payment_type_id', 'source_id'
 
       #p "--!--"

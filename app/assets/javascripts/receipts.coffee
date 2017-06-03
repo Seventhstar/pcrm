@@ -34,9 +34,7 @@ $(document).ready ->
     else
     	$('#prj_sum').val 0
     return
-  $('.sum_mask').mask '# ##0',
-    reverse: true
-    maxlength: false 
+   
   $('.float_mask').mask "# ##0.0", 
     reverse: true
     maxlength: false

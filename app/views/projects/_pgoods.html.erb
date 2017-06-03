@@ -9,6 +9,7 @@
 
 <% first_col = true %>
 
+<% @all_total = [0,0,0,0] %>
 <% @project.project_g_types.each do |pgt| %>
 <div class="panel panel-default">
 <div class="panel-heading table-heading head month" name="pgt<%= pgt.id %>"><%= pgt.goodstype_name %> 
@@ -17,5 +18,9 @@
   <% first_col = false %>
 </div>
 <% end %>
+<div class="panel panel-default">
+<div class="panel-heading table-heading head month">Общий итог:
+<span class="right"><%= total_info(@all_total).html_safe %></span></div>
+</div>
 
 
