@@ -4,6 +4,7 @@ class ProjectGood < ActiveRecord::Base
   validates :name, :length => { :minimum => 3 }
 	validates :provider_id, presence: true
 	validates :date_supply, presence: true
+	validates :gsum, presence: true
 
 	def provider_name
 		provider.try(:name)

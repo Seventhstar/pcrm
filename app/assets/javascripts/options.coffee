@@ -11,8 +11,11 @@ $(document).ready ->
     
   item_id = $(this).attr('item_id')
   chk = $(this).attr('chk')
+  tr = $(this).closest('tr')
+  
+  table = $(this).closest('table')
+  color_cls = table.attr('color_cls')
   if !chk
-    table = $(this).closest('table')
     chk = table.find('th:eq('+$(this).closest('td')[0].cellIndex+')').attr('fld')
 
   $.ajax
@@ -26,6 +29,12 @@ $(document).ready ->
     beforeSend: (xhr) ->
       xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
       return
+    success: ->
+      if tr.hasClass('sw_color') || color_cls!=undefined
+        if tr.hasClass(color_cls) 
+          tr.removeClass(color_cls)
+        else
+          tr.addClass(color_cls)
   return
 
 # menu 

@@ -99,6 +99,14 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1/edit
   def edit
+ 
+    def_goods = Goodstype.where(default: true)
+    def_goods.each do |dg|
+      pgt = ProjectGType.find_or_create_by({g_type_id: dg.id, project_id: @project.id})
+    end
+    
+    @prj_good_types = @project.project_g_types
+
     get_debt
     def_params
     @comm_height = 350

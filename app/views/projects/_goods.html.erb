@@ -1,4 +1,4 @@
-<table class="tleads twfixed tbl_a" id="project_goods"  model="ProjectGood" action="project_goods">
+<table class="tleads twfixed tbl_a" id="project_goods"  model="ProjectGood" action="project_goods" color_cls="ordered">
   
   <% if first_col %>
   <% end %>
@@ -18,7 +18,7 @@
   <%  total = [0,0,0,0] %>
   <tbody>
     <% pgt.goods.order(:id).each do |g| %>
-      <tr id="pgt_item<%= g.id %>">
+      <tr id="pgt_item<%= g.id %>" class="sw_color <%= g.order ? 'ordered' : '' %>">
         <td width='220px'><%= g.name %></td>
         <td width='210px'><%= g.provider_name %></td>
         <td width='115px'><%= g.date_supply.try('strftime',"%d.%m.%Y") %></td>
@@ -27,11 +27,11 @@
         <td><%= g.currency_name %></td>
 				<td width='90px' class="td_right"><%= g.gsum.to_sum if !g.gsum.nil? %></td>
         <%= tool_icons(g, {icons:'inline_edit,delete',tag:'span', add_class:'td_right'}) %>
-        <%  total[g.currency_id] = total[g.currency_id] + g.gsum %>
-        <%  @all_total[g.currency_id] = @all_total[g.currency_id] + g.gsum %>
+        <%  total[g.currency_id] = total[g.currency_id] + g.gsum if !g.gsum.nil? %>
+        <%  @all_total[g.currency_id] = @all_total[g.currency_id] + g.gsum if !g.gsum.nil? %>
         
       </tr>
-      <tr id="new_pgt_item<%= g.id %>" class="editable new_row" style="display: none;">
+      <tr id="edit_pgt_item<%= g.id %>" class="editable new_row" style="display: none;">
         <% iname = ['upd',g.id].join %>
         <%= hidden_field iname,'project_g_type_id', value: pgt.id %>
         <td class="fw" width='220px'><%= text_field iname,:name, {value: g.name,:class => 'txt'} %></td>

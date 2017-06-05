@@ -17,6 +17,8 @@ input::-webkit-inner-spin-button { padding-right:0}
 
 .space20 {margin-left: 20px !important;}
 .space10 {margin-left: 10px !important;}
+.ordered {background: rgba(1, 124, 255, 0.20); transition: .5s;}
+.ordered td:hover,table.tleads tr.ordered:hover:not(#new_item) td{background: rgba(1, 124, 255, 0.23);transition: .5s;}
 
 // #add_footage {font-size: 18px; font-weight: bold;}
 .va_pt15{padding-top: 16px;}

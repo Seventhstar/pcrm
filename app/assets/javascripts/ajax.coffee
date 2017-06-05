@@ -34,6 +34,8 @@
  $('.icon_hide_edit').each ->
   item_id = $(this).attr('item_id')
   $('#new_pgt_item'+item_id).hide()
+  $('.new_row').hide()
+  $('.btn_add').show()
   $('#pgt_item'+item_id).show()
 
 @disable_input = (cancel=true) -> 
@@ -192,7 +194,12 @@ $(document).ready ->
  
    $('body').on 'keyup', '.editable input', (e) ->
       if e.keyCode == 13
-        if $(this).closest('td').hasClass('l_edit') then i = $('.l_edit.editable') else i = $('span.icon_apply')
+        if $(this).closest('td').hasClass('l_edit') 
+          i = $('.l_edit.editable')
+        else if $(this).closest('tr').hasClass('editable')
+          i = $(this).closest('td').siblings().last().children('.icon_apply')
+        else 
+          i = $('span.icon_apply')
         apply_opt_change(i)
       else if e.keyCode == 27 
         disable_input()
