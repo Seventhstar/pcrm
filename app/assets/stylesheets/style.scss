@@ -33,40 +33,6 @@ p {margin:0 0 14px 0; padding: 0 0 0 0; }
 .red {color: #cd1010; }
 .grey {color: #aeaeae; }
 
-.icon,li.icon a {display: inline-block; background: asset-url('pict01.png') no-repeat; vertical-align:middle; position:relative; 
-                  width: 16px; height: 16px; cursor: pointer;}
-
-.icon_logout {background-position:0 0; }
-.icon_user {background-position:-18px 0; width: 14px;  }
-a:hover .icon_user, .active .icon_user {background-position:-18px -18px; }
-.active:hover {opacity: 0.9;}
-
-.icon_options,li.icon_options a{background-position:-228px 0; width: 24px; height: 24px; }
-.icon_edit, .inline_edit {background-position:-69px -16px; }
-.icon_show {background-position:-212px -16px; margin: 0 4px 0 0 !important;}
-.icon_apply {background-position:-69px -32px; }
-// .icon_apply:hover {background-position:-69px -48px;}
-.icon_cancel, .icon_hide_edit {background-position:-52px -32px; }
-.icon_cancel:hover, .icon_hide_edit:hover {background-position:-52px 1px;}
-//.app_cancel .icon, .icon_hide_edit .icon {margin: 5px 9px 0 0 !important;}
-
-
-.icon_remove {background-position:-52px 0; width: 15px; height: 15px;}
-.icon_remove_disabled {background-position:-52px -16px;}
-
-.icon_close {background-position:-52px -32px; }
-.icon_close:hover {background-position:-52px 0; }
-
-.hl .icon_remove {margin-top: 4px !important;}
-
-.icon_remove_1 {background-position:-119px -9px; width: 9px; height: 9px;}
-.icon_remove_1:hover {background-position:-119px 0; cursor: pointer;}
-
-.icon_download {background-position:-130px 0; width: 12px; height: 12px;}
-.icon_chat {background-position:-144px 0; margin: 0 10px 0 0 !important; }
-.icon_birthday {background-position:-163px 0; width: 15px; height: 20px;}
-.icon_file {background-position:-180px 0; width: 12px; height: 16px;}
-
 .btn_a, .btn_add,.form-actions .btn-success, a.btn-success, 
 .input-group .btn-warning {display: inline-block; background: #ff8411; height: 34px; line-height: 34px; padding: 0 19px 0 19px; text-decoration:none; font-size: 14px; color: #fff; 
   border-radius: 5px; 

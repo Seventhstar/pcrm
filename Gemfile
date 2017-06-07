@@ -35,7 +35,7 @@ gem 'coffee-rails', '~> 4.1.0'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
+# gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
@@ -70,8 +70,9 @@ gem 'will_paginate'
 gem 'bootstrap_tokenfield_rails'
 gem 'paper_trail', '~> 4.0.0'
 gem 'jquery.fileupload-rails'
-gem 'nokogiri'
+gem 'nokogiri', '1.6.8'
 gem 'responders'
+#gem 'modal-responder-rails'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'nprogress-rails'

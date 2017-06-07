@@ -1,0 +1,25 @@
+<%= simple_form_for(@pg) do |f| %>
+<div class="box_wrap box_wrap_1">
+
+<div class="panel-left">
+<table class="tbl_fc tbl_fc_1">
+
+	<tr><td class="caption">Товар:</td>
+	<td><div class="inp_w"><%= f.input :name, label: false %></div></td></tr>
+
+	<tr><td class="caption">Поставщик:</td>
+	<td><div class="inp_w">
+	<%= chosen_src "provider_id", Goodstype.find(@pg.project_g_type.g_type_id).providers, @pg.provider_id,{ nil_value: 'Выберите поставщика...'} %></div></td></tr>
+	<tr><td class="caption">Дата поставки:</td>
+	<td><div class="inp_w">
+		<%= text_field @pg,:date_supply, {:class => 'txt datepicker'} %>
+	</div></td></tr>
+
+</table>
+</div>
+
+<div class="panel-right">
+</div>
+
+</div>
+<% end %>

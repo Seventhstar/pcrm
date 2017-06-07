@@ -1,6 +1,7 @@
 class ProjectGood < ActiveRecord::Base
 	include CurrencyHelper
   belongs_to :provider
+  belongs_to :project_g_type
   validates :name, :length => { :minimum => 3 }
 	validates :provider_id, presence: true
 	validates :date_supply, presence: true

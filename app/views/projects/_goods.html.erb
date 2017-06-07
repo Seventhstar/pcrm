@@ -26,7 +26,7 @@
         <td><span class="check_img sw_check good_check <%= g.order ? "checked" :"" %>" item_id="<%=g.id%>" chk="order"></span> </td>
         <td><%= g.currency_name %></td>
 				<td width='90px' class="td_right"><%= g.gsum.to_sum if !g.gsum.nil? %></td>
-        <%= tool_icons(g, {icons:'inline_edit,delete',tag:'span', add_class:'td_right'}) %>
+        <%= tool_icons(g, {icons:'modal_edit,delete',tag:'link', add_class:'td_right', modal: true}) %>
         <%  total[g.currency_id] = total[g.currency_id] + g.gsum if !g.gsum.nil? %>
         <%  @all_total[g.currency_id] = @all_total[g.currency_id] + g.gsum if !g.gsum.nil? %>
         

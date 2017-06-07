@@ -1,29 +1,36 @@
 class ProjectGoodsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy]  
+  respond_to :html, :json
+  before_action :set_project_good, only: [:show, :edit, :update, :destroy]  
   before_action :logged_in_user
   before_action :check_sum, only: [:create,:update]
 
   def create
-    @pe = ProjectGood.new(pg_params)
+    @pg = ProjectGood.new(pg_params)
      respond_to do |format|
-      # !@pe.new_date.nil? &&
-        if @pe.save 
+      # !@pg.new_date.nil? &&
+        if @pg.save 
           format.html { redirect_to absences_url, notice: 'Менеджер успешно создан.' }
-          format.json { render json: @pe.errors, status: :ok, location: @pe }
+          format.json { render json: @pg.errors, status: :ok, location: @pg }
         else
           format.html { render :nothing => true }
-          format.json { render json: @pe.errors, status: :unprocessable_entity }
+          format.json { render json: @pg.errors, status: :unprocessable_entity }
         end
       end 
   end
 
   def destroy
-    @pe.destroy
+    @pg.destroy
     respond_to do |format|
       format.html { redirect_to '/providers/', notice: 'Менеджер успешно удален.' }
       format.json { head :no_content }
     end
   end
+
+  def edit
+    @title = 'Редактирование заказа'
+    respond_modal_with @pg, location: root_path
+  end
+
 
    private
 
@@ -35,8 +42,8 @@ class ProjectGoodsController < ApplicationController
       end
     end
 
-    def set_project
-      @pe = ProjectGood.find(params[:id])
+    def set_project_good
+      @pg = ProjectGood.find(params[:id])
     end
 
     def pg_params

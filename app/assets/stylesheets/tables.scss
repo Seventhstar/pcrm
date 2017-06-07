@@ -45,10 +45,7 @@ table td{font-size: 13px;}
 .tbl_a table tbody tr:last-child td:first-child {border-radius: 0 0 0 5px;}
 .tbl_a table tbody tr:last-child td:last-child {border-radius: 0 0 5px 0;}
 
-.tbl_a table td.tools, .edit_delete{width: 41px; padding-right: 10px; margin:0 0 0 0; font-size: 0; white-space:nowrap;}
-.tbl_a table td.tools .icon, table .icon {margin:0 10px 0 0;}
-.tbl_a table td.tools .icon:hover {opacity: 0.5;}
-.tbl_a table td.tools .icon.disabled:hover {opacity: 1;}
+
 .tbl_a table .actual {text-align: center; }
 
 // .e_edit, .editable td.edit_delete { padding-top: 5px; }
