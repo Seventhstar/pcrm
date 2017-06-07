@@ -11,8 +11,6 @@
     if (el.value == '0' || el.value=='0,0' || el.value=='0.0' )
         el.value = '';
 
-
-
 @upd_param = (param,reload=false)->
   $.ajax
       url: '/ajax/upd_param'
@@ -133,6 +131,12 @@
 
 $(document).ready ->
   apply_mask()
+
+  $(document).on 'click', 'span.modal_apply', ->
+    upd_pref = $(this).attr('prm')
+    model = $(this).attr('model')
+    params = $('input[name^='+upd_pref+']').serialize()    
+    upd_param(params+'&model='+model)
 # поиск 
   $('#search').on 'keyup', (e)-> 
     c= String.fromCharCode(event.keyCode);

@@ -1,4 +1,5 @@
-<%= simple_form_for(@pg) do |f| %>
+<%= simple_form_for @pg , html:{ class: "modal_form"} do |f| %>
+<input type="hidden" name="_method" value="post">
 <div class="box_wrap box_wrap_1">
 
 <div class="panel-left">
@@ -9,10 +10,10 @@
 
 	<tr><td class="caption">Поставщик:</td>
 	<td><div class="inp_w">
-	<%= chosen_src "provider_id", Goodstype.find(@pg.project_g_type.g_type_id).providers, @pg.provider_id,{ nil_value: 'Выберите поставщика...'} %></div></td></tr>
+	<%= chosen_src "provider_id", Goodstype.find(@pg.project_g_type.g_type_id).providers, @pg.provider_id,{ nil_value: 'Выберите поставщика...',add_name: 'project_good'} %></div></td></tr>
 	<tr><td class="caption">Дата поставки:</td>
 	<td><div class="inp_w">
-		<%= text_field @pg,:date_supply, {:class => 'txt datepicker'} %>
+		<%= text_field "project_good",:date_supply, {:class => 'txt datepicker'} %>
 	</div></td></tr>
 
 </table>
@@ -20,6 +21,12 @@
 
 <div class="panel-right">
 </div>
+
+<div class="sep_1"></div>
+  <div class="actions">
+<td><span class="sub btn_a modal_apply" id="btn-modal" pg_id="<%= @pg.id %>" action='/provider_goods/' model="ProjectGood" prm='project_good'> Добавить</span></td></tr>
+  </div>
+
 
 </div>
 <% end %>
