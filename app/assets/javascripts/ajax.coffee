@@ -2,6 +2,15 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+# @showNotifications = ->
+  
+#   if $('.alert').hasClass('flash_success')
+#     setTimeout (->
+#      setTimeout '$(".alert").addClass("out")', 3000
+#      return
+#   ), 5000
+#   return
+
 @onBlur = (el)->
     if (el.value == '') 
         el.value = el.defaultValue;
@@ -11,7 +20,7 @@
     if (el.value == '0' || el.value=='0,0' || el.value=='0.0' )
         el.value = '';
 
-@upd_param = (param,reload=false)->
+@upd_param = (param, reload = false, modal = false)->
   $.ajax
       url: '/ajax/upd_param'
       data: param
@@ -19,10 +28,15 @@
       beforeSend: (xhr) ->
         xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
         return
-      success: ->
+      success: (event, xhr, settings) ->
         disable_input(false)
         if reload then update_page()
-        show_ajax_message('Успешно обновлено')
+        show_ajax_message(event,'success')
+        if modal then $('.modal').modal('hide')
+      error: (evt, xhr, status, error) ->      
+        errors = evt.responseText
+        show_ajax_message(errors,'error')
+        showNotifications();  
      return
 
 @update_page = ->
@@ -132,11 +146,16 @@
 $(document).ready ->
   apply_mask()
 
+  $(document).on 'click', '.close', ->
+      $(this).closest('.alert').removeClass("in").addClass('out');
+
   $(document).on 'click', 'span.modal_apply', ->
-    upd_pref = $(this).attr('prm')
+    prm = $(this).attr('prm')
     model = $(this).attr('model')
-    params = $('input[name^='+upd_pref+']').serialize()    
-    upd_param(params+'&model='+model)
+    item_id = $(this).attr('item_id')
+    params = $('[name^='+prm+']').serialize()    
+    upd_param(params+'&model='+model+'&id='+item_id,true,true)
+
 # поиск 
   $('#search').on 'keyup', (e)-> 
     c= String.fromCharCode(event.keyCode);
@@ -196,6 +215,7 @@ $(document).ready ->
    # отправка новых данных
    $('.container').on 'click', 'span.icon_apply', -> 
     apply_opt_change($(this))
+
  
    $('body').on 'keyup', '.editable input', (e) ->
       if e.keyCode == 13

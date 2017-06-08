@@ -111,6 +111,7 @@ class LeadsController < ApplicationController
   # GET /leads/new
   def new
     @lead = Lead.new
+    @lead.start_date = Date.today
     @lead.status_id = 1
     @lead.ic_user_id = current_user.id
     @lead.channel_id = 1

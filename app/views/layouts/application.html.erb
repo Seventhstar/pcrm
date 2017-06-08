@@ -40,9 +40,11 @@
 
   <div class="js-notes has-note">
     <% flash.each do |name, msg| %>
-      <%= content_tag :div, msg, :id => "flash_#{name}", :class => "alert fade-in in flash_#{name}" %>
+      <%= content_tag :div, :id => "flash_#{name}", :class => "alert fade-in flash_#{name}" do %>
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <%= msg %>
+      <% end %>
     <% end %>
-    <a class="close note-close" href="#"></a>
   </div>
 
 

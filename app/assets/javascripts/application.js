@@ -39,14 +39,10 @@ function intFromSum(sum){
   return i;
 }
 
-var showNotifications = function(){ 
-  var time = 5000;
+function showNotifications(){ 
   $nt = $(".alert"); 
-  if ($nt.hasClass('flash_success')){ time = 2000; }
-  setTimeout(function() {
-    $nt.removeClass("in"); 
-    setTimeout("$nt.addClass('out')",1000);
-  }, time);
+  setTimeout("$nt.addClass('in')",500);
+  setTimeout("$nt.removeClass('in').addClass('out')",5000);
 }
 
 function checkTime(i){
@@ -77,7 +73,7 @@ var delay = (function(){
 
 var show_ajax_message = function(msg, type) {
     if (!type) {type = "success"};
-    $(".js-notes").html( '<div class="alert fade-in flash_'+type+'">'+msg+'</div>');    
+    $(".js-notes").html( '<div class="alert flash_'+type+'">'+msg+'<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></div>');    
     showNotifications();
 };
 
@@ -85,95 +81,81 @@ var show_ajax_message = function(msg, type) {
 $(function() {
 
   startTime();
+  NProgress.configure({ showSpinner: false, ease: 'ease', speed: 300 });
+  NProgress.start();
+  NProgress.done();
 
-    tinyMCE.init({
-      selector: '.tinymce textarea',  // change this value according to your HTML
-      plugins: "textcolor,lists,spellchecker",
+  $( document ).ajaxStart(function() { NProgress.start(); });  
+  $( document ).ajaxStop( function() {
+    $('[data-toggle="tooltip"]').tooltip({'placement': 'top', fade: false});
+    NProgress.done(); 
+    apply_mask();
+  });
 
-      toolbar_items_size : 'small',
-      branding: false,
-      menubar: '',
-      gecko_spellcheck:true,
-      toolbar: 'bold italic underline | forecolor backcolor fontsizeselect | bullist numlist '
-    });
+  $('.progress').hide();
+  $('#file').hide();
+  $("#tabs" ).tabs({active: 3}); //{active: 3}
+
+  tinyMCE.init({
+    selector: '.tinymce textarea', 
+    plugins: "textcolor,lists,spellchecker",
+    toolbar_items_size : 'small',
+    branding: false,
+    menubar: '',
+    gecko_spellcheck:true,
+    toolbar: 'bold italic underline | forecolor backcolor fontsizeselect | bullist numlist '
+  });
 
 
   $('.timepicker').timepicker({ 'timeFormat': 'H:i' });
 
-  //.try('strftime',"%d.%m.%Y")
-  //alert(v[0]);
   $(document).on('focus', '.datepicker', function () {
         var me = $(".datepicker");
         me.mask('99.99.9999');
     });
 
   $('.switcher_a').each(function(){
-        var switcher = $(this);
-        var link = $(this).find('.link_a,.link_c');
-        var scale = $(this).find('.scale');
-        var handle = $(this).find('.handle');
-        var details = switcher.parent().find('.details');
+    
+    var link = $(this).find('.link_a,.link_c');
+    var scale = $(this).find('.scale');
+    var handle = $(this).find('.handle');
+    var switcher = $(this);
+    var details = switcher.parent().find('.details');
 
-        $(scale).click(function(event){
-            switcher.toggleClass('toggled');
-            link.toggleClass('on');
-            link[0].innerHTML = link.attr(link.hasClass('on') ? 'on' : 'off');
-            
-            handle.toggleClass('active');
-
-            if(switcher.hasClass('toggled')){
-                details.slideDown(300);
-            } else {
-                details.slideUp(300);
-            }
-            
-            if (link.hasClass('link_a'))
-              sortable_query({only_actual:link.hasClass('on')});
-            else{
-              if (link.hasClass('on')){
-                $('tr.new_client').hide();
-                $('tr.ex_client').show();
-              }else{
-                $('tr.new_client').show();
-                $('tr.ex_client').hide();
-                // alert(
-                $('#project_client_id').val(0);
-                $('#project_client_id').trigger("chosen:updated")
-                  //alert($('#project_client_id').val());
-                  // );
-              }
-            }
-            return false;
-        });
-       
+    $(scale).click(function(event){
+        switcher.toggleClass('toggled');
+        link.toggleClass('on');
+        link[0].innerHTML = link.attr(link.hasClass('on') ? 'on' : 'off');
         
+        handle.toggleClass('active');
 
+        if (switcher.hasClass('toggled')){
+            details.slideDown(300);
+        } else {
+            details.slideUp(300);
+        }
+        
+        if (link.hasClass('link_a'))
+          sortable_query({only_actual:link.hasClass('on')});
+        else{
+          if (link.hasClass('on')){
+            $('tr.new_client').hide();
+            $('tr.ex_client').show();
+          }else{
+            $('tr.new_client').show();
+            $('tr.ex_client').hide();
+            $('#project_client_id').val(0);
+            $('#project_client_id').trigger("chosen:updated")
+          }
+        }
+        return false;
     });
-
-
+  });
 
   $('.nav #develops').addClass('li-right develops');
   $('.nav #options').addClass('li-right options');
  
- 
-   NProgress.configure({
-    showSpinner: false,
-    ease: 'ease',
-    speed: 300
-  });
 
-  NProgress.start();
-  NProgress.done();
-
-  $( document ).ajaxStart(function() {
-      NProgress.start();
-  });  
-
-  $( document ).ajaxStop( function() {
-    $('[data-toggle="tooltip"]').tooltip({'placement': 'top', fade: false});
-    NProgress.done(); 
-    apply_mask();
-  });
 
   $('[data-toggle="tooltip"]').tooltip({'placement': 'top', fade: false});
   
@@ -183,29 +165,9 @@ $(function() {
    // alert("There was an ajax error!");
   });
     
-
-$('.progress').hide();
-$('#file').hide();
-$( "#tabs" ).tabs({active: 3}); //{active: 3}
- 
-
-  // дата по умолчанию для нового лида - сегодня
-  if (!$("#lead_start_date").val()){
-      $("#lead_start_date").val($.datepicker.formatDate('dd.mm.yy', new Date()));
-  }
-
- $('.sel_val').click(function(){
-          if ($(this).hasClass('select_custom_ext')) {
-            $(this).removeClass('select_custom_ext');
-            $(this).parent().removeClass('select_custom_ext');
-          }
-          else {
-            $(this).addClass('select_custom_ext');
-            $(this).parent().addClass('select_custom_ext');
-          }
-        });
-
   showNotifications();
+
+
 
 });
 

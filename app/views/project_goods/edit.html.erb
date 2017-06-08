@@ -1,32 +1,51 @@
-<%= simple_form_for @pg , html:{ class: "modal_form"} do |f| %>
-<input type="hidden" name="_method" value="post">
-<div class="box_wrap box_wrap_1">
+<% iname = 'upd_modal' %>
 
+<div class="box_wrap box_wrap_1">
 <div class="panel-left">
 <table class="tbl_fc tbl_fc_1">
 
 	<tr><td class="caption">Товар:</td>
-	<td><div class="inp_w"><%= f.input :name, label: false %></div></td></tr>
+	<td><div class="inp_w"><%= text_field iname,:name, {value: @pg.name,:class => 'txt'} %></div></td></tr>
 
 	<tr><td class="caption">Поставщик:</td>
 	<td><div class="inp_w">
-	<%= chosen_src "provider_id", Goodstype.find(@pg.project_g_type.g_type_id).providers, @pg.provider_id,{ nil_value: 'Выберите поставщика...',add_name: 'project_good'} %></div></td></tr>
+	<%= chosen_src "provider_id", Goodstype.find(@pg.project_g_type.g_type_id).providers, @pg.provider_id,
+	 {nil_value: 'Выберите поставщика...', add_name: iname} %></div></td></tr>
 	<tr><td class="caption">Дата поставки:</td>
 	<td><div class="inp_w">
-		<%= text_field "project_good",:date_supply, {:class => 'txt datepicker'} %>
+		<%= text_field iname, :date_supply, {:class => 'txt datepicker', value: @pg.date_supply.try('strftime',"%d.%m.%Y")} %>
 	</div></td></tr>
+
+	<tr><td class="caption">Примечение:</td>
+	<td><div class="inp_w"><%= text_field iname,:description, {value: @pg.description,:class => 'txt'} %></div></td></tr>
+
+	<tr><td class="caption">Сумма:</td>
+			<%= td_sum_field(iname, :gsum ,nil,{value: @pg.gsum}) %>
+			</tr>
+
+	<td class="caption">Валюта:</td>
+	<td><div class="inp_w"><%= chosen_src "currency_id", currency_src,@pg.currency_id,{nil_value: '',add_name: iname, add_class: 'currency_src'} %></div></td></tr>
+
+	<tr><td class="last_td"></td>
+			<td class="last_td">
+			<button type="button" class="sub btn_a btn_reset" data-dismiss="modal" aria-hidden="true">Отмена</button>
+			
+				<span class="sub btn_a modal_apply" id="btn-modal" item_id="<%= @pg.id %>" action='/provider_goods/' model="ProjectGood" prm='upd_modal'> Сохранить</span>
+				</td></tr>
 
 </table>
 </div>
 
 <div class="panel-right">
+	<table class="tbl_fc tbl_fc_1">
+	<tr>
+		<td><label class="inp_btn_label"><div class="inp_btn checkbox">
+			<input name="status[actual]" type="hidden" value="false">
+			<input type="checkbox" value="true" name="status[actual]" id="status_actual"></div>
+			Товар заказан:
+      </label></td>
+	</tr>
+	<tr><td class="caption">Товар:</td>
+	</tr>
+
 </div>
-
-<div class="sep_1"></div>
-  <div class="actions">
-<td><span class="sub btn_a modal_apply" id="btn-modal" pg_id="<%= @pg.id %>" action='/provider_goods/' model="ProjectGood" prm='project_good'> Добавить</span></td></tr>
-  </div>
-
-
-</div>
-<% end %>

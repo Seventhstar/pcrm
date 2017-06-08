@@ -125,15 +125,24 @@ class AjaxController < ApplicationController
   		obj = Object.const_get(params['model']).find(params['id'])
       prms = params[:upd]
       prms = params['upd'+params[:id]] if prms.nil?
+      prms = params['upd_modal'] if prms.nil?
 
       prms.each do |p|
         new_value = p[1]
         new_value.gsub!(' ','') if p[0]=='sum' || p[0]=='gsum'
         obj[p[0]] = new_value if p[0]!='undefined'
       end
-      obj.save
+      if !obj.save
+        render html: obj.errors.full_messages, status: :unprocessable_entity
+      else
+        msg = "Успешно обновлено: "+ t(obj.class.name)
+        render html: msg, status: :ok
+      end
+     else
+      render json: nil, status: :ok
    	 end
-   	 render :nothing => true 
+   	 # render :nothing => true 
+     
    	end
 
 end
