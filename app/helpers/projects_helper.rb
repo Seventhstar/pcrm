@@ -1,4 +1,5 @@
 module ProjectsHelper
+
 	def td_sum_field( f, val = 0, label='', params = {})
 		mask_cls = params[:mask] ? 'float_mask' : 'sum_mask'
     inp_add_mask = params[:inp_class].nil? ? '' : ' '+params[:inp_class]

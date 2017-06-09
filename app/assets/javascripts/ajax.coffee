@@ -172,7 +172,7 @@ $(document).ready ->
   $('.schosen').chosen(width: '99.5%')
   $('.chosen').chosen(width: '99.5%', disable_search: 'true')
 
-  $('.ychosen').chosen(width:' 65px', disable_search: 'true').on 'change', ->
+  $('.ychosen').chosen(width:' 65px', disable_search: 'true', inherit_select_classes: 'true').on 'change', ->
     sortable_query({})
     return
 

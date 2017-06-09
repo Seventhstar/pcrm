@@ -1,0 +1,49 @@
+<% @cur_head = "" %>
+<% @first_table = true %>
+<% @no = 1 %>
+<% total = [0,0,0,0] %>
+    <% @goods.order(:id).each do |g| %>
+      <% if check_new_table_head(g) %>
+      <% if !@first_table %>
+        <tr class="total">
+          <td>Итого: </td>
+          <td colspan="4"></td>
+          <td colspan="3" class="td_right"><%= total_info(total).html_safe %></td>
+        </tr>
+        <% total = [0,0,0,0] %>
+        <% end -%>
+       <%= render "shared/head" %>
+          <tr>
+      <th width='220px'>Позиция</th>
+      <th width='216px'>Поставщик</th>
+      <th width='115px'>Срок поставки</th>
+      <th width='230px'>Примечание</th>
+      <th width='30px' alt="Предложено / заказано"> Зак.</th>
+      <th width='58px'>Валюта</th>
+      <th fld='gsum' width='90px'>Стоимость</th>
+      <th width='48px'></th>
+    
+    </tr></thead>
+    <tbody>
+
+    <% end -%>
+
+      <tr id="pgt_item<%= g.id %>" class="sw_color <%= g.order ? 'ordered' : '' %>">
+        <td width='220px'><%= g.name %></td>
+        <td width='210px'><%= g.provider_name %></td>
+        <td width='115px'><%= g.date_supply.try('strftime',"%d.%m.%Y") %></td>
+        <td width='230px'><%= g.description %></td>
+        <td><span class="check_img sw_check good_check <%= g.order ? "checked" :"" %>" item_id="<%=g.id%>" chk="order"></span> </td>
+        <td><%= g.currency_name %></td>
+				<td width='90px' class="td_right"><%= g.gsum.to_sum if !g.gsum.nil? %></td>
+        <%= tool_icons(g, {icons:'modal_edit,delete',tag:'link', add_class:'td_right', modal: true}) %>
+        <%  total[g.currency_id] = total[g.currency_id] + g.gsum if !g.gsum.nil? %>
+      </tr>
+    <% end %>
+      <tr class="total">
+        <td>Итого: </td>
+        <td colspan="4"></td>
+        <td colspan="3" class="td_right"><%= total_info(total).html_safe %></td>
+      </tr>
+  </tbody>
+</table>

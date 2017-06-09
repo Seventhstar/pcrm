@@ -1,0 +1,18 @@
+<div class="subnav submenu">
+
+	<%= sortable_pil "project_g_type_id", "По проектам" %>
+	<%= sortable_pil "provider_id", "По поставщикам" %>
+
+	<%= chosen_src 'year', @years, nil,{class: 'ychosen',nil_value: 'Год'} %>
+	<%= chosen_src "currency_id", currency_src, nil,{nil_value: '', class: 'ychosen'} %>
+
+	<%= form_tag receipts_path, :method => 'get', :id => "rcpt_search", class: 'index_filter left' do %>
+	
+	<% end %>
+ 	
+   <%= only_actual_btn %>
+
+</div>
+
+	
+

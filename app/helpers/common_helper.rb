@@ -1,9 +1,9 @@
 module CommonHelper
 
- def find_version_author_name(version)
+  def find_version_author_name(version)
     user = User.find_version_author(version) 
     user ? user.name : ''
- end
+  end
 
   def user_name(id)
     if !id.nil? && id!=0 && id!=0-1
@@ -24,11 +24,13 @@ module CommonHelper
       new_head = head_name(obj,'user_id')
     when "ic_users.name"
       new_head = head_name(obj,'ic_user_id')
-    when "status_id","pstatus_id","start_date", "status_date", "executor_id", "project_type_id"
+    when "status_id","pstatus_id","start_date", "status_date", "executor_id", "project_type_id", "provider_id","project_g_type_id"
       new_head = head_name(obj,params[:sort])
     else
       if obj.class.name == "Lead"
         new_head = is_admin? ? head_name(obj,'status_date') : head_name(obj,'start_date') 
+      elsif obj.class.name == "ProjectGood"
+        new_head = head_name(obj,'project_g_type_id')
       else
         new_head = nil
       end
@@ -49,11 +51,15 @@ module CommonHelper
       val = User.find(id).try(:name) if !id.nil? && id>0 
     when 'start_date','status_date'
       val = month_year(id)
+    when 'project_g_type_id'
+      val = obj.project_g_type.project.address
+      id = obj.project_g_type.project.id
     else
       prop_name = id_name[0..-4]+'_name'
       val = obj.try(prop_name)
-      # p "val #{obj.try(prop_name)} prop_name #{prop_name}"
+      
     end
+    p "val #{val} id_name #{id_name}"
     n = (id.nil? || id==0) ? t('without_'+id_name) : val
     n
   end

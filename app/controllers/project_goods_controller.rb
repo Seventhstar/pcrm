@@ -3,6 +3,20 @@ class ProjectGoodsController < ApplicationController
   before_action :set_project_good, only: [:show, :edit, :update, :destroy]  
   before_action :logged_in_user
   before_action :check_sum, only: [:create,:update]
+  helper_method :sort_column, :sort_direction
+
+  def index
+
+    years = Project.select("projects.*, date_trunc('year', date_start) AS year").where('date_start IS NOT NULL').order('date_start')
+    year_from = years.first.year
+    year_to = years.last.year
+    @currency = 
+    @years = (year_from.year..year_to.year).step(1).to_a.reverse
+    
+    @sort_column = sort_column
+    # @goods = ProjectGood.order(@sort_column)
+    @goods = ProjectGood.order(@sort_column)
+  end
 
   def create
     @pg = ProjectGood.new(pg_params)
@@ -21,7 +35,7 @@ class ProjectGoodsController < ApplicationController
   def destroy
     @pg.destroy
     respond_to do |format|
-      format.html { redirect_to '/providers/', notice: 'Менеджер успешно удален.' }
+      format.html { redirect_to '/project_goods/', notice: 'Менеджер успешно удален.' }
       format.json { head :no_content }
     end
   end
@@ -41,6 +55,17 @@ class ProjectGoodsController < ApplicationController
         # p p,project_params[p]
       end
     end
+
+    def sort_column
+      default_column = "project_g_type_id"
+      (ProjectGood.column_names.include?(params[:sort]) || params[:sort] == 'project_g_type_id' ) ? params[:sort] : default_column
+    end
+
+    def sort_direction
+      defaul_dir = sort_column =='project_g_type_id' ? "asc": "desc"
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : defaul_dir
+    end
+
 
     def set_project_good
       @pg = ProjectGood.find(params[:id])

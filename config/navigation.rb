@@ -73,6 +73,8 @@ SimpleNavigation::Configuration.run do |navigation|
       sub_nav.item :payments, 'Расходы', payments_path  
     end
 
+    primary.item :providers, 'Заказы', project_goods_path
+
     primary.item :absence, 'Календарь', absences_path
 
     primary.item :wiki_records, 'База знаний', wiki_records_path do |sub_nav|
