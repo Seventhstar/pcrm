@@ -73,7 +73,7 @@ SimpleNavigation::Configuration.run do |navigation|
       sub_nav.item :payments, 'Расходы', payments_path  
     end
 
-    primary.item :providers, 'Заказы', project_goods_path
+    primary.item :providers, 'Заказы', project_goods_path, if: -> { [1,5].include? current_user.id }
 
     primary.item :absence, 'Календарь', absences_path
 

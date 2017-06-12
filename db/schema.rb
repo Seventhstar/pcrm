@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170605152223) do
+ActiveRecord::Schema.define(version: 20170612065123) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -274,6 +274,8 @@ ActiveRecord::Schema.define(version: 20170605152223) do
     t.integer  "gsum"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.date     "date_offer"
+    t.date     "date_place"
   end
 
   create_table "project_statuses", force: :cascade do |t|
@@ -406,6 +408,12 @@ ActiveRecord::Schema.define(version: 20170605152223) do
 
   add_index "receipts", ["paid"], name: "index_receipts_on_paid", using: :btree
 
+  create_table "roles", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "statuses", force: :cascade do |t|
     t.string   "name"
     t.boolean  "actual"
@@ -423,6 +431,13 @@ ActiveRecord::Schema.define(version: 20170605152223) do
     t.integer  "user_id"
     t.integer  "option_id"
     t.string   "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_roles", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "role_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

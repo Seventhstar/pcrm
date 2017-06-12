@@ -11,9 +11,9 @@
 	<td><div class="inp_w">
 	<%= chosen_src "provider_id", Goodstype.find(@pg.project_g_type.g_type_id).providers, @pg.provider_id,
 	 {nil_value: 'Выберите поставщика...', add_name: iname} %></div></td></tr>
-	<tr><td class="caption">Дата поставки:</td>
+	<tr><td class="caption">Дата предложения:</td>
 	<td><div class="inp_w">
-		<%= text_field iname, :date_supply, {:class => 'txt datepicker', value: @pg.date_supply.try('strftime',"%d.%m.%Y")} %>
+		<%= text_field iname, :date_place, {:class => 'txt datepicker', value: @pg.date_place.try('strftime',"%d.%m.%Y")} %>
 	</div></td></tr>
 
 	<tr><td class="caption">Примечение:</td>
@@ -39,13 +39,20 @@
 <div class="panel-right">
 	<table class="tbl_fc tbl_fc_1">
 	<tr>
-		<td><label class="inp_btn_label"><div class="inp_btn checkbox">
-			<input name="status[actual]" type="hidden" value="false">
-			<input type="checkbox" value="true" name="status[actual]" id="status_actual"></div>
-			Товар заказан:
-      </label></td>
+		<td>
+				<label class="inp_btn_label sw_enable" grp_id='1'><div class="inp_btn checkbox <%= @pg.order ? 'active':'' %>">
+				<%= check_box iname,:order, {checked: @pg.order } %></div>Товар заказан
+      </label>
+      </td>
 	</tr>
-	<tr><td class="caption">Товар:</td>
-	</tr>
+	<tr class="grp1"><td class="caption grp1">Дата заказа:</td>
+	<td><div class="inp_w">
+		<%= text_field iname, :date_offer, {:class => 'txt datepicker grp1', value: @pg.date_offer.try('strftime',"%d.%m.%Y")} %>
+	</div></td></tr>
+	<tr class="grp1"><td class="caption grp1">Дата поставки:</td>
+	<td><div class="inp_w">
+		<%= text_field iname, :date_supply, {:class => 'txt datepicker grp1', value: @pg.date_supply.try('strftime',"%d.%m.%Y")} %>
+	</div></td></tr>
+	
 
 </div>

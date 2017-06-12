@@ -19,7 +19,8 @@
 
 .tbl_fc_1 .inp_w .datepicker{ background: asset-url('ico-date.png') 98% 8px no-repeat; }
 
-input[disabled].datepicker { background: asset-url('ico-date.png') 95% -27px no-repeat; cursor: pointer;}
+input[disabled].datepicker { background: asset-url('ico-date.png') 98% -27px no-repeat !important; cursor: default; box-shadow: none !important;}
+td.disabled {color: gray !important;}
 
 
 .datepicker.slim_txt{ background: asset-url('ico-date.png') 94% 4px no-repeat; }

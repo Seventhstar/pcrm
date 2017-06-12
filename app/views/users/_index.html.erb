@@ -1,0 +1,43 @@
+<div class="box_wrap">
+<%= link_to 'Добавить пользователя', new_user_path, class: "btn_a btn-add right", data: {modal: true} %>
+</div>
+<div class="sep_15"></div>
+
+<div class="items_box_cont tbl_a">
+<div class="head">Список пользователей</div>
+<table class="tleads user-table" model="User">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Пользователь</th>
+      <th>День рождения</th>
+      <th width="60px" class="center">Активен</th>
+      <th width="60px" class="center">Админ</th>  
+      <% if current_user.admin? %>    
+        <th width="30px"></th>
+      <% end -%>
+    </tr>
+  </thead>
+
+  <tbody>
+
+  <!-- %= render @users %> -->
+<% @items.each do |user| %>
+<tr >
+  <td width="60"><%= avatar_for(user) %></td>
+  <td>  <%= link_to user.name, user %> </br> <%= user.email %> </td>
+  <td class ="birthday">  <%= date_of_birth user %> </td>
+  <td class="state"><span class="check_img sw_check <%= user.activated ? "checked" :"" %>" item_id="<%=user.id%>" chk="activated"></span></td>
+  <td class="state"><span class="check_img sw_check <%= user.admin ? "checked" :"" %>" item_id="<%=user.id%>" chk="admin"></span></td>
+  
+  <% if current_user.admin? %>
+     <%= tool_icons(user, {subcount: current_user?(user) ? 1:nil} ) %>
+  <% end %>
+  
+</td>
+</tr>
+<% end %>
+
+</tbody>
+</table>
+</div>

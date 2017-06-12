@@ -3,6 +3,7 @@ class UsersController < ApplicationController
 #, only: [:index, :edit, :update, :destroy, :following, :followers]
   before_action :correct_user,   only: [:edit, :update]
   before_action :admin_user,     only: :destroy
+  respond_to :html, :json
 
   # GET /users
   # GET /users.json
@@ -19,6 +20,7 @@ class UsersController < ApplicationController
   
   def new
     @user = User.new
+    respond_modal_with @user, location: root_path
   end
 
 
@@ -28,7 +30,7 @@ class UsersController < ApplicationController
     if @user.save
       @user.send_activation_email
       #flash[:info] = "На Ваш почтовый ящик отправлено письмо со ссылки на активацию аккаунта."
-      redirect_to users_url
+      redirect_to '/options/users'
     else
       render 'new'
     end
@@ -59,7 +61,7 @@ class UsersController < ApplicationController
   def destroy
     User.find(params[:id]).destroy
     flash[:success] = "Пользователь удален"
-    redirect_to users_url
+    redirect_to '/options/users'
   end
 
   private

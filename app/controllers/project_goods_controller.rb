@@ -73,6 +73,6 @@ class ProjectGoodsController < ApplicationController
 
     def pg_params
       prm = params.first[0] 
-      params.require(prm).permit(:project_g_type_id,:provider_id,:date_supply,:currency_id,:gsum,:order,:name,:description)
+      params.require(prm).permit(:project_g_type_id,:provider_id,:date_supply,:date_place,:date_offer, :currency_id,:gsum,:order,:name,:description)
     end
 end

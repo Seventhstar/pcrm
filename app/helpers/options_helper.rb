@@ -2,23 +2,25 @@ module OptionsHelper
 
   def get_active_option_page
 
-  	case @page
-  	when 'leads','statuses','channels','lead_sources'
-  		0
-    when 'holidays','project_statuses','project_types','elongation_types'
+    case @page
+    when 'users','roles','user_roles'
+      0
+    when 'leads','statuses','channels','lead_sources'
       1
-    when 'payment_types','payment_purposes'
+    when 'holidays','project_statuses','project_types','elongation_types'
       2
-  	when 'providers','budgets','goodstypes','styles','p_statuses'
-  		3
+    when 'payment_types','payment_purposes'
+      3
+    when 'providers','budgets','goodstypes','styles','p_statuses'
+      4
     when 'absence_reasons', 'absence_targets','absence_shop_targets'
-      5
-    when 'wiki_cats'
       6
-  	else
-  		4
-  	end
-  			
+    when 'wiki_cats'
+      7
+    else
+      5
+    end
+
   end
 
 end

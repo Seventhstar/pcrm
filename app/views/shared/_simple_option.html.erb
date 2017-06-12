@@ -2,20 +2,24 @@
 
 <div class="option_list">
 <% fn = ''+@item.class.name.underscore.pluralize %>
-<% if lookup_context.find_all(fn+'/_new_item.html.erb').any? %>
-  <% p fn.to_s %>
+<% if ['users','user_roles'].include? fn %>
+<% elsif lookup_context.find_all(fn+'/_new_item.html.erb').any? %>
   <%= render fn+'/new_item' %>
 <% else %>
   <%= render 'shared/new_item' %>
 <% end %>
 </div>
 
+<% if lookup_context.find_all(fn+'/_index.html.erb').any? %>
+  <%= render fn+'/index.html' %>
+<% else %>
+
 <div class="sep_15"></div>
 
 <% if @items.first.nil? %>
-<% attrs = @item.attributes.except("id", "created_at", "updated_at") %>
+  <% attrs = @item.attributes.except("id", "created_at", "updated_at") %>
 <% else %>
-<% attrs = @items.first.attributes.except("id", "created_at", "updated_at") %>
+  <% attrs = @items.first.attributes.except("id", "created_at", "updated_at") %>
 <% end %>
 
 <div class="items_box_cont tbl_a">
@@ -47,3 +51,5 @@
 </table>
 </div>
 </div>
+
+<% end %>

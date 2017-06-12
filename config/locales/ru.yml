@@ -128,6 +128,8 @@ ru:
   new_LeadSource: Новый источник
   new_ElongationType: Новая причина продления
   new_WikiCat: Новая категория
+  new_Role: Новая роль
+  new_User: Новый пользователь
 
   list_Priority: Список приоритетов
   list_ProjectType: Список видов проектов
@@ -149,6 +151,7 @@ ru:
   list_ElongationType: Список причин продления
   list_Holiday: Список праздничных дней
   list_WikiCat: Список категорий базы знаний
+  list_Role: Список ролей
 
 
   without_start_date: Без даты старта

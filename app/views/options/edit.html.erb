@@ -1,14 +1,14 @@
 <div class="sidebar">
-	<div class="menu_sb">
-	  <ul>
-		<li><%= link_to :users do %><span class="pict"><span class="icon icon_user"></span></span>Пользователи<% end %></li>
-	  </ul>
-	</div>
-		
-
 
   <div id="accordion" class="menu_sb menu_sb_a" active=<%= get_active_option_page %> >
-  <h3 class="first">Настройки лидов:</h3><div><ul>
+
+  <h3 class="first">Настройки пользователей:</h3><div><ul>
+	<%= option_li("users","Пользователи") %>
+			<%= option_li("roles","Роли") %>
+      <%= option_li("user_roles","Назначение ролей") %>
+  </ul></div>
+
+  <h3>Настройки лидов:</h3><div><ul>
 			<%= option_li("statuses","Статусы") %>
 			<%= option_li("channels","Каналы") %>
       <%= option_li("lead_sources","Источники") %>

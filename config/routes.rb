@@ -79,6 +79,7 @@ Rails.application.routes.draw do
     end
   end
 
+
   resources :leads
   resources :lead_sources
 #  resources :leads_comments
@@ -87,6 +88,9 @@ Rails.application.routes.draw do
   resources :wiki_cats
 
   resources :users
+  resources :roles
+  resources :user_roles
+
 
   root :to => "leads#index"
   

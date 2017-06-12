@@ -118,13 +118,7 @@ $(document).ready ->
     $(this).hide()
     $('.invisible').removeClass('invisible')
     return
-  $('#project_project_type_id').chosen
-    width: '99.5%'
-    disable_search: 'true'
-  $('#project_executor_id').chosen
-    width: '99.5%'
-    disable_search: 'true'
-  $('#project_style_id').chosen
+  $('#project_project_type_id,#project_executor_id,#project_style_id').chosen
     width: '99.5%'
     disable_search: 'true'
   $('#project_days').change ->
@@ -135,7 +129,6 @@ $(document).ready ->
       'workdays': add
       'weekdays': [1,2,3,4,5]
       'exclusions': v
-    # d = dateFromString(, )
     dd = $.datepicker.formatDate('dd.mm.yy', new Date(d))
     $('#project_date_end_plan').val dd
   $('#project_price,#project_footage,#project_price_2,#project_footage_2').change ->
@@ -147,9 +140,7 @@ $(document).ready ->
     calc_proj_sum_real()
   $('#project_sum_real').change ->
     calc_proj_sum()
-  $('#project_sum_total').change ->
-    calc_debt()
-  $('#project_sum_total_real').change ->
+  $('#project_sum_total,#project_sum_total_real').change ->
     calc_debt()
   $('#project_sum_total_executor').change ->
     $('#project_sum_rest').val( to_sum(intFromSum($('#project_sum_total').val()) - intFromSum($(this).val())) )

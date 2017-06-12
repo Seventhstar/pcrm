@@ -1,5 +1,10 @@
 $(document).ready ->
-
+ $(document).on 'click', '.sw_enable', ->
+  grp_id = $(this).attr('grp_id')
+  ch = $(this).find('.checkbox').hasClass('active')
+  $('.grp'+grp_id).prop('disabled',ch)
+  $('.grp'+grp_id).children().each ->
+    if ch then $(this).addClass('disabled') else $(this).removeClass('disabled')
  $('.container').on 'click', 'span.sw_check',  ->
   model = $(this).parents('table').attr('model')
   if $(this).hasClass('checked')
