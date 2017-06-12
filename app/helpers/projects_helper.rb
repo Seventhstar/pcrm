@@ -5,7 +5,7 @@ module ProjectsHelper
     inp_add_mask = params[:inp_class].nil? ? '' : ' '+params[:inp_class]
 		lbl = content_tag 'label', params[:translate] ? t(label) : label if !label.nil?
     v = params[:value]
-    v ||= @project[val]
+    v ||= @project[val] if !@project.nil?
     if f.class == String
       obj_name = f
     else

@@ -59,7 +59,7 @@ module CommonHelper
       val = obj.try(prop_name)
       
     end
-    p "val #{val} id_name #{id_name}"
+    #p "val #{val} id_name #{id_name}"
     n = (id.nil? || id==0) ? t('without_'+id_name) : val
     n
   end

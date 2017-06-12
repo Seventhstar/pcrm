@@ -36,7 +36,12 @@
         <%= hidden_field iname,'project_g_type_id', value: pgt.id %>
         <td class="fw" width='220px'><%= text_field iname,:name, {value: g.name,:class => 'txt'} %></td>
         <td width='220px'>
-        <%= chosen_src "provider_id", Goodstype.find(pgt.g_type_id).providers, g.provider_id,{nil_value: 'Выберите поставщика...',add_name: iname} %></td>
+        <% gt_coll = Goodstype.find_by(id: pgt.g_type_id) %>
+        <% if !gt_coll.nil? %>
+          <%= chosen_src "provider_id", gt_coll.providers, g.provider_id,{nil_value: 'Выберите поставщика...',add_name: iname} %>
+        <% end %>
+
+        </td>
         <td class="caption3" width='115px'><%= text_field iname,:date_supply, {value: g.date_supply, :class => 'txt datepicker'} %></td>
         <td class="caption3" width='238px'><%= text_field iname,:description, {value: g.description ,:class => 'txt fullwidth'} %></td>
         <td width='25px'><div class="inp_btn checkbox bigcheck <%= g.order ? 'active' : '' %>">
@@ -52,7 +57,10 @@
         <%= hidden_field iname,'project_g_type_id', value: pgt.id %>
         <td class="fw" width='220px'><%= text_field iname,:name, {:class => 'txt'} %></td>
         <td width='220px'>
-        <%= chosen_src "provider_id", Goodstype.find(pgt.g_type_id).providers, nil,{nil_value: 'Выберите поставщика...',add_name: iname} %></td>
+        <% gt_coll = Goodstype.find_by(id: pgt.g_type_id) %>
+        <% if !gt_coll.nil? %>
+        <%= chosen_src "provider_id", gt_coll.providers, nil,{nil_value: 'Выберите поставщика...',add_name: iname} %></td>
+        <% end %>
         <td class="caption3" width='115px'><%= text_field iname,:date_supply, {:class => 'txt datepicker'} %></td>
         <td class="caption3" width='238px'><%= text_field iname,:description, {:class => 'txt fullwidth'} %></td>
         <td width='25px'><div class="inp_btn checkbox bigcheck"><%= check_box_tag iname+'[order]', 'false', false %></td>
