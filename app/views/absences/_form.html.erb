@@ -42,11 +42,7 @@
       <td width='200px;'><div class="inp_"><%= f.text_field :dt_from, :value => @dt_from, label: false, class: "txt datepicker" %></div></td>
       <td class="caption caption_to"><%= f.hidden_field :checked %><span class="check_img <%= @checked ? 'checked' : '' %>" id='dt_to_check'></span> по:</td>
       <td width='180px;'><div class="inp_">
-        <% if @checked %>
-          <%= f.text_field :dt_to, :value => @dt_to, label: false, class: "txt datepicker" %>
-        <% else %>
-          <%= f.text_field :dt_to, :value => @dt_to, label: false, class: "txt ", disabled: 'disabled' %>
-        <% end %>
+          <%= f.text_field :dt_to, :value => @dt_to, label: false, class: "txt datepicker", disabled: !@checked %>
         </div></td>
       <td class="caption caption_sm">Время:</td>
       <td >

@@ -16,7 +16,7 @@
           <tr>
       <th width='220px'>Позиция</th>
       <th width='216px'>Поставщик</th>
-      <th width='115px'>Срок поставки</th>
+      <th width='115px'>Дата</th>
       <th width='230px'>Примечание</th>
       <th width='30px' alt="Предложено / заказано"> Зак.</th>
       <th width='58px'>Валюта</th>
@@ -31,7 +31,7 @@
       <tr id="pgt_item<%= g.id %>" class="sw_color <%= g.order ? 'ordered' : '' %>">
         <td width='220px'><%= g.name %></td>
         <td width='210px'><%= g.provider_name %></td>
-        <td width='115px'><%= g.date_supply.try('strftime',"%d.%m.%Y") %></td>
+        <td width='115px'><%= g.date_place.try('strftime',"%d.%m.%Y") %></td>
         <td width='230px'><%= g.description %></td>
         <td><span class="check_img sw_check good_check <%= g.order ? "checked" :"" %>" item_id="<%=g.id%>" chk="order"></span> </td>
         <td><%= g.currency_name %></td>

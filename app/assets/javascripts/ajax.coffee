@@ -142,6 +142,7 @@
     reverse: true
     maxlength: false
   $('.chosen').chosen(width: '99.5%', disable_search: 'true')
+  $('.schosen').chosen(width: '99.5%')
 
 $(document).ready ->
   apply_mask()
