@@ -29,12 +29,18 @@ class ProjectsController < ApplicationController
       @projects = Project.select(query_str)
     end
 
+    # @projects = @projects.includes(:client)
+
     if !params[:executor_id].nil? && params[:executor_id]!='0'
-      @projects = @projects.where(:id => User.find(params[:executor_id]).projects.ids)
+      @projects = @projects.where(id: User.find(params[:executor_id]).projects.ids)
     end
 
     if !params[:search].nil?
-      @projects = @projects.where('LOWER(address) like LOWER(?)','%'+params[:search]+'%')
+      src = ('%'+params[:search]+'%').downcase
+      cl_ids = Client.where('LOWER(name) like ? or LOWER(email) like ? or LOWER(phone) like ?',src,src,src).pluck(:id)
+      cl_prj = Project.where(client_id: cl_ids) 
+      search_prj =  @projects.where('LOWER(address) like ?',src).pluck(:id)
+      @projects = @projects.where(id: cl_prj + search_prj) 
     end
 
     if @only_actual

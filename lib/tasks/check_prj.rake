@@ -11,8 +11,13 @@ namespace :check_prj do
 		all = prj_wo_pe + pe.select{|k, v| v < Date.today }.keys
 		all.each do |prj_id|
 			ProjectMailer.overdue_email(prj_id).deliver
+			
+			
+			
 		end 
 
 	end
 
+
+ 
 end

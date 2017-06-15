@@ -80,6 +80,7 @@ GEM
       rails
     globalid (0.4.0)
       activesupport (>= 4.2.0)
+    httpclient (2.8.3)
     i18n (0.8.4)
     jbuilder (2.7.0)
       activesupport (>= 4.2.0)
@@ -194,6 +195,10 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    telegram-bot (0.11.3)
+      actionpack (>= 4.0, <= 5.1)
+      activesupport (>= 4.0, <= 5.1)
+      httpclient (~> 2.7)
     thor (0.19.4)
     thread_safe (0.3.6)
     tilt (2.0.7)
@@ -246,6 +251,7 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   simple-navigation (= 4.0.3)
   simple_form
+  telegram-bot
   tinymce-rails
   tzinfo-data
   uglifier (>= 1.3.0)

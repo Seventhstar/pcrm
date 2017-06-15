@@ -2,15 +2,17 @@
 <% @first_table = true %>
 <% @no = 1 %>
 <% total = [0,0,0,0] %>
+<% total_order = [0,0,0,0] %>
     <% @goods.order(:id).each do |g| %>
       <% if check_new_table_head(g) %>
       <% if !@first_table %>
         <tr class="total">
           <td>Итого: </td>
-          <td colspan="4"></td>
-          <td colspan="3" class="td_right"><%= total_info(total).html_safe %></td>
+          <td colspan="2"><%= total_info(total).html_safe %></td>
+          <td>Итого заказано: </td>
+          <td colspan="4" class="td_right"><%= total_info(total_order).html_safe %></td>
         </tr>
-        <% total = [0,0,0,0] %>
+        <% total = [0,0,0,0] %><% total_order = [0,0,0,0] %>
         <% end -%>
        <%= render "shared/head" %>
           <tr>
@@ -38,12 +40,14 @@
 				<td width='90px' class="td_right"><%= g.gsum.to_sum if !g.gsum.nil? %></td>
         <%= tool_icons(g, {icons:'modal_edit,delete',tag:'link', add_class:'td_right', modal: true}) %>
         <%  total[g.currency_id] = total[g.currency_id] + g.gsum if !g.gsum.nil? %>
+        <%  total_order[g.currency_id] = total_order[g.currency_id] + g.gsum if !g.gsum.nil? && g.order %>
       </tr>
     <% end %>
       <tr class="total">
         <td>Итого: </td>
-        <td colspan="4"></td>
-        <td colspan="3" class="td_right"><%= total_info(total).html_safe %></td>
+        <td colspan="2"><%= total_info(total).html_safe %></td>
+        <td>Итого заказано: </td>
+        <td colspan="4" class="td_right"><%= total_info(total_order).html_safe %></td>
       </tr>
   </tbody>
 </table>

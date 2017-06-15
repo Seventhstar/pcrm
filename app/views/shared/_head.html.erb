@@ -11,5 +11,5 @@
 <% end %>
 
 <div id="table<%= @no %>">
-<table class="tleads">
+<table class="tleads" action=<%= controller.controller_name %> model=<%= controller.controller_name.classify %> >
   <thead>

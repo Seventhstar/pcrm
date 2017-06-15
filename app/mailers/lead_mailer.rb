@@ -4,6 +4,7 @@ class LeadMailer < ActionMailer::Base
   include LeadsHelper
   add_template_helper(CommonHelper)
   add_template_helper(LeadsHelper)
+  include ActionView::Helpers::UrlHelper
 
   def reminder_email(user, leads_today, leads_tomorrow)
        @l_today =leads_today
@@ -65,6 +66,18 @@ class LeadMailer < ActionMailer::Base
     @lead = Lead.find(lead_id)
     @version = @lead.versions.last
     send_lead_mail("[CRM] Вы назначены ответственным", @lead.ic_user.try(:email))
+
+    chat_id = @lead.ic_user.try(:telegram)
+    if !chat_id.nil?
+      token = Rails.application.secrets['telegram']['bot']
+      bot = Telegram::Bot::Client.new(token)
+
+      keyboard = { inline_keyboard: [[{text: "Перейти", url: edit_polymorphic_url(@lead)}]]}
+      markup = JSON.parse(keyboard.to_json)
+
+      lnk = ['[#',@lead.id,']'].join
+      bot.send_message chat_id: chat_id, text: 'Вы назначены ответственным. Лид: '+lnk+' '+ @lead.address, reply_markup: markup
+    end
   end
 
 end

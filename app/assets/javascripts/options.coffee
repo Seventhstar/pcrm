@@ -5,7 +5,7 @@ $(document).ready ->
   $('.grp'+grp_id).prop('disabled',ch)
   $('.grp'+grp_id).children().each ->
     if ch then $(this).addClass('disabled') else $(this).removeClass('disabled')
- $('.container').on 'click', 'span.sw_check',  ->
+ $('.page-wrapper').on 'click', 'span.sw_check',  ->
   model = $(this).parents('table').attr('model')
   if $(this).hasClass('checked')
     $(this).removeClass 'checked'
