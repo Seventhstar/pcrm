@@ -1,3 +1,28 @@
+@switch_check_ajax = (data,tr,cls) ->
+  $.ajax
+    url: '/ajax/switch_check'
+    data: data   
+    type: 'POST'
+    beforeSend: (xhr) ->
+      xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
+      return
+    success: ->
+      if tr.hasClass('sw_color') || cls!=undefined
+        if tr.hasClass(cls) 
+          tr.removeClass(cls)
+        else
+          tr.addClass(cls)
+
+@switch_check = (el) ->
+  if el.hasClass('checked')
+    el.removeClass 'checked'
+    checked = false
+  else
+    el.addClass 'checked'
+    checked = true
+  return checked
+
+
 $(document).ready ->
  $(document).on 'click', '.sw_enable', ->
   grp_id = $(this).attr('grp_id')
@@ -5,14 +30,18 @@ $(document).ready ->
   $('.grp'+grp_id).prop('disabled',ch)
   $('.grp'+grp_id).children().each ->
     if ch then $(this).addClass('disabled') else $(this).removeClass('disabled')
+ $('.page-wrapper').on 'click', 'span.role_check',  ->
+    checked = switch_check($(this))    
+    user_id = $(this).attr('user_id')
+    role_id = $(this).attr('role_id')
+    tr = $(this).closest('tr')
+    
+    data  ={'model': 'UserRole', 'item_id': user_id, 'field': role_id,'checked': checked}
+    switch_check_ajax(data,tr,'')
+    return   
  $('.page-wrapper').on 'click', 'span.sw_check',  ->
   model = $(this).parents('table').attr('model')
-  if $(this).hasClass('checked')
-    $(this).removeClass 'checked'
-    checked = false
-  else
-    $(this).addClass 'checked'
-    checked = true
+  checked = switch_check($(this))
     
   item_id = $(this).attr('item_id')
   chk = $(this).attr('chk')
@@ -22,24 +51,8 @@ $(document).ready ->
   color_cls = table.attr('color_cls')
   if !chk
     chk = table.find('th:eq('+$(this).closest('td')[0].cellIndex+')').attr('fld')
-
-  $.ajax
-    url: '/ajax/switch_check'
-    data:
-      'model': model
-      'item_id': item_id
-      'field': chk
-      'checked': checked
-    type: 'POST'
-    beforeSend: (xhr) ->
-      xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
-      return
-    success: ->
-      if tr.hasClass('sw_color') || color_cls!=undefined
-        if tr.hasClass(color_cls) 
-          tr.removeClass(color_cls)
-        else
-          tr.addClass(color_cls)
+  data  ={'model': model, 'item_id': item_id, 'field': chk,'checked': checked}
+  switch_check_ajax(data,tr,color_cls)
   return
 
 # menu 

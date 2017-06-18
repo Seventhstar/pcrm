@@ -49,10 +49,11 @@ class ProjectGoodsController < ApplicationController
    private
 
    def check_sum
-      prms = ['gsum']
+      p "check_sum"
+      prms = ['gsum',:sum_supply]
       prms.each do |p|
         pg_params[p] = pg_params[p].gsub!(' ','') if !pg_params[p].nil?
-        # p p,project_params[p]
+        p "check_sum",p,project_params[p]
       end
     end
 
@@ -73,6 +74,7 @@ class ProjectGoodsController < ApplicationController
 
     def pg_params
       prm = params.first[0] 
-      params.require(prm).permit(:project_g_type_id,:provider_id,:date_supply,:date_place,:date_offer, :currency_id,:gsum,:order,:name,:description)
+      params.require(prm).permit(:project_g_type_id,:provider_id,:date_supply,:date_place,:date_offer, 
+        :currency_id,:gsum,:order,:name,:description, :fixed, :sum_supply)
     end
 end

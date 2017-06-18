@@ -6,12 +6,11 @@ class OptionsController < ApplicationController
     o = option_model.name
     case o
     when "Holiday"
-
         sort = :day
     else
         sort = :name 
     end
-    p "sort",sort
+    # p "sort",sort
     @items = option_model.order(sort)
     @item = option_model.new
   end
@@ -59,6 +58,11 @@ class OptionsController < ApplicationController
     def option_model
       page = params[:options_page]
       page ||= "statuses"
+      if page == "user_roles"
+        @users = User.order('admin ASC,name')
+        @roles = Role.order(:name)
+      end
       page.classify.constantize
+      
     end
 end

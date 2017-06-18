@@ -5,14 +5,17 @@ module ProjectsHelper
     inp_add_mask = params[:inp_class].nil? ? '' : ' '+params[:inp_class]
 		lbl = content_tag 'label', params[:translate] ? t(label) : label if !label.nil?
     v = params[:value]
+    disabled = params[:disabled]
     v ||= @project[val] if !@project.nil?
     if f.class == String
       obj_name = f
     else
       obj_name = f.object_name
     end 
+    
+		txt = content_tag 'input', '', value: v, onblur:"onBlur(this)", onfocus:"onFocus(this)", class: 'txt '+mask_cls + inp_add_mask, type: 'text', name: "#{obj_name}[#{val}]" , id: "#{obj_name}_#{val}", disabled: disabled
 
-		txt = content_tag 'input', '', value: v, onblur:"onBlur(this)", onfocus:"onFocus(this)", class: 'txt '+mask_cls + inp_add_mask, type: 'text', name: "#{obj_name}[#{val}]" , id: "#{obj_name}_#{val}"
+
 		add_class = params[:class].nil? ? '' : ' '+params[:class]
 		content_tag 'td' do
 			content_tag 'div', class: 'inp_w'+add_class do
@@ -54,8 +57,8 @@ module ProjectsHelper
     business_days
   end
 
-  def project_stored_page_url
-      sess_url  = session[:last_prj_page]
+  def project_page_url
+      sess_url  = session[:last_projects_page]
       sess_url || projects_url
   end
 

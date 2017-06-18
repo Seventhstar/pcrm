@@ -1,0 +1,31 @@
+<div class="items_box_cont tbl_a">
+<div class="head">Список пользователей</div>
+<table class="tleads user-table" model="UserRole">
+  <thead class="center">
+    <tr>
+      <th width="160px">Пользователь</th>
+      <% @roles.each do |r| %>
+        <th width="60px"><%= r.name %></th>
+      <% end %>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+<% @users.each do |user| %>
+<tr class="<%= user.admin? ? 'nonactual' : ''%>">
+  <td> <%= link_to user.name, user %></td>
+  <% @roles.each do |r| %>
+    <td class="state" >
+    <span class="check_img role_check <%= user.has_role?(r.id) ? "checked" :"" %>" user_id="<%=user.id%>" role_id="<%= r.id %>"> </span>
+    </td>
+  <% end %>
+  <td></td>
+    
+</td>
+</tr>
+<% end %>
+
+</tbody>
+</table>
+</div>

@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
 #  acts_as_avatarable
   mount_uploader :avatar, AvatarUploader
   has_many :leads
-  has_many :roles
+  has_many :roles, class_name: 'UserRole'
   has_many :absences
   has_many :projects, foreign_key: :executor_id
   has_many :ic_leads, foreign_key: :ic_user_id, class_name: 'Lead'
@@ -23,6 +23,8 @@ class User < ActiveRecord::Base
                     uniqueness: { case_sensitive: false }
   has_secure_password
   validates :password, length: { minimum: 6 }, allow_blank: true
+
+  ROLES = [:admin, :superadmin, :designer, :manager].freeze
 
   def self.find_version_author(version)
     find(version.terminator) if version.terminator  
@@ -79,6 +81,22 @@ class User < ActiveRecord::Base
   # Sends password reset email.
   def send_password_reset_email
     UserMailer.password_reset(self).deliver_now
+  end
+
+  def has_role?(r_id)
+      return true if self.admin?
+      if r_id.class == Symbol
+        role_id = ROLES.index(r_id)
+      else
+        role_id = r_id
+      end
+      !self.roles.find_by(role_id: role_id).nil?
+  end
+
+  def has_roles()
+      r = self.roles.map{ |r| ROLES[r.role_id] }
+      r << :admin if self.admin?
+      r
   end
 
   # Returns true if a password reset has expired.

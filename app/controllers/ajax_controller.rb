@@ -72,7 +72,21 @@ class AjaxController < ApplicationController
       leadcomment = Comment.find(params[:comment_id]).destroy
    end
   	render :nothing => true
-   end
+  end
+
+  def store_cut
+      ls = session['last_'+params['cntr']+'_page']
+      ls = url_for(action: 'index', controller: params['cntr'])
+      p params,ls
+      url = URI.parse(ls) 
+      url.query = params['cut'] #Rack::Utils.parse_nested_query(url.query).merge({cut: params['cut']}).to_query  
+      p url.to_s
+      session["last_"+params['cntr']+"_page"] = url.to_s
+      p session["last_"+params['cntr']+"_page"]
+
+      render :nothing => true
+  end
+
 
   def read_comment
     if params[:comment_id]
@@ -109,7 +123,18 @@ class AjaxController < ApplicationController
 
   def switch_check
     # p "params[:model]",params[:model]
-    if params[:model]
+    if params[:model] == 'UserRole'
+      item = UserRole.where(user_id: params[:item_id], role_id: params[:field])
+      if params[:checked] == 'true'
+         item = UserRole.new
+         item.user_id = params[:item_id]
+         item.role_id = params[:field]
+         item.save
+      else
+        item.destroy_all
+      end
+
+    elsif params[:model]
       item = params[:model].classify.constantize.find(params[:item_id])
       if !item.nil?
           item[params[:field]] = params[:checked]
@@ -129,7 +154,7 @@ class AjaxController < ApplicationController
 
       prms.each do |p|
         new_value = p[1]
-        new_value.gsub!(' ','') if p[0]=='sum' || p[0]=='gsum'
+        new_value.gsub!(' ','') if !p[0].index('sum').nil?
         obj[p[0]] = new_value if p[0]!='undefined'
       end
       if !obj.save

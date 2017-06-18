@@ -56,6 +56,12 @@
 	<td><div class="inp_w">
 		<%= text_field iname, :date_supply, {:class => 'txt datepicker grp1', value: @pg.date_supply.try('strftime',"%d.%m.%Y"), disabled: !@pg.order} %>
 	</div></td></tr>
+	<tr class="grp1"><td class="caption grp1 <%= row_cls %>" >Сумма заказа:</td>
+			<%= td_sum_field(iname, :sum_supply ,nil, {value: @pg.sum_supply,disabled: !@pg.order, inp_class: 'grp1'}) %>
+			</tr>
+	<tr class="grp1"><td class="caption grp1 <%= row_cls %>">Закрыт:</td>
+      <td><label class="inp_btn_label"><div class="inp_btn checkbox <%= @pg.fixed ? 'active':'' %>">
+      <%= check_box iname, :fixed, {value: @pg.fixed}, "true", "false" %></div></label></td></tr>
 	
 
 </div>

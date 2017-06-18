@@ -20,6 +20,16 @@
     if (el.value == '0' || el.value=='0,0' || el.value=='0.0' )
         el.value = '';
 
+@store_cut = (param)->
+  controller =  $('#search').attr('cname')
+  $.ajax
+      url: '/ajax/store_cut'
+      data: {'cntr': controller, 'cut': param}
+      type: 'POST'
+      beforeSend: (xhr) ->
+        xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
+        return
+
 @upd_param = (param, reload = false, modal = false)->
   $.ajax
       url: '/ajax/upd_param'
@@ -99,7 +109,12 @@
   cl.append $input
   cl.context.firstChild.focus()
 
-@sortable_query = (params)->
+@sort_base_url = ->
+  method = if $('#cur_method').val() == 'edit_multiple' then '/edit_multiple' else ''
+  controller =  $('#search').attr('cname')
+  return controller+method
+
+@sortable_prepare = (params)->
   actual = if $('.only_actual').length==0 then null else $('.only_actual').hasClass('on')
 
   url = {    
@@ -129,12 +144,16 @@
     return
   each params, (i, a) ->
     url[i] = a
-    return
-  method = if $('#cur_method').val() == 'edit_multiple' then '/edit_multiple' else ''
-  controller =  $('#search').attr('cname')
+    return 
 
-  $.get '/'+controller+method, url, null, 'script'
-  setLoc(""+controller+method+"?"+ajx2q(url));
+  return url
+
+@sortable_query = (params)->
+  url = sortable_prepare(params)
+  base_url = sort_base_url()
+
+  $.get '/'+base_url, url, null, 'script'
+  setLoc(""+base_url+"?"+ajx2q(url));
   return
 
 @apply_mask = ->
@@ -248,6 +267,15 @@ $(document).ready ->
     $(this).toggleClass('cutted')
     id = 'table' + $(this).attr('cut_id')
     $('#'+id).slideToggle( "slow" )
+    url = sortable_prepare({})
+    base_url = sort_base_url()
+    cut = ""
+    $('.cutted').each ->
+      cut = cut+$(this).attr('cut_id')+'.'
+    
+    url['cut'] = cut if cut!=''
+    store_cut(ajx2q(url))
+    setLoc(""+base_url+"?"+ajx2q(url));
 
   $("#back-top").hide();
 

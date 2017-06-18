@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170615155103) do
+ActiveRecord::Schema.define(version: 20170618194929) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -276,7 +276,11 @@ ActiveRecord::Schema.define(version: 20170615155103) do
     t.datetime "updated_at",        null: false
     t.date     "date_offer"
     t.date     "date_place"
+    t.integer  "sum_supply"
+    t.boolean  "fixed"
   end
+
+  add_index "project_goods", ["fixed"], name: "index_project_goods_on_fixed", using: :btree
 
   create_table "project_statuses", force: :cascade do |t|
     t.string   "name"

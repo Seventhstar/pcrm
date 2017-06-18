@@ -36,7 +36,7 @@ class LeadsController < ApplicationController
     end
     
     # if @sort_column == "status_date" && !current_user.admin?
-    if !current_user.admin?
+    if !current_user.admin? && !current_user.has_role?(:manager)
       if params[:sort] == 'users.name'
         @leads = current_user.leads.select(query_str)
       else

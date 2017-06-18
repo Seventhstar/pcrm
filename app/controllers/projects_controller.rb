@@ -149,7 +149,7 @@ class ProjectsController < ApplicationController
           comm.user_id = params[:project][:owner_id]
           comm.save
         end
-        format.html { redirect_to project_stored_page_url, notice: 'Проект успешно создан' }
+        format.html { redirect_to project_page_url, notice: 'Проект успешно создан' }
         format.json { render :show, status: :created, location: @project }
       else
         format.html { render :new }
@@ -177,7 +177,7 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       if @project.update(project_params)
-        format.html { redirect_to project_stored_page_url, notice: 'Проект успешно сохранен' }
+        format.html { redirect_to project_page_url, notice: 'Проект успешно сохранен' }
         format.json { render :show, status: :ok, location: @project }
       else
         format.html { render :edit }
@@ -192,7 +192,7 @@ class ProjectsController < ApplicationController
   def destroy
     @project.destroy
     respond_to do |format|
-      format.html { redirect_to project_stored_page_url, notice: 'Проект успешно удален' }
+      format.html { redirect_to project_page_url, notice: 'Проект успешно удален' }
       format.json { head :no_content }
     end
   end
@@ -210,7 +210,7 @@ class ProjectsController < ApplicationController
     end
 
     def store_prj_path
-      session[:last_prj_page] = request.url || projects_url if request.get?
+      session[:last_projects_page] = request.url || projects_url if request.get?
     end
 
 

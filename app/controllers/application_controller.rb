@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
+  before_action :check_policy
 	
   include SessionsHelper
 
@@ -18,4 +19,9 @@ class ApplicationController < ActionController::Base
     options[:responder] = ModalResponder
     respond_with *args, options, &blk
   end
+
+  def check_policy
+  	p "current_user.roles #{current_user.has_roles}" if !current_user.nil?
+  end
+
 end
