@@ -162,6 +162,22 @@
     maxlength: false
   $('.chosen').chosen(width: '99.5%', disable_search: 'true')
   $('.schosen').chosen(width: '99.5%')
+  # меняем ширину progress`бара
+  $('.bar').each ->
+    w = $(this).attr('w')
+    if w == "" then w = 100
+    $(this).width(w+'%')
+    col = $(this).attr('c')
+    if col == undefined then col = 'c7c7c7'
+    col = '#'+col
+    $(this).css("backgroundColor", col) 
+  # подкрашиваем остатки из-за rowspan
+  $("tr").hover (->
+    ri = $(this).attr('tr_id')
+    $('.tr_id'+ri).addClass('hover')
+  ), ->
+    ri = $(this).attr('tr_id')
+    $('.tr_id'+ri).removeClass('hover')
 
 $(document).ready ->
   apply_mask()

@@ -22,41 +22,49 @@
       <th style="width: 75px;"><%= sortable_th(:date_start,'Начало', @numsort) %></th>
       <th width="85px"><%= sortable_th(:date_end_plan,'Оконч.', @numsort) %> </th>
       <th style="width: 105px;" class=""><%= sortable_th(:footage, 'м2 / Цена', @numsort) %></th>
-      <th class="td_right" style="width: 77px;"><%= sortable_th(:sum_total,'Стоимость', @numsort) %></th>
+      <th class="td_right" style="width: 77px;" ><%= sortable_th(:sum_total,'Стоимость', @numsort) %></th>
       <% if is_admin? %>
-        <th></th>
+        <th ></th>
       <% end %>
-
-
-    </tr></thead>
+    </tr>
+    </thead>
     <tbody>
 
   <% end %>
 
-  <tr class="va_middle <%= class_for_project(project) %>">
+  <tr class="va_middle <%= class_for_project(project) %> tr_id<%= project.id %>" tr_id="<%= project.id %>">
 
-    <td class="cell-inner"><%= icon_for_project(project).html_safe %><%= project.number %></td>
-    <td><%= tooltip(project.address,project.pstatus.try(:name)) %></td>
-    <td><%= project.project_type_name %></td>
-    <td><%= project.client_name %></td>
-    <% if is_admin? && @sort!="users.name" %><td><%= project.executor_name %></td> <% end %>
+    <td class="cell-inner" rowspan="2"><%= icon_for_project(project).html_safe %><%= project.number %></td>
+    <td rowspan="2"><%= tooltip(project.address,project.pstatus.try(:name)) %></td>
+    <td rowspan="2"><%= project.project_type_name %></td>
+    <td rowspan="2"><%= project.client_name %></td>
+    <% if is_admin? && @sort!="users.name" %><td rowspan="2"><%= project.executor_name %></td> <% end %>
 
-    <td ><%= project.date_start.try('strftime',"%d.%m.%Y") %></td>
-    <td class=<%= class_prj_td(project) %>><%= project.date_end.try('strftime',"%d.%m.%Y") %></td>
+    <td class="td_prgrs"><%= project.date_start.try('strftime',"%d.%m.%Y") %></td>
+    <td class="<%= class_prj_td(project) %> td_prgrs"><%= project.date_end.try('strftime',"%d.%m.%Y") %></td>
 
     <% if is_admin? %>
-      <td><%= project.admin_info.html_safe %></td>
-      <td class="" <%= project.sum_total_real ==0 ? '':'red' %>" title="<%= project.sum_total.to_sum %>"><%= project.total.to_sum %></td>
-      <%= tool_icons(project,{icons:'edit,show'}) %>
+      <td rowspan="2"><%= project.admin_info.html_safe %></td>
+      <td <%= project.sum_total_real ==0 ? '':'red' %>" rowspan="2" title="<%= project.sum_total.to_sum %>">
+          <%= project.total.to_sum %></td>
+      <%= tool_icons(project,{icons:'edit,show', rowspan: 2}) %>
     <% else %>
 
-      <td><%= project.executor_info.html_safe %></td>
-      <td class=" <%= project.sum_total_real ==0 ? '':'red' %>"><%= project.designer_sum_calc.to_sum %></td>
+      <td rowspan="2"><%= project.executor_info.html_safe %></td>
+      <td rowspan="2" class="<%= project.sum_total_real ==0 ? '':'red' %>"><%= project.designer_sum_calc.to_sum %></td>
 
     <% end %>
 
   </tr>
-<% end %>
+  <tr tr_id="<%= project.id %>" class="tr_id<%= project.id %>"> <td colspan="2" class="prgrs"> 
+
+    <div class="prgrs">
+      <span class="percent"><%= project.progress_proc %></span>
+    <div class="bar" w="<%= project.progress %>" c="<%= project.pstatus.try(:color) %>"></div>
+    </div>
+
+  </td></tr>
+  <% end %>
   </tbody>
 </table>
 </div>

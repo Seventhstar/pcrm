@@ -246,7 +246,7 @@ module ApplicationHelper
       all_icons['delete'] = content_tag(:span,"",{class: 'icon icon_remove_disabled'}) if params[:subcount]>0
     end
 
-    content_tag content,{:class=>["edit_delete"+add_cls,' ',params[:content_class]].join} do
+    content_tag content,{:class=>["edit_delete",add_cls,' ',params[:content_class]].join,:rowspan => params[:rowspan]} do
       icons.collect{ |i| all_icons[i] }.join.html_safe
     end
   end

@@ -13,6 +13,7 @@
 .tbl_a table .disabled td a{color: #aeaeae; }
 .tbl_a table tr:nth-child(even) td, table.tleads tr:nth-child(even) td {background: #fafafa;}
 .tbl_a table tr:hover td, table.tleads tr:hover:not(#new_item) td{ background-color: #f5f5f5;}
+tr.hover td{ background-color: #f5f5f5 !important;}
 
 table.tbl_fc{border-collapse:collapse; width: 100%; }
 table.tbl_fc td{vertical-align:top; padding-bottom: 10px; }
@@ -44,8 +45,6 @@ table td{font-size: 13px;}
 .tbl_a table tbody tr:last-child td {border-bottom: 0;}
 .tbl_a table tbody tr:last-child td:first-child {border-radius: 0 0 0 5px;}
 .tbl_a table tbody tr:last-child td:last-child {border-radius: 0 0 5px 0;}
-
-
 .tbl_a table .actual {text-align: center; }
 
 // .e_edit, .editable td.edit_delete { padding-top: 5px; }
@@ -145,3 +144,20 @@ tr.va_middle td, td.va_middle {vertical-align: middle !important;}
 #back-top a:hover span, #to_bottom a:hover span{background-color:#999;}
 
 table thead.center th { vertical-align:middle; text-align: center; }
+ td.td_prgrs {padding: 6px 0 0 0;  text-align: center;}
+ td.prgrs {padding:  0 20px 6px 16px; background: none !important; border: none !important;}
+ td.prgrs:hover, tr:hover td.td_prgrs{background-color: #f5f5f5 !important;}
+.prgrs {   position: relative;  padding: 0px;  background-color: #c7c7c7; /*border-radius: 5px;*/ }
+.percent { position: absolute;  text-align: center;  color: white;  width: 100%; }
+.bar {  height: 16px;  background-color: #545a92;  width: 0%; /*border-radius: 5px 0 0 5px; */
+    // transition: all .5s;
+}
+
+.two_inp #project_progress {width: 55px;}
+.two_inp #project_pstatus_id_chosen {width: 205px !important; float: left; margin-right: 10px;}
+.two_inp label {display: inline-flex;
+    font-size: 14px;
+    margin-bottom: 11px;
+    padding-top: 7px;
+    padding-right: 6px;
+    vertical-align: bottom;}

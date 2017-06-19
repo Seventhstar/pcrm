@@ -34,6 +34,12 @@ class Project < ActiveRecord::Base
     n
   end
 
+  def progress_proc
+    pp = pstatus.try(:name)
+    pp = pp + ' '+self.progress.to_s + '%' if !self.progress.nil? && self.progress>0
+    pp
+  end
+
   def executor_name
     executor.try(:name)
   end
