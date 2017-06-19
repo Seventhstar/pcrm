@@ -60,8 +60,8 @@
 			<%= td_sum_field(iname, :sum_supply ,nil, {value: @pg.sum_supply,disabled: !@pg.order, inp_class: 'grp1'}) %>
 			</tr>
 	<tr class="grp1"><td class="caption grp1 <%= row_cls %>">Закрыт:</td>
-      <td><label class="inp_btn_label"><div class="inp_btn checkbox <%= @pg.fixed ? 'active':'' %>">
-      <%= check_box iname, :fixed, {value: @pg.fixed}, "true", "false" %></div></label></td></tr>
+      <td><label class="inp_btn_label"><div class="inp_btn checkbox <%= @pg.fixed ? 'active':'' %> td_v_center">
+      <%= check_box iname, :fixed, {value: @pg.fixed,  checked: @pg.fixed}, "true", "false" %></div></label></td></tr>
 	
 
 </div>

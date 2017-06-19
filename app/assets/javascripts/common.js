@@ -124,12 +124,14 @@ $(document).ready(function(){
 			}
 		}
 		else {
-			if ($(this).prop('checked')) {
+			var ch = $(this).prop('checked');
+			if (ch) {
 				$inp_btn.addClass('active');
 			} else {
 				$inp_btn.removeClass('active');
 			}
-			$(this).val($(this).prop('checked'));
+			$(this).val(ch);
+			// $('[name^='+$(this).attr('name')).val(ch); 
 		}
 	})
 

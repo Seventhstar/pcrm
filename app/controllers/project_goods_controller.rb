@@ -19,6 +19,7 @@ class ProjectGoodsController < ApplicationController
   end
 
   def create
+
     @pg = ProjectGood.new(pg_params)
      respond_to do |format|
       # !@pg.new_date.nil? &&
@@ -35,7 +36,7 @@ class ProjectGoodsController < ApplicationController
   def destroy
     @pg.destroy
     respond_to do |format|
-      format.html { redirect_to '/project_goods/', notice: 'Менеджер успешно удален.' }
+      format.html { redirect_to request.referer+'#tabs-4', notice: 'Позиция успешно удалена.' }
       format.json { head :no_content }
     end
   end
@@ -53,7 +54,7 @@ class ProjectGoodsController < ApplicationController
       prms = ['gsum',:sum_supply]
       prms.each do |p|
         pg_params[p] = pg_params[p].gsub!(' ','') if !pg_params[p].nil?
-        p "check_sum",p,project_params[p]
+        # p "check_sum",p,project_params[p]
       end
     end
 

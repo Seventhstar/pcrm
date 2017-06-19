@@ -67,7 +67,7 @@ class ProjectsController < ApplicationController
     end
 
     order = sort_1 + " " + sort_direction + ", "+ sort_2  + " " + dir_2 + ", projects.number desc"
-    p "sort_2, order #{order}"
+    # p "sort_2, order #{order}"
     @projects = @projects.order(order)
     store_prj_path
     @sort = sort_1
