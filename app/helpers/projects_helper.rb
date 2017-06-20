@@ -84,4 +84,8 @@ module ProjectsHelper
       cntnt = cntnt + '</div>'
   end
 
+  def good_state_src
+    [['Заказанные',1],['Закрытые',2]]
+  end
+
 end

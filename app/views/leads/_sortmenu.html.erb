@@ -12,7 +12,7 @@
 	
 	<%= sortable_pil "status_id", "По статусам" %>
 
-	<%= chosen_src 'year', @years, nil,{class: 'ychosen',nil_value: 'Год'} %>
+	<%= chosen_src 'year', @years, params[:year],{class: 'ychosen',nil_value: 'Год'} %>
 
 	<%= link_to 'Добавить', new_lead_path, class: "btn_a btn-add btn_slim right space20" %>
 	<%= only_actual_btn %>

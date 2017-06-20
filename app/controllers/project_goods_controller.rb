@@ -6,16 +6,26 @@ class ProjectGoodsController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   def index
-
+    params.delete_if{|k,v| v=='' || v=='0' }
     years = Project.select("projects.*, date_trunc('year', date_start) AS year").where('date_start IS NOT NULL').order('date_start')
     year_from = years.first.year
     year_to = years.last.year
-    @currency = 
+
     @years = (year_from.year..year_to.year).step(1).to_a.reverse
     
     @sort_column = sort_column
-    # @goods = ProjectGood.order(@sort_column)
     @goods = ProjectGood.order(@sort_column)
+
+    if params[:currency]
+      @goods = @goods.where(currency_id: params[:currency])
+    end
+
+    if params[:good_state] == '1'
+      @goods = @goods.where(order: true)
+    elsif params[:good_state] == '2'
+      @goods = @goods.where(fixed: true)
+    end
+
   end
 
   def create

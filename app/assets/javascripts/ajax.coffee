@@ -125,6 +125,8 @@
     dir2: $('span.subsort.current').attr('dir2')
     search: $('#search').val()
     year: $('#year').val()
+    currency: $('#currency_id').val()
+    good_state: $('#good_state').val()
   }
   
   l = window.location.toString().split('?');

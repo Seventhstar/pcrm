@@ -23,14 +23,15 @@
 .subnav .ychosen span, tr.editable .chosen span {line-height: 25px !important; height: 20px; font-size: 13px;}
 .ychosen .chosen-container-single, .ychosen .chosen-single, 
 tr.editable .chosen-single {height: 26px !important; }
-.ychosen {height: 24px !important; min-height: 24px;}
+.ychosen {height: 24px !important; min-height: 24px; margin-right: 8px;}
 
 tr.editable .chosen-container { min-height: 26px; font-size: 13px;}
 tr.editable .chosen-container-single .chosen-single  {padding: 0 0 0 5px;}
 tr.editable .chosen-container-single .chosen-single span {line-height: 26px; font-size: 13px;}
 tr.editable .chosen-container-single .chosen-single div b, span.cut b {margin-top: 10px;}
 
-.ychosen div b { margin-top: 9px !important;}
+.ychosen div b { margin-top: 9px !important; }
+#good_state_chosen {width: 130px !important; }
 
 .items_box_param .chosen-container {float: left; padding: 0 !important; 
   &.chosen-single div{width: 15px;}
