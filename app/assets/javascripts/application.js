@@ -94,7 +94,18 @@ $(function() {
 
   $('.progress').hide();
   $('#file').hide();
-  $("#tabs" ).tabs(); //{active: 3}
+  // $("#tabs" ).tabs({select: function(event, ui) { // select event
+  //         $(ui.tab); // the tab selected
+  //         alert(ui.index); // zero-based index
+  //     });
+  //   }); //{active: 3}
+  $('#tabs').tabs({
+    activate: function (event, ui) {
+      // var l = window.location.toString().split('#')[0];
+      // var t = $(".ui-tabs-active a").attr('href');
+      // setLoc(""+l+t);
+    }
+  });
 
   tinyMCE.init({
     selector: '.tinymce textarea', 

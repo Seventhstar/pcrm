@@ -110,6 +110,13 @@ class ProjectsController < ApplicationController
     def_goods.each do |dg|
       pgt = ProjectGType.find_or_create_by({g_type_id: dg.id, project_id: @project.id})
     end
+
+    @gs = params[:good_state]
+    if !@gs.nil? && @gs.to_i>0
+      @gs = @gs.to_i
+    else
+      @gs = 0
+    end
     
     @prj_good_types = @project.project_g_types
 

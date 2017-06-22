@@ -164,6 +164,14 @@
     maxlength: false
   $('.chosen').chosen(width: '99.5%', disable_search: 'true')
   $('.schosen').chosen(width: '99.5%')
+  $('.tab-chosen').chosen(width: '150px').on 'change', ->
+    l = $('form').attr('action');
+    p = $(".ui-tabs-active a").attr('href')
+    par ='good_state='+$('#good_state').val()
+    url = l+"/edit"+p
+    $.get url, par, null, 'script'
+    setLoc(l.substring(1)+"/edit"+"?"+par+p)
+    return
   # меняем ширину progress`бара
   $('.bar').each ->
     w = $(this).attr('w')
@@ -213,6 +221,8 @@ $(document).ready ->
   $('.ychosen').chosen(width:' 65px', disable_search: 'true', inherit_select_classes: 'true').on 'change', ->
     sortable_query({})
     return
+
+
 
   $('.srtchosen').chosen(width:'165px', disable_search: 'true').on 'change', ->
     sortable_query({})
