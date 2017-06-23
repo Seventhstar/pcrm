@@ -62,6 +62,7 @@ Rails.application.routes.draw do
   # end
 
   delete 'options/:options_page/:id' => 'options#destroy'
+  delete 'options/:id' => 'options#destroy'
 
   get    'signup'  => 'users#new'
   get    'login'   => 'sessions#new'                                   

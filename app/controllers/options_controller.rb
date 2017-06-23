@@ -42,6 +42,7 @@ class OptionsController < ApplicationController
   # DELETE /absences/1.json
   def destroy
     @item = option_model.find(params[:id])
+    p "@item #{@item}"
     @item.destroy
     respond_to do |format|
       format.json { head :no_content }
@@ -62,6 +63,7 @@ class OptionsController < ApplicationController
         @users = User.order('admin ASC,name')
         @roles = Role.order(:name)
       end
+
       page.classify.constantize
       
     end
