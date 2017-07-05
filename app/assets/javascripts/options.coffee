@@ -39,7 +39,7 @@ $(document).ready ->
     data  ={'model': 'UserRole', 'item_id': user_id, 'field': role_id,'checked': checked}
     switch_check_ajax(data,tr,'')
     return   
- $('.page-wrapper').on 'click', 'span.sw_check',  ->
+ $(document).on 'click', 'span.sw_check',  ->
   model = $(this).parents('table').attr('model')
   checked = switch_check($(this))
     

@@ -130,6 +130,23 @@ class ProjectsController < ApplicationController
     @new_gt  = Goodstype.new
     gt = @project.project_g_types.pluck(:g_type_id)
     @gtypes = gt.empty? ? Goodstype.order(:name) : Goodstype.where('not id in (?)',gt)
+
+    respond_to do |format|
+      format.html
+      format.pdf do
+        pdf = WickedPdf.new.pdf_from_string('<h1>Hello There!</h1>')
+      #   pdf = render_to_string :pdf => 'test',
+      #                    layout: ['project','.pdf'].join,
+      #                    template: 'projects/show',
+      #                    header: { :right => '[page] of [topage]'},
+      #                    margin: {top: 0,
+      #                             bottom: 0,
+      #                             left: 0,
+      #                             right: 0},
+      #                    outline: {outline: true,
+      #                              outline_depth: 2}
+       end
+    end
   end
 
   # POST /projects

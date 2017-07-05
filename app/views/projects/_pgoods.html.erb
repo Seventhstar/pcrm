@@ -1,3 +1,5 @@
+<%= wicked_pdf_stylesheet_link_tag "pdf" -%>
+    <%= wicked_pdf_javascript_include_tag "number_pages" %>
 <div class="box_wrap items_box_param">
 <%= hidden_field 'g_type','project_id', value: @project.id %>
 <div class="left mgn_right15" style="width:270px ">
@@ -6,6 +8,9 @@
 <span class="sub btn_a" id="btn-sub-send" pe_id="<%= @project.id %>" action='/project_g_types/' prm='g_type'> Добавить</span>
 <div class="right">
 <%= chosen_src "good_state",good_state_src, params[:good_state],{nil_value: 'Все позиции',class: 'tab-chosen'} %>
+<div id=pdf>
+	<%= link_to image_tag('pdf.png'), edit_project_path(@project,format: :pdf) %> 
+</div>
 </div>
 </div>
 
