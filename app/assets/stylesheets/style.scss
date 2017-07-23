@@ -39,6 +39,8 @@ p {margin:0 0 14px 0; padding: 0 0 0 0; }
   position:relative;}
 tr.editable .btn_a {line-height: 30px; height: 30px;}
 span.btn_add{ height: 24px; width: 12px; padding: 0px 60px 7px 8px; margin-top: -3px !important;}
+#pgoods span.btn_add{    padding: 0px 12px 7px 21px;
+    width: 138px;}
 .btn_slim{ height: 26px; font-size: 13px; padding: 0 12px; line-height: 24px;} 
 //.btn_a:hover {opacity: 0.7; transition: All 0.5s ease;}
 .btn_a:hover { opacity: 0.7; background: asset-url('xbg1_2.png'); transition: All 0.5s ease;}

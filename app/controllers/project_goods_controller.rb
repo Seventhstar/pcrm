@@ -20,9 +20,12 @@ class ProjectGoodsController < ApplicationController
       @goods = @goods.where(currency_id: params[:currency])
     end
 
-    if params[:good_state] == '1'
-      @goods = @goods.where(order: true)
-    elsif params[:good_state] == '2'
+    case params[:good_state]
+    when '1'
+      @goods = @goods.where(order: false)
+    when '2'
+      @goods = @goods.where(order: true, fixed: false)
+    when '3'
       @goods = @goods.where(fixed: true)
     end
 

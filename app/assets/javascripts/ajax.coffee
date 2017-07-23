@@ -169,7 +169,7 @@
     p = $(".ui-tabs-active a").attr('href')
     par ='good_state='+$('#good_state').val()
     url = l+"/edit"+p
-    $.get url, par, null, 'script'
+    $.get url, par, null,'script'
     setLoc(l.substring(1)+"/edit"+"?"+par+p)
     return
   # меняем ширину progress`бара
@@ -218,7 +218,7 @@ $(document).ready ->
   $('.schosen').chosen(width: '99.5%')
   $('.chosen').chosen(width: '99.5%', disable_search: 'true')
 
-  $('.ychosen').chosen(width:' 65px', disable_search: 'true', inherit_select_classes: 'true').on 'change', ->
+  $('.ychosen').chosen(width:' 78px', disable_search: 'true', inherit_select_classes: 'true').on 'change', ->
     sortable_query({})
     return
 

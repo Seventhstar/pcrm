@@ -4,14 +4,14 @@
 	<%= sortable_pil "provider_id", "По поставщикам" %>
 
 	<%= chosen_src 'year', @years, params[:year],{class: 'ychosen',nil_value: 'Год'} %>
-	<%= chosen_src "currency_id", currency_src, params[:currency],	{nil_value: 'Все', 				class: 'ychosen'} %>
+	<%= chosen_src "currency_id", currency_src, params[:currency],	{nil_value: 'Валюта', 				class: 'ychosen'} %>
 	<%= chosen_src "good_state",good_state_src, params[:good_state],{nil_value: 'Все позиции',class: 'ychosen'} %>
 
 	<%= form_tag receipts_path, :method => 'get', :id => "rcpt_search", class: 'index_filter left' do %>
 	
 	<% end %>
  	
-   <%= only_actual_btn %>
+   
 
 </div>
 

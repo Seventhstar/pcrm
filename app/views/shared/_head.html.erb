@@ -11,6 +11,8 @@
 	<div class="panel-heading table-heading head month"><%= @cur_head %><span class="cut <%= hide ? 'cutted' : '' %>" cut_id="<%= @no %>"><b></b></span></div>	
 <% end %>
 
+<% stripped ||=false %>
+
 <div id="table<%= @no %>" style="display: <%= hide ? 'none' : '' %>;">
-<table class="tleads" action=<%= controller.controller_name %> model=<%= controller.controller_name.classify %>  >
+<table class="tleads <%= stripped ? 'stripped' : '' %>" action=<%= controller.controller_name %> model=<%= controller.controller_name.classify %> >
   <thead>

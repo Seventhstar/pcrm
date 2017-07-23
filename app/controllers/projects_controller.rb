@@ -43,6 +43,8 @@ class ProjectsController < ApplicationController
       @projects = @projects.where(id: cl_prj + search_prj) 
     end
 
+
+
     if @only_actual
       @projects = @projects.where('not pstatus_id = 3')
     end
@@ -112,6 +114,8 @@ class ProjectsController < ApplicationController
     end
 
     @gs = params[:good_state]
+
+    p "@gs #{@gs}"
     if !@gs.nil? && @gs.to_i>0
       @gs = @gs.to_i
     else

@@ -43,14 +43,9 @@
         <td class="caption3" width='238px'><%= text_field iname,:description, {:class => 'txt fullwidth'} %></td>
         <td width='25px'><div class="inp_btn checkbox bigcheck"><%= check_box_tag iname+'[order]', 'false', false %></td>
         <td width='60px'><%= chosen_src "currency_id", currency_src,1,{nil_value: '',add_name: iname, add_class: 'currency_src'} %></td>
-        <td></td>
+        <%= td_sum_field(iname, :gsum) %>
         <td><span class="sub btn_a" id="btn-sub-send" pe_id="<%= pgt.id %>" action='/project_goods/' prm='project_good<%= pgt.id %>'> ok</span></td>
       </tr>
-      <tr class="total">
-        <td>Итого: </td>
-        <td colspan="4"></td>
-        <td colspan="3" class="td_right"><%= total_info(total).html_safe %></td>
-        
-      </tr>
+      <%= render 'project_goods/total', total: total, total_order: 0 %>
   </tbody>
 </table>

@@ -62,6 +62,13 @@ module ProjectsHelper
       sess_url || projects_url
   end
 
+  def class_for_prj_goods(g)
+    cls = 'placed'
+    cls = 'ordered' if g.order
+    cls = "fixed"   if g.fixed
+    cls
+  end
+
   def icon_for_project (prj)
       cntnt = '<div class="icons-indicate">'   
       cntnt = cntnt + image_tag('debt.png', title: 'Заказчик должен денег') if prj.debt
@@ -80,12 +87,12 @@ module ProjectsHelper
       end
 
       cntnt = cntnt + image_tag('attention.png', title: 'Особое внимание') if prj.attention
-      cntnt = cntnt + image_tag('stopped.png', title: 'Проект приостановлен') if prj.pstatus_id == 2
+      # cntnt = cntnt + image_tag('stopped.png', title: 'Проект приостановлен') if prj.pstatus_id == 2
       cntnt = cntnt + '</div>'
   end
 
   def good_state_src
-    [['Заказанные',1],['Закрытые',2]]
+    [['Предложенные',1],['Заказанные',2],['Закрытые',3]]
   end
 
 end

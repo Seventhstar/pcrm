@@ -17,9 +17,14 @@ input::-webkit-inner-spin-button { padding-right:0}
 
 .space20 {margin-left: 20px !important;}
 .space10 {margin-left: 10px !important;}
-.ordered {background: #ADD8E6; }
-.ordered td:hover,table.tleads tr.ordered:hover:not(#new_item) td{ background: #42c0db;}
-.tbl_a table tr.ordered:nth-child(even) td, table.tleads tr.ordered:nth-child(even) td { background: #84c8d6;}
+.ordered {background: #ffa34d; }
+.ordered td:hover,table.tleads tr.ordered:hover:not(#new_item) td{ background: #fdc188;}
+.placed {background: #fff;}
+// table.tleads tr.placed:nth-child(even) td
+.fixed {background: #fafafa; color: #ccc;}
+
+// .tbl_a table tr.ordered:nth-child(even) td, table.tleads tr.ordered:nth-child(even) td { background: #84c8d6;}
+
 
 
 // #add_footage {font-size: 18px; font-weight: bold;}
@@ -47,3 +52,9 @@ td.inf.comment {  background-position-x: -17px !important; }
 #pgoods .datepicker {width: 125px;}
 
 #pdf {float: right; margin-left: 15px;}
+
+#pgoods #btn-sub-send{padding: 0 14px;}
+
+.goods_order_td span{font-size: 17px;font-weight: 500;padding-left: 8px;}
+table.tbl_fc_1 td.caption.goods_closed {font-size: 17px; font-weight: 500; padding-top: 4px; color: red;}
+.goods_order_td label.inp_btn_label .inp_btn  {top: 4px; left: 174px;}

@@ -183,7 +183,7 @@ module ApplicationHelper
 
   def total_info(t_array)
     s = ''
-    currency = ['Руб: ','$','€']
+    currency = ['Руб. ','$','€']
     i = 1
     currency.each do |c|
         tsum = t_array[i]
