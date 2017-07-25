@@ -68,7 +68,7 @@ class LeadMailer < ActionMailer::Base
     send_lead_mail("[CRM] Вы назначены ответственным", @lead.ic_user.try(:email))
 
     chat_id = @lead.ic_user.try(:telegram)
-    if !chat_id.nil?
+    if !chat_id.nil? && chat_id.length >0
       token = Rails.application.secrets['telegram']['bot']
       bot = Telegram::Bot::Client.new(token)
 
