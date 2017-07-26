@@ -33,7 +33,7 @@ class DevelopsController < ApplicationController
   end
 
   def def_params
-    @projects     = DevProject.all
+    @projects     = DevProject.order(:name)
     @dev_statuses = DevStatus.order(:id)
     @priorities   = Priority.order(:name)
     @users        = User.order(:name)
@@ -54,6 +54,8 @@ class DevelopsController < ApplicationController
   def new
     @develop      = Develop.new
     @develop.dev_status_id = 1
+    @develop.priority_id = 1
+    @develop.ic_user_id = 1
     def_params
     @files        = {}
     @history      = {}

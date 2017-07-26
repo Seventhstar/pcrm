@@ -121,7 +121,7 @@ $(document).ready ->
   $('#project_project_type_id,#project_executor_id,#project_style_id').chosen
     width: '99.5%'
     disable_search: 'true'
-  $('#project_days').change ->
+  $(document).on 'change', '#project_days', ->
     d_st = dateFromString $('#project_date_start').val()
     add  = $(this).val()-1
     v = $('#holidays').val().split(" ")

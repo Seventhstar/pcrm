@@ -29,6 +29,7 @@ class DevProjectsController < ApplicationController
   def create
     @dev_project = DevProject.new(dev_project_params)
 
+
     respond_to do |format|
       if @dev_project.save
         format.html { redirect_to '/options/dev_projects', notice: 'Dev project was successfully created.' }
