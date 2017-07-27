@@ -43,12 +43,12 @@ span.btn_add{ height: 24px; width: 12px; padding: 0px 60px 7px 8px; margin-top: 
     width: 138px;}
 .btn_slim{ height: 26px; font-size: 13px; padding: 0 12px; line-height: 24px;} 
 //.btn_a:hover {opacity: 0.7; transition: All 0.5s ease;}
-.btn_a:hover { opacity: 0.7; background: asset-url('xbg1_2.png'); transition: All 0.5s ease;}
+.btn_a:hover { opacity: 0.7; background: asset-url('xbg1_2.png'); transition: All 0.5s ease; box-shadow: 0 -2px 0 0 #cb4f00 inset;}
 .icon:hover {opacity: 0.7;}
 .btn:hover {opacity: 0.8; transition: All 0.5s ease;}
 .only_actual:hover {opacity: 0.8;}
 .btn_a.btn_reset {background: #c3c3c3;}
-
+.btn_a.btn_reset:hover {box-shadow: 0 -2px 0 0 #888 inset;}
 .btn_b{display: inline-block; border:1px solid #e5e5e5; padding: 9px 19px 9px 19px; color: #000000; position:relative; text-decoration:none; 
   border-radius: 5px; 
   line-height: 1; }

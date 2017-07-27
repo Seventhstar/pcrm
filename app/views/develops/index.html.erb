@@ -1,20 +1,22 @@
 <div class="hl hl_a bd">Описание, выполнение и проверка разработок</div>
 
-<div class="items_box_head">
+<div class="items_box_head ">
 
 
 
 <%= form_tag develops_path, :method => 'get', :id => "develops", class: 'index_filter' do %>
-  <div class="left">
+  <div class="left short_search">
       <%= chosen_src "develops_project_id", DevProject.all,@project_id,{nil_value: 'Проект...',class:''} %>
   </div>
 
-  <div class="btn-group left space20" data-toggle="buttons">
-    <%= switch_active 'check','К проверке' %>
-    <%= switch_active 'new','Новые' %>
-    <%= switch_active 'info','Справка' %>
-    <%= switch_active 'all','Все' %>
+  <div class="combobox short_search left items_box_head"> 
+    <%= chosen_src 'develops_ic_user_id', @ic_users, @ic_user_id,{nil_value: 'Все исполнители'} %>
   </div>
+  
+  <div class="combobox short_search left items_box_head"> 
+    <%= chosen_src 'develops_status_id', @dev_statuses, @dev_status_id,{nil_value: 'Все статусы'} %>
+  </div>
+
 
   <%= link_to 'Добавить', new_develop_path, class: "btn_a btn-add btn_slim right space20" %>
 

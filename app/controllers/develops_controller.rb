@@ -7,29 +7,33 @@ class DevelopsController < ApplicationController
   # GET /develops
   # GET /develops.json
   def index
-    params.delete_if{|k,v| v=='' || v=='0' }
+    params.delete_if{|k,v| (v=='' || v=='0') && k!='develops_status_id'}
     page = params[:page].nil? ? 1 : params[:page]
     search = params[:search]
     @develops = Develop.search(search).order('project_id desc')#.paginate(:page => page, :per_page => 5)
     @project_id = params['develops_project_id']
-    show = params[:show]
-    @show_dev = %w[check new info all].include?(show) ? show : "check"
-    #show_dev = ''
-    case  @show_dev
-    when "check"
-      @develops = @develops.where(:dev_status_id => 2).where.not(priority_id: 4)
-    when "new"
-      @develops = @develops.where(:dev_status_id => [1,4]).where.not(priority_id: 4)
-    when "info"
-      @develops = @develops.where(priority_id: 4)
+
+    @dev_statuses = DevStatus.order(:id)
+
+    @dev_status_id = params['develops_status_id']
+    @ic_user_id ||= 1
+
+    if current_user.id== 1  
+       @dev_status_id ||= 1
+    else
+      @dev_status_id ||= 2
+      
     end
 
-    if !params['develops_project_id'].nil?
-      @develops = @develops.where(project_id: params['develops_project_id'] )
-    end
-
+    @develops = @develops.where(dev_status_id: @dev_status_id).where.not(priority_id: 4) if @dev_status_id!="0"
+    @develops = @develops.where(ic_user_id: params['develops_ic_user_id'] ) if !params['develops_ic_user_id'].nil?
+    @develops = @develops.where(project_id: params['develops_project_id'] ) if !params['develops_project_id'].nil?
     @develops = @develops.paginate(:page => page, :per_page => 20)
-
+    
+    @ic_users = Develop.group(:ic_user_id)
+                   .select(:ic_user_id, "count(id) as count" )
+                   .where(dev_status_id: 1)
+                   .collect{ |dev| [dev.ic_user_id==0 ? '' :User.find(dev.ic_user_id).name + " ("+dev.count.to_s+")", dev.ic_user_id]}
   end
 
   def def_params

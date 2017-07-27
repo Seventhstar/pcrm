@@ -5,6 +5,7 @@ class UsersController < ApplicationController
   before_action :admin_user,     only: :destroy
   respond_to :html, :json
 
+
   # GET /users
   # GET /users.json
   def index

@@ -12,7 +12,17 @@ module ApplicationHelper
     current_user.admin?
   end
 
-
+  def develops_info
+    if current_user.admin? 
+      uncheked_tasks = Develop.where(dev_status_id: 2).size
+      my_tasks       = current_user.develops.size      
+      a = content_tag :span
+      b = content_tag :span
+      a = content_tag :span, uncheked_tasks,{ :class => "uncheked_tasks", title: "Непроверенных задач" } if uncheked_tasks>0
+      b = content_tag :span, my_tasks,{ :class => "my_tasks", title: "Моих задач" } if my_tasks >0
+      a + b
+    end
+  end
 
 
 
