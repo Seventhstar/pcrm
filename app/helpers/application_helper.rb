@@ -13,7 +13,7 @@ module ApplicationHelper
   end
 
   def develops_info
-    if current_user.admin? 
+    if [1,5].include? current_user.id
       uncheked_tasks = Develop.where(dev_status_id: 2).size
       my_tasks       = current_user.develops.size      
       a = content_tag :span
