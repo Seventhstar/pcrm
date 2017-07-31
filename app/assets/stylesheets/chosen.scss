@@ -38,6 +38,8 @@ tr.editable .chosen-container-single .chosen-single div b, span.cut b {margin-to
   &.chosen-single div{width: 15px;}
 }
 
+.chosen-container:hover {border-color: #ff8411;}
+
 .chosen-container * { -webkit-box-sizing: border-box; -moz-box-sizing: border-box;  box-sizing: border-box;}
 .chosen-container .chosen-drop {
   position: absolute;

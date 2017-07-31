@@ -12,14 +12,21 @@ module ApplicationHelper
     current_user.admin?
   end
 
+  def uncheked_tasks
+    uncheked_tasks = Develop.where(dev_status_id: 2).size
+    a = content_tag :span
+    a = link_to uncheked_tasks, develops_path({develops_status_id: "2"}),  { :class => "uncheked_tasks", title: "Непроверенных задач" } if uncheked_tasks>0
+    a
+  end
+
   def develops_info
     if [1,5].include? current_user.id
       uncheked_tasks = Develop.where(dev_status_id: 2).size
       my_tasks       = current_user.develops.size      
       a = content_tag :span
       b = content_tag :span
-      a = content_tag :span, uncheked_tasks,{ :class => "uncheked_tasks", title: "Непроверенных задач" } if uncheked_tasks>0
-      b = content_tag :span, my_tasks,{ :class => "my_tasks", title: "Моих задач" } if my_tasks >0
+      a = link_to uncheked_tasks, develops_path({develops_status_id: "2"}),  { :class => "uncheked_tasks", title: "Непроверенных задач" } if uncheked_tasks>0
+      b = link_to my_tasks, develops_path({develops_status_id: "1", develops_ic_user_id: current_user.id}), { :class => "my_tasks", title: "Моих задач" } if my_tasks >0
       a + b
     end
   end

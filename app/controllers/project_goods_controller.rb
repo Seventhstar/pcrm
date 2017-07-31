@@ -63,12 +63,15 @@ class ProjectGoodsController < ApplicationController
    private
 
    def check_sum
-      p "check_sum"
-      prms = ['gsum',:sum_supply]
+      # p "check_sum"
+      # p "pg_params.sum_supply #{pg_params.sum_supply}"
+      prms = [:gsum,:sum_supply]
       prms.each do |p|
         pg_params[p] = pg_params[p].gsub!(' ','') if !pg_params[p].nil?
-        # p "check_sum",p,project_params[p]
       end
+
+      pg_params.sum_supply = pg_params.g_sum if pg_params.order && [0,nil,''].include?(pg_params.sum_supply)
+
     end
 
     def sort_column

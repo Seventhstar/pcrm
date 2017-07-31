@@ -16,6 +16,7 @@ class DevelopsController < ApplicationController
     @dev_statuses = DevStatus.order(:id)
 
     @dev_status_id = params['develops_status_id']
+    @ic_user_id  = params['develops_ic_user_id'] 
     @ic_user_id ||= 1
 
     if current_user.id== 1  
@@ -26,7 +27,7 @@ class DevelopsController < ApplicationController
     end
 
     @develops = @develops.where(dev_status_id: @dev_status_id).where.not(priority_id: 4) if @dev_status_id!="0"
-    @develops = @develops.where(ic_user_id: params['develops_ic_user_id'] ) if !params['develops_ic_user_id'].nil?
+    @develops = @develops.where(ic_user_id: @ic_user_id) 
     @develops = @develops.where(project_id: params['develops_project_id'] ) if !params['develops_project_id'].nil?
     @develops = @develops.paginate(:page => page, :per_page => 20)
     
