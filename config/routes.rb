@@ -111,6 +111,7 @@ Rails.application.routes.draw do
 
   post "file/del_file"
   post '/file' => 'file#create_file'
+  get '/file/:file' => 'file#show'
   get  '/download/:type/:id/:basename.:extension'  => 'file#download'
 
   post "channels/new"

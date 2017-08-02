@@ -13,3 +13,11 @@
     line-height: 8px;
     font-size: 16px;
 }
+
+
+.icon_img, .icon_doc {display: inline-block; background: url('image.png') no-repeat; vertical-align: middle; position: relative; width: 16px; height: 16px; cursor: pointer; }
+.icon_doc {background: url('doc.png') no-repeat;}
+
+.fname .icon_img, .fname .icon_doc {
+	padding-left:20px;
+}

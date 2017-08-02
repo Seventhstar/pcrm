@@ -14,11 +14,13 @@ body.modal-open,
   margin-right: 0;
 }
 
-.modal {
+.modal {  z-index: 1041;}
+
+.modal_1 {
   left: 50%;
   bottom: auto;
   right: auto;
-  z-index: 1041;
+
   padding: 0;
   width: 500px;
   margin-left: -250px;

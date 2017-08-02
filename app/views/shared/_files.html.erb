@@ -1,10 +1,10 @@
 <% @files.each_with_index do |file,i| %>
 <div class="item <%= i.odd? ? 'odd':'' %>">
 	<div class="fname">
-		<a href="/download/<%= self.controller_name.classify %>/<%= @owner.id %>/<%= file.id.to_s+File.extname(file.name) %>" target="_blank"><%= file.name %></a>
+		<%= file_default_action(file,@owner) %>
 	</div>
-	<div class="tools">
-		<a href="/download/<%= self.controller_name.classify %>/<%= @owner.id %>/<%= file.id.to_s+File.extname(file.name) %>" target="_blank" class="icon icon_download"></a>
+	<div class="tools">		
+		<a href="<%= file.download_path(@owner) %>" target="_blank" class="icon icon_download"></a>
 		<span file_id=<%= file.id %> class="icon icon_remove_1"></span> </td>
 	</div>
 </div>

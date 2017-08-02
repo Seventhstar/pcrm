@@ -1,6 +1,9 @@
 class FileController < ApplicationController
 require 'uri'
+respond_to :html, :json
 before_action :logged_in_user
+
+
    def del_file
      if params[:file_id]
         file = Attachment.find(params[:file_id])
@@ -11,6 +14,11 @@ before_action :logged_in_user
      end
      render :nothing => true
    end
+
+  def show
+    @img = '/download/'+params[:path]
+    respond_modal_with @img, location: root_path
+  end
 
   def create_file
 

@@ -12,6 +12,16 @@ module ApplicationHelper
     current_user.admin?
   end
 
+  def file_default_action(file,owner)
+  if ['jpg','png','gif'].include?(file.name.split('.').last)
+    a = link_to file.name, file.show_path(owner), class: "icon_img", data: { modal: true }
+  else
+    a = link_to file.name, file.download_path(owner), class: "icon_doc"
+    # a =  <a href="<%= file.download_path(@owner) %>" target="_blank"><%= file.name %></a> 
+  end
+ end
+
+
   def uncheked_tasks
     uncheked_tasks = Develop.where(dev_status_id: 2).size
     a = content_tag :span

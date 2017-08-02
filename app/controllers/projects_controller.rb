@@ -115,7 +115,7 @@ class ProjectsController < ApplicationController
 
     @gs = params[:good_state]
 
-    p "@gs #{@gs}"
+    #p "@gs #{@gs}"
     if !@gs.nil? && @gs.to_i>0
       @gs = @gs.to_i
     else
