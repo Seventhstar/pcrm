@@ -15,8 +15,8 @@
 }
 
 
-.icon_img, .icon_doc {display: inline-block; background: url('image.png') no-repeat; vertical-align: middle; position: relative; width: 16px; height: 16px; cursor: pointer; }
-.icon_doc {background: url('doc.png') no-repeat;}
+.icon_img, .icon_doc {display: inline-block; background: asset-url('image.png') no-repeat; vertical-align: middle; position: relative; cursor: pointer; }
+.icon_doc {background: asset-url('doc.png') no-repeat;}
 
 .fname .icon_img, .fname .icon_doc {
 	padding-left:20px;
