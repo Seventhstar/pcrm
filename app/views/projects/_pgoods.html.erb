@@ -8,7 +8,7 @@
 <div class="right">
 <%= chosen_src "good_state",good_state_src, params[:good_state],{nil_value: 'Все позиции',class: 'tab-chosen'} %>
 <div id=pdf>
-	<%= link_to image_tag('pdf.png'), edit_project_path(@project,format: :pdf) %> 
+	<%= link_to image_tag('pdf.png'), project_path(@project)+"/pdf" %> 
 </div>
 </div>
 </div>
@@ -20,17 +20,16 @@
 <% @all_total = [0,0,0,0] %>
 <% @prj_good_types.each do |pgt| %>
 
-<% p "@gs #{@gs}" %>
-    <% case @gs %>
-    <% when 1 %>
-    <%   @goods = pgt.goods.where(order: false) %>
-    <% when 2 %> 
-    <%   @goods = pgt.goods.where(order: true, fixed: false) %>
-    <% when 3 %>
-    <%   @goods = pgt.goods.where(fixed: true) %>
-    <% else %>
-    <%   @goods = pgt.goods %>
-    <% end %>
+<% case @gs %>
+<% when 1 %>
+    <% @goods = pgt.goods.where(order: false) %>
+<% when 2 %> 
+    <%  @goods = pgt.goods.where(order: true, fixed: false) %>
+<% when 3 %>
+    <%  @goods = pgt.goods.where(fixed: true) %>
+<% else %>
+    <%  @goods = pgt.goods %>
+<% end %>
 
 <div class="panel panel-default">
 <div class="panel-heading table-heading head month" name="pgt<%= pgt.id %>"><%= pgt.goodstype_name %> 

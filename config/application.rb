@@ -12,6 +12,7 @@ module Pcrm
   class Application < Rails::Application
   
     config.active_record.raise_in_transactional_callbacks = true
+#    config.middleware.use "PDFKit::Middleware", :print_media_type => true
 #    config.autoload_paths += %W(#{config.root}/lib)
 
     # Settings in config/environments/* take precedence over those specified here.

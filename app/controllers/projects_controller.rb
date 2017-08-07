@@ -76,6 +76,29 @@ class ProjectsController < ApplicationController
     # p project_stored_page_url
   end
 
+  def line_rows
+    ['Позиция','Поставщик']
+  end
+
+  def show_pdf
+
+        pdf = Prawn::Document.new
+        pdf.text 'Hello World'
+        @goods = pgt.goods.where(order: true, fixed: false) 
+
+        move_down 20
+        table line_rows do
+          row(0).font_style = :bold
+          columns(1..3).align = :right
+          self.row_colors = ['DDDDDD', 'FFFFFF']
+          self.header = true
+        end
+
+        send_data pdf.render        
+
+
+  end
+
   # GET /projects/1
   # GET /projects/1.json
   def show
@@ -115,7 +138,6 @@ class ProjectsController < ApplicationController
 
     @gs = params[:good_state]
 
-    #p "@gs #{@gs}"
     if !@gs.nil? && @gs.to_i>0
       @gs = @gs.to_i
     else

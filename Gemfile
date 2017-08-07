@@ -80,5 +80,6 @@ gem 'RedCloth'
 gem 'momentjs-rails'
 gem 'tinymce-rails'
 gem 'telegram-bot'
-#gem 'wicked_pdf'
-#gem 'wkhtmltopdf-binary'
+
+gem 'prawn'
+gem 'prawn-table'
