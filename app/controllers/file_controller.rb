@@ -77,7 +77,6 @@ before_action :logged_in_user
     dir = Rails.root.join('public', 'uploads',params[:type],params[:id],params[:basename]+"."+params[:extension])
     f = Attachment.find(params[:basename])
     send_file dir, :disposition => 'attachment', :filename => f.name
-    flash[:notice] = "Файл успешно загружен"
   end
 
 end

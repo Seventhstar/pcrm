@@ -20,7 +20,8 @@ a:hover .icon_user, .active .icon_user {background-position:-18px -18px; }
 .icon_remove_disabled {background-position:-52px -16px;}
 
 .icon_close {background-position:-52px -32px; }
-.icon_close:hover {background-position:-52px 0; }
+.icon_close:hover {background-position:-52px 1px; }
+#close_img_modal .icon_close:hover {background-position:-52px -48px; }
 
 .hl .icon_remove {margin-top: 4px !important;}
 
