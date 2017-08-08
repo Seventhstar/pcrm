@@ -11,7 +11,7 @@ class ProjectPdf < Prawn::Document
 
 
     
-    p "project #{project}"
+    # p "project #{project}"
     @project = project
     order_number
     line_items
@@ -35,7 +35,7 @@ class ProjectPdf < Prawn::Document
       # self.row_colors = @r
       self.header = true
     end
-    p "@r #{@r}"
+    # p "@r #{@r}"
   end
 
   def line_item_rows
