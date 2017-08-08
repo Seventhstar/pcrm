@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
   end
 
   def check_policy
-  	p "current_user.roles #{current_user.has_roles}" if !current_user.nil?
+#  	p "current_user.roles #{current_user.has_roles}" if !current_user.nil?
   end
 
 end

@@ -75,52 +75,13 @@ class ProjectsController < ApplicationController
     @sort = sort_1
     # p project_stored_page_url
   end
-
-  def line_rows
-    ['Позиция','Поставщик']
-  end
-
-  def show_pdf
-    pdf = ProjectPdf.new(@project)
-    send_data pdf.render, 
-            filename: "order_#{@order.order_number}",
-            type: 'application/pdf',
-            disposition: 'inline'
-
-        # pdf = Prawn::Document.new
-        # pdf.text 'Hello World'
-        # @goods = ProjectGood.where(order: true, fixed: false, project_id: @project.id, ) 
-
-        # move_down 20
-        # table line_rows do
-        #   row(0).font_style = :bold
-        #   columns(1..3).align = :right
-        #   self.row_colors = ['DDDDDD', 'FFFFFF']
-        #   self.header = true
-        # end
-
-        # send_data pdf.render        
-
-
-  end
-
+ 
   # GET /projects/1
   # GET /projects/1.json
   def show
-    # respond_to do |format|
-    #   format.json{ render :json=>  {:status => 200, :response=>@some_resource} }
-    #   format.html { redirect_to(some_resource_path)}
-    # end
-    p "@project #{@project}"
+
     respond_to do |format|
-      format.pdf do 
-        pdf = ProjectPdf.new(@project) 
-        send_data pdf.render, 
-        filename: "project_#{@project.id}",
-        type: 'application/pdf',
-        page_layout: 'landscape',
-        disposition: 'inline'
-      end
+      p "format #{format}"
       format.html do
         @title = 'Просмотр проекта'
         @owner = @project
@@ -129,6 +90,15 @@ class ProjectsController < ApplicationController
         data = params[:data]
         get_debt(data) 
       end
+      format.pdf do 
+        pdf = ProjectPdf.new(@project) 
+        send_data pdf.render, 
+        filename: "project_#{@project.id}",
+        type: 'application/pdf',
+        page_layout: 'landscape',
+        disposition: 'inline'
+      end
+
     end
   end
 
