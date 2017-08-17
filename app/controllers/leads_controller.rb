@@ -49,7 +49,7 @@ class LeadsController < ApplicationController
     if !params[:search].nil?
       info =params[:search]
       @leads = @leads
-        .where('LOWER(info) like LOWER(?) or LOWER(phone) like LOWER(?) or LOWER(fio) like LOWER(?) or LOWER(address) like LOWER(?) or LOWER(email) like LOWER(?)',
+        .where('LOWER(info) like LOWER(?) or LOWER(phone) like LOWER(?) or LOWER(fio) like LOWER(?) or LOWER(address) like LOWER(?) or LOWER(leads.email) like LOWER(?)',
         '%'+info+'%','%'+info+'%','%'+info+'%','%'+info+'%','%'+info+'%')
     end
 
