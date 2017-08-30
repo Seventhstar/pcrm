@@ -3,13 +3,13 @@ class ProjectMailer < ActionMailer::Base
   # include CommonHelper
   # add_template_helper(CommonHelper)
 
-  def reminder_email(prj)
-      @prj = prj
-  	  @subj = 'У проекта '+@prj.address+' подошел срок сдачи!'
-      emails = User.where(id: [@prj.executor_id]).pluck(:email)
-  	  if Rails.env.production? && !emails.empty?
-        mail(:to => emails, :subject => @subj) do |format|
-        format.html 
+  def reminder_email(prj_id)
+    @prj = Project.find(prj_id)
+    @subj = 'У проекта '+@prj.address+' подошел срок сдачи!'
+    emails = User.where(id: [@prj.executor_id]).pluck(:email)
+    if Rails.env.production? && !emails.empty?
+      mail(:to => emails, :subject => @subj) do |format|
+        format.html
       end
     end
   end
@@ -20,7 +20,7 @@ class ProjectMailer < ActionMailer::Base
     emails = User.where(id: [@prj.executor_id]).pluck(:email)
     if Rails.env.production? && !emails.empty?
       mail(:to => emails, :subject => @subj) do |format|
-        format.html 
+        format.html
       end
     end
   end

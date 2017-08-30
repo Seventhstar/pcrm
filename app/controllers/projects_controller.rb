@@ -19,7 +19,6 @@ class ProjectsController < ApplicationController
 
     @years = (year_from.year..year_to.year).step(1).to_a.reverse
 
-
     @sort_column = sort_column
     @only_actual = params[:only_actual].nil? ? true : params[:only_actual]=='true'
     query_str = "projects.*, date_trunc('month', date_start) AS month"
@@ -36,11 +35,11 @@ class ProjectsController < ApplicationController
     end
 
     if !params[:search].nil?
-      src = ('%'+params[:search]+'%').downcase
+      src = ('%'+params[:search]+'%').mb_chars.downcase
       cl_ids = Client.where('LOWER(name) like ? or LOWER(email) like ? or LOWER(phone) like ?',src,src,src).pluck(:id)
       cl_prj = Project.where(client_id: cl_ids) 
       search_prj =  @projects.where('LOWER(address) like ?',src).pluck(:id)
-      @projects = @projects.where(id: cl_prj + search_prj) 
+      @projects = @projects.where(id: cl_prj + search_prj)
     end
 
 
