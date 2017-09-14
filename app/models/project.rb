@@ -1,13 +1,14 @@
 class Project < ActiveRecord::Base
-	belongs_to :client
+  belongs_to :client
   belongs_to :executor, class_name: 'User', foreign_key: :executor_id
-	belongs_to :project_type
+  belongs_to :project_type
   belongs_to :pstatus, class_name: 'ProjectStatus',foreign_key: :pstatus_id
   has_many :comments, :as => :owner
   has_many :attachments, :as => :owner
   has_many :receipts
   has_many :project_g_types
   has_many :absence
+  has_many  :goods, class_name: "ProjectGood", dependent: :destroy
 
   attr_accessor :first_comment, :days, :sum_rest
   has_many :elongations, class_name: 'ProjectElongation'
@@ -17,7 +18,7 @@ class Project < ActiveRecord::Base
   validates :footage, presence: true
   #validates_numericality_of :footage, greater_than: 1
   include ProjectsHelper
-	accepts_nested_attributes_for :client
+  accepts_nested_attributes_for :client
   has_paper_trail
 
   def client_name
@@ -29,7 +30,7 @@ class Project < ActiveRecord::Base
   end
 
   def project_type_name
-  	n = project_type.try(:name)
+    n = project_type.try(:name)
     n = 'Вид не указан' if n.nil?
     n
   end

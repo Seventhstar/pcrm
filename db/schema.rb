@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170914044615) do
+ActiveRecord::Schema.define(version: 20170914172443) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -281,9 +281,11 @@ ActiveRecord::Schema.define(version: 20170914044615) do
     t.date     "date_place"
     t.integer  "sum_supply"
     t.boolean  "fixed"
+    t.integer  "project_id"
   end
 
   add_index "project_goods", ["fixed"], name: "index_project_goods_on_fixed", using: :btree
+  add_index "project_goods", ["project_id"], name: "index_project_goods_on_project_id", using: :btree
 
   create_table "project_statuses", force: :cascade do |t|
     t.string   "name"
@@ -521,4 +523,5 @@ ActiveRecord::Schema.define(version: 20170914044615) do
 
   add_index "wiki_records", ["wiki_cat_id"], name: "index_wiki_records_on_wiki_cat_id", using: :btree
 
+  add_foreign_key "project_goods", "projects"
 end

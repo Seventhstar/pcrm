@@ -267,8 +267,9 @@ $(document).ready ->
  
    $('body').on 'keyup', '.editable input', (e) ->
       if e.keyCode == 13
-
-        if $(this).closest('table').attr('model')=='ProjectGood'
+        if $(this).offsetParent().hasClass('chosen-search')
+          return  
+        else if $(this).closest('table').attr('model')=='ProjectGood'
           $(this).closest('td').siblings().last().children('#btn-sub-send').click()
           e.preventDefault()
         else if $(this).closest('td').hasClass('l_edit') 
@@ -277,7 +278,8 @@ $(document).ready ->
           i = $(this).closest('td').siblings().last().children('.icon_apply')
         else 
           i = $('span.icon_apply')
-        apply_opt_change(i)
+        if (i!=undefined)
+          apply_opt_change(i)
       else if e.keyCode == 27 
         disable_input()
       return

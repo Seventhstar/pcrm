@@ -82,7 +82,7 @@ $(document).ready ->
 $(document).on 'click', '#btn-sub-send', (e) ->
   attr_url = $(this).attr('action')
   prm = $(this).attr('prm')
-  values = $('[name^='+prm+']').serialize()
+  values = $('[name^='+prm+']').serialize()+'&owner_id='+$('form').attr('id')
   url = document.URL
   if url.indexOf('edit')<1 then url = url + '/edit'
   #alert url

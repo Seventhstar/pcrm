@@ -34,16 +34,18 @@ class ProjectGoodsController < ApplicationController
   def create
 
     @pg = ProjectGood.new(pg_params)
-     respond_to do |format|
+    @pg.project_id = params[:owner_id].split('_').last
+    p "@pg #{@pg}"
+    respond_to do |format|
       # !@pg.new_date.nil? &&
-        if @pg.save 
-          format.html { redirect_to absences_url, notice: 'Менеджер успешно создан.' }
-          format.json { render json: @pg.errors, status: :ok, location: @pg }
-        else
-          format.html { render :nothing => true }
-          format.json { render json: @pg.errors, status: :unprocessable_entity }
-        end
-      end 
+      if @pg.save 
+        format.html { redirect_to absences_url, notice: 'Менеджер успешно создан.' }
+        format.json { render json: @pg.errors, status: :ok, location: @pg }
+      else
+        format.html { render nothing: true }
+        format.json { render json: @pg.errors, status: :unprocessable_entity }
+      end
+    end 
   end
 
   def destroy
@@ -60,9 +62,9 @@ class ProjectGoodsController < ApplicationController
   end
 
 
-   private
+  private
 
-   def check_sum
+  def check_sum
       # p "check_sum"
       #p "pg_params.sum_supply #{pg_params.sum_supply}"
       prms = [:gsum,:sum_supply]
@@ -92,6 +94,6 @@ class ProjectGoodsController < ApplicationController
     def pg_params
       prm = params.first[0] 
       params.require(prm).permit(:project_g_type_id,:provider_id,:date_supply,:date_place,:date_offer, 
-        :currency_id,:gsum,:order,:name,:description, :fixed, :sum_supply)
+        :currency_id,:gsum,:order,:name,:description, :fixed, :sum_supply, :project_id)
     end
-end
+  end
