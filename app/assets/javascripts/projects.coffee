@@ -19,7 +19,7 @@
     v  = $('#holidays').val().split(" ")
     $('#project_days').val( moment().isoWeekdayCalc(d1,d2,[1,2,3,4,5],v) )
 
-		return
+    return
 
 @calc_debt =() ->
   sum_total = intFromSum($('#project_sum_total').val())
@@ -98,6 +98,8 @@ $(document).ready ->
     id = $(this).attr('itm')
     $('#'+id).show()
     $(this).hide()
+    $('.fw input').focus()
+
   $('#project_payd_full,#project_payd_q').click ->
     f = $('#project_payd_full')
     q = $('#project_payd_q')

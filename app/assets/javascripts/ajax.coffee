@@ -267,7 +267,11 @@ $(document).ready ->
  
    $('body').on 'keyup', '.editable input', (e) ->
       if e.keyCode == 13
-        if $(this).closest('td').hasClass('l_edit') 
+
+        if $(this).closest('table').attr('model')=='ProjectGood'
+          $(this).closest('td').siblings().last().children('#btn-sub-send').click()
+          e.preventDefault()
+        else if $(this).closest('td').hasClass('l_edit') 
           i = $('.l_edit.editable')
         else if $(this).closest('tr').hasClass('editable')
           i = $(this).closest('td').siblings().last().children('.icon_apply')
