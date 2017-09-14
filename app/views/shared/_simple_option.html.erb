@@ -23,11 +23,11 @@
 <% end %>
 
 <div class="items_box_cont tbl_a">
-<div class="head"><%= t("list_"+@item.class.name) %></div>
+<div class="head"> <%= "Список #{t(@item.model_name.name.downcase)[1]}" %></div>
 <table class="tleads" model="<%= @item.class.name %>">
   <thead>
   <% attrs.each do |attr| %>
-  	<th <%= attr_boolean?(@item,attr[0])||attr_date?(@item,attr[0]) ? 'width=60px;':'' %> fld='<%= attr[0] %>'><%= t(attr[0]) %></th>
+    <th <%= attr_boolean?(@item,attr[0])||attr_date?(@item,attr[0]) ? 'width=60px;':'' %> fld='<%= attr[0] %>'><%= t(attr[0]) %></th>
   <% end %>
   <th></th>
   </thead>

@@ -7,12 +7,12 @@ class LeadMailer < ActionMailer::Base
   include ActionView::Helpers::UrlHelper
 
   def reminder_email(user, leads_today, leads_tomorrow)
-    @l_today =leads_today
+    @l_today = leads_today
     @l_tomorrow = leads_tomorrow
     subj = '[CRM] Напоминание о событии'
     email = User.find(user).email
     if Rails.env.production? && !email.empty?
-      mail(:to => email, :subject => subj) do |format|
+      mail(to: email, subject: subj) do |format|
         format.html
       end
     end
@@ -21,7 +21,7 @@ class LeadMailer < ActionMailer::Base
   def send_lead_mail(subj, to = nil, user_exclude = nil, only_admins = false, id = nil)
 
     admins = User.where(admin: true).ids
-    admins = admins & UserOption.where(option_id: id).pluck(:user_id) if !id.nil?
+    admins = admins & UserOption.users_ids(id) if !id.nil?
 
     if !only_admins
       admins << @lead.user.id if !@lead.user.nil?
@@ -36,7 +36,7 @@ class LeadMailer < ActionMailer::Base
     end
 
     if Rails.env.production? && !emails.empty?
-      mail(:to => emails, :subject => subj) do |format|
+      mail(to: emails, subject: subj) do |format|
         format.html
       end
     end
@@ -46,7 +46,7 @@ class LeadMailer < ActionMailer::Base
   def created_email(lead_id, first_comment)
     @first_comment = first_comment
     @lead = Lead.find(lead_id)
-    send_lead_mail("[CRM] Новый лид #"+lead_id.to_s, nil, nil, false, 1)
+    send_lead_mail("[CRM] Новый лид ##{lead_id}", nil, nil, false, 1)
   end
 
   def changeset_email(lead_id)
@@ -76,7 +76,7 @@ class LeadMailer < ActionMailer::Base
       markup = JSON.parse(keyboard.to_json)
 
       lnk = ['[#', @lead.id, ']'].join
-      bot.send_message chat_id: chat_id, text: 'Вы назначены ответственным. Лид: '+lnk+' '+ @lead.address, reply_markup: markup
+      bot.send_message chat_id: chat_id, text: 'Вы назначены ответственным. Лид: #{lnk} #{@lead.address}', reply_markup: markup
     end
   end
 

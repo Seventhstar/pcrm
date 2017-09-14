@@ -8,7 +8,7 @@
 <div class="right">
 <%= chosen_src "good_state",good_state_src, params[:good_state],{nil_value: 'Все позиции',class: 'tab-chosen'} %>
 <div id=pdf>
-	<%= link_to image_tag('pdf.png'), project_path(@project,format: :pdf), target: :_blank %> 
+  <%= link_to image_tag('pdf.png'), project_path(@project,format: :pdf), target: :_blank %> 
 </div>
 </div>
 </div>
@@ -38,7 +38,7 @@
 
 
 <% if @gs ==2 %> 
-	<%= render 'goods_ordered', pgt: pgt, first_col: first_col %>
+  <%= render 'goods_ordered', pgt: pgt, first_col: first_col %>
 <% else %>
   <%= render 'goods', pgt: pgt, first_col: first_col %>
 <% end %>

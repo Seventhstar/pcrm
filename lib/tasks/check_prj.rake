@@ -15,8 +15,11 @@ namespace :check_prj do
     prj_wo_pe = prj_todtom - all_pe
     prjs_ids = prj_wo_pe + pe.select {|k, v| v < Date.today + 2 && v >= Date.today}.keys
     prjs_ids.each do |prj_id|
+      # p prj_id
       ProjectMailer.reminder_email(prj_id).deliver
     end
+
+    # ProjectMailer.subscriber_email(prjs_ids)
 
     prj_wo_pe = prj - all_pe
     prjs_ids = prj_wo_pe + pe.select {|k, v| v < Date.today}.keys

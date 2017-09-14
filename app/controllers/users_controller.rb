@@ -44,7 +44,7 @@ class UsersController < ApplicationController
     if @user.update_attributes(user_params)
       flash[:success] = "Профиль обновлен"
 
-      redirect_to root_url
+      
       @user.options.destroy_all
       if params[:options]
         params[:options].each do |option|
@@ -54,9 +54,11 @@ class UsersController < ApplicationController
           opt.save
         end
       end
+      redirect_to '/options/users'
     else
       render 'edit'
     end
+
   end
   
   def destroy

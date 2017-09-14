@@ -1,21 +1,22 @@
 <%= simple_form_for(@client) do |f| %>
-<%= render 'shared/error_messages', object: f.object %>
+  <%= render 'shared/error_messages', object: f.object %>
 
-<div class="box_wrap box_wrap_1">
-  <div class="panel-left">
-    <table class="tbl_fc tbl_fc">
+  <div class="box_wrap box_wrap_1">
+    <div class="panel-left">
+      <table class="tbl_fc tbl_fc">
 
-    <% a = [:name,:address,:phone, :email ] %>
-    <% a.each do |el| %>
+      <% a = [:name,:address,:phone, :email ] %>
+      <% a.each do |el| %>
 
-      <tr><td class="caption"> <%= t(el) %>:</td>
-      <td><div class="inp_w"><%= f.input el, label: false %></div></td></tr>
-    <% end %>
-    <tr><td class="caption"></td>
+        <tr><td class="caption"> <%= t(el) %>:</td>
+        <td><div class="inp_w"><%= f.input el, label: false %></div></td></tr>
+      <% end %>
+      <tr><td class="caption"></td>
 
-      <td><%= submit_cancel clients_url, params[:sub] %></td></tr>
+        <td><%= submit_cancel clients_url, params[:sub] %></td>
+        <td><%= f.submit %></td></tr>
 
-  </table>
-  </div>
-  </div>
+    </table>
+    </div>
+    </div>
 <% end %>

@@ -1,10 +1,10 @@
-<%= form_for(@item, :html => {:class => 'simple_options_form'}) do |f| %>
+<%= form_for(@item, html: {:class => 'simple_options_form'}) do |f| %>
 <div class="itemAdd_form">
   <table><tbody>
-  <tr><td class="caption"><%= t("new_"+@item.class.name) %>:</td>
+  <tr><td class="caption"><%= "Новый #{t(@item.model_name.name.downcase)[0]}" %>:</td>
       <td><div class="inp_w">
           <%= f.text_field :name, :class => 'txt' %>
-	  			<span class="sub btn_a" id="btn-send"> Добавить</span></div>
+          <span class="sub btn_a" id="btn-send"> Добавить</span></div>
       </td></tr>
   </tbody></table>
 

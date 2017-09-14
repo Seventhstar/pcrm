@@ -1,16 +1,14 @@
-  <div class="box_wide">
+<div class="box_wide">
   <div class="box_wrap box_wrap_1">
 
     <div class="panel-left">  
     <table class="tbl_fc tbl_fc_1">
-    <% a = [:name,:address,:phone, :email ] %>
-    <% a.each do |el| %>
-        <tr><td class="caption"><%= t(el) %>:</td>
-            <td><div class="lbl"><%= @client[el] %></div></td></tr>
-     <% end %>  
-
-	</table>
+      <% a = [:name,:address,:phone, :email ] %>
+      <% a.each do |el| %>
+          <tr><td class="caption"><%= t(el) %>:</td>
+              <td><div class="lbl"><%= @client[el] %></div></td></tr>
+      <% end %>  
+     </table>
     </div>
-
   </div>
-  </div>
+</div>

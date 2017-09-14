@@ -134,7 +134,6 @@ class ProjectsController < ApplicationController
       @gs = 0
     end
     
-    @prj_good_types = @project.project_g_types
 
     get_debt
     def_params
@@ -145,8 +144,9 @@ class ProjectsController < ApplicationController
     @new_et  = ProjectElongation.new
     @new_gt  = Goodstype.new
     gt = @project.project_g_types.pluck(:g_type_id)
-    @gtypes = gt.empty? ? Goodstype.order(:name) : Goodstype.where('not id in (?)',gt)
-
+    @gtypes = gt.empty? ? Goodstype.order(:name) : Goodstype.where('not id in (?)',gt).order(:name)
+    # @prj_good_types = @project.project_g_types.order("goodstype.name")
+    @prj_good_types = ProjectGType.joins(:goodstype).where('g_type_id in (?) and project_id = ?',gt,@project.id).order('goodstypes.name')
     
   end
 

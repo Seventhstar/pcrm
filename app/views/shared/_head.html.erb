@@ -6,13 +6,13 @@
 <% @first_table = false %>
 <% hide = params['cut'].split('.').include? @no.to_s if !params['cut'].nil? %>
 
+<% header = local_assigns[:link] ? link_to( @cur_head, [:edit, link]) : @cur_head  %>
+
 <div class="panel panel-default">
-<% if !@cur_head.nil? %>
-	<div class="panel-heading table-heading head month"><%= @cur_head %><span class="cut <%= hide ? 'cutted' : '' %>" cut_id="<%= @no %>"><b></b></span></div>	
+<% if @cur_head %>
+  <div class="panel-heading table-heading head month"><%= header %><span class="cut <%= hide ? 'cutted' : '' %>" cut_id="<%= @no %>"><b></b></span></div>  
 <% end %>
 
-<% stripped ||=false %>
-
 <div id="table<%= @no %>" style="display: <%= hide ? 'none' : '' %>;">
-<table class="tleads <%= stripped ? 'stripped' : '' %>" action=<%= controller.controller_name %> model=<%= controller.controller_name.classify %> >
+<table class="tleads <%= local_assigns[:stripped] ? 'stripped' : '' %>" action=<%= controller.controller_name %> model=<%= controller.controller_name.classify %> >
   <thead>

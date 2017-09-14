@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170619182258) do
+ActiveRecord::Schema.define(version: 20170913090706) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -158,8 +158,8 @@ ActiveRecord::Schema.define(version: 20170619182258) do
   end
 
   create_table "holidays", force: :cascade do |t|
-    t.date     "day"
     t.string   "name"
+    t.date     "day"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -248,9 +248,9 @@ ActiveRecord::Schema.define(version: 20170619182258) do
 
   create_table "project_elongations", force: :cascade do |t|
     t.date     "new_date"
-    t.integer  "project_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+    t.integer  "project_id"
     t.integer  "elongation_type_id"
   end
 
@@ -262,6 +262,9 @@ ActiveRecord::Schema.define(version: 20170619182258) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_index "project_g_types", ["g_type_id"], name: "index_project_g_types_on_g_type_id", using: :btree
+  add_index "project_g_types", ["project_id"], name: "index_project_g_types_on_project_id", using: :btree
 
   create_table "project_goods", force: :cascade do |t|
     t.integer  "project_g_type_id"
@@ -495,6 +498,16 @@ ActiveRecord::Schema.define(version: 20170619182258) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "wiki_files", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "wiki_record_id"
+    t.string   "name"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "wiki_files", ["wiki_record_id"], name: "index_wiki_files_on_wiki_record_id", using: :btree
 
   create_table "wiki_records", force: :cascade do |t|
     t.string   "name"

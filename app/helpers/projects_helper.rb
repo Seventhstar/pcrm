@@ -1,9 +1,9 @@
 module ProjectsHelper
 
-	def td_sum_field( f, val = 0, label='', params = {})
-		mask_cls = params[:mask] ? 'float_mask' : 'sum_mask'
+  def td_sum_field( f, val = 0, label='', params = {})
+    mask_cls = params[:mask] ? 'float_mask' : 'sum_mask'
     inp_add_mask = params[:inp_class].nil? ? '' : ' '+params[:inp_class]
-		lbl = content_tag 'label', params[:translate] ? t(label) : label if !label.nil?
+    lbl = content_tag 'label', params[:translate] ? t(label) : label if !label.nil?
     v = params[:value]
     disabled = params[:disabled]
     v ||= @project[val] if !@project.nil?
@@ -13,20 +13,22 @@ module ProjectsHelper
       obj_name = f.object_name
     end 
     
-		txt = content_tag 'input', '', value: v, onblur:"onBlur(this)", onfocus:"onFocus(this)", class: 'txt '+mask_cls + inp_add_mask, type: 'text', name: "#{obj_name}[#{val}]" , id: "#{obj_name}_#{val}", disabled: disabled
+    txt = content_tag 'input', '', value: v, onblur:"onBlur(this)", onfocus:"onFocus(this)", class: 'txt '+mask_cls + inp_add_mask, type: 'text', name: "#{obj_name}[#{val}]" , id: "#{obj_name}_#{val}", disabled: disabled
 
 
-		add_class = params[:class].nil? ? '' : ' '+params[:class]
-		content_tag 'td' do
-			content_tag 'div', class: 'inp_w'+add_class do
-				lbl.nil? ? txt : lbl+txt
-			end
-		end
-	end
+    add_class = params[:class].nil? ? '' : ' '+params[:class]
+    content_tag 'td' do
+      content_tag 'div', class: 'inp_w'+add_class do
+        lbl.nil? ? txt : lbl+txt
+      end
+    end
+  end
 
   def nil_footage(f)
     f.nil? || f==0 || f=='0.0' || f=='0'
   end
+
+
 
 
   def class_prj_td (prj)

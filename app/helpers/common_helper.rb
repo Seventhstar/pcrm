@@ -1,21 +1,19 @@
 module CommonHelper
 
   def find_version_author_name(version)
-    user = User.find_version_author(version) 
-    user ? user.name : ''
+    user = User.find_version_author(version).try(:name)
   end
 
   def user_name(id)
-    if !id.nil? && id!=0 && id!=0-1
-     user = User.find(id)
-     user ? user.name : ''
+    if !id.nil? && id!='0' && id!='-1'
+     user = User.find(id).try(:name)
     else
       ""
     end
   end
 
   def month_year(date)
-    t(date.try('strftime',"%B"))+" "+date.try('strftime',"%Y")
+    "#{t date.try('strftime','%B')} #{date.try('strftime','%Y')}"
   end
 
   def check_new_table_head( obj )
@@ -44,6 +42,12 @@ module CommonHelper
     need_head
   end
 
+  def text_or_link(text, link)
+    t = text
+    # p "link #{link}, id: #{link.id}"
+    t = link_to text, [:edit, link] if link
+  end
+
   def head_name(obj,id_name)
     id = obj[id_name]
     case id_name
@@ -52,15 +56,16 @@ module CommonHelper
     when 'start_date','status_date'
       val = month_year(id)
     when 'project_g_type_id'
-      val = obj.project_g_type.project.address
-      id = obj.project_g_type.project.id
+      val = 'Не все данные заполнены'
+      val = obj.try(:project_g_type).try(:project).try(:address)
+      id = obj.try(:project_g_type).try(:project).try(:id)
     else
       prop_name = id_name[0..-4]+'_name'
       val = obj.try(prop_name)
       
     end
     #p "val #{val} id_name #{id_name}"
-    n = (id.nil? || id==0) ? t('without_'+id_name) : val
+    n = (id.nil? || id==0) ? t('without.'+id_name) : val
     n
   end
 
@@ -134,10 +139,10 @@ module CommonHelper
           if from.present? || to.present?
             from = from.nil? ? "" : from.to_s
             to = to.nil?  ? "" : to.to_s
-          	#puts k,k == 'description'
-          	if k == 'description' || k == 'info'
-          	  from.gsub!(/\n/, '<br>')  
-          	  to.gsub!(/\n/, '<br>')
+            #puts k,k == 'description'
+            if k == 'description' || k == 'info'
+              from.gsub!(/\n/, '<br>')  
+              to.gsub!(/\n/, '<br>')
               desc << (from.empty? ? ('Заполнено поле <b>'+t(k)+':</b> «'+to+'»') : ('Изменено поле <b>'+t(k)+'</b> c<br> «'+from+'»<br><b> на </b><br>«'+to+'»') )
             else
               desc << (from.empty? ?  ('Заполнено поле <b>'+t(k)+':</b> «'+to+'»'): ('Изменено поле <b>'+t(k)+'</b> c «'+from+'» на «'+to+'»') )
