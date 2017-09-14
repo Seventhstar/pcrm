@@ -55,16 +55,17 @@ class ClientsController < ApplicationController
   # PATCH/PUT /clients/1
   # PATCH/PUT /clients/1.json
   def update
-    respond_to do |format|
-      if @client.update(client_params)
-        #format.html { redirect_to clients_url, notice: 'Client was successfully updated.' }
-        format.html { head :no_content }
-        format.json { render :show, status: :ok, location: @client }
-      else
-        format.html { render :edit }
-        format.json { render json: @client.errors, status: :unprocessable_entity }
-      end
-    end
+    @client.update(client_params)
+    # respond_to do |format|
+    #   if 
+    #     #format.html { redirect_to clients_url, notice: 'Client was successfully updated.' }
+    #     # format.html { head :no_content }
+    #     # format.json { render :show, status: :ok, location: @client }
+    #   else
+    #     # format.html { render :edit }
+    #     # format.json { render json: @client.errors, status: :unprocessable_entity }
+    #   end
+    # end
   end
 
   # DELETE /clients/1

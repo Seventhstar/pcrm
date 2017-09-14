@@ -12,17 +12,7 @@
 
   <tbody>
     <% @clients.each do |client| %>
-      <tr>
-        <td><%= client.name %></td>
-        <td><%= client.address %></td>
-        <td><%= client.phone %></td>
-        <td><%= client.email %></td>
-        <% if is_admin? %>
-          <%= tool_icons(client,{icons:'edit,show', modal: true}) %>
-        <% else %>
-          <%= tool_icons(client,{icons:'show', modal: true}) %>
-        <% end %>
-      </tr>
+      <%= render client %>
     <% end %>
   </tbody>
 </table>
