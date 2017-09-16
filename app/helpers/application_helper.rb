@@ -12,11 +12,13 @@ module ApplicationHelper
     current_user.admin?
   end
 
-  def file_default_action(file,owner)
+  def file_default_action(file,add_name = nil)
+    filename = add_name.nil? ? file.name : [file.name,add_name].join(' ')
+
   if ['jpg','png','gif'].include?(file.name.split('.').last)
-    a = link_to file.name, file.show_path(owner), class: "icon_img", data: { modal: true }
+    a = link_to filename, file.show_path(file.owner), class: "icon_img", data: { modal: true }
   else
-    a = link_to file.name, file.download_path(owner), class: "icon_doc"
+    a = link_to filename, file.download_path(file.owner), class: "icon_doc"
     # a =  <a href="<%= file.download_path(@owner) %>" target="_blank"><%= file.name %></a> 
   end
  end

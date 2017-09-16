@@ -9,15 +9,19 @@ class WikiRecordsController < ApplicationController
     @parent_id = 0 if @parent_id.nil?
     params.delete_if{|k,v| v=='' || v=='0' }
     @wiki_record = WikiRecord.find(@parent_id) if @parent_id != 0 
+
+
     if current_user.admin? 
       @wiki_records = WikiRecord.where(:parent_id => @parent_id ).order(:name)
     else
       @wiki_records = WikiRecord.where(parent_id: @parent_id, admin: false).order(:name)
     end
 
+
     if !params[:wiki_cat_id].nil? && params[:wiki_cat_id]!=0
       @wiki_records = @wiki_records.where(wiki_cat_id: params[:wiki_cat_id])
     end
+
 
     if !params[:search].nil? && params[:search]!=""
       info =params[:search]
@@ -29,6 +33,7 @@ class WikiRecordsController < ApplicationController
   # GET /wiki_records/1
   # GET /wiki_records/1.json
   def show
+    def_params
   end
 
   def def_params
@@ -40,6 +45,8 @@ class WikiRecordsController < ApplicationController
   def new
     @wiki_record = WikiRecord.new
     def_params
+    # @wiki_folders = WikiRecord.where(:parent_id =>0)
+    # p "@wiki_folders #{@wiki_folders}"
   end
 
   # GET /wiki_records/1/edit
@@ -57,13 +64,14 @@ class WikiRecordsController < ApplicationController
   # POST /wiki_records.json
   def create
     @wiki_record = WikiRecord.new(wiki_record_params)
-
+    def_params
     respond_to do |format|
       if @wiki_record.save
         format.html { redirect_to wiki_records_url, notice: 'Знание успешно создано.' }
         format.json { render :show, status: :created, location: @wiki_record }
       else
-        format.html { render :new }
+        p "@wiki_record.errors #{@wiki_record.errors.full_messages}"
+        format.html { redirect_to new_wiki_record_url }
         format.json { render json: @wiki_record.errors, status: :unprocessable_entity }
       end
     end

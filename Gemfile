@@ -1,12 +1,22 @@
 source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.0'
+# gem 'rails', '4.2.0'
+
+git_source(:github) do |repo_name|
+  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
+  "https://github.com/#{repo_name}.git"
+end
+
+gem 'rails', '~> 5.1.3'
 
 gem 'pg'
 
+# Use Puma as the app server
+gem 'puma', '~> 3.7'
+
 group :development, :test do
-  gem 'coffee-script-source', '1.8.0'
-  gem 'rspec-rails', '~> 3.0'
+#  gem 'coffee-script-source', '1.8.0'
+  gem 'rspec-rails'
   gem "better_errors"
   gem "capybara"
 end
@@ -22,8 +32,11 @@ end
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
+
 # Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.1.0'
+# gem 'coffee-rails', '~> 4.1.0'
+gem 'coffee-rails', '~> 4.2'
+
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
@@ -64,7 +77,7 @@ gem 'yaml_db'
 gem 'font-kit-rails'
 gem 'will_paginate'
 gem 'bootstrap_tokenfield_rails'
-gem 'paper_trail', '~> 4.0.0'
+gem 'paper_trail'
 gem 'jquery.fileupload-rails'
 gem 'nokogiri', '1.6.8'
 gem 'responders'

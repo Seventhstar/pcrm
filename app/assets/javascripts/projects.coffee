@@ -93,7 +93,7 @@ $(document).ready ->
     itm = $(this).attr('item_id')
     $('#edit_pgt_item'+itm).show()
     $('#pgt_item'+itm).hide()
-  $(".container").on 'click','.btn_add', ->
+  $(".container").on 'click','span.btn_add', ->
     disable_input_row()
     id = $(this).attr('itm')
     $('#'+id).show()

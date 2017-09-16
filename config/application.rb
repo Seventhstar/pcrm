@@ -10,8 +10,10 @@ Bundler.require(*Rails.groups)
 
 module Pcrm
   class Application < Rails::Application
-  
-    config.active_record.raise_in_transactional_callbacks = true
+    config.load_defaults 5.1
+    config.autoload_paths << Rails.root.join('lib')
+
+#    config.active_record.raise_in_transactional_callbacks = true
 #    config.middleware.use "PDFKit::Middleware", :print_media_type => true
 #    config.autoload_paths += %W(#{config.root}/lib)
 

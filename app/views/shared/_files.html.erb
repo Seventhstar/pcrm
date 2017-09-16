@@ -1,7 +1,7 @@
 <% @files.each_with_index do |file,i| %>
 <div class="item <%= i.odd? ? 'odd':'' %>">
 	<div class="fname">
-		<%= file_default_action(file,@owner) %>
+		<%= file_default_action(file) %>
 	</div>
 	<div class="tools">		
 		<a href="<%= file.download_path(@owner) %>" target="_blank" class="icon icon_download"></a>

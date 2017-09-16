@@ -5,7 +5,7 @@ class AbsencesController < ApplicationController
   helper_method :sort_2, :dir_2
   helper_method :sort_column, :sort_direction
   before_action :logged_in_user
-  after_filter  :send_changeset_email, only: [:update,:create]
+  after_action  :send_changeset_email, only: [:update,:create]
 
   # GET /absences
   # GET /absences.json

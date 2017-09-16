@@ -4,7 +4,7 @@
 
 
 .comments_list_a .item.new {
-	background-color: #fbfbfb;
+  background-color: #fbfbfb;
 }
 
 .comments_list_a .item.new .cont .date:before {
@@ -18,6 +18,4 @@
 .icon_img, .icon_doc {display: inline-block; background: asset-url('image.png') no-repeat; vertical-align: middle; position: relative; cursor: pointer; }
 .icon_doc {background: asset-url('doc.png') no-repeat;}
 
-.fname .icon_img, .fname .icon_doc {
-	padding-left:20px;
-}
+.fname .icon_img, .fname .icon_doc, .files_ul .icon_img, .files_ul .icon_doc { padding-left:20px; }

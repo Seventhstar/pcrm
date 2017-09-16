@@ -23,5 +23,5 @@ Stache.configure do |c|
 end
 
 # or if the block style ain't yer thang, just:
-Stache.template_base_path = File.join(Rails.root, "app", "shablon")
+Stache.template_base_path = File.join(Rails.root, "app", "templates")
 Stache.template_cache = ActiveSupport::Cache::MemoryStore.new if Rails.env.production?

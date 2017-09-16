@@ -16,8 +16,7 @@
   </div>
   <ul class="files_ul">
         <% @wiki_record.attachments.order(:name).each do |file| %>
-        <li><a href="/download/WikiRecord/<%= @wiki_record.id %>/<%= file.id.to_s+File.extname(file.name) %>" target="_blank">
-        <%= file.name %> (<%= file.created_at.try('strftime',"%d.%m.%Y") %>)</a></li>
+          <%= render "wiki_files/wiki_file", file: file %>
         <% end -%>
         </ul>
 <% end %>
