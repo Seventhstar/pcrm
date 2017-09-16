@@ -44,5 +44,7 @@ module Pcrm
      config.i18n.default_locale = :ru
      #config.time_zone = 'Moskow'
      #config.active_record.default_timezone = :local
+     config.action_cable.disable_request_forgery_protection = false
+     config.encoding = "utf-8"
   end
 end

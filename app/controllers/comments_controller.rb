@@ -1,6 +1,7 @@
 class CommentsController < ApplicationController
 
   before_action :load_comment, only: [:destroy]
+  after_action :publish_comment, only: :create
   respond_to :js, :json
 
   def destroy
@@ -43,13 +44,26 @@ class CommentsController < ApplicationController
       end
     end
   end
-  
+
 
   private
-  def comment_params
-    params.require(:comment).permit(:id,:comment, :owner_id, :owner_type)
-  end
-  def load_comment
-    @comment = Comment.find(params[:id])
-  end
+    def comment_params
+      params.require(:comment).permit(:id,:comment, :owner_id, :owner_type)
+    end
+
+    def load_comment
+      @comment = Comment.find(params[:id])
+    end
+
+    def publish_comment
+      p "@comment #{@comment}"
+      return if @comment.errors.any?
+      result = { comment: @comment.as_json(include: :user) }
+      id = @comment.owner.id
+      ActionCable.server.broadcast("comments/owner_#{id}", result)
+      data = {id: @comment.id, comment: @comment.comment, created_at: @comment.created_at.strftime("%d.%m.%Y %H:%M:%S"), username: @comment.user.name}
+      ActionCable.server.broadcast("comments", data)
+    end
+
+
 end

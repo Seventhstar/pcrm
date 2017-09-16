@@ -22,7 +22,10 @@
 //= require jquery.fileupload
 //= require tinymce-jquery
 //= require jquery.timepicker
+//= require mustache
+//= require jquery.mustache
 //= require moment
+//= require action_cable
 //= require_tree .
 
 function to_sum(d){ 

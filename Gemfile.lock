@@ -48,13 +48,10 @@ GEM
       coderay (>= 1.0.0)
       erubi (>= 1.0.0)
       rack (>= 0.9.0)
-    binding_of_caller (0.7.2)
-      debug_inspector (>= 0.0.1)
     bootstrap-datepicker-rails (1.7.1.1)
       railties (>= 3.0)
     bootstrap_tokenfield_rails (0.12.1)
     builder (3.2.3)
-    byebug (9.1.0)
     capybara (2.15.1)
       addressable
       mini_mime (>= 0.1.3)
@@ -73,9 +70,8 @@ GEM
     coffee-script (2.4.1)
       coffee-script-source
       execjs
-    coffee-script-source (1.8.0)
+    coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
-    debug_inspector (0.0.3)
     diff-lcs (1.3)
     erubi (1.6.1)
     execjs (2.7.0)
@@ -85,6 +81,11 @@ GEM
       rails
     globalid (0.4.0)
       activesupport (>= 4.2.0)
+    gon (6.1.0)
+      actionpack (>= 3.0)
+      json
+      multi_json
+      request_store (>= 1.0)
     httpclient (2.8.3)
     i18n (0.8.6)
     jbuilder (2.7.0)
@@ -115,7 +116,8 @@ GEM
     momentjs-rails (2.17.1)
       railties (>= 3.1)
     multi_json (1.12.2)
-    mustache (1.0.5)
+    mustache-js-rails (0.0.7)
+      railties (>= 3.1)
     nio4r (2.1.0)
     nokogiri (1.6.8)
       mini_portile2 (~> 2.1.0)
@@ -222,7 +224,6 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    stache (1.2.0)
     telegram-bot (0.12.0)
       actionpack (>= 4.0, < 5.2)
       activesupport (>= 4.0, < 5.2)
@@ -260,21 +261,20 @@ DEPENDENCIES
   RedCloth
   bcrypt
   better_errors
-  binding_of_caller
   bootstrap-datepicker-rails
   bootstrap_tokenfield_rails
-  byebug
   capybara
   carrierwave
   coffee-rails (~> 4.2)
   font-kit-rails
+  gon
   jbuilder (~> 2.0)
   jquery-rails
   jquery-ui-rails
   jquery.fileupload-rails
   mini_magick
   momentjs-rails
-  mustache
+  mustache-js-rails
   nokogiri (= 1.6.8)
   nprogress-rails
   paper_trail
@@ -291,7 +291,6 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   simple-navigation (= 4.0.3)
   simple_form
-  stache
   telegram-bot
   tinymce-rails
   turbolinks

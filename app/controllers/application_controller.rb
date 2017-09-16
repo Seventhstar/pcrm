@@ -4,7 +4,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :check_policy
   before_action :set_paper_trail_whodunnit
-  
+  before_action :gon_user
+    
   include SessionsHelper
 
   def logged_in_user
@@ -24,5 +25,11 @@ class ApplicationController < ActionController::Base
   def check_policy
 #   p "current_user.roles #{current_user.has_roles}" if !current_user.nil?
   end
+
+  private
+
+    def gon_user
+      gon.user_id = current_user.id if current_user
+    end
 
 end

@@ -1,3 +1,7 @@
+<script type="text/html" id="comments_template">
+  <%= render "comments/comment.html.mustache" %>
+</script>
+
 <% if !@owner.comments.nil? && @owner.comments.count >0 %>
 <% @comments = @owner.comments.order('created_at asc') %>  
 <% end %>
