@@ -12,16 +12,16 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery-ui/datepicker
-//= require jquery-ui/tabs
+//= require nprogress
 //= require jquery-ui  
 //= require jquery-ui/accordion
+//= require jquery-ui/datepicker
+//= require jquery-ui/tabs
 //= require bootstrap-tokenfield
 //= require chosen.jquery
 //= require jquery.fileupload
-//= require jquery.timepicker
-//= require nprogress
 //= require tinymce-jquery
+//= require jquery.timepicker
 //= require moment
 //= require_tree .
 
@@ -46,20 +46,20 @@ function showNotifications(){
 }
 
 function checkTime(i){
-	if (i<10){i="0" + i;}
-	return i;
+  if (i<10){i="0" + i;}
+  return i;
 }
 
 function startTime(){
-	var tm=new Date();
-	var h=tm.getHours();
-	var m=tm.getMinutes();
-	var s=tm.getSeconds();
-	
-	m=checkTime(m);
-	s=checkTime(s);
-	$(".time_h").html(h+":"+m+":"+s);
-	t=setTimeout('startTime()',500);
+  var tm=new Date();
+  var h=tm.getHours();
+  var m=tm.getMinutes();
+  var s=tm.getSeconds();
+  
+  m=checkTime(m);
+  s=checkTime(s);
+  $(".time_h").html(h+":"+m+":"+s);
+  t=setTimeout('startTime()',500);
 }
 
 var delay = (function(){
@@ -100,6 +100,7 @@ $(function() {
   //     });
   //   }); //{active: 3}
   $('#tabs').tabs({
+    active: 2,
     activate: function (event, ui) {
       // var l = window.location.toString().split('#')[0];
       // var t = $(".ui-tabs-active a").attr('href');

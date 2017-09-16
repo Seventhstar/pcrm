@@ -60,10 +60,10 @@ module ApplicationHelper
     if params[:controller] && params[:controller]=="leads" && params[:action]
       if params[:action]=="new"
          "red"
-	    elsif params[:action]=="edit"
-	       "orange"
+      elsif params[:action]=="edit"
+         "orange"
       else
-	       "call"
+         "call"
       end
     else
       "call"
@@ -72,7 +72,7 @@ module ApplicationHelper
 
   def activeClassIfModel( model )
     if model && model == self.controller_name.classify
-	    "class=""active_li"""
+      "class=""active_li"""
     else ""
     end
   end
@@ -95,7 +95,7 @@ module ApplicationHelper
     nil_value = options[:nil_value].nil? ? 'Выберите...' : options[:nil_value]
     add_name  = options[:add_name]
 
-  	coll = collection.class.ancestors.include?(ActiveRecord::Relation) ? collection : collection
+    coll = collection.class.ancestors.include?(ActiveRecord::Relation) ? collection : collection
     coll = coll.collect{ |u| [u[p_name], u.id] } if coll.class.name != 'Array'
     coll.insert(0,[nil_value,0,{class: 'def_value'}]) if nil_value != ''
     coll.insert(1,[options[:special_value],-1]) if !options[:special_value].nil?
@@ -103,7 +103,7 @@ module ApplicationHelper
     if !options[:selected].nil?
       sel = options[:selected]
     else
-  		is_attr = (obj.class != Fixnum && obj.class != String && !obj.nil?)
+      is_attr = (obj.class != Fixnum && obj.class != String && !obj.nil?)
       sel = is_attr ? obj[id] : obj
     end 
     
@@ -189,9 +189,9 @@ module ApplicationHelper
   end
 
   def set_only_actual(actual,title = nil)
-		css_class = actual == "false" ? "passive" : "active"
-		css_class.concat(" only_actual li-right")
-		p_active = only_actual == "false"
+    css_class = actual == "false" ? "passive" : "active"
+    css_class.concat(" only_actual li-right")
+    p_active = only_actual == "false"
     p_title  = only_actual == "false" ? "Все" : "Актуальные"
     content_tag :span, p_title, {:class => css_class}
   end

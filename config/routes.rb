@@ -27,13 +27,15 @@ Rails.application.routes.draw do
 
   resources :receipts
 
-  resources :projects
+  resources :projects do
+    resources :project_elongations, shallow: true
+  end
+
   get 'projects/:id/:update_client' => 'projects#update_client'
 
   resources :project_goods
   resources :project_types
   resources :project_statuses
-  resources :project_elongations
   resources :elongation_types
   resources :project_g_types
   

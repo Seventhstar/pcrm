@@ -1,15 +1,10 @@
 source 'https://rubygems.org'
-
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
 
-# Use sqlite3 as the database for Active Record
-# gem 'sqlite3'
-  gem 'pg'
+gem 'pg'
 
 group :development, :test do
-#  gem 'sqlite3',     '1.3.10'
   gem 'coffee-script-source', '1.8.0'
   gem 'rspec-rails', '~> 3.0'
   gem "better_errors"
@@ -34,8 +29,10 @@ gem 'coffee-rails', '~> 4.1.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-# gem 'turbolinks'
+gem 'turbolinks'
+
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
@@ -65,14 +62,12 @@ gem 'jquery-ui-rails'
 gem 'bcrypt'
 gem 'yaml_db'
 gem 'font-kit-rails'
-#gem 'will_paginate-bootstrap'
 gem 'will_paginate'
 gem 'bootstrap_tokenfield_rails'
 gem 'paper_trail', '~> 4.0.0'
 gem 'jquery.fileupload-rails'
 gem 'nokogiri', '1.6.8'
 gem 'responders'
-#gem 'modal-responder-rails'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'nprogress-rails'
@@ -83,3 +78,7 @@ gem 'telegram-bot'
 
 gem 'prawn'
 gem 'prawn-table'
+
+gem 'mustache'
+gem 'stache'
+gem 'remotipart'

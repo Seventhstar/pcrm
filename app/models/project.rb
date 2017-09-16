@@ -11,7 +11,7 @@ class Project < ActiveRecord::Base
   has_many  :goods, class_name: "ProjectGood", dependent: :destroy
 
   attr_accessor :first_comment, :days, :sum_rest
-  has_many :elongations, class_name: 'ProjectElongation'
+  has_many :elongations, class_name: 'ProjectElongation', dependent: :destroy
 
   validates :address, :length => { :minimum => 3 }
   validates :client_id, presence: true
