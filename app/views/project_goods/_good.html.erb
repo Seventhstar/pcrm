@@ -1,0 +1,11 @@
+<tr id="pgt_item<%= g.id %>" class="sw_color <%= class_for_prj_goods(g) %>">
+  <td width='220px'><%= g.name %></td>
+  <td width='210px'><%= g.provider_name %></td>
+  <td width='115px'><%= g.date_place.try('strftime',"%d.%m.%Y") %></td>
+  <td width='230px'><%= g.description %></td>
+  <td><%= g.currency_name %></td>
+  <td width='90px' class="">
+    <%= g.order ? (g.sum_supply.to_sum if !g.sum_supply.nil? ) : (g.gsum.to_sum if !g.gsum.nil?) %>
+  </td>
+  <%= tool_icons(g, {icons:'modal_edit,delete',tag:'link', add_class:'td_right', modal: true}) %>
+</tr>

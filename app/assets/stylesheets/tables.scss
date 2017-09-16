@@ -13,7 +13,7 @@
 .tbl_a table .disabled td a{color: #aeaeae; }
 .tbl_a table.stripped tr:nth-child(even) td, table.stripped tr:nth-child(even) td {background: #fafafa;}
 
-.tbl_a table tr:hover td, table.tleads tr:hover:not(#new_item) td{ background-color: #f5f5f5;}
+.tbl_a table tr:hover td, table.tleads tr:hover:not(#new_item):not(.total):not(.ordered) td{ background-color: #f5f5f5;}
 tr.hover td{ background-color: #f5f5f5 !important;}
 
 table.tbl_fc{border-collapse:collapse; width: 100%; }
@@ -60,9 +60,9 @@ table td{font-size: 13px;}
 .tleads thead{ border-radius: 0 3px 3px 0; }
 
 
-.tleads th{ padding: 8px;	border-bottom: 1px solid #ddd; }
+.tleads th{ padding: 8px;   border-bottom: 1px solid #ddd; }
 .tleads td{ border-top: 1px solid #ebebeb; padding: 8px;
-	&.editable,&.app_cancel{padding: 4px 4px;}
+    &.editable,&.app_cancel{padding: 4px 4px;}
 }
 tr.editable td { padding: 3px 2px; vertical-align: middle;}
 tr.editable td.e_edit { padding: 3px 7px; }
@@ -71,12 +71,12 @@ tr.editable td.e_edit { padding: 3px 7px; }
 .tbl_a span.check_img{    width: 18px; height: 18px; }
 
 .cut {
-	float: right;
-	width: 24px;
-	height: 24px;
-	border-radius: 5px;
-	background-color: white;
-	    border: 1px solid #ddd;
+    float: right;
+    width: 24px;
+    height: 24px;
+    border-radius: 5px;
+    background-color: white;
+        border: 1px solid #ddd;
 }
 span.cut b { display: block;
   margin-top: 9px;
@@ -98,16 +98,16 @@ td.app_cancel {}
 // td.edit_delete .icon{float: right;}
 
 .tleads tr.month, .month{
-	border-right-color: white;
-	border-left-color: white;
-	vertical-align: bottom;
-	margin-bottom: 0;
-	font-size: 20px !important;
-	font-weight: normal !important;
-	background-color: #fafafa;
+    border-right-color: white;
+    border-left-color: white;
+    vertical-align: bottom;
+    margin-bottom: 0;
+    font-size: 20px !important;
+    font-weight: normal !important;
+    background-color: #fafafa;
 }
 
-.tleads tr.month td{ 	padding: 10px; }
+.tleads tr.month td{    padding: 10px; }
 .tleads th.inf{padding:2px; width: 20px;}
 tr.va_middle td, td.va_middle {vertical-align: middle !important;}
 

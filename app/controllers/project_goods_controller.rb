@@ -77,12 +77,12 @@ class ProjectGoodsController < ApplicationController
     end
 
     def sort_column
-      default_column = "project_g_type_id"
-      (ProjectGood.column_names.include?(params[:sort]) || params[:sort] == 'project_g_type_id' ) ? params[:sort] : default_column
+      default_column = "project_id"
+      (ProjectGood.column_names.include?(params[:sort]) || params[:sort] == 'project_id' ) ? params[:sort] : default_column
     end
 
     def sort_direction
-      defaul_dir = sort_column =='project_g_type_id' ? "asc": "desc"
+      defaul_dir = sort_column =='project_id' ? "asc": "desc"
       %w[asc desc].include?(params[:direction]) ? params[:direction] : defaul_dir
     end
 
@@ -93,7 +93,7 @@ class ProjectGoodsController < ApplicationController
 
     def pg_params
       prm = params.first[0] 
-      params.require(prm).permit(:project_g_type_id,:provider_id,:date_supply,:date_place,:date_offer, 
+      params.require(prm).permit(:goodstype_id,:provider_id,:date_supply,:date_place,:date_offer, 
         :currency_id,:gsum,:order,:name,:description, :fixed, :sum_supply, :project_id)
     end
   end

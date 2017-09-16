@@ -28,7 +28,7 @@ module CommonHelper
       if obj.class.name == "Lead"
         new_head = is_admin? ? head_name(obj,'status_date') : head_name(obj,'start_date') 
       elsif obj.class.name == "ProjectGood"
-        new_head = head_name(obj,'project_g_type_id')
+        new_head = head_name(obj,'goodstype_id')
       else
         new_head = nil
       end

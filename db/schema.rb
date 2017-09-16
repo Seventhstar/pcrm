@@ -267,24 +267,25 @@ ActiveRecord::Schema.define(version: 20170914172443) do
   add_index "project_g_types", ["project_id"], name: "index_project_g_types_on_project_id", using: :btree
 
   create_table "project_goods", force: :cascade do |t|
-    t.integer  "project_g_type_id"
     t.string   "name"
     t.integer  "provider_id"
     t.date     "date_supply"
     t.text     "description"
-    t.boolean  "order",             default: false
+    t.boolean  "order",        default: false
     t.integer  "currency_id"
     t.integer  "gsum"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.date     "date_offer"
     t.date     "date_place"
     t.integer  "sum_supply"
-    t.boolean  "fixed"
+    t.boolean  "fixed",        default: false
     t.integer  "project_id"
+    t.integer  "goodstype_id"
   end
 
   add_index "project_goods", ["fixed"], name: "index_project_goods_on_fixed", using: :btree
+  add_index "project_goods", ["goodstype_id"], name: "index_project_goods_on_goodstype_id", using: :btree
   add_index "project_goods", ["project_id"], name: "index_project_goods_on_project_id", using: :btree
 
   create_table "project_statuses", force: :cascade do |t|
@@ -523,5 +524,6 @@ ActiveRecord::Schema.define(version: 20170914172443) do
 
   add_index "wiki_records", ["wiki_cat_id"], name: "index_wiki_records_on_wiki_cat_id", using: :btree
 
+  add_foreign_key "project_goods", "goodstypes"
   add_foreign_key "project_goods", "projects"
 end

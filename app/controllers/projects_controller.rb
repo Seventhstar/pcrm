@@ -120,15 +120,6 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1/edit
   def edit
- 
-    if params[:good_state]=='1'
-      def_goods = Goodstype.where(default: true)
-      def_goods.each do |dg|
-        pgt = ProjectGType.find_or_create_by({g_type_id: dg.id, project_id: @project.id})
-      end
-    else
-      pgt = @project.project_g_types.joins(:goods)
-    end
 
     @gs = params[:good_state]
 
@@ -137,7 +128,6 @@ class ProjectsController < ApplicationController
     else
       @gs = 0
     end
-    
 
     get_debt
     def_params
@@ -147,14 +137,14 @@ class ProjectsController < ApplicationController
     @elongation_types = ElongationType.all
     @new_et  = ProjectElongation.new
     @new_gt  = Goodstype.new
-    
-    p "params[:good_state] #{params[:good_state]}"
 
-    gt = @project.project_g_types.pluck(:g_type_id)
-
-    @gtypes = gt.empty? ? Goodstype.order(:name) : Goodstype.where('not id in (?)',gt).order(:name)
+    pgt = Goodstype.where(default: true).pluck(:id)
+    gt = @project.goods.pluck(:goodstype_id)
+    pgt << gt 
+    @prj_good_types = Goodstype.where(id: [pgt])
+    # @gtypes = gt.empty? ? Goodstype.order(:name) : Goodstype.where('not id in (?)',gt).order(:name)
     # @prj_good_types = @project.project_g_types.order("goodstype.name")
-    @prj_good_types = ProjectGType.joins(:goodstype).where('g_type_id in (?) and project_id = ?',gt,@project.id).order('goodstypes.name')
+    # @prj_good_types = ProjectGType.joins(:goodstype).where('g_type_id in (?) and project_id = ?',gt,@project.id).order('goodstypes.name')
     
   end
 

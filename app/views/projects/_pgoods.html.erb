@@ -32,7 +32,7 @@
 <% end %>
 
 <div class="panel panel-default">
-<div class="panel-heading table-heading head month" name="pgt<%= pgt.id %>"><%= pgt.goodstype_name %> 
+<div class="panel-heading table-heading head month" name="pgt<%= pgt.id %>"><%= pgt.name %> 
 <span class="sub btn_add right" itm="new_pgt_item<%= pgt.id %>">Добавить позицию</span></div>
 
 
@@ -48,9 +48,8 @@
   <% first_col = false %>
 </div>
 <% end %>
-<div class="panel panel-default">
-<div class="panel-heading table-heading head month">Общий итог:
+
+<div class="total-footer">Общий итог:
 <span class="right"><%= total_info(@all_total).html_safe %></span></div>
-</div>
 
 

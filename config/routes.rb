@@ -30,12 +30,13 @@ Rails.application.routes.draw do
   resources :projects
   get 'projects/:id/:update_client' => 'projects#update_client'
 
+  resources :project_goods
   resources :project_types
   resources :project_statuses
   resources :project_elongations
   resources :elongation_types
   resources :project_g_types
-  resources :project_goods
+  
   resources :clients
 
   resources :p_statuses
