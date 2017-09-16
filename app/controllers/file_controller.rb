@@ -74,7 +74,8 @@ before_action :logged_in_user
   end
 
   def download
-    dir = Rails.root.join('public', 'uploads',params[:type],params[:id],params[:basename]+"."+params[:extension])
+    name = params[:extension].nil? ? params[:basename] : params[:basename]+"."+params[:extension]
+    dir = Rails.root.join('public', 'uploads',params[:type],params[:id],name)
     f = Attachment.find(params[:basename])
     send_file dir, :disposition => 'attachment', :filename => f.name
   end

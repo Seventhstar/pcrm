@@ -3,7 +3,8 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   before_action :check_policy
-	
+  before_action :set_paper_trail_whodunnit
+  
   include SessionsHelper
 
   def logged_in_user
@@ -21,7 +22,7 @@ class ApplicationController < ActionController::Base
   end
 
   def check_policy
-#  	p "current_user.roles #{current_user.has_roles}" if !current_user.nil?
+#   p "current_user.roles #{current_user.has_roles}" if !current_user.nil?
   end
 
 end

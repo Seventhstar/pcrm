@@ -160,12 +160,16 @@ class LeadsController < ApplicationController
       if @lead.update(lead_params)
         format.html { redirect_to leads_page_url, notice: 'Лид успешно обновлен.' }
 #        format.html { redirect_back_or leads_url }
-        format.json { render :show, status: :ok, location: @lead }
+        # format.json { render :show, status: :ok, location: @lead }
       else
+        def_params
+        flash.now[:danger] = @lead.errors.full_messages
         format.html { render :edit }
-        format.json { render json: @lead.errors, status: :unprocessable_entity }
+        # redirect_to [:edit,@lead]
+        # format.json { render json: @lead.errors.full_messages, status: :unprocessable_entity }
       end
     end
+
   end
 
   # DELETE /leads/1

@@ -43,10 +43,7 @@
 
   <div class="js-notes has-note">
     <% flash.each do |name, msg| %>
-      <%= content_tag :div, :id => "flash_#{name}", :class => "alert fade-in flash_#{name}" do %>
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        <%= msg %>
-      <% end %>
+      <%= render 'error_msg', name: name, msg: msg %>
     <% end %>
     <% flash.clear %>
   </div>

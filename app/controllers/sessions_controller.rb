@@ -19,7 +19,7 @@ class SessionsController < ApplicationController
         end
         # session[:return_to] ||= default
         if session[:forwarding_url] == root_url 
-          p "default_url #{default_url}"
+          #p "default_url #{default_url}"
           redirect_to default_url
         else
           redirect_back_or :leads

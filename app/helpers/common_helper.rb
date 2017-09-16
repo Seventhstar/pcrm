@@ -44,12 +44,12 @@ module CommonHelper
 
   def text_or_link(text, link)
     t = text
-    # p "link #{link}, id: #{link.id}"
     t = link_to text, [:edit, link] if link
   end
 
   def head_name(obj,id_name)
     id = obj[id_name]
+    
     case id_name
     when 'executor_id', 'ic_user_id', 'user_id'
       val = User.find(id).try(:name) if !id.nil? && id>0 
@@ -62,9 +62,8 @@ module CommonHelper
     else
       prop_name = id_name[0..-4]+'_name'
       val = obj.try(prop_name)
-      
     end
-    #p "val #{val} id_name #{id_name}"
+
     n = (id.nil? || id==0) ? t('without.'+id_name) : val
     n
   end
@@ -74,8 +73,7 @@ module CommonHelper
     
     from = ""  
     to = ""
-    #p "event",event
-   # p "changeset",changeset
+
     case event 
     when "updated_at"
     when "verified", "payd_q", "attention", "debt", "interest", "payd_full"
@@ -96,12 +94,10 @@ module CommonHelper
     when "channel_id", 'reason_id','new_reason_id','target_id','dev_status_id','status_id','p_status_id', 'priority_id', 'project_id',"user_id","ic_user_id",
          "executor_id","pstatus_id", "project_type_id", 'payment_purpose_id', 'payment_type_id', 'source_id'
 
-      #p "--!--"
       attrib = event.gsub('_id','').gsub('new_','')
       cls = obj["item_type"].constantize.find_by_id(obj["item_id"])
       if !cls.nil?
         cls = cls.try(attrib).class
-        #p  "obj,cls", obj["item_type"], obj["item_id"], attrib,cls
         if !cls.nil? && cls != NilClass
           from = cls.where(id: changeset[0]).first_or_initialize.try(:name) if !changeset[0].nil? && changeset[0]!=0
           to = cls.where(id: changeset[1]).first_or_initialize.try(:name) if !changeset[1].nil? && changeset[1]!=0
@@ -175,34 +171,26 @@ module CommonHelper
 
   def changeset_detail(version)
     obj = YAML.load(version['object_changes']) if !version['object_changes'].nil?
-    #p version['object_changes']
     obj = YAML.load(version['object']) if obj.nil?
 
     info = {}
+    ch = {}
     case version[:event]
     when "update" 
         changeset = version.changeset 
-        ch = Hash.new
         desc = []
         changeset.keys.each_with_index do |k,index| 
-          #p version['object_changes']
-          #p 'k,',k, changeset[k], ch
           from_to = from_to_from_changeset(version,changeset[k],k)
           from = from_to['from'] 
           to = from_to['to']
           if from.present? || to.present?
             from = from.nil? ? "" : from.to_s
-           # p "from", from
-            #p "to", to
-            #p "k",k,t(k)
             k = 'pdate' if k=='date'
             desc << (from.empty? ? ('Заполнено поле <b>'+t(k)+':</b> «'+to.to_s+'»') : ('Изменено поле <b>'+t(k)+'</b> c «'+from.to_s+'» на «'+to.to_s+'»') )
             ch.store( index, {'field' => t(k), 'from' => from, 'to' => to, 'description' => desc } )
-            #p 'ch,', ch
           end
         end
     when "create"
-        ch = {}
         case version['item_type']
         when 'Attachment' #['name'][1]
           desc = 'Прикреплен файл '+link_to_file(obj)  + ' к объекту: ' + link_to_obj(obj['owner_type'][1],obj['owner_id'][1])
@@ -213,14 +201,10 @@ module CommonHelper
         else
           desc = 'Создан ' + link_to_obj(version["item_type"], version['item_id'])
         end
-
     when "destroy"    
-      ch = {}
       ch.store(0,'Удален')
       desc = 'Удален ' + link_to_obj(version["item_type"], version['item_id'])
     else
-      # p "version[:event]",version[:event]
-      ch = {}
       desc = {"version[:event]"=> version[:event]}
     end
     obj['inf'] = {'ch' => ch, 'desc' => desc}

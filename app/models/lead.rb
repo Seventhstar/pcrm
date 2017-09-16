@@ -1,10 +1,11 @@
 class Lead < ActiveRecord::Base
+  include Comments
   belongs_to :channel
   belongs_to :status
   belongs_to :user
   belongs_to :ic_user, foreign_key: :ic_user_id, class_name: 'User'
-  belongs_to :source, foreign_key: :source_id, class_name: 'LeadSource'
-  has_many :comments, :as => :owner
+  belongs_to :source, foreign_key: :source_id, class_name: 'LeadSource', optional: true
+  #has_many :comments, :as => :owner
   has_many :attachments, :as => :owner
   has_paper_trail
   attr_accessor :first_comment
@@ -64,7 +65,7 @@ class Lead < ActiveRecord::Base
      if info.length>50
         info[0..50]+' ...'
      else
-	info
+  info
      end
   end
 

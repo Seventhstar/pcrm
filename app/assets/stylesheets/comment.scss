@@ -3,17 +3,9 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
-.comments_list_a .item.new {
-  background-color: #fbfbfb;
-}
-
-.comments_list_a .item.new .cont .date:before {
-    color: #ff8411;
-    content: "●";
-    line-height: 8px;
-    font-size: 16px;
-}
-
+.comments_list_a .item.new { background-color: #fbfbfb; }
+.comments_list_a .item .info:after { color: gray; content: " ●"; line-height: 8px; font-size: 16px; cursor: pointer;}
+.comments_list_a .item.new .info:after {color: #ff8411; content: " ●"; line-height: 8px; font-size: 16px; }
 
 .icon_img, .icon_doc {display: inline-block; background: asset-url('image.png') no-repeat; vertical-align: middle; position: relative; cursor: pointer; }
 .icon_doc {background: asset-url('doc.png') no-repeat;}
