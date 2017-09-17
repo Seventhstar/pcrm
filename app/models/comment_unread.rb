@@ -1,2 +1,2 @@
-class CommentUnread < ActiveRecord::Base
+class CommentUnread < ApplicationRecord
 end

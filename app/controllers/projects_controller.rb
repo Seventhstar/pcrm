@@ -92,7 +92,7 @@ class ProjectsController < ApplicationController
       format.pdf do 
         pdf = ProjectPdf.new(@project) 
         send_data pdf.render, 
-        filename: "project_#{@project.id}",
+        filename: "Project_#{@project.id}.pdf",
         type: 'application/pdf',
         page_layout: 'landscape',
         disposition: 'inline'
@@ -139,9 +139,9 @@ class ProjectsController < ApplicationController
     @new_gt  = Goodstype.new
 
     pgt = Goodstype.where(default: true).pluck(:id)
-    gt = @project.goods.pluck(:goodstype_id)
-    pgt << gt 
-    @prj_good_types = Goodstype.where(id: [pgt])
+    types_from_project = @project.goods.pluck(:goodstype_id).uniq
+    pgt.concat types_from_project
+    @prj_good_types = Goodstype.where(id: [pgt]).order(:name)
     # @gtypes = gt.empty? ? Goodstype.order(:name) : Goodstype.where('not id in (?)',gt).order(:name)
     # @prj_good_types = @project.project_g_types.order("goodstype.name")
     # @prj_good_types = ProjectGType.joins(:goodstype).where('g_type_id in (?) and project_id = ?',gt,@project.id).order('goodstypes.name')
@@ -194,13 +194,9 @@ class ProjectsController < ApplicationController
   def add_goodstype
     @project = Project.find(params[:g_type][:project_id])
     def_params
-    # pgt = Goodstype.where(default: true).pluck(:id)
     pgt = []
     pgt << params[:g_type][:g_type_id] 
     @prj_good_types = Goodstype.where(id: [pgt])
-    # respond_to do |format|
-    #   format.json { render json: 'weuhfeu', status: :unprocessable_entity }
-    # end
   end
 
   # PATCH/PUT /projects/1
@@ -257,7 +253,6 @@ class ProjectsController < ApplicationController
               'sum_total_executor']
       prms.each do |p|
         project_params[p] = project_params[p].gsub!(' ','') if !project_params[p].nil?
-        # p p,project_params[p]
       end
     end
 

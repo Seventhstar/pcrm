@@ -1,4 +1,4 @@
-class CreateProjectGoods < ActiveRecord::Migration
+class CreateProjectGoods < ActiveRecord::Migration[5.1]
   def change
     create_table :project_goods do |t|
       t.integer :project_g_type_id

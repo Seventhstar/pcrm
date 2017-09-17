@@ -1,4 +1,4 @@
-class CreateProjectGTypes < ActiveRecord::Migration
+class CreateProjectGTypes < ActiveRecord::Migration[5.1]
   def change
     create_table :project_g_types do |t|
       t.integer :g_type_id

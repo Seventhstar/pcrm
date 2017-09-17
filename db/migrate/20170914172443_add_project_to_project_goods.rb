@@ -1,4 +1,4 @@
-class AddProjectToProjectGoods < ActiveRecord::Migration
+class AddProjectToProjectGoods < ActiveRecord::Migration[5.1]
   def change
     add_reference :project_goods, :project, index: true
     add_reference :project_goods, :goodstype, index: true
