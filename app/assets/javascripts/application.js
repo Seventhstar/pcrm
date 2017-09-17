@@ -73,10 +73,19 @@ var delay = (function(){
   };
 })();
 
+var message_template = function(msg, type) {
+  return '<div class="alert flash_'+type+'">'+msg+'<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></div>';
+};
+
+var add_ajax_message = function(msg, type) {
+  if (!type) {type = "success"};
+    $(".js-notes").append( message_template(msg,type));    
+    showNotifications();
+};
 
 var show_ajax_message = function(msg, type) {
     if (!type) {type = "success"};
-    $(".js-notes").html( '<div class="alert flash_'+type+'">'+msg+'<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></div>');    
+    $(".js-notes").html( message_template(msg,type));    
     showNotifications();
 };
 
@@ -103,7 +112,7 @@ $(function() {
   //     });
   //   }); //{active: 3}
   $('#tabs').tabs({
-    active: 2,
+    active: 3,
     activate: function (event, ui) {
       // var l = window.location.toString().split('#')[0];
       // var t = $(".ui-tabs-active a").attr('href');

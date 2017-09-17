@@ -1,10 +1,10 @@
 <div class="panel panel-default">
 <div class="panel-heading table-heading head month"> Продления сроков:</div>
-<table class="tleads" id="project_elongations"  model="ProjectElongation" action="project_elongations">
+<table class="tleads" id="project_elongations">
   
   <tbody>
     <% @project.elongations.each do |pe| %>
-      <tr>
+      <tr id=<%= "pe_#{pe.id}" %>>
         <td><%= pe.new_date.try('strftime','%d.%m.%Y') %></td>
         <td><%= pe.description %></td>
         <%= tool_icons(pe, {icons:'delete',tag:'span'}) %>
@@ -13,16 +13,14 @@
 
 
       <tr id="new_item">
+        <%= hidden_field 'project_elongation','project_id', value: @project.id %>
+        <td class="caption3" width='120px'><%= text_field "project_elongation",:new_date, {:class => 'txt datepicker'} %></td>
+        <td><%= chosen_src "elongation_type_id", @elongation_types,@new_et,{nil_value: 'Выберите причину...'} %></td>
+        <td>
+          <span class="sub btn_a" id="btn-sub-send" pe_id="<%= @project.id %>" action='/project_elongations/' prm='project_elongation'>  Добавить</span></td>
       </tr>
 
   </tbody>
 </table>
 
-        <%= form_for [@project, ProjectElongation.new], remote: true, authenticity_token: true do |fe| %>
-        
-          <td class="caption3" width='120px'><%= fe.text_field :new_date, {:class => 'txt datepicker'} %></td>
-          <td><%= chosen_src "elongation_type_id", @elongation_types,@new_et,{nil_value: 'Выберите причину...'} %></td>
-          <td><%= fe.submit 'Добавить', class: 'btn_a' %>
-          </td>
-        <% end %>
 </div>

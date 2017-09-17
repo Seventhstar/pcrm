@@ -90,18 +90,19 @@ $(document).on 'click', '#btn-sub-send', (e) ->
     type: 'POST'
     url: attr_url
     data: values
-    dataType: 'JSON'
+    dataType: 'script'
     beforeSend: (xhr) ->
       xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
       return
-    success: ->
-      $.get url, null, null, 'script'
-      show_ajax_message 'Успешно добавлено'
+    success: (e, data, status, xhr) ->
+      # $('#'+e.add_to).append Mustache.to_html($('#'+e.template_name).html(), e)
+      show_ajax_message 'Успешно добавлено.'
       return
     error: (evt, xhr, status, error) ->      
-      errors = evt.responseText
-      #alert(typeof(errors))
-      show_ajax_message(errors,'error')
+      errors = $.parseJSON(evt.responseText)
+      $(".js-notes").html('')
+      $.each errors, (index, value) ->
+        add_ajax_message(value,'error')
       showNotifications();
   return
 
@@ -149,7 +150,7 @@ $(document).on 'click', '#btn-send', (e) ->
 $(document).on 'click', ' span.icon_remove', ->
     item_id = $(this).attr('item_id')
     url = document.URL.replace('#', '') #$('form').attr('action')
-    attr_url = $(this).parents('table').attr('action') 
+    attr_url = $(this).closest('table').attr('id') 
     if attr_url!=undefined
       del_url = '/'+attr_url + '/' + item_id
     else
@@ -162,10 +163,10 @@ $(document).on 'click', ' span.icon_remove', ->
     $.ajax
       url: del_url
       data: '_method': 'delete'
-      dataType: 'json'
+      dataType: 'script'
       type: 'POST'
       complete: ->
-        $.get url, null, null, 'script'
+        # $.get url, null, null, 'script'
         show_ajax_message('Успешно удалено')
         return
     return

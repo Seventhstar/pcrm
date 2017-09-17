@@ -97,6 +97,7 @@ $(document).ready ->
     disable_input_row()
     id = $(this).attr('itm')
     $('#'+id).show()
+    $('#table_'+id+' thead').removeClass('hidden')
     $(this).hide()
     $('.fw input').focus()
 

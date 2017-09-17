@@ -1,4 +1,6 @@
 class Project < ActiveRecord::Base
+  include ProjectsHelper
+  attr_accessor :first_comment, :days, :sum_rest
   belongs_to :client
   belongs_to :executor, class_name: 'User', foreign_key: :executor_id
   belongs_to :project_type
@@ -8,17 +10,18 @@ class Project < ActiveRecord::Base
   has_many :receipts
   has_many :project_g_types
   has_many :absence
-  has_many  :goods, class_name: "ProjectGood", dependent: :destroy
-
-  attr_accessor :first_comment, :days, :sum_rest
+  has_many :goods, class_name: "ProjectGood", dependent: :destroy
   has_many :elongations, class_name: 'ProjectElongation', dependent: :destroy
+
 
   validates :address, :length => { :minimum => 3 }
   validates :client_id, presence: true
   validates :footage, presence: true
-  #validates_numericality_of :footage, greater_than: 1
-  include ProjectsHelper
   accepts_nested_attributes_for :client
+  #validates_numericality_of :footage, greater_than: 1
+  # belongs_to :project_elongation
+  # accepts_nested_attributes_for :project_elongation, reject_if: :all_blank, allow_destroy: true
+
   has_paper_trail
 
   def client_name

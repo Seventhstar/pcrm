@@ -39,8 +39,8 @@ Rails.application.routes.draw do
   end
 
 
+  resources :project_elongations
   resources :projects do
-    resources :project_elongations, shallow: true
   end
 
   get 'projects/:id/:update_client' => 'projects#update_client'

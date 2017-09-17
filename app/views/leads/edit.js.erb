@@ -1,3 +1,3 @@
-$(".comments_box").html("<%= escape_javascript(render("shared/comments")) %>");
-$(".files_list_a").html("<%= escape_javascript(render("shared/files")) %>");
-$(".historyChange_box").html("<%= escape_javascript(render("shared/history")) %>");
+$(".comments_box").html("<%= j render("shared/comments") %>");
+$(".files_list_a").html("<%= j render("shared/files") %>");
+$(".historyChange_box").html("<%= j render("shared/history") %>");

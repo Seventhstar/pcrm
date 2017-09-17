@@ -1,0 +1,5 @@
+<tr id=<%= "pe_#{pe.id}" %>>
+  <td><%= pe.new_date.try('strftime','%d.%m.%Y') %></td>
+  <td><%= pe.description %></td>
+  <%= tool_icons(pe, {icons:'delete',tag:'span'}) %>
+</tr>

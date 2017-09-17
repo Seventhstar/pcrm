@@ -1,1 +1,7 @@
-alert(10);
+$("#project_elongations tr:last").before("<%= j render("elongation", pe: @pe) %>");
+$('#project_elongation_elongation_type_id').val(0);
+$('#project_elongation_elongation_type_id').trigger('chosen:updated');
+$('#project_elongation_new_date').val('');
+
+$('#project_date_end_plan').val('<%= @pe.project.last_elongation.try('strftime',"%d.%m.%Y") %>');
+$('#project_days').val('<%= @pe.project.days_duration %>');

@@ -8,6 +8,9 @@ ru:
       lead:
         source: "Источник"
         channel: "Канал"
+      project_elongation:
+        new_date: "Новая дата"
+        elongation_type: Причина продления
     successful:
       messages:
         created: "%{model} was successfully created."
@@ -21,7 +24,7 @@ ru:
         other: "%{resource}: сохранение не удалось из-за %{count} ошибки"
       messages:
         accepted: нужно подтвердить
-        blank: "не должно быть пустым"
+        blank: "Не должно быть пустым"
         required: "Не заполнено поле"
         present: нужно оставить пустым
         confirmation: 'не совпадает со значением поля %{t attribute}'

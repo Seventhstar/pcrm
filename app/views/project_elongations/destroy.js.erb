@@ -1,0 +1,3 @@
+$('#pe_<%= params[:id] %>').remove();
+$('#project_date_end_plan').val('<%= @project.last_elongation.try('strftime',"%d.%m.%Y") %>');
+$('#project_days').val('<%= @project.days_duration %>');

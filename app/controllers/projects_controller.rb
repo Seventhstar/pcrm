@@ -203,6 +203,7 @@ class ProjectsController < ApplicationController
         format.html { redirect_to project_page_url, notice: 'Проект успешно сохранен' }
         format.json { render :show, status: :ok, location: @project }
       else
+        # p "errors: #{@project.errors.full_messages}"
         format.html { render :edit }
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
@@ -272,7 +273,8 @@ class ProjectsController < ApplicationController
         :designer_price, :designer_price_2, :visualer_price, :days, 
         :designer_sum, :visualer_sum, :sum_total_executor, :sum_rest,
         :debt, :interest, :payd_q, :payd_full, :first_comment, :progress,
-        :client_attributes => [:name, :address, :phone, :email] )
+        client_attributes: [:name, :address, :phone, :email], 
+        elongations_attributes: [:new_date, :elongation_type_id, :_destroy] )
     end
 
     def sort_column

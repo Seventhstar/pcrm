@@ -15,9 +15,11 @@ module ProjectsHelper
     
     txt = content_tag 'input', '', value: v, onblur:"onBlur(this)", onfocus:"onFocus(this)", class: 'txt '+mask_cls + inp_add_mask, type: 'text', name: "#{obj_name}[#{val}]" , id: "#{obj_name}_#{val}", disabled: disabled
 
+    style = ""
+    style = 'width: '+params[:width] if params[:width]
 
     add_class = params[:class].nil? ? '' : ' '+params[:class]
-    content_tag 'td' do
+    content_tag 'td', style: style do
       content_tag 'div', class: 'inp_w'+add_class do
         lbl.nil? ? txt : lbl+txt
       end

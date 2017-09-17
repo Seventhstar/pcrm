@@ -264,6 +264,9 @@ module ApplicationHelper
     datap = modal ? {modal: true} : {}
     i_edit = (icons & ['icon_edit','inline_edit','modal_edit']).first
 
+    style = ""
+    style = 'width: ' + params[:width] if params[:width] 
+
     if params[:tag] == 'span'
       
       all_icons[i_edit] = content_tag :span, "", {class: 'icon '+i_edit , item_id: element.id} if !i_edit.nil?
@@ -275,7 +278,7 @@ module ApplicationHelper
       all_icons['delete'] = content_tag(:span,"",{class: 'icon icon_remove_disabled'}) if params[:subcount]>0
     end
 
-    content_tag content,{:class=>["edit_delete",add_cls,' ',params[:content_class]].join,:rowspan => params[:rowspan]} do
+    content_tag content,{class: ["edit_delete",add_cls,' ',params[:content_class]].join, rowspan: params[:rowspan], style: style} do
       icons.collect{ |i| all_icons[i] }.join.html_safe
     end
   end

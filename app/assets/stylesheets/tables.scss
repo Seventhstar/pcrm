@@ -55,7 +55,8 @@ table td{font-size: 13px;}
 .items_box_head:after {content: ' '; clear:both; display: block; width: 0; height: 0; overflow: hidden; font-size: 0;}
 
 .tleads, .tcalendar{ width: 100%; border-radius: 4px; -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05); box-shadow: 0 1px 1px rgba(0,0,0,.05);}
-.twfixed {table-layout: fixed;}
+table.twfixed {table-layout:fixed; }
+table.txfixed td { overflow: hidden; }
 
 .tleads thead{ border-radius: 0 3px 3px 0; }
 
