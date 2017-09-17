@@ -101,7 +101,7 @@ class ProjectGoodsController < ApplicationController
 
     def pg_params
       prm = params.permit!.to_h.first[0] 
-      p "params #{params} = #{prm}"
+      #p "params #{params} = #{prm}"
       params.require(prm).permit(:goodstype_id,:provider_id,:date_supply,:date_place,:date_offer, 
         :currency_id,:gsum,:order,:name,:description, :fixed, :sum_supply, :project_id)
     end

@@ -1,5 +1,4 @@
-<% if total[1]>0 %>
-<tr class="total">
+<tr class="total <%= total[1]>0 ? '' : 'hidden' %>">
     <% case params[:good_state] %> 
     <% when '1' %> 
       <td colspan="7">Итого предложено: <%= total_info(total).html_safe %></td>
@@ -12,4 +11,3 @@
       <td colspan="4">Итого заказано: <%= total_info(total_order).html_safe %></td>    
     <% end %>
 </tr>
-<% end -%>

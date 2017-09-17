@@ -2,10 +2,15 @@ module ApplicationHelper
   include CurrencyHelper
   
   def attr_boolean?(item,attr)
-    item.class.column_types[attr.to_s].class == ActiveRecord::Type::Boolean
+    item.column_for_attribute(attr.to_s).class == ActiveRecord::Type::Boolean
+    # item.class.column_types[attr.to_s].class == ActiveRecord::Type::Boolean
   end
-    def attr_date?(item,attr)
-    item.class.column_types[attr.to_s].class == ActiveRecord::ConnectionAdapters::PostgreSQL::OID::Date
+  
+  def attr_date?(item,attr)
+      # p "attr #{attr} #{item.column_for_attribute(attr.to_s).type== :date}"
+    item.column_for_attribute(attr.to_s).type == :date
+    # item.column_for_attribute(attr.to_s).class == ActiveRecord::ConnectionAdapters::PostgreSQL::OID::Date
+    # item.class.column_types[attr.to_s].class == ActiveRecord::ConnectionAdapters::PostgreSQL::OID::Date
   end
 
   def is_admin?

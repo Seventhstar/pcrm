@@ -164,12 +164,17 @@ class AjaxController < ApplicationController
 
         render html: obj.errors.full_messages, status: :unprocessable_entity
       else
-        # msg = "Успешно обновлено: "+ t(obj.class.name)
+        # p "obj.errors.full_messages #{obj.errors.full_messages}"
+        # respond_to do |format|
+        # # msg = "Успешно обновлено: "+ t(obj.class.name)
+        # end
+        msg = "Успешно обновлено: "+ t(obj.class.name)
+        render json: msg.to_json, status: :ok
         #p "obj: #{obj}"
-        respond_to do |format|
-          format.js { render location: params[:model].tableize+'#update' }
-          # respond_with(obj, location: )
-        end
+        # respond_to do |format|
+        #   format.js { render location: params[:model].tableize+'#update' }
+        #   # respond_with(obj, location: )
+        # end
       end
      else
       # render json: nil, status: :ok

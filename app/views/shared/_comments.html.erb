@@ -22,13 +22,11 @@
 
   <% if controller.action_name == 'edit' %>
   <div class="commentAdd_form">
-
-    <%= form_for( [@owner.comments.new], remote: true, data: {format: "json"} ) do |fc| %>
-    <%= fc.hidden_field :owner_type, value: @owner.class  %>
-    <%= fc.hidden_field :owner_id, value: @owner.id %>
-    <%= fc.text_field "comment", class: 'txt', placeholder: "Новый комментарий" %>
-    <%= fc.submit 'Отправить', class: 'sub btn_a' %>
-
+    <%= form_for( Comment.new, remote: true, data: {format: "json"} ) do |fc| %>
+      <%= fc.hidden_field :owner_type, value: @owner.class  %>
+      <%= fc.hidden_field :owner_id, value: @owner.id %>
+      <%= fc.text_field "comment", class: 'txt', placeholder: "Новый комментарий" %>
+      <%= fc.submit 'Отправить', class: 'sub btn_a' %>
     <% end %>
   </div>
   <% end %>

@@ -1,37 +1,31 @@
-
-
 <% first_col = true %>
 
 <% @all_total = [0,0,0,0] %>
 <% @prj_good_types.each do |pgt| %>
+  <% total = [0,0,0,0] %>
+  <% case @gs %>
+  <% when 1 %>
+      <% @goods = pgt.goods.where(order: false) %>
+  <% when 2 %> 
+      <%  @goods = pgt.goods.where(order: true, fixed: false) %>
+  <% when 3 %>
+      <%  @goods = pgt.goods.where(fixed: true) %>
+  <% else %>
+      <%  @goods = pgt.goods %>
+  <% end %>
 
-<% case @gs %>
-<% when 1 %>
-    <% @goods = pgt.goods.where(order: false) %>
-<% when 2 %> 
-    <%  @goods = pgt.goods.where(order: true, fixed: false) %>
-<% when 3 %>
-    <%  @goods = pgt.goods.where(fixed: true) %>
-<% else %>
-    <%  @goods = pgt.goods %>
-<% end %>
+  <div class="panel panel-default" id="table_new_pgt_item<%= pgt.id %>">
+    <div class="panel-heading table-heading head month"><%= pgt.name %> 
+      <span class="sub btn_add right" itm="new_pgt_item<%= pgt.id %>">Добавить позицию</span></div>
 
-<div class="panel panel-default" id="table_new_pgt_item<%= pgt.id %>">
-<div class="panel-heading table-heading head month"><%= pgt.name %> 
-<span class="sub btn_add right" itm="new_pgt_item<%= pgt.id %>">Добавить позицию</span></div>
+    <% if @gs ==2 %> 
+      <%= render 'goods_ordered', pgt: pgt, first_col: first_col %>
+    <% else %>
+      <%= render 'goods', pgt: pgt, first_col: first_col %>
+    <% end %>
 
-
-
-<% if @gs ==2 %> 
-  <%= render 'goods_ordered', pgt: pgt, first_col: first_col %>
-<% else %>
-  <%= render 'goods', pgt: pgt, first_col: first_col %>
-<% end %>
-
-
-  
-  <% first_col = false %>
-</div>
+    <% first_col = false %>
+  </div>
 <% end %>
 
 

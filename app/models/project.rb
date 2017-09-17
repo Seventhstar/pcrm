@@ -1,11 +1,12 @@
 class Project < ActiveRecord::Base
   include ProjectsHelper
+  include Comments
   attr_accessor :first_comment, :days, :sum_rest
   belongs_to :client
   belongs_to :executor, class_name: 'User', foreign_key: :executor_id
   belongs_to :project_type
   belongs_to :pstatus, class_name: 'ProjectStatus',foreign_key: :pstatus_id
-  has_many :comments, :as => :owner
+  # has_many :comments, :as => :owner
   has_many :attachments, :as => :owner
   has_many :receipts
   has_many :project_g_types

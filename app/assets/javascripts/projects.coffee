@@ -97,9 +97,10 @@ $(document).ready ->
     disable_input_row()
     id = $(this).attr('itm')
     $('#'+id).show()
-    $('#table_'+id+' thead').removeClass('hidden')
+    $('#table_'+id+' .hidden').removeClass('hidden')
     $(this).hide()
-    $('.fw input').focus()
+    # $('#table_'+id+'.fw input').focus()
+    $('#table_' + id + ' .new_row input')[1].focus()
 
   $('#project_payd_full,#project_payd_q').click ->
     f = $('#project_payd_full')

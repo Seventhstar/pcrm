@@ -4,29 +4,28 @@
 <% total = [0,0,0,0] %>
 <% total_order = [0,0,0,0] %>
 <% @goods.order(:id).each do |g| %>
-<% if check_new_table_head(g) %>
-  <% if !@first_table %>
+  <% if check_new_table_head(g) %>
+    <% if !@first_table %>
+      <%= render 'total', total: total, total_order: total_order %>
+      <% total = [0,0,0,0] %><% total_order = [0,0,0,0] %>
+    <% end %>
+    <%= render "shared/head", link: g.project %>
+    <tr>
+      <th width='220px'>Позиция</th>
+      <th width='216px'>Поставщик</th>
+      <th width='115px'>Дата</th>
+      <th width='230px'>Примечание</th>
+      <th width='58px'>Валюта</th>
+      <th fld='gsum' width='90px'>Стоимость</th>
+      <th width='48px'></th>
+    </tr></thead>
+    <tbody>
+  <% end %>
+
+    <%= render "good", g: g %> 
+    <%  total[g.currency_id] = total[g.currency_id] + g.gsum if !g.gsum.nil? %>
+    <%  total_order[g.currency_id] = total_order[g.currency_id] + g.sum_supply if !g.sum_supply.nil? && g.order %>
+    <% end %>
     <%= render 'total', total: total, total_order: total_order %>
-    <% total = [0,0,0,0] %><% total_order = [0,0,0,0] %>
-  <% end %>
-  <%= render "shared/head", link: g.project %>
-  <tr>
-    <th width='220px'>Позиция</th>
-    <th width='216px'>Поставщик</th>
-    <th width='115px'>Дата</th>
-    <th width='230px'>Примечание</th>
-    <th width='58px'>Валюта</th>
-    <th fld='gsum' width='90px'>Стоимость</th>
-    <th width='48px'></th>
-  </tr></thead>
-  <tbody>
-
-<% end -%>
-
-  <%= render "good", g: g %> 
-  <%  total[g.currency_id] = total[g.currency_id] + g.gsum if !g.gsum.nil? %>
-  <%  total_order[g.currency_id] = total_order[g.currency_id] + g.sum_supply if !g.sum_supply.nil? && g.order %>
-  <% end %>
-  <%= render 'total', total: total, total_order: total_order %>
-</tbody>
+  </tbody>
 </table>
