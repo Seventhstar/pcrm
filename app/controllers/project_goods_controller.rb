@@ -5,6 +5,7 @@ class ProjectGoodsController < ApplicationController
   before_action :check_sum, only: [:create,:update]
   helper_method :sort_column, :sort_direction
 
+
   def index
     params.delete_if{|k,v| v=='' || v=='0' }
     years = Project.select("projects.*, date_trunc('year', date_start) AS year").where('date_start IS NOT NULL').order('date_start')
@@ -36,14 +37,15 @@ class ProjectGoodsController < ApplicationController
     @pg = ProjectGood.new(pg_params)
     @pg.project_id = params[:owner_id].split('_').last
     p "@pg #{@pg}"
+    if @pg.save 
+      p "pg save" 
+    else
     respond_to do |format|
       # !@pg.new_date.nil? &&
-      if @pg.save 
-        format.html { redirect_to absences_url, notice: 'Менеджер успешно создан.' }
-        format.json { render json: @pg.errors, status: :ok, location: @pg }
-      else
-        format.html { render nothing: true }
-        format.json { render json: @pg.errors, status: :unprocessable_entity }
+        # format.html { redirect_to absences_url, notice: 'Менеджер успешно создан.' }
+        # format.json { render json: @pg.errors, status: :ok, location: @pg }
+        # format.html { render nothing: true }
+        format.json { render json: @pg.errors.full_messages, status: :unprocessable_entity }
       end
     end 
   end
@@ -54,6 +56,12 @@ class ProjectGoodsController < ApplicationController
       format.html { redirect_to request.referer+'#tabs-4', notice: 'Позиция успешно удалена.' }
       format.json { head :no_content }
     end
+  end
+
+  def update
+    @pg.update(pg_params)    
+    @pg.save 
+    
   end
 
   def edit
@@ -92,7 +100,8 @@ class ProjectGoodsController < ApplicationController
     end
 
     def pg_params
-      prm = params.first[0] 
+      prm = params.permit!.to_h.first[0] 
+      p "params #{params} = #{prm}"
       params.require(prm).permit(:goodstype_id,:provider_id,:date_supply,:date_place,:date_offer, 
         :currency_id,:gsum,:order,:name,:description, :fixed, :sum_supply, :project_id)
     end

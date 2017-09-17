@@ -5,7 +5,7 @@ class ProjectsController < ApplicationController
   helper_method :sort_2, :dir_2
   helper_method :sort_column, :sort_direction
   # attr_accessor :days,:sum_rest
-  respond_to :html, :json
+  respond_to :html, :json, :js
 
   include ProjectsHelper
 
@@ -191,6 +191,17 @@ class ProjectsController < ApplicationController
     # end
   end
 
+  def add_goodstype
+    @project = Project.find(params[:g_type][:project_id])
+    def_params
+    # pgt = Goodstype.where(default: true).pluck(:id)
+    pgt = []
+    pgt << params[:g_type][:g_type_id] 
+    @prj_good_types = Goodstype.where(id: [pgt])
+    # respond_to do |format|
+    #   format.json { render json: 'weuhfeu', status: :unprocessable_entity }
+    # end
+  end
 
   # PATCH/PUT /projects/1
   # PATCH/PUT /projects/1.json

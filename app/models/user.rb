@@ -44,6 +44,12 @@ class User < ActiveRecord::Base
     SecureRandom.urlsafe_base64
   end
 
+  def avatar_for
+    
+    self.avatar.try(:url).nil? ? '/assets/unknown.png' : self.avatar.url
+    
+  end
+
   # Remembers a user in the database for use in persistent sessions.
   def remember
     self.remember_token = User.new_token

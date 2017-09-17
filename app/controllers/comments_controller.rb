@@ -31,11 +31,17 @@ class CommentsController < ApplicationController
   end
 
   def create
-
     @comment = Comment.new(comment_params)
     @comment.user = current_user
     if @comment.save
-      # render json: { status: :ok }
+      admins = User.where(admin: true).ids # помечаем сообщения непрочитанными
+      admins.delete(current_user.id) # кроме себя
+      admins.each do |a|
+        cu = CommentUnread.new
+        cu.user_id = a
+        cu.comment_id = @comment.id
+        cu.save
+      end
     else
       respond_to do |format|
         format.json do
@@ -56,12 +62,12 @@ class CommentsController < ApplicationController
     end
 
     def publish_comment
-      p "@comment #{@comment}"
       return if @comment.errors.any?
       result = { comment: @comment.as_json(include: :user) }
       id = @comment.owner.id
       ActionCable.server.broadcast("comments/owner_#{id}", result)
-      data = {id: @comment.id, comment: @comment.comment, created_at: @comment.created_at.strftime("%d.%m.%Y %H:%M:%S"), username: @comment.user.name}
+      data = {id: @comment.id, comment: @comment.comment, created_at: @comment.created_at.strftime("%d.%m.%Y %H:%M:%S"), 
+              username: @comment.user.name, user_id: @comment.user.id, avatar: @comment.user.avatar_for}
       ActionCable.server.broadcast("comments", data)
     end
 

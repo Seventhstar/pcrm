@@ -64,14 +64,14 @@ class AjaxController < ApplicationController
       end
 
    end
-	 render :nothing => true
+   render :nothing => true
   end
 
   def del_comment
    if params[:comment_id] 
       leadcomment = Comment.find(params[:comment_id]).destroy
    end
-  	render :nothing => true
+    render :nothing => true
   end
 
   def store_cut
@@ -108,7 +108,7 @@ class AjaxController < ApplicationController
    if params[:develop_id]
       develop = Develop.find(params[:develop_id])
       if params[:field] == "boss"    
-	      develop.dev_status_id = params[:checked]=='true' ? 3 : 4
+        develop.dev_status_id = params[:checked]=='true' ? 3 : 4
         develop.save  
       else
         if [1,2,4].include?(develop.dev_status_id)
@@ -145,29 +145,37 @@ class AjaxController < ApplicationController
   end
 
   def upd_param
-  	if params['model'] && params['model']!='undefined'
+    if params['model'] && params['model']!='undefined'
 
-  		obj = Object.const_get(params['model']).find(params['id'])
+      obj = Object.const_get(params['model']).find(params['id'])
       prms = params[:upd]
       prms = params['upd'+params[:id]] if prms.nil?
       prms = params['upd_modal'] if prms.nil?
 
+      prms = prms.permit!.to_h
       prms.each do |p|
         new_value = p[1]
         new_value.gsub!(' ','') if !p[0].index('sum').nil?
         obj[p[0]] = new_value if p[0]!='undefined'
       end
+
+
       if !obj.save
+
         render html: obj.errors.full_messages, status: :unprocessable_entity
       else
-        msg = "Успешно обновлено: "+ t(obj.class.name)
-        render html: msg, status: :ok
+        # msg = "Успешно обновлено: "+ t(obj.class.name)
+        #p "obj: #{obj}"
+        respond_to do |format|
+          format.js { render location: params[:model].tableize+'#update' }
+          # respond_with(obj, location: )
+        end
       end
      else
-      render json: nil, status: :ok
-   	 end
-   	 # render :nothing => true 
+      # render json: nil, status: :ok
+     end
+     # render :nothing => true 
      
-   	end
+    end
 
 end

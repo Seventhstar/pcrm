@@ -41,6 +41,9 @@ Rails.application.routes.draw do
 
   resources :project_elongations
   resources :projects do
+    collection do
+      post :add_goodstype
+    end
   end
 
   get 'projects/:id/:update_client' => 'projects#update_client'

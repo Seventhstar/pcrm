@@ -142,9 +142,29 @@
 </div>
 
 <div id="tabs-4" class="ptab">
-  <div id="pgoods">
+  
+
+    <div class="box_wrap items_box_param">
+    <%= hidden_field 'g_type','project_id', value: @project.id %>
+    <div class="left mgn_right15" style="width:270px ">
+    <%= chosen_src "g_type[g_type_id]", @gtypes,"g_type",{nil_value: 'Выберите вид товара...'} %>
+    </div>
+    <span class="sub btn_a" id="btn-sub-send" pe_id="<%= @project.id %>" action='/projects/add_goodstype' prm='g_type'> Добавить вид товара</span>
+    <div class="right">
+    <%= chosen_src "good_state",good_state_src, params[:good_state],{nil_value: 'Все позиции',class: 'tab-chosen'} %>
+    <div id=pdf>
+      <%= link_to image_tag('pdf.png'), project_path(@project,format: :pdf), target: :_blank %> 
+    </div>
+    </div>
+    </div>
+
+    <div class="sep_15"></div>
+  <div id="pgoods">  
     <%= render partial: 'pgoods', locals: { f: f } %>
   </div>
+  <div class="total-footer">Общий итог:
+  <span class="right"><%= total_info(@all_total).html_safe %></span></div>
+
 </div>
 
 <div id="tabs-5" class="ptab">
@@ -199,9 +219,9 @@
 <div class="box_wrap box_wrap_1">
   <div class="panel-left lead_files">  
     <div class="sep_15"></div>
-    	<% if !@owner.nil? %>	
-    		<%= render "shared/attach_list" %>
-    	<% end -%>
+      <% if !@owner.nil? %> 
+        <%= render "shared/attach_list" %>
+      <% end -%>
   </div>
 </div>
 </div>

@@ -34,13 +34,14 @@
   $.ajax
       url: '/ajax/upd_param'
       data: param
+      dataType: 'script'
       type: 'POST'
       beforeSend: (xhr) ->
         xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
         return
       success: (event, xhr, settings) ->
         disable_input(false)
-        if reload then update_page()
+        # if reload then update_page()
         show_ajax_message(event,'success')
         if modal then $('.modal').modal('hide')
       error: (evt, xhr, status, error) ->      
@@ -197,10 +198,15 @@ $(document).ready ->
 
   $(document).on 'click', 'span.modal_apply', ->
     prm = $(this).attr('prm')
-    model = $(this).attr('model')
+    action = $(this).attr('action')
     item_id = $(this).attr('item_id')
     params = $('[name^='+prm+']').serialize()    
-    upd_param(params+'&model='+model+'&id='+item_id,true,true)
+    $.ajax
+      url: action+item_id
+      data: params
+      dataType: 'script'
+      type: 'PATCH'
+    # upd_param(params+'&model='+model+'&id='+item_id,true,true)
 
 # поиск 
   $('#search').on 'keyup', (e)-> 

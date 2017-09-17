@@ -417,7 +417,7 @@ input[type='number']::-webkit-inner-spin-button {
 .jsph1 { height: 400px; }
 
 .comments_list_a {}
-.comments_list_a .item{padding: 14px 0 0 0; margin: 14px 0 0 64px; border-top:1px solid #e5e5e5; line-height:1.25;}
+.comments_list_a .item{padding: 0 6px; margin: 14px 0 0 64px; border-top:1px solid #e5e5e5; line-height:1.25;}
 .comments_list_a .item:first-child{border: 0; padding-top: 0; margin-top: 0;}
 .comments_list_a .item:after {content: ' '; clear:both; display: block; width: 0; height: 0; overflow: hidden; font-size: 0;}
 .comments_list_a .item .pic{float:left; width: 50px; margin:0 0 0 -64px;}

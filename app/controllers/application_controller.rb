@@ -29,7 +29,10 @@ class ApplicationController < ActionController::Base
   private
 
     def gon_user
-      gon.user_id = current_user.id if current_user
+      if current_user
+        gon.user_id = current_user.id 
+        gon.admin = current_user.admin?  
+      end
     end
 
 end
