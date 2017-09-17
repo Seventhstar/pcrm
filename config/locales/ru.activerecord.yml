@@ -11,6 +11,8 @@ ru:
         status: Статус
         ic_user: Ответственный
         info: Информация
+      user:
+        email: 'e-mail'
       project_elongation:
         new_date: "Новая дата"
         elongation_type: Причина продления
@@ -38,7 +40,7 @@ ru:
         greater_than: может иметь значение большее %{count}
         greater_than_or_equal_to: может иметь значение большее или равное %{count}
         inclusion: имеет непредусмотренное значение
-        invalid: имеет неверное значение
+        invalid: Имеет неверное значение
         less_than: может иметь значение меньшее чем %{count}
         less_than_or_equal_to: может иметь значение меньшее или равное %{count}
         not_a_number: не является числом

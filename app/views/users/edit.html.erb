@@ -2,7 +2,7 @@
 <div class="hl hl_a bd">Редактировать пользователя</div>
 
 <%= form_for(@user) do |f| %>
-
+<% p "user #{@user.to_json}" %>
 <div class="box_wrap box_wrap_1">
 <div class="panel-left">
   <table class="tbl_fc tbl_fc_1">
@@ -13,7 +13,7 @@
     <tr><td class="caption">E-mail:</td>
         <td><div class="inp_w"><%= f.text_field :email, class: 'form-control' %></div></td></tr>    
     <tr><td class="caption">Telegram:</td>
-        <td><div class="inp_w"><%= f.text_field :telegram, class: 'form-control' %></div></td></tr>  
+        <td><div class="inp_w"><%= f.text_field :telegram, value: @user.telegram.nil? ? ' ' : @user.telegram , class: 'form-control' %></div></td></tr>  
     <tr><td class="caption">Пароль:</td>
         <td><div class="inp_w"><%= f.password_field :password, class: 'form-control' %></div></td></tr>    
 

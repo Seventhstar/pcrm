@@ -56,6 +56,7 @@ class UsersController < ApplicationController
       end
       redirect_to '/options/users'
     else
+      flash[:error] = @user.errors.full_messages
       render 'edit'
     end
 
