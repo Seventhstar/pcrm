@@ -59,7 +59,7 @@ class ProjectsController < ApplicationController
 
     sort_1 = @sort_column #== 'date_end_plan' ? 'month' : @sort_column
     @numsort = (sort_1 == "number") 
-        
+
 
     if params[:sort] == 'executor_id'
       sort_1 = "users.name"
@@ -74,7 +74,7 @@ class ProjectsController < ApplicationController
     @sort = sort_1
     # p project_stored_page_url
   end
- 
+
   # GET /projects/1
   # GET /projects/1.json
   def show
@@ -230,31 +230,44 @@ class ProjectsController < ApplicationController
   end
 
   private
-    def get_debt(to_date = '')
-      if to_date == ''
-        @cl_payments = @project.receipts.where(provider_id: 0).order(:date)
-      else
-        @cl_payments = @project.receipts.where('provider_id = 0 and date < ?', to_date).order(:date)
-      end
-
-      @cl_total = @cl_payments.sum(:sum)
-      @cl_debt  =  (@project.total - @cl_total).to_i
+  def get_debt(to_date = '')
+    if to_date == ''
+      @cl_payments = @project.receipts.where(provider_id: 0).order(:date)
+    else
+      @cl_payments = @project.receipts.where('provider_id = 0 and date < ?', to_date).order(:date)
     end
 
-    def store_prj_path
-      session[:last_projects_page] = request.url || projects_url if request.get?
-    end
+    @cl_total = @cl_payments.sum(:sum)
+    @cl_debt  =  (@project.total - @cl_total).to_i
+  end
+
+  def store_prj_path
+    session[:last_projects_page] = request.url || projects_url if request.get?
+  end
 
 
 
-    def check_sum
-      prms = ['price','price_2','price_real','price_2_real','sum','sum_2','sum_real','sum_2_real',
-              'sum_total','sum_total_real','designer_price', 'designer_price_2','visualer_price',
-              'visualer_sum','designer_sum',
-              'sum_total_executor']
+  def check_sum
+    prms = ['price','price_2','price_real','price_2_real','sum','sum_2','sum_real','sum_2_real',
+      'sum_total','sum_total_real','designer_price', 'designer_price_2','visualer_price',
+      'visualer_sum','designer_sum',
+      'sum_total_executor']
       prms.each do |p|
+        # p "project_params[p] #{project_params[p]}"
         project_params[p] = project_params[p].gsub!(' ','') if !project_params[p].nil?
+        # p "project_params[p] #{project_params[p]}"
       end
+
+      # p "project_params.class #{project_params.class}"
+      if !project_params[:progress].nil? && project_params["progress"].to_i>100
+        # p project_params
+      # p "project_params[:progress] #{project_params[:progress]}"
+        project_params["progress"] = 100
+        # p project_params["progress"].class
+      # p "project_params['progress'] #{project_params['progress']}"
+      # p  project_params
+      end
+      # jehj
     end
 
     # Use callbacks to share common setup or constraints between actions.
@@ -303,4 +316,4 @@ class ProjectsController < ApplicationController
       %w[asc desc].include?(params[:dir2]) ? params[:dir2] : defaul_dir
     end
 
-end
+  end

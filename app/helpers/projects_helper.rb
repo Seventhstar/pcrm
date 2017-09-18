@@ -30,7 +30,20 @@ module ProjectsHelper
     f.nil? || f==0 || f=='0.0' || f=='0'
   end
 
+  def all_sum(g)
+    gsum = g.gsum.nil? ? '' : g.gsum.to_sum
+    gsum = ["<span class='striked'>",gsum,'</span>'].join if gsum.length && g.order && g.sum_supply != g.gsum
+    a = gsum 
+    a = [gsum,'<br>',g.sum_supply.to_sum].join if !g.sum_supply.nil? && g.sum_supply != g.gsum
+    a.html_safe
+  end
 
+  def all_sum_info(g)
+      gsum = g.gsum.nil? ? '' : g.gsum.to_sum
+      a = 'Предложено: ' + gsum 
+      a = [a,'&#013; Заказано: ',g.sum_supply.to_sum].join if !g.sum_supply.nil?
+      a.html_safe
+  end
 
 
   def class_prj_td (prj)
@@ -57,46 +70,46 @@ module ProjectsHelper
     while date > date1
      business_days = business_days + 1 unless date.saturday? or date.sunday? or hdays.include?(date)
      date = date - 1.day
-    end
-    business_days
-  end
+   end
+   business_days
+ end
 
-  def project_page_url
-      sess_url  = session[:last_projects_page]
-      sess_url || projects_url
-  end
+ def project_page_url
+  sess_url  = session[:last_projects_page]
+  sess_url || projects_url
+end
 
-  def class_for_prj_goods(g)
-    cls = 'placed'
-    cls = 'ordered' if g.order
-    cls = "fixed"   if g.fixed
-    cls
-  end
+def class_for_prj_goods(g)
+  cls = 'placed'
+  cls = 'ordered' if g.order
+  cls = "fixed"   if g.fixed
+  cls
+end
 
-  def icon_for_project (prj)
-      cntnt = '<div class="icons-indicate">'   
-      cntnt = cntnt + image_tag('debt.png', title: 'Заказчик должен денег') if prj.debt
-      
-      cntnt = cntnt + image_tag('25.png', title: '25% процентов оплаты') if prj.payd_q
-      cntnt = cntnt + image_tag('100.png', title: 'Оплачен, но не сдан') if prj.payd_full
+def icon_for_project (prj)
+  cntnt = '<div class="icons-indicate">'   
+  cntnt = cntnt + image_tag('debt.png', title: 'Заказчик должен денег') if prj.debt
 
-      cntnt = cntnt + image_tag('hammer.png', title: 'Интерес к стройке') if prj.interest
-      
-      if is_admin? && prj.comments.count>0
-        if !prj.comments.last.receivers.find_by_user_id(current_user.id).nil?
+  cntnt = cntnt + image_tag('25.png', title: '25% процентов оплаты') if prj.payd_q
+  cntnt = cntnt + image_tag('100.png', title: 'Оплачен, но не сдан') if prj.payd_full
+
+  cntnt = cntnt + image_tag('hammer.png', title: 'Интерес к стройке') if prj.interest
+
+  if is_admin? && prj.comments.count>0
+    if !prj.comments.last.receivers.find_by_user_id(current_user.id).nil?
          #   cntnt = cntnt + image_tag('comment_unread.png', title: 'Есть комментарии') 
          # else
-          cntnt = cntnt + image_tag('comment.png', title: 'Новый комментарий')
-        end
-      end
+         cntnt = cntnt + image_tag('comment.png', title: 'Новый комментарий')
+       end
+     end
 
-      cntnt = cntnt + image_tag('attention.png', title: 'Особое внимание') if prj.attention
+     cntnt = cntnt + image_tag('attention.png', title: 'Особое внимание') if prj.attention
       # cntnt = cntnt + image_tag('stopped.png', title: 'Проект приостановлен') if prj.pstatus_id == 2
       cntnt = cntnt + '</div>'
-  end
+    end
 
-  def good_state_src
-    [['Предложенные',1],['Заказанные',2],['Закрытые',3]]
-  end
+    def good_state_src
+      [['Предложенные',1],['Заказанные',2],['Закрытые',3]]
+    end
 
-end
+  end

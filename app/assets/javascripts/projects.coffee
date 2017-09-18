@@ -102,6 +102,16 @@ $(document).ready ->
     # $('#table_'+id+'.fw input').focus()
     $('#table_' + id + ' .new_row input')[1].focus()
 
+  $(".container").on 'change','#project_pstatus_id', ->
+    $('#project_progress').val(0)
+
+  $(".container").on 'blur','#project_progress', -> 
+    v = $(this).val()
+    if v >100
+      $(this).val(100)   
+    if v <0
+      $(this).val(0)
+
   $('#project_payd_full,#project_payd_q').click ->
     f = $('#project_payd_full')
     q = $('#project_payd_q')

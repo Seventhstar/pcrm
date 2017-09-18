@@ -270,7 +270,7 @@ module ApplicationHelper
     modal = params[:modal] ||= false
     dilable_cls = params[:subcount]>0 ? '_disabled' : ''
     datap = modal ? {modal: true} : {}
-    i_edit = (icons & ['icon_edit','inline_edit','modal_edit']).first
+    i_edit = (icons & ['icon_edit','inline_edit','modal_edit','basket']).first
 
     style = ""
     style = 'width: ' + params[:width] if params[:width] 

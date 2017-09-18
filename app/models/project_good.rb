@@ -12,6 +12,10 @@ class ProjectGood < ActiveRecord::Base
     provider.try(:name)
   end
 
+  def project_name
+    project.try(:name)
+  end
+
   def currency_print_name
     c = ''
     cpn = ['р.', 'евро', 'дол.']

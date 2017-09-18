@@ -17,18 +17,21 @@ module CommonHelper
   end
 
   def check_new_table_head( obj )
+    p "params[:sort] #{params[:sort]}"
     case params[:sort]
     when "users.name"
       new_head = head_name(obj,'user_id')
     when "ic_users.name"
       new_head = head_name(obj,'ic_user_id')
-    when "status_id","pstatus_id","start_date", "status_date", "executor_id", "project_type_id", "provider_id","project_g_type_id"
+    when "status_id","pstatus_id","start_date", "status_date", "project_id",
+         "executor_id", "project_type_id", "provider_id","project_g_type_id"
+         p "head_name(obj,params[:sort]) #{head_name(obj,params[:sort])}"
       new_head = head_name(obj,params[:sort])
     else
       if obj.class.name == "Lead"
         new_head = is_admin? ? head_name(obj,'status_date') : head_name(obj,'start_date') 
       elsif obj.class.name == "ProjectGood"
-        new_head = head_name(obj,'goodstype_id')
+        new_head = head_name(obj,params[:sort])
       else
         new_head = nil
       end
@@ -55,10 +58,10 @@ module CommonHelper
       val = User.find(id).try(:name) if !id.nil? && id>0 
     when 'start_date','status_date'
       val = month_year(id)
-    when 'project_g_type_id'
+    when 'project_id'
       val = 'Не все данные заполнены'
-      val = obj.try(:project_g_type).try(:project).try(:address)
-      id = obj.try(:project_g_type).try(:project).try(:id)
+      val = obj.try(:project).try(:address)
+      id = obj.try(:project).try(:id)
     else
       prop_name = id_name[0..-4]+'_name'
       val = obj.try(prop_name)

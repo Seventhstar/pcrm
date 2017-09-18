@@ -4,8 +4,9 @@
   <td width='115px'><%= g.date_place.try('strftime',"%d.%m.%Y") %></td>
   <td width='230px'><%= g.description %></td>
   <td><%= g.currency_name %></td>
-  <td width='90px' class="">
-    <%= g.order ? (g.sum_supply.to_sum if !g.sum_supply.nil? ) : (g.gsum.to_sum if !g.gsum.nil?) %>
+  <td width='90px' class="" title="<%= all_sum_info(g) %>">
+    <%= all_sum(g) %>
+    
   </td>
-  <%= tool_icons(g, {icons:'modal_edit,delete',tag:'link', add_class:'td_right', modal: true}) %>
+  <%= tool_icons(g, {icons:'basket,delete',tag:'link', add_class:'td_right', modal: true}) %>
 </tr>

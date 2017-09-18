@@ -9,7 +9,9 @@
       <%= render 'total', total: total, total_order: total_order %>
       <% total = [0,0,0,0] %><% total_order = [0,0,0,0] %>
     <% end %>
-    <%= render "shared/head", link: g.project %>
+    <% p "@cur_head #{@cur_head}" %>
+    <% p "head: #{g.try(params[:sort].sub('_id',''))}" %>
+    <%= render "shared/head", link: g.try(params[:sort].sub('_id','')) %>
     <tr>
       <th width='220px'>Позиция</th>
       <th width='216px'>Поставщик</th>
