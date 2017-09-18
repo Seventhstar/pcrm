@@ -1,6 +1,6 @@
 <table class="tleads twfixed" id="project_goods<%= pgt.id %>"  model="ProjectGood" action="project_goods" color_cls="ordered">
-   
-  <thead class="<%= @goods.count>0 ? '' : 'hidden' %>">
+  <% opened = local_assigns.has_key?(:opened) ? opened : false %>   
+  <thead class="<%= @goods.count>0 || opened ? '' : 'hidden' %>">
     <tr>
       <th width='220px'>Позиция</th>
       <th width='216px'>Поставщик</th>
@@ -30,7 +30,7 @@
         
       </tr>
     <% end %>
-      <tr id="new_pgt_item<%= pgt.id %>" class="invisible editable new_row">
+      <tr id="new_pgt_item<%= pgt.id %>" class="<%= opened ? '' : 'invisible' %> editable new_row">
         <% iname = ['project_good_',pgt.id,'_'].join %>
         <%= hidden_field iname,'goodstype_id', value: pgt.id %>
         <td class="fw" width='220px'><%= text_field iname,:name, {:class => 'txt'} %></td>

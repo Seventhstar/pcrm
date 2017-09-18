@@ -104,7 +104,8 @@ class ProjectsController < ApplicationController
   def def_params
     @owner = @project
     @holidays =  Holiday.pluck(:day).collect{|d| d.try('strftime',"%Y-%m-%d")}
-    @gtypes = Goodstype.all
+    @gtypes = Goodstype.where.not(id: [@pgt]).order(:name)
+    #@gtypes = Goodstype.all
     # @files    = @lead.attachments
     # @history  = get_history_with_files(@lead)
   end
@@ -130,7 +131,6 @@ class ProjectsController < ApplicationController
     end
 
     get_debt
-    def_params
     @comm_height = 350
     @owner = @project
     @files        = @project.attachments
@@ -140,9 +140,12 @@ class ProjectsController < ApplicationController
 
     pgt = Goodstype.where(default: true).pluck(:id)
     types_from_project = @project.goods.pluck(:goodstype_id).uniq
-    pgt.concat types_from_project
+    pgt = pgt.concat(types_from_project)
+    @pgt = pgt
     @prj_good_types = Goodstype.where(id: [pgt]).order(:name)
-    # @gtypes = gt.empty? ? Goodstype.order(:name) : Goodstype.where('not id in (?)',gt).order(:name)
+    
+    def_params
+    # @gtypes = gt.empty? ? Goodstype.order(:name) : 
     # @prj_good_types = @project.project_g_types.order("goodstype.name")
     # @prj_good_types = ProjectGType.joins(:goodstype).where('g_type_id in (?) and project_id = ?',gt,@project.id).order('goodstypes.name')
     
@@ -193,10 +196,9 @@ class ProjectsController < ApplicationController
 
   def add_goodstype
     @project = Project.find(params[:g_type][:project_id])
+    @pgt = params[:g_type][:g_type_id] 
+    @prj_good_types = Goodstype.where(id: @pgt)
     def_params
-    pgt = []
-    pgt << params[:g_type][:g_type_id] 
-    @prj_good_types = Goodstype.where(id: [pgt])
   end
 
   # PATCH/PUT /projects/1

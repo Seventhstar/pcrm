@@ -5,13 +5,13 @@
   <% total = [0,0,0,0] %>
   <% case @gs %>
   <% when 1 %>
-      <% @goods = pgt.goods.where(order: false) %>
+      <% @goods = pgt.goods.where(order: false, project_id: @project.id) %>
   <% when 2 %> 
-      <%  @goods = pgt.goods.where(order: true, fixed: false) %>
+      <%  @goods = pgt.goods.where(order: true, fixed: false, project_id: @project.id) %>
   <% when 3 %>
-      <%  @goods = pgt.goods.where(fixed: true) %>
+      <%  @goods = pgt.goods.where(fixed: true, project_id: @project.id) %>
   <% else %>
-      <%  @goods = pgt.goods %>
+      <%  @goods = pgt.goods.where(project_id: @project.id) %>
   <% end %>
 
   <div class="panel panel-default" id="table_new_pgt_item<%= pgt.id %>">
@@ -19,9 +19,9 @@
       <span class="sub btn_add right" itm="new_pgt_item<%= pgt.id %>">Добавить позицию</span></div>
 
     <% if @gs ==2 %> 
-      <%= render 'goods_ordered', pgt: pgt, first_col: first_col %>
+      <%= render 'goods_ordered', pgt: pgt, first_col: first_col, opened: opened %>
     <% else %>
-      <%= render 'goods', pgt: pgt, first_col: first_col %>
+      <%= render 'goods', pgt: pgt, first_col: first_col, opened: opened %>
     <% end %>
 
     <% first_col = false %>

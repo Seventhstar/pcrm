@@ -1,5 +1,5 @@
 $("#prj_elongations").html("<%= escape_javascript(render("elongations")) %>");
-$("#pgoods").html("<%= escape_javascript(render("pgoods")) %>");
+$("#pgoods").html("<%= j render("pgoods", opened: false) %>");
 
 $(".comments_box").html("<%= escape_javascript(render("shared/comments")) %>");
 $('.chosen').chosen({width: '99.5%', disable_search: 'true'});

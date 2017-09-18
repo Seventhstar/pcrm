@@ -160,7 +160,7 @@
 
     <div class="sep_15"></div>
   <div id="pgoods">  
-    <%= render partial: 'pgoods', locals: { f: f } %>
+    <%= render partial: 'pgoods', locals: { f: f, opened: false } %>
   </div>
   <div class="total-footer">Общий итог:
   <span class="right"><%= total_info(@all_total).html_safe %></span></div>
