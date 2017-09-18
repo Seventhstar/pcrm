@@ -103,6 +103,9 @@ module ApplicationHelper
     add_name  = options[:add_name]
 
     coll = collection.class.ancestors.include?(ActiveRecord::Relation) ? collection : collection
+    if coll.nil?  
+      return
+    end
     coll = coll.collect{ |u| [u[p_name], u.id] } if coll.class.name != 'Array'
     coll.insert(0,[nil_value,0,{class: 'def_value'}]) if nil_value != ''
     coll.insert(1,[options[:special_value],-1]) if !options[:special_value].nil?

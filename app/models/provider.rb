@@ -18,6 +18,10 @@ class Provider < ActiveRecord::Base
       self.style_ids = Style.ids_from_tokens(tokens)
     end
 
+    def full_info
+      [self.name,self.try(:address), self.try(:phone)].compact.join(', ')
+    end
+
     def style_names
       self.styles.pluck(:name).join(", ")
     end

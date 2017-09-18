@@ -22,7 +22,7 @@ ru:
     formats:
       default: "%d.%m.%Y-"
       short: "%b %d"
-      long: "%B %d, %Y"
+      long: "%B %d, %Yг."
 
     day_names: [Воскресенье, Понедельник, Вторник, Среда, Четверг, Пятница, Суббота]
     abbr_day_names: [Вос, Пон, Вт, Ср, Чет, Пят, Суб]
@@ -61,7 +61,7 @@ ru:
     - суббота
     formats:
       default: ! '%d.%m.%Y-'
-      long: ! '%-d %B %Y'
+      long: ! '%-d %B, %Yг.'
       short: ! '%-d %b'
     month_names:
     -

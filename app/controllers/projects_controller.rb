@@ -105,9 +105,6 @@ class ProjectsController < ApplicationController
     @owner = @project
     @holidays =  Holiday.pluck(:day).collect{|d| d.try('strftime',"%Y-%m-%d")}
     @gtypes = Goodstype.where.not(id: [@pgt]).order(:name)
-    #@gtypes = Goodstype.all
-    # @files    = @lead.attachments
-    # @history  = get_history_with_files(@lead)
   end
 
   # GET /projects/new
@@ -212,7 +209,9 @@ class ProjectsController < ApplicationController
         format.html { redirect_to project_page_url, notice: 'Проект успешно сохранен' }
         format.json { render :show, status: :ok, location: @project }
       else
+        edit
         # p "errors: #{@project.errors.full_messages}"
+        flash.now[:danger] = @project.errors.full_messages
         format.html { render :edit }
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end

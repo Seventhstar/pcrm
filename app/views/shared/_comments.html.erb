@@ -2,8 +2,8 @@
   <%= render "comments/comment.html.mustache" %>
 </script>
 
-<% if !@owner.comments.nil? && @owner.comments.count >0 %>
-<% @comments = @owner.comments.order('created_at asc') %>  
+<% if @owner && !@owner.comments.nil? && @owner.comments.count >0 %>
+  <% @comments = @owner.comments.order('created_at asc') %>  
 <% end %>
 <div class="box_i">
   <div class="hl"><span class="icon icon_chat"></span>Комментарии: </div>  
