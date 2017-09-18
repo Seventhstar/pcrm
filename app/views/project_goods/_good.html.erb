@@ -3,10 +3,14 @@
   <td width='210px'><%= g.provider_name %></td>
   <td width='115px'><%= g.date_place.try('strftime',"%d.%m.%Y") %></td>
   <td width='230px'><%= g.description %></td>
-  <td><%= g.currency_name %></td>
+  <td width='58px'><%= g.currency_name %></td>
   <td width='90px' class="" title="<%= all_sum_info(g) %>">
     <%= all_sum(g) %>
     
   </td>
   <%= tool_icons(g, {icons:'basket,delete',tag:'link', add_class:'td_right', modal: true}) %>
+  <% if local_assigns.has_key?(:total) %>
+    <%  total[g.currency_id] = total[g.currency_id] + g.gsum if !g.gsum.nil? %>
+    <%  @all_total[g.currency_id] = @all_total[g.currency_id] + g.gsum if !g.gsum.nil? %>
+  <% end -%>
 </tr>

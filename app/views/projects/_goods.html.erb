@@ -16,19 +16,7 @@
   <%  total = [0,0,0,0] %>
   <tbody>
     <% @goods.order(:id).each do |g| %>
-      <tr id="pgt_item<%= g.id %>" class="sw_color <%= class_for_prj_goods(g) %>">
-        <td width='220'><%= g.name %></td>
-        <td width='216'><%= g.provider_name %></td>
-        <td width='115'><%= g.date_place.try('strftime',"%d.%m.%Y") %></td>
-        <td width='230'><%= g.description %></td>
- 
-        <td width='58px'><%= g.currency_name %></td>
-        <td width='90px' class=""><%= g.gsum.to_sum if !g.gsum.nil? %></td>
-        <%= tool_icons(g, {icons:'modal_edit,delete',tag:'link', add_class:'td_right', modal: true, width: '48px'}) %>
-        <%  total[g.currency_id] = total[g.currency_id] + g.gsum if !g.gsum.nil? %>
-        <%  @all_total[g.currency_id] = @all_total[g.currency_id] + g.gsum if !g.gsum.nil? %>
-        
-      </tr>
+      <%= render "project_goods/good", g: g %>
     <% end %>
       <tr id="new_pgt_item<%= pgt.id %>" class="<%= opened ? '' : 'invisible' %> editable new_row">
         <% iname = ['project_good_',pgt.id,'_'].join %>

@@ -6,7 +6,7 @@
 <% @first_table = false %>
 <% hide = params['cut'].split('.').include? @no.to_s if !params['cut'].nil? %>
 
-<% header = local_assigns[:link] ? link_to( @cur_head, [:edit, link], target: :blank) : @cur_head  %>
+<% header = local_assigns[:link] ? link_to( @cur_head, [:edit, link], target: "_blank") : @cur_head  %>
 
 <div class="panel panel-default">
 <% if @cur_head %>
