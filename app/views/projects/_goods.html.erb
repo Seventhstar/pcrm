@@ -16,7 +16,7 @@
   <%  total = [0,0,0,0] %>
   <tbody>
     <% @goods.order(:id).each do |g| %>
-      <%= render "project_goods/good", g: g %>
+      <%= render partial: "project_goods/good", locals: {g: g} %>
     <% end %>
       <tr id="new_pgt_item<%= pgt.id %>" class="<%= opened ? '' : 'invisible' %> editable new_row">
         <% iname = ['project_good_',pgt.id,'_'].join %>

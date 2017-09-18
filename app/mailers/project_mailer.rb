@@ -17,7 +17,11 @@ class ProjectMailer < ActionMailer::Base
     @prj = Project.find(prj_id)
     @subj = 'У проекта '+@prj.try(:address)+' истек срок сдачи (не продлен)!'
 
-    emails = users_emails(31,@prj.executor_id)
+    if Date.today.monday?
+      emails = users_emails(31,@prj.executor_id)
+    else
+      emails = @prj.executor.email
+    end
 
     if Rails.env.production? && !emails.empty?
       mail(to: emails, subject: @subj) do |format|

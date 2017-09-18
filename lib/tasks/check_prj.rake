@@ -12,6 +12,7 @@ namespace :check_prj do
     # отбираем для них последние даты продления
     pe = ProjectElongation.select(:id, :project_id, :new_date).where('project_id in (?)', prj+prj_todtom).group(:project_id).maximum(:new_date)
 
+    # подходит срок
     prj_wo_pe = prj_todtom - all_pe
     prjs_ids = prj_wo_pe + pe.select {|k, v| v < Date.today + 2 && v >= Date.today}.keys
     prjs_ids.each do |prj_id|
@@ -19,8 +20,7 @@ namespace :check_prj do
       ProjectMailer.reminder_email(prj_id).deliver
     end
 
-    # ProjectMailer.subscriber_email(prjs_ids)
-
+    # просрочены
     prj_wo_pe = prj - all_pe
     prjs_ids = prj_wo_pe + pe.select {|k, v| v < Date.today}.keys
     prjs_ids.each do |prj_id|
