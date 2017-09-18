@@ -134,8 +134,7 @@ $(function() {
   $('.timepicker').timepicker({ 'timeFormat': 'H:i' });
 
   $(document).on('focus', '.datepicker', function () {
-        var me = $(".datepicker");
-        me.mask('99.99.9999');
+        $(".datepicker").mask('99.99.9999');
     });
 
   $('.switcher_a').each(function(){

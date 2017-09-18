@@ -2,9 +2,9 @@ class LeadMailer < ActionMailer::Base
   default from: "service@crmpp.ru"
   include CommonHelper
   include LeadsHelper
+  include ActionView::Helpers::UrlHelper
   add_template_helper(CommonHelper)
   add_template_helper(LeadsHelper)
-  include ActionView::Helpers::UrlHelper
 
   def reminder_email(user, leads_today, leads_tomorrow)
     @l_today = leads_today
@@ -69,14 +69,27 @@ class LeadMailer < ActionMailer::Base
 
     chat_id = @lead.ic_user.try(:telegram)
     if !chat_id.nil? && chat_id.length >0
-      token = Rails.application.secrets['telegram']['bot']
+      token = Rails.application.secrets['telegram'][:bot]
+      token = Rails.application.secrets['telegram']['bot'] if token.nil?
       bot = Telegram::Bot::Client.new(token)
 
-      keyboard = {inline_keyboard: [[{text: "Перейти", url: edit_polymorphic_url(@lead)}]]}
+      if Rails.env.development?
+        keyboard = {inline_keyboard: [[{text: "Перейти", url: 'ya.ru'}]]}
+      else
+        keyboard = {inline_keyboard: [[{text: "Перейти", url: edit_polymorphic_url(@lead)}]]}
+      end
       markup = JSON.parse(keyboard.to_json)
 
       lnk = ['[#', @lead.id, ']'].join
-      bot.send_message chat_id: chat_id, text: 'Вы назначены ответственным. Лид: #{lnk} #{@lead.address}', reply_markup: markup
+      text = ["Вы назначены ответственным",
+              "Лид: #{lnk} #{@lead.try(:address)}",
+              "ФИО: #{@lead.fio}",
+              @lead.try(:phone).present? ? "Телефон: #{@lead.phone}" : nil,
+              @lead.try(:email).present? ? "E-mail: #{@lead.email}": nil ,
+              "Информация:",
+              "#{raw(@lead.info)}"].compact.join("\n")
+              
+      bot.send_message chat_id: chat_id, text: text, reply_markup: markup
     end
   end
 

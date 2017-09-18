@@ -20,10 +20,10 @@ class ProjectMailer < ActionMailer::Base
     if Date.today.monday?
       emails = users_emails(31,@prj.executor_id)
     else
-      emails = @prj.executor.email
+      emails = @prj.executor.try(:email)
     end
 
-    if Rails.env.production? && !emails.empty?
+    if Rails.env.production? && emails.present?
       mail(to: emails, subject: @subj) do |format|
         format.html
       end

@@ -393,6 +393,10 @@ input[type='number']::-webkit-inner-spin-button {
 
 
 .auth_form {width: 425px; margin:0 auto; }
+@media screen and (max-width: 980px) {
+  .auth_form {width: 425px; margin:0 -60px; }
+}
+
 .auth_form table.tbl_fc {}
 .auth_form table.tbl_fc td.caption{width: 60px; }
 
