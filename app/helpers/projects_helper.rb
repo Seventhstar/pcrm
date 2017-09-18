@@ -26,6 +26,14 @@ module ProjectsHelper
     end
   end
 
+  def obj_to_link(g)
+    prm = params[:sort]
+    prm = 'project_id' if prm.nil?
+    g.try(prm.sub('_id',''))
+    
+  end
+
+
   def nil_footage(f)
     f.nil? || f==0 || f=='0.0' || f=='0'
   end

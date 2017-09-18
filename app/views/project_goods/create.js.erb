@@ -8,3 +8,5 @@ $("<%= gts %>_date_place").val('')
 
 $('<%= gts %>__provider_id').val(0);
 $('<%= gts %>__provider_id').trigger('chosen:updated');
+$('#table_new_pgt_item<%= @pg.goodstype.id %> span.btn_add').show();
+$('#new_pgt_item<%= @pg.goodstype.id %>').hide();
