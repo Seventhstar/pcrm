@@ -4,7 +4,7 @@
 <% @leads.each do |lead| %>
 
   <% if check_new_table_head(lead) %>
-    <%= render "shared/head", stripped: true %>
+    <%= render partial: "shared/head", locals: {stripped: true} %>
       <tr>
       <th width="110px"><%= sortable_th(:status_id,'Статус') %> </th>
         <th width="108px"><%= sortable_th(:status_date,'Дата статуса') %></th>

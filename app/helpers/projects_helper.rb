@@ -1,5 +1,50 @@
 module ProjectsHelper
 
+  def total_on_currencies(total_data, sum_type)
+      sum_type_str = :gsum
+      case sum_type
+      when 2
+        sum_type_str = :sum_supply
+      when 3
+        sum_type_str = :sum_fixed
+      end
+
+      s = ''
+      currency = ['р. ','$','€']
+      i = 1
+      currency.each do |c|
+        sum_by_currency = total_data.select {|h| h[:currency_id] == i }.first
+        p "sum_by_currency #{sum_by_currency}"
+        tsum = 0
+        tsum = sum_by_currency[sum_type_str] if sum_by_currency.present?
+        s = s + ' | ' if s.length >0 && tsum>0
+        s = s + tsum.to_sum + c if tsum>0
+        i = i + 1 
+      end
+      s
+  end
+
+  def get_project_goods_data(pgt)
+    case @gs
+    when 1 
+      @goods = pgt.goods.where(order: false, project_id: @project.id)
+    when 2 
+      @goods = pgt.goods.where(order: true, fixed: false, project_id: @project.id)
+    when 3
+      @goods = pgt.goods.where(fixed: true, project_id: @project.id)
+    else 
+      @goods = pgt.goods.where(project_id: @project.id)
+    end
+
+    total_data = @goods.group('currency_id')
+                 .select('currency_id, sum(gsum) as gsum, sum(sum_supply) as sum_supply, 
+                  sum(case when fixed then sum_supply else 0 end) as sum_fixed')
+                 .collect{ |c| {currency_id: c.currency_id, 
+                                gsum: c.gsum||0, 
+                                sum_supply: c.sum_supply ||0, 
+                                sum_fixed: c.sum_fixed }}
+  end
+
   def td_sum_field( f, val = 0, label='', params = {})
     mask_cls = params[:mask] ? 'float_mask' : 'sum_mask'
     inp_add_mask = params[:inp_class].nil? ? '' : ' '+params[:inp_class]

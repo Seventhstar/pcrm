@@ -16,7 +16,7 @@
         <%= hidden_field 'project_elongation','project_id', value: @project.id %>
         <td class="caption3" width='120px'><%= text_field "project_elongation",:new_date, {:class => 'txt datepicker'} %></td>
         <td><%= chosen_src "elongation_type_id", @elongation_types,@new_et,{nil_value: 'Выберите причину...'} %></td>
-        <td>
+        <td width="110px">
           <span class="sub btn_a" id="btn-sub-send" pe_id="<%= @project.id %>" action='/project_elongations/' prm='project_elongation'>  Добавить</span></td>
       </tr>
 

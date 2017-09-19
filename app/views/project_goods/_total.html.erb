@@ -1,13 +1,4 @@
-<tr class="total <%= total[1]>0 ? '' : 'hidden' %>">
-    <% case params[:good_state] %> 
-    <% when '1' %> 
-      <td colspan="7">Итого предложено: <%= total_info(total).html_safe %></td>
-    <% when '2' %>
-      <td colspan="7">Итого заказано: <%= total_info(total_order).html_safe %></td>
-    <% when '3' %>
-      <td colspan="7">Итого закрыто: <%= total_info(total).html_safe %></td>
-    <% else %>
-      <td colspan="3">Итого предложено: <%= total_info(total).html_safe %></td>
-      <td colspan="4">Итого заказано: <%= total_info(total_order).html_safe %></td>    
-    <% end %>
+<tr class="total <%= @goods.count>0 || opened ? '' : 'hidden' %>">
+  <td colspan="3">Итого предложено: <%= total_on_currencies(total, 1).html_safe %></td>
+  <td colspan="4">Итого заказано: <%= total_on_currencies(total, 2).html_safe %></td>    
 </tr>

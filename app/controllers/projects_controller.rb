@@ -194,8 +194,14 @@ class ProjectsController < ApplicationController
   def add_goodstype
     @project = Project.find(params[:g_type][:project_id])
     @pgt = params[:g_type][:g_type_id] 
-    @prj_good_types = Goodstype.where(id: @pgt)
-    def_params
+    if @pgt.present? && @pgt.to_i >0 
+      @prj_good_types = Goodstype.where(id: @pgt)
+      def_params
+    else
+      respond_to do |format|
+        format.json { render json: ['Выберите тип товара!'], status: :unprocessable_entity }
+      end
+    end
   end
 
   # PATCH/PUT /projects/1

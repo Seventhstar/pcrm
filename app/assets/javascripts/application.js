@@ -44,8 +44,8 @@ function intFromSum(sum){
 
 function showNotifications(){ 
   $nt = $(".alert"); 
-  setTimeout("$nt.addClass('in')",500);
-  setTimeout("$nt.removeClass('in').addClass('out')",5000);
+  setTimeout("$nt.addClass('in')",800);
+  setTimeout("$nt.removeClass('in').addClass('out')",7000);
 }
 
 function checkTime(i){
@@ -106,18 +106,8 @@ $(function() {
 
   $('.progress').hide();
   $('#file').hide();
-  // $("#tabs" ).tabs({select: function(event, ui) { // select event
-  //         $(ui.tab); // the tab selected
-  //         alert(ui.index); // zero-based index
-  //     });
-  //   }); //{active: 3}
   $('#tabs').tabs({
-    active: 3,
-    activate: function (event, ui) {
-      // var l = window.location.toString().split('#')[0];
-      // var t = $(".ui-tabs-active a").attr('href');
-      // setLoc(""+l+t);
-    }
+    active: 3
   });
 
   tinyMCE.init({
