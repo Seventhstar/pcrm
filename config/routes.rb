@@ -124,11 +124,12 @@ Rails.application.routes.draw do
   post "ajax/update_holidays"
   post "ajax/store_cut"
 
-  post "file/del_file"
-  post '/file' => 'file#create_file'
-  get '/file/:file' => 'file#show'
-  get  '/download/:type/:id/:basename.:extension'  => 'file#download'
-  get  '/download/:type/:id/:basename'  => 'file#download'
+  resources :files
+  #post "files/del_file"
+  #post '/files' => 'file#create_file'
+  #get '/files/:file' => 'file#show'
+  get  '/download/:type/:id/:basename.:extension'  => 'files#download'
+  get  '/download/:type/:id/:basename'  => 'files#download'
 
   post "channels/new"
 
@@ -138,5 +139,4 @@ Rails.application.routes.draw do
   get "/history/" => "history#show"
   get "/history/:period" => "history#show"
 
-  mount ActionCable.server => '/cable'
 end

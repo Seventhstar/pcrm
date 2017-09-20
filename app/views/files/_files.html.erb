@@ -1,0 +1,3 @@
+<% @files.each_with_index do |file,i| %>
+  <%= render partial: 'files/file', locals: {file: file, odd: i.odd?} %>
+<% end %>

@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
 
   before_action :load_comment, only: [:destroy]
-  after_action :publish_comment, only: :create
+  #after_action :publish_comment, only: :create
   respond_to :js, :json
 
   def destroy

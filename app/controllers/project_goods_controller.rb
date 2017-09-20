@@ -40,15 +40,9 @@ class ProjectGoodsController < ApplicationController
 
     @prj_good = ProjectGood.new(pg_params)
     @prj_good.project_id = params[:owner_id].split('_').last
-    p "@prj_good #{@prj_good}"
     if @prj_good.save 
-      p "pg save" 
     else
     respond_to do |format|
-      # !@prj_good.new_date.nil? &&
-        # format.html { redirect_to absences_url, notice: 'Менеджер успешно создан.' }
-        # format.json { render json: @prj_good.errors, status: :ok, location: @prj_good }
-        # format.html { render nothing: true }
         format.json { render json: @prj_good.errors.full_messages, status: :unprocessable_entity }
       end
     end 
@@ -56,10 +50,6 @@ class ProjectGoodsController < ApplicationController
 
   def destroy
     @prj_good.destroy
-    # respond_to do |format|
-    # #   format.html { redirect_to request.referer+'#tabs-4', notice: 'Позиция успешно удалена.' }
-    #    format.js { head :no_content }
-    # end
   end
 
   def update

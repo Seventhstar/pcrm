@@ -5,7 +5,9 @@ class Lead < ActiveRecord::Base
   belongs_to :user
   belongs_to :ic_user, foreign_key: :ic_user_id, class_name: 'User'
   belongs_to :source, foreign_key: :source_id, class_name: 'LeadSource', optional: true
+
   has_many :attachments, :as => :owner
+
   has_paper_trail
   attr_accessor :first_comment
   after_save :send_changeset_email

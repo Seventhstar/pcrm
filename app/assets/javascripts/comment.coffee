@@ -14,19 +14,3 @@ $ ->
       success: ->
         item.toggleClass('new')
     return
-
-  # receive_data =(data) ->
-  #   console.log data
-  #   if gon.user_id != data.user_id
-  #     data.admin = gon.admin
-  #     $('.comments_list_a').append( Mustache.to_html($('#comments_template').html(), data))
-  #     $('#comment_comment').val('')
-  # App.cable.subscriptions.create 'CommentsChannel',
-  # connected: ->
-  #   console.log 'Connected to comments!'
-  #   @perform 'follow_all'
-  # received: (data) ->
-  #   receive_data data
-
-
-

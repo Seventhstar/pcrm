@@ -1,13 +1,13 @@
 <p><label for="attach_list" class="attach_list"> <a class="btn_add"><span class="pict"><span class="icon icon_file"></span></span>Добавить файл</a> </label></p>
-    	<div class="file_progress">
-    		<div class="progress">
-    			<div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-    				<span class="sr-only">20% Complete</span>
-    			</div>
-    		</div>
-    	</div>
+      <div class="file_progress">
+        <div class="progress">
+          <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+            <span class="sr-only">20% Complete</span>
+          </div>
+        </div>
+      </div>
 
-<input id="attach_list" type="file" owner_id="<%= @owner.id %>" owner_type="<%= self.controller_name %>" name="file" data-url="/file" multiple="" style="display: none;">
-<div class="files_list_a">
- <%= render "shared/files" %>
-</div>
+<input id="attach_list" type="file" owner_id="<%= @owner.id %>" owner_type="<%= self.controller_name %>" name="files" data-url="/files" multiple="" style="display: none;">
+<ul class="files_list_a">
+ <%= render "files/files" %>
+</ul>

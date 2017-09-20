@@ -21,9 +21,9 @@ module ApplicationHelper
     filename = add_name.nil? ? file.name : [file.name,add_name].join(' ')
 
   if ['jpg','png','gif'].include?(file.name.split('.').last)
-    a = link_to filename, file.show_path(file.owner), class: "icon_img", data: { modal: true }
+    a = link_to filename, file.show_path, class: "icon_img", data: { modal: true }
   else
-    a = link_to filename, file.download_path(file.owner), class: "icon_doc" , target: "_blank" #{}"_tab"
+    a = link_to filename, file.download_path, class: "icon_doc" , target: "_blank" #{}"_tab"
     # a =  <a href="<%= file.download_path(@owner) %>" target="_blank"><%= file.name %></a> 
   end
  end

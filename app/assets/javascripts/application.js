@@ -25,7 +25,6 @@
 //= require mustache
 //= require jquery.mustache
 //= require moment
-//= require action_cable
 //= require_tree .
 
 function to_sum(d){ 
@@ -106,9 +105,7 @@ $(function() {
 
   $('.progress').hide();
   $('#file').hide();
-  $('#tabs').tabs({
-    active: 3
-  });
+  $('#tabs').tabs({active: 3 });
 
   tinyMCE.init({
     selector: '.tinymce textarea', 
@@ -123,12 +120,9 @@ $(function() {
 
   $('.timepicker').timepicker({ 'timeFormat': 'H:i' });
 
-  $(document).on('focus', '.datepicker', function () {
-        $(".datepicker").mask('99.99.9999');
-    });
+  $(document).on('focus', '.datepicker', function () {$(".datepicker").mask('99.99.9999'); });
 
-  $('.switcher_a').each(function(){
-    
+  $('.switcher_a').each(function(){    
     var link = $(this).find('.link_a,.link_c');
     var scale = $(this).find('.scale');
     var handle = $(this).find('.handle');
@@ -167,17 +161,9 @@ $(function() {
 
   $('.nav #develops').addClass('li-right develops');
   $('.nav #options').addClass('li-right options');
- 
-
 
   $('[data-toggle="tooltip"]').tooltip({'placement': 'top', fade: false});
-  
 
-
-  $(document).ajaxError(function myErrorHandler(event, xhr, ajaxOptions, thrownError) {
-   // alert("There was an ajax error!");
-  });
-    
   showNotifications();
 
 
