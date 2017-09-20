@@ -271,7 +271,7 @@ module ApplicationHelper
     
     modal     = params[:modal] ||= false
     datap     = modal ? { modal: true } : {}
-    data_del  = modal ? { modal: true, confirm: 'Действительно удалить?' } : { confirm: 'Действительно удалить?' }
+    data_del  = modal ? { confirm: 'Действительно удалить?' } : { confirm: 'Действительно удалить?' }
 
     
     i_edit = (icons & ['icon_edit','inline_edit','modal_edit','basket']).first

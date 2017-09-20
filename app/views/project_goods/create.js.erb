@@ -10,4 +10,5 @@ $('<%= gts %>__provider_id').trigger('chosen:updated');
 $('#table_new_pgt_item<%= @prj_good.goodstype.id %> span.btn_add').show();
 $('span#new_pgt_item<%= @prj_good.goodstype.id %>').hide();
 
-$('tr#total_pgt_<%= @prj_good.goodstype.id %>').replaceWith("<%= j render('total', pgt: @prj_good.goodstype ) %>")
+$('tr#total_pgt_<%= @prj_good.goodstype.id %>').replaceWith("<%= j render('total', pgt: @prj_good.goodstype ) %>");
+$('#grand_total').html("<%= j render('grand_total', project_id: @prj_good.project_id) %>");

@@ -126,10 +126,7 @@
           <tr><th width="20%"></th><th width="20%"></th><th width="20%"></th><th width="20%"></th><th width="20%"></th></tr></thead>
           <tbody>
               <tr id="lday">
-              
-               <%= render "day" %>
-              
-              
+               <%= render "day" %>         
             </tr>
           </tbody>
           </table>
@@ -163,7 +160,10 @@
     <%= render partial: 'project_goods_types', locals: { f: f, opened: false } %>
   </div>
   <div class="total-footer">Общий итог:
-  <span class="right"><%= total_info(@all_total).html_safe %></span></div>
+    <div id="grand_total">
+      <%= render 'project_goods/grand_total', project_id: @project.id %>
+    </div>
+  </div>
 
 </div>
 

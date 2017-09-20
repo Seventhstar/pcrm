@@ -12,18 +12,17 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require nprogress
 //= require jquery-ui  
 //= require jquery-ui/accordion
 //= require jquery-ui/datepicker
 //= require jquery-ui/tabs
-//= require bootstrap-tokenfield
-//= require chosen.jquery
 //= require jquery.fileupload
-//= require tinymce-jquery
+//= require chosen.jquery
 //= require jquery.timepicker
-//= require mustache
 //= require jquery.mustache
+//= require tinymce-jquery
+//= require nprogress
+//= require bootstrap-tokenfield
 //= require moment
 //= require_tree .
 

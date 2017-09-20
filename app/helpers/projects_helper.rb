@@ -1,5 +1,9 @@
 module ProjectsHelper
 
+  def hash_sum_on_field(total_data,field)
+    total_data.map {|h| h[field] }.sum>0
+  end
+
   def total_on_currencies(total_data, sum_type)
       sum_type_str = :gsum
       case sum_type
@@ -24,19 +28,23 @@ module ProjectsHelper
   end
 
   def get_goods(project_id,pgt)
-    case @gs
-    when 1 
-      @goods = pgt.goods.where(order: false, project_id: project_id)
-    when 2 
-      @goods = pgt.goods.where(order: true, fixed: false, project_id: project_id)
-    when 3
-      @goods = pgt.goods.where(fixed: true, project_id: project_id)
-    else 
-      @goods = pgt.goods.where(project_id: project_id)
+    if pgt.nil?
+      @goods = ProjectGood.where(project_id: project_id)
+    else
+      case @gs
+      when 1 
+        @goods = pgt.goods.where(order: false, project_id: project_id)
+      when 2 
+        @goods = pgt.goods.where(order: true, fixed: false, project_id: project_id)
+      when 3
+        @goods = pgt.goods.where(fixed: true, project_id: project_id)
+      else 
+        @goods = pgt.goods.where(project_id: project_id)
+      end
     end
   end
   
-  def get_project_goods_data(pgt)
+  def get_project_goods_data()
 
     total_data = @goods.group('currency_id')
                  .select('currency_id, sum(gsum) as gsum, sum(sum_supply) as sum_supply, 

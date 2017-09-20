@@ -1,2 +1,3 @@
 $('#pgt_item<%= @prj_good.id  %>').remove();
-$('tr#total_pgt_<%= @prj_good.goodstype.id %>').replaceWith("<%= j render('total', pgt: @prj_good.goodstype ) %>");
+$('tr#total_pgt_<%= @prj_good.goodstype.id %>').replaceWith("<%= j render('total', opened: true, pgt: @prj_good.goodstype ) %>");
+$('#grand_total').html("<%= j render('grand_total', project_id: @prj_good.project_id) %>");

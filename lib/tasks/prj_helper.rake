@@ -9,8 +9,8 @@ namespace :prj_helper do
     pgt = Goodstype.find(3)
     total = get_project_goods_data(pgt)
     p total
-    p total_on_currencies(total,1)
-    p total_on_currencies(total,2)
+    # p total_on_currencies(total,1)
+    # p total_on_currencies(total,2)
     
   end
 
