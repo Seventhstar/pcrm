@@ -62,13 +62,13 @@ class CommentsController < ApplicationController
     end
 
     def publish_comment
-      return if @comment.errors.any?
-      result = { comment: @comment.as_json(include: :user) }
-      id = @comment.owner.id
-      ActionCable.server.broadcast("comments/owner_#{id}", result)
-      data = {id: @comment.id, comment: @comment.comment, created_at: @comment.created_at.strftime("%d.%m.%Y %H:%M:%S"), 
-              username: @comment.user.name, user_id: @comment.user.id, avatar: @comment.user.avatar_for}
-      ActionCable.server.broadcast("comments", data)
+   #   return if @comment.errors.any?
+   #   result = { comment: @comment.as_json(include: :user) }
+   #   id = @comment.owner.id
+   #   ActionCable.server.broadcast("comments/owner_#{id}", result)
+   #  data = {id: @comment.id, comment: @comment.comment, created_at: @comment.created_at.strftime("%d.%m.%Y %H:%M:%S"), 
+   #           username: @comment.user.name, user_id: @comment.user.id, avatar: @comment.user.avatar_for}
+   #    ActionCable.server.broadcast("comments", data)
     end
 
 

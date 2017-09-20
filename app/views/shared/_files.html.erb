@@ -1,5 +1,5 @@
 <% @files.each_with_index do |file,i| %>
-<div class="item <%= i.odd? ? 'odd':'' %>">
+<div class="item <%= i.odd? ? 'odd':'' %>" id="file_<%= file.id%>">
 	<div class="fname">
 		<%= file_default_action(file) %>
 	</div>

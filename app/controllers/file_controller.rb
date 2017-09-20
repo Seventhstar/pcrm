@@ -5,11 +5,11 @@ class FileController < ApplicationController
 
   def del_file
     if params[:file_id]
-      file = Attachment.find(params[:file_id])
-      num_to_s = file.owner_id.to_s
-      filename = Rails.root.join('public', 'uploads',file.owner_type,num_to_s,file.id.to_s+File.extname(file.name))
+      @file = Attachment.find(params[:file_id])
+      num_to_s = @file.owner_id.to_s
+      filename = Rails.root.join('public', 'uploads',@file.owner_type,num_to_s,@file.id.to_s+File.extname(@file.name))
       File.delete(filename) if File.exist?(filename)
-      file.destroy
+      @file.destroy
     end
     render :nothing => true
   end

@@ -18,6 +18,12 @@ $ ->
       $(modal_holder_selector).html(data).find(modal_selector).modal()
     false
 
+  $(document).on 'keypress keyup', '#mainModal', (e)->
+    if e.keyCode == 13
+      $('#btn-modal').click()
+    else if e.keyCode == 27
+      $('.close').click()
+
   $(document).on 'click','.update', ->
     $('.close').click()
     delay('upd_ch_client({})',100)
