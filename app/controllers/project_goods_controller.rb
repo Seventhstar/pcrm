@@ -5,6 +5,10 @@ class ProjectGoodsController < ApplicationController
   before_action :check_sum, only: [:create,:update]
   helper_method :sort_column, :sort_direction
 
+  respond_to :html, :json, :js
+
+  def show
+  end
 
   def index
     params.delete_if{|k,v| v=='' || v=='0' }
@@ -34,39 +38,39 @@ class ProjectGoodsController < ApplicationController
 
   def create
 
-    @pg = ProjectGood.new(pg_params)
-    @pg.project_id = params[:owner_id].split('_').last
-    p "@pg #{@pg}"
-    if @pg.save 
+    @prj_good = ProjectGood.new(pg_params)
+    @prj_good.project_id = params[:owner_id].split('_').last
+    p "@prj_good #{@prj_good}"
+    if @prj_good.save 
       p "pg save" 
     else
     respond_to do |format|
-      # !@pg.new_date.nil? &&
+      # !@prj_good.new_date.nil? &&
         # format.html { redirect_to absences_url, notice: 'Менеджер успешно создан.' }
-        # format.json { render json: @pg.errors, status: :ok, location: @pg }
+        # format.json { render json: @prj_good.errors, status: :ok, location: @prj_good }
         # format.html { render nothing: true }
-        format.json { render json: @pg.errors.full_messages, status: :unprocessable_entity }
+        format.json { render json: @prj_good.errors.full_messages, status: :unprocessable_entity }
       end
     end 
   end
 
   def destroy
-    @pg.destroy
-    respond_to do |format|
-      format.html { redirect_to request.referer+'#tabs-4', notice: 'Позиция успешно удалена.' }
-      format.json { head :no_content }
-    end
+    @prj_good.destroy
+    # respond_to do |format|
+    # #   format.html { redirect_to request.referer+'#tabs-4', notice: 'Позиция успешно удалена.' }
+    #    format.js { head :no_content }
+    # end
   end
 
   def update
-    @pg.update(pg_params)    
-    @pg.save 
+    @prj_good.update(pg_params)    
+    @prj_good.save 
     
   end
 
   def edit
     @title = 'Редактирование заказа'
-    respond_modal_with @pg, location: root_path
+    respond_modal_with @prj_good, location: root_path
   end
 
 
@@ -96,12 +100,11 @@ class ProjectGoodsController < ApplicationController
 
 
     def set_project_good
-      @pg = ProjectGood.find(params[:id])
+      @prj_good = ProjectGood.find(params[:id])
     end
 
     def pg_params
       prm = params.permit!.to_h.first[0] 
-      #p "params #{params} = #{prm}"
       params.require(prm).permit(:goodstype_id,:provider_id,:date_supply,:date_place,:date_offer, 
         :currency_id,:gsum,:order,:name,:description, :fixed, :sum_supply, :project_id)
     end

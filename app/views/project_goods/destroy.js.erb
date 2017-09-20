@@ -1,0 +1,2 @@
+$('#pgt_item<%= @prj_good.id  %>').remove();
+$('tr#total_pgt_<%= @prj_good.goodstype.id %>').replaceWith("<%= j render('total', pgt: @prj_good.goodstype ) %>");

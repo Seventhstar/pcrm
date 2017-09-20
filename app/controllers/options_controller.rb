@@ -23,10 +23,12 @@ class OptionsController < ApplicationController
     #p params[:options_page]
     @item = option_model.new(options_params)
     @items  = option_model.order(:name)  
-    respond_to do |format|
-       if @item.save
-         format.json { render 'options/index', status: :created, location: @item, notice: 'Лид успешно создан.' }
+    if @item.save
+        
+       
+         # format.json { render 'options/index', status: :created, location: @item, notice: 'Лид успешно создан.' }
        else
+        respond_to do |format|
          format.json { render json: @item.errors, status: :unprocessable_entity }
        end
      end
@@ -44,9 +46,9 @@ class OptionsController < ApplicationController
     @item = option_model.find(params[:id])
     #p "@item #{@item}"
     @item.destroy
-    respond_to do |format|
-      format.json { head :no_content }
-    end
+    # respond_to do |format|
+    #   format.json { head :no_content }
+    # end
   end  
 
   private

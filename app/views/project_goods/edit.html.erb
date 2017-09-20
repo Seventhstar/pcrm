@@ -5,26 +5,26 @@
 <table class="tbl_fc tbl_fc_1">
 
   <tr><td class="caption">Товар:</td>
-  <td><div class="inp_w"><%= text_field iname,:name, {value: @pg.name,:class => 'txt'} %></div></td></tr>
+  <td><div class="inp_w"><%= text_field iname,:name, {value: @prj_good.name,:class => 'txt'} %></div></td></tr>
 
   <tr><td class="caption">Поставщик:</td>
   <td><div class="inp_w">
-  <%= chosen_src "provider_id", Goodstype.find(@pg.goodstype_id).providers, @pg.provider_id,
+  <%= chosen_src "provider_id", Goodstype.find(@prj_good.goodstype_id).providers, @prj_good.provider_id,
    {nil_value: 'Выберите поставщика...', add_name: iname} %></div></td></tr>
   <tr><td class="caption">Дата предложения:</td>
   <td><div class="inp_w">
-    <%= text_field iname, :date_place, {:class => 'txt datepicker', value: @pg.date_place.try('strftime',"%d.%m.%Y")} %>
+    <%= text_field iname, :date_place, {:class => 'txt datepicker', value: @prj_good.date_place.try('strftime',"%d.%m.%Y")} %>
   </div></td></tr>
 
   <tr><td class="caption">Примечение:</td>
-  <td><div class="inp_w"><%= text_field iname,:description, {value: @pg.description,:class => 'txt'} %></div></td></tr>
+  <td><div class="inp_w"><%= text_field iname,:description, {value: @prj_good.description,:class => 'txt'} %></div></td></tr>
 
   <tr><td class="caption">Сумма:</td>
-      <%= td_sum_field(iname, :gsum ,nil,{value: @pg.gsum}) %>
+      <%= td_sum_field(iname, :gsum ,nil,{value: @prj_good.gsum}) %>
       </tr>
 
   <td class="caption">Валюта:</td>
-  <td><div class="inp_w"><%= chosen_src "currency_id", currency_src,@pg.currency_id,{nil_value: '',add_name: iname, add_class: 'currency_src'} %></div></td></tr>
+  <td><div class="inp_w"><%= chosen_src "currency_id", currency_src,@prj_good.currency_id,{nil_value: '',add_name: iname, add_class: 'currency_src'} %></div></td></tr>
   <tr style="height: 20px;">
     <td>  </td>
   </tr>
@@ -32,7 +32,7 @@
       <td class="last_td">
       <button type="button" class="sub btn_a btn_reset" data-dismiss="modal" aria-hidden="true">Отмена</button>
       
-        <span class="sub btn_a modal_apply" id="btn-modal" item_id="<%= @pg.id %>" action='/project_goods/' model="ProjectGood" prm='upd_modal'> Сохранить</span>
+        <span class="sub btn_a modal_apply" id="btn-modal" item_id="<%= @prj_good.id %>" action='/project_goods/' model="ProjectGood" prm='upd_modal'> Сохранить</span>
         </td></tr>
 
 </table>
@@ -42,32 +42,32 @@
   <table class="tbl_fc tbl_fc_1">
   <tr>
     <td colspan="2" class="goods_order_td">
-        <label class="inp_btn_label sw_enable" grp_id='1'><div class="inp_btn checkbox <%= @pg.order ? 'active':'' %>">
-        <%= check_box iname,:order, {checked: @pg.order } %></div><span>Товар заказан</span>
+        <label class="inp_btn_label sw_enable" grp_id='1'><div class="inp_btn checkbox <%= @prj_good.order ? 'active':'' %>">
+        <%= check_box iname,:order, {checked: @prj_good.order } %></div><span>Товар заказан</span>
       </label>
       </td>
   </tr>
-  <% row_cls = @pg.order ? '' : 'disabled' %>
+  <% row_cls = @prj_good.order ? '' : 'disabled' %>
 
 
   <tr class="grp1"><td class="caption grp1 <%= row_cls %>">Дата заказа:</td>
   <td><div class="inp_w">
-    <%= text_field iname, :date_offer, {:class => 'txt datepicker grp1', value: @pg.date_offer.try('strftime',"%d.%m.%Y"), disabled: !@pg.order} %>
+    <%= text_field iname, :date_offer, {:class => 'txt datepicker grp1', value: @prj_good.date_offer.try('strftime',"%d.%m.%Y"), disabled: !@prj_good.order} %>
   </div></td></tr>
   <tr class="grp1"><td class="caption grp1 <%= row_cls %>">Дата поставки:</td>
   <td><div class="inp_w">
-    <%= text_field iname, :date_supply, {:class => 'txt datepicker grp1', value: @pg.date_supply.try('strftime',"%d.%m.%Y"), disabled: !@pg.order} %>
+    <%= text_field iname, :date_supply, {:class => 'txt datepicker grp1', value: @prj_good.date_supply.try('strftime',"%d.%m.%Y"), disabled: !@prj_good.order} %>
   </div></td></tr>
   <tr class="grp1"><td class="caption grp1 <%= row_cls %>" >Сумма заказа:</td>
-      <%= td_sum_field(iname, :sum_supply ,nil, {value: @pg.sum_supply,disabled: !@pg.order, inp_class: 'grp1'}) %>
+      <%= td_sum_field(iname, :sum_supply ,nil, {value: @prj_good.sum_supply,disabled: !@prj_good.order, inp_class: 'grp1'}) %>
       </tr>
 
       <tr>
         <td></td>
       </tr>
   <tr class="grp1"><td class="caption grp1 goods_closed <%= row_cls %>">Закрыт</td>
-      <td><label class="inp_btn_label"><div class="inp_btn checkbox <%= @pg.fixed ? 'active':'' %> td_v_center">
-      <%= check_box iname, :fixed, {value: @pg.fixed,  checked: @pg.fixed}, "true", "false" %></div></label></td></tr>
+      <td><label class="inp_btn_label"><div class="inp_btn checkbox <%= @prj_good.fixed ? 'active':'' %> td_v_center">
+      <%= check_box iname, :fixed, {value: @prj_good.fixed,  checked: @prj_good.fixed}, "true", "false" %></div></label></td></tr>
   
 
 </div>

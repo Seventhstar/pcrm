@@ -267,9 +267,13 @@ module ApplicationHelper
     params[:content_tag] ||= :td
     add_cls = ' ' + params[:add_class] ||= ''
     content = params[:content_tag]
-    modal = params[:modal] ||= false
     dilable_cls = params[:subcount]>0 ? '_disabled' : ''
-    datap = modal ? {modal: true} : {}
+    
+    modal     = params[:modal] ||= false
+    datap     = modal ? { modal: true } : {}
+    data_del  = modal ? { modal: true, confirm: 'Действительно удалить?' } : { confirm: 'Действительно удалить?' }
+
+    
     i_edit = (icons & ['icon_edit','inline_edit','modal_edit','basket']).first
 
     style = ""
@@ -282,7 +286,9 @@ module ApplicationHelper
      else
       all_icons[i_edit] = link_to "", edit_polymorphic_path(element), class: "icon "+i_edit + params[:class], data: datap
       all_icons['show'] = link_to "", polymorphic_path(element), class: "icon icon_show", data: { modal: true }
-      all_icons['delete'] = link_to "", element, method: :delete, data: { confirm: 'Действительно удалить?' }, class: "icon icon_remove " + params[:class] if params[:subcount]==0
+      all_icons['delete'] = link_to "", polymorphic_url(element), 
+                            method: :delete, data: data_del, remote: modal,
+                            class: "icon icon_remove " + params[:class] if params[:subcount]==0
       all_icons['delete'] = content_tag(:span,"",{class: 'icon icon_remove_disabled'}) if params[:subcount]>0
     end
 

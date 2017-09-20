@@ -33,7 +33,7 @@
   </thead>
   <tbody>
     <% @items.each do |item| %>
-      <tr>
+      <tr id="item_<%= item.id %>">
         <% attrs.each do |attr| %>
           <% if attr_boolean?(@item,attr[0]) %>
             <td class="state"><span class="check_img sw_check <%= item[attr[0]] ? "checked" :"" %>" item_id="<%= item.id %>" chk="<%= attr[0] %>"></span>

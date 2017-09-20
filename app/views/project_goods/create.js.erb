@@ -1,12 +1,13 @@
-$("#project_goods<%= @pg.goodstype.id %> tr:last").prev().before("<%= j render("good", g: @pg) %>");
-<% gts = "#project_good_#{@pg.goodstype.id}" %>
-$("<%= gts %>_name").val('')
-$("<%= gts %>_description").val('')
-$("<%= gts %>__gsum").val('')
-$("<%= gts %>_date_place").val('')
-
+$("#project_goods<%= @prj_good.goodstype.id %> tr:last").prev().before("<%= j render('good', g: @prj_good) %>");
+<% gts = "#project_good_#{@prj_good.goodstype.id}" %>
+$("<%= gts %>_name").val('');
+$("<%= gts %>_description").val('');
+$("<%= gts %>__gsum").val('');
+$("<%= gts %>_date_place").val("<%= Date.today.try('strftime','%d.%m.%Y') %>");
 
 $('<%= gts %>__provider_id').val(0);
 $('<%= gts %>__provider_id').trigger('chosen:updated');
-$('#table_new_pgt_item<%= @pg.goodstype.id %> span.btn_add').show();
-$('#new_pgt_item<%= @pg.goodstype.id %>').hide();
+$('#table_new_pgt_item<%= @prj_good.goodstype.id %> span.btn_add').show();
+$('span#new_pgt_item<%= @prj_good.goodstype.id %>').hide();
+
+$('tr#total_pgt_<%= @prj_good.goodstype.id %>').replaceWith("<%= j render('total', pgt: @prj_good.goodstype ) %>")

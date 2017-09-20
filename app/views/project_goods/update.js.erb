@@ -1,2 +1,3 @@
 $('.modal').modal('hide');
-$("#pgt_item<%= @pg.id %>").replaceWith("<%= j render('good', g: @pg) %>");
+$("#pgt_item<%= @prj_good.id %>").replaceWith("<%= j render('good', g: @prj_good) %>");
+$('tr#total_pgt_<%= @prj_good.goodstype.id %>').replaceWith("<%= j render('total', pgt: @prj_good.goodstype ) %>");

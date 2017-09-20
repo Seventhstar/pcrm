@@ -2,11 +2,11 @@
   <% first_col = true %>
   <% @all_total = [0,0,0,0] %>
   <% @prj_good_types.each do |pgt| %>
-    <% total_data = get_project_goods_data(pgt) %>
+    
     <div class="panel panel-default" id="table_new_pgt_item<%= pgt.id %>">
       <div class="panel-heading table-heading head month"><%= pgt.name %> 
         <span class="sub btn_add right" itm="new_pgt_item<%= pgt.id %>">Добавить позицию</span></div>
-         <%= render partial: 'goods', locals: {pgt: pgt, first_col: first_col, opened: opened, total: total_data} %>
+         <%= render partial: 'goods', locals: {pgt: pgt, first_col: first_col, opened: opened} %>
       <% first_col = false %>
     </div>
   <% end %>

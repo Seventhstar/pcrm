@@ -14,7 +14,6 @@ module ProjectsHelper
       i = 1
       currency.each do |c|
         sum_by_currency = total_data.select {|h| h[:currency_id] == i }.first
-        p "sum_by_currency #{sum_by_currency}"
         tsum = 0
         tsum = sum_by_currency[sum_type_str] if sum_by_currency.present?
         s = s + ' | ' if s.length >0 && tsum>0
@@ -24,17 +23,20 @@ module ProjectsHelper
       s
   end
 
-  def get_project_goods_data(pgt)
+  def get_goods(project_id,pgt)
     case @gs
     when 1 
-      @goods = pgt.goods.where(order: false, project_id: @project.id)
+      @goods = pgt.goods.where(order: false, project_id: project_id)
     when 2 
-      @goods = pgt.goods.where(order: true, fixed: false, project_id: @project.id)
+      @goods = pgt.goods.where(order: true, fixed: false, project_id: project_id)
     when 3
-      @goods = pgt.goods.where(fixed: true, project_id: @project.id)
+      @goods = pgt.goods.where(fixed: true, project_id: project_id)
     else 
-      @goods = pgt.goods.where(project_id: @project.id)
+      @goods = pgt.goods.where(project_id: project_id)
     end
+  end
+  
+  def get_project_goods_data(pgt)
 
     total_data = @goods.group('currency_id')
                  .select('currency_id, sum(gsum) as gsum, sum(sum_supply) as sum_supply, 
