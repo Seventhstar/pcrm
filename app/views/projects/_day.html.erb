@@ -2,7 +2,7 @@
 
 
 <td><div class="inp_w"><label>Окончание</label>
-    <%= text_field_tag "project[date_end_plan]", @project.last_elongation.try('strftime',"%d.%m.%Y"), 
+    <%= text_field_tag "project[date_end_plan]", @project.date_end.try('strftime',"%d.%m.%Y"), 
                     {class: "txt datepicker" , disabled: @project.elongations.count>0} %>
 </div></td>
 

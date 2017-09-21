@@ -61,13 +61,15 @@ class ProjectPdf < Prawn::Document
            {content:"Примечание",width:160}
            ]]
 
-    @prj_good_types = Goodstype.where(id: [@project.goods.pluck(:goodstype_id).uniq]).order(:name)  
+    # @prj_good_types = @project.goods.where(id: [@project.goods.pluck(:goodstype_id).uniq]).order(:name) 
+    items = @project.goods.order(:goodstype_id,:name)
     
     ind = 1
 
-    @prj_good_types.each do |item|
-      if item.goods.count>0
-        item.goods.each do |g|
+    items.each do |g|
+       p "g.goodstype_id: #{g.goodstype_id} g: #{g.id}" 
+      # if item.goods.count>0
+        # item.goods.each do |g|
             date_supp = g.date_supply.nil? ? 'По согласованию' : I18n.localize(g.date_supply, format: :long)
 
             a << [ind, g.name, 
@@ -76,8 +78,8 @@ class ProjectPdf < Prawn::Document
                   g.provider_full_info,
                   g.description]
             ind+=1
-        end
-      end
+        # end
+      # end
     end
     a
   end
