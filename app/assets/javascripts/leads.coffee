@@ -16,28 +16,7 @@
   a.search = (if a.search.substring(0, 1) == '?' then '' else '?') + str.join('&')
   a.href
 
-@add_comment = ->
-  comment = $('#comment_comment').val()
-  owner_id = $('#btn-chat').attr('ownerid')
-  owner_type = $('#btn-chat').attr('ownertype');
-  upd_url = owner_type.toLowerCase()+'s';
-  if comment == ''
-    return
-  $.ajax
-    url: '/ajax/add_comment'
-    data:
-      'comment': comment
-      'owner_id': owner_id
-      'owner_type': owner_type
-    type: 'POST'
-    beforeSend: (xhr) ->
-      xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
-      return
-    success: ->
-      $('#comment_comment').val ''
-      $.get '/'+upd_url+'/' + owner_id + '/edit', '', null, 'script'
-      return
-  return
+
 
 
 
@@ -47,46 +26,9 @@ $(document).ready ->
   $('#lead_status_id').chosen(width: '99.5%', disable_search: 'true')
   $('.inp_w #lead_user_id').chosen(width: '99.5%', disable_search: 'true')
   $('.inp_w #lead_ic_user_id').chosen(width: '99.5%', disable_search: 'true')
-
-
-  
-  
   $('#user_id').chosen(width: '200px', disable_search: 'true')
 
-  # удаляем комент
-  $('.comments_box').on 'click', 'span.btn_remove', ->
-    del = confirm('Действительно удалить?')
-    if !del
-      return
-    ownerid = $(this).attr('ownerid')
-    comm_id = $(this).attr('commentid')
-    owner_type = $('#btn-chat').attr('ownertype');
-    upd_url = owner_type.toLowerCase()+'s';
-    $.ajax
-      url: '/ajax/del_comment'
-      data: 'comment_id': comm_id
-      type: 'POST'
-      beforeSend: (xhr) ->
-        xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
-        return
-      success: ->
-        $.get '/'+upd_url+'/' + ownerid + '/edit', '', null, 'script'
-        show_ajax_message "Успешно удален"
-        return
-    return
 
-  # добавление комментария 
-  # кликом по кнопке 
-  $('.comments_box').on 'click', 'span.btn-sm', ->
-    add_comment()
-    return
-  
-  # нажатием на Enter
-  $('.container').on 'keypress', '#comment_comment', ->
-    if event.keyCode==13
-      add_comment()
-      return false;
-    return
 
   # основновная сортировка
   $('.container').on 'click', 'span.sort-span', ->
