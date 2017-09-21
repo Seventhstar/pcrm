@@ -4,6 +4,30 @@ module ProjectsHelper
     total_data.map {|h| h[field] }.sum>0
   end
 
+  def get_total_id(pgt)
+    if pgt.present?
+      id = pgt.id
+    else
+      id = @project.id
+    end
+    p "id #{id}"
+    id
+  end
+
+  def get_total_key(pgt)
+    if @cur_id.present? && action_name!='edit'
+      key = @cur_id
+    else      
+      item = @prj_good.nil? ? pgt : @prj_good 
+      if action_name=='index' && params[:sort]=='provider_id'
+        key = item.provider_id
+      else
+        key = item.goodstype_id
+      end
+    end
+    key
+  end
+
   def total_on_currencies(total_data, sum_type)
       sum_type_str = :gsum
       case sum_type
@@ -27,21 +51,44 @@ module ProjectsHelper
       s
   end
 
-  def get_goods(project_id,pgt)
+  def clarify_params
+    years = Project.select("projects.*, date_trunc('year', date_start) AS year").where('date_start IS NOT NULL').order('date_start')
+    year_from = years.first.year
+    year_to = years.last.year
+    @years = (year_from.year..year_to.year).step(1).to_a.reverse
+    if params[:currency]
+      @goods = @goods.where(currency_id: params[:currency])
+    end
+  end
+
+  def get_goods(id,pgt)
+    # p "get_goods controller_name #{action_name}"
+    # p " params #{params}"
     if pgt.nil?
-      @goods = ProjectGood.where(project_id: project_id)
+      if action_name=='index' && params[:sort]=='provider_id'
+        # provider = Provider.find(id.provider_id)
+        @goods = ProjectGood.where(provider_id: id.provider_id)
+        clarify_params
+      else
+        s_id = id.is_a?(Integer) ? id : id.project_id
+        @goods = ProjectGood.where(project_id: s_id)
+      end
+
     else
+      @goods = pgt.goods.where(project_id: id)
+    end
+
       case @gs
       when 1 
-        @goods = pgt.goods.where(order: false, project_id: project_id)
+        @goods = @goods.where(order: false)
       when 2 
-        @goods = pgt.goods.where(order: true, fixed: false, project_id: project_id)
+        @goods = @goods.where(order: true, fixed: false)
       when 3
-        @goods = pgt.goods.where(fixed: true, project_id: project_id)
-      else 
-        @goods = pgt.goods.where(project_id: project_id)
+        @goods = @goods.where(fixed: true)
+      # else 
+        # @goods = @goods.where(project_id: id)
       end
-    end
+    # end
   end
   
   def get_project_goods_data()
@@ -84,8 +131,8 @@ module ProjectsHelper
   def obj_to_link(g)
     prm = params[:sort]
     prm = 'project_id' if prm.nil?
+    @cur_id = g.try(prm)
     g.try(prm.sub('_id',''))
-    
   end
 
 

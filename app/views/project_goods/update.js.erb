@@ -1,3 +1,4 @@
 $('.modal').modal('hide');
-$("#pgt_item<%= @prj_good.id %>").replaceWith("<%= j render('good', g: @prj_good) %>");
-$('tr#total_pgt_<%= @prj_good.goodstype.id %>').replaceWith("<%= j render('total', pgt: @prj_good.goodstype ) %>");
+$("#item_<%= @prj_good.id %>").replaceWith("<%= j render('good', g: @prj_good) %>");
+$('tr#total_<%= get_total_key(@prj_good) %>').html("<%= j render('total_body', pgt: @prj_good.goodstype ) %>");
+$('#grand_total').html("<%= j render('grand_total', project_id: @prj_good.project_id) %>");

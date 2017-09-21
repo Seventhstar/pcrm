@@ -3,6 +3,7 @@ class ProjectGood < ActiveRecord::Base
   belongs_to :provider
   belongs_to :project
   belongs_to :goodstype
+  attr_accessor :owner_id
 
   validates :name, :length => { :minimum => 3 }
   validates :provider_id, presence: true

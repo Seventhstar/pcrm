@@ -1,24 +1,18 @@
 <% @cur_head = "" %>
 <% @first_table = true %>
 <% @no = 1 %>
-<% total = [0,0,0,0] %>
-<% total_order = [0,0,0,0] %>
 <% @goods.order(:id).each do |g| %>
   <% if check_new_table_head(g) %>
     <% if !@first_table %>
-      <%= render 'total', total: total, total_order: total_order %>
-      <% total = [0,0,0,0] %><% total_order = [0,0,0,0] %>
+      <%= render 'total', opened: true, pgt: nil %>
     <% end %>
     <%= render "shared/head", link: obj_to_link(g) %>
-    
+    <% get_goods(g,nil) %>
     </thead>
     <tbody>
   <% end %>
-
-    <%= render "good", g: g %> 
-    <%  total[g.currency_id] = total[g.currency_id] + g.gsum if !g.gsum.nil? %>
-    <%  total_order[g.currency_id] = total_order[g.currency_id] + g.sum_supply if !g.sum_supply.nil? && g.order %>
-    <% end %>
-    <%= render 'total', total: total, total_order: total_order %>
-  </tbody>
+  <%= render "good", g: g %> 
+<% end %>
+<%= render 'total', opened: true, pgt: nil %>
+</tbody>
 </table>

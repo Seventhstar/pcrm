@@ -93,10 +93,11 @@ $(document).ready ->
     itm = $(this).attr('item_id')
     $('#edit_pgt_item'+itm).show()
     $('#pgt_item'+itm).hide()
+
   $(".container").on 'click','span.btn_add', ->
     disable_input_row()
     id = $(this).attr('itm')
-    $('#'+id).show()
+    $('#new_item_'+id).show()
     $('#table_'+id+' .hidden').removeClass('hidden')
     $(this).hide()
     # $('#table_'+id+'.fw input').focus()

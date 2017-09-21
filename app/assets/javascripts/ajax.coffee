@@ -305,7 +305,7 @@ $(document).ready ->
     
   $(document).on 'click', '.cut', ->
     $(this).toggleClass('cutted')
-    id = 'table' + $(this).attr('cut_id')
+    id = 'table_' + $(this).attr('cut_id')
     $('#'+id).slideToggle( "slow" )
     url = sortable_prepare({})
     base_url = sort_base_url()

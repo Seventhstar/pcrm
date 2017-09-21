@@ -1,8 +1,6 @@
 <% if @goods.nil? %>
   <% get_goods(@prj_good.project_id,pgt) %>
 <% end %>
-<tr id= "total_pgt_<%= pgt.id %>" class="total <%= @goods.count>0 || opened ? '' : 'hidden' %>">
-  <% total = get_project_goods_data %>
-  <td colspan="3">Итого предложено: <%= total_on_currencies(total, 1).html_safe %></td>
-  <td colspan="4">Итого заказано: <%= total_on_currencies(total, 2).html_safe %></td>    
+<tr id= "total_<%= @cur_id %>" class="total <%= @goods.count>0 || opened ? '' : 'hidden' %>">
+  <%= render 'project_goods/total_body' %>    
 </tr>

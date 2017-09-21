@@ -77,12 +77,12 @@ class AjaxController < ApplicationController
   def store_cut
       ls = session['last_'+params['cntr']+'_page']
       ls = url_for(action: 'index', controller: params['cntr'])
-      p params,ls
+      # p params,ls
       url = URI.parse(ls) 
       url.query = params['cut'] #Rack::Utils.parse_nested_query(url.query).merge({cut: params['cut']}).to_query  
-      p url.to_s
+      # p url.to_s
       session["last_"+params['cntr']+"_page"] = url.to_s
-      p session["last_"+params['cntr']+"_page"]
+      # p session["last_"+params['cntr']+"_page"]
 
       render :nothing => true
   end

@@ -16,10 +16,6 @@
   a.search = (if a.search.substring(0, 1) == '?' then '' else '?') + str.join('&')
   a.href
 
-
-
-
-
 $(document).ready ->
 
   $('#lead_channel_id').chosen(width: '99.5%', disable_search: 'true')
@@ -27,8 +23,6 @@ $(document).ready ->
   $('.inp_w #lead_user_id').chosen(width: '99.5%', disable_search: 'true')
   $('.inp_w #lead_ic_user_id').chosen(width: '99.5%', disable_search: 'true')
   $('#user_id').chosen(width: '200px', disable_search: 'true')
-
-
 
   # основновная сортировка
   $('.container').on 'click', 'span.sort-span', ->

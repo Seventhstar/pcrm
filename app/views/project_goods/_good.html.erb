@@ -1,16 +1,16 @@
-<tr id="pgt_item<%= g.id %>" class="sw_color <%= class_for_prj_goods(g) %>">
+<tr id="item_<%= g.id %>" class="sw_color <%= class_for_prj_goods(g) %>">
   <td width='220px'><%= g.name %></td>
-  <td width='210px'><%= g.provider_name %></td>
+  <td width='210px'><%= action_name=='index' && params[:sort] == 'provider_id' ? g.project.try(:address) : g.provider_name %></td>
   <td width='115px'><%= g.date_place.try('strftime',"%d.%m.%Y") %></td>
   <td width='230px'><%= g.description %></td>
   <td width='58px'><%= g.currency_name %></td>
-  <td width='90px' class="" title="<%= all_sum_info(g) %>">
-    <%= all_sum(g) %>
-    
+  <td width='90px' class="" title="<%= all_sum_info(g) %>"><%= all_sum(g) %></td>
+  
+  <td class="edit_delete td_right " style="">
+    <a class="icon basket" data-modal="true" href="/project_goods/<%= g.id %>/edit?owner_id=<%= get_total_key(g) %>"></a>
+    <a data-confirm="Действительно удалить?" class="icon icon_remove " 
+    data-remote="true" rel="nofollow" 
+    data-method="delete" href="/project_goods/<%= g.id %>"></a>
   </td>
-  <%= tool_icons(g, {icons:'basket,delete',tag:'link', add_class:'td_right', modal: true}) %>
-  <% if local_assigns.has_key?(:total) %>
-    <%  total[g.currency_id] = total[g.currency_id] + g.gsum if !g.gsum.nil? %>
-    <%  @all_total[g.currency_id] = @all_total[g.currency_id] + g.gsum if !g.gsum.nil? %>
-  <% end -%>
+
 </tr>

@@ -3,6 +3,8 @@
   </tbody></table></div></div>
 <% end %>
 
+<% cur_id = @cur_id.nil? ? @no : @cur_id %>
+
 <% @first_table = false %>
 <% hide = params['cut'].split('.').include? @no.to_s if !params['cut'].nil? %>
 
@@ -10,9 +12,9 @@
 
 <div class="panel panel-default">
 <% if @cur_head %>
-  <div class="panel-heading table-heading head month"><%= header %><span class="cut <%= hide ? 'cutted' : '' %>" cut_id="<%= @no %>"><b></b></span></div>  
+  <div class="panel-heading table-heading head month"><%= header %><span class="cut <%= hide ? 'cutted' : '' %>" cut_id="<%= cur_id %>"><b></b></span></div>  
 <% end %>
 
-<div id="table<%= @no %>" style="display: <%= hide ? 'none' : '' %>;">
+<div id="table_<%= cur_id %>" style="display: <%= hide ? 'none' : '' %>;">
 <table class="tleads <%= local_assigns[:stripped] ? 'stripped' : '' %>" action=<%= controller.controller_name %> model=<%= controller.controller_name.classify %> >
   <thead>

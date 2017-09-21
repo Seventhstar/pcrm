@@ -1,4 +1,4 @@
-<table class="tleads twfixed" id="project_goods<%= pgt.id %>"  model="ProjectGood" action="project_goods" color_cls="ordered">
+<table class="tleads twfixed" id="table_<%= pgt.id %>"  model="ProjectGood" action="project_goods" color_cls="ordered">
   <% opened = local_assigns.has_key?(:opened) ? opened : false %>   
   <% get_goods(@project.id,pgt) %>
   <thead class="<%= @goods.count>0 || opened ? '' : 'hidden' %>">
@@ -9,6 +9,7 @@
       <%= render partial: "project_goods/good", locals: {g: g} %>
     <% end %>
     <%= render partial: "project_goods/new_item", locals: {pgt: pgt, opened: opened} %>
+    <% @cur_id = pgt.id %>
     <%= render partial: 'project_goods/total', locals: {opened: opened, pgt: pgt} %>    
   </tbody>
 </table>

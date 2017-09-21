@@ -1,29 +1,21 @@
 class ProjectGoodsController < ApplicationController
+  include ProjectsHelper
   respond_to :html, :json
   before_action :set_project_good, only: [:show, :edit, :update, :destroy]  
   before_action :logged_in_user
   before_action :check_sum, only: [:create,:update]
   helper_method :sort_column, :sort_direction
-
   respond_to :html, :json, :js
 
   def show
   end
-
+  
   def index
     params.delete_if{|k,v| v=='' || v=='0' }
-    years = Project.select("projects.*, date_trunc('year', date_start) AS year").where('date_start IS NOT NULL').order('date_start')
-    year_from = years.first.year
-    year_to = years.last.year
-
-    @years = (year_from.year..year_to.year).step(1).to_a.reverse
     
     @sort_column = sort_column
     @goods = ProjectGood.order(@sort_column)
-
-    if params[:currency]
-      @goods = @goods.where(currency_id: params[:currency])
-    end
+    clarify_params
 
     case params[:good_state]
     when '1'
@@ -37,12 +29,12 @@ class ProjectGoodsController < ApplicationController
   end
 
   def create
-
     @prj_good = ProjectGood.new(pg_params)
     @prj_good.project_id = params[:owner_id].split('_').last
+    @cur_id = pg_params[:owner_id]
     if @prj_good.save 
     else
-    respond_to do |format|
+      respond_to do |format|
         format.json { render json: @prj_good.errors.full_messages, status: :unprocessable_entity }
       end
     end 
@@ -53,6 +45,8 @@ class ProjectGoodsController < ApplicationController
   end
 
   def update
+    @cur_id = pg_params[:owner_id]
+    p "@cur_id #{@cur_id}"
     @prj_good.update(pg_params)    
     @prj_good.save 
     
@@ -60,6 +54,8 @@ class ProjectGoodsController < ApplicationController
 
   def edit
     @title = 'Редактирование заказа'
+    @cur_id = params[:owner_id]
+    p "@cur_id #{@cur_id}"
     respond_modal_with @prj_good, location: root_path
   end
 
@@ -96,6 +92,6 @@ class ProjectGoodsController < ApplicationController
     def pg_params
       prm = params.permit!.to_h.first[0] 
       params.require(prm).permit(:goodstype_id,:provider_id,:date_supply,:date_place,:date_offer, 
-        :currency_id,:gsum,:order,:name,:description, :fixed, :sum_supply, :project_id)
+        :currency_id,:gsum,:order,:name,:description, :fixed, :sum_supply, :project_id, :owner_id)
     end
   end
