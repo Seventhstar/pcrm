@@ -9,7 +9,7 @@ class ProjectGoodsController < ApplicationController
 
   def show
   end
-  
+
   def index
     params.delete_if{|k,v| v=='' || v=='0' }
     
@@ -46,7 +46,7 @@ class ProjectGoodsController < ApplicationController
 
   def update
     @cur_id = pg_params[:owner_id]
-    p "@cur_id #{@cur_id}"
+    #p "@cur_id #{@cur_id}"
     @prj_good.update(pg_params)    
     @prj_good.save 
     
@@ -55,7 +55,7 @@ class ProjectGoodsController < ApplicationController
   def edit
     @title = 'Редактирование заказа'
     @cur_id = params[:owner_id]
-    p "@cur_id #{@cur_id}"
+    # p "@cur_id #{@cur_id}"
     respond_modal_with @prj_good, location: root_path
   end
 

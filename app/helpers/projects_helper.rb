@@ -10,7 +10,7 @@ module ProjectsHelper
     else
       id = @project.id
     end
-    p "id #{id}"
+    # p "id #{id}"
     id
   end
 

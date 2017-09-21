@@ -17,7 +17,7 @@ module CommonHelper
   end
 
   def check_new_table_head( obj )
-    p "params[:sort] #{params[:sort]}"
+    #p "params[:sort] #{params[:sort]}"
     case params[:sort]
     when "users.name"
       new_head = head_name(obj,'user_id')

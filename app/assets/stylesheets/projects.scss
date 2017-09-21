@@ -17,7 +17,7 @@ input::-webkit-inner-spin-button { padding-right:0}
 
 .striked {text-decoration: line-through;}
 .icon.basket { display: inline-block;
-    background: url('basket.png') no-repeat;
+    background: asset-url('basket.png') no-repeat;
     vertical-align: middle;
     position: relative;
     width: 16px;
