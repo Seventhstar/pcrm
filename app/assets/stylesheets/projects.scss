@@ -64,8 +64,9 @@ td.inf.comment {  background-position-x: -17px !important; }
 
 #pdf {float: right; margin-left: 15px;}
 
-#project_client_id_chosen {width: 98% !important;}
-.fullwidth #project_client_id_chosen {width: 100% !important;}
+.inp_94 #project_client_id_chosen {width: 98% !important;}
+tr.fullwidth>td>#project_client_id_chosen {width: 100% !important;}
+// .fullwidth #project_client_id_chosen {width: 100%;}
 
 
 .inp_94 {width: 94%;}

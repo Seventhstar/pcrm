@@ -20,6 +20,9 @@ ru:
         name: Наименование
         gsum: Стоимость
         provider: Поставщик
+      project:
+        executor: Исполнитель
+        project_type: Вид проекта
     successful:
       messages:
         created: "%{model} was successfully created."
