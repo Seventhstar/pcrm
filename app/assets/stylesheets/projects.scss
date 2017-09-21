@@ -33,7 +33,7 @@ input::-webkit-inner-spin-button { padding-right:0}
 .fixed {background: #fafafa; color: #999;}
 
 // .tbl_a table tr.ordered:nth-child(even) td, table.tleads tr.ordered:nth-child(even) td { background: #84c8d6;}
-#project_client_id_chosen {max-width: 300px !important;}
+// #project_client_id_chosen {max-width: 300px !important;}
 
 
 
@@ -60,8 +60,17 @@ td.inf.comment {  background-position-x: -17px !important; }
 .green { color: #0dd60d;}
 
 #pgoods .datepicker {width: 125px;}
+.sw_b {width: 238px !important; font-weight: 500; font-size: 17px;}
 
 #pdf {float: right; margin-left: 15px;}
+
+#project_client_id_chosen {width: 98% !important;}
+.fullwidth #project_client_id_chosen {width: 100% !important;}
+
+
+.inp_94 {width: 94%;}
+
+.td_caption {padding-top: 10px;}
 
 #pgoods #btn-sub-send{padding: 0 14px;}
 

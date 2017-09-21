@@ -17,12 +17,11 @@
             <td><div class="inp_w"><label>Дата</label><%= f.text_field :date_sign, value: Date.today.try('strftime',"%d.%m.%Y"), class: "txt datepicker" %></div></td>
             <td colspan="3"><div class="inp_w"><%= f.input :address, label: 'Адрес' %></div></td>
           </tr>
-          <tr><td><div class="inp_w"><label> Сведения о клиенте</label></div></div></td><td><div class="switcher_a toggled">
-          <a class="link_c left on new_client" off="Новый" on="Из базы">Из базы</a>
+          <tr><td><div class="switcher_a sw_b left toggled">
+          <a class="link_c left on new_client" off="Новый клиент" on="Клиент из базы">Клиент из базы</a>
           <div class="scale"><div class="handle active"></div></div></div></td></tr>
           
-          <tr class="ex_client"><td colspan="2">
-          <label>Клиент</label>
+          <tr class="ex_client fullwidth"><td colspan="2">
               <%= chosen_src :client_id, Client.order(:name), @project, {nil_value: 'Клиент...' } %></td>
           </tr>
          

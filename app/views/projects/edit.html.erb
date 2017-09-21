@@ -30,7 +30,7 @@
         <tbody>
           <tr>
             <td><div class="inp_w"><%= f.input :number,label: 'Номер' %></div></td>
-            <td class='va_pt15'><%= f.input :interest, :as => :boolean, label: 'Интерес к стройке', class: 'inp_btn checkbox'  %>
+            <td class='va_pt15'><%= f.input :interest, as: :boolean, label: 'Интерес к стройке', class: 'inp_btn checkbox'  %>
               <%= f.input :debt, :as => :boolean, label: 'Должен денег', class: 'inp_btn checkbox'  %>
             </td>
             </tr>
@@ -51,14 +51,16 @@
             </td>
             
             </tr>
-            <tr><td class="gr_caption">Клиент</td></tr>
+            <tr><td class="gr_caption">Клиент</td><td class="td_caption">Адрес:</td></tr>
             <tr>
-            <td ><div class="inp_90 left"><%= chosen_src :client_id, Client.all, @project,{label: ' '} %></div>
+            <td ><div class="inp_94 left">
+              <%= chosen_src :client_id, Client.all, @project,{label: ' '} %></div>
               <% if @project.client_id %> 
-                <%= link_to "", edit_client_path(@project.client_id, sub: true),data: {modal: true}, class: 'icon icon_edit left', id: 'client_link' %>
+                <%= link_to "", edit_client_path(@project.client_id, sub: true), data: {modal: true}, 
+                    class: 'icon icon_edit left chosen_edit', id: 'client_link' %>
               <% end %>
             </td>
-            <td ><div class="inp_w"><%= f.input :address, label: 'Адрес' %></div></td>
+            <td ><div class="inp_w"><%= f.input :address, label: false %></div></td>
           </tr>
 
           <tr><td class="gr_caption">Вид работы и исполнитель</td></tr>
