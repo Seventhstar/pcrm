@@ -131,6 +131,7 @@ ru:
     ic_user_id: Без ответственного
     pstatus_id: Без статуса
     status_id: Без статуса
+    project_id: Без проекта
     project_type_id: Вид не указан
     project_g_type_id: Не указан тип проекта
 
