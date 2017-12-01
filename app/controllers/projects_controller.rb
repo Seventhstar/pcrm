@@ -22,7 +22,7 @@ class ProjectsController < ApplicationController
     @sort_column = sort_column
     @only_actual = params[:only_actual].nil? ? true : params[:only_actual]=='true'
     query_str = "projects.*, date_trunc('month', date_start) AS month"
-    if !current_user.admin?
+    if !current_user.has_role?(:manager)
       @projects = current_user.projects.select(query_str)
     else
       @projects = Project.select(query_str)

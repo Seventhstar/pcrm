@@ -13,9 +13,8 @@ class ClientsController < ApplicationController
       @clients = Client.order(:name)
     end
 
-    if !current_user.admin?
+    if !current_user.has_role?(:manager)
       @clients = @clients.where('id in (?)', current_user.projects.pluck(:client_id))
-
     end
   end
 

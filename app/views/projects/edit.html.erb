@@ -1,4 +1,4 @@
-<% if is_admin? %>
+<% if current_user.has_role?(:manager) %>
 <div class="hl hl_a bd">Редактирование проекта <%= @project.address %>
 <%= link_to "", @project, method: :delete, data: { confirm: 'Действительно удалить проект?' }, :class=>"icon icon_remove right" %>
 </div>
@@ -117,7 +117,9 @@
           <td></td>
           </tr>
 
-          <%= render 'executor', f: f %>
+          <% if is_admin? %>
+            <%= render 'executor', f: f %>
+          <% end %>
 
 </tbody></table></div></div></div>
 <div id="tabs-3" class="ptab">
@@ -213,8 +215,6 @@
     </div>
   </div>
 </div>
-
-
 
 <div id="tabs-6" class="ptab">
 <div class="box_wide">

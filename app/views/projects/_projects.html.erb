@@ -15,10 +15,14 @@
         <% if @sort!="users.name" %>
           <th width='120px'><%= sortable_th( :executor_id,'Исполнитель', @numsort) %></th>
         <% end %>
+
       <% else %>
+      
         <th width='200px'><%= sortable_th( :project_type_id,'Вид проекта', @numsort) %></th>
         <th width='220px'><%= sortable_th( :client_id,'Заказчик', @numsort) %></th>
+      
       <% end %>
+
       <th style="width: 75px;"><%= sortable_th(:date_start,'Начало', @numsort) %></th>
       <th width="85px"><%= sortable_th(:date_end_plan,'Оконч.', @numsort) %> </th>
       <th style="width: 105px;" class=""><%= sortable_th(:footage, 'м2 / Цена', @numsort) %></th>
@@ -43,11 +47,13 @@
     <td class="td_prgrs"><%= project.date_start.try('strftime',"%d.%m.%Y") %></td>
     <td class="<%= class_prj_td(project) %> td_prgrs"><%= project.date_end.try('strftime',"%d.%m.%Y") %></td>
 
-    <% if is_admin? %>
+    <% if current_user.has_role?(:manager) %>
+
       <td rowspan="2"><%= project.admin_info.html_safe %></td>
       <td <%= project.sum_total_real ==0 ? '':'red' %>" rowspan="2" title="<%= project.sum_total.to_sum %>">
           <%= project.total.to_sum %></td>
       <%= tool_icons(project,{icons:'edit,show', rowspan: 2}) %>
+
     <% else %>
 
       <td rowspan="2"><%= project.executor_info.html_safe %></td>

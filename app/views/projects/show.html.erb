@@ -1,50 +1,53 @@
+<% if current_user.has_role?(:manager) %>
 <div class="box_wrap box_wrap_1">
 
-	<div class="panel-left">
-		<table class="tbl_fc tbl_fc_1">
-		<tr><td class="caption">Клиент:</td>
-		    <td><div class="lbl"><%= @project.client_name %></div></td></tr>
-		<tr><td class="caption">Адрес:</td>
-			<td><div class="lbl"><%= @project.address %></div></td></tr>
+  <div class="panel-left">
+    <table class="tbl_fc tbl_fc_1">
+    <tr><td class="caption">Клиент:</td>
+        <td><div class="lbl"><%= @project.client_name %></div></td></tr>
+    <tr><td class="caption">Адрес:</td>
+      <td><div class="lbl"><%= @project.address %></div></td></tr>
 
-		<tr><td class="caption">Исполнитель:</td>
-		    <td><div class="lbl"><%= @project.executor_name %></div></td></tr>
-		<tr><td class="caption">Вид работы:</td>
-			<td><div class="lbl"><%= @project.project_type_name %></div></td></tr>    
-		
-		</div>
-		</td></tr>
+    <tr><td class="caption">Исполнитель:</td>
+        <td><div class="lbl"><%= @project.executor_name %></div></td></tr>
+    <tr><td class="caption">Вид работы:</td>
+      <td><div class="lbl"><%= @project.project_type_name %></div></td></tr>    
+    
+    </div>
+    </td></tr>
 
-		<tr><td class="caption">Метраж * Цена:</td>
-		    <td><div class="lbl">
-		    <%= [@project.f1_info,'м2',' х ',@project.price.to_sum,'р./м2 = ', (@project.f1 * @project.price.to_i).to_i.to_sum,'р.' ].join %>
-		    </div></td></tr>
-		<tr><td class="caption">Метраж2 * Цена2:</td>
-			<td><div class="lbl">
-				<%= [@project.f2_info,'м2',' x ',@project.price_2.to_sum,'р./м2 = ', (@project.f2 * @project.price_2.to_i).to_i.to_sum,'р.' ].join if !nil_footage(@project.f2) %>
-			</div></td></tr>
-			  
-		<tr><td class="caption">Цена дизайнера:</td>
-			<td><div class="lbl">
-				<%= @project.executor_prices %>
-			</div></td></tr>
+    <tr><td class="caption">Метраж * Цена:</td>
+        <td><div class="lbl">
+        <%= [@project.f1_info,'м2',' х ',@project.price.to_sum,'р./м2 = ', (@project.f1 * @project.price.to_i).to_i.to_sum,'р.' ].join %>
+        </div></td></tr>
+    <tr><td class="caption">Метраж2 * Цена2:</td>
+      <td><div class="lbl">
+        <%= [@project.f2_info,'м2',' x ',@project.price_2.to_sum,'р./м2 = ', (@project.f2 * @project.price_2.to_i).to_i.to_sum,'р.' ].join if !nil_footage(@project.f2) %>
+      </div></td></tr>
+        
+    <% if is_admin? %>
+        
+      <tr><td class="caption">Цена дизайнера:</td>
+        <td><div class="lbl">
+          <%= @project.executor_prices %>
+        </div></td></tr>
 
+      <tr><td class="caption">Всего / Остаток:</td>
+        <td><div class="lbl">
+          <%= [@project.total.to_sum,
+                'p. - ', @project.executor_sum.to_sum,
+                'р. = ', @project.rest.to_sum,'р.'].join %>
+        </div></td></tr>
+      
+    <% end %>
 
-		<tr><td class="caption">Всего / Остаток:</td>
-			<td><div class="lbl">
-				<%= [@project.total.to_sum,'p. - ',@project.executor_sum.to_sum,'р. = ',@project.rest.to_sum,'р.'].join %>
-			</div></td></tr>
-			
+    <tr><td class="caption">Сроки:</td>
+        <td><div class="lbl"><%= @project.date_start.try('strftime',"%d.%m.%Y") %> / <%= @project.date_end.try('strftime',"%d.%m.%Y") %> = <%= @project.days_duration %>дн.</div></td></tr>  
+    
+    </div></td></tr>
 
-		<tr><td class="caption">Сроки:</td>
-		    <td><div class="lbl"><%= @project.date_start.try('strftime',"%d.%m.%Y") %> / <%= @project.date_end.try('strftime',"%d.%m.%Y") %> = <%= @project.days_duration %>дн.</div></td></tr>
-		 
-		
-		</div></td></tr>
-
-		</table>
+    </table>
   </div>
-
 
   <div class="panel-right">
     <div class="comments_box">
@@ -53,3 +56,4 @@
   </div>
 
 </div>
+<% end %>

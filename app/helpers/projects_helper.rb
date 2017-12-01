@@ -115,7 +115,13 @@ module ProjectsHelper
       obj_name = f.object_name
     end 
     
-    txt = content_tag 'input', '', value: v, onblur:"onBlur(this)", onfocus:"onFocus(this)", class: 'txt '+mask_cls + inp_add_mask, type: 'text', name: "#{obj_name}[#{val}]" , id: "#{obj_name}_#{val}", disabled: disabled
+    txt = content_tag 'input', '', value: v, 
+            onblur:"onBlur(this)", onfocus:"onFocus(this)", 
+            class: 'txt '+mask_cls + inp_add_mask, 
+            type: 'text', 
+            name: "#{obj_name}[#{val}]", 
+            id:   "#{obj_name}_#{val}", 
+            disabled: disabled
 
     style = ""
     style = 'width: '+params[:width] if params[:width]

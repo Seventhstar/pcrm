@@ -284,7 +284,7 @@ module ApplicationHelper
       all_icons[i_edit] = content_tag :span, "", {class: 'icon '+i_edit , item_id: element.id} if !i_edit.nil?
       all_icons['delete'] = content_tag( :span,"",{class: ['icon icon_remove',dilable_cls,' ',params[:class]].join, item_id: params[:subcount]>0 ? '' : element.id})
      else
-      all_icons[i_edit] = link_to "", edit_polymorphic_path(element), class: "icon "+i_edit + params[:class], data: datap
+      all_icons[i_edit] = link_to "", edit_polymorphic_path(element), class: "icon "+i_edit + params[:class], data: datap if !i_edit.nil?
       all_icons['show'] = link_to "", polymorphic_path(element), class: "icon icon_show", data: { modal: true }
       all_icons['delete'] = link_to "", polymorphic_url(element), 
                             method: :delete, data: data_del, remote: modal,
