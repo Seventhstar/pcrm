@@ -160,9 +160,16 @@
   return
 
 @apply_mask = ->
-  $('.sum_mask').mask '# ##0',
-    reverse: true
-    maxlength: false
+  mask = 
+    groupSeparator: ' '
+    alias: 'numeric'
+    placeholder: '0'
+    autoGroup: !0
+    digits: 2
+    digitsOptional: !1
+    clearMaskOnLostFocus: !1
+  $('.sum_mask').inputmask mask
+  $('.float_mask').inputmask mask
   $('.chosen').chosen(width: '99.5%', disable_search: 'true')
   $('.schosen').chosen(width: '99.5%')
   $('.tab-chosen').chosen(width: '150px').on 'change', ->

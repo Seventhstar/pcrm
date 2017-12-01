@@ -19,6 +19,7 @@
 //= require jquery.fileupload
 //= require chosen.jquery
 //= require jquery.timepicker
+//= require jquery.inputmask.bundle.min
 //= require jquery.mustache
 //= require tinymce-jquery
 //= require nprogress
@@ -104,7 +105,7 @@ $(function() {
 
   $('.progress').hide();
   $('#file').hide();
-  $('#tabs').tabs({active: 3 });
+  $('#tabs').tabs({active: 1 });
 
   tinyMCE.init({
     selector: '.tinymce textarea', 
