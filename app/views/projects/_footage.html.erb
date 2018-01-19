@@ -7,7 +7,8 @@
         <span class="sub btn_a" id="add_footage">Добавить</span>
       <% end %>
     </td>
-    <%= td_sum_field(f, :sum_total, 'Общая стоимость',{simple: true, inp_class: 'sum_total'} ) %>
+    <% add_cls = @project.plan_sum_by_hand? ? 'red' : '' %>
+    <%= td_sum_field(f, :sum_total, 'Общая стоимость', {simple: true, inp_class: 'sum_total ' +add_cls} ) %>
 
   </tr>
   

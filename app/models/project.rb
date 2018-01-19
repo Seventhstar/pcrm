@@ -168,6 +168,14 @@ class Project < ActiveRecord::Base
     ['<span>',f,'</span>'].join
   end
 
+  def plan_sum_by_hand?
+    (sum_2 + sum) != sum_total
+  end
+
+  def real_sum_by_hand?
+    (sum_2_real + sum_real) != sum_total_real
+  end  
+
   def sum_plan
     (footage*price).to_i
   end

@@ -14,6 +14,10 @@ class AbsenceMailer < ActionMailer::Base
       end
 
       emails << @abs.user.email if !curr_user.nil? && curr_user.id != @abs.user_id && !@abs.user.nil?
+      # p "emails #{emails}"
+      # p "curr_user #{curr_user}"
+      # p "@abs.user.email #{@abs.user.email}" 
+      return if emails.nil? || emails.empty?
 
       mail(:to => emails, :subject => subj) do |format|
         format.html

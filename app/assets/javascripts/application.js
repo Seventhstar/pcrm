@@ -20,6 +20,7 @@
 //= require chosen.jquery
 //= require jquery.timepicker
 //= require jquery.inputmask.bundle.min
+//= require vue.min
 //= require jquery.mustache
 //= require tinymce-jquery
 //= require nprogress

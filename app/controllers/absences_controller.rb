@@ -192,6 +192,7 @@ class AbsencesController < ApplicationController
 
     def send_changeset_email
       @version = @absence.versions.last
+      p "current_user:", current_user
       if !@version.nil?
         if @version.event == "create"
           AbsenceMailer.created_email(@absence.id,current_user).deliver_now
