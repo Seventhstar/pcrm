@@ -11,7 +11,6 @@ class Lead < ActiveRecord::Base
   has_paper_trail
   attr_accessor :first_comment
   after_save :send_changeset_email
-  validates :info, presence: true
 
   def send_changeset_email
     if updated_at > (Time.now-5)
@@ -74,14 +73,6 @@ class Lead < ActiveRecord::Base
     self.users = User.find_or_create_by_name(name) if name.present?
   end
 
-  def self.chart_types
-    [ {"id" => 'created_at', 'name' => 'Создано лидов'},
-      {"id" => 'users_created_at', 'name'=> 'Создано сотрудниками'},
-      {"id" => 'footage', 'name' => 'Метраж'},
-      {"id" => 'statuses', 'name' => 'По статусам'} ]
-
-  end
-
   def self.leads_users_count(type,start_date,end_date)
 
     data = {}
@@ -105,21 +96,25 @@ class Lead < ActiveRecord::Base
 
       data = period.each.collect{ |p|  {month:I18n.t(p.try('strftime',"%B")),  'Количество' => Lead.where("date_trunc('month', start_date) = ?",p).count } }
       headers = ['Количество']
-      el= 'Bar'
+      el = 'Bar'
     when 'footage'
       st = Status.find(10)
-      data = period.each.collect{ |p|  {month:I18n.t(p.try('strftime',"%B")),
-                                            'Всего' => Lead.where("date_trunc('month', start_date) = ?",p).sum(:footage),
-                                             'Заключили договор' => st.leads.where("date_trunc('month', start_date) = ?",p).sum(:footage) } }
+      data = period.each.collect{ |p| {month:I18n.t(p.try('strftime',"%B")), 
+                          'Всего' => Lead.where("date_trunc('month', start_date) = ?",p).sum(:footage),
+                          'Заключили договор' => st.leads.where("date_trunc('month', start_date) = ?",p).sum(:footage) } }
+
       data.map {|t| t["Заключили договор"].nil? || t["Заключили договор"]==0 ? 0 : t["Процент"] = t["Заключили договор"] * 100 / t["Всего"] }
 
       headers = ['Всего','Заключили договор','Процент']
-      el= 'Area'
+      el = 'Area'
     when 'users_created_at'
-      usr = User.where('id NOT IN (?)',[1,3]).order(:name)
-      data = period.each.collect{ |p|  usr.collect{ |u| {month:I18n.t(p.try('strftime',"%B")),  u.name =>  u.leads.where("date_trunc('month', start_date) = ?",p).count } }.reduce(:merge) }
+      usr = User.where('id NOT IN (?)',[1,3,19]).order(:name)
+      data = period.each.collect{ |p|  usr.collect{ 
+              |u| {month: I18n.t(p.try('strftime',"%B")),  
+              u.name =>  u.leads.where("date_trunc('month', start_date) = ?",p).count } }
+              .reduce(:merge) }
       headers = usr.map {|u| u.name }
-      el= 'Bar'
+      el = 'Bar'
     end
 
     { hash: data, json: data, headers: headers, element: el}

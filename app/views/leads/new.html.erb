@@ -5,48 +5,51 @@
 <%= render 'shared/error_messages', object: f.object %>
 
 <div class="box_wrap box_wrap_1">
-	<table class="tbl_fc tbl_fc_1">
-		<tr><td class="caption">Информация о запросе:</td>
-			<td><div class="inp_w"><%= f.text_area :info, class: 'txt alone',label: false %></div></td></tr>
-	</table>
-	<div class="panel-left">
-		<table class="tbl_fc tbl_fc_1">
-		<tr><td class="caption">Фио:</td>
-		    <td><div class="inp_w"><%= f.input :fio, label: false %></div></td></tr>
-		<tr><td class="caption">Телефон:</td>
-		    <td><div class="inp_w"><%= f.input :phone, label: false, class: :txt %></div></td></tr>
-		<tr><td class="caption">E-Mail:</td>
-			<td><div class="inp_w"><%= f.input :email, label: false %></div></td></tr>    
-		<tr><td class="caption">Метраж:</td>
-			<td><div class="inp_w"><%= f.input :footage, label: false %></div></td></tr>
-		<tr><td class="caption">Адрес объекта:</td>
-			<td><div class="inp_w"><%= f.input :address, label: false %></div></td></tr>
-		<tr><td class="caption">Ответственный:</td>
-			<td><div class="inp_w"><%= chosen_src :ic_user_id, User.all, @lead %>			
-		<tr><td class="caption"></td>
-			<td><%= submit_cancel leads_path %> </td></tr>
-		</table>
-	</div>
+  <table class="tbl_fc tbl_fc_1">
+    <tr><td class="caption">Информация о запросе:</td>
+      <td><div class="inp_w"><%= f.text_area :info, class: 'txt alone',label: false %></div></td></tr>
+  </table>
+  <div class="panel-left">
+    <table class="tbl_fc tbl_fc_1">
+    <tr><td class="caption">Фио:</td>
+        <td><div class="inp_w"><%= f.input :fio, label: false %></div></td></tr>
+    <tr><td class="caption">Телефон:</td>
+        <td><div class="inp_w"><%= f.input :phone, label: false, class: :txt %></div></td></tr>
+    <tr><td class="caption">E-Mail:</td>
+      <td><div class="inp_w"><%= f.input :email, label: false %></div></td></tr>    
+    <tr><td class="caption">Метраж:</td>
+      <td><div class="inp_w"><%= f.input :footage, label: false %></div></td></tr>
+    <tr><td class="caption">Адрес объекта:</td>
+      <td><div class="inp_w"><%= f.input :address, label: false %></div></td></tr>
+    <tr><td class="caption">Приоритет:</td>
+      <td><div class="inp_w"><%= chosen_src 'priority_id', @priorities, @lead %>
+      </div></td></tr>
+    <tr><td class="caption">Ответственный:</td>
+      <td><div class="inp_w"><%= chosen_src :ic_user_id, User.all, @lead %>     
+    <tr><td class="caption"></td>
+      <td><%= submit_cancel leads_path %> </td></tr>
+    </table>
+  </div>
 
-	<div class="panel-right">
-		<table class="tbl_fc"><tbody>
-		<tr><td class="caption">Дата создания:</td>
-			<td><div class="inp_w"><%= f.text_field :start_date, class: "txt datepicker" %></div></td></tr>
-		<tr><td class="caption">Канал:</td>
-			<td><div class="select_custom select"><%= chosen_src :channel_id, @channels, @lead %>
-			</td></tr>
-		<tr><td class="caption">Источник:</td>
-			<td><div class="select_custom select"><%= chosen_src :source_id, LeadSource.all, @lead %>
-			</td></tr>
-		<tr><td class="caption">Статус:</td>
-			<td><div class="select_custom select"><%= chosen_src :status_id, @statuses, @lead %>
-		<tr><td class="caption">Дата статуса:</td>
-			<td><div class="inp_w"><%= f.text_field :status_date, class: "txt datepicker" %></div></td>	</tr>		
-				</td></tr>
-		<tr><td class="caption">Примечание:</td>
-			<td><div class="inp_w"><%= f.text_area :first_comment, class: :txt, label: false %></div></td></tr>
-		</tbody></table>
-	</div>
+  <div class="panel-right">
+    <table class="tbl_fc"><tbody>
+    <tr><td class="caption">Дата создания:</td>
+      <td><div class="inp_w"><%= f.text_field :start_date, class: "txt datepicker" %></div></td></tr>
+    <tr><td class="caption">Канал:</td>
+      <td><div class="select_custom select"><%= chosen_src :channel_id, @channels, @lead %>
+      </td></tr>
+    <tr><td class="caption">Источник:</td>
+      <td><div class="select_custom select"><%= chosen_src :source_id, LeadSource.all, @lead %>
+      </td></tr>
+    <tr><td class="caption">Статус:</td>
+      <td><div class="select_custom select"><%= chosen_src :status_id, @statuses, @lead %>
+    <tr><td class="caption">Дата статуса:</td>
+      <td><div class="inp_w"><%= f.text_field :status_date, class: "txt datepicker" %></div></td> </tr>   
+        </td></tr>
+    <tr><td class="caption">Примечание:</td>
+      <td><div class="inp_w"><%= f.text_area :first_comment, class: :txt, label: false %></div></td></tr>
+    </tbody></table>
+  </div>
    
 <%= f.hidden_field :user_id, value: current_user.id %>
 

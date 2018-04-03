@@ -126,6 +126,7 @@
     dir2: $('span.subsort.current').attr('dir2')
     search: $('#search').val()
     year: $('#year').val()
+    priority_id: $('#priority_id').val()
     currency: $('#currency_id').val()
     good_state: $('#good_state').val()
   }
@@ -234,9 +235,9 @@ $(document).ready ->
   $('.ychosen').chosen(width:' 78px', disable_search: 'true', inherit_select_classes: 'true').on 'change', ->
     sortable_query({})
     return
-
-
-
+  $('.pchosen').chosen(width:' 108px', disable_search: 'true', inherit_select_classes: 'true').on 'change', ->
+    sortable_query({})
+    return
   $('.srtchosen').chosen(width:'165px', disable_search: 'true').on 'change', ->
     sortable_query({})
     return

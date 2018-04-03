@@ -5,28 +5,28 @@
   <% if check_new_table_head(project) %>
     <%= render "shared/head" %>
     <tr>
-      <th width="25px"><%= sortable_th(:number,'№', @numsort) %></th>
-      <th><%= sortable_th(:address,'Адрес', @numsort) %></th>
+      <th width="25px"><%= sortable_th(:number, '№', @numsort) %></th>
+      <th><%= sortable_th(:address, 'Адрес', @numsort) %></th>
 
       <% if is_admin? %>
-        <th width='110px'><%= sortable_th(:project_type_id,'Вид проекта', @numsort) %></th>
-        <th width='150px'><%= sortable_th( :client_id,'Заказчик', @numsort) %></th>
+        <th width='110px'><%= sortable_th(:project_type_id, 'Вид проекта', @numsort) %></th>
+        <th width='150px'><%= sortable_th(:client_id, 'Заказчик', @numsort) %></th>
       
         <% if @sort!="users.name" %>
-          <th width='120px'><%= sortable_th( :executor_id,'Исполнитель', @numsort) %></th>
+          <th width='120px'><%= sortable_th(:executor_id, 'Исполнитель', @numsort) %></th>
         <% end %>
 
       <% else %>
       
-        <th width='200px'><%= sortable_th( :project_type_id,'Вид проекта', @numsort) %></th>
-        <th width='220px'><%= sortable_th( :client_id,'Заказчик', @numsort) %></th>
+        <th width='200px'><%= sortable_th(:project_type_id, 'Вид проекта', @numsort) %></th>
+        <th width='220px'><%= sortable_th(:client_id, 'Заказчик', @numsort) %></th>
       
       <% end %>
 
-      <th style="width: 75px;"><%= sortable_th(:date_start,'Начало', @numsort) %></th>
-      <th width="85px"><%= sortable_th(:date_end_plan,'Оконч.', @numsort) %> </th>
+      <th style="width: 75px;"><%= sortable_th(:date_start, 'Начало', @numsort) %></th>
+      <th width="85px"><%= sortable_th(:date_end_plan, 'Оконч.', @numsort) %> </th>
       <th style="width: 105px;" class=""><%= sortable_th(:footage, 'м2 / Цена', @numsort) %></th>
-      <th class="td_right" style="width: 77px;" ><%= sortable_th(:sum_total,'Стоимость', @numsort) %></th>
+      <th class="td_right" style="width: 77px;" ><%= sortable_th(:sum_total, 'Стоимость', @numsort) %></th>
       <% if is_admin? %>
         <th ></th>
       <% end %>

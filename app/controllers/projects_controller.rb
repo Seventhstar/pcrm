@@ -8,6 +8,7 @@ class ProjectsController < ApplicationController
   respond_to :html, :json, :js
 
   include ProjectsHelper
+  include CommonHelper
 
   # GET /projects
   # GET /projects.json
@@ -55,7 +56,7 @@ class ProjectsController < ApplicationController
       @projects = @projects.where('EXTRACT(year FROM "date_start") = ?', y)
     end
 
-    @executors = User.order(:name)
+    @executors = User.where(activated: true).order(:name)
 
     sort_1 = @sort_column #== 'date_end_plan' ? 'month' : @sort_column
     @numsort = (sort_1 == "number") 
@@ -105,6 +106,7 @@ class ProjectsController < ApplicationController
     @owner = @project
     @holidays =  Holiday.pluck(:day).collect{|d| d.try('strftime',"%Y-%m-%d")}
     @gtypes = Goodstype.where.not(id: [@pgt]).order(:name)
+    @history  = get_history_with_files(@project)
   end
 
   # GET /projects/new

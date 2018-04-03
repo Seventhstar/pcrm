@@ -26,6 +26,9 @@ class LeadsController < ApplicationController
     @years = (year_from.year..year_to.year).step(1).to_a.reverse
 
     @only_actual = params[:only_actual].nil? ? true : params[:only_actual]=='true'
+    
+    @priorities = Priority.all
+
     @sort_column = sort_column
     if @sort_column == "status_date"
       query_str = "leads.*, date_trunc('month', status_date) AS month"
@@ -54,8 +57,14 @@ class LeadsController < ApplicationController
     end
 
     if @only_actual
-      @s_status_ids = Status.where(:actual => true).ids
-      @leads = @leads.where(:status => @s_status_ids)
+      @s_status_ids = Status.where(actual: true).ids
+      @leads = @leads.where(status: @s_status_ids)
+    end
+
+    #p "params[:priority_id] #{params[:priority_id]}"
+
+    if params[:priority_id].present? && params[:priority_id]!='0'
+      @leads = @leads.where(priority_id: params[:priority_id])
     end
 
     y = params[:year]
@@ -95,11 +104,15 @@ class LeadsController < ApplicationController
   # GET /leads/1
   # GET /leads/1.json
   def show
+    if !current_user.has_role?(:manager) and @lead.ic_user != current_user
+      redirect_to leads_url
+      return
+    end
     @title = 'Просмотр лида'
 
     def_params
 
-    @comm_height = 488
+    @comm_height = 464 #488
     respond_modal_with @lead, location: root_path
   end
 
@@ -109,7 +122,9 @@ class LeadsController < ApplicationController
     @owner    = @lead
     @files    = @lead.attachments
     @history  = get_history_with_files(@lead)
+    @priorities = Priority.all
   end
+
   # GET /leads/new
   def new
     @lead = Lead.new
@@ -117,12 +132,17 @@ class LeadsController < ApplicationController
     @lead.status_id = 1
     @lead.ic_user_id = current_user.id
     @lead.channel_id = 1
+    @lead.priority_id = 1
 
     def_params
   end
 
   # GET /leads/1/edit
   def edit
+    if !current_user.has_role?(:manager) and @lead.ic_user != current_user
+      redirect_to leads_url
+      return
+    end
     def_params
     @comm_height = 400
     
@@ -135,22 +155,23 @@ class LeadsController < ApplicationController
     @lead = Lead.new(lead_params)
     @channels = Channel.all
 
-    respond_to do |format|
+    # respond_to do |format|
       if @lead.save
-       if params[:lead][:first_comment] && !params[:lead][:first_comment].empty?
+       if !params[:lead][:first_comment]&.empty?
         comm = @lead.comments.new
         comm.comment = params[:lead][:first_comment]
         comm.user_id = params[:lead][:user_id]
         comm.save
        end
-       format.html { redirect_to leads_page_url, notice: 'Лид успешно создан.'}
-       format.json { render :show, status: :created, location: @lead }
+       # format.html { redirect_to leads_page_url}
+       # format.json { render :show, status: :created, location: @lead }
+       respond_with @lead, location: -> { leads_page_url }
       else
        def_params
-       format.html { render :new }
-       format.json { render json: @lead.errors, status: :unprocessable_entity }
+       respond_with @lead
+       # format.json { render json: @lead.errors, status: :unprocessable_entity }
       end
-     end
+     # end
   end
 
   # PATCH/PUT /leads/1
@@ -191,7 +212,12 @@ class LeadsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def lead_params
       params.require(:lead).permit(:info, :fio, :footage, :phone, :email, :address, :channel_id, :source_id,
-                      :status_id, :user_id, :status_date,:start_date, :first_comment,:leads_ids, :ic_user_id)
+                      :status_id, :user_id, :status_date,:start_date, :first_comment,:leads_ids, :ic_user_id,
+                      :priority_id)
+    end
+
+    def flash_interpolation_options
+        {resource_name: t("Lead")}
     end
 
   def sort_column

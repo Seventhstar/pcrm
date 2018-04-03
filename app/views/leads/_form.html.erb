@@ -1,48 +1,51 @@
 <%= simple_form_for(@lead) do |f| %>
 
-	<table class="tbl_fc tbl_fc_1">
-		<tr><td class="caption">Информация о запросе:</td>
-			<td><div class="inp_w"><%= f.text_area :info, class: 'txt alone',label: false %></div></td></tr>
-	</table>
+  <table class="tbl_fc tbl_fc_1">
+    <tr><td class="caption">Информация о запросе:</td>
+      <td><div class="inp_w"><%= f.text_area :info, class: 'txt alone',label: false %></div></td></tr>
+  </table>
 
-	<div class="panel-left">
-		<table class="tbl_fc tbl_fc_1">
-		<tr><td class="caption">Дата создания:</td>
-			<td><div class="inp_w"><%= f.text_field :start_date, :value => @lead.start_date.try('strftime',"%d.%m.%Y"), label: false, class: "txt datepicker" %></div></td></tr>
-		<tr><td class="caption">Фио:</td>
-		    <td><div class="inp_w"><%= f.input :fio, label: false %></div></td></tr>
-		<tr><td class="caption">Телефон:</td>
-		    <td><div class="inp_w"><%= f.input :phone, label: false, class: :txt %></div></td></tr>
-		<tr><td class="caption">E-Mail:</td>
-			<td><div class="inp_w"><%= f.input :email, label: false %></div></td></tr>    
-		<tr><td class="caption">Метраж:</td>
-			<td><div class="inp_w"><%= f.input :footage, label: false %></div></td></tr>
-		<tr><td class="caption">Адрес объекта:</td>
-			<td><div class="inp_w"><%= f.input :address, label: false %></div></td></tr>
-			
-		<tr><td class="caption">Статус:</td>
-			<td><div class="inp_w"><%= chosen_src 'status_id', @statuses, @lead %>
-			</div></td></tr>
-		<tr><td class="caption">Дата для статуса:</td>
-			<td><div class="inp_w"><%= f.text_field :status_date,:value => @lead.status_date.try('strftime',"%d.%m.%Y"), label: false, class: "txt datepicker" %>
-			</div></td></tr>
-		<tr><td class="caption">Канал:</td>
-			<td><div class="inp_w"><%= chosen_src 'channel_id', @channels ,@lead %>
-		</div></td></tr>
-		<tr><td class="caption">Источник:</td>
-			<td><div class="inp_w"><%= chosen_src 'source_id', LeadSource.all ,@lead %>
-		</div></td></tr>
-		
-		<% if is_admin? %>
-			<tr><td class="caption">Создатель:</td><td><div class="inp_w"><%= chosen_src :user_id, User.all,@lead %></div></td></tr>
-		<% end %>
-		
-		<tr><td class="caption">Ответственный:</td><td><div class="inp_w"><%= chosen_src :ic_user_id, User.all, @lead %></div></td></tr>
+  <div class="panel-left">
+    <table class="tbl_fc tbl_fc_1">
+    <tr><td class="caption">Дата создания:</td>
+      <td><div class="inp_w"><%= f.text_field :start_date, :value => @lead.start_date.try('strftime',"%d.%m.%Y"), label: false, class: "txt datepicker" %></div></td></tr>
+    <tr><td class="caption">Фио:</td>
+        <td><div class="inp_w"><%= f.input :fio, label: false %></div></td></tr>
+    <tr><td class="caption">Телефон:</td>
+        <td><div class="inp_w"><%= f.input :phone, label: false, class: :txt %></div></td></tr>
+    <tr><td class="caption">E-Mail:</td>
+      <td><div class="inp_w"><%= f.input :email, label: false %></div></td></tr>    
+    <tr><td class="caption">Метраж:</td>
+      <td><div class="inp_w"><%= f.input :footage, label: false %></div></td></tr>
+    <tr><td class="caption">Адрес объекта:</td>
+      <td><div class="inp_w"><%= f.input :address, label: false %></div></td></tr>
+      
+    <tr><td class="caption">Приоритет:</td>
+      <td><div class="inp_w"><%= chosen_src 'priority_id', @priorities, @lead %>
+      </div></td></tr>
+    <tr><td class="caption">Статус:</td>
+      <td><div class="inp_w"><%= chosen_src 'status_id', @statuses, @lead %>
+      </div></td></tr>
+    <tr><td class="caption">Дата для статуса:</td>
+      <td><div class="inp_w"><%= f.text_field :status_date,:value => @lead.status_date.try('strftime',"%d.%m.%Y"), label: false, class: "txt datepicker" %>
+      </div></td></tr>
+    <tr><td class="caption">Канал:</td>
+      <td><div class="inp_w"><%= chosen_src 'channel_id', @channels ,@lead %>
+    </div></td></tr>
+    <tr><td class="caption">Источник:</td>
+      <td><div class="inp_w"><%= chosen_src 'source_id', LeadSource.all ,@lead %>
+    </div></td></tr>
+    
+    <% if is_admin? %>
+      <tr><td class="caption">Создатель:</td><td><div class="inp_w"><%= chosen_src :user_id, User.all,@lead %></div></td></tr>
+    <% end %>
+    
+    <tr><td class="caption">Ответственный:</td><td><div class="inp_w"><%= chosen_src :ic_user_id, User.all, @lead %></div></td></tr>
 
-		<tr><td class="last_td"></td>
-			<td class="last_td"><%= link_to 'Отмена', leads_page_url, :class => "sub btn_a btn_reset"%>
-				<%= f.button :submit, value: 'Сохранить', :class => 'sub btn_a' %></td></tr>
-		</table>
-	</div>
+    <tr><td class="last_td"></td>
+      <td class="last_td"><%= link_to 'Отмена', leads_page_url, :class => "sub btn_a btn_reset"%>
+        <%= f.button :submit, value: 'Сохранить', :class => 'sub btn_a' %></td></tr>
+    </table>
+  </div>
 
 <% end %>

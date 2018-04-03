@@ -1,6 +1,5 @@
 li class="item #{odd ? 'odd' : '' }" id="file_#{file.id}"
-  .fname
-    = file_default_action(file)
+  = file_default_action(file)
   .tools
     a.icon.icon_download href=file.download_path target="_blank"
     = link_to '', file_path(file), method: :delete, remote: true, data: {confirm: 'Удалить файл?' }, class: 'icon icon_remove_file'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170914172443) do
+ActiveRecord::Schema.define(version: 20180403113507) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -153,8 +153,8 @@ ActiveRecord::Schema.define(version: 20170914172443) do
   end
 
   create_table "holidays", id: :serial, force: :cascade do |t|
-    t.date "day"
     t.string "name"
+    t.date "day"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -181,7 +181,9 @@ ActiveRecord::Schema.define(version: 20170914172443) do
     t.string "address"
     t.integer "ic_user_id"
     t.integer "source_id"
+    t.bigint "priority_id"
     t.index ["ic_user_id"], name: "index_leads_on_ic_user_id"
+    t.index ["priority_id"], name: "index_leads_on_priority_id"
     t.index ["status_id"], name: "index_leads_on_status_id"
   end
 
@@ -242,9 +244,9 @@ ActiveRecord::Schema.define(version: 20170914172443) do
 
   create_table "project_elongations", id: :serial, force: :cascade do |t|
     t.date "new_date"
-    t.integer "project_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "project_id"
     t.integer "elongation_type_id"
     t.index ["project_id"], name: "index_project_elongations_on_project_id"
   end
@@ -272,8 +274,8 @@ ActiveRecord::Schema.define(version: 20170914172443) do
     t.date "date_place"
     t.integer "sum_supply"
     t.boolean "fixed", default: false
-    t.bigint "project_id"
-    t.bigint "goodstype_id"
+    t.integer "project_id"
+    t.integer "goodstype_id"
     t.index ["fixed"], name: "index_project_goods_on_fixed"
     t.index ["goodstype_id"], name: "index_project_goods_on_goodstype_id"
     t.index ["project_id"], name: "index_project_goods_on_project_id"
@@ -486,6 +488,15 @@ ActiveRecord::Schema.define(version: 20170914172443) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "wiki_files", id: :serial, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "wiki_record_id"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["wiki_record_id"], name: "index_wiki_files_on_wiki_record_id"
+  end
+
   create_table "wiki_records", id: :serial, force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -497,6 +508,7 @@ ActiveRecord::Schema.define(version: 20170914172443) do
     t.index ["wiki_cat_id"], name: "index_wiki_records_on_wiki_cat_id"
   end
 
+  add_foreign_key "leads", "priorities"
   add_foreign_key "project_goods", "goodstypes"
   add_foreign_key "project_goods", "projects"
 end

@@ -15,12 +15,12 @@
     <li><a href="#tabs-4">Заказы</a></li>
     <li><a href="#tabs-5">Выплаты</a></li>
     <li><a href="#tabs-6">Файлы</a></li>
+    <li><a href="#tabs-7">История</a></li>
 
   </ul>
   <div class="right" style="width: 100%"></div>
 <div class="box_wrap">
 <div id="tabs-1" class="ptab">
-
     <div class=" box_wrap_1 left">
       <div class="panel-left">
       <div class="sep_15"></div>
@@ -31,24 +31,16 @@
           <tr>
             <td><div class="inp_w"><%= f.input :number,label: 'Номер' %></div></td>
             <td class='va_pt15'><%= f.input :interest, as: :boolean, label: 'Интерес к стройке', class: 'inp_btn checkbox'  %>
-              <%= f.input :debt, :as => :boolean, label: 'Должен денег', class: 'inp_btn checkbox'  %>
+              <%= f.input :attention, :as => :boolean, label: 'Особое внимание', class: 'inp_btn checkbox'  %>
             </td>
             </tr>
-            <tr><td class="gr_caption">Статус:</td></tr>
+            <tr><td class="gr_caption">Статус:</td><td style="vertical-align: bottom;"></td></tr>
           <tr>
             <td><div class="inp_w two_inp">
               <%= chosen_src :pstatus_id, ProjectStatus.all, @project, {nil_value: 'Статус...' } %>
               <%= f.input :progress,label: '%' %>
             </div></td>
-            <td class='va_middle'>
-
-            <%= f.input :attention, :as => :boolean, label: 'Особое внимание', class: 'inp_btn checkbox'  %>
-            <div class="left">
-            <%= f.input :payd_q, :as => :boolean, label: '25%', class: 'inp_btn checkbox left' %>
-            </div>
-            <%= f.input :payd_full, :as => :boolean, label: '100%', class: 'inp_btn checkbox left' %>
-            
-            </td>
+            <td class='va_middle'></td>
             
             </tr>
             <tr><td class="gr_caption">Клиент</td><td class="td_caption">Адрес:</td></tr>
@@ -228,6 +220,18 @@
 </div>
 </div>
 </div>
+
+<div id="tabs-7" class="ptab">
+<div class="box_wide">
+<div class="box_wrap box_wrap_1">
+<div class="historyChange_box">
+          <% if @history.count >0 %>
+            <%= render "shared/history" %>    
+          <% end %>
+        </div>
+      </div></div>
+    </div>
+
 </div>
 
 <%= submit_cancel project_page_url %>

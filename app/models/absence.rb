@@ -44,4 +44,38 @@ class Absence < ActiveRecord::Base
     target.try(:name)
   end
 
+  def self.counts_by_types(page_type, start_date, end_date)
+
+    usr = User.where('id NOT IN (?)',[1,3,19]).order(:name)
+    reasons = AbsenceReason.all.collect{ |u| {name: u.name, id: u.id} }
+    reasons.insert(0, {name: 'Всего', id: 0})
+    el = 'Bar'
+    data_source = Absence.group(:user_id, :reason_id )
+             .select(:user_id, :reason_id, "count(id) as count" )
+             .where('dt_from between ? and ?', start_date, end_date)
+             .order(:user_id, :reason_id)
+             .collect{ |abs| {reason_id: abs.reason_id, user_id: abs.user_id, count: abs.count}}
+
+    data = usr.collect{ |u|  
+            reasons.collect{ |r| {
+              month: u.name, 
+              r[:name] => data_source.select{ |s| s[:user_id] == u.id && s[:reason_id] == r[:id] }
+                                     .first.to_h[:count]
+              }
+            }
+            .reduce(:merge) 
+          }
+
+    # p "data #{data.class} #{data[2]} #{data[2].keys} #{data[2].values[2..-1]} #{data[2].values.inject(0) { |sum, x| sum + x.to_i }}"
+    data.map{|a| a['Всего'] = a.values[2..-1].inject(0) { |sum, x| sum + x.to_i } }      
+    # p data_source
+    # p data
+
+    headers = reasons.map {|u| u[:name] }
+    # p headers
+    { hash: data, json: data, headers: headers, element: el}
+
+  end
+
+
 end

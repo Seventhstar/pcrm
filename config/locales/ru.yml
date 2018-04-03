@@ -21,11 +21,13 @@ ru:
   reason_id: Новая причина
   target_id: Цель
   executor_id: Исполнитель
+  visualer_id: Визуализатор
   project_type_id: Вид проекта
   payment_purpose_id: Вид выплаты
   payment_type_id: Вид платежа
   designer_price: Цена для дизайнера
   designer_sum: Сумма для дизайнера
+  visualer_sum: Сумма для визуализатора
   sum_total_executor: Общая стоимость исполнителей
   payd_q: Оплачено 25%
   attention: Особое внимание
@@ -33,6 +35,7 @@ ru:
   interest: Интерес к стройке
   payd_full: Оплачено 100%  
   default: Базов.
+  date_start: Дата начала
   
   number: Номер
   pdate: Дата
@@ -41,6 +44,7 @@ ru:
   footage_2: Метраж 2
   footage_real: Метраж факт
   footage_2_real: Метраж факт 2
+  progress: Прогресс
 
   sum: Сумма
   sum_2: Сумма 2
@@ -167,12 +171,12 @@ ru:
       words_connector: ! ', '
 
 
-  flash:
-    actions:
-      create:
-        notice: "%{resource_name} успешно создано."
-      update:
-        notice: "%{resource_name} успешно обновлено."
-      destroy:
-        notice: "%{resource_name} успешно удалено."
-        alert: "%{resource_name} не может быть удалено."
+  #flash:
+  #  actions:
+  #    create:
+  #      notice: "%{resource_name} успешно создано."
+  #    update:
+  #      notice: "%{resource_name} успешно обновлено."
+  #    destroy:
+  #      notice: "%{resource_name} успешно удалено."
+  #      alert: "%{resource_name} не может быть удалено."

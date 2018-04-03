@@ -20,13 +20,15 @@
 //= require chosen.jquery
 //= require jquery.timepicker
 //= require jquery.inputmask.bundle.min
-//= require vue.min
+//= require plyr
 //= require jquery.mustache
 //= require tinymce-jquery
 //= require nprogress
 //= require bootstrap-tokenfield
 //= require moment
+//= require vue
 //= require_tree .
+
 
 function to_sum(d){ 
     if (isNaN(d)) return 0;
@@ -92,10 +94,16 @@ var show_ajax_message = function(msg, type) {
 
 $(function() {
 
+  // vueapp = new Vue({
+  //   el: ".container"
+  // });
+
+
   startTime();
   NProgress.configure({ showSpinner: false, ease: 'ease', speed: 300 });
   NProgress.start();
   NProgress.done();
+  plyr.setup();
 
   $( document ).ajaxStart(function() { NProgress.start(); });  
   $( document ).ajaxStop( function() {

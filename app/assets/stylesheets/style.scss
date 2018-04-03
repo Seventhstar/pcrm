@@ -192,6 +192,7 @@ background-position:-34px 0 !important; width: 16px; height: 16px;}
 
 
 .lbl{ padding: 6px 10px 6px 10px; border:1px solid #e5e5e5; border-radius: 5px; font: normal 14px 'Pragmatica', sans-serif; min-height: 20px;}
+.panel-left .tbl_fc_1 .lbl {width: 448px; overflow-x: hidden;}
 
 textarea.txt, #lead_first_comment {padding: 5px 10px 5px 10px; margin:0 0 0 0; vertical-align:top; resize: none; overflow:auto;}
 .txtArea_1 {height: 80px; }
@@ -447,6 +448,10 @@ input[type='number']::-webkit-inner-spin-button {
 .files_list_a .item.odd {background: #fafafa;}
 .files_list_a .item:first-child {margin-top: 0; border: 0; }
 .files_list_a .item .fname {width: 93%;}
+.files_list_a .item .fname.audio {width: 80%;}
+.fname.audio span {padding: 5px; color: gray;}
+.show_audio .fname.audio span{float: right;padding: 7px;}
+.show_audio { height: 46px; margin-top: 10px;}
 
 .files_list_a .item:after {content: ' '; clear:both; display: block; width: 0; height: 0; overflow: hidden; font-size: 0;}
 .files_list_a .item a{text-decoration:underline; }

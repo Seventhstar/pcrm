@@ -20,18 +20,18 @@
 .items_box_head .chosen-container { min-height: 24px !important; min-width: 160px; }
 #develops .items_box_head .chosen-container{min-width: 220px;}
 // .subnav #year_chosen, tr.editable .chosen {min-height: 22px !important;}
-.subnav .ychosen, tr.editable .chosen {min-height: 22px !important;}
-.subnav .ychosen span, tr.editable .chosen span {line-height: 25px !important; height: 20px !important; font-size: 13px !important;}
+.subnav .ychosen, .subnav .pchosen, tr.editable .chosen {min-height: 22px !important;}
+.subnav .ychosen span, .subnav .pchosen span, tr.editable .chosen span {line-height: 25px !important; height: 20px !important; font-size: 13px !important;}
 .ychosen .chosen-container-single, .ychosen .chosen-single, 
 tr.editable .chosen-single {height: 26px !important; }
-.ychosen {height: 24px !important; min-height: 24px; margin-right: 8px;}
+.ychosen, .pchosen {height: 24px !important; min-height: 24px; margin-right: 8px;}
 
 tr.editable .chosen-container { min-height: 26px; font-size: 13px;}
 tr.editable .chosen-container-single .chosen-single  {padding: 0 0 0 5px;}
 tr.editable .chosen-container-single .chosen-single span {line-height: 26px; font-size: 13px;}
 tr.editable .chosen-container-single .chosen-single div b, span.cut b {margin-top: 10px;}
 
-.ychosen div b { margin-top: 9px !important; font-size: 13px !important;}
+.ychosen div b, .pchosen b { margin-top: 9px !important; font-size: 13px !important;}
 #good_state_chosen {width: 140px !important; }
 
 .items_box_param .chosen-container {float: left; padding: 0 !important; 

@@ -1,53 +1,55 @@
+<% if current_user.has_role?(:manager) or @lead.ic_user == current_user  %>
 <div class="box_wrap box_wrap_1">
 
-	<div class="panel-left">
-		<table class="tbl_fc tbl_fc_1">
-		<tr><td class="caption">Дата создания:</td>
-			<td><div class="lbl"><%= @lead.start_date.try('strftime',"%d.%m.%Y") %></div></td></tr>
-		<tr><td class="caption">Фио:</td>
-		    <td><div class="lbl"><%= @lead.fio %></div></td></tr>
-		<tr><td class="caption">Телефон:</td>
-		    <td><div class="lbl"><%= @lead.phone %></div></td></tr>
-		<tr><td class="caption">E-Mail:</td>
-			<td><div class="lbl"><%= @lead.email %></div></td></tr>    
-		<tr><td class="caption">Информация о запросе:</td>
-			<td><div class="lbl"><%= @lead.info %></div></td></tr>
-		<tr><td class="caption">Метраж:</td>
-			<td><div class="lbl"><%= @lead.footage %></div></td></tr>
-		<tr><td class="caption">Адрес объекта:</td>
-			<td><div class="lbl"><%= @lead.address %></div></td></tr>
-			
-		<tr><td class="caption">Статус:</td>
-			<td><div class="lbl"><%= @lead.status_name %>
-			</div></td></tr>
-		<tr><td class="caption">Дата для статуса:</td>
-			<td><div class="lbl"><%= @lead.status_date.try('strftime',"%d.%m.%Y") %>
-			</div></td></tr>
-		<tr><td class="caption">Канал:</td>
-			<td><div class="lbl"><%= @lead.channel_name %>
-		</div></td></tr>
-		<tr><td class="caption">Источник:</td>
-			<td><div class="lbl"><%= @lead.source_name %>
-		</div></td></tr>
-		
-		<% if is_admin? %>
-			<tr><td class="caption">Создатель:</td>
-				<td><div class="lbl"><%= @lead.user_name %>
-			</div></td></tr>
-		<% end %>
-		
-		<tr><td class="caption">Ответственный:</td>
-			<td><div class="lbl"><%= @lead.ic_user_name %>
-		</div></td></tr>
+  <div class="panel-left">
+    <table class="tbl_fc tbl_fc_1">
+    <tr><td class="caption">Дата создания:</td>
+      <td><div class="lbl"><%= @lead.start_date.try('strftime',"%d.%m.%Y") %></div></td></tr>
+    <tr><td class="caption">Фио:</td>
+        <td><div class="lbl"><%= @lead.fio %></div></td></tr>
+    <tr><td class="caption">Телефон:</td>
+        <td><div class="lbl"><%= @lead.phone %></div></td></tr>
+    <tr><td class="caption">E-Mail:</td>
+      <td><div class="lbl"><%= @lead.email %></div></td></tr>    
+    <tr><td class="caption">Информация о запросе:</td>
+      <td><div class="lbl"><%= @lead.info %></div></td></tr>
+    <tr><td class="caption">Метраж:</td>
+      <td><div class="lbl"><%= @lead.footage %></div></td></tr>
+    <tr><td class="caption">Адрес объекта:</td>
+      <td><div class="lbl"><%= @lead.address %></div></td></tr>
+      
+    <tr><td class="caption">Статус:</td>
+      <td><div class="lbl"><%= @lead.status_name %>
+      </div></td></tr>
+    <tr><td class="caption">Дата для статуса:</td>
+      <td><div class="lbl"><%= @lead.status_date.try('strftime',"%d.%m.%Y") %>
+      </div></td></tr>
+    <tr><td class="caption">Канал:</td>
+      <td><div class="lbl"><%= @lead.channel_name %>
+    </div></td></tr>
+    <tr><td class="caption">Источник:</td>
+      <td><div class="lbl"><%= @lead.source_name %>
+    </div></td></tr>
+    
+    <% if is_admin? %>
+      <tr><td class="caption">Создатель:</td>
+        <td><div class="lbl"><%= @lead.user_name %>
+      </div></td></tr>
+    <% end %>
+    
+    <tr><td class="caption">Ответственный:</td>
+      <td><div class="lbl"><%= @lead.ic_user_name %>
+    </div></td></tr>
 
-		</table>
-	</div>
+    </table>
+  </div>
 
   <div class="panel-right">
     <div class="comments_box">
       <%= render "shared/comments" %>
     </div>
+    <%= render "files/audio" %>
   </div>
 
 </div>
-
+<% end %>

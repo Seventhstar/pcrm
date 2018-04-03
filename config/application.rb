@@ -2,7 +2,7 @@ require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 #require 'ext/fixnum'
-require_relative  '../lib/ext/fixnum'
+require_relative  '../lib/ext/integer'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -10,6 +10,9 @@ Bundler.require(*Rails.groups)
 
 module Pcrm
   class Application < Rails::Application
+    # Use the responders controller from the responders gem
+    config.app_generators.scaffold_controller :responders_controller
+
     config.load_defaults 5.1
     config.autoload_paths << Rails.root.join('lib')
 

@@ -1,4 +1,4 @@
-class AjaxController < ApplicationController
+  class AjaxController < ApplicationController
   before_action :logged_in_user
 
   def update_holidays

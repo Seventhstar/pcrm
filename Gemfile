@@ -17,6 +17,7 @@ gem 'puma', '~> 3.7'
 group :development, :test do
 #  gem 'coffee-script-source', '1.8.0'
   gem 'rspec-rails'
+  gem 'rails-controller-testing'
   gem "better_errors"
   gem "capybara"
 end
@@ -53,6 +54,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', git: 'https://github.com/codahale/bcrypt-ruby.git', require: 'bcrypt'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -72,14 +74,14 @@ gem 'simple_form'
 gem 'simple-navigation', '4.0.3'
 gem 'bootstrap-datepicker-rails'
 gem 'jquery-ui-rails'
-gem 'bcrypt'
+#gem 'bcrypt'
 gem 'yaml_db'
 gem 'font-kit-rails'
 gem 'will_paginate'
 gem 'bootstrap_tokenfield_rails'
 gem 'paper_trail'
 gem 'jquery.fileupload-rails'
-gem 'nokogiri', '1.6.8'
+gem 'nokogiri', '1.8.2'
 gem 'responders'
 gem 'carrierwave'
 gem 'mini_magick'
@@ -93,9 +95,10 @@ gem 'prawn'
 gem 'prawn-table'
 
 gem 'mustache-js-rails'
-# gem 'mustache'
-# gem 'stache'
 gem 'remotipart'
 gem 'gon'
 gem 'slim'
 gem 'pundit'
+gem 'plyr-rails'
+gem 'vuejs-rails'
+gem 'skim'

@@ -22,7 +22,6 @@
 
   <% if controller.action_name == 'edit' %>
   <div class="commentAdd_form">
-    <% p "commentAdd_form" %>
     <%= field_set_tag nil, class: 'format' do %>
       <%= hidden_field_tag 'comment[owner_type]', @owner.class  %>
       <%= hidden_field_tag 'comment[owner_id]', @owner.id %>
