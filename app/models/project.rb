@@ -40,9 +40,9 @@ class Project < ActiveRecord::Base
   end
 
   def progress_proc
-    pp = pstatus.try(:name)
-    pp = pp + ' '+self.progress.to_s + '%' if !self.progress.nil? && self.progress>0
-    pp
+    ps = pstatus.try(:name)
+    ps << " #{self.progress}%" if self.progress&.between?(1, 99)
+    ps
   end
 
   def executor_name
@@ -145,18 +145,18 @@ class Project < ActiveRecord::Base
      i
   end
 
-  def f1_info
-    f = f1
+  def format_zero(f)
     f = f.to_s[0..-3] if f.to_s[-2,2] == '.0'
     f = f.to_s.sub('.',',')
     f
   end
 
+  def f1_info
+    format_zero(f1)
+  end
+
   def f2_info
-    f = f2
-    f = f.to_s[0..-3] if f.to_s[-2,2] == '.0'
-    f = f.to_s.sub('.',',')
-    f
+    format_zero(f2)
   end
 
   def footage_info

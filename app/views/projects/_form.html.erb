@@ -1,4 +1,4 @@
-<% if is_admin? %>
+<% if is_manager? %>
 
 <%= hidden_field_tag 'holidays', @holidays %> 
 
@@ -46,7 +46,7 @@
             </div></td>
             
             <td colspan="2">
-            <% if is_admin? %>
+            <% if is_manager? %>
               <div class="inp_w">
                 <label>Дизайнер</label>
                 <%= chosen_src :executor_id, User.order(:name), @project, {nil_value: 'Дизайнер...' } %>
@@ -55,7 +55,7 @@
             </td>
 
             <td colspan="2">
-            <% if is_admin? %>
+            <% if is_manager? %>
               <div class="inp_w">
                 <label>Визуализатор</label>
                 <%= chosen_src :visualer_id, User.order(:name), @project, {nil_value: 'Визуализатор...' } %>

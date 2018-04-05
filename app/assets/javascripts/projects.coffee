@@ -119,7 +119,7 @@ $(document).ready ->
     $('#table_' + id + ' .new_row input')[1].focus()
 
   $(".container").on 'change','#project_pstatus_id', ->
-    $('#project_progress').val(0)
+    $('#project_progress').val(100)
 
   $(".container").on 'blur','#project_progress', -> 
     v = $(this).val()

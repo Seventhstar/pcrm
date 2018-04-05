@@ -1,4 +1,4 @@
-class CreateLeadsComments < ActiveRecord::Migration
+class CreateLeadsComments < ActiveRecord::Migration[4.2]
   def change
     create_table :leads_comments do |t|
       t.text :comment

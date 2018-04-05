@@ -1,4 +1,4 @@
-class CreateProjectElongations < ActiveRecord::Migration
+class CreateProjectElongations < ActiveRecord::Migration[4.2]
   def change
     create_table :project_elongations do |t|
       t.date :new_date

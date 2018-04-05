@@ -21,7 +21,8 @@ module AbsencesHelper
 
   def abs_class_td( abs )      
       cls = abs.reason_id == 1 ? "hot" : ""
-      cls = cls + ' nonactual' if abs.try(:dt_from) < Date.today
+      cls = cls + ' nonactual' if abs.try(:dt_from) < Date.today || abs.canceled
+      cls = cls + ' striked' if abs.canceled
       cls = "info" if ( abs.reason_id != abs.new_reason_id && abs.new_reason_id.to_i != 0 )
       cls
   end

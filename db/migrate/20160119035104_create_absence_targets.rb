@@ -1,4 +1,4 @@
-class CreateAbsenceTargets < ActiveRecord::Migration
+class CreateAbsenceTargets < ActiveRecord::Migration[4.2]
   def change
     create_table :absence_targets do |t|
       t.string :name

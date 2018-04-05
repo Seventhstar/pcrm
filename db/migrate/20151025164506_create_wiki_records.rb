@@ -1,4 +1,4 @@
-class CreateWikiRecords < ActiveRecord::Migration
+class CreateWikiRecords < ActiveRecord::Migration[4.2]
   def change
     create_table :wiki_records do |t|
       t.string :name

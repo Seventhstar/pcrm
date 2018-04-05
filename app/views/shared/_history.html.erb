@@ -1,3 +1,4 @@
+<% if is_admin? %>  
 <div class="hl hl_a">История изменений <span class="grey">(<%= @history.count %>)</span></div>
 <div class="historyChange_list_a">
 
@@ -17,3 +18,4 @@
 
   <% end %>
 </div>
+<% end %>

@@ -1,4 +1,4 @@
-class CreateDevStatuses < ActiveRecord::Migration
+class CreateDevStatuses < ActiveRecord::Migration[4.2]
   def change
     create_table :dev_statuses do |t|
       t.string :name

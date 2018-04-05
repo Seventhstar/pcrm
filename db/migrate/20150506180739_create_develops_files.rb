@@ -1,4 +1,4 @@
-class CreateDevelopsFiles < ActiveRecord::Migration
+class CreateDevelopsFiles < ActiveRecord::Migration[4.2]
   def change
     create_table :develops_files do |t|
       t.string :develop_id

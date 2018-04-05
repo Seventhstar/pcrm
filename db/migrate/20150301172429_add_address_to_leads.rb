@@ -1,4 +1,4 @@
-class AddAddressToLeads < ActiveRecord::Migration
+class AddAddressToLeads < ActiveRecord::Migration[4.2]
   def change
     add_column :leads, :address, :string
   end

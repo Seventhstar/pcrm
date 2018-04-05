@@ -17,6 +17,10 @@ module ApplicationHelper
     current_user.admin?
   end
 
+  def is_manager?
+    current_user.has_role?(:manager)
+  end
+
   def file_default_action(file, add_name = nil)
     if file.nil? 
       return

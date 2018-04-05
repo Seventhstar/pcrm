@@ -1,4 +1,4 @@
-class CreateProviderManagers < ActiveRecord::Migration
+class CreateProviderManagers < ActiveRecord::Migration[4.2]
   def change
     create_table :provider_managers do |t|
       t.string :name

@@ -15,7 +15,7 @@ span.calc_proc{ padding: 8px 6px;  margin-left: 6px;  display: inline-block;  bo
 input[type='number'] {text-align: right;}
 input::-webkit-inner-spin-button { padding-right:0}
 
-.striked {text-decoration: line-through;}
+.striked {text-decoration: line-through gray;}
 .icon.basket { display: inline-block;
     background: asset-url('basket.png') no-repeat;
     vertical-align: middle;

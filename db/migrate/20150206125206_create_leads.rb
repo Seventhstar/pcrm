@@ -1,4 +1,4 @@
-class CreateLeads < ActiveRecord::Migration
+class CreateLeads < ActiveRecord::Migration[4.2]
   def change
     create_table :leads do |t|
       t.string :info

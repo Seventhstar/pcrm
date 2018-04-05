@@ -1,15 +1,14 @@
 <div class="subnav">
-
-	<%= hidden_field_tag :cur_method,controller.action_name, {controller: controller.controller_name} %>
-	<%= sortable_pil "calendar", "Календарь" %>
-	<%= sortable_pil "dt_from", "По месяцам" %>
-	<% if is_admin? %>
-		<%= sortable_pil "users.name", "По сотрудникам", 'asc' %>
-	<% end %>
-	<%= sortable_pil "reason_id", "По причинам" %>
-	<%= link_to 'Добавить', new_absence_path, class: "btn_a btn-add btn_slim right space20" %>
-	<%= only_actual_btn %>
+  <%= hidden_field_tag :cur_method,controller.action_name, {controller: controller.controller_name} %>
+  <%= sortable_pil "calendar", "Календарь" %>
+  <%= sortable_pil "dt_from", "По месяцам" %>
+  <% if is_manager? %>
+    <%= sortable_pil "users.name", "По сотрудникам", 'asc' %>
+  <% end %>
+  <%= sortable_pil "reason_id", "По причинам" %>
+  <%= link_to 'Добавить', new_absence_path, class: "btn_a btn-add btn_slim right space20" %>
+  <%= only_actual_btn %>
 </div>
 
-	
+  
 

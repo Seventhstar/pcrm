@@ -1,4 +1,4 @@
-class CreateProviderStyles < ActiveRecord::Migration
+class CreateProviderStyles < ActiveRecord::Migration[4.2]
   def change
     create_table :provider_styles do |t|
       t.belongs_to :provider

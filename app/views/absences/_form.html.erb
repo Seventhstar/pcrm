@@ -1,7 +1,7 @@
 <%= simple_form_for(@absence) do |f| %>
 <%= f.hidden_field :reopen,{action_name: action_name} %>
 
-<% if !is_admin? %>
+<% if !is_manager? %>
   <%= f.hidden_field :user_id,  :value => @absence.user_id ||= current_user.id %>
 <% end %>
 
@@ -10,7 +10,7 @@
   <table class="tbl_fc tbl_fc_1">
     <tr><td class="caption">Причина:</td>
     <td  colspan="3">         
-      <% if is_admin? || action_name == 'new' || 
+      <% if is_manager? || action_name == 'new' || 
             (!@absence.created_at.nil? && @absence.user_id == current_user.id && @absence.created_at > (Date.today-3.day) && @absence.new_reason_id.nil? )  %>
         <div class="inp_w"><%= chosen_src 'reason_id',@reasons, @absence %></div>
       <% else %>
@@ -54,13 +54,19 @@
 
       <tr><td class="caption">Комментарий:</td>
         <td colspan="5"><div class="inp_w" ><%= f.text_area :comment, class: 'txt alone',label: false %></div></td></tr>
-    <% if is_admin? %>
+    <% if is_manager? %>
       <tr><td class="caption">Сотрудник:</td>
           <td width='490px;' colspan="3"><div class="inp_w" >
-           <%= chosen_src 'user_id', User.all, @absence, {selected: @user} %></div>
-      </td></tr>
+           <%= chosen_src 'absence[user_id]', User.all, @absence, {selected: @user} %></div>
+      </td>
 
+      </tr>
     <% end %>
+    <tr><td></td> <td class="caption caption_to"><div id='a_canceled' >
+            <%= f.input :canceled, :as => :boolean, label: 'Отменить отсутствие', class: 'inp_btn checkbox'  %>
+      </div>
+      </td>
+    </tr>
         
     
 
@@ -78,7 +84,7 @@
 
 
 
-<% if is_admin? || action_name == 'new' || @absence.user_id == current_user.id %>
+<% if is_manager? || action_name == 'new' || @absence.user_id == current_user.id %>
   <%= submit_cancel absences_url %>          
 <% end %>
 

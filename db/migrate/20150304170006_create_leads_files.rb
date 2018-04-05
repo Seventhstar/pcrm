@@ -1,4 +1,4 @@
-class CreateLeadsFiles < ActiveRecord::Migration
+class CreateLeadsFiles < ActiveRecord::Migration[4.2]
   def change
     create_table :leads_files do |t|
       t.string :name

@@ -21,7 +21,7 @@
         new_d.save
       end
     end
-    render :nothing => true
+    head :ok
   end
 
   def channels
@@ -64,14 +64,14 @@
       end
 
    end
-   render :nothing => true
+   head :ok
   end
 
   def del_comment
    if params[:comment_id] 
       leadcomment = Comment.find(params[:comment_id]).destroy
    end
-    render :nothing => true
+    head :ok
   end
 
   def store_cut
@@ -84,7 +84,7 @@
       session["last_"+params['cntr']+"_page"] = url.to_s
       # p session["last_"+params['cntr']+"_page"]
 
-      render :nothing => true
+      head :ok
   end
 
 
@@ -101,7 +101,7 @@
         c.save 
       end
     end
-    render :nothing => true
+    head :ok
   end
 
   def dev_check
@@ -118,7 +118,7 @@
       end
       
    end
-   render :nothing => true
+   head :ok
   end
 
   def switch_check
@@ -141,7 +141,7 @@
           item.save
       end
     end
-    render :nothing => true 
+    head :ok
   end
 
   def upd_param

@@ -19,10 +19,10 @@ class AbsencesController < ApplicationController
     @curr_day = @current_month.beginning_of_month.beginning_of_week
     query_str = "absences.*, date_trunc('month', dt_from) AS month"
 
-    if !current_user.admin?
-      @absences = current_user.absences.select(query_str)
-    else
+    if is_manager?
       @absences = Absence.select(query_str)
+    else
+      @absences = current_user.absences.select(query_str)
     end
 
     if params[:sort]!='calendar'
@@ -68,6 +68,7 @@ class AbsencesController < ApplicationController
     @reopen = false
     #p  "current_user.id",current_user.id
     @user = current_user.id
+    @absence.user_id = @user if @absence.try(:user_id)
     if !@absence.nil?
       @user = @absence.user_id
       @shops  = @absence.shops
@@ -94,12 +95,10 @@ class AbsencesController < ApplicationController
 
   # GET /absences/1/edit
   def edit
-    if !current_user.admin? && @absence.user != current_user
+    if !is_manager? && @absence.user != current_user
       redirect_to absences_path
     end
     abs_params
-
-
   end
 
   # POST /absences
@@ -164,7 +163,11 @@ class AbsencesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def absence_params
-      a = params.require(:absence).permit(:user_id, :dt_from, :dt_to, :reason_id, :new_reason_id, :comment, :project_id,:t_from,:t_to,:checked, :target_id,:reopen)
+      a = params.require(:absence).permit(:user_id, :dt_from, :dt_to, :reason_id, 
+                                          :new_reason_id, :comment, :project_id,
+                                          :t_from, :t_to, :checked, :target_id, 
+                                          :reopen, :canceled)
+
       a['dt_to'] = a['dt_from'] if a['checked']=='false' || a['dt_to'].nil?
       a['dt_from'] = a['dt_from'].gsub("00:00", '')+ ' ' + a['t_from']
       a['dt_to'] = a['dt_to'].gsub("00:00", '') +' ' + a['t_to']
@@ -192,7 +195,7 @@ class AbsencesController < ApplicationController
 
     def send_changeset_email
       @version = @absence.versions.last
-      p "current_user:", current_user
+      # p "current_user:", current_user
       if !@version.nil?
         if @version.event == "create"
           AbsenceMailer.created_email(@absence.id,current_user).deliver_now

@@ -12,6 +12,10 @@ module CommonHelper
     end
   end
 
+  def is_manager?
+    current_user.has_role?(:manager)
+  end
+
   def month_year(date)
     "#{t date.try('strftime','%B')} #{date.try('strftime','%Y')}"
   end

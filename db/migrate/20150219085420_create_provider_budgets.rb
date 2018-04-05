@@ -1,4 +1,4 @@
-class CreateProviderBudgets < ActiveRecord::Migration
+class CreateProviderBudgets < ActiveRecord::Migration[4.2]
   def change
     create_table :provider_budgets do |t|
       t.integer :provider_id

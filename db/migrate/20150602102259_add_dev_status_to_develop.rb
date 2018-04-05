@@ -1,4 +1,4 @@
-class AddDevStatusToDevelop < ActiveRecord::Migration
+class AddDevStatusToDevelop < ActiveRecord::Migration[4.2]
   def change
     add_column :develops, :dev_status_id, :integer
 
