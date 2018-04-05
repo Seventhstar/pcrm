@@ -160,11 +160,11 @@ table thead.center th { vertical-align:middle; text-align: center; }
     // transition: all .5s;
 }
 
-.two_inp #project_progress {width: 55px;}
-.two_inp #project_pstatus_id_chosen {width: 205px !important; float: left; margin-right: 10px;}
-.two_inp label {display: inline-flex;
+#project_progress {width: 55px;}
+// .two_inp #project_pstatus_id_chosen {width: 205px !important; float: left; margin-right: 10px;}
+.project_progress label {display: inline-flex;
     font-size: 14px;
-    margin-bottom: 11px;
+    margin-bottom: 7px;
     padding-top: 7px;
     padding-right: 6px;
     vertical-align: bottom;}

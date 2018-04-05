@@ -3,6 +3,7 @@
 <b>ФИО:</b> <%= @lead.fio %></br>
 <b>Телефон:</b> <%= @lead.phone %></br>
 <b>E-mail:</b> <%= @lead.email %></br>
+<b>Дата статуса:</b> <%= @lead.status_date.try('strftime',"%d.%m.%Y") %></br>
 <b>Информация:</b> </br>
 <%= raw(@lead.info.gsub!(/\n/, '<br>'))  %>
 

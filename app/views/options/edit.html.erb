@@ -1,56 +1,59 @@
 <div class="sidebar">
-
   <div id="accordion" class="menu_sb menu_sb_a" active=<%= get_active_option_page %> >
 
   <h3 class="first">Настройки пользователей:</h3><div><ul>
-	<%= option_li("users","Пользователи") %>
-			<%= option_li("roles","Роли") %>
-      <%= option_li("user_roles","Назначение ролей") %>
+    <%= option_li("users","Пользователи") %>
+    <%= option_li("roles","Роли") %>
+    <%= option_li("user_roles","Назначение ролей") %>
   </ul></div>
 
   <h3>Настройки лидов:</h3><div><ul>
-			<%= option_li("statuses","Статусы") %>
-			<%= option_li("channels","Каналы") %>
-      <%= option_li("lead_sources","Источники") %>
-  </ul></div>	  
-   <h3>Настройки проектов:</h3><div><ul>
-          <%= option_li("holidays","Праздники") %>
-			    <%= option_li("project_types","Виды проектов") %>
-          <%= option_li("project_statuses","Статусы проектов") %>
-          <%= option_li("elongation_types","Причины продления") %>
+    <%= option_li("statuses","Статусы") %>
+    <%= option_li("channels","Каналы") %>
+    <%= option_li("lead_sources","Источники") %>
+  </ul></div>   
+  
+  <h3>Настройки проектов:</h3><div><ul>
+    <%= option_li("holidays","Праздники") %>
+    <%= option_li("project_types","Виды проектов") %>
+    <%= option_li("project_statuses","Статусы проектов") %>
+    <%= option_li("elongation_types","Причины продления") %>
+    <%= option_li("styles","Стили") %>
   </ul></div>
 
   <h3>Настройки финансов:</h3><div><ul>
-			    <%= option_li("payment_types","Виды оплат") %>
-			    <%= option_li("payment_purposes","Назначение платежей") %>
+    <%= option_li("payment_types","Виды оплат") %>
+    <%= option_li("payment_purposes","Назначение платежей") %>
   </ul></div>
+
   <h3>Настройки поставшиков:</h3><div><ul>
-			    <%= option_li("budgets","Бюджеты") %>
-			    <%= option_li("goodstypes","Виды товаров") %>
-			    <%= option_li("styles","Стили") %>
-			    <%= option_li("p_statuses","Статусы") %>
+    <%= option_li("budgets","Бюджеты") %>
+    <%= option_li("goodstypes","Виды товаров") %>
+    <%= option_li("styles","Стили") %>
+    <%= option_li("p_statuses","Статусы") %>
   </ul></div>
+
   <h3>Настройки задач:</h3><div><ul>
-      <%= option_li("dev_projects","Проекты") %>
-      <%= option_li("priorities","Приоритеты") %>
-      <%= option_li("dev_statuses","Статусы задач") %>
-
+    <%= option_li("dev_projects","Проекты") %>
+    <%= option_li("priorities","Приоритеты") %>
+    <%= option_li("dev_statuses","Статусы задач") %>
   </ul></div>
+
   <h3>Настройки календаря:</h3><div><ul>
-      <%= option_li("absence_reasons","Причины отсутствия") %>
-      <%= option_li("absence_targets","Цели отсутствия") %>
-      <%= option_li("absence_shop_targets","Цели для магазинов") %>
+    <%= option_li("absence_reasons","Причины отсутствия") %>
+    <%= option_li("absence_targets","Цели отсутствия") %>
+    <%= option_li("absence_shop_targets","Цели для магазинов") %>
   </ul></div>
-  <h3>Настройки знаний:</h3><div><ul>
-      <%= option_li("wiki_cats","Категории знаний") %>
 
+  <h3>Настройки знаний:</h3><div><ul>
+    <%= option_li("wiki_cats","Категории знаний") %>
   </ul></div>
-			
+      
   </div>
 </div>
 
 <div class="content option_list">
-        <%= render("shared/simple_option") %>
+  <%= render("shared/simple_option") %>
 <div class="sep_3"></div>
 </div>
 

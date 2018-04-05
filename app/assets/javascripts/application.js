@@ -114,7 +114,7 @@ $(function() {
 
   $('.progress').hide();
   $('#file').hide();
-  $('#tabs').tabs({active: 1 });
+  $('#tabs').tabs();
 
   tinyMCE.init({
     selector: '.tinymce textarea', 

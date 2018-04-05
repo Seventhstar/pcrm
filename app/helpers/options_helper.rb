@@ -5,7 +5,7 @@ module OptionsHelper
     case @page
     when 'users','roles','user_roles'
       0
-    when 'leads','statuses','channels','lead_sources'
+    when 'leads','statuses','channels','lead_sources', 'styles'
       1
     when 'holidays','project_statuses','project_types','elongation_types'
       2
