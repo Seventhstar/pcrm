@@ -5,14 +5,15 @@ class ProjectElongationsController < ApplicationController
   # respond_to :js
   # respond_to :js,:json
   def create
-    @pe = ProjectElongation.new(pe_params)
-    if @pe.save 
-    else
-      respond_to do |format|
-        format.json { render json: @pe.errors.full_messages, status: :unprocessable_entity }
+    if current_user.has_role?(:manager)
+      @pe = ProjectElongation.new(pe_params)
+      if @pe.save 
+      else
+        respond_to do |format|
+          format.json { render json: @pe.errors.full_messages, status: :unprocessable_entity }
+        end
       end
     end
-    
   end
 
   def destroy
@@ -31,6 +32,6 @@ class ProjectElongationsController < ApplicationController
   end
 
   def pe_params
-    params.require(:project_elongation).permit(:new_date,:elongation_type_id,:project_id)
+    params.require(:project_elongation).permit(:new_date, :elongation_type_id, :project_id)
   end
 end

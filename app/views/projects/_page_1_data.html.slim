@@ -1,0 +1,57 @@
+#tabs-1.ptab
+  .box_wrap_1.left
+    .panel-left
+      .sep_15
+      table.fullwidth.tbl_fc.fw_form
+        thead
+          tr
+            th width="50%" 
+            th width="50%" 
+        tbody
+          tr
+            td
+              .inp_w= f.input :number,label: 'Номер'
+            td.va_pt15
+              = f.input :interest, as: :boolean, label: 'Интерес к стройке', class: 'inp_btn checkbox'
+              = f.input :attention, :as => :boolean, label: 'Особое внимание', class: 'inp_btn checkbox'
+          tr
+            td.gr_caption Статус:
+            td
+          tr
+            td
+              .inp_w
+                = chosen_src :pstatus_id, ProjectStatus.all, @project, {nil_value: 'Статус...' }
+            td= f.input :progress,label: '%'
+            td.va_middle
+          tr
+            td.inp_97 colspan="2" 
+              = chosen_src :client_id, Client.all, @project, {label: 'Клиент:'}
+              - if @project.client_id
+                #edit_icon
+                  = link_to "", edit_client_path(@project.client_id, sub: true), data: {modal: true}, \
+                    class: 'icon icon_edit left chosen_edit', id: 'client_link'                       
+          tr
+            td colspan="2" 
+              .inp_w
+                label Адрес:
+                .inp_w= f.input :address, label: false
+          tr
+            td
+              .inp_w
+                label Вид работы
+                = chosen_src :project_type_id, ProjectType.all, @project, {nil_value: 'Вид работы...' }
+            td= chosen_src :style_id, Style.all, @project,  nil_value: 'Стиль...', label: 'Стиль'  
+          tr
+            td
+              .inp_w
+                label Дизайнер
+                = chosen_src :executor_id, User.all, @project, {nil_value: 'Исполнитель...' }
+          tr
+            td
+              .inp_w
+                label Визуализатор
+                = chosen_src :visualer_id, User.all, @project, {nil_value: 'Визуализатор...' }
+    .right
+      .sep_3
+      .comments_box
+        = render "shared/comments"

@@ -1,0 +1,52 @@
+#tabs-2.ptab
+  .box_wrap.box_wrap_1
+    .fullwidth
+      table.fullwidth.tbl_fc.fw_form.vue_cmp
+        thead
+          tr
+            th width="20%" 
+            th width="20%" 
+            th width="20%" 
+            th width="20%" 
+            th width="20%" 
+        tbody
+        - footage_2_nil = @project.footage_2.to_i==0
+        - if is_manager?
+          = render 'footage_sum', f: f, real: false, footage_2_nil: footage_2_nil, title: 'Заявленная площадь и стоимость'
+          = render 'footage_sum', f: f, real: true, footage_2_nil: footage_2_nil, title: 'Фактическая площадь и стоимость'  
+          = render 'executor', f: f
+        - else
+          tr
+            td.gr_caption colspan="5" Заявленная площадь
+          tr 
+            td
+              .inp_w
+                label Метраж
+                .lbl =@project.footage
+            td
+              .inp_w
+                label Метраж 2
+                .lbl =@project.footage_2
+          tr
+            td.gr_caption colspan="5" Фактическая площадь
+          tr 
+            td
+              .inp_w
+                label Метраж
+                .lbl =@project.footage_real
+            td
+              .inp_w
+                label Метраж 2
+                .lbl =@project.footage_2_real
+          tr
+            td.gr_caption colspan="5" Стомость для исполнителей
+          tr 
+            td
+              .inp_w
+                label Цена для дизайнера за м2
+                .lbl =@project.designer_price.to_sum
+            td
+              .inp_w
+                label Стоимость дизайнера
+                .lbl =@project.designer_sum_calc.to_sum
+

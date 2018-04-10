@@ -1,0 +1,17 @@
+td
+  .inp_w
+    label Начало
+    .lbl =@project.date_start.try('strftime',"%d.%m.%Y")
+td
+  .inp_w
+    label Окончание
+    .lbl =@project.date_end.try('strftime',"%d.%m.%Y")      
+td
+  .inp_w
+    label Рабоч. дней без уч. праздников
+    .lbl =@project.days_duration
+td
+td
+  .inp_w
+    label Дата подписания
+    .lbl =@project.date_sign.try('strftime',"%d.%m.%Y")

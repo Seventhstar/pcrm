@@ -1,10 +1,8 @@
-<% if is_manager? %>
 <div class="hl hl_a bd">Редактирование проекта <%= @project.address %>
 <%= link_to "", @project, method: :delete, data: { confirm: 'Действительно удалить проект?' }, :class=>"icon icon_remove right" %>
 </div>
 
 <%= hidden_field_tag 'holidays', @holidays %> 
-
 <%= simple_form_for(@project) do |f| %>
 
 <div id="tabs">
@@ -23,158 +21,19 @@
   </ul>
   <div class="right" style="width: 100%"></div>
 <div class="box_wrap">
-<div id="tabs-1" class="ptab">
-    <div class=" box_wrap_1 left">
-      <div class="panel-left">
-      <div class="sep_15"></div>
-        <table class="fullwidth tbl_fc fw_form">
-        <thead>
-        <tr><th width="50%"></th><th width="50%"></th></tr></thead>
-        <tbody>
-          <tr>
-            <td><div class="inp_w"><%= f.input :number,label: 'Номер' %></div></td>
-            <td class='va_pt15'><%= f.input :interest, as: :boolean, label: 'Интерес к стройке', class: 'inp_btn checkbox'  %>
-              <%= f.input :attention, :as => :boolean, label: 'Особое внимание', class: 'inp_btn checkbox'  %>
-            </td>
-            </tr>
-            <tr><td class="gr_caption">Статус:</td><td ></td></tr>
-          <tr>
-            <td><div class="inp_w ">
-              <%= chosen_src :pstatus_id, ProjectStatus.all, @project, {nil_value: 'Статус...' } %>
-              
-            </div>
-            <td><%= f.input :progress,label: '%' %></td></td>
-            <td class='va_middle'></td>
-            
-            </tr>
-            <tr><td colspan="2" class="inp_97">
-            
-              <%= chosen_src :client_id, Client.all, @project, {label: 'Клиент:'} %></div>
-              <% if @project.client_id %> 
-              <div id="edit_icon">
-                <%= link_to "", edit_client_path(@project.client_id, sub: true), data: {modal: true}, 
-                    class: 'icon icon_edit left chosen_edit', id: 'client_link' %>
-                  </div>
-              <% end %>
 
-            </td>
+<% if is_manager? %>
+<%= render 'page_1_data', f: f %>
+<% else %>
+<%= render 'page_1_data_show', f: f %>
+<% end %>
 
-            <tr><td colspan="2"><div class="inp_w">
-              <label>Адрес:</label>
-            <div class="inp_w"><%= f.input :address, label: false %></div></td>
-          </tr>
 
-          <tr>
-            <td><div class="inp_w"><label>Вид работы</label><%= chosen_src :project_type_id, ProjectType.all, @project, {nil_value: 'Вид работы...' } %></div></td>
-            <td><%= chosen_src :style_id, Style.all, @project, {nil_value: 'Стиль...', label: 'Стиль' } %></td>
-          </tr>
-          <tr>
-            <td ><div class="inp_w"><label>Дизайнер</label>
-              <%= chosen_src :executor_id, User.all, @project, {nil_value: 'Исполнитель...' } %></div>
-            </td>
-          </tr>
-          <tr>
-            <td ><div class="inp_w"><label>Визуализатор</label><%= chosen_src :visualer_id, User.all, @project, {nil_value: 'Визуализатор...' } %>
-            </div>
-            </td>
-          </tr>
-          
-
-</tbody></table></div>
-</div>
-
-  <div class="right">
-    <div class="sep_3"></div>
-    <div class="comments_box">
-      <%= render "shared/comments" %>
-    </div>
-  </div>
-
-</div>
-<div id="tabs-2" class="ptab">
-
-    <div class="box_wrap box_wrap_1">
-      <div class="fullwidth">
-        <table class="fullwidth tbl_fc fw_form vue_cmp">
-        <thead>
-        <tr><th width="20%"></th><th width="20%"></th><th width="20%"></th><th width="20%"></th><th width="20%"></th></tr></thead>
-        <tbody>
-
-          <tr><td class="gr_caption" colspan="5">Заявленная площадь и стоимость</td></tr>
-          <%= render 'footage', f: f %>
-          <tr><td class="gr_caption" colspan="5">Фактическая площадь и стоимость</td></tr>
-          <tr>
-
-          <%= td_sum_field(f, :footage_real, 'Метраж',  {mask: true}) %>
-          <%= td_sum_field(f, :price_real, 'Цена за м2') %>
-          <%= td_sum_field(f, :sum_real, 'Сумма') %>
-          <td></td>
-          <%= td_sum_field(f, :sum_total_real, 'Общая стоимость (факт)',{inp_class: 'sum_total'}) %>
-          </tr>
-          <tr <%= @project.footage_2.to_i==0 ? "class=invisible" : "" %>  id="tr_footage_2_real">
-          <%= td_sum_field(f, :footage_2_real, 'Метраж 2',  {mask: true}) %>
-          <%= td_sum_field(f, :price_2_real, 'Цена за м2') %>
-          <%= td_sum_field(f, :sum_2_real, 'Сумма') %>
-          <td></td>
-          </tr>
-
-          <% if is_manager? %>
-            <%= render 'executor', f: f %>
-          <% end %>
-
-</tbody></table></div></div></div>
-<div id="tabs-3" class="ptab">
-  <div class="box_wrap box_wrap_1">
-        <div class="fullwidth">
-          <table class="fullwidth tbl_fc fw_form">
-          <thead>
-          <tr><th width="20%"></th><th width="20%"></th><th width="20%"></th><th width="20%"></th><th width="20%"></th></tr></thead>
-          <tbody>
-              <tr id="lday">
-               <%= render "day" %>         
-            </tr>
-          </tbody>
-          </table>
-          <div class="sep_3"></div>
-          <div id='prj_elongations'>
-            <%= render partial: 'elongations', locals: { f: f } %>
-          </div>
-        </div>
-   </div>
-</div>
-
-<div id="tabs-4" class="ptab">
-  
-
-    <div class="box_wrap items_box_param">
-    <%= hidden_field 'g_type','project_id', value: @project.id %>
-    <div class="left mgn_right15" style="width:270px ">
-    <%= chosen_src "g_type[g_type_id]", @gtypes,"g_type",{nil_value: 'Выберите вид товара...'} %>
-    </div>
-    <span class="sub btn_a" id="btn-sub-send" pe_id="<%= @project.id %>" action='/projects/add_goodstype' prm='g_type'> Добавить вид товара</span>
-    <div class="right">
-    <%= chosen_src "good_state",good_state_src, params[:good_state],{nil_value: 'Все позиции',class: 'tab-chosen'} %>
-    <div id=pdf>
-      <%= link_to image_tag('pdf.png'), project_path(@project,format: :pdf), target: :_blank %> 
-    </div>
-    </div>
-    </div>
-
-    <div class="sep_15"></div>
-  <div id="pgoods">  
-    <%= render partial: 'project_goods_types', locals: { f: f, opened: false } %>
-  </div>
-  <div class="total-footer">Общий итог:
-    <div id="grand_total">
-      <%= render 'project_goods/grand_total', project_id: @project.id %>
-    </div>
-  </div>
-
-</div>
+<%= render 'page_2_footage', f: f %>
+<%= render 'page_3_dates', f: f %>
+<%= render 'page_4_goods', f: f %>
 
 <div id="tabs-5" class="ptab">
-
-
   <div class="box_wrap box_wrap_1">
     <div class="panel panel-default">
       <div class="panel-heading table-heading head month">Выплаты по проекту</div>
@@ -248,6 +107,5 @@
 <% end %>
 
 </div>
-<% end %>
 
 

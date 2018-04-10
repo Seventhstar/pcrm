@@ -1,0 +1,14 @@
+tr
+  td.gr_caption colspan="5" #{title}
+tr
+  = render 'footage', f: f, order: false, real: real
+  td.va_top
+    - if footage_2_nil && !real
+      span#add_footage.sub.btn_a Добавить
+      
+  - add_cls = @project.plan_sum_by_hand? ? 'red' : ''
+  = td_sum_field(f, :sum_total, 'Общая стоимость', {simple: true, inp_class: "sum_total #{add_cls}"} )
+
+tr class=(footage_2_nil ? 'invisible' : '')
+	= render 'footage', f: f, order: true, real: real
+	td

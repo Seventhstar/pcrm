@@ -1,0 +1,20 @@
+#tabs-3.ptab
+  .box_wrap.box_wrap_1
+    .fullwidth
+      table.fullwidth.tbl_fc.fw_form
+        thead
+          tr
+            th width="20%" 
+            th width="20%" 
+            th width="20%" 
+            th width="20%" 
+            th width="20%" 
+        tbody
+          tr#lday
+            - if is_manager?
+              = render "day"
+            - else
+              = render "day_show"
+      .sep_3
+      #prj_elongations
+        = render partial: 'elongations', locals: { f: f }

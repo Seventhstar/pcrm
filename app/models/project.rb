@@ -6,6 +6,7 @@ class Project < ActiveRecord::Base
   belongs_to :executor, class_name: 'User', foreign_key: :executor_id
   belongs_to :project_type
   belongs_to :pstatus, class_name: 'ProjectStatus',foreign_key: :pstatus_id
+  belongs_to :style
   # has_many :comments, :as => :owner
   has_many :attachments, :as => :owner
   has_many :receipts
@@ -52,6 +53,11 @@ class Project < ActiveRecord::Base
   def status_name
     pstatus.try(:name)
   end
+
+  def style_name
+    style.try(:name)
+  end
+
   def pstatus_name
     pstatus.try(:name)
   end

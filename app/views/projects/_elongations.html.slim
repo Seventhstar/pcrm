@@ -1,0 +1,18 @@
+.panel.panel-default
+  .panel-heading.table-heading.head.month Продления сроков:
+  table#project_elongations.tleads
+    tbody
+      - @project.elongations.each do |pe|
+        tr id="pe_#{pe.id}"
+          td= pe.new_date.try('strftime','%d.%m.%Y')
+          td= pe.description
+          - if is_manager?
+            = tool_icons(pe, {icons:'delete',tag:'span'})
+      - if is_manager?
+        tr#new_item
+          = hidden_field 'project_elongation','project_id', value: @project.id
+          td.caption3 width="120px" 
+            = text_field "project_elongation", :new_date, {:class => 'txt datepicker'}
+          td= chosen_src "elongation_type_id", @elongation_types,@new_et, nil_value: 'Выберите причину...'
+          td width="110px" 
+            span#btn-sub-send.sub.btn_a action="/project_elongations/" pe_id="#{@project.id}" prm="project_elongation"  Добавить

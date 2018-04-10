@@ -1,0 +1,39 @@
+#tabs-1.ptab
+  .box_wrap_1.left
+    .panel-left
+      .sep_3
+      table.fullwidth.tbl_fc.fw_form style="width: 95%;"
+        tbody
+          tr
+            td.caption Номер
+            td
+              .lbl =@project.number
+          tr
+            td.caption Статус:            
+            td
+              .lbl =@project.status_name
+          tr
+            td.caption Клиент:
+            td
+              .lbl= @project.client_name
+          tr
+            td.caption Адрес:
+            td
+              .lbl= @project.address
+
+          tr
+            td.caption Вид работы
+            td
+              .lbl =@project.project_type_name
+          tr
+            td.caption Стиль
+            td
+              .lbl =@project.style_name
+          tr
+            td.caption Дизайнер
+            td
+              .lbl =@project.executor_name
+    .box_wrap_1.panel-right
+      .sep_3
+      .comments_box
+        = render "shared/comments"
