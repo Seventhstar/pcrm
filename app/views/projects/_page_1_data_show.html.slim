@@ -36,4 +36,5 @@
     .box_wrap_1.panel-right
       .sep_3
       .comments_box
-        = render "shared/comments"
+        - if is_manager? 
+          = render "shared/comments"
