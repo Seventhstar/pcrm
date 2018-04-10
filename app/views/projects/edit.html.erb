@@ -23,11 +23,10 @@
 <div class="box_wrap">
 
 <% if is_manager? %>
-<%= render 'page_1_data', f: f %>
+  <%= render 'page_1_data', f: f %>
 <% else %>
-<%= render 'page_1_data_show', f: f %>
+  <%= render 'page_1_data_show', f: f %>
 <% end %>
-
 
 <%= render 'page_2_footage', f: f %>
 <%= render 'page_3_dates', f: f %>

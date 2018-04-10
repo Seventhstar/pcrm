@@ -173,6 +173,7 @@
   $('.float_mask').inputmask mask
   $('.chosen').chosen(width: '99.5%', disable_search: 'true')
   $('.schosen').chosen(width: '99.5%')
+  $('.tel').inputmask(mask: ["999-99-99","+7(999) 999-99-99","8(999) 999-99-99"])
   $('.tab-chosen').chosen(width: '150px').on 'change', ->
     l = $('form').attr('action');
     p = $(".ui-tabs-active a").attr('href')

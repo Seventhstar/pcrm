@@ -125,6 +125,7 @@ class LeadsController < ApplicationController
     @files    = @lead.attachments
     @history  = get_history_with_files(@lead)
     @priorities = Priority.all
+    @lead.priority_id = 1 if @lead.priority_id.nil?
   end
 
   # GET /leads/new
