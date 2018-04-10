@@ -44,9 +44,9 @@
             td
               .inp_w
                 label Цена для дизайнера за м2
-                .lbl =@project.designer_price.to_sum
+                .lbl =@project.designer_price.try(:to_sum)
             td
               .inp_w
                 label Стоимость дизайнера
-                .lbl =@project.designer_sum_calc.to_sum
+                .lbl =@project.designer_sum_calc.try(:to_sum)
 

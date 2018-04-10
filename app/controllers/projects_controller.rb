@@ -1,10 +1,9 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy, :update_client]
   before_action :logged_in_user
-  before_action :check_sum, only: [:create,:update]
+  before_action :check_sum, only: [:create, :update]
   helper_method :sort_2, :dir_2
   helper_method :sort_column, :sort_direction
-  # attr_accessor :days,:sum_rest
   respond_to :html, :json, :js
 
   include ProjectsHelper
@@ -112,15 +111,12 @@ class ProjectsController < ApplicationController
   # GET /projects/new
   def new
     @project = Project.new
-    # @client =  @project.build_client
-    # p :client_id
     get_debt
     def_params
   end
 
   # GET /projects/1/edit
   def edit
-
     @gs = params[:good_state]
 
     if !@gs.nil? && @gs.to_i>0
@@ -144,10 +140,6 @@ class ProjectsController < ApplicationController
     @prj_good_types = Goodstype.where(id: [pgt]).order(:name)
     
     def_params
-    # @gtypes = gt.empty? ? Goodstype.order(:name) : 
-    # @prj_good_types = @project.project_g_types.order("goodstype.name")
-    # @prj_good_types = ProjectGType.joins(:goodstype).where('g_type_id in (?) and project_id = ?',gt,@project.id).order('goodstypes.name')
-    
   end
 
   # POST /projects
@@ -156,9 +148,7 @@ class ProjectsController < ApplicationController
     pp = project_params
     pp['pstatus_id'] ||= 1
     @project = Project.new(pp)
-    # p "project_params[:client_id]",project_params[:client_id]
     if project_params[:client_id] == "0" 
-      # p "@client.save"
       @client = @project.create_client(client_params)
       @client.save
       @project.client_id = @client.id
@@ -185,12 +175,6 @@ class ProjectsController < ApplicationController
 
   def update_client
     @clients = Client.order(:name)
-    # respond_to do |format|
-    #   format.json { head :no_content }
-    # end
-    # respond_to do |format|
-    #   format.js {}
-    # end
   end
 
   def add_goodstype
@@ -213,18 +197,16 @@ class ProjectsController < ApplicationController
     elgtn.save if !elgtn.new_date.nil?
 
     respond_to do |format|
-      if @project.update(project_params)
+      if @project.update(project_params) && current_user.has_role?(:manager)
         format.html { redirect_to project_page_url, notice: 'Проект успешно сохранен' }
         format.json { render :show, status: :ok, location: @project }
       else
         edit
-        # p "errors: #{@project.errors.full_messages}"
         flash.now[:danger] = @project.errors.full_messages
         format.html { render :edit }
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end
-    # p @project
   end
 
   # DELETE /projects/1
@@ -253,29 +235,18 @@ class ProjectsController < ApplicationController
     session[:last_projects_page] = request.url || projects_url if request.get?
   end
 
-
-
   def check_sum
     prms = ['price','price_2','price_real','price_2_real','sum','sum_2','sum_real','sum_2_real',
       'sum_total','sum_total_real','designer_price', 'designer_price_2','visualer_price',
       'visualer_sum','designer_sum',
       'sum_total_executor']
       prms.each do |p|
-        # p "project_params[p] #{project_params[p]}"
         project_params[p] = project_params[p].gsub!(' ','') if !project_params[p].nil?
-        # p "project_params[p] #{project_params[p]}"
       end
 
-      # p "project_params.class #{project_params.class}"
       if !project_params[:progress].nil? && project_params["progress"].to_i>100
-        # p project_params
-      # p "project_params[:progress] #{project_params[:progress]}"
         project_params["progress"] = 100
-        # p project_params["progress"].class
-      # p "project_params['progress'] #{project_params['progress']}"
-      # p  project_params
       end
-      # jehj
     end
 
     # Use callbacks to share common setup or constraints between actions.
