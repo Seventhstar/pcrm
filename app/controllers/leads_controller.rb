@@ -48,6 +48,7 @@ class LeadsController < ApplicationController
     else
       @leads = Lead.select(query_str)
     end
+
     
     if !params[:search].nil?
       info =params[:search]
@@ -61,6 +62,7 @@ class LeadsController < ApplicationController
       @leads = @leads.where(status: @s_status_ids)
     end
 
+    
     #p "params[:priority_id] #{params[:priority_id]}"
 
     if params[:priority_id].present? && params[:priority_id]!='0'
@@ -212,7 +214,7 @@ class LeadsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def lead_params
       params.require(:lead).permit(:info, :fio, :footage, :phone, :email, :address, :channel_id, :source_id,
-                      :status_id, :user_id, :status_date,:start_date, :first_comment,:leads_ids, :ic_user_id,
+                      :status_id, :user_id, :status_date, :start_date, :first_comment, :leads_ids, :ic_user_id,
                       :priority_id)
     end
 

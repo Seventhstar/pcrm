@@ -68,6 +68,16 @@ group :development, :test do
   gem "binding_of_caller"
 end
 
+group :test do
+  gem 'launchy'
+  gem 'factory_bot_rails'
+  gem 'database_cleaner'
+  gem 'rails-controller-testing'
+  gem 'shoulda-matchers'#, git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'  
+  gem 'selenium-webdriver'
+end
+
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'simple_form'
