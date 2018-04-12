@@ -5,9 +5,8 @@ class Project < ActiveRecord::Base
   belongs_to :client
   belongs_to :executor, class_name: 'User', foreign_key: :executor_id
   belongs_to :project_type
-  belongs_to :pstatus, class_name: 'ProjectStatus',foreign_key: :pstatus_id
-  belongs_to :style
-  # has_many :comments, :as => :owner
+  belongs_to :pstatus, class_name: 'ProjectStatus', foreign_key: :pstatus_id
+  belongs_to :style, optional: true
   has_many :attachments, :as => :owner
   has_many :receipts
   has_many :project_g_types
@@ -15,14 +14,10 @@ class Project < ActiveRecord::Base
   has_many :goods, class_name: "ProjectGood", dependent: :destroy
   has_many :elongations, class_name: 'ProjectElongation', dependent: :destroy
 
-
   validates :address, :length => { :minimum => 3 }
   validates :client_id, presence: true
   validates :footage, presence: true
   accepts_nested_attributes_for :client
-  #validates_numericality_of :footage, greater_than: 1
-  # belongs_to :project_elongation
-  # accepts_nested_attributes_for :project_elongation, reject_if: :all_blank, allow_destroy: true
 
   has_paper_trail
 
