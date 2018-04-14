@@ -14,9 +14,13 @@
     <li><a href="#tabs-5">Выплаты</a></li>
     <li><a href="#tabs-6">Файлы</a></li>  
 
+
     <% if is_admin? %>  
       <li><a href="#tabs-7">История</a></li>
+      <li><a href="#tabs-8">Особенности</a></li>  
     <% end %>
+
+    <li><a href="#tabs-9">Контакты</a></li>
 
   </ul>
   <div class="right" style="width: 100%"></div>
@@ -93,18 +97,49 @@
 
 
 <% if is_admin? %>  
-<div id="tabs-7" class="ptab">
-<div class="box_wide">
-<div class="box_wrap box_wrap_1">
-<div class="historyChange_box">
-          <% if @history.count >0 %>
-            <%= render "shared/history" %>    
-          <% end %>
-        </div>
-      </div></div>
-    </div>
-</div>
+  <div id="tabs-7" class="ptab">
+  <div class="box_wide">
+  <div class="box_wrap box_wrap_1">
+  <div class="historyChange_box">
+            <% if @history.count >0 %>
+              <%= render "shared/history" %>    
+            <% end %>
+          </div>
+        </div></div>
+      </div>
+  </div>
+
+  <div id="tabs-8" class="ptab">
+  <div class="box_wide">
+  <div class="box_wrap box_wrap_1">
+      <% f.simple_fields_for :special_infos do |si| %>
+        <%= render 'special_infos', f: si %>
+      <% end %>
+      <div class="links">
+        <%= link_to_add_association 'add', f, :special_infos %>
+      </div>
+
+        </div></div>
+      </div>
+  </div>  
 <% end %>
+
+<div id="tabs-9" class="ptab">
+  <div class="box_wide">
+    <div class="box_wrap box_wrap_1">
+      <div id='tasks'>
+        <%= f.simple_fields_for :contacts do |contact| %>
+          <%= render 'contact_fields', f: contact %>
+        <% end %>
+        <div class='links'>
+          <%= link_to_add_association 'Добавить', f, :contacts, class: "btn btn-default sub btn_a" %>
+        </div>
+      </div>
+
+      </div>
+    </div>
+  </div>
+</div>
 
 <%= submit_cancel project_page_url %>
 <% end %>

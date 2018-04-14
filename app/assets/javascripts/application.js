@@ -26,6 +26,8 @@
 //= require nprogress
 //= require bootstrap-tokenfield
 //= require moment
+//= require cocoon
+//= require contextMenu.min
 //= require vue
 //= require_tree .
 
@@ -91,12 +93,33 @@ var show_ajax_message = function(msg, type) {
     showNotifications();
 };
 
+function getInputSelection(elem){
+ if(typeof elem != "undefined"){
+  s=elem[0].selectionStart;
+  e=elem[0].selectionEnd;
+  return elem.val().substring(s, e);
+ }else{
+  return '';
+ }
+}
 
 $(function() {
 
-  // vueapp = new Vue({
-  //   el: ".container"
-  // });
+  var menu = [{
+        name: 'телефон',
+        fun: function () {
+            $('#lead_phone').val(getInputSelection($('#lead_info')));
+        }
+    }, {
+        name: 'email',
+        fun: function () {
+            $('#lead_email').val(getInputSelection($('#lead_info')));
+        }
+    
+    }];
+ 
+//Calling context menu
+ $('#lead_info').contextMenu(menu,{triggerOn:'contextmenu'});
 
 
   startTime();

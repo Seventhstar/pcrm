@@ -9,7 +9,9 @@
 
 .datepicker { background: asset-url('ico-date.png') 95% 8px no-repeat; cursor: pointer;}
 .editable input[type="text"].datepicker { background: asset-url('ico-date.png') 95% 5px no-repeat; cursor: pointer; }
-.inp_w .datepicker{ background: asset-url('ico-date.png') 93% 8px no-repeat; }
+.inp_w .datepicker{ background: asset-url('ico-date.png') 98% 8px no-repeat; }
+.projects .inp_w .datepicker{ background: asset-url('ico-date.png') 96% 8px no-repeat; }
+.edit_project .inp_w .datepicker{ background: asset-url('ico-date.png') 96% 8px no-repeat; }
 
 .inp_w .sum_mask { background: asset-url('rub.png') 98% 8px no-repeat; padding-right: 22px; }
 
@@ -24,7 +26,7 @@
 
 .tbl_fc_1 .inp_w .datepicker{ background: asset-url('ico-date.png') 98% 8px no-repeat; }
 
-input[disabled].datepicker { background: asset-url('ico-date.png') 93% -27px no-repeat !important; }
+input[disabled].datepicker { background: asset-url('ico-date.png') 96% -27px no-repeat !important; }
 
 input[disabled] {cursor: default; box-shadow: none !important;}
 td.disabled {color: gray !important;}

@@ -1,23 +1,32 @@
 class Project < ActiveRecord::Base
-  include ProjectsHelper
   include Comments
+  include ProjectsHelper
   attr_accessor :first_comment, :days, :sum_rest
   belongs_to :client
   belongs_to :executor, class_name: 'User', foreign_key: :executor_id
   belongs_to :project_type
   belongs_to :pstatus, class_name: 'ProjectStatus', foreign_key: :pstatus_id
   belongs_to :style, optional: true
-  has_many :attachments, :as => :owner
+
+  has_many :attachments, as: :owner
   has_many :receipts
   has_many :project_g_types
   has_many :absence
   has_many :goods, class_name: "ProjectGood", dependent: :destroy
   has_many :elongations, class_name: 'ProjectElongation', dependent: :destroy
+  has_many :special_infos, as: :special_info
+  has_many :contacts, as: :contactable
 
-  validates :address, :length => { :minimum => 3 }
+  validates :address, length: { minimum: 3 }
   validates :client_id, presence: true
   validates :footage, presence: true
   accepts_nested_attributes_for :client
+  accepts_nested_attributes_for :contacts
+  accepts_nested_attributes_for :special_infos
+
+  scope :by_executor, ->(executor) {where(executor_id: executor) if executor.present? && executor&.to_i>0}
+  scope :only_actual, ->(actual){where.not(pstatus_id: 3) if actual}
+  scope :by_year,     ->(year){where(date_start: Date.new(year.to_i,1,1)..Date.new(year.to_i,12,31)) if year.present? && year&.to_i>0}
 
   has_paper_trail
 
@@ -63,10 +72,10 @@ class Project < ActiveRecord::Base
 
 
   def days_duration
-    if elongations.count>0
-      business_days_between(date_start.to_datetime,last_elongation.to_datetime)+1
+    if elongations.size > 0
+      business_days_between(date_start.to_datetime, last_elongation.to_datetime)+1
     elsif date_end_plan? && date_start?
-      business_days_between(date_start.to_datetime,date_end_plan.to_datetime)+1
+      business_days_between(date_start.to_datetime, date_end_plan.to_datetime)+1
     end
   end
 
@@ -130,14 +139,14 @@ class Project < ActiveRecord::Base
 
   def last_elongation
     new_date = ""
-     if !elongations.nil? && elongations.count>0
+     if !elongations.nil? && elongations.size > 0
         new_date = elongations.last.new_date
      end
      new_date
   end
 
   def date_end
-    elongations.count==0 ? date_end_plan : last_elongation #elongations.last.new_date
+    elongations.size==0 ? date_end_plan : last_elongation #elongations.last.new_date
   end
 
   def admin_info()

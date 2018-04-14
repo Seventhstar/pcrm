@@ -10,7 +10,6 @@ module ProjectsHelper
     else
       id = @project.id
     end
-    # p "id #{id}"
     id
   end
 
@@ -62,8 +61,6 @@ module ProjectsHelper
   end
 
   def get_goods(id,pgt)
-    # p "get_goods controller_name #{action_name}"
-    # p " params #{params}"
     if pgt.nil?
       if action_name=='index' && params[:sort]=='provider_id'
         # provider = Provider.find(id.provider_id)

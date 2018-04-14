@@ -1,16 +1,19 @@
 class Lead < ActiveRecord::Base
   include Comments
-  belongs_to :channel
-  belongs_to :status
   belongs_to :user
+  belongs_to :status
+  belongs_to :channel
   belongs_to :ic_user, foreign_key: :ic_user_id, class_name: 'User'
   belongs_to :source, foreign_key: :source_id, class_name: 'LeadSource', optional: true
+  has_many :attachments, as: :owner
 
-  has_many :attachments, :as => :owner
-
-  has_paper_trail
+  scope :by_priority, ->(priority) {where(priority_id: priority) if priority.present? && priority&.to_i>0}
+  scope :only_actual, ->(actual){where(status_id: Status.where(actual: true).ids) if actual}
+  scope :by_year,     ->(year){where(start_date: Date.new(year.to_i,1,1)..Date.new(year.to_i,12,31)) if year.present? && year&.to_i>0}
+ 
   attr_accessor :first_comment
   after_save :send_changeset_email
+  has_paper_trail
 
   def send_changeset_email
     if updated_at > (Time.now-5)
@@ -111,7 +114,7 @@ class Lead < ActiveRecord::Base
       usr = User.where('id NOT IN (?)',[1,3,19]).order(:name)
       data = period.each.collect{ |p|  usr.collect{ 
               |u| {month: I18n.t(p.try('strftime',"%B")),  
-              u.name =>  u.leads.where("date_trunc('month', start_date) = ?",p).count } }
+              u.name =>  u.leads.where("date_trunc('month', start_date) = ?", p).count } }
               .reduce(:merge) }
       headers = usr.map {|u| u.name }
       el = 'Bar'

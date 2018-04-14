@@ -1,6 +1,5 @@
 module ReceiptsHelper
 	def receipt_procents_div
-		#p "@receipt.provider_id",@receipt.provider_id
 		div_cls = @receipt.provider_id==-1 ? '' : 'invisible'
 		a ={}
 		d = 25

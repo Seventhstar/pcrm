@@ -18,6 +18,12 @@
     white-space: nowrap;
 }
 
+.nested-fields li .form-group {float: left; margin-right: 4px;}
+.nested-fields li {display: table-row;}
+.nested-fields {margin-top: 10px;}
+.nested-tools {padding: 8px;}
+.links {margin-top: 10px;}
+ 
 .ui-tabs .ui-tabs-nav .ui-tabs-anchor {float: left; padding: .5em 1em; text-decoration: none;}
 
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active { color: #212121;}

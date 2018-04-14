@@ -25,7 +25,7 @@
     <td><%= lead.status_name %></td>
     <td><%= lead.status_date.try('strftime',"%d.%m.%Y") %></td>
     <td><%= lead.fio %></td>
-    <td><%= lead.phone %></td>
+    <td><%= phone_format(lead.phone) %></td>
     <td><%= tooltip_if_big( lead.info ) %></td>
     <td><%= lead.footage %></td>
     <td><%= lead.start_date.try('strftime',"%d.%m.%Y") %></td>

@@ -3,14 +3,10 @@ module ApplicationHelper
   
   def attr_boolean?(item,attr)
     item.column_for_attribute(attr.to_s).class == ActiveRecord::Type::Boolean
-    # item.class.column_types[attr.to_s].class == ActiveRecord::Type::Boolean
   end
   
   def attr_date?(item,attr)
-      # p "attr #{attr} #{item.column_for_attribute(attr.to_s).type== :date}"
       item.column_for_attribute(attr.to_s).type == :date
-    # item.column_for_attribute(attr.to_s).class == ActiveRecord::ConnectionAdapters::PostgreSQL::OID::Date
-    # item.class.column_types[attr.to_s].class == ActiveRecord::ConnectionAdapters::PostgreSQL::OID::Date
   end
 
   def is_admin?
@@ -54,11 +50,15 @@ module ApplicationHelper
     
   end
 
+  def contact_kind_src
+    [["Телефон",1],["E-mail",2]]
+  end
+
 
   def uncheked_tasks
     uncheked_tasks = Develop.where(dev_status_id: 2).size
     a = content_tag :span
-    a = link_to uncheked_tasks, develops_path({develops_status_id: "2"}),  { :class => "uncheked_tasks", title: "Непроверенных задач" } if uncheked_tasks>0
+    a = link_to uncheked_tasks, develops_path({develops_status_id: "2"}),  { class: "uncheked_tasks", title: "Непроверенных задач" } if uncheked_tasks>0
     a
   end
 
@@ -68,13 +68,20 @@ module ApplicationHelper
       my_tasks       = current_user.develops.size      
       a = content_tag :span
       b = content_tag :span
-      a = link_to uncheked_tasks, develops_path({develops_status_id: "2"}),  { :class => "uncheked_tasks", title: "Непроверенных задач" } if uncheked_tasks>0
-      b = link_to my_tasks, develops_path({develops_status_id: "1", develops_ic_user_id: current_user.id}), { :class => "my_tasks", title: "Моих задач" } if my_tasks >0
+      a = link_to uncheked_tasks, develops_path({develops_status_id: "2"}),  { class: "uncheked_tasks", title: "Непроверенных задач" } if uncheked_tasks>0
+      b = link_to my_tasks, develops_path({develops_status_id: "1", develops_ic_user_id: current_user.id}), { class: "my_tasks", title: "Моих задач" } if my_tasks >0
       a + b
     end
   end
 
-
+  def phone_format(phone)
+    if phone.length == 11
+      ph = "#{phone[0]=='7' ? '+':''}#{phone[0]}(#{phone[1..3]}) #{phone[4..6]}-#{phone[7..8]}-#{phone[9..10]}"
+    elsif phone.length == 7
+      ph = "#{phone[4..6]}-#{phone[7..8]}-#{phone[9..10]}"
+    end
+    ph
+  end
 
   def date_ago( day )
     now = Date.today
@@ -151,7 +158,7 @@ def chosen_src( id, collection, obj = nil, options = {})
   cls = cls + ' '+ options[:add_class] if !options[:add_class].nil?
   cls = cls+" has-error" if is_attr && ( obj.errors[id].any? || obj.errors[id.to_s.gsub('_id','')].any? )
   l = label_tag options[:label]
-  s = select_tag n, options_for_select(coll, :selected => sel), class: cls
+  s = select_tag n, options_for_select(coll, selected: sel), class: cls
   options[:label].nil? ? s : l+s
 end
 
@@ -169,7 +176,7 @@ def sortable_pil(column, title = nil, default_dir = 'desc')
   if (direction == false)
     direction = default_dir
   end
-  content_tag :span, title,{ :class => css_class, :sort => column, :direction => direction }
+  content_tag :span, title,{ class: css_class, sort: column, direction: direction }
 end
 
 def sortable_th(column, title = nil, nosort = false)
@@ -183,7 +190,7 @@ def sortable_th(column, title = nil, nosort = false)
   if nosort 
     title
   else
-    content_tag :span,{:class => css_class, :sort2 => column, :dir2 => dir_2} do
+    content_tag :span, {class: css_class, sort2: column, dir2: dir_2} do
       b + a
     end
   end
@@ -205,7 +212,7 @@ def sortable(column, title = nil)
    params.delete("_")
  end
 
- link_to params.merge(:sort2 => column, :dir2 => direction, :page => nil), {:class => css_class} do
+ link_to params.merge(sort2: column, dir2: direction, page: nil), {class: css_class} do
    b + a
  end
 end
@@ -229,7 +236,7 @@ def set_only_actual(actual,title = nil)
   css_class.concat(" only_actual li-right")
   p_active = only_actual == "false"
   p_title  = only_actual == "false" ? "Все" : "Актуальные"
-  content_tag :span, p_title, {:class => css_class}
+  content_tag :span, p_title, {class: css_class}
 end
 
 def class_for_lead( lead )
@@ -257,15 +264,15 @@ def total_info(t_array)
   s
 end
 
-def option_link( page,title )
+def option_link(page, title)
   css_class = @page_data == page ? "active" : nil
-  link_to title, '#',{:class =>"list-group-item #{css_class}", :controller => page}
+  link_to title, '#',{class: "list-group-item #{css_class}", controller: page}
 end
 
-def option_li( page,title )
+def option_li(page, title)
   css_class = @page == page ? "active" : nil
-  content_tag :li, {:class =>css_class } do
-    link_to title, '#',{:class =>"list-group-item #{css_class}", :controller => page}
+  content_tag :li, {class: css_class } do
+    link_to title, '#', {class: "list-group-item #{css_class}", controller: page}
   end
 end
 
@@ -279,7 +286,7 @@ def submit_cancel(back_url, modal = false)
 end
 
 
-def tool_icons(element,params = nil)
+def tool_icons(element, params = nil)
 
     all_icons = {} #['edit','delete','show'] tag='span',subcount=nil
     params ||= {}
@@ -307,7 +314,7 @@ def tool_icons(element,params = nil)
 
     if params[:tag] == 'span'
 
-      all_icons[i_edit] = content_tag :span, "", {class: 'icon '+i_edit , item_id: element.id} if !i_edit.nil?
+      all_icons[i_edit] = content_tag :span, "", {class: "icon #{i_edit}", item_id: element.id} if !i_edit.nil?
       all_icons['delete'] = content_tag( :span,"",{class: ['icon icon_remove',dilable_cls,' ',params[:class]].join, item_id: params[:subcount]>0 ? '' : element.id})
     else
       all_icons[i_edit] = link_to "", edit_polymorphic_path(element), class: "icon "+i_edit + params[:class], data: datap if !i_edit.nil?
@@ -318,13 +325,13 @@ def tool_icons(element,params = nil)
         all_icons['delete'] = content_tag(:span,"",{class: 'icon icon_remove_disabled'}) if params[:subcount]>0
       end
 
-      content_tag content,{class: ["edit_delete",add_cls,' ',params[:content_class]].join, rowspan: params[:rowspan], style: style} do
+      content_tag content,{class: ["edit_delete", add_cls, ' ', params[:content_class]].join, rowspan: params[:rowspan], style: style} do
         icons.collect{ |i| all_icons[i] }.join.html_safe
       end
     end
 
     def tooltip( s_info, info )
-      content_tag(:span,s_info,{'data-toggle' =>"tooltip", 'data-placement' => "top", :title => info})
+      content_tag(:span, s_info, {'data-toggle' => "tooltip", 'data-placement' => "top", title: info})
     end
 
     def tooltip_if_big( info, length = 50 )
@@ -336,15 +343,15 @@ def tool_icons(element,params = nil)
    end
 
    def span_tooltip(info, full_info, cls, a, is_link = true )
-    t_hash = {'data-toggle' =>"tooltip", 'data-placement' => "top", :title => full_info}
+    t_hash = {'data-toggle' => "tooltip", 'data-placement' => "top", title: full_info}
     if is_link
       b = link_to info.html_safe, [:edit, a], t_hash
     else
       b = content_tag :span, info.html_safe, t_hash
     end
-    c = content_tag(:span,' ',{:class => cls})
-    content_tag(:span,' ',{class: "numday"}) do
-      content_tag(:li,{class: cls}) do
+    c = content_tag(:span, ' ', {class: cls})
+    content_tag(:span, ' ', {class: "numday"}) do
+      content_tag(:li, {class: cls}) do
         content_tag(:span) do
           b
         end
@@ -353,7 +360,7 @@ def tool_icons(element,params = nil)
   end
 
   def ttip(info, full_info, cls, a )
-    b = link_to info, [:edit, a], {'data-toggle' =>"tooltip", 'data-placement' => "top", :title => full_info}
+    b = link_to info, [:edit, a], {'data-toggle' =>"tooltip", 'data-placement' => "top", title: full_info}
   end
 
   def tooltip_str_from_hash(h)

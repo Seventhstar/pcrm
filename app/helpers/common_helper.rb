@@ -21,7 +21,6 @@ module CommonHelper
   end
 
   def check_new_table_head( obj )
-    #p "params[:sort] #{params[:sort]}"
     case params[:sort]
     when "users.name"
       new_head = head_name(obj,'user_id')
@@ -29,16 +28,13 @@ module CommonHelper
       new_head = head_name(obj,'ic_user_id')
     when "status_id","pstatus_id","start_date", "status_date", "project_id",
          "executor_id", "project_type_id", "provider_id","project_g_type_id"
-         # p "head_name(obj,params[:sort]) #{head_name(obj,params[:sort])}"
       new_head = head_name(obj,params[:sort])
     else
       if obj.class.name == "Lead"
         new_head = is_admin? ? head_name(obj,'status_date') : head_name(obj,'start_date') 
       elsif obj.class.name == "ProjectGood"
         prm = params[:sort]
-        p "params[:sort] #{params[:sort]}"
         prm = 'project_id' if prm.nil?
-        p "prm #{prm}"
         new_head = head_name(obj,prm)
       else
         new_head = nil
@@ -129,16 +125,13 @@ module CommonHelper
       history = Hash.new
     # изменения в самом объекте
       version = obj.versions.last || @version
-      #if version[:event]!="create" && version != obj.versions.first 
         author = find_version_author_name(version) 
         at = version.created_at.localtime.strftime("%Y.%m.%d %H:%M:%S") 
         at_hum = version.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 
         changeset = version.changeset 
-        #puts "changeset: "+changeset
         ch = Hash.new
         desc = []
         changeset.keys.each_with_index do |k,index| 
-          # p 'k',k
           from_to = from_to_from_changeset(version,changeset[k],k)
           from = from_to['from'] 
           to = from_to['to']
@@ -146,7 +139,6 @@ module CommonHelper
           if from.present? || to.present?
             from = from.nil? ? "" : from.to_s
             to = to.nil?  ? "" : to.to_s
-            #puts k,k == 'description'
             if k == 'description' || k == 'info'
               from.gsub!(/\n/, '<br>')  
               to.gsub!(/\n/, '<br>')
@@ -163,10 +155,6 @@ module CommonHelper
      # end
     history
   end
-
-  # def get_all_history
-  #   pt = PaperTrail::Version.order(created_at: :desc).limit(50) #.where('created_at > ?',Date.yesterday)
-  # end
 
   def link_to_obj(obj, id)
      lnk =  t(obj) +' #' + id.to_s
@@ -228,7 +216,6 @@ module CommonHelper
 
   def get_history_with_files(obj)
     history = Hash.new
-    # p "----1"
     # изменения в самом объекте
     obj.versions.reverse.each do |version|
       if version[:event]!="create" && version != obj.versions.first 

@@ -24,12 +24,16 @@ class ProvidersController < ApplicationController
     @only_actual = !params[:only_actual] || params[:only_actual] == "true"
 
     all_ids = Provider.order(:name).ids
+    p all_ids.size
     sp,bp,gtp,ps,s_ids = all_ids,all_ids,all_ids,all_ids,all_ids
 
-    if !params[:search].nil?
-      s_ids = Provider.where('LOWER(name) like LOWER(?) or LOWER(address) like LOWER(?)','%'+params[:search]+'%','%'+params[:search]+'%').ids
+    if params[:search].present?
+      srch = "%#{params[:search]}%"
+      s_ids = Provider.where(%q{LOWER(name) like LOWER(?) 
+                            or LOWER(address) like LOWER(?)'},
+                            srch,
+                            srch).ids
     end
-
 
     if params[:style] && params[:style]!="" && params[:style]!='0'
         sp = Style.find(params[:style]).providers.ids
@@ -44,14 +48,14 @@ class ProvidersController < ApplicationController
         @goodstypes = [Goodstype.find(params[:goodstype])]
     end
 
-    #if @param_p_status && @param_p_status!="" && @param_p_status!='0'
     if  @only_actual
         ps = Provider.where('p_status_id > 2').ids
     end
 
     @ids = sp & bp & gtp & ps & s_ids
 
-    @providers = Provider.where(:id => @ids).order(:name) # find(ids, :order => :name)
+    @providers = Provider.where(id: @ids).order(:name) # find(ids, :order => :name)
+    p "@providers: #{@providers.size}"
     store_providers_path
   end
 
@@ -107,7 +111,6 @@ class ProvidersController < ApplicationController
   # PATCH/PUT /providers/1.json
   def update
     respond_to do |format|
-      #puts provider_params
       if @provider.update(provider_params)
       #@provider = Provider.find(params[:id])
       #if @provider.update_attributes(params[:provider])

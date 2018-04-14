@@ -12,67 +12,42 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
-
-    years = Project.select("projects.*, date_trunc('year', date_start) AS year").where('date_start IS NOT NULL').order('date_start')
-    year_from = years.first.year
-    year_to = years.last.year
-
-    @years = (year_from.year..year_to.year).step(1).to_a.reverse
+    @years = (2016..Date.today.year).step(1).to_a.reverse
+    @executors = User.where(activated: true).order(:name)
 
     @sort_column = sort_column
-    @only_actual = params[:only_actual].nil? ? true : params[:only_actual]=='true'
-    query_str = "projects.*, date_trunc('month', date_start) AS month"
-    if !current_user.has_role?(:manager)
-      @projects = current_user.projects.select(query_str)
-    else
-      @projects = Project.select(query_str)
-    end
+    sort_1 = @sort_column
+    @numsort = (sort_1 == "number") 
+    @only_actual = params[:only_actual].present? ? params[:only_actual]=='true' : true
 
-    # @projects = @projects.includes(:client)
+    query_str = "projects.*, date_trunc('month', date_start) AS month" 
+    @projects = current_user.has_role?(:manager) ? Project : current_user.projects
+    @projects = @projects.select(query_str)
 
-    if !params[:executor_id].nil? && params[:executor_id]!='0'
-      @projects = @projects.where(id: User.find(params[:executor_id]).projects.ids)
-    end
+    includes = [:client, :elongations, :project_type, :pstatus]
 
-    if !params[:search].nil?
-      src = ('%'+params[:search]+'%').mb_chars.downcase
+    if params[:search].present?
+      src = "%#{params[:search]}%".mb_chars.downcase
       cl_ids = Client.where('LOWER(name) like ? or LOWER(email) like ? or LOWER(phone) like ?',src,src,src).pluck(:id)
       cl_prj = Project.where(client_id: cl_ids) 
-      search_prj =  @projects.where('LOWER(address) like ?',src).pluck(:id)
+      search_prj =  @projects.where('LOWER(address) like ?', src).pluck(:id)
       @projects = @projects.where(id: cl_prj + search_prj)
     end
 
-
-
-    if @only_actual
-      @projects = @projects.where('not pstatus_id = 3')
-    end
-
-
-
-    y = params[:year] 
-    if !y.nil? && y!='' && y.to_i>0
-      @projects = @projects.where('EXTRACT(year FROM "date_start") = ?', y)
-    end
-
-    @executors = User.where(activated: true).order(:name)
-
-    sort_1 = @sort_column #== 'date_end_plan' ? 'month' : @sort_column
-    @numsort = (sort_1 == "number") 
-
-
     if params[:sort] == 'executor_id'
       sort_1 = "users.name"
-
-      @projects = @projects.includes(:executor)
+      includes << :executor
     end
 
-    order = sort_1 + " " + sort_direction + ", "+ sort_2  + " " + dir_2 + ", projects.number desc"
-    # p "sort_2, order #{order}"
-    @projects = @projects.order(order)
+    @projects = @projects                
+                .includes(includes)
+                .only_actual(@only_actual)
+                .by_executor(params[:executor_id])
+                .by_year(params[:year])
+                .order("#{sort_1} #{sort_direction}, #{sort_2} #{dir_2}, projects.number desc")
+
     store_prj_path
     @sort = sort_1
-    # p project_stored_page_url
   end
 
   # GET /projects/1
@@ -273,7 +248,9 @@ class ProjectsController < ApplicationController
         :designer_sum, :visualer_sum, :sum_total_executor, :sum_rest,
         :debt, :interest, :payd_q, :payd_full, :first_comment, :progress,
         client_attributes: [:name, :address, :phone, :email], 
-        elongations_attributes: [:new_date, :elongation_type_id, :_destroy] )
+        contacts_attributes: [:id, :contact_kind_id, :contact_kind, :val, :who, :_destroy],
+        elongations_attributes: [:new_date, :elongation_type_id, :_destroy],
+        special_infos_attributes: [:id, :content, :_destroy])
     end
 
     def sort_column

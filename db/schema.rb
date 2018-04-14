@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180405121956) do
+ActiveRecord::Schema.define(version: 20180414084901) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -101,6 +101,24 @@ ActiveRecord::Schema.define(version: 20180405121956) do
     t.string "owner_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "contact_kinds", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "contacts", force: :cascade do |t|
+    t.integer "contact_kind_id"
+    t.string "val"
+    t.string "who"
+    t.string "contactable_type"
+    t.bigint "contactable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contactable_id", "contactable_type"], name: "index_contacts_on_contactable_id_and_contactable_type"
+    t.index ["contactable_type", "contactable_id"], name: "index_contacts_on_contactable_type_and_contactable_id"
   end
 
   create_table "dev_projects", id: :serial, force: :cascade do |t|
@@ -413,6 +431,15 @@ ActiveRecord::Schema.define(version: 20180405121956) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "special_infos", force: :cascade do |t|
+    t.text "content"
+    t.integer "special_info_id"
+    t.string "special_info_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["special_info_id", "special_info_type"], name: "index_special_infos_on_special_info_id_and_special_info_type"
   end
 
   create_table "statuses", id: :serial, force: :cascade do |t|

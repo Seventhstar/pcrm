@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   
+  get 'contacts/index'
+
+  get 'contacts/new'
+
   resources :payments
 
   get 'project_status/name'
@@ -41,6 +45,7 @@ Rails.application.routes.draw do
 
   resources :project_elongations
   resources :projects do
+    resources :contacts
     collection do
       post :add_goodstype
     end
@@ -53,6 +58,7 @@ Rails.application.routes.draw do
   resources :project_statuses
   resources :elongation_types
   resources :project_g_types
+  resources :contact_kinds
   
   resources :clients
 

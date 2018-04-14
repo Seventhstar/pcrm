@@ -1,0 +1,2 @@
+class ContactKind < ApplicationRecord
+end

@@ -119,7 +119,7 @@
   actual = if $('.only_actual').length==0 then null else $('.only_actual').hasClass('on')
 
   url = {    
-    only_actual: actual
+    only_actual: $('.only_actual').hasClass('on')
     sort: $('span.active').attr('sort')
     direction: $('span.active').attr('direction')
     sort2: $('span.subsort.current').attr('sort2')
@@ -173,7 +173,7 @@
   $('.float_mask').inputmask mask
   $('.chosen').chosen(width: '99.5%', disable_search: 'true')
   $('.schosen').chosen(width: '99.5%')
-  $('.tel').inputmask(mask: ["999-99-99","+7(999) 999-99-99","8(999) 999-99-99"])
+  # $('.tel').inputmask(mask: ["999-99-99","+7(999) 999-99-99","8(999) 999-99-99"])
   $('.tab-chosen').chosen(width: '150px').on 'change', ->
     l = $('form').attr('action');
     p = $(".ui-tabs-active a").attr('href')

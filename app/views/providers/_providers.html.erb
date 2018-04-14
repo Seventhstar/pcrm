@@ -3,9 +3,9 @@
 
 
 <% @goodstypes.each do  |gt| %>
-<% prv = gt.providers.where(:id => @ids) %>
+  <% p "ehj" %>
+<% prv = gt.providers.where(id: @ids) %>
 <% if prv.count>0 %>
-  
 
 <div class="panel panel-default">
 <div class="panel-heading table-heading head month"> <%= gt.name %></div>
