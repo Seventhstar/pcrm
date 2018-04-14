@@ -14,7 +14,7 @@ class Project < ActiveRecord::Base
   has_many :absence
   has_many :goods, class_name: "ProjectGood", dependent: :destroy
   has_many :elongations, class_name: 'ProjectElongation', dependent: :destroy
-  has_many :special_infos, as: :special_info
+  has_many :special_infos, as: :specialable
   has_many :contacts, as: :contactable
 
   validates :address, length: { minimum: 3 }

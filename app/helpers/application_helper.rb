@@ -2,7 +2,7 @@ module ApplicationHelper
   include CurrencyHelper
   
   def attr_boolean?(item,attr)
-    item.column_for_attribute(attr.to_s).class == ActiveRecord::Type::Boolean
+    item.column_for_attribute(attr.to_s).type == :boolean
   end
   
   def attr_date?(item,attr)
@@ -17,7 +17,7 @@ module ApplicationHelper
     current_user.has_role?(:manager)
   end
 
-  def file_default_action(file, add_name = nil)
+  def file_default_action(file, add_name=nil)
     if file.nil? 
       return
     end
@@ -266,7 +266,7 @@ end
 
 def option_link(page, title)
   css_class = @page_data == page ? "active" : nil
-  link_to title, '#',{class: "list-group-item #{css_class}", controller: page}
+  link_to title, '#', {class: "list-group-item #{css_class}", controller: page}
 end
 
 def option_li(page, title)
@@ -280,7 +280,7 @@ end
 def submit_cancel(back_url, modal = false)
   add_cls = modal ? ' update' : ''
   dd      = modal ? "modal" : ''
-  s = submit_tag  'Сохранить', class: 'btn btn-default sub btn_a' + add_cls
+  s = submit_tag 'Сохранить', class: 'btn btn-default sub btn_a' + add_cls
   c = link_to 'Отмена', back_url, class: "sub btn_a btn_reset", "data-dismiss" => dd
   c+s
 end
@@ -315,7 +315,7 @@ def tool_icons(element, params = nil)
     if params[:tag] == 'span'
 
       all_icons[i_edit] = content_tag :span, "", {class: "icon #{i_edit}", item_id: element.id} if !i_edit.nil?
-      all_icons['delete'] = content_tag( :span,"",{class: ['icon icon_remove',dilable_cls,' ',params[:class]].join, item_id: params[:subcount]>0 ? '' : element.id})
+      all_icons['delete'] = content_tag( :span, "",{class: ['icon icon_remove',dilable_cls,' ',params[:class]].join, item_id: params[:subcount]>0 ? '' : element.id})
     else
       all_icons[i_edit] = link_to "", edit_polymorphic_path(element), class: "icon "+i_edit + params[:class], data: datap if !i_edit.nil?
       all_icons['show'] = link_to "", polymorphic_path(element), class: "icon icon_show", data: { modal: true }

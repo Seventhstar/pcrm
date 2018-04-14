@@ -148,9 +148,11 @@ $(document).ready ->
     $(this).hide()
     $('.invisible').removeClass('invisible')
     return
-  $('#project_project_type_id,#project_executor_id,#project_style_id').chosen
+  $('#project_executor_id,#project_style_id').chosen
     width: '99.5%'
     disable_search: 'true'
+  $('#project_project_type_id').chosen({width: '99.5%', disable_search: 'true'}).on 'change', ->
+    $('.prj_not_simple').toggle('');
 
   $(document).on 'change', '#project_days', ->
     d_st = dateFromString $('#project_date_start').val()

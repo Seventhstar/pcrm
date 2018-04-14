@@ -24,7 +24,6 @@ class ProvidersController < ApplicationController
     @only_actual = !params[:only_actual] || params[:only_actual] == "true"
 
     all_ids = Provider.order(:name).ids
-    p all_ids.size
     sp,bp,gtp,ps,s_ids = all_ids,all_ids,all_ids,all_ids,all_ids
 
     if params[:search].present?
@@ -55,7 +54,6 @@ class ProvidersController < ApplicationController
     @ids = sp & bp & gtp & ps & s_ids
 
     @providers = Provider.where(id: @ids).order(:name) # find(ids, :order => :name)
-    p "@providers: #{@providers.size}"
     store_providers_path
   end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180414084901) do
+ActiveRecord::Schema.define(version: 20180414124222) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -295,6 +295,7 @@ ActiveRecord::Schema.define(version: 20180414084901) do
     t.boolean "fixed", default: false
     t.integer "project_id"
     t.integer "goodstype_id"
+    t.integer "project_g_type_id"
     t.index ["fixed"], name: "index_project_goods_on_fixed"
     t.index ["goodstype_id"], name: "index_project_goods_on_goodstype_id"
     t.index ["project_id"], name: "index_project_goods_on_project_id"
@@ -311,6 +312,7 @@ ActiveRecord::Schema.define(version: 20180414084901) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "simple", default: false
   end
 
   create_table "projects", id: :serial, force: :cascade do |t|
@@ -435,11 +437,12 @@ ActiveRecord::Schema.define(version: 20180414084901) do
 
   create_table "special_infos", force: :cascade do |t|
     t.text "content"
-    t.integer "special_info_id"
-    t.string "special_info_type"
+    t.string "specialable_type"
+    t.bigint "specialable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["special_info_id", "special_info_type"], name: "index_special_infos_on_special_info_id_and_special_info_type"
+    t.index ["specialable_id", "specialable_type"], name: "index_special_infos_on_specialable_id_and_specialable_type"
+    t.index ["specialable_type", "specialable_id"], name: "index_special_infos_on_specialable_type_and_specialable_id"
   end
 
   create_table "statuses", id: :serial, force: :cascade do |t|

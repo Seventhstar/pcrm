@@ -48,7 +48,7 @@
                 = chosen_src :executor_id, User.all, @project, {nil_value: 'Исполнитель...' }
           tr
             td
-              .inp_w
+              .inp_w.prj_not_simple
                 label Визуализатор
                 = chosen_src :visualer_id, User.all, @project, {nil_value: 'Визуализатор...' }
     .right

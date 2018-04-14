@@ -112,14 +112,17 @@
   <div id="tabs-8" class="ptab">
   <div class="box_wide">
   <div class="box_wrap box_wrap_1">
-      <% f.simple_fields_for :special_infos do |si| %>
-        <%= render 'special_infos', f: si %>
+      <div id='special_infos'>
+      <%= f.simple_fields_for :special_infos do |si| %>
+        <%= render 'special_info_fields', f: si %>
       <% end %>
       <div class="links">
-        <%= link_to_add_association 'add', f, :special_infos %>
+        <%= link_to_add_association 'Добавить', f, :special_infos, class: "btn btn-default sub btn_a" %>
+      </div>
       </div>
 
-        </div></div>
+        </div>
+      </div>
       </div>
  
 <% end %>
@@ -127,7 +130,7 @@
 <div id="tabs-9" class="ptab">
   <div class="box_wide">
     <div class="box_wrap box_wrap_1">
-      <div id='tasks'>
+      <div id='contacts'>
         <%= f.simple_fields_for :contacts do |contact| %>
           <%= render 'contact_fields', f: contact %>
         <% end %>
