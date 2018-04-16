@@ -1,0 +1,6 @@
+- if item.errors.any?
+    - item.errors.full_messages.each do |message|
+      .alert.flash_error
+        =message
+        a.close href="#" data-dismiss="alert" aria-label="close"
+          

@@ -3,39 +3,38 @@
 
 
 <% @goodstypes.each do  |gt| %>
-  <% p "ehj" %>
 <% prv = gt.providers.where(id: @ids) %>
-<% if prv.count>0 %>
+<% if prv.size>0 %>
 
 <div class="panel panel-default">
-<div class="panel-heading table-heading head month"> <%= gt.name %></div>
-<table class="tleads twfixed stripped">
-  <thead>
-    <tr>
-      <th width="230px">Название</th>
-      <th width="260px">Специализация</th>
-      <th width="150px">Телефон</th>
-      <th width="170px">Сайт</th>
-      <th width="250px">Адрес</th>
-      <th></th>
-    </tr>
-  </thead>
+  <div class="panel-heading table-heading head month"> <%= gt.name %></div>
+  <table class="tleads twfixed stripped">
+    <thead>
+      <tr>
+        <th width="230px">Название</th>
+        <th width="260px">Специализация</th>
+        <th width="150px">Телефон</th>
+        <th width="170px">Сайт</th>
+        <th width="250px">Адрес</th>
+        <th></th>
+      </tr>
+    </thead>
 
-  <tbody>
-    
+    <tbody>
+      
       <% prv.each do |provider| %>
-        <tr class=<%= class_for_provider(provider) %> >
-          <td class="cell-inner"><%= icon_for_provider(provider).html_safe %><%= provider.name %></td>
-          <td><%= provider.goods_type_names.html_safe %></td>
-          <td><%= provider.phone %></td>
-          <td><%= site_link(provider.url) %></td>
-          <td><%= provider.address %></td>
-          <%= tool_icons(provider,{icons:'edit,show'}) %>
-        </tr>
+      <tr class=<%= class_for_provider(provider) %> >
+        <td class="cell-inner"><%= icon_for_provider(provider).html_safe %><%= provider.name %></td>
+        <td><%= provider.goods_type_names.html_safe %></td>
+        <td><%= provider.phone %></td>
+        <td><%= site_link(provider.url) %></td>
+        <td><%= provider.address %></td>
+        <%= tool_icons(provider,{icons:'edit,show'}) %>
+      </tr>
       <% end %>
-    
-  </tbody>
-</table>
+      
+    </tbody>
+  </table>
 </div>
 <% end %>
 <% end %>

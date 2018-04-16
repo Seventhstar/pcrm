@@ -1,7 +1,6 @@
-
 <div class="tbl_a">
 <div class="head"> Менеджеры:</div>
-<table class="tleads" id="pmanagers"  model="ProviderManager" action="provider_managers">
+<table class="tleads" id="provider_managers"  model="ProviderManager" action="provider_managers">
   <thead>
     <tr>
       <th width="380px" class="center" fld='name'>ФИО</th>
@@ -13,15 +12,13 @@
     <%= hidden_field 'manager','provider_id', value: @provider.id %>
   <tbody>
     <% @managers.each do |manager| %>
-      <tr>
+      <tr id="ProviderManager_<%=manager.id%>">
         <td><%= manager.name %></td>
         <td><%= manager.phone %></td>
         <td><%= manager.email %></td>
         <%= tool_icons manager,{tag:'span'} %>
       </tr>
     <% end %>
-
-
      <tr id="new_item">
       <td class="caption3"><span>Новый менеджер: </span>
         <div class="left" style="width:258px;" ><%= text_field "manager",:name, {:class => 'txt fullwidth'} %></div> </td>

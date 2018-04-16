@@ -1,0 +1,9 @@
+<% if @pm.errors.present? %>
+  $(".js-notes").html("<%= j render 'shared/errors', item: @pm %>");
+  $nt = $(".alert"); 
+  setTimeout("$nt.addClass('in')",800);
+  setTimeout("$nt.removeClass('in').addClass('out')",7000);
+<% else %>
+  $('#provider_managers tr:last').before("<%= j render @pm %>");
+  $('#new_item input').val('');
+<% end %>

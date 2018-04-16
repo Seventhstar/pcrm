@@ -85,7 +85,6 @@ $(document).on 'click', '#btn-sub-send', (e) ->
   values = $('[name^='+prm+']').serialize()+'&owner_id='+$('form').attr('id')
   url = document.URL
   if url.indexOf('edit')<1 then url = url + '/edit'
-  #alert url
   $.ajax
     type: 'POST'
     url: attr_url
@@ -94,16 +93,6 @@ $(document).on 'click', '#btn-sub-send', (e) ->
     beforeSend: (xhr) ->
       xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
       return
-    success: (e, data, status, xhr) ->
-      # $('#'+e.add_to).append Mustache.to_html($('#'+e.template_name).html(), e)
-      show_ajax_message 'Успешно добавлено.'
-      return
-    error: (evt, xhr, status, error) ->      
-      errors = $.parseJSON(evt.responseText)
-      $(".js-notes").html('')
-      $.each errors, (index, value) ->
-        add_ajax_message(value,'error')
-      showNotifications();
   return
 
 # запись нового элемента простого справочника
