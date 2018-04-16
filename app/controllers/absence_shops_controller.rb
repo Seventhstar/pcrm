@@ -13,7 +13,6 @@ class AbsenceShopsController < ApplicationController
   end
 
   private
-
     def set_shop
       @shop = AbsenceShop.find(params[:id])
     end

@@ -1,16 +1,6 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
-
-# @showNotifications = ->
-  
-#   if $('.alert').hasClass('flash_success')
-#     setTimeout (->
-#      setTimeout '$(".alert").addClass("out")', 3000
-#      return
-#   ), 5000
-#   return
-
 @onBlur = (el)->
     if (el.value == '') 
         el.value = el.defaultValue;
