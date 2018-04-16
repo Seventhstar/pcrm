@@ -79,6 +79,8 @@ module ApplicationHelper
       ph = "#{phone[0]=='7' ? '+':''}#{phone[0]}(#{phone[1..3]}) #{phone[4..6]}-#{phone[7..8]}-#{phone[9..10]}"
     elsif phone.length == 7
       ph = "#{phone[4..6]}-#{phone[7..8]}-#{phone[9..10]}"
+    else
+      ph = phone
     end
     ph
   end
@@ -330,8 +332,13 @@ def tool_icons(element, params = nil)
       end
     end
 
-    def tooltip( s_info, info )
-      content_tag(:span, s_info, {'data-toggle' => "tooltip", 'data-placement' => "top", title: info})
+    def tooltip( s_info, info, safe = false )
+      tt = safe ? info.html_safe : info
+      if tt.present?
+        content_tag(:span, s_info, {'data-toggle' => "tooltip", 'data-placement' => "top", title: tt}) 
+      else
+        content_tag(:span, s_info)
+      end
     end
 
     def tooltip_if_big( info, length = 50 )
@@ -364,7 +371,7 @@ def tool_icons(element, params = nil)
   end
 
   def tooltip_str_from_hash(h)
-    a = h.collect{ |k,v| [k,v].join(' ')}.join("\n")
+    a = h.collect{ |k,v| [k,v].join(' ') if v.present?}.join("\n")
   end
 
   def avatar_for( user )

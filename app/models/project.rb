@@ -38,6 +38,14 @@ class Project < ActiveRecord::Base
     self.client = Client.find_by_name(name) if name.present?
   end
 
+  def client_phone
+    client.try(:phone)
+  end  
+
+  def client_email
+    client.try(:email)
+  end  
+
   def project_type_name
     n = project_type.try(:name)
     n = 'Вид не указан' if n.nil?

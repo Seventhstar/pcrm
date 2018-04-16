@@ -11,8 +11,6 @@
   </thead>
 
   <tbody>
-    <% @clients.each do |client| %>
-      <%= render client %>
-    <% end %>
+    <%= render partial: @clients, as: :client %>
   </tbody>
 </table>

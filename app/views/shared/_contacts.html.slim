@@ -1,0 +1,16 @@
+#contacts
+- if is_manager?
+  = f.simple_fields_for :contacts do |contact|
+    = render 'contact_fields', f: contact
+  .links
+    = link_to_add_association 'Добавить', f, :contacts, class: "btn btn-default sub btn_a"
+- else          
+    table.fullwidth.tbl_fc.fw_form
+      - @project.contacts.each do |contact|
+        tr
+          td.caption
+            = contact.contact_kind_name
+          td
+            .lbl =contact.val
+          td
+            .lbl =contact.who

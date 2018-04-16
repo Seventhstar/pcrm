@@ -1,0 +1,24 @@
+#tabs-9.ptab
+  .box_wide
+    .box_wrap.box_wrap_1
+      .panel-left
+        .gr_caption.prj_not_simple.hl_tr colspan="5" Контакты клиента
+        table.fullwidth.tbl_fc.fw_form
+          tr
+            td.caption ФИО
+            td
+              .lbl =@project.client_name
+          tr
+            td.caption Телефон
+            td
+              .lbl =@project.client.phone
+          tr
+            td.caption E-Mail
+            td
+              .lbl =@project.client.email
+
+        br/
+      .panel-right
+        .gr_caption.prj_not_simple.hl_tr colspan="5"  Дополнительные контакты проекта
+        = render 'shared/contacts', f: f
+

@@ -1,5 +1,5 @@
 <div class="hl hl_a bd">Редактирование проекта <%= @project.address %>
-<%= link_to "", @project, method: :delete, data: { confirm: 'Действительно удалить проект?' }, :class=>"icon icon_remove right" %>
+<%= link_to "", @project, method: :delete, data: { confirm: 'Действительно удалить проект?' }, class: "icon icon_remove right" %>
 </div>
 
 <%= hidden_field_tag 'holidays', @holidays %> 
@@ -13,15 +13,11 @@
     <li><a href="#tabs-4">Заказы</a></li>
     <li><a href="#tabs-5">Выплаты</a></li>
     <li><a href="#tabs-6">Файлы</a></li>  
-
-
     <% if is_admin? %>  
       <li><a href="#tabs-7">История</a></li>
       <li><a href="#tabs-8">Особенности</a></li>  
     <% end %>
-
     <li><a href="#tabs-9">Контакты</a></li>
-
   </ul>
   <div class="right" style="width: 100%"></div>
 <div class="box_wrap">
@@ -127,23 +123,7 @@
  
 <% end %>
 
-<div id="tabs-9" class="ptab">
-  <div class="box_wide">
-    <div class="box_wrap box_wrap_1">
-      <div class="gr_caption prj_not_simple hl_tr" colspan="5">Контакты клиента</div>
-      <div class="gr_caption prj_not_simple hl_tr" colspan="5">Дополнительные контакты проекта</div>
-      <div id='contacts'>
-        <%= f.simple_fields_for :contacts do |contact| %>
-          <%= render 'contact_fields', f: contact %>
-        <% end %>
-        <div class='links'>
-          <%= link_to_add_association 'Добавить', f, :contacts, class: "btn btn-default sub btn_a" %>
-        </div>
-      </div>
-      </div>
-    </div>
-
-</div>
+<%= render 'page_9_clients', f: f %>
 
 <%= submit_cancel project_page_url %>
 <% end %>
