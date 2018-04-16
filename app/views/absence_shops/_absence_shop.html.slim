@@ -1,0 +1,8 @@
+- shop ||= @shop
+tr id="Shop_#{shop.id}"
+  td.caption3
+    = shop.shop_name 
+  td.caption3
+    = shop.target_name
+  = tool_icons(shop, {icons: 'delete', tag: 'span', content_class: 'right'})
+

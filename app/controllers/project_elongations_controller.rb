@@ -2,26 +2,16 @@ class ProjectElongationsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy]  
   before_action :logged_in_user
 
-  # respond_to :js
+  respond_to :js
   # respond_to :js,:json
   def create
     if current_user.has_role?(:manager)
-      @pe = ProjectElongation.new(pe_params)
-      if @pe.save 
-      else
-        respond_to do |format|
-          format.json { render json: @pe.errors.full_messages, status: :unprocessable_entity }
-        end
-      end
+      respond_with (@pe = ProjectElongation.create(pe_params))      
     end
   end
 
   def destroy
-    @pe.destroy
-    # respond_to do |format|
-    #   format.html { redirect_to '/providers/', notice: 'Менеджер успешно удален.' }
-    #   format.json { head :no_content }
-    # end
+    respond_with @pe.destroy!
   end
 
   private

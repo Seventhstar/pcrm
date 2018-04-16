@@ -221,7 +221,7 @@ $(document).ready ->
   $('#search').on 'keyup', (e)-> 
     c= String.fromCharCode(event.keyCode);
     isWordCharacter = c.match(/\w/);
-    isBackspaceOrDelete = (event.keyCode == 8 || event.keyCode == 46);
+    isBackspaceOrDelete = (event.keyCode == 8 || event.keyCode == 46 || event.keyCode == 13);
     if (isWordCharacter || isBackspaceOrDelete)
        delay('sortable_query({})',700)
     return

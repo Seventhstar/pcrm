@@ -28,9 +28,9 @@ class ProjectsController < ApplicationController
 
     if params[:search].present?
       src = "%#{params[:search]}%".mb_chars.downcase
-      cl_ids = Client.where('LOWER(name) like ? or LOWER(email) like ? or LOWER(phone) like ?',src,src,src).pluck(:id)
+      cl_ids = Client.where('LOWER(name) like ? or LOWER(email) like ? or LOWER(phone) like ?',src, src, src).pluck(:id)
       cl_prj = Project.where(client_id: cl_ids) 
-      search_prj =  @projects.where('LOWER(address) like ?', src).pluck(:id)
+      search_prj =  @projects.where('LOWER(address) like ? or number = ?',src, params[:search].try('to_i')).pluck(:id)
       @projects = @projects.where(id: cl_prj + search_prj)
     end
 

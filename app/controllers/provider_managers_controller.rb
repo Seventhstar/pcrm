@@ -6,23 +6,10 @@ class ProviderManagersController < ApplicationController
 
   def create
     respond_with (@pm = ProviderManager.create(pm_params))
-  #    respond_to do |format|
-  #       if @pm.save
-  #         format.html { redirect_to absences_url, notice: 'Менеджер успешно создан.' }
-  #         format.json { render json: @pm.errors, status: :ok, location: @pm }
-  #       else
-  #         format.html { render :nothing => true }
-  #         format.json { render json: @pm.errors, status: :unprocessable_entity }
-  #       end
-  #     end 
   end
 
   def destroy
     respond_with @pm.destroy!
-    # respond_to do |format|
-    #   format.html { redirect_to '/providers/', notice: 'Менеджер успешно удален.' }
-    #   format.json { head :no_content }
-    # end
   end
 
   private

@@ -1,16 +1,9 @@
 <div class="panel panel-default">
 <div class="panel-heading table-heading">Список магазинов: </div>
-<table class="tleads" id="ashops" model="AbsenceShops" action="absence_shops">
+<table class="tleads" id="absence_shops" model="AbsenceShops" action="absence_shops">
   <tbody>
 
-    <% @shops.each do |shop| %>
-      <tr>
-        <td class="caption3"><%= shop.shop_name %></td>
-        <td class="caption3"><%= shop.target_name %></td>
-        <%= tool_icons(shop,{icons: 'delete',tag: 'span', content_class: 'right'}) %>
-      </tr>
-    <% end %>
-
+    <%= render partial: @shops, as: :shop %>
  
     <tr id="new_item"><%= hidden_field 'absence_shop','absence_id', value: @absence.id %>
       <td class="caption3 w_60"><div class="inp_l inp_w" >

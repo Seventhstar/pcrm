@@ -7,7 +7,7 @@ tr
       span#add_footage.sub.btn_a Добавить
       
   - add_cls = @project.plan_sum_by_hand? ? 'red' : ''
-  = td_sum_field(f, :sum_total, 'Общая стоимость', {simple: true, inp_class: "sum_total #{add_cls}"} )
+  = td_sum_field(f, "sum_total#{real ? '_real' :''}", 'Общая стоимость', {simple: true, inp_class: "sum_total #{add_cls}"} )
 
 tr class=(footage_2_nil ? 'invisible' : '')
 	= render 'footage', f: f, order: true, real: real

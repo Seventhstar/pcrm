@@ -1,7 +1,7 @@
 <table class="tleads twfixed" id="table_<%= pgt.id %>"  model="ProjectGood" action="project_goods" color_cls="ordered">
   <% opened = local_assigns.has_key?(:opened) ? opened : false %>   
   <% get_goods(@project.id,pgt) %>
-  <thead class="<%= @goods.count>0 || opened ? '' : 'hidden' %>">
+  <thead class="<%= @goods.size>0 || opened ? '' : 'hidden' %>">
     <%= render partial: 'project_goods/head_row' %>
   </thead>
   <tbody>

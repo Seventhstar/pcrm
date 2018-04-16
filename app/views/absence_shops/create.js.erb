@@ -1,0 +1,6 @@
+<% if @shop.errors.present? %>
+  <%= render 'errors', item: @shop %>
+<% else %>
+  $('#absence_shops tr:last').before("<%= j render @shop %>");
+  $('#new_item .schosen, #new_item .chosen').val(0).trigger('chosen:updated');
+<% end %>

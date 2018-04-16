@@ -5,6 +5,11 @@ ru:
     models:
       lead: "Лид"
     attributes:
+      absence_shop:
+        shop: Магазин
+        target: Причина
+      provider_manager:
+        name: ФИО
       lead:
         source: "Источник"
         channel: "Канал"
@@ -14,7 +19,7 @@ ru:
       user:
         email: 'e-mail'
       project_elongation:
-        new_date: "Новая дата"
+        new_date: Новая дата
         elongation_type: Причина продления
       project_good:
         name: Наименование

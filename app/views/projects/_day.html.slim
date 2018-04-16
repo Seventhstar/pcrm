@@ -6,11 +6,11 @@ td
   .inp_w
     label Окончание
     = text_field_tag "project[date_end_plan]", @project.date_end.try('strftime',"%d.%m.%Y"), \
-      {class: "txt datepicker" , disabled: @project.elongations.count>0}                     
+      {class: "txt datepicker" , disabled: @project.elongations.size>0}                     
 td
   .inp_w
     label Рабоч. дней без уч. праздников
-    = number_field_tag "project[days]", @project.days_duration, {class: 'form-control', disabled: @project.elongations.count>0 }
+    = number_field_tag "project[days]", @project.days_duration, {class: 'form-control', disabled: @project.elongations.size>0 }
 td
 td
   .inp_w
