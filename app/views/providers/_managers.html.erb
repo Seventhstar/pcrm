@@ -11,19 +11,14 @@
   </thead>
     <%= hidden_field 'manager','provider_id', value: @provider.id %>
   <tbody>
-    <% @managers.each do |manager| %>
-      <tr id="ProviderManager_<%=manager.id%>">
-        <td><%= manager.name %></td>
-        <td><%= manager.phone %></td>
-        <td><%= manager.email %></td>
-        <%= tool_icons manager,{tag:'span'} %>
-      </tr>
-    <% end %>
+
+    <%= render partial: @managers, as: :pm %>
+
      <tr id="new_item">
       <td class="caption3"><span>Новый менеджер: </span>
         <div class="left" style="width:258px;" ><%= text_field "manager",:name, {:class => 'txt fullwidth'} %></div> </td>
-      <td><%= text_field "manager",:phone, {:class => 'txt fullwidth'} %></td>
-      <td><%= text_field "manager",:email, {:class => 'txt fullwidth'} %></td>
+      <td><%= text_field "manager", :phone, {:class => 'txt fullwidth'} %></td>
+      <td><%= text_field "manager", :email, {:class => 'txt fullwidth'} %></td>
       <td><span class="sub btn_a" id="btn-sub-send" providerid="<%= @provider.id %>" action='/provider_managers/' prm='manager'> Добавить</span></td></tr>
 
   </tbody>

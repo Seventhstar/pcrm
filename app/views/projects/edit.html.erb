@@ -130,6 +130,8 @@
 <div id="tabs-9" class="ptab">
   <div class="box_wide">
     <div class="box_wrap box_wrap_1">
+      <div class="gr_caption prj_not_simple hl_tr" colspan="5">Контакты клиента</div>
+      <div class="gr_caption prj_not_simple hl_tr" colspan="5">Дополнительные контакты проекта</div>
       <div id='contacts'>
         <%= f.simple_fields_for :contacts do |contact| %>
           <%= render 'contact_fields', f: contact %>
@@ -138,7 +140,6 @@
           <%= link_to_add_association 'Добавить', f, :contacts, class: "btn btn-default sub btn_a" %>
         </div>
       </div>
-
       </div>
     </div>
 

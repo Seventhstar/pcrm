@@ -1,5 +1,7 @@
 tr
-  td.gr_caption colspan="5" #{title}
+  td.gr_caption.hl_tr colspan="5" #{title}
+tr
+  td
 tr
   = render 'footage', f: f, order: false, real: real
   td.va_top
@@ -10,5 +12,5 @@ tr
   = td_sum_field(f, "sum_total#{real ? '_real' :''}", 'Общая стоимость', {simple: true, inp_class: "sum_total #{add_cls}"} )
 
 tr class=(footage_2_nil ? 'invisible' : '')
-	= render 'footage', f: f, order: true, real: real
-	td
+  = render 'footage', f: f, order: true, real: real
+  td

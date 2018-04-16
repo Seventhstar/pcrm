@@ -9,6 +9,8 @@ ru:
   Channel: Канал
   Status: Статус
   status_id: Статус
+  client_id: Клиент
+  style_id: Стиль
   p_status_id: Статус
   dev_status_id: Статус
   channel_id: Канал
