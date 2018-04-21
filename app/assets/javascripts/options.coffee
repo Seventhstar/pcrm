@@ -22,7 +22,6 @@
     checked = true
   return checked
 
-
 $(document).ready ->
  $(document).on 'click', '.sw_enable', ->
   grp_id = $(this).attr('grp_id')
@@ -79,7 +78,7 @@ $(document).ready ->
        success: ->
         setLoc url
 
-$(document).on 'click', '#btn-sub-send', (e) ->
+ $(document).on 'click', '#btn-sub-send', (e) ->
   attr_url = $(this).attr('action')
   prm = $(this).attr('prm')
   values = $('[name^='+prm+']').serialize()+'&owner_id='+$('form').attr('id')
@@ -94,6 +93,8 @@ $(document).on 'click', '#btn-sub-send', (e) ->
       xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
       return
   return
+
+
 
 # запись нового элемента простого справочника
 $(document).on 'click', '#get-holidays', (e) ->
@@ -159,3 +160,4 @@ $(document).on 'click', ' span.icon_remove', ->
         show_ajax_message('Успешно удалено')
         return
     return
+

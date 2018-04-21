@@ -33,9 +33,9 @@
 
 
 function to_sum(d){ 
-    if (isNaN(d)) return 0;
-    s = d.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1 ");  
-    return s;
+  if (isNaN(d)) return 0;
+  s = d.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1 ");  
+  return s;
 }
 
 function intFromSum(sum){
@@ -83,14 +83,14 @@ var message_template = function(msg, type) {
 
 var add_ajax_message = function(msg, type) {
   if (!type) {type = "success"};
-    $(".js-notes").append( message_template(msg,type));    
-    showNotifications();
+  $(".js-notes").append( message_template(msg,type));    
+  showNotifications();
 };
 
 var show_ajax_message = function(msg, type) {
-    if (!type) {type = "success"};
-    $(".js-notes").html( message_template(msg,type));    
-    showNotifications();
+  if (!type) {type = "success"};
+  $(".js-notes").html( message_template(msg,type));    
+  showNotifications();
 };
 
 function getInputSelection(elem){
@@ -98,29 +98,24 @@ function getInputSelection(elem){
   s=elem[0].selectionStart;
   e=elem[0].selectionEnd;
   return elem.val().substring(s, e);
- }else{
+}else{
   return '';
- }
+}
 }
 
 $(function() {
 
-  var menu = [{
-        name: 'телефон',
-        fun: function () {
-            $('#lead_phone').val(getInputSelection($('#lead_info')));
-        }
-    }, {
-        name: 'email',
-        fun: function () {
-            $('#lead_email').val(getInputSelection($('#lead_info')));
-        }
-    
-    }];
- 
-//Calling context menu
- $('#lead_info').contextMenu(menu,{triggerOn:'contextmenu'});
+  var menu = [
+    {name: 'телефон', fun: function (){$('#lead_phone').val(getInputSelection($('#lead_info')));}}, 
+    {name: 'email', fun: function () {$('#lead_email').val(getInputSelection($('#lead_info')));}}
+  ];
 
+  $( document ).ajaxError(function( event, jqxhr, settings, thrownError ) {
+    show_ajax_message(jqxhr.responseText,'error')
+  });
+
+  //Calling context menu
+  $('#lead_info').contextMenu(menu,{triggerOn:'contextmenu'});
 
   startTime();
   NProgress.configure({ showSpinner: false, ease: 'ease', speed: 300 });
@@ -139,17 +134,17 @@ $(function() {
   $('#file').hide();
   $('#tabs').tabs({
     activate: function (event, ui) {
-        p = $(".ui-tabs-active a").attr('href');
-        window.location.hash = p;
-        if ($(p).html() == undefined || ($('.good_group').size()==0 &&  p=='#tabs-4' )) {
-          l = $('form').attr('action');
-          url = l+"/edit"+p
-          $.get(url, null, null, 'script');
-         }
+      p = $(".ui-tabs-active a").attr('href');
+      window.location.hash = p;
+      if ($(p).html() == undefined || ($('.good_group').size()==0 &&  p=='#tabs-4' )) {
+        l = $('form').attr('action');
+        url = l+"/edit"+p
+        $.get(url, null, null, 'script');
+      }
     }
-}
+  }
 
-);
+  );
 
   tinyMCE.init({
     selector: '.tinymce textarea', 
@@ -174,44 +169,40 @@ $(function() {
     var details = switcher.parent().find('.details');
 
     $(scale).click(function(event){
-        switcher.toggleClass('toggled');
-        link.toggleClass('on');
-        link[0].innerHTML = link.attr(link.hasClass('on') ? 'on' : 'off');
-        
-        handle.toggleClass('active');
+      switcher.toggleClass('toggled');
+      link.toggleClass('on');
+      link[0].innerHTML = link.attr(link.hasClass('on') ? 'on' : 'off');
 
-        if (switcher.hasClass('toggled')){
-            details.slideDown(300);
-        } else {
-            details.slideUp(300);
+      handle.toggleClass('active');
+
+      if (switcher.hasClass('toggled')){
+        details.slideDown(300);
+      } else {
+        details.slideUp(300);
+      }
+
+      if (link.hasClass('link_a'))
+        sortable_query({only_actual:link.hasClass('on')});
+      else{
+        if (link.hasClass('on')){
+          $('tr.new_client').hide();
+          $('tr.ex_client').show();
+        }else{
+          $('tr.new_client').show();
+          $('tr.ex_client').hide();
+          $('#project_client_id').val(0);
+          $('#project_client_id').trigger("chosen:updated")
         }
-        
-        if (link.hasClass('link_a'))
-          sortable_query({only_actual:link.hasClass('on')});
-        else{
-          if (link.hasClass('on')){
-            $('tr.new_client').hide();
-            $('tr.ex_client').show();
-          }else{
-            $('tr.new_client').show();
-            $('tr.ex_client').hide();
-            $('#project_client_id').val(0);
-            $('#project_client_id').trigger("chosen:updated")
-          }
-        }
-        return false;
+      }
+      return false;
     });
   });
 
   $('.nav #develops').addClass('li-right develops');
   $('.nav #options').addClass('li-right options');
-
   $('[data-toggle="tooltip"]').tooltip({'placement': 'top', fade: false});
 
   showNotifications();
-
-
-
 });
 
 

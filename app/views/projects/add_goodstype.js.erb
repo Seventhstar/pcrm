@@ -1,7 +1,10 @@
+<%= @prj_good.errors.any? %>
+<% else %> 
 <% if @pgt.present? && @pgt.to_i>0 %>
-  $("#pgoods .panel:first").before("<%= j render("pgoods", {opened: true}) %>");
+  $("#pgoods .panel:first").before("<%= j render("project_goods_types", {opened: true}) %>");
   $('#g_type_g_type_id').val(0);
   $("#g_type_g_type_id option[value='<%= @pgt %>']").remove(); 
   $('#g_type_g_type_id').trigger('chosen:updated');
   $('#project_good_<%= @pgt %>_name').focus();
+<% end %>
 <% end %>
