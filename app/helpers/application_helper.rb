@@ -17,39 +17,6 @@ module ApplicationHelper
     current_user.has_role?(:manager)
   end
 
-  def file_default_action(file, add_name=nil)
-    if file.nil? 
-      return
-    end
-    filename = add_name.nil? ? file.name : [file.name,add_name].join(' ')
-    extension = file.name.split('.').last
-
-    case extension
-    when 'jpg', 'png', 'gif'
-      content_tag :div, class: 'fname' do
-        a = link_to filename, file.show_path, class: "icon_img", data: { modal: true }
-      end
-
-    when 'mp3', 'ogg'
-      a = content_tag :span do
-        filename[0..-5]
-      end
-      
-      b = content_tag 'audio', 'controls':'' do
-        content_tag 'source', src: file.download_path, type: "audio/mp3" do
-        end
-      end
-
-      content_tag :div, class: 'fname audio' do
-        a + b
-      end
-
-    else  
-      a = link_to filename, file.download_path, class: "icon_doc" , target: "_blank" #{}"_tab"
-    end
-    
-  end
-
   def contact_kind_src
     [["Телефон",1],["E-mail",2]]
   end

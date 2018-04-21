@@ -1,6 +1,7 @@
   class AjaxController < ApplicationController
   before_action :logged_in_user
 
+  respond_to :js, :json 
   def update_holidays
     # if params[:year]
     y = Date.today.year.to_s
@@ -142,6 +143,18 @@
       end
     end
     head :ok
+  end
+
+  def switch_locked
+    if current_user.has_role?(:manager)
+    puts "current_user #{current_user.name} #{current_user.has_role?(:manager)}" 
+      file = Attachment.find(params[:file])
+      file.update_attribute(:secret,!file.secret)
+      head :ok
+    else
+      head :error
+    end
+    # render nothing: true
   end
 
   def upd_param

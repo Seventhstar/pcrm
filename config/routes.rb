@@ -126,6 +126,7 @@ Rails.application.routes.draw do
   post "ajax/dev_check" 
   post "ajax/status_check" 
   post "ajax/switch_check" 
+  post "ajax/switch_locked"
   post "ajax/upd_param"
   post "ajax/update_holidays"
   post "ajax/store_cut"
@@ -134,8 +135,8 @@ Rails.application.routes.draw do
   #post "files/del_file"
   #post '/files' => 'file#create_file'
   #get '/files/:file' => 'file#show'
-  get  '/download/:type/:id/:basename.:extension'  => 'files#download'
-  get  '/download/:type/:id/:basename'  => 'files#download'
+ # get  '/download/:type/:id/:basename.:extension'  => 'files#download'
+  get  '/download/:id'  => 'files#download'
 
   post "channels/new"
 

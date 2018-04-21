@@ -1,14 +1,15 @@
-<div class="hl hl_a bd">История изменений <span class="grey"></span></div>
+<% if is_manager? %>
+  <div class="hl hl_a bd">История изменений <span class="grey"></span></div>
 
-<div class="items_box_head panel-left short_search">
-  <label class="left"> <%= select "obj", "type", options_for_select(@types, @item_type), class: 'chosen' %> </label>
-  <label class="left"> <%= chosen_src 'obj[user_id]', User.order(:name), @user_id, {nil_value: 'Пользователи...'} %> </label>
+  <div class="items_box_head panel-left short_search">
+    <label class="left"> <%= select "obj", "type", options_for_select(@types, @item_type), class: 'chosen' %> </label>
+    <label class="left"> <%= chosen_src 'obj[user_id]', User.order(:name), @user_id, {nil_value: 'Пользователи...'} %> </label>
 
-</div>
-
-  <div id="pagination">
-  <%= render 'shared/pagination' %>
   </div>
 
+    <div id="pagination">
+    <%= render 'shared/pagination' %>
+    </div>
 
-<%= render 'history_content' %>
+  <%= render 'history_content' %>
+<% end %>

@@ -36,6 +36,9 @@ a:hover .icon_user, .active .icon_user {background-position:-18px -18px; }
 .icon_chat {background-position:-144px 0; margin: 0 10px 0 0 !important; }
 .icon_birthday {background-position:-163px 0; width: 15px; height: 20px;}
 .icon_file {background-position:-180px 0; width: 12px; height: 16px;}
+.icon_lock{background-position:-230px -16px; width: 12px; height: 16px;}
+.icon_lock.locked{background-position:-230px 0; width: 12px; height: 16px;}
+
 
 .tbl_a table td.tools, .edit_delete{width: 41px; padding-right: 10px; margin:0 0 0 0; font-size: 0; white-space:nowrap;}
 .tbl_a table td.tools .icon, table .icon {margin:0 10px 0 0;}

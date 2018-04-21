@@ -3,7 +3,7 @@
   <% @all_total = [0,0,0,0] %>
   <% @prj_good_types.each do |pgt| %>
     
-    <div class="panel panel-default" id="div_coll_<%= pgt.id %>">
+    <div class="panel panel-default good_group" id="div_coll_<%= pgt.id %>">
       <div class="panel-heading table-heading head month"><%= pgt.name %> 
         <span class="sub btn_add right" itm="<%= pgt.id %>">Добавить позицию</span></div>
          <%= render partial: 'goods', locals: {pgt: pgt, first_col: first_col, opened: opened} %>

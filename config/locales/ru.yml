@@ -28,6 +28,8 @@ ru:
   payment_purpose_id: Вид выплаты
   payment_type_id: Вид платежа
   designer_price: Цена для дизайнера
+  designer_price_2: Цена для дизайнера 2
+  visualer_price: Цена визуализатора
   designer_sum: Сумма для дизайнера
   visualer_sum: Сумма для визуализатора
   sum_total_executor: Общая стоимость исполнителей
@@ -99,6 +101,7 @@ ru:
   Provider: Поставщик
   ProjectGood: Позиция в проекте
   ProjectStatus: Статус
+  Pstatus: Статус
   LeadSource: Источник
   Source: Источник
   Reason: Причина

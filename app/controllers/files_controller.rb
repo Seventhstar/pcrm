@@ -11,7 +11,7 @@ class FilesController < ApplicationController
       File.delete(filename) if File.exist?(filename)
       @file.destroy
     end
-    render :nothing => true
+    render nothing: true
   end
 
   def create
@@ -24,7 +24,7 @@ class FilesController < ApplicationController
       dir = Rails.root.join('public', 'uploads',folder,subfolder)
 
       FileUtils.mkdir_p(dir) unless File.exists?(dir)
-      p "name #{name}"
+      # p "name #{name}"
       id = append_file(name)
       open(dir+(id.to_s+File.extname(name)), 'wb') do |file|
        file.write(uploaded_io.read)
@@ -45,18 +45,14 @@ class FilesController < ApplicationController
   end
 
   def show
-    @file = Attachment.find(params[:id])
-    # p "file: " + @file.to_json
-    # owner.class.name,owner.id,self.id.to_s+File.extname(self.name)
-    @img = ['/download/',@file.owner_type,@file.owner.id,@file.id.to_s+File.extname(@file.name)].join('/')
+    @img = "/download/#{params[:id]}"
     respond_modal_with @img, location: root_path
   end
 
   def download
-    name = params[:extension].nil? ? params[:basename] : params[:basename]+"."+params[:extension]
-    dir = Rails.root.join('public', 'uploads',params[:type],params[:id],name)
-    f = Attachment.find(params[:basename])
-    send_file dir, disposition: 'attachment', filename: f.name
+    file = Attachment.find(params[:id])
+    dir = Rails.root.join('public', 'uploads', file.owner_type, file.owner.id.to_s, file.id.to_s+File.extname(file.name))
+    send_file(dir, filename: file.name, disposition: 'attachment')
   end
 
 end

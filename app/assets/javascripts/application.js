@@ -137,7 +137,19 @@ $(function() {
 
   $('.progress').hide();
   $('#file').hide();
-  $('#tabs').tabs();
+  $('#tabs').tabs({
+    activate: function (event, ui) {
+        p = $(".ui-tabs-active a").attr('href');
+        window.location.hash = p;
+        if ($(p).html() == undefined || ($('.good_group').size()==0 &&  p=='#tabs-4' )) {
+          l = $('form').attr('action');
+          url = l+"/edit"+p
+          $.get(url, null, null, 'script');
+         }
+    }
+}
+
+);
 
   tinyMCE.init({
     selector: '.tinymce textarea', 

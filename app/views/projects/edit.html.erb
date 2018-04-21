@@ -32,6 +32,7 @@
 <%= render 'page_3_dates', f: f %>
 <%= render 'page_4_goods', f: f %>
 
+
 <div id="tabs-5" class="ptab">
   <div class="box_wrap box_wrap_1">
     <div class="panel panel-default">
@@ -82,9 +83,7 @@
   <div class="panel-left lead_files">  
     <div class="sep_15"></div>
       <% if !@owner.nil? %> 
-      <% if is_manager? %>  
         <%= render "shared/attach_list" %>
-      <% end -%>
       <% end -%>
   </div>
 </div>

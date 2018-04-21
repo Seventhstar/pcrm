@@ -15,7 +15,6 @@ $(document).ready ->
     done: (e, data) ->
       owner_id = $('#attach_list').attr('owner_id')
       owner_type = $('#attach_list').attr('owner_type')
-      #setTimeout 'update_owner("'+owner_type+'",'+owner_id+')',200
       $('.progress').hide()
       return
     progressall: (e, data) ->
@@ -24,3 +23,16 @@ $(document).ready ->
       $('.progress-bar').css width: progress + '%'
       $('.progress-bar span').text progress + '%'
       return
+  $('.icon_lock').on 'click', ->
+    $(this).toggleClass('locked')
+    li = $(this).closest('li')
+    file_id = $(this).attr('file-id')
+    $.ajax
+      url: '/ajax/switch_locked'
+      data: {file: file_id}   
+      type: 'POST'
+      beforeSend: (xhr) ->
+        xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
+        return
+      success: ->
+        li.toggleClass('locked')

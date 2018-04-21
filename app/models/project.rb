@@ -24,7 +24,7 @@ class Project < ActiveRecord::Base
   accepts_nested_attributes_for :contacts
   accepts_nested_attributes_for :special_infos
 
-  scope :by_executor, ->(executor) {where(executor_id: executor) if executor.present? && executor&.to_i>0}
+  scope :by_executor, ->(executor){where(executor_id: executor) if executor.present? && executor&.to_i>0}
   scope :only_actual, ->(actual){where.not(pstatus_id: 3) if actual}
   scope :by_year,     ->(year){where(date_start: Date.new(year.to_i,1,1)..Date.new(year.to_i,12,31)) if year.present? && year&.to_i>0}
 

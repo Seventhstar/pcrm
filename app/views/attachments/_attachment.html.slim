@@ -1,0 +1,10 @@
+- scr = attachment.secret ? 'locked' : ''
+- icn = is_manager? ? 'icon icon_lock' : ''
+li class="item #{scr}" id="file_#{attachment.id}"
+  = file_default_action(attachment)
+  .tools
+    span class="#{icn} #{scr}" file-id="#{attachment.id}"
+    a.icon.icon_download href=attachment.download_path target="_blank"
+    = link_to '', file_path(attachment), method: :delete, remote: true, data: {confirm: 'Удалить файл?' }, class: 'icon icon_remove_file'
+                                   
+

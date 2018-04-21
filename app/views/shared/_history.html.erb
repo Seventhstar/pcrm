@@ -1,15 +1,15 @@
 <% if is_admin? %>  
-<div class="hl hl_a">История изменений <span class="grey">(<%= @history.count %>)</span></div>
+<div class="hl hl_a">История изменений <span class="grey">(<%= @history.size %>)</span></div>
 <div class="historyChange_list_a">
 
   <%- @history.each do |version_fields| %>
 
   <%- version = version_fields[1] %>
   <div class="item">
-    <div class="head"><%= version['author'] %>, <span class="date"><%= version['at'] %></span></div>
+    <div class="head"><%= version[:author] %>, <span class="date"><%= version[:at] %></span></div>
     <ul>
-      <% if version['description'].class == Array %>
-        <%- version['description'].each do |descr| %>
+      <% if version[:description].class == Array %>
+        <%- version[:description].each do |descr| %>
           <li><%= raw(descr) %></li>
         <% end %>
       <% end %>

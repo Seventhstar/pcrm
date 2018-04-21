@@ -5,7 +5,7 @@ module CommonHelper
   end
 
   def user_name(id)
-    if !id.nil? && id!='0' && id!='-1'
+    if !id.nil? && id&.to_i>0
      user = User.find(id).try(:name)
     else
       ""
@@ -31,7 +31,7 @@ module CommonHelper
       new_head = head_name(obj,params[:sort])
     else
       if obj.class.name == "Lead"
-        new_head = is_admin? ? head_name(obj,'status_date') : head_name(obj,'start_date') 
+        new_head = is_admin? ? head_name(obj, 'status_date') : head_name(obj, 'start_date') 
       elsif obj.class.name == "ProjectGood"
         prm = params[:sort]
         prm = 'project_id' if prm.nil?
@@ -50,8 +50,7 @@ module CommonHelper
   end
 
   def text_or_link(text, link)
-    t = text
-    t = link_to text, [:edit, link] if link
+    link ? link_to(text, [:edit, link]) : text
   end
 
   def head_name(obj,id_name)
@@ -59,19 +58,19 @@ module CommonHelper
     
     case id_name
     when 'executor_id', 'ic_user_id', 'user_id'
-      val = User.find(id).try(:name) if !id.nil? && id>0 
+      val = User.find(id).try(:name) if id.present? 
     when 'start_date','status_date'
       val = month_year(id)
     when 'project_id'
       val = 'Не все данные заполнены'
       val = obj.try(:project).try(:address)
-      id = obj.try(:project).try(:id)
+      id  = obj.try(:project).try(:id)
     else
-      prop_name = id_name[0..-4]+'_name'
+      prop_name = "#{id_name[0..-4]}_name"
       val = obj.try(prop_name)
     end
 
-    n = (id.nil? || id==0) ? t('without.'+id_name) : val
+    n = (id.nil? || id==0) ? t("without.#{id_name}") : val
     n
   end
 
@@ -86,17 +85,14 @@ module CommonHelper
     when "verified", "payd_q", "attention", "debt", "interest", "payd_full"
       from = changeset[0] ? 'Да' : 'Нет'
       to =  changeset[1] ? 'Да' : 'Нет'
-    when "coder"
+    when "coder", "boss"
       from = nil
       pref = changeset[1]? '': ' не '
-      to = 'Помечен как <b>' + pref + ' выполнено </b>'
-    when "boss"
-      from = nil
-      pref = changeset[1]? '': ' не '
-      to = 'Помечен как <b>' + pref + ' проверено </b>'
+      status = event == "coder" ? "выполнено" : "проверено"  
+      to = "Помечен как <b>#{pref} #{status}</b>"
     when 'dt_to', 'dt_from'
       from = changeset[0].try('strftime',"%Y.%m.%d %H:%M" )
-      to = changeset[1].try('strftime',"%Y.%m.%d %H:%M" )
+      to   = changeset[1].try('strftime',"%Y.%m.%d %H:%M" )
 
     when "channel_id", 'reason_id','new_reason_id','target_id','dev_status_id','status_id','p_status_id', 'priority_id', 'project_id',"user_id","ic_user_id",
          "executor_id","pstatus_id", "project_type_id", 'payment_purpose_id', 'payment_type_id', 'source_id'
@@ -118,60 +114,71 @@ module CommonHelper
       from = changeset[0]
       to = changeset[1]
     end
-    {'from' => from, 'to' => to }
+    {from: from, to: to }
   end
 
   def get_last_history_item(obj)
-      history = Hash.new
+    history = Hash.new
     # изменения в самом объекте
-      version = obj.versions.last || @version
-        author = find_version_author_name(version) 
-        at = version.created_at.localtime.strftime("%Y.%m.%d %H:%M:%S") 
-        at_hum = version.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 
-        changeset = version.changeset 
-        ch = Hash.new
-        desc = []
-        changeset.keys.each_with_index do |k,index| 
-          from_to = from_to_from_changeset(version,changeset[k],k)
-          from = from_to['from'] 
-          to = from_to['to']
-          
-          if from.present? || to.present?
-            from = from.nil? ? "" : from.to_s
-            to = to.nil?  ? "" : to.to_s
-            if k == 'description' || k == 'info'
-              from.gsub!(/\n/, '<br>')  
-              to.gsub!(/\n/, '<br>')
-              desc << (from.empty? ? ('Заполнено поле <b>'+t(k)+':</b> «'+to+'»') : ('Изменено поле <b>'+t(k)+'</b> c<br> «'+from+'»<br><b> на </b><br>«'+to+'»') )
-            else
-              desc << (from.empty? ?  ('Заполнено поле <b>'+t(k)+':</b> «'+to+'»'): ('Изменено поле <b>'+t(k)+'</b> c «'+from+'» на «'+to+'»') )
-            end
-
-            ch.store( index, {'field' => t(k), 'from' => from, 'to' => to, 'description' => desc } )
-          end
+    version = obj.versions.last || @version
+    author = find_version_author_name(version) 
+    at = version.created_at.localtime.strftime("%Y.%m.%d %H:%M:%S") 
+    at_hum = version.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 
+    changeset = version.changeset 
+    ch = Hash.new
+    desc = []
+    changeset.keys.each_with_index do |k,index| 
+      from_to = from_to_from_changeset(version,changeset[k],k)
+      from = from_to[:from] 
+      to = from_to[:to]
+      
+      if from.present? || to.present?
+        from = from.nil? ? "" : from.to_s
+        to = to.nil?  ? "" : to.to_s
+        filled = "Заполнено поле <b>'#{t(k)}:</b> «#{to}»"
+        if k == 'description' || k == 'info'
+          from.gsub!(/\n/, '<br>')  
+          to.gsub!(/\n/, '<br>')
+        else
+          # desc << (from.empty? ? filled : ('Изменено поле <b>'+t(k)+'</b> c «'+from+'» на «'+to+'»') )
         end
+        
+        desc << (from.empty? ? filled : ('Изменено поле <b>'+t(k)+'</b>: c <br>«'+from+'»<br><b> на </b><br>«'+to+'»') )
+        ch.store( index, {field: t(k), from: from, to: to, description: desc } )
+      end
+    end
 
-        history.store( at.to_s, {'at' => at_hum,'type'=> 'ch','author' => author,'changeset' => ch, 'description' => desc})
+    history.store( at.to_s, {at: at_hum, type: 'ch', author: author, changeset: ch, description: desc})
      # end
     history
   end
 
   def link_to_obj(obj, id)
-     lnk =  t(obj) +' #' + id.to_s
-    "<a href=" + [nil,obj.tableize,id,'edit'].join('/')+ ">" + lnk + "</a>"
+    _obj = obj.nil? ? '' : obj.tableize
+    obj_name = obj.present? ? t(obj) : ''
+    "<a href=#{[_obj, id, 'edit'].join('/')}>#{obj_name} ##{id}</a>"
   end
 
   def link_to_file(obj)
-    type = obj['owner_type']
-    id   = obj['owner_id'][1]
     name = obj['name'][1]
-    "<a href=" + [nil,'download',type,id,name].join('/')+ ">" + name + "</a>"
+    id   = obj['owner_id'][1]
+    ext  = name.split('.')[1]
+    type = obj['owner_type'][1]
+    filename = "#{obj['id'][1]}.#{ext}"
+    full_path = Rails.root.join('public', 'uploads', type, id.to_s, filename)
+    data_modal = ['jpg','gif','png'].include?(ext) ?  "data-modal='true'" : ''
+    if File.exists?(full_path)
+      # "<a href=#{['files', obj['id'][1]].join('/')} #{data_modal}>#{name}</a>"
+      file_default_action(obj['id'][1],'',false)
+    else
+      "<span class='striked'>#{name}</span>"
+    end
   end
 
   def changeset_detail(version)
     obj = YAML.load(version['object_changes']) if !version['object_changes'].nil?
     obj = YAML.load(version['object']) if obj.nil?
-
+    lnk = link_to_obj(version["item_type"], version['item_id'])
     info = {}
     ch = {}
     case version[:event]
@@ -180,33 +187,41 @@ module CommonHelper
         desc = []
         changeset.keys.each_with_index do |k,index| 
           from_to = from_to_from_changeset(version,changeset[k],k)
-          from = from_to['from'] 
-          to = from_to['to']
+          from = from_to[:from] 
+          to = from_to[:to]
           if from.present? || to.present?
             from = from.nil? ? "" : from.to_s
             k = 'pdate' if k=='date'
-            desc << (from.empty? ? ('Заполнено поле <b>'+t(k)+':</b> «'+to.to_s+'»') : ('Изменено поле <b>'+t(k)+'</b> c «'+from.to_s+'» на «'+to.to_s+'»') )
-            ch.store( index, {'field' => t(k), 'from' => from, 'to' => to, 'description' => desc } )
+
+            desc << (from.empty? || from==to ? "Заполнено поле <b>#{t(k)}:</b> «#{to}»" : 
+                                               "Изменено поле <b>#{t(k)}</b> c «#{from}» на «#{to}»" )
+            ch.store( index, {field: t(k), from: from, to: to, description: desc } )
           end
         end
     when "create"
         case version['item_type']
-        when 'Attachment' #['name'][1]
-          desc = 'Прикреплен файл '+link_to_file(obj)  + ' к объекту: ' + link_to_obj(obj['owner_type'][1],obj['owner_id'][1])
+        when 'Attachment' 
+          lnk = link_to_obj(obj['owner_type'][1], obj['owner_id'][1])
+          desc = "Прикреплен файл #{link_to_file(obj)} к объекту: #{lnk}"
         when 'Develop'
-          desc = 'Создана ' +link_to_obj(version["item_type"], version['item_id'])
+          desc = "Создана #{lnk}"
         when 'Absence'
-          desc = 'Создано ' + link_to_obj(version["item_type"], version['item_id'])
+          desc = "Создано #{lnk}"
         else
-          desc = 'Создан ' + link_to_obj(version["item_type"], version['item_id'])
+          desc = "Создан #{lnk}"
         end
     when "destroy"    
       ch.store(0,'Удален')
-      desc = 'Удален ' + link_to_obj(version["item_type"], version['item_id'])
+      file = YAML.load(version['object'])
+      if file['owner_type'].nil?
+        desc = "Удален объект: #{t(version['item_type'])} ##{version['item_id']} [#{version['object']}]"
+      else
+        desc = "Удален файл #{file['name']} у объекта: #{link_to_obj(file['owner_type'], file['owner_id'])}"
+      end 
     else
       desc = {"version[:event]"=> version[:event]}
     end
-    obj['inf'] = {'ch' => ch, 'desc' => desc}
+    obj['inf'] = {ch: ch, desc: desc}
     obj
   end
 
@@ -219,68 +234,49 @@ module CommonHelper
     # изменения в самом объекте
     obj.versions.reverse.each do |version|
       if version[:event]!="create" && version != obj.versions.first 
-        author = find_version_author_name(version) 
-        at = version.created_at.localtime.strftime("%Y.%m.%d %H:%M:%S") 
-        at_hum = version.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 
+        created = version.created_at.localtime
+        at = created.strftime("%Y.%m.%d %H:%M:%S")         
         info = changeset_detail(version)['inf']
-        history.store( at.to_s, {'at' => at_hum,'type'=> 'ch','author' => author,'changeset' => info['ch'], 'description' => info['desc']})
+        history.store( at.to_s, {at: created.strftime("%d.%m.%Y %H:%M:%S"), 
+                                  type: 'ch', 
+                                  author: find_version_author_name(version), 
+                                  changeset: info[:ch], 
+                                  description: info[:desc]})
       end
     end
    
     created = PaperTrail::Version.where_object_changes(owner_id: obj.id, owner_type: obj.class.name)
-
-    created.each_with_index do |file,index|
-      ch = Hash.new  
-      at = file.created_at.localtime.strftime("%Y.%m.%d %H:%M:%S") 
-      at_hum = file.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 
-      author = user_name(file.whodunnit)
-      _obj = YAML.load(file['object_changes'])
-      desc = []
-      desc << 'Cоздан файл файл <b>' +_obj['name'][1] +'</b>'
-
-      ch.store( index, {'file' =>  _obj['name'][1]} )
-      history.store( at+'2', {'at' => at_hum,'type'=> 'add','author' => author,'changeset' => ch,'description' => desc})
+    created.each_with_index do |file, index|
+      file_changes(history, file, index, 'object_changes', 'add', 'Добавлен', '1')
     end  
 
     # удаленные файлы
     file_id = []
     deleted = PaperTrail::Version.where_object(owner_id: obj.id, owner_type: obj.class.name)
-
-    if deleted.count==0
-        deleted = PaperTrail::Version.where_object(owner_id: "'"+obj.id.to_s+"'", owner_type: obj.class.name)
-    end
-
-    deleted.each_with_index do |file,index|
-      ch = Hash.new  
-      at = file.created_at.localtime.strftime("%Y.%m.%d %H:%M:%S") 
-      at_hum = file.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 
-      author = user_name(file.whodunnit)
+    deleted = PaperTrail::Version.where_object(owner_id: "'#{obj.id}'", owner_type: obj.class.name) if deleted.count==0
+    deleted.each_with_index do |file, index|
       file_id << file['item_id']
-
-      _obj = YAML.load(file['object'])
-      desc = []
-      desc << 'Удален файл <b>' +_obj['name'] +'</b>'
-
-      ch.store( index, {'file' =>  _obj['name']} )
-      history.store( at+'2', {'at' => at_hum,'type'=> 'del','author' => author,'changeset' => ch,'description' => desc})
+      file_changes(history, file, index, 'object', 'del', 'Удален', '2')
     end  
-    # созданные и потом удаленные файлы
-    created = PaperTrail::Version.where(:item_id => file_id, event: 'create', item_type: controller_name.classify+'sFile')
-    created.each_with_index do |file,index|
 
-      at = file.created_at.localtime.strftime("%Y.%m.%d %H:%M:%S") 
-      at_hum = file.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 
-      ch = Hash.new  
-      author = user_name(file.whodunnit)
-      file_id << file['item_id']
-      obj = YAML.load(file['object_changes'])
-      ch.store( index, {'file' =>  obj['name'][1] } )
-      desc = []
-      desc << 'Добавлен файл <b>' +obj['name'][1] +'</b>'
-      history.store( at +'1', {'at' => at_hum,'type'=> 'add','author' => author,'changeset' => ch,'description' => desc})
+    # созданные и потом удаленные файлы
+    created = PaperTrail::Version.where(item_id: file_id, event: 'create', item_type: controller_name.classify+'sFile')
+    created.each_with_index do |file, index|
+      file_changes(history, file, index, 'object_changes', 'add', 'Добавлен', '1')
     end  
     history.sort.reverse
   end
 
+  def file_changes(history, file, index, fields, type, type_t, order)
+    obj = YAML.load(file[fields])
+    fname = type == 'del' ? obj['name'] : obj['name'][1]
+    created = file.created_at.localtime
+    at      = created.strftime("%Y.%m.%d %H:%M:%S") 
+    history.store( at+order, {at: created.strftime("%d.%m.%Y %H:%M:%S"), 
+                              type: type, 
+                              author: user_name(file.whodunnit), 
+                              changeset: {'index' => {file: fname}}, 
+                              description: ["#{type_t} файл <b>#{fname}</b>"]})
+  end
 
 end
