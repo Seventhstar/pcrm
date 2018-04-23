@@ -1,0 +1,25 @@
+script#comments_template type="text/html" 
+  =render "comments/comment.html.mustache"
+- if @owner && !@owner.comments.nil? && @owner.comments.count >0
+  - @comments = @owner.comments.order('created_at asc')
+.box_i
+  - if is_manager? && (@owner.class == Project)
+    #tabs_msg
+      ul
+        li
+          a href="#tab-msg-1"  Комментарии
+        li.right
+          a href="#tab-msg-2"  Особенности
+      #tab-msg-1
+        = render 'shared/comments_list', items: @comments
+        = render 'comments/form'
+      #tab-msg-2
+        = render 'shared/comments_list', items: @owner.special_infos
+        = render 'special_infos/form'
+  - else
+    .hl
+      span.icon.icon_chat
+      | Комментарии:
+    = render 'shared/comments_list', items: @comments
+    = render 'comments/form'
+

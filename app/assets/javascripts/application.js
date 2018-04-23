@@ -142,9 +142,8 @@ $(function() {
         $.get(url, null, null, 'script');
       }
     }
-  }
-
-  );
+  });
+  $('#tabs_msg').tabs();
 
   tinyMCE.init({
     selector: '.tinymce textarea', 

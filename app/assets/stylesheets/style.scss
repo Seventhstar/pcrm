@@ -412,9 +412,9 @@ input[type='number']::-webkit-inner-spin-button {
 .comments_box .hl{margin: 0 0 15px 0; font-weight: 500;   border-bottom: 1px solid #e5e5e5; padding-bottom: 5px;}
 .comments_box .hl .icon{margin:0 0 0 10px;}
 .comments_box .box_i {border:1px solid #e5e5e5; padding: 16px; border-radius: 5px;}
-.comments_box .commentAdd_form {margin: 12px 0 0 0; overflow:hidden;}
-.comments_box .commentAdd_form .txt {float:left; width: 430px; }
-.comments_box .commentAdd_form .sub {float:right;}
+.comments_box .add_form {margin: 12px 0 0 0; overflow:hidden;}
+.comments_box .add_form .txt,  {float:left; width: 430px; }
+.comments_box .add_form .sub {float:right;}
 
 .jspContainer{ position: relative;  width: 550px; overflow-y: scroll; }
 .jsph  { height: 347px; }

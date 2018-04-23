@@ -1,4 +1,4 @@
-<%= @prj_good.errors.any? %>
+<% if @prj_good.errors.any? %>
 <% else %> 
 <% if @pgt.present? && @pgt.to_i>0 %>
   $("#pgoods .panel:first").before("<%= j render("project_goods_types", {opened: true}) %>");

@@ -1,17 +1,17 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
-@add_comment = ->
-  comment = $('#comment_comment').val()
-  owner_id = $('#btn-chat').attr('ownerid')
-  owner_type = $('#btn-chat').attr('ownertype')
-  inputs = $('input[name^=comment]').serialize()
-  upd_url = owner_type.toLowerCase()+'s';
-  if comment == ''
+add_comment =(item) ->
+  obj = item.attr('data-class')
+  body = item.attr('data-body')
+  msg = $("#"+obj+"_"+body).val()
+  inputs = $('input[name^='+obj+']').serialize()
+  if msg == ''
     return
   $.ajax
-    url: '/comments/'
+    url: '/'+obj+'s/'
     data: inputs
+    dataType: 'script'
     type: 'POST'
     beforeSend: (xhr) ->
       xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
@@ -40,10 +40,11 @@ $ ->
         show_ajax_message "Успешно удален"
         return
     return
+
   # добавление комментария 
   # кликом по кнопке 
   $('.comments_box').on 'click', 'span.btn-sm', ->
-    add_comment()
+    add_comment($(this))
     return
   
   # нажатием на Enter
@@ -52,6 +53,7 @@ $ ->
       add_comment()
       return false;
     return
+
   $('.comments_box').on 'click', '.info', ->
     item = $(this).closest('.item')  
     $.ajax

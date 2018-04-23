@@ -1,0 +1,7 @@
+<% if @special_info.errors.any? %>
+  
+<% else %>
+  $('.comments_list_a.specialinfo').append("<%= j render "special_info", special_info: @special_info %>");
+  $('#special_info_content').val('');
+  $('.jspContainer').animate({scrollTop: $('.comments_list_a').prop("scrollHeight")}, 500);
+<% end %>

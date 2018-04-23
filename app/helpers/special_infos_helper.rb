@@ -1,0 +1,2 @@
+module SpecialInfosHelper
+end

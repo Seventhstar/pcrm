@@ -1,0 +1,7 @@
+- if controller.action_name == 'edit'
+  #comment_add_form.add_form item-id="comment"
+    = field_set_tag nil, class: 'format' do
+      = hidden_field_tag 'comment[owner_type]', @owner.class
+      = hidden_field_tag 'comment[owner_id]', @owner.id
+      = text_field_tag 'comment[comment]', '', class: 'txt', placeholder: "Новый комментарий"
+      span#btn-chat.sub.btn_a.btn-sm ownerid="#{@owner.id}" ownertype='#{@owner.class.name}' data-class="comment" data-body="comment" Отправить

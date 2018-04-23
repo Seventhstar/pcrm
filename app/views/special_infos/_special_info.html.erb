@@ -1,0 +1,18 @@
+<li class="item" special_infoid="<%= special_info.id %>" id="special_info_<%= special_info.id %>" > 
+  <div class="pic"><%= avatar_for(special_info.user) %></div>
+  <div class="cont">
+    <div class="head">
+      <div class="name"><%= special_info.user.try(:name) %></div>
+      <div class="info"><%= special_info.created_at.try('strftime',"%d.%m.%Y %H:%M:%S") %></div>
+      <div class="date">
+        <% if (current_user== special_info.user || current_user.admin) && ['edit','create'].include?(controller.action_name) %>
+
+        <%= link_to '', special_info, method: :delete, remote: true, data: {confirm: 'Удалить комментарий?'}, class: "icon icon_remove_1 btn_remove" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="text" ownerid=<%= special_info.specialable.id %>>
+    <span><%= simple_format(special_info.content) %></span>
+  </div>      
+</li>

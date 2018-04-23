@@ -1,7 +1,6 @@
 $("#prj_elongations").html("<%= escape_javascript(render("elongations")) %>");
 $("#pgoods").html("<%= j render("project_goods_types", opened: false) %>");
 
-$(".comments_box").html("<%= escape_javascript(render("shared/comments")) %>");
 $('.chosen').chosen({width: '99.5%', disable_search: 'true'});
 $('.schosen').chosen({width: '99.5%'});
 $('#lday').html("<%= escape_javascript(render("day")) %>");

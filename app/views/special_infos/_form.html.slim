@@ -1,0 +1,8 @@
+- if controller.action_name == 'edit'
+  #special_info_form.add_form item-id="special-info"
+    = form_for SpecialInfo.new, remote: true do |f|
+      = f.hidden_field :specialable_type, value: @owner.class
+      = f.hidden_field :specialable_id, value: @owner.id
+      = f.text_field :content, class: 'txt', placeholder: "Новая особенность"
+      span#btn-special-info.sub.btn_a.btn-sm ownerid="#{@owner.id}" ownertype='#{@owner.class.name}' data-class="special_info" data-body="content" Отправить
+      

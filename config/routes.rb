@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
   
+  get 'special_infos/index'
+
+  get 'special_infos/delete'
+
+  get 'special_infos/create'
+
   get 'contacts/index'
 
   get 'contacts/new'
@@ -36,6 +42,7 @@ Rails.application.routes.draw do
   post "ajax/read_comment"
 
   #resources :comments
+  resources :special_infos
   resources :comments do
     collection do
       post :read_comment

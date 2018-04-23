@@ -1,0 +1,5 @@
+- items ||= @comments
+.jspContainer style="height:#{@comm_height}px;" 
+  .jspPane
+    ul class="comments_list_a #{items.klass.name.downcase if items.present?}" 
+      = render items
