@@ -42,14 +42,16 @@ module ApplicationHelper
   end
 
   def phone_format(phone)
-    if phone.length == 11
-      ph = "#{phone[0]=='7' ? '+':''}#{phone[0]}(#{phone[1..3]}) #{phone[4..6]}-#{phone[7..8]}-#{phone[9..10]}"
-    elsif phone.length == 7
-      ph = "#{phone[4..6]}-#{phone[7..8]}-#{phone[9..10]}"
-    else
-      ph = phone
+    if phone
+      if phone.length == 11
+        ph = "#{phone[0]=='7' ? '+':''}#{phone[0]}(#{phone[1..3]}) #{phone[4..6]}-#{phone[7..8]}-#{phone[9..10]}"
+      elsif phone.length == 7
+        ph = "#{phone[4..6]}-#{phone[7..8]}-#{phone[9..10]}"
+      else
+        ph = phone
+      end
+      ph
     end
-    ph
   end
 
   def date_ago( day )

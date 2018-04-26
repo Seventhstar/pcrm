@@ -81,3 +81,8 @@ table.tbl_fc_1 td.caption.goods_closed {font-size: 17px; font-weight: 500; paddi
 .goods_order_td label.inp_btn_label .inp_btn  {top: 4px; left: 174px;}
 
 .total-footer{ margin-bottom: 20px; border-top: 2px solid #e5e5e5; padding: 10px; font-size: 20px;}
+#client_projects {  margin-bottom: 20px; display: inline-block; width: 100%;}
+#client_projects li{ list-style-type: none; display: inline-block; width: 100%;}
+#client_projects .lbl{ float: left; width: 45%; }
+#client_projects span {width: 47%; font-weight: 500; display: inline-block; padding-left: 10px;}
+#client_projects li div{ margin: 2px;}

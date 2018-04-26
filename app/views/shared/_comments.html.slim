@@ -2,21 +2,22 @@ script#comments_template type="text/html"
   =render "comments/comment.html.mustache"
 
 - @comments = @owner.comments.order('created_at asc')
-.box_i
-  - if is_manager? && (@owner.class == Project)
+- if is_manager? && (@owner.class == Project)
+  .box_msg
     #tabs_msg
       ul
-        li
+        li.first
           a href="#tab-msg-1"  Комментарии
-        li.right
-          a#tab_special_info href="#tab-msg-2"  Особенности
-      #tab-msg-1
-        = render 'shared/comments_list', items: @comments
-        = render 'comments/form'
-      #tab-msg-2
-        = render 'shared/comments_list', items: @owner.special_infos
-        = render 'special_infos/form'
-  - else
+        li.right.last
+          a#tab_special_info href="#tab-msg-2" Важные детали
+    #tab-msg-1.first
+      = render 'shared/comments_list', items: @comments
+      = render 'comments/form'
+    #tab-msg-2.last
+      = render 'shared/comments_list', items: @owner.special_infos
+      = render 'special_infos/form'
+- else
+  .box_i
     .hl
       span.icon.icon_chat
       | Комментарии:

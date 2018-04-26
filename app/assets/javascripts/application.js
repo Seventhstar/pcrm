@@ -143,19 +143,19 @@ $(function() {
       }
     }
   });
+
   $('#tabs_msg').tabs({
     activate: function (event, ui) {
       var color;
       if ($('#tab_special_info').closest('li').hasClass('ui-tabs-active')){
         color = 'red';
       }else{
-        color = '';
+        color = '#6acc00';
       }
-    $('.comments_box .box_i').css('border-color', color);
+    $('.comments_box .box_msg ul.ui-tabs-nav').css('border-bottom', color+' 2px solid');
     }
   });
   
-
   tinyMCE.init({
     selector: '.tinymce textarea', 
     plugins: "textcolor,lists,spellchecker",
