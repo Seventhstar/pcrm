@@ -9,7 +9,7 @@ script#comments_template type="text/html"
         li
           a href="#tab-msg-1"  Комментарии
         li.right
-          a href="#tab-msg-2"  Особенности
+          a#tab_special_info href="#tab-msg-2"  Особенности
       #tab-msg-1
         = render 'shared/comments_list', items: @comments
         = render 'comments/form'

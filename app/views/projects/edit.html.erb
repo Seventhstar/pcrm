@@ -15,7 +15,6 @@
     <li><a href="#tabs-6">Файлы</a></li>  
     <% if is_admin? %>  
       <li><a href="#tabs-7">История</a></li>
-      <li><a href="#tabs-8">Особенности</a></li>  
     <% end %>
     <li><a href="#tabs-9">Контакты</a></li>
   </ul>
@@ -78,48 +77,31 @@
 
 
 <div id="tabs-6" class="ptab">
-<div class="box_wide">
-<div class="box_wrap box_wrap_1">
-  <div class="panel-left lead_files">  
-    <div class="sep_15"></div>
-      <% if !@owner.nil? %> 
-        <%= render "shared/attach_list" %>
-      <% end -%>
+  <div class="box_wide">
+    <div class="box_wrap box_wrap_1">
+      <div class="panel-left lead_files">  
+        <div class="sep_15"></div>
+          <% if !@owner.nil? %> 
+            <%= render "shared/attach_list" %>
+          <% end -%>
+      </div>
+    </div>
   </div>
-</div>
-</div>
 </div>
 
 
 <% if is_admin? %>  
   <div id="tabs-7" class="ptab">
-  <div class="box_wide">
-  <div class="box_wrap box_wrap_1">
-  <div class="historyChange_box">
-            <% if @history.size >0 %>
-              <%= render "shared/history" %>    
-            <% end %>
-          </div>
-        </div></div>
-      </div>
-  </div>
-
-  <div id="tabs-8" class="ptab">
-  <div class="box_wide">
-  <div class="box_wrap box_wrap_1">
-      <div id='special_infos'>
-      <%= f.simple_fields_for :special_infos do |si| %>
-        <%= render 'special_info_fields', f: si %>
-      <% end %>
-      <div class="links">
-        <%= link_to_add_association 'Добавить', f, :special_infos, class: "btn btn-default sub btn_a" %>
-      </div>
-      </div>
-
+    <div class="box_wide">
+      <div class="box_wrap box_wrap_1">
+        <div class="historyChange_box">
+          <% if @history.size >0 %>
+            <%= render "shared/history" %>    
+          <% end %>
         </div>
       </div>
-      </div>
- 
+    </div>
+  </div>
 <% end %>
 
 <%= render 'page_9_clients', f: f %>

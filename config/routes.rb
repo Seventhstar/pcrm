@@ -1,13 +1,5 @@
 Rails.application.routes.draw do
-  
-  get 'special_infos/index'
-
-  get 'special_infos/delete'
-
-  get 'special_infos/create'
-
   get 'contacts/index'
-
   get 'contacts/new'
 
   resources :payments
@@ -37,18 +29,12 @@ Rails.application.routes.draw do
 
   resources :receipts
 
-  post "ajax/add_comment"
-  post "ajax/del_comment"
-  post "ajax/read_comment"
-
-  #resources :comments
   resources :special_infos
   resources :comments do
     collection do
       post :read_comment
     end
   end
-
 
   resources :project_elongations
   resources :projects do
@@ -59,6 +45,7 @@ Rails.application.routes.draw do
   end
 
   get 'projects/:id/:update_client' => 'projects#update_client'
+  get 'projects/:id/edit#:tab_id' => 'projects#edit', constraint: { tab_id: /\d+/ }
 
   resources :project_goods
   resources :project_types
@@ -86,11 +73,8 @@ Rails.application.routes.draw do
   resources :providers
 
   get    'options'  => 'options#edit'
-  get    'options/:options_page'  => 'options#edit',:constraints => {:format => /(json|html)/}
+  get    'options/:options_page'  => 'options#edit', constraints: {format: /(json|html)/}
   post   'options/:options_page' => 'options#create'
-  # resource :options do
-  #   resource :lead_sources
-  # end
 
   delete 'options/:options_page/:id' => 'options#destroy'
   delete 'options/:id' => 'options#destroy'
@@ -121,15 +105,12 @@ Rails.application.routes.draw do
   resources :users
   resources :roles
   resources :user_roles
-
-
-  root :to => "leads#index"
-  
+ 
 
   get "ajax/channels"
   get "ajax/leads"
 
-
+  post "ajax/read_comment"
   post "ajax/dev_check" 
   post "ajax/status_check" 
   post "ajax/switch_check" 
@@ -139,10 +120,6 @@ Rails.application.routes.draw do
   post "ajax/store_cut"
 
   resources :files
-  #post "files/del_file"
-  #post '/files' => 'file#create_file'
-  #get '/files/:file' => 'file#show'
- # get  '/download/:type/:id/:basename.:extension'  => 'files#download'
   get  '/download/:id'  => 'files#download'
 
   post "channels/new"
@@ -153,4 +130,5 @@ Rails.application.routes.draw do
   get "/history/" => "history#show"
   get "/history/:period" => "history#show"
 
+  root :to => "leads#index"
 end

@@ -51,7 +51,12 @@
 .ptab {min-height: 490px; }
 .ptab .box_wrap {margin-top: 60px;}
 
-#tabs_msg li.ui-state-default.right{
-    margin-bottom: 5px;
-    margin-right: 0;
-}
+// #tabs_msg li.ui-state-default.right{
+//     margin-bottom: 5px;
+//     margin-right: 0;
+// }
+
+.comments_box .ui-tabs .ui-tabs-nav li {width:50%; margin: 0; }
+.comments_box .ui-tabs .ui-tabs-nav li a {width: 90%; margin: 0 auto;}
+
+.ui-tabs-active, .ui-tabs-active a#tab_special_info, .ui-widget-header .ui-state-hover a#tab_special_info{background-color: red;}

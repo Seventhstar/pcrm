@@ -143,7 +143,18 @@ $(function() {
       }
     }
   });
-  $('#tabs_msg').tabs();
+  $('#tabs_msg').tabs({
+    activate: function (event, ui) {
+      var color;
+      if ($('#tab_special_info').closest('li').hasClass('ui-tabs-active')){
+        color = 'red';
+      }else{
+        color = '';
+      }
+    $('.comments_box .box_i').css('border-color', color);
+    }
+  });
+  
 
   tinyMCE.init({
     selector: '.tinymce textarea', 

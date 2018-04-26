@@ -5,6 +5,6 @@ li class="item #{scr}" id="file_#{attachment.id}"
   .tools
     span class="#{icn} #{scr}" file-id="#{attachment.id}"
     a.icon.icon_download href=attachment.download_path target="_blank"
-    = link_to '', file_path(attachment), method: :delete, remote: true, data: {confirm: 'Удалить файл?' }, class: 'icon icon_remove_file'
+    = link_to '', file_path(attachment), method: :delete, remote: true, data: {confirm: 'Удалить файл?' }, class: 'icon icon_remove_file' if is_manager?
                                    
 

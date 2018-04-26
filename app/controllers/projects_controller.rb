@@ -92,6 +92,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1/edit
   def edit
+    # puts "params #{params}"
     @gs = params[:good_state]
 
     if !@gs.nil? && @gs.to_i>0
@@ -238,7 +239,7 @@ class ProjectsController < ApplicationController
       params.require(:client).permit(:name, :address, :phone, :email)
     end
 
-    def project_params
+    def project_params      
       params.require(:project).permit(:client_id, :address, :owner_id, :executor_id, :designer_id, :visualer_id, :project_type_id,
         :date_start, :date_end_plan, :date_end_real, :number, :date_sign,
         :footage, :footage_2, :footage_real, :footage_2_real, :style_id,

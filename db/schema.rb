@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(version: 20180423064308) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "secret"
+    t.boolean "secret", default: false
     t.index ["owner_id"], name: "index_attachments_on_owner_id"
   end
 

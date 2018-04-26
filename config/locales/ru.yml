@@ -5,6 +5,7 @@ ru:
     previous_label: "назад"
     page_gap: '...'
   Status: "статус"
+  secret: Закрыт
   Source: источник
   Channel: Канал
   Status: Статус

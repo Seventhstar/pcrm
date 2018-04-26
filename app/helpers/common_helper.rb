@@ -82,7 +82,7 @@ module CommonHelper
 
     case event 
     when "updated_at"
-    when "verified", "payd_q", "attention", "debt", "interest", "payd_full"
+    when "verified", "payd_q", "attention", "debt", "interest", "payd_full", "secret"
       from = changeset[0] ? 'Да' : 'Нет'
       to =  changeset[1] ? 'Да' : 'Нет'
     when "coder", "boss"

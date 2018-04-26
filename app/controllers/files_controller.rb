@@ -4,7 +4,7 @@ class FilesController < ApplicationController
   before_action :logged_in_user
 
   def destroy
-    if params[:id]
+    if params[:id] && current_user.has_role?(:manager)
       @file = Attachment.find(params[:id])
       num_to_s = @file.owner_id.to_s
       filename = Rails.root.join('public', 'uploads',@file.owner_type,num_to_s,@file.id.to_s+File.extname(@file.name))
