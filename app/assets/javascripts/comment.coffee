@@ -48,9 +48,9 @@ $ ->
     return
   
   # нажатием на Enter
-  $('.container').on 'keypress', '#comment_comment', ->
+  $('.container').on 'keypress', '#comment_comment, #special_info_content', ->
     if event.keyCode==13
-      add_comment()
+      add_comment($($(this).attr('btn')))
       return false;
     return
 

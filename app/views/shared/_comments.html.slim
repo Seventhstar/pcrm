@@ -1,7 +1,7 @@
 script#comments_template type="text/html" 
   =render "comments/comment.html.mustache"
-- if @owner && !@owner.comments.nil? && @owner.comments.count >0
-  - @comments = @owner.comments.order('created_at asc')
+
+- @comments = @owner.comments.order('created_at asc')
 .box_i
   - if is_manager? && (@owner.class == Project)
     #tabs_msg
