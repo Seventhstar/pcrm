@@ -1,3 +1,5 @@
+<% comment ||= @comment%>
+<% if comment.present? %>
 <li class="item <%= comment.readed_by_user?(current_user) ? '' : 'new' %>" commentid="<%= comment.id %>" id="comment_<%= comment.id %>" > 
   <div class="pic"><%= avatar_for(comment.user) %></div>
   <div class="cont">
@@ -16,3 +18,4 @@
     <span><%= simple_format(comment.comment) %></span>
   </div>      
 </li>
+<% end %>

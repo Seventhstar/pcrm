@@ -27,7 +27,7 @@
 //= require bootstrap-tokenfield
 //= require moment
 //= require cocoon
-//= require contextMenu.min
+//= require contextMenu
 //= require vue
 //= require_tree .
 
@@ -94,20 +94,21 @@ var show_ajax_message = function(msg, type) {
 };
 
 function getInputSelection(elem){
- if(typeof elem != "undefined"){
-  s=elem[0].selectionStart;
-  e=elem[0].selectionEnd;
-  return elem.val().substring(s, e);
-}else{
-  return '';
-}
+   if(typeof elem != "undefined"){
+    s=elem[0].selectionStart;
+    e=elem[0].selectionEnd;
+    return elem.val().substring(s, e);
+  }else{return '';}
 }
 
 $(function() {
 
   var menu = [
-    {name: 'телефон', fun: function (){$('#lead_phone').val(getInputSelection($('#lead_info')));}}, 
-    {name: 'email', fun: function () {$('#lead_email').val(getInputSelection($('#lead_info')));}}
+    {name: 'Телефон', fun: function (){$('#lead_phone').val(getInputSelection($('#lead_info')));}}, 
+    {name: 'email', fun: function () {$('#lead_email').val(getInputSelection($('#lead_info')));}},
+    {name: 'ФИО', fun: function (){$('#lead_fio').val(getInputSelection($('#lead_info')));}}, 
+    {name: 'Адрес', fun: function () {$('#lead_address').val(getInputSelection($('#lead_info')));}}
+    
   ];
 
   $( document ).ajaxError(function( event, jqxhr, settings, thrownError ) {
@@ -132,6 +133,19 @@ $(function() {
 
   $('.progress').hide();
   $('#file').hide();
+  $('#tabs_msg').tabs({
+    activate: function (event, ui) {
+      var color;
+      if ($('#tab_special_info').closest('li').hasClass('ui-tabs-active')){
+        color = 'red';
+      }
+      else
+      {
+        color = '#6acc00';
+      }
+    $('.comments_box .box_msg ul.ui-tabs-nav').css('border-bottom', color+' 2px solid');
+    }
+  });
   $('#tabs').tabs({
     activate: function (event, ui) {
       p = $(".ui-tabs-active a").attr('href');
@@ -144,17 +158,6 @@ $(function() {
     }
   });
 
-  $('#tabs_msg').tabs({
-    activate: function (event, ui) {
-      var color;
-      if ($('#tab_special_info').closest('li').hasClass('ui-tabs-active')){
-        color = 'red';
-      }else{
-        color = '#6acc00';
-      }
-    $('.comments_box .box_msg ul.ui-tabs-nav').css('border-bottom', color+' 2px solid');
-    }
-  });
   
   tinyMCE.init({
     selector: '.tinymce textarea', 
