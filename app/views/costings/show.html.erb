@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Project:</strong>
+  <%= @costing.project %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @costing.user %>
+</p>
+
+<%= link_to 'Edit', edit_costing_path(@costing) %> |
+<%= link_to 'Back', costings_path %>

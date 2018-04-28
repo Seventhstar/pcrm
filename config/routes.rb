@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :costings
   get 'contacts/index'
   get 'contacts/new'
 
@@ -110,6 +111,7 @@ Rails.application.routes.draw do
 
   get "ajax/channels"
   get "ajax/leads"
+  get "ajax/projects"
 
   post "ajax/read_comment"
   post "ajax/dev_check" 

@@ -2,6 +2,18 @@
   before_action :logged_in_user
 
   respond_to :js, :json 
+
+  def projects
+    if params[:term]
+      projects = Project.where("lower(address) like lower(?) ", "%#{params[:term]}%")
+    else
+      projects = Project.first(10)
+    end
+    list = projects.map {|u| Hash[ id: u.id, label: u.address, name: u.address]}
+    render json: list
+  end
+
+
   def update_holidays
     # if params[:year]
     y = Date.today.year.to_s

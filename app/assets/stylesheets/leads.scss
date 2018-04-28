@@ -8,26 +8,20 @@
 
 .btn_remove{cursor: pointer;}
 
-.comments_list_a{ width: 528px; padding: 0;}
-.comments_list_a li{list-style: none;}
 
-::-webkit-scrollbar { width: 10px; height: 10px; background: #f5f5f5;}
+
+::-webkit-scrollbar { width: 10px; height: 10px; background: #f5f5f5; border-radius: 4px;}
 ::-webkit-scrollbar-thumb {
     background: #ccc;
     border-radius: 4px;
-    border:1px solid #ccc; 
+    border: 1px solid #ccc; 
 }
 
 
 .lead_comments{ width: 500px; float: right; }
 
-
-
-// .tleads tr:hover:not(.month):not(#new_item) { background-color: #f5f5f5;   border-radius: 4px; }
-
 .hotlead, .hot, td.hot_date{  color: red; }
 .info, .info a {color: #009DDD;}
-
 
 .input-group select,.input-group .chosen-container-single, .input-group .chosen-container-single .chosen-single{
   width: 100% !important; 

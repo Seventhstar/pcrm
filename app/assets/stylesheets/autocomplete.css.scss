@@ -1,0 +1,7 @@
+.ui-autocomplete {position: absolute; top: 0; left: 0; cursor: default; }
+.ui-menu {list-style: none; padding: 0; margin: 0; display: block; outline: none;}
+.ui-front {z-index: 100;}
+.ui-autocomplete {border: 1px solid #aaaaaa; background: #ffffff; color: #222222;}
+.ui-autocomplete .ui-menu-item {position: relative; margin: 0; padding: 3px 1em 3px .4em; cursor: pointer; min-height: 0; }
+
+.ui-menu .ui-state-focus{color: white;background:#ff8411;}

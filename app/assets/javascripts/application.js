@@ -17,6 +17,7 @@
 //= require jquery-ui/datepicker
 //= require jquery-ui/tabs
 //= require jquery.fileupload
+//= require jquery.tokeninput
 //= require chosen.jquery
 //= require jquery.timepicker
 //= require jquery.inputmask.bundle.min

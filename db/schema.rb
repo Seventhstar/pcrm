@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180428121057) do
+ActiveRecord::Schema.define(version: 20180428130403) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -120,6 +120,15 @@ ActiveRecord::Schema.define(version: 20180428121057) do
     t.datetime "updated_at", null: false
     t.index ["contactable_id", "contactable_type"], name: "index_contacts_on_contactable_id_and_contactable_type"
     t.index ["contactable_type", "contactable_id"], name: "index_contacts_on_contactable_type_and_contactable_id"
+  end
+
+  create_table "costings", force: :cascade do |t|
+    t.bigint "project_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_costings_on_project_id"
+    t.index ["user_id"], name: "index_costings_on_user_id"
   end
 
   create_table "dev_projects", id: :serial, force: :cascade do |t|
@@ -538,6 +547,8 @@ ActiveRecord::Schema.define(version: 20180428121057) do
     t.index ["wiki_cat_id"], name: "index_wiki_records_on_wiki_cat_id"
   end
 
+  add_foreign_key "costings", "projects"
+  add_foreign_key "costings", "users"
   add_foreign_key "leads", "priorities"
   add_foreign_key "project_goods", "goodstypes"
   add_foreign_key "project_goods", "projects"

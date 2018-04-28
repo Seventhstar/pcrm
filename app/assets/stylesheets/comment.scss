@@ -17,6 +17,9 @@
 .comments_list_a .btn_remove{margin:0 0 0 10px;}
 .comments_list_a .text{}
 
+.comments_list_a {width: 528px; padding: 0; -webkit-margin-after: 0; -webkit-margin-before: 0;}
+.comments_list_a li{list-style: none;}
+
 
 .comments_list_a .item.new { background-color: #fbfbfb; }
 .first .comments_list_a .item .info:after { color: gray; content: " ●"; line-height: 8px; font-size: 16px; cursor: pointer;}

@@ -22,31 +22,46 @@
             td
               .inp_w
                 label Метраж
-                .lbl =@project.footage
+                .lbl.float_mask =@project.footage
             td
               .inp_w
                 label Метраж 2
-                .lbl =@project.footage_2
+                .lbl.float_mask =@project.footage_2
+            td    
+            td
+              .inp_w
+                label Общая стоимость план
+                .lbl.sum_mask.sum_total =@project.sum_total.to_sum    
           tr
             td.gr_caption colspan="5" Фактическая площадь
           tr 
             td
               .inp_w
                 label Метраж
-                .lbl =@project.footage_real
+                .lbl.float_mask =@project.footage_real
             td
               .inp_w
                 label Метраж 2
-                .lbl =@project.footage_2_real
+                .lbl.float_mask =@project.footage_2_real
+            td
+            td
+              .inp_w
+                label Общая стоимость факт
+                .lbl.sum_total.sum_mask =@project.sum_total_real.to_sum
           tr
             td.gr_caption colspan="5" Стомость для исполнителей
           tr 
             td
               .inp_w
                 label Цена для дизайнера за м2
-                .lbl =@project.designer_price.try(:to_sum)
+                .lbl.sum_mask =@project.designer_price.try(:to_sum)
+            td
+              .inp_w
+                label Цена 2 для дизайнера за м2
+                .lbl.sum_mask =@project.designer_price_2.try(:to_sum)    
+            td    
             td
               .inp_w
                 label Стоимость дизайнера
-                .lbl =@project.designer_sum_calc.try(:to_sum)
+                .lbl.sum_cost.sum_mask =@project.designer_sum_calc.try(:to_sum)
 
