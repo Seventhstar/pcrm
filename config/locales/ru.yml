@@ -5,6 +5,7 @@ ru:
     previous_label: "назад"
     page_gap: '...'
   Status: "статус"
+  uom: "eд. изм."
   secret: Закрыт
   Source: источник
   Channel: Канал
@@ -134,6 +135,7 @@ ru:
   role: ["Новая роль","ролей"]
   wikicat: Новая категория,"категорий"]
   contact_kind: ['','']
+  uom: ['ед. изм.', 'ед. изм.']
 
   without:
     start_date: Без даты старта

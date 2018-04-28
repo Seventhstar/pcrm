@@ -105,6 +105,7 @@ Rails.application.routes.draw do
   resources :users
   resources :roles
   resources :user_roles
+  resources :uoms
  
 
   get "ajax/channels"

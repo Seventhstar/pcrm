@@ -9,14 +9,16 @@ module OptionsHelper
       1
     when 'holidays', 'project_statuses', 'project_types', 'elongation_types', 'contact_kinds'
       2
-    when 'payment_types', 'payment_purposes'
+    when 'uoms'
       3
-    when 'providers', 'budgets', 'goodstypes', 'styles', 'p_statuses'
+    when 'payment_types', 'payment_purposes'
       4
-    when 'absence_reasons', 'absence_targets', 'absence_shop_targets'
+    when 'providers', 'budgets', 'goodstypes', 'styles', 'p_statuses'
       6
-    when 'wiki_cats'
+    when 'absence_reasons', 'absence_targets', 'absence_shop_targets'
       7
+    when 'wiki_cats'
+      8
     else
       5
     end
