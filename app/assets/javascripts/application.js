@@ -33,6 +33,7 @@
 //= require_tree .
 
 
+
 function to_sum(d){ 
   if (isNaN(d)) return 0;
   s = d.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1 ");  
@@ -103,6 +104,15 @@ function getInputSelection(elem){
 }
 
 $(function() {
+
+  const app = new Vue({
+    '.container',
+    data: {
+      reason_id: true
+    }
+  })
+
+  console.log(app)
 
   var menu = [
     {name: 'Телефон', fun: function (){$('#lead_phone').val(getInputSelection($('#lead_info')));}}, 

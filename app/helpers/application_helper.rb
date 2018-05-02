@@ -105,6 +105,7 @@ def chosen_src( id, collection, obj = nil, options = {})
   order     = options[:order].nil? ? p_name : options[:order]
   nil_value = options[:nil_value].nil? ? 'Выберите...' : options[:nil_value]
   add_name  = options[:add_name]
+  v_model   = options[:v_model]
 
   coll = collection.class.ancestors.include?(ActiveRecord::Relation) ? collection : collection
   if coll.nil?  
@@ -129,7 +130,7 @@ def chosen_src( id, collection, obj = nil, options = {})
   cls = cls + ' '+ options[:add_class] if !options[:add_class].nil?
   cls = cls+" has-error" if is_attr && ( obj.errors[id].any? || obj.errors[id.to_s.gsub('_id','')].any? )
   l = label_tag options[:label]
-  s = select_tag n, options_for_select(coll, selected: sel), class: cls
+  s = select_tag n, options_for_select(coll, selected: sel), class: cls, 'v-model' => v_model
   options[:label].nil? ? s : l+s
 end
 

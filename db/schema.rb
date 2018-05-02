@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180428130403) do
+ActiveRecord::Schema.define(version: 20180429110841) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 20180428130403) do
     t.datetime "updated_at", null: false
     t.integer "target_id"
     t.boolean "canceled"
+    t.boolean "approved", default: false
   end
 
   create_table "attachments", id: :serial, force: :cascade do |t|
@@ -62,7 +63,7 @@ ActiveRecord::Schema.define(version: 20180428130403) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "secret", default: false
+    t.boolean "secret"
     t.index ["owner_id"], name: "index_attachments_on_owner_id"
   end
 
@@ -87,7 +88,7 @@ ActiveRecord::Schema.define(version: 20180428130403) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "comment_unreads", force: :cascade do |t|
+  create_table "comment_unreads", id: :serial, force: :cascade do |t|
     t.integer "comment_id"
     t.integer "user_id"
     t.datetime "created_at", null: false
@@ -182,8 +183,8 @@ ActiveRecord::Schema.define(version: 20180428130403) do
   end
 
   create_table "holidays", id: :serial, force: :cascade do |t|
-    t.date "day"
     t.string "name"
+    t.date "day"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -273,14 +274,14 @@ ActiveRecord::Schema.define(version: 20180428130403) do
 
   create_table "project_elongations", id: :serial, force: :cascade do |t|
     t.date "new_date"
-    t.integer "project_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "project_id"
     t.integer "elongation_type_id"
     t.index ["project_id"], name: "index_project_elongations_on_project_id"
   end
 
-  create_table "project_g_types", force: :cascade do |t|
+  create_table "project_g_types", id: :serial, force: :cascade do |t|
     t.integer "g_type_id"
     t.integer "project_id"
     t.datetime "created_at", null: false
@@ -289,7 +290,7 @@ ActiveRecord::Schema.define(version: 20180428130403) do
     t.index ["project_id"], name: "index_project_g_types_on_project_id"
   end
 
-  create_table "project_goods", force: :cascade do |t|
+  create_table "project_goods", id: :serial, force: :cascade do |t|
     t.string "name"
     t.integer "provider_id"
     t.date "date_supply"
@@ -303,8 +304,8 @@ ActiveRecord::Schema.define(version: 20180428130403) do
     t.date "date_place"
     t.integer "sum_supply"
     t.boolean "fixed", default: false
-    t.bigint "project_id"
-    t.bigint "goodstype_id"
+    t.integer "project_id"
+    t.integer "goodstype_id"
     t.integer "project_g_type_id"
     t.index ["fixed"], name: "index_project_goods_on_fixed"
     t.index ["goodstype_id"], name: "index_project_goods_on_goodstype_id"
@@ -439,7 +440,7 @@ ActiveRecord::Schema.define(version: 20180428130403) do
     t.index ["paid"], name: "index_receipts_on_paid"
   end
 
-  create_table "roles", force: :cascade do |t|
+  create_table "roles", id: :serial, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -483,7 +484,7 @@ ActiveRecord::Schema.define(version: 20180428130403) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "user_roles", force: :cascade do |t|
+  create_table "user_roles", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.integer "role_id"
     t.datetime "created_at", null: false
@@ -530,10 +531,19 @@ ActiveRecord::Schema.define(version: 20180428130403) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
-  create_table "wiki_cats", force: :cascade do |t|
+  create_table "wiki_cats", id: :serial, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "wiki_files", id: :serial, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "wiki_record_id"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["wiki_record_id"], name: "index_wiki_files_on_wiki_record_id"
   end
 
   create_table "wiki_records", id: :serial, force: :cascade do |t|

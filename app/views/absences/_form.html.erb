@@ -1,5 +1,5 @@
 <%= simple_form_for(@absence) do |f| %>
-<%= f.hidden_field :reopen,{action_name: action_name} %>
+<%= f.hidden_field :reopen, {action_name: action_name} %>
 
 <% if !is_manager? %>
   <%= f.hidden_field :user_id,  :value => @absence.user_id ||= current_user.id %>
@@ -12,7 +12,7 @@
     <td  colspan="3">         
       <% if is_manager? || action_name == 'new' || 
             (!@absence.created_at.nil? && @absence.user_id == current_user.id && @absence.created_at > (Date.today-3.day) && @absence.new_reason_id.nil? )  %>
-        <div class="inp_w"><%= chosen_src 'reason_id',@reasons, @absence %></div>
+        <div class="inp_w"><%= chosen_src 'reason_id', @reasons, @absence, {v_model: "reason_id"} %></div>
       <% else %>
         <div class="lbl"><%= @absence.reason_name %><%= f.hidden_field :reason_id %></div>
       <% end %>
@@ -42,7 +42,7 @@
       <td width='200px;'><div class="inp_"><%= f.text_field :dt_from, :value => @dt_from, label: false, class: "txt datepicker" %></div></td>
       <td class="caption caption_to"><%= f.hidden_field :checked %><span class="check_img <%= @checked ? 'checked' : '' %>" id='dt_to_check'></span> по:</td>
       <td width='180px;'><div class="inp_">
-          <%= f.text_field :dt_to, :value => @dt_to, label: false, class: "txt datepicker", disabled: !@checked %>
+          <%= f.text_field :dt_to, value: @dt_to, label: false, class: "txt datepicker", disabled: !@checked %>
         </div></td>
       <td class="caption caption_sm">Время:</td>
       <td >
@@ -62,11 +62,13 @@
 
       </tr>
     <% end %>
-    <tr><td></td> <td class="caption caption_to"><div id='a_canceled' >
-            <%= f.input :canceled, :as => :boolean, label: 'Отменить отсутствие', class: 'inp_btn checkbox'  %>
-      </div>
-      </td>
-    </tr>
+    <template v-if="reason_id==2">
+        <tr><td></td> <td class="caption caption_to"><div id='a_canceled' >
+              <%= f.input :canceled, as: :boolean, label: 'Отменить отсутствие', class: 'inp_btn checkbox'  %>
+        </div>
+        </td>
+      </tr>
+    </template>
         
     
 
