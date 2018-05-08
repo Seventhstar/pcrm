@@ -30,7 +30,7 @@
 .comments_box .ui-tabs {padding: 0;}
 .comments_box .ui-tabs-panel{padding: 16px;}
 
-.ui-tabs-nav {border-bottom: 2px solid #6acc00; display: inline-block;}
+.ui-tabs-nav {border-bottom: 2px solid #6acc00; display: inline-block; width: 100%;}
 
 .comments_box .ui-tabs-nav {width:100%;}
 
@@ -42,3 +42,5 @@
 .comments_box li.last, .comments_box li.last a {border-top-right-radius: 5px; border-top-left-radius: 0;}
 
 .ui-tabs-active, .ui-tabs-active a#tab_special_info, .ui-widget-header .ui-state-hover a#tab_special_info{background-color: red;}
+
+tr.new_item_head td {font-size: 14px; background: #f2f2f2; font-weight: 500;}

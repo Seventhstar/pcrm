@@ -7,9 +7,9 @@
   <title><%= content_for?(:title) ? yield(:title) : "Pcrm" %></title>
   <%= Gon::Base.render_data %>
   <%= favicon_link_tag 'favicon.png' %>
-  <%= javascript_include_tag "application" %> 
   <%= csrf_meta_tags %>
-  <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= stylesheet_link_tag "application", media: "all" %>
+  <%= javascript_include_tag "application" %> 
 </head>
 
 <body>
@@ -20,7 +20,11 @@
       <div class="bw_i">
         <% if controller.action_name == 'index' %>
           <div class="navsearch"> 
-            <%= text_field_tag :search, params[:search], :class => "search_area txt slim_txt", :placeholder=>"Поиск...", aname: controller.action_name, cname: controller.controller_name %>
+            <%= text_field_tag :search, params[:search], 
+                                class: "search_area txt slim_txt", 
+                                placeholder: "Поиск...", 
+                                aname: controller.action_name, 
+                                cname: controller.controller_name %>
           </div>
         <% end %>
         <div class="user_h">
@@ -36,7 +40,7 @@
         <div id="dev_info">
           <%= develops_info %>
         </div>
-        <%= render_navigation :level => 1 %>
+        <%= render_navigation level: 1 %>
       </div>
     </div>
   <% end %>      

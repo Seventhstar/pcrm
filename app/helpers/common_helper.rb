@@ -30,12 +30,15 @@ module CommonHelper
          "executor_id", "project_type_id", "provider_id","project_g_type_id"
       new_head = head_name(obj,params[:sort])
     else
-      if obj.class.name == "Lead"
+      case obj.class.name
+      when "Lead"
         new_head = is_admin? ? head_name(obj, 'status_date') : head_name(obj, 'start_date') 
-      elsif obj.class.name == "ProjectGood"
+      when "Costing"
+        new_head = head_name(obj, 'user_id')
+      when "ProjectGood"
         prm = params[:sort]
         prm = 'project_id' if prm.nil?
-        new_head = head_name(obj,prm)
+        new_head = head_name(obj, prm)
       else
         new_head = nil
       end

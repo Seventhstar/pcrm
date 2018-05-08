@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180429110841) do
+ActiveRecord::Schema.define(version: 20180507213357) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -101,6 +101,12 @@ ActiveRecord::Schema.define(version: 20180429110841) do
     t.integer "user_id"
     t.integer "owner_id"
     t.string "owner_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "consumptions", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -229,6 +235,12 @@ ActiveRecord::Schema.define(version: 20180429110841) do
     t.string "name"
     t.integer "lead_id"
     t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "materials", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -557,9 +569,35 @@ ActiveRecord::Schema.define(version: 20180429110841) do
     t.index ["wiki_cat_id"], name: "index_wiki_records_on_wiki_cat_id"
   end
 
+  create_table "work_linkers", force: :cascade do |t|
+    t.bigint "work_id"
+    t.bigint "linked_work_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["linked_work_id"], name: "index_work_linkers_on_linked_work_id"
+    t.index ["work_id", "linked_work_id"], name: "index_work_linkers_on_work_id_and_linked_work_id", unique: true
+    t.index ["work_id"], name: "index_work_linkers_on_work_id"
+  end
+
+  create_table "work_types", force: :cascade do |t|
+    t.string "name"
+    t.integer "comission"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "works", force: :cascade do |t|
+    t.string "name"
+    t.bigint "work_type_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["work_type_id"], name: "index_works_on_work_type_id"
+  end
+
   add_foreign_key "costings", "projects"
   add_foreign_key "costings", "users"
   add_foreign_key "leads", "priorities"
   add_foreign_key "project_goods", "goodstypes"
   add_foreign_key "project_goods", "projects"
+  add_foreign_key "works", "work_types"
 end

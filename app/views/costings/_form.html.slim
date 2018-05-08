@@ -1,5 +1,5 @@
 = simple_form_for @costing do |f|
-  = f.hidden_field :user, value: current_user.id
+  = f.hidden_field :user_id, value: current_user.id
   .box_wrap.box_wrap_1
     .panel-left
       table.tbl_fc.tbl_fc_1
@@ -11,4 +11,4 @@
         tr
           td.caption
           td
-            = submit_cancel costings_path        
+            =submit_cancel costings_path        

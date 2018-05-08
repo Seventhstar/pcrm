@@ -8,4 +8,5 @@ $(document).ready ->
     select: (event,ui) ->
       $("#costing_project_id").val(ui.item.id)
     change: (event, ui) ->
-       $("#costing_project_id").val(null)
+      return
+      $("#costing_project_id").val(null)

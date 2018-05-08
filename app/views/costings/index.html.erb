@@ -1,29 +1,20 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Costings</h1>
-
-<table>
-  <thead>
+<%= render "sortmenu" %>
+<% @costings.each do |costing| %>
+<% if check_new_table_head(costing) %>
+<%= render partial: "shared/head", locals: {stripped: true} %>
+  <tr>
+    <th>Проект</th>
+    <th width="140px"><%= sortable_th(:user_id, 'Владелец') %></th>
+    <th class="edit_delete"></th>
+  </tr>
+ </thead>
+<tbody>
+<% end %>
     <tr>
-      <th>Project</th>
-      <th>User</th>
-      <th colspan="3"></th>
+      <td><%= costing.project_address %></td>
+      <td><%= costing.owner_name %></td>
+      <%= tool_icons(costing, {icons:'edit, show'}) %>
     </tr>
-  </thead>
+  <% end %>
+</tbody></table></div></div>
 
-  <tbody>
-    <% @costings.each do |costing| %>
-      <tr>
-        <td><%= costing.project %></td>
-        <td><%= costing.user %></td>
-        <td><%= link_to 'Show', costing %></td>
-        <td><%= link_to 'Edit', edit_costing_path(costing) %></td>
-        <td><%= link_to 'Destroy', costing, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Costing', new_costing_path %>

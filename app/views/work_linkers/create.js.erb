@@ -1,0 +1,7 @@
+<% if @work.errors.present? %>
+  <%= render 'errors', item: @work %>
+<% else %>
+  $('#work_linkers tr.new_item_head').before("<%= j render @work %>");
+  $('#linked_linked_work_id option[value="'+$('#linked_linked_work_id').val()+'"]').remove(); 
+  $('#linked_linked_work_id').val(0).trigger('chosen:updated');
+<% end %>

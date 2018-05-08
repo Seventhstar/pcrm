@@ -8,7 +8,7 @@
   <div class="panel-left">
     <table class="tbl_fc tbl_fc_1">
     <tr><td class="caption">Дата создания:</td>
-      <td><div class="inp_w"><%= f.text_field :start_date, :value => @lead.start_date.try('strftime',"%d.%m.%Y"), label: false, class: "txt datepicker" %></div></td></tr>
+      <td><div class="inp_w"><%= f.text_field :start_date, value: @lead.start_date.try('strftime',"%d.%m.%Y"), label: false, class: "txt datepicker" %></div></td></tr>
     <tr><td class="caption">Фио:</td>
         <td><div class="inp_w"><%= f.input :fio, label: false %></div></td></tr>
     <tr><td class="caption">Телефон:</td>
@@ -42,9 +42,7 @@
     
     <tr><td class="caption">Ответственный:</td><td><div class="inp_w"><%= chosen_src :ic_user_id, User.all, @lead %></div></td></tr>
 
-    <tr><td class="last_td"></td>
-      <td class="last_td"><%= link_to 'Отмена', leads_page_url, :class => "sub btn_a btn_reset"%>
-        <%= f.button :submit, value: 'Сохранить', :class => 'sub btn_a' %></td></tr>
+    <tr><td class="last_td"></td><td class="last_td"><%= submit_cancel leads_page_url %></td></tr>
     </table>
   </div>
 

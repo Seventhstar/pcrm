@@ -1,7 +1,7 @@
-$("#prj_elongations").html("<%= escape_javascript(render("elongations")) %>");
-$("#pgoods").html("<%= j render("project_goods_types", opened: false) %>");
+$("#prj_elongations").html("<%= j render("elongations") %>");
+$("#pgoods").html("<%= j render @goods %>");
 
 $('.chosen').chosen({width: '99.5%', disable_search: 'true'});
 $('.schosen').chosen({width: '99.5%'});
-$('#lday').html("<%= escape_javascript(render("day")) %>");
-$(".files_list_a").html("<%= escape_javascript(render("files/files")) %>");
+$('#lday').html("<%= j render("day") %>");
+$(".files_list_a").html("<%= j render("files/files") %>");

@@ -1,0 +1,16 @@
+.tbl_a
+  .head Связанные работы:
+  table#work_linkers.tleads action="work_linkers" model="WorkLinker" 
+    thead
+      tr 
+        th.center fld="name" width="380px" Работа
+        th
+    tbody
+      = render @work.work_linkers
+      tr.new_item_head
+        td colspan="2" Новая работа:
+      tr
+        td#new_item
+          = hidden_field 'linked','work_id', value: @work.id
+          = chosen_src 'linked[linked_work_id]', Work.where.not(id: @work.work_linkers.pluck(:linked_work_id).uniq.push(@work.id))
+          = td_add_sub_send 'work_linkers', 'linked'

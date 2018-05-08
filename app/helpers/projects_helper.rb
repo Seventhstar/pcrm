@@ -60,7 +60,7 @@ module ProjectsHelper
     end
   end
 
-  def get_goods(id,pgt)
+  def get_goods(id, pgt)
     if pgt.nil?
       if action_name=='index' && params[:sort]=='provider_id'
         # provider = Provider.find(id.provider_id)
@@ -72,7 +72,7 @@ module ProjectsHelper
       end
 
     else
-      @goods = pgt.goods.where(project_id: id)
+      @goods = ProjectGood.where(project_id: id, goodstype_id: pgt[0])
     end
 
     case @gs

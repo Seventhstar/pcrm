@@ -5,7 +5,7 @@
    <ul>
   <%- @history.each do |version_fields| %>
   <%- version = version_fields[1] %>
-	<%- version['description'].each do |descr| %>
+	<%- version[:description].each do |descr| %>
 	    <li><%= raw(descr) %></li>
         <% end %>
     </ul>

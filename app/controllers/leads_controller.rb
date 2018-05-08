@@ -5,8 +5,7 @@ class LeadsController < ApplicationController
 
   before_action :set_lead, only: [:show, :edit, :update, :destroy]
   before_action :logged_in_user
-  helper_method :sort_column, :sort_direction, :only_actual
-  helper_method :sort_2, :dir_2
+  include Sortable
 
   respond_to :html, :json
 
@@ -208,27 +207,17 @@ class LeadsController < ApplicationController
 
   def sort_column
     default_column = "status_date"
-    (Lead.column_names.include?(params[:sort]) || params[:sort] == 'ic_users.name' || params[:sort] == 'users.name' ) ? params[:sort] : default_column
+    srt = params[:sort]
+    (Lead.column_names.include?(srt) || srt == 'ic_users.name' || srt == 'users.name' ) ? srt : default_column
   end
 
   def sort_2
     Lead.column_names.include?(params[:sort2]) ? params[:sort2] : "status_date"
   end
 
-  def dir_2
-    defaul_dir = sort_column =='status_date' ? "asc": "desc"
-    %w[asc desc].include?(params[:dir2]) ? params[:dir2] : defaul_dir
-  end
-
-
   def sort_direction
-    defaul_dir = sort_column =='status_date' ? "asc": "desc"
+    defaul_dir = sort_column == 'status_date' ? "asc": "desc"
     %w[asc desc].include?(params[:direction]) ? params[:direction] : defaul_dir
   end
-
-  def only_actual
-    %w[true false nil].include?(params[:only_actual]) ? params[:only_actual] : "all"
-  end
-
 
 end

@@ -1,59 +1,13 @@
 <div class="sidebar">
+  <% menu = get_menu() %>
   <div id="accordion" class="menu_sb menu_sb_a" active=<%= get_active_option_page %> >
-
-  <h3 class="first">Настройки пользователей:</h3><div><ul>
-    <%= option_li("users","Пользователи") %>
-    <%= option_li("roles","Роли") %>
-    <%= option_li("user_roles","Назначение ролей") %>
-  </ul></div>
-
-  <h3>Настройки лидов:</h3><div><ul>
-    <%= option_li("statuses","Статусы") %>
-    <%= option_li("channels","Каналы") %>
-    <%= option_li("lead_sources","Источники") %>
-  </ul></div>   
-  
-  <h3>Настройки проектов:</h3><div><ul>
-    <%= option_li("holidays","Праздники") %>
-    <%= option_li("project_types","Виды проектов") %>
-    <%= option_li("project_statuses","Статусы проектов") %>
-    <%= option_li("elongation_types","Причины продления") %>
-    <%= option_li("styles","Стили") %>
-    <%= option_li("contact_kinds","Виды контактов") %>
-  </ul></div>
-
-  <h3>Настройки сметы:</h3><div><ul>
-    <%= option_li("uoms","Ед. изм.") %>
-  </ul></div>  
-
-  <h3>Настройки финансов:</h3><div><ul>
-    <%= option_li("payment_types","Виды оплат") %>
-    <%= option_li("payment_purposes","Назначение платежей") %>
-  </ul></div>
-
-  <h3>Настройки поставшиков:</h3><div><ul>
-    <%= option_li("budgets","Бюджеты") %>
-    <%= option_li("goodstypes","Виды товаров") %>
-    <%= option_li("styles","Стили") %>
-    <%= option_li("p_statuses","Статусы") %>
-  </ul></div>
-
-  <h3>Настройки задач:</h3><div><ul>
-    <%= option_li("dev_projects","Проекты") %>
-    <%= option_li("priorities","Приоритеты") %>
-    <%= option_li("dev_statuses","Статусы задач") %>
-  </ul></div>
-
-  <h3>Настройки календаря:</h3><div><ul>
-    <%= option_li("absence_reasons","Причины отсутствия") %>
-    <%= option_li("absence_targets","Цели отсутствия") %>
-    <%= option_li("absence_shop_targets","Цели для магазинов") %>
-  </ul></div>
-
-  <h3>Настройки знаний:</h3><div><ul>
-    <%= option_li("wiki_cats","Категории знаний") %>
-  </ul></div>
-      
+    <% menu.each do |m| %>
+      <h3><%= t m[0] %></h3><div><ul>
+        <% m[1].each  do |opt| %>
+          <%= option_li(opt, t(opt)[0]) %>
+        <% end %>
+      </ul></div>
+    <% end %>
   </div>
 </div>
 

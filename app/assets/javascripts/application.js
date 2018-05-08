@@ -32,8 +32,6 @@
 //= require vue
 //= require_tree .
 
-
-
 function to_sum(d){ 
   if (isNaN(d)) return 0;
   s = d.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1 ");  
@@ -105,14 +103,36 @@ function getInputSelection(elem){
 
 $(function() {
 
-  const app = new Vue({
-    '.container',
+  // el = $('.container');
+  // const app = new Vue({
+  //   el,
+  //   data: {
+  //     reason_id: true
+  //   }
+  // })
+//   new Vue({
+//     el: '.container',
+//     data: {
+//         tableData: [
+//             { id: 1, name: 'Son Goku', race: 'saiyan'},
+//             { id: 2, name: 'Son Gohan', race: 'half-saiyan'},
+//             { id: 3, name: 'Vegeta', race: 'saiyan'},
+//             { id: 4, name: 'Trunks Brief', race: 'half-saiyan'},
+//         ],
+//         tableHeader: ["project", "name", "race"],
+//     },
+// });
+
+  const el = document.body.appendChild(document.createElement('application'))
+  app = new Vue({
+    el,
     data: {
-      reason_id: true
+      show: true
     }
   })
 
-  console.log(app)
+
+  console.log(app.show)
 
   var menu = [
     {name: 'Телефон', fun: function (){$('#lead_phone').val(getInputSelection($('#lead_info')));}}, 

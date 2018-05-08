@@ -11,17 +11,15 @@
   </thead>
     <%= hidden_field 'manager','provider_id', value: @provider.id %>
   <tbody>
-
     <%= render partial: @managers, as: :pm %>
-
-     <tr id="new_item">
-      <td class="caption3"><span>Новый менеджер: </span>
-        <div class="left" style="width:258px;" ><%= text_field "manager",:name, {:class => 'txt fullwidth'} %></div> </td>
-      <td><%= text_field "manager", :phone, {:class => 'txt fullwidth'} %></td>
-      <td><%= text_field "manager", :email, {:class => 'txt fullwidth'} %></td>
-      <td><span class="sub btn_a" id="btn-sub-send" providerid="<%= @provider.id %>" action='/provider_managers/' prm='manager'> Добавить</span></td></tr>
-
+    <% css = {class: 'txt fullwidth'} %>
+    <tr class="new_item_head"><td colspan="4">Новый менеджер:</td></tr>
+    <tr id="new_item">
+      <td><%= text_field "manager", :name,  css %></td>
+      <td><%= text_field "manager", :phone, css %></td>
+      <td><%= text_field "manager", :email, css %></td>
+      <%= td_add_sub_send('provider_managers', 'manager') %>
+    </tr>
   </tbody>
 </table>
-
 </div>

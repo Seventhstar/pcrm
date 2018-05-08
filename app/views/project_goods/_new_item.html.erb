@@ -1,22 +1,23 @@
-<tr id="new_item_<%= pgt.id %>" class="<%= opened ? '' : 'invisible' %> editable new_row">
-    <% iname = ['project_good_',pgt.id,'_'].join %>
-    <%= hidden_field iname,'goodstype_id', value: pgt.id %>
-    <%= hidden_field iname,'owner_id', value: pgt.id %>
-    <td class="fw" width='220px'><%= text_field iname,:name, {:class => 'txt'} %></td>
+<% pgt_id = pgt.id %>
+<tr id="new_item_<%= pgt_id %>" class="<%= opened ? '' : 'invisible' %> editable new_row">
+    <% iname = ['project_good_',pgt_id,'_'].join %>
+    <%= hidden_field iname,'goodstype_id', value: pgt_id %>
+    <%= hidden_field iname,'owner_id', value: pgt_id %>
+    <td class="fw" width='220px'><%= text_field iname,:name, {class: 'txt'} %></td>
     <td width='216px'>
-        <% gt_coll = Goodstype.find_by(id: pgt.id) %>
+        <% gt_coll = Goodstype.find_by(id: pgt_id) %>
         <% if gt_coll.present? %>
-            <%= chosen_src "provider_id", gt_coll.providers, nil,{nil_value: 'Выберите поставщика...',add_name: iname} %>
+            <%= chosen_src "provider_id", gt_coll.providers, nil, {nil_value: 'Выберите поставщика...', add_name: iname} %>
         <% end %>
     </td>
     <td class="caption3" width='115px'>
-        <%= text_field iname,:date_place, { value: Date.today.try('strftime',"%d.%m.%Y") , :class => 'txt datepicker'} %></td>
+        <%= text_field iname,:date_place, { value: Date.today.try('strftime',"%d.%m.%Y") , class: 'txt datepicker'} %></td>
     <td class="caption3" width='230px'>
-        <%= text_field iname,:description, {:class => 'txt fullwidth'} %></td>
+        <%= text_field iname,:description, {class: 'txt fullwidth'} %></td>
 
     <td width='58px'><%= chosen_src "currency_id", currency_src,1,{nil_value: '',add_name: iname, add_class: 'currency_src'} %></td>
     <%= td_sum_field(iname, :gsum, '', {width: '90px'}) %>
 
     <td width="48px">
-        <span class="sub btn_a" id="btn-sub-send" pe_id="<%= pgt.id %>" action='/project_goods/' prm='project_good_<%= pgt.id %>_'>Сохр.</span></td>
+        <span class="sub btn_a" id="btn-sub-send" pe_id="<%= pgt_id %>" action='/project_goods/' prm='project_good_<%= pgt_id %>_'>Сохр.</span></td>
 </tr>

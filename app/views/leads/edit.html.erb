@@ -1,8 +1,5 @@
 <% if current_user.has_role?(:manager) or @lead.ic_user == current_user  %> 
-<div class="hl hl_a bd">Редактирование лида
-<%= link_to "", @lead, method: :delete, data: { confirm: 'Действительно удалить лид?' }, :class=>"icon icon_remove right" %>
-</div>
-
+<%= render 'shared/edit_head', item: @lead, title: "Редактирование лида" %>
 
 <div class="box_wrap box_wrap_1">
 

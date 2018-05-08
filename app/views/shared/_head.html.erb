@@ -1,6 +1,8 @@
-<% if !@first_table %>
-  <% @no=@no+1 %>
+<% if @first_table == false %>
+  <% @no = @no + 1 %>
   </tbody></table></div></div>
+<% else %>
+  <% @no = 1 %>
 <% end %>
 
 <% cur_id = @cur_id.nil? ? @no : @cur_id %>

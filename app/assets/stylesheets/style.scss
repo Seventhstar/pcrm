@@ -388,15 +388,14 @@ input[type='number']::-webkit-inner-spin-button {
 .box_wrap_1 .panel-left2{width: 490px; }
 .box_wrap_1 .panel-right{width: 584px; }
 
+#tabs-1 .panel-left{width: 604px;}
+
 .box_cent {position:relative;}
 
 .form_c {}
 
-
-
 .auth_form {width: 425px; margin:0 auto; }
-@media screen and (max-width: 980px) {
-  .auth_form {width: 425px; margin:0 -60px; }
+  @media screen and (max-width: 980px) {.auth_form {width: 425px; margin:0 -60px; }
 }
 
 .auth_form table.tbl_fc {}

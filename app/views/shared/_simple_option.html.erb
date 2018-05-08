@@ -1,33 +1,31 @@
 <div class="sep_05"></div>
 
 <div class="option_list">
-<% fn = ''+@item.class.name.underscore.pluralize %>
+<% fn = class_name %>
 <% if ['users','user_roles'].include? fn %>
-<% elsif lookup_context.find_all(fn+'/_new_item.html.erb').any? %>
-  <%= render fn+'/new_item' %>
+<% elsif lookup_context.find_all("#{fn}/_new_item.html.erb").any? %>
+  <%= render "#{fn}/new_item" %>
 <% else %>
   <%= render 'shared/new_item' %>
 <% end %>
 </div>
 
-<% if lookup_context.find_all(fn+'/_index.html.erb').any? %>
-  <%= render fn+'/index.html' %>
+<% if lookup_context.find_all("#{fn}/_index.html.erb").any? %>
+  <%= render "#{fn}/index.html" %>
 <% else %>
 
 <div class="sep_15"></div>
 
-<% if @items.first.nil? %>
-  <% attrs = @item.attributes.except("id", "created_at", "updated_at") %>
-<% else %>
-  <% attrs = @items.first.attributes.except("id", "created_at", "updated_at") %>
-<% end %>
+<% attrs = (@items.first.nil? ? @item : @items.first).attributes.except("id", "created_at", "updated_at") %>
+
+<% is_inside_edit = inside_edit() %>
 
 <div class="items_box_cont tbl_a">
-<div class="head"> <%= "Список #{t(@item.model_name.name.downcase)[1]}" %></div>
+<div class="head"> <%= t_items_list %></div>
 <table class="tleads" model="<%= @item.class.name %>">
   <thead>
   <% attrs.each do |attr| %>
-    <th <%= attr_boolean?(@item,attr[0])||attr_date?(@item,attr[0]) ? 'width=60px;':'' %> fld='<%= attr[0] %>'><%= t(attr[0]) %></th>
+    <th <%= attr_date_or_bool?(@item, attr[0]) ? "width=60px;":'' %> fld='<%= attr[0] %>'><%= t(attr[0]) %></th>
   <% end %>
   <th></th>
   </thead>
@@ -35,16 +33,28 @@
     <% @items.each do |item| %>
       <tr id="item_<%= item.id %>">
         <% attrs.each do |attr| %>
-          <% if attr_boolean?(@item, attr[0]) %>
-            <td class="state"><span class="check_img sw_check <%= item[attr[0]] ? "checked" :"" %>" item_id="<%= item.id %>" chk="<%= attr[0] %>"></span>
+          <% a0 = attr[0] %>
+          
+          <% if attr_boolean?(@item, a0) %>
+            <td class="state">
+              <span class="check_img sw_check <%= item[a0] ? 'checked' : '' %>" item_id="<%= item.id %>" chk="<%= a0 %>"></span>
             </td> 
-          <% elsif attr_date?(@item,attr[0]) %>  
-            <td><%= item[attr[0]].try('strftime',"%d.%m.%Y") %></td>
+
+          <% elsif attr_date?(@item, a0) %>  
+            <td><%= item[a0].try('strftime',"%d.%m.%Y") %></td>
+
+          <% elsif a0.last(3) == '_id' %>
+            <td title='<%= item.id %>'><%= item.try(a0[0..-4]).try(:name) %></td>
+
           <% else %>
-            <td title='<%= item.id %>'><%= item[attr[0]].to_s %></td>
+            <td title='<%= item.id %>'><%= item[a0].to_s %></td>
           <% end %>
+
         <% end %>
-        <%= tool_icons(item,{tag: 'span', subcount: item.try(:parents_count)} )%>
+        
+        <% tag = is_inside_edit.include?(item.class.name) ? 'link' : 'span' %>
+        <%= tool_icons(item, {tag: tag, subcount: item.try(:parents_count)} )%>
+        
       </tr>
     <% end %>
   </tbody>

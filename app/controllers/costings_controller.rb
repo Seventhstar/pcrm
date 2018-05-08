@@ -1,10 +1,13 @@
 class CostingsController < ApplicationController
   before_action :set_costing, only: [:show, :edit, :update, :destroy]
-
+  include Sortable
+  
   respond_to :html
 
   def index
     @costings = Costing.all
+    sort_1 = "users.name"
+    sort_2 = "created_at"
     respond_with(@costings)
   end
 
@@ -44,4 +47,12 @@ class CostingsController < ApplicationController
     def costing_params
       params.require(:costing).permit(:project_id, :user_id, :project_address)
     end
+
+    def sort_column
+    end
+
+    def sort_2
+      Costing.column_names.include?(params[:sort2]) ? params[:sort2] : "created_at"
+    end
+
 end

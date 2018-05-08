@@ -1,6 +1,3 @@
-<h1>Editing Costing</h1>
-
+<%= render 'shared/edit_head', item: @costing, title: "Редактирование сметы #{@costing.project_address}" %>
 <%= render 'form', costing: @costing %>
 
-<%= link_to 'Show', @costing %> |
-<%= link_to 'Back', costings_path %>

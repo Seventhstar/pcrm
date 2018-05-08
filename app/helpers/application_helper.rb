@@ -1,12 +1,16 @@
 module ApplicationHelper
   include CurrencyHelper
   
-  def attr_boolean?(item,attr)
+  def attr_boolean?(item, attr)
     item.column_for_attribute(attr.to_s).type == :boolean
   end
   
-  def attr_date?(item,attr)
-      item.column_for_attribute(attr.to_s).type == :date
+  def attr_date?(item, attr)
+    item.column_for_attribute(attr.to_s).type == :date
+  end
+
+  def attr_date_or_bool?(item, attr)
+    attr_boolean?(item, attr) || attr_date?(item, attr)
   end
 
   def is_admin?
@@ -21,11 +25,18 @@ module ApplicationHelper
     [["Телефон",1],["E-mail",2]]
   end
 
+  # def td_actions(url, f)
+  #   # <td><%= link_to 'Отмена', url, class: "sub btn_a btn_reset"%>
+  #           # <%= f.button :submit, value: 'Сохранить', :class => 'sub btn_a ' %></td>
+  #   content_tag :td do
+  #     link_to 'Отмена', url, class: "sub btn_a btn_reset"
+  #   end
+  # end
 
   def uncheked_tasks
     uncheked_tasks = Develop.where(dev_status_id: 2).size
     a = content_tag :span
-    a = link_to uncheked_tasks, develops_path({develops_status_id: "2"}),  { class: "uncheked_tasks", title: "Непроверенных задач" } if uncheked_tasks>0
+    a = link_to uncheked_tasks, develops_path({develops_status_id: "2"}), { class: "uncheked_tasks", title: "Непроверенных задач" } if uncheked_tasks>0
     a
   end
 
@@ -148,7 +159,7 @@ def sortable_pil(column, title = nil, default_dir = 'desc')
   if (direction == false)
     direction = default_dir
   end
-  content_tag :span, title,{ class: css_class, sort: column, direction: direction }
+  content_tag :span, title, {class: css_class, sort: column, direction: direction }
 end
 
 def sortable_th(column, title = nil, nosort = false)
@@ -248,6 +259,13 @@ def option_li(page, title)
   end
 end
 
+def td_add_sub_send(action, prm)
+  content_tag :td do
+    content_tag :span, {class: 'sub btn_a', id: "btn-sub-send", action: "/#{action}/", prm: prm} do
+      'Добавить'
+    end
+  end
+end
 
 def submit_cancel(back_url, modal = false)
   add_cls = modal ? ' update' : ''

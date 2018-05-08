@@ -62,13 +62,12 @@
 
       </tr>
     <% end %>
-    <template v-if="reason_id==2">
-        <tr><td></td> <td class="caption caption_to"><div id='a_canceled' >
-              <%= f.input :canceled, as: :boolean, label: 'Отменить отсутствие', class: 'inp_btn checkbox'  %>
-        </div>
-        </td>
+    <!-- <template v-if="show" class="vue-row"> -->
+      <tr><td></td><td class="caption caption_to"><div id='a_canceled' >
+        <%= f.input :canceled, as: :boolean, label: 'Отменить отсутствие', class: 'inp_btn checkbox'  %>
+        </div></td>
       </tr>
-    </template>
+    <!-- </template> -->
         
     
 

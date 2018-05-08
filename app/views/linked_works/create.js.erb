@@ -1,0 +1,6 @@
+<% if @work.errors.present? %>
+  <%= render 'errors', item: @work %>
+<% else %>
+  $('#linked_works tr.new_item_head').before("<%= j render @work %>");
+  $('#new_item input').val('');
+<% end %>

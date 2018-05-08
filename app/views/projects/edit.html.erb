@@ -1,6 +1,4 @@
-<div class="hl hl_a bd">Редактирование проекта <%= @project.address %>
-<%= link_to "", @project, method: :delete, data: { confirm: 'Действительно удалить проект?' }, class: "icon icon_remove right" %>
-</div>
+<%= render 'shared/edit_head', item: @project, title: "Редактирование проекта #{@project.address}" %>
 
 <%= hidden_field_tag 'holidays', @holidays %> 
 <%= simple_form_for(@project) do |f| %>

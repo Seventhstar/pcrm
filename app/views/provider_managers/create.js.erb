@@ -1,6 +1,6 @@
 <% if @pm.errors.present? %>
   <%= render 'errors', item: @pm %>
 <% else %>
-  $('#provider_managers tr:last').before("<%= j render @pm %>");
+  $('#provider_managers tr.new_item_head').before("<%= j render @pm %>");
   $('#new_item input').val('');
 <% end %>

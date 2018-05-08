@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  get 'linked_works/create'
+
+  get 'linked_works/destroy'
+
+  get 'work/edit'
+
+  get 'work/index'
+
   resources :costings
   get 'contacts/index'
   get 'contacts/new'
@@ -38,6 +46,7 @@ Rails.application.routes.draw do
   end
 
   resources :project_elongations
+  get 'projects/:id/:action(. :format)' => 'projects#edit', constraint: { tab_id: '233' }
   resources :projects do
     resources :contacts
     collection do
@@ -46,7 +55,6 @@ Rails.application.routes.draw do
   end
 
   get 'projects/:id/:update_client' => 'projects#update_client'
-  get 'projects/:id/edit#:tab_id' => 'projects#edit', constraint: { tab_id: /\d+/ }
 
   resources :project_goods
   resources :project_types
@@ -107,6 +115,12 @@ Rails.application.routes.draw do
   resources :roles
   resources :user_roles
   resources :uoms
+  resources :materials
+  resources :consumptions
+  resources :works
+  resources :work_types
+  resources :linked_works
+  resources :work_linkers
  
 
   get "ajax/channels"

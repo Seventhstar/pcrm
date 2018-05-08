@@ -2,8 +2,8 @@ class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy, :update_client]
   before_action :logged_in_user
   before_action :check_sum, only: [:create, :update]
-  helper_method :sort_2, :dir_2
-  helper_method :sort_column, :sort_direction
+  include Sortable
+  
   respond_to :html, :json, :js
 
   include ProjectsHelper
@@ -114,6 +114,8 @@ class ProjectsController < ApplicationController
     pgt = pgt.concat(types_from_project)
     @pgt = pgt
     @prj_good_types = Goodstype.where(id: [pgt]).order(:name)
+    # @prj_good_types = @prj_good_types.pluck(:id, :name).to_h
+    @goods = ProjectGood.where(project_id: @project.id)
     
     def_params
   end
@@ -266,11 +268,6 @@ class ProjectsController < ApplicationController
 
     def sort_2
       Project.column_names.include?(params[:sort2]) ? params[:sort2] : "number"
-    end
-
-    def dir_2
-      defaul_dir = sort_column =='number' ? "asc": "desc"
-      %w[asc desc].include?(params[:dir2]) ? params[:dir2] : defaul_dir
     end
 
   end
