@@ -73,6 +73,15 @@
 @calc_proj_sum_real = () ->
   calcPrjSum('_real')  
 
+calc_rest = ->
+  sum_total_real = intPrjSum('sum_total_real')
+  if sum_total_real > 0
+    sum_total = sum_total_real
+  else
+    sum_total = intPrjSum('sum_total')
+
+  $('#project_sum_rest').val(to_sum(sum_total - ex_sum)) 
+
 @calc_executor_sum =() ->
   footage = prjFloat('footage')
   footage2 = prjFloat('footage_2')
@@ -100,7 +109,8 @@
     ex_sum = designer_sum + designer_sum2 + visual_sum
   else
     ex_sum = intFromSum($('#project_sum_total_executor').val())
-    $('#project_sum_rest').val( to_sum(intPrjSum('sum_total')) - ex_sum) 
+
+
   return
 
 $(document).ready ->
@@ -164,7 +174,7 @@ $(document).ready ->
       'exclusions': v
     dd = $.datepicker.formatDate('dd.mm.yy', new Date(d))
     $('#project_date_end_plan').val dd
-  $('#project_price,#project_footage,#project_price_2,#project_footage_2').change ->
+  $('#project_price, #project_footage, #project_price_2, #project_footage_2').change ->
     calc_proj_sum_plan()
     calc_executor_sum()
   $('#project_price_real, #project_price_2_real, #project_footage_2_real, #project_footage_real').change ->
@@ -180,7 +190,7 @@ $(document).ready ->
     calc_debt()
   $('#project_sum_total_executor').change ->
     $('#project_sum_rest').val( to_sum(intFromSum($('#project_sum_total').val()) - intFromSum($(this).val())) )
-  $('#project_designer_price,#project_designer_price_2,#project_visualer_price,#project_designer_sum,#project_visualer_sum').change ->
+  $('#project_designer_price, #project_designer_price_2, #project_visualer_price, #project_designer_sum, #project_visualer_sum').change ->
     calc_executor_sum()
     return
   return

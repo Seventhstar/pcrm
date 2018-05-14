@@ -1,6 +1,9 @@
-	<% if params['sort']=='calendar' %>
-		$("#div_tabsences").html("<%= escape_javascript(render("calendar")) %>");
-	<% else %>
-		$("#div_tabsences").html("<%= escape_javascript(render("absences")) %>");
-	<% end %>  
+$('#page_num').val(<%= @page+1 %>)
+<% if params['sort']=='calendar' %>
+  $("#div_tabsences").html("<%= j render("calendar") %>");
+<% elsif @page>1 %>
+  $("#page_<%= @page %>").html("<%= j render("absences") %>");
+<% else %>
+  $("#div_tabsences").html("<%= j render("absences") %>");
+<% end %>  
 

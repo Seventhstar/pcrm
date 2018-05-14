@@ -33,6 +33,19 @@ module ApplicationHelper
   #   end
   # end
 
+  def month_year(date)
+    "#{t date.try('strftime','%B')} #{date.try('strftime','%Y')}"
+  end
+
+  def f_time(date_time)
+    date_time.try('strftime',"%H:%M")
+  end
+
+  def f_date(date_time)
+    date_time.try('strftime',"%d.%m.%Y")
+  end
+
+
   def uncheked_tasks
     uncheked_tasks = Develop.where(dev_status_id: 2).size
     a = content_tag :span

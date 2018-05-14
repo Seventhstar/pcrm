@@ -7,15 +7,15 @@
     <% new_date = payment.date? ? payment.date : Date.today %>
       <% if cur_month != new_date.month && (params[:sort] == "date" || (params[:sort] == nil)) %> 
           <% cur_month = new_date.month %>
-          <%= render "head", {:first_table => first_table, :heading => t(new_date.try('strftime',"%B"))+" "+new_date.try('strftime',"%Y") } %>
+          <%= render "head", {first_table: first_table, heading: month_year(new_date) } %>
           <% first_table = false %>  
           <% @sum = 0 %>
       <% end %>
       <tr class=<%= 'nonactual' if payment.date < (Date.today.beginning_of_month-1.month) %>>
-      	<td><%= payment.date.try('strftime',"%d.%m.%Y") %></td>
-      	<td><%= payment.payment_type_name %></td>
-      	<td><%= payment.purpose_name %></td>
-      	<td><%= payment.whom_name %></td>
+        <td><%= payment.date.try('strftime',"%d.%m.%Y") %></td>
+        <td><%= payment.payment_type_name %></td>
+        <td><%= payment.purpose_name %></td>
+        <td><%= payment.whom_name %></td>
         <td><%= payment.project_address %></td>
         <td class="td_right l_edit" item_id="<%= payment.id %>" attr='sum'><%= payment.sum.nil? ? 0 : payment.sum.to_sum  %></td>
         <td class="state"><span class="check_img sw_check <%= payment.verified ? 'checked' : '' %>" item_id="<%= payment.id %>"></span></td>

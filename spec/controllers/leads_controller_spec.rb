@@ -1,36 +1,46 @@
 require 'rails_helper'
 
 RSpec.describe LeadsController, type: :controller do
-
   # This should return the minimal set of attributes required to create a valid
   # Lead. As you add validations to Lead, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    #skip("Add a hash of attributes valid for your model")
-    {info: 'new lead', channel_id: 3}
-  }
-
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
-  let(:user1) { User.first }
-  before do 
-   log_in user1 
-  #p user1 
- end
+  # let(:valid_attributes) {
+  #   #skip("Add a hash of attributes valid for your model")
+  #   {info: 'new lead', channel_id: 3}
+  # }
+  # let(:invalid_attributes) {
+  #   skip("Add a hash of attributes invalid for your model")
+  # }
+  # let(:user1) { create(:user) }
+  # let(:user) { create(:user) }
+  # before do 
+  #   log_in user
+  #   puts user1 
+  #  end
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # LeadsController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
+  # let(:valid_session) { {} }
 
   describe "GET #index" do
-    it "assigns all leads as @leads" do
+    let(:user) {create(:user) }
+    let(:leads) {create_list(:lead, 2, ic_user: user)}
+
+    # it "assigns all leads as @leads" do
       # lead = Lead.create! valid_attributes
-      get :index, params: {sort: 'status_date', direction: 'asc', sort2: 'status_date', dir2: 'asc', only_actual: true}
+      # get :index, params: {sort: 'status_date', direction: 'asc', sort2: 'status_date', dir2: 'asc', only_actual: true}
       
       # p assigns(:leads)
-      expect(assigns(:leads)).to eq([lead])
-    end
+      # expect(assigns(:leads)).to eq([lead])
+      # expect { post :create, params: { info: 'new lead', } }.to change(question.comments, :count).by(1)
+
+      # before {get :index}
+
+      it 'populates an array of all questions' do
+        expect(assigns(:leads)).to match_array(leads)
+      end
+
+    # end
   end
 
   # describe "GET #show" do

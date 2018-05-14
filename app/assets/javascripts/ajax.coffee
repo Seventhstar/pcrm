@@ -43,6 +43,9 @@
 @update_page = ->
   $.get document.URL, null, null, 'script'
 
+@paginate = (v)->
+  $.get document.URL + '&page='+v, null, null, 'script'
+
 @disable_input_row = () ->
  $('.icon_hide_edit').each ->
   item_id = $(this).attr('item_id')
@@ -322,6 +325,7 @@ $ ->
   $(window).scroll ->
     dh = $(document).height()
     st = $(this).scrollTop()
+
     if st > 150
       $('#back-top').fadeIn()
     else
@@ -330,6 +334,12 @@ $ ->
       $('#to_bottom').fadeOut()
     else if dh>1200
       $('#to_bottom').fadeIn()
+
+    v = parseInt $('#page_num').val()
+    if($(window).scrollTop() == dh - $(window).height()) && v > 0
+      $("#page_"+v).html("Загружается...")
+      delay('paginate('+v+')',100)
+    
 
   # при клике на ссылку плавно поднимаемся вверх
   $('#back-top a').click ->

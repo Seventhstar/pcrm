@@ -1,6 +1,6 @@
 class AbsencesController < ApplicationController
   include CommonHelper
-  respond_to :html, :json
+  respond_to :html, :json, :js
   before_action :set_absence, only: [:show, :edit, :update, :destroy]
   helper_method :sort_2, :dir_2
   helper_method :sort_column, :sort_direction
@@ -19,18 +19,19 @@ class AbsencesController < ApplicationController
     @curr_day = @current_month.beginning_of_month.beginning_of_week
     query_str = "absences.*, date_trunc('month', dt_from) AS month"
 
-    if is_manager?
-      @absences = Absence.select(query_str)
-    else
-      @absences = current_user.absences.select(query_str)
-    end
+    @page = params[:page].try(:to_i) || 1
+
+    abs = is_manager? ? Absence.all : current_user.absences
+    @absences = abs.select(query_str).joins(:reason)
 
     if params[:sort]!='calendar'
       if @only_actual
         @absences = @absences.where("dt_from >= ?", (Date.today-2.week))
+      else
+        @absences = @absences.paginate(page: @page, per_page: 50)
       end
     else
-      @absences = @absences.where("dt_from >= ?",@curr_day)
+      @absences = @absences.where("dt_from >= ?", @curr_day)
     end
 
     if params[:sort] == 'users.name'
@@ -39,8 +40,8 @@ class AbsencesController < ApplicationController
     end
 
     sort_1 = @sort_column == 'dt_from' ? 'month' : @sort_column
-    order = sort_1 + " " + sort_direction + ", "+ sort_2  + " " + dir_2 + ", absences.created_at desc"
-    # p "sort",sort_1,sort_direction
+    order = "#{sort_1} #{sort_direction}, #{sort_2} #{dir_2}, absences.created_at desc"
+    puts "order #{order}"
     @absences = @absences.order(order)
   end
 
@@ -189,7 +190,7 @@ class AbsencesController < ApplicationController
     end
 
     def dir_2
-      defaul_dir = sort_column =='dt_from' ? "asc": "desc"
+      defaul_dir = (sort_column =='dt_from' && @only_actual) ? "asc": "desc"
       %w[asc desc].include?(params[:dir2]) ? params[:dir2] : defaul_dir
     end
 

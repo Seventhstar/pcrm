@@ -6,16 +6,16 @@
     <% new_date = receipt.date? ? receipt.date : Date.today %>
       <% if cur_month != new_date.month && (params[:sort] == "date" || (params[:sort] == nil)) %> 
           <% cur_month = new_date.month %>
-          <%= render "head", {:first_table => first_table, :heading => t(new_date.try('strftime',"%B"))+" "+new_date.try('strftime',"%Y") } %>
+          <%= render "head", {first_table: first_table, heading: month_year(new_date) } %>
           <% first_table = false %>  
           <% @sum = 0 %>
       <% end %>
       <tr class="<%= receipt.payment_id.nil? ? '': 'nonactual' %>" >
-      	<td><%= receipt.date.try('strftime',"%d.%m.%Y") %></td>
-      	<td><%= receipt.payment_type_name %></td>
-      	<td><%= receipt.executor_name %></td>
-      	<td><%= receipt.purpose %></td>
-      	<td><%= receipt.provider_name %></td>
+        <td><%= receipt.date.try('strftime',"%d.%m.%Y") %></td>
+        <td><%= receipt.payment_type_name %></td>
+        <td><%= receipt.executor_name %></td>
+        <td><%= receipt.purpose %></td>
+        <td><%= receipt.provider_name %></td>
         <td><%= receipt.project_address %></td>
         <td class="td_right l_edit" item_id="<%= receipt.id %>" attr='sum'><%= receipt.sum.to_sum %></td>
         <td><%= tooltip_if_big receipt.description, 25 %></td>
