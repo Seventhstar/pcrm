@@ -54,7 +54,7 @@ class Project < ActiveRecord::Base
 
   def progress_proc
     ps = pstatus.try(:name)
-    ps << " #{self.progress}%" if self.progress&.between?(1, 99)
+    ps += " #{self.progress}%" if self.progress&.between?(1, 99)
     ps
   end
 

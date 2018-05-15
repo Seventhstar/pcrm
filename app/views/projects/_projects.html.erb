@@ -46,8 +46,8 @@
                                                   'E-mail:' => project.client_email}), true ) %></td>
     <% if is_admin? && @sort!="users.name" %><td rowspan="2"><%= project.executor_name %></td> <% end %>
 
-    <td class="td_prgrs"><%= project.date_start.try('strftime',"%d.%m.%Y") %></td>
-    <td class="<%= class_prj_td(project) %> td_prgrs"><%= project.date_end.try('strftime',"%d.%m.%Y") %></td>
+    <td class="td_prgrs"><%= f_date(project.date_start) %></td>
+    <td class="<%= class_prj_td(project) %> td_prgrs"><%= f_date(project.date_end) %></td>
 
     <% if is_manager? %>
 

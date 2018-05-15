@@ -10,8 +10,7 @@
                                                             inp_class: 'sum_cost', class: 'prj_not_simple'}) %>
   <td class="prj_not_simple"></td>
   <%= td_sum_field(f, :sum_total_executor, 'Общая стоимость исполнителей', {value: @project.executor_sum, 
-                                                            inp_class: 'sum_cost'} ) %>
-  
+                                                            inp_class: 'sum_cost', disabled: true} ) %>
 </tr>
 <tr>
   <%= td_sum_field(f, :visualer_price, 'Цена для визуализатора (за м2)', {class: 'prj_not_simple'}) %>
@@ -20,6 +19,6 @@
   <%= td_sum_field(f, :visualer_sum, 'Cтоимость визуализатора', {value: @project.visualer_sum_calc, 
                                                                 inp_class: 'sum_cost', class: 'prj_not_simple'}) %>
   <td class="prj_not_simple"></td>
-  <%= td_sum_field(f, :sum_rest, 'Остаток', {value: @project.rest, inp_class: 'sum_rest'}) %>
+  <%= td_sum_field(f, :sum_rest, 'Остаток', {value: @project.rest, inp_class: 'sum_rest', disabled: true}) %>
 </tr>
 <% end %>

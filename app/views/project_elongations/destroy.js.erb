@@ -1,6 +1,6 @@
 $('#pe_<%= params[:id] %>').remove();
-$('#project_date_end_plan').val('<%= @project.date_end.try('strftime',"%d.%m.%Y") %>');
+$('#project_date_end_plan').val('<%= f_date(@project.date_end) %>');
 $('#project_days').val('<%= @project.days_duration %>');
 <% if @project.elongations.size() == 0 %>
-  $('#project_date_end_plan').prop('disabled', false);
+  $('#project_date_end_plan, #project_days').prop('disabled', false);
 <% end %>  

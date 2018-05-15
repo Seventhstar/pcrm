@@ -5,12 +5,7 @@ module ProjectsHelper
   end
 
   def get_total_id(pgt)
-    if pgt.present?
-      id = pgt.id
-    else
-      id = @project.id
-    end
-    id
+    id = pgt.present? ? pgt.id : @project.id
   end
 
   def get_total_key(pgt)
@@ -43,9 +38,9 @@ module ProjectsHelper
       sum_by_currency = total_data.select {|h| h[:currency_id] == i }.first
       tsum = 0
       tsum = sum_by_currency[sum_type_str] if sum_by_currency.present?
-      s = s + ' | ' if s.length >0 && tsum>0
-      s = s + tsum.to_sum + c if tsum>0
-      i = i + 1 
+      s += ' | ' if s.length >0 && tsum>0
+      s += tsum.to_sum + c if tsum>0
+      i += 1
     end
     s
   end
@@ -91,28 +86,28 @@ module ProjectsHelper
   def get_project_goods_data()
 
     total_data = @goods.group('currency_id')
-    .select('currency_id, sum(gsum) as gsum, sum(sum_supply) as sum_supply, 
-      sum(case when fixed then sum_supply else 0 end) as sum_fixed')
-    .collect{ |c| {currency_id: c.currency_id, 
-      gsum: c.gsum||0, 
-      sum_supply: c.sum_supply ||0, 
-      sum_fixed: c.sum_fixed }}
-    end
+        .select('currency_id, sum(gsum) as gsum, sum(sum_supply) as sum_supply, 
+                  sum(case when fixed then sum_supply else 0 end) as sum_fixed')
+        .collect{ |c| {currency_id: c.currency_id, 
+                        gsum: c.gsum||0, 
+                        sum_supply: c.sum_supply ||0, 
+                        sum_fixed: c.sum_fixed }}
+  end
 
-    def td_sum_field( f, val = 0, label='', params = {})
-      mask_cls = params[:mask] ? 'float_mask' : 'sum_mask'
-      inp_add_mask = params[:inp_class].nil? ? '' : ' '+params[:inp_class]
-      lbl = content_tag 'label', params[:translate] ? t(label) : label if !label.nil?
-      v = params[:value]
-      disabled = params[:disabled]
-      v ||= @project[val] if !@project.nil?
-      if f.class == String
-        obj_name = f
-      else
-        obj_name = f.object_name
-      end 
+  def td_sum_field( f, val = 0, label='', params = {})
+    mask_cls = params[:mask] ? 'float_mask' : 'sum_mask'
+    inp_add_mask = params[:inp_class].nil? ? '' : ' '+params[:inp_class]
+    lbl = content_tag 'label', params[:translate] ? t(label) : label if !label.nil?
+    v = params[:value]
+    disabled = params[:disabled]
+    v ||= @project[val] if !@project.nil?
+    if f.class == String
+      obj_name = f
+    else
+      obj_name = f.object_name
+    end 
 
-      txt = content_tag 'input', '', value: v, 
+    txt = content_tag 'input', '', value: v, 
       onblur:"onBlur(this)", onfocus:"onFocus(this)", 
       class: 'txt '+mask_cls + inp_add_mask, 
         type: 'text', 
@@ -120,109 +115,95 @@ module ProjectsHelper
         id:   "#{obj_name}_#{val}", 
         disabled: disabled
 
-        style = ""
-        style = 'width: '+params[:width] if params[:width]
+    style = ""
+    style = 'width: '+params[:width] if params[:width]
 
-        add_class = params[:class].nil? ? '' : ' '+params[:class]
-        content_tag 'td', style: style do
-          content_tag 'div', class: 'inp_w'+add_class do
-            lbl.nil? ? txt : lbl+txt
-          end
-        end
+    add_class = params[:class].nil? ? '' : ' '+params[:class]
+    content_tag 'td', style: style do
+      content_tag 'div', class: "inp_w #{add_class}" do
+        lbl.nil? ? txt : lbl+txt
       end
-
-      def obj_to_link(g)
-        prm = params[:sort]
-        prm = 'project_id' if prm.nil?
-        @cur_id = g.try(prm)
-        g.try(prm.sub('_id',''))
-      end
-
-
-      def nil_footage(f)
-        f.nil? || f==0 || f=='0.0' || f=='0'
-      end
-
-      def all_sum(g)
-        gsum = g.gsum.nil? ? '' : g.gsum.to_sum
-        gsum = ["<span class='striked'>",gsum,'</span>'].join if gsum.length && g.order && g.sum_supply != g.gsum
-        a = gsum 
-        a = [gsum,'<br>',g.sum_supply.to_sum].join if !g.sum_supply.nil? && g.sum_supply != g.gsum
-        a.html_safe
-      end
-
-      def all_sum_info(g)
-        gsum = g.gsum.nil? ? '' : g.gsum.to_sum
-        a = 'Предложено: ' + gsum 
-        a = [a,'&#013; Заказано: ',g.sum_supply.to_sum].join if !g.sum_supply.nil?
-        a.html_safe
-      end
-
-
-      def class_prj_td (prj)
-        cls = ''
-        cls = 'green '    if prj.pstatus_id == 4
-        cls = 'hot_date'  if !prj.date_end.nil? && prj.date_end <= Date.today+1
-        cls = 'hot '      if prj.pstatus_id == 2
-        cls
-      end
-
-
-      def class_for_project (prj)
-        cls = ''
-        cls = 'green '    if prj.pstatus_id == 4
-        cls = "nonactual" if prj.pstatus_id == 3
-        cls = 'hot '      if prj.pstatus_id == 2
-        cls
-      end
-
-      def business_days_between(date1, date2)
-        hdays = Holiday.pluck(:day)
-        business_days = 0
-        date = date2
-        while date > date1
-         business_days = business_days + 1 unless date.saturday? or date.sunday? or hdays.include?(date)
-         date = date - 1.day
-       end
-       business_days
-     end
-
-     def project_page_url
-      sess_url  = session[:last_projects_page]
-      sess_url || projects_url
     end
-
-    def class_for_prj_goods(g)
-      cls = 'placed'
-      cls = 'ordered' if g.order
-      cls = "fixed"   if g.fixed
-      cls
-    end
-
-    def icon_for_project (prj)
-      cntnt = '<div class="icons-indicate">'   
-      cntnt = cntnt + image_tag('debt.png', title: 'Заказчик должен денег') if prj.debt
-
-      # cntnt = cntnt + image_tag('25.png', title: '25% процентов оплаты') if prj.payd_q
-      # cntnt = cntnt + image_tag('100.png', title: 'Оплачен, но не сдан') if prj.payd_full
-
-      cntnt = cntnt + image_tag('hammer.png', title: 'Интерес к стройке') if prj.interest
-
-      # if is_admin? && prj.comments.count>0
-      #   if !prj.comments.last.receivers.find_by_user_id(current_user.id).nil?
-      #    #   cntnt = cntnt + image_tag('comment_unread.png', title: 'Есть комментарии') 
-      #    # else
-      #    cntnt = cntnt + image_tag('comment.png', title: 'Новый комментарий')
-      #   end
-      # end
-
-      cntnt = cntnt + image_tag('attention.png', title: 'Особое внимание') if prj.attention
-      # cntnt = cntnt + image_tag('stopped.png', title: 'Проект приостановлен') if prj.pstatus_id == 2
-      cntnt = cntnt + '</div>'
-    end
-
-    def good_state_src
-      [['Предложенные',1],['Заказанные',2],['Закрытые',3]]
-    end
-
   end
+
+  def obj_to_link(g)
+    prm = params[:sort]
+    prm = 'project_id' if prm.nil?
+    @cur_id = g.try(prm)
+    g.try(prm.sub('_id',''))
+  end
+
+
+  def nil_footage(f)
+    f.nil? || f==0 || f=='0.0' || f=='0'
+  end
+
+  def all_sum(g)
+    gsum = g.gsum.nil? ? '' : g.gsum.to_sum
+    gsum = ["<span class='striked'>",gsum,'</span>'].join if gsum.length && g.order && g.sum_supply != g.gsum
+    a = gsum 
+    a = [gsum,'<br>',g.sum_supply.to_sum].join if !g.sum_supply.nil? && g.sum_supply != g.gsum
+    a.html_safe
+  end
+
+  def all_sum_info(g)
+    gsum = g.gsum.nil? ? '' : g.gsum.to_sum
+    a = 'Предложено: ' + gsum 
+    a = [a,'&#013; Заказано: ',g.sum_supply.to_sum].join if !g.sum_supply.nil?
+    a.html_safe
+  end
+
+
+  def class_prj_td (prj)
+    cls = ''
+    cls = 'green '    if prj.pstatus_id == 4
+    cls = 'hot_date'  if !prj.date_end.nil? && prj.date_end <= Date.today+1
+    cls = 'hot '      if prj.pstatus_id == 2
+    cls
+  end
+
+
+  def class_for_project (prj)
+    cls = ''
+    cls = 'green '    if prj.pstatus_id == 4
+    cls = "nonactual" if prj.pstatus_id == 3
+    cls = 'hot '      if prj.pstatus_id == 2
+    cls
+  end
+
+  def business_days_between(date1, date2)
+    hdays = Holiday.pluck(:day)
+    business_days = 0
+    date = date2
+    while date > date1
+     business_days = business_days + 1 unless date.saturday? or date.sunday? or hdays.include?(date)
+     date = date - 1.day
+   end
+   business_days
+  end
+
+  def project_page_url
+    sess_url  = session[:last_projects_page]
+    sess_url || projects_url
+  end
+
+  def class_for_prj_goods(g)
+    cls = 'placed'
+    cls = 'ordered' if g.order
+    cls = "fixed"   if g.fixed
+    cls
+  end
+
+  def icon_for_project (prj)
+    cntnt = '<div class="icons-indicate">'   
+    cntnt = cntnt + image_tag('debt.png', title: 'Заказчик должен денег') if prj.debt
+    cntnt = cntnt + image_tag('hammer.png', title: 'Интерес к стройке') if prj.interest
+    cntnt = cntnt + image_tag('attention.png', title: 'Особое внимание') if prj.attention
+    cntnt = cntnt + '</div>'
+  end
+
+  def good_state_src
+    [['Предложенные', 1], ['Заказанные', 2], ['Закрытые', 3]]
+  end
+
+end

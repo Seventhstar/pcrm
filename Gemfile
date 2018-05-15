@@ -115,7 +115,3 @@ gem 'vuejs-rails'
 gem 'skim'
 gem 'cocoon'
 gem 'formtastic', '~> 3.0'
-
-gem 'elasticsearch-model', git: 'git://github.com/elastic/elasticsearch-rails.git', branch: 'master'
-gem 'elasticsearch-rails', git: 'git://github.com/elastic/elasticsearch-rails.git', branch: 'master'
-gem 'searchkick'

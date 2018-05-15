@@ -30,6 +30,10 @@
 //= require cocoon
 //= require contextMenu
 //= require vue
+//= require vue-router
+//= require vue-resource
+//= require vuex
+//= require script
 //= require_tree .
 
 function to_sum(d){ 

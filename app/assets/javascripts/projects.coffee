@@ -20,7 +20,7 @@
     $('#project_days').val( moment().isoWeekdayCalc(d1,d2,[1,2,3,4,5],v) )
     return
 
-@intPrjSum = (name) ->
+intPrjSum = (name) ->
   intFromSum($('#project_'+name).val())
 
 @prjFloat = (name) ->
@@ -35,7 +35,7 @@
      _sum.removeClass('red')
 
 
-@calc_debt = () ->
+calc_debt = ->
   sum_total = intPrjSum("sum_total")
   calc_sum_total = intPrjSum("sum") + intPrjSum("sum_2")
   
@@ -50,7 +50,7 @@
   $('#cl_debt').html(to_sum(sum_total-intFromSum($('#cl_total').html())))
   return
 
-@fp_sum = (sum_name, price, footage) ->
+fp_sum = (sum_name, price, footage) ->
   sum = to_sum( intPrjSum(price) * prjFloat(footage))
   if sum != "0" 
     $('#project_'+sum_name).val(sum)
@@ -60,38 +60,38 @@
   if ttl != "0"
     $('#project_'+total).val(ttl)
 
-@calcPrjSum = (suff) ->
+calcPrjSum = (suff) ->
   fp_sum('sum'+suff, 'price'+suff, 'footage'+suff)
   fp_sum('sum_2'+suff, 'price_2'+suff,'footage_2'+suff)
   sum_total('sum_total'+suff, 'sum'+suff, 'sum_2'+suff)
   calc_debt()
   return
 
-@calc_proj_sum_plan = () ->
+calc_proj_sum_plan = ->
   calcPrjSum('')
 
-@calc_proj_sum_real = () ->
+calc_proj_sum_real = ->
   calcPrjSum('_real')  
 
-calc_rest = ->
+calc_rest = (ex_sum)->
   sum_total_real = intPrjSum('sum_total_real')
   if sum_total_real > 0
     sum_total = sum_total_real
   else
     sum_total = intPrjSum('sum_total')
-
+  if ex_sum == 0
+    ex_sum = intPrjSum('sum_total_executor')
   $('#project_sum_rest').val(to_sum(sum_total - ex_sum)) 
 
-@calc_executor_sum =() ->
+calc_executor_sum = ->
   footage = prjFloat('footage')
   footage2 = prjFloat('footage_2')
-
+  v_price  = intPrjSum('visualer_price')
   d_price  = intPrjSum('designer_price')
   d_price2 = intPrjSum('designer_price_2') 
-  v_price  = intPrjSum('visualer_price')
+  visual_sum    = v_price * footage
   designer_sum  = d_price * footage 
   designer_sum2 = d_price2 * footage2 
-  visual_sum    = v_price * footage
   
   if d_price>0
     $('#project_designer_sum').val(to_sum(designer_sum + designer_sum2))
@@ -109,8 +109,7 @@ calc_rest = ->
     ex_sum = designer_sum + designer_sum2 + visual_sum
   else
     ex_sum = intFromSum($('#project_sum_total_executor').val())
-
-
+  calc_rest(ex_sum)
   return
 
 $(document).ready ->
@@ -180,12 +179,15 @@ $(document).ready ->
   $('#project_price_real, #project_price_2_real, #project_footage_2_real, #project_footage_real').change ->
     calc_proj_sum_real()
     calc_debt()
+    calc_rest(0)
   $('#project_sum, #project_sum_2').change ->
     calc_proj_sum_plan()
     calc_debt()
+    calc_rest(0)
   $('#project_sum_real, #project_sum_2_real').change ->
     calc_proj_sum_real()
     calc_debt()
+    calc_rest(0)
   $('#project_sum_total,#project_sum_total_real').change ->
     calc_debt()
   $('#project_sum_total_executor').change ->
