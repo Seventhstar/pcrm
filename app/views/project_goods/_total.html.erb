@@ -1,6 +1,3 @@
-<% if @goods.nil? %>
-  <% get_goods(@prj_good.project_id,pgt) %>
-<% end %>
-<tr id= "total_<%= @cur_id %>" class="total <%= @goods.count>0 || opened ? '' : 'hidden' %>">
+<tr id= "total_<%= @cur_id %>" class="total">
   <%= render 'project_goods/total_body' %>    
 </tr>

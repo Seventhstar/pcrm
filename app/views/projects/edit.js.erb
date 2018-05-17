@@ -1,7 +1,10 @@
-$("#prj_elongations").html("<%= j render("elongations") %>");
-$("#pgoods").html("<%= j render @goods %>");
+<% if @tab == 4 %>  
+  $("#pgoods").html("<%= j render @goods %>");
+<% else %>
+  $("#prj_elongations").html("<%= j render("elongations") %>");
 
-$('.chosen').chosen({width: '99.5%', disable_search: 'true'});
-$('.schosen').chosen({width: '99.5%'});
-$('#lday').html("<%= j render("day") %>");
-$(".files_list_a").html("<%= j render("files/files") %>");
+  $('.chosen').chosen({width: '99.5%', disable_search: 'true'});
+  $('.schosen').chosen({width: '99.5%'});
+  $('#lday').html("<%= j render("day") %>");
+  $(".files_list_a").html("<%= j render("files/files") %>");
+<% end %>

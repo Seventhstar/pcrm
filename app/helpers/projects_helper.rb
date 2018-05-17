@@ -1,7 +1,7 @@
 module ProjectsHelper
 
-  def hash_sum_on_field(total_data,field)
-    total_data.map {|h| h[field] }.sum>0
+  def hash_sum_on_field(total_data, field)
+    total_data.map {|h| h[field] }.sum>0 if t!otal_data.nil?
   end
 
   def get_total_id(pgt)
@@ -32,15 +32,17 @@ module ProjectsHelper
     end
 
     s = ''
-    currency = ['р. ','$','€']
     i = 1
-    currency.each do |c|
-      sum_by_currency = total_data.select {|h| h[:currency_id] == i }.first
-      tsum = 0
-      tsum = sum_by_currency[sum_type_str] if sum_by_currency.present?
-      s += ' | ' if s.length >0 && tsum>0
-      s += tsum.to_sum + c if tsum>0
-      i += 1
+    currency = ['р. ','$','€']
+    if !total_data.nil?
+      currency.each do |c|
+        sum_by_currency = total_data.select {|h| h[:currency_id] == i }.first
+        tsum = 0
+        tsum = sum_by_currency[sum_type_str] if sum_by_currency.present?
+        s += ' | ' if s.length >0 && tsum>0
+        s += tsum.to_sum + c if tsum>0
+        i += 1
+      end
     end
     s
   end
@@ -83,15 +85,27 @@ module ProjectsHelper
     # end
   end
   
-  def get_project_goods_data()
+  def init_totals()
+    @grand_totals = {}
+    @totals = {}
 
-    total_data = @goods.group('currency_id')
-        .select('currency_id, sum(gsum) as gsum, sum(sum_supply) as sum_supply, 
-                  sum(case when fixed then sum_supply else 0 end) as sum_fixed')
-        .collect{ |c| {currency_id: c.currency_id, 
-                        gsum: c.gsum||0, 
-                        sum_supply: c.sum_supply ||0, 
-                        sum_fixed: c.sum_fixed }}
+    currency = ['р. ','$','€']
+    currency.each do |c|
+      
+    end
+
+
+  end
+
+  def get_project_goods_data()
+    # total_data = @goods_sum.group(:currency_id, :goodstype_id)
+    #     .select('currency_id, goodstype_id, sum(gsum) as gsum, sum(sum_supply) as sum_supply, 
+    #               sum(case when fixed then sum_supply else 0 end) as sum_fixed')
+    #     .collect{ |c| { currency_id: c.currency_id, 
+    #                     gsum: c.gsum||0, 
+    #                     sum_supply: c.sum_supply ||0, 
+    #                     sum_fixed: c.sum_fixed }
+    #             }
   end
 
   def td_sum_field( f, val = 0, label='', params = {})
@@ -101,11 +115,7 @@ module ProjectsHelper
     v = params[:value]
     disabled = params[:disabled]
     v ||= @project[val] if !@project.nil?
-    if f.class == String
-      obj_name = f
-    else
-      obj_name = f.object_name
-    end 
+    obj_name = f.class == String ? f : f.object_name
 
     txt = content_tag 'input', '', value: v, 
       onblur:"onBlur(this)", onfocus:"onFocus(this)", 

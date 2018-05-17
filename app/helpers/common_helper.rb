@@ -20,30 +20,34 @@ module CommonHelper
     "#{t date.try('strftime','%B')} #{date.try('strftime','%Y')}"
   end
 
-  def check_new_table_head( obj )
-    case params[:sort]
-    when "users.name"
-      new_head = head_name(obj,'user_id')
-    when "ic_users.name"
-      new_head = head_name(obj,'ic_user_id')
-    when "status_id","pstatus_id","start_date", "status_date", "project_id",
-         "executor_id", "project_type_id", "provider_id","project_g_type_id"
-      new_head = head_name(obj,params[:sort])
-    else
-      case obj.class.name
-      when "Lead"
-        new_head = is_admin? ? head_name(obj, 'status_date') : head_name(obj, 'start_date') 
-      when "Costing"
-        new_head = head_name(obj, 'user_id')
-      when "ProjectGood"
-        prm = params[:sort]
-        prm = 'project_id' if prm.nil?
-        new_head = head_name(obj, prm)
+  def check_new_table_head(obj, field)
+    if field.nil? 
+      case params[:sort]
+      when "users.name"
+        new_head = head_name(obj,'user_id')
+      when "ic_users.name"
+        new_head = head_name(obj,'ic_user_id')
+      when "status_id","pstatus_id","start_date", "status_date", "project_id",
+           "executor_id", "project_type_id", "provider_id","project_g_type_id"
+        new_head = head_name(obj,params[:sort])
       else
-        new_head = nil
+        case obj.class.name
+        when "Lead"
+          new_head = is_admin? ? head_name(obj, 'status_date') : head_name(obj, 'start_date') 
+        when "Costing"
+          new_head = head_name(obj, 'user_id')
+        when "ProjectGood"
+          prm = params[:sort]
+          prm = 'project_id' if prm.nil?
+          new_head = head_name(obj, prm)
+        else
+          new_head = nil
+        end
       end
+    else
+      new_head = head_name(obj, field)
     end
-    
+
     need_head = false
     if @cur_head != new_head 
       @cur_head = new_head
@@ -56,7 +60,7 @@ module CommonHelper
     link ? link_to(text, [:edit, link]) : text
   end
 
-  def head_name(obj,id_name)
+  def head_name(obj, id_name)
     id = obj[id_name]
     
     case id_name
@@ -64,6 +68,8 @@ module CommonHelper
       val = User.find(id).try(:name) if id.present? 
     when 'start_date','status_date'
       val = month_year(id)
+    when :goodstype_id
+      val = obj.try(:goodstype).try(:name)
     when 'project_id'
       val = 'Не все данные заполнены'
       val = obj.try(:project).try(:address)

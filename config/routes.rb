@@ -46,7 +46,6 @@ Rails.application.routes.draw do
   end
 
   resources :project_elongations
-  get 'projects/:id/:action(. :format)' => 'projects#edit', constraint: { tab_id: '233' }
   resources :projects do
     resources :contacts
     collection do

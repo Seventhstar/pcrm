@@ -187,7 +187,7 @@ $(function() {
       window.location.hash = p;
       if ($(p).html() == undefined || ($('.good_group').size()==0 &&  p=='#tabs-4' )) {
         l = $('form').attr('action');
-        url = l+"/edit"+p
+        url = l+"/edit"+p.replace('#','?').replace('-','=')
         $.get(url, null, null, 'script');
       }
     }

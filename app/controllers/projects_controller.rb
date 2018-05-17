@@ -80,7 +80,7 @@ class ProjectsController < ApplicationController
     @owner = @project
     @holidays =  Holiday.pluck(:day).collect{|d| d.try('strftime',"%Y-%m-%d")}
     @gtypes = Goodstype.where.not(id: [@pgt]).order(:name)
-    @history  = get_history_with_files(@project)
+    
   end
 
   # GET /projects/new
@@ -93,6 +93,8 @@ class ProjectsController < ApplicationController
   # GET /projects/1/edit
   def edit
     # puts "params #{params}"
+    @tab = params[:tabs].try(:to_i)
+
     @gs = params[:good_state]
 
     if !@gs.nil? && @gs.to_i>0
@@ -104,18 +106,29 @@ class ProjectsController < ApplicationController
     get_debt
     @comm_height = 350
     @owner = @project
-    @files        = @project.attachments
     @elongation_types = ElongationType.all
     @new_et  = ProjectElongation.new
     @new_gt  = Goodstype.new
 
-    pgt = Goodstype.where(default: true).pluck(:id)
-    types_from_project = @project.goods.pluck(:goodstype_id).uniq
-    pgt = pgt.concat(types_from_project)
-    @pgt = pgt
-    @prj_good_types = Goodstype.where(id: [pgt]).order(:name)
-    # @prj_good_types = @prj_good_types.pluck(:id, :name).to_h
-    @goods = ProjectGood.where(project_id: @project.id)
+    @goods_sum = ProjectGood.where(project_id: @project.id)
+    @goods = ProjectGood.where(project_id: @project.id).includes(:provider).includes(:goodstype).order(:goodstype_id, :created_at)
+
+    case @tab
+    when 4
+      pgt = Goodstype.where(default: true).pluck(:id)
+      types_from_project = @project.goods.pluck(:goodstype_id).uniq
+      pgt = pgt.concat(types_from_project)
+      @pgt = pgt
+      @prj_good_types = Goodstype.where(id: [pgt]).order(:name)
+      # puts "@goods.count #{@goods.count}"
+    when 6
+      @files        = @project.attachments
+    when 7
+      @history  = get_history_with_files(@project)
+    else
+      @history = []
+      @files        = @project.attachments
+    end
     
     def_params
   end

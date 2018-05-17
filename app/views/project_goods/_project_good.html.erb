@@ -1,0 +1,42 @@
+<% g = project_good %>
+<% opened ||= false  %>
+
+<% if check_new_table_head(g, :goodstype_id) %>
+  <% if @first_table == false %>
+    <% @no ||=1 %>
+    <% @no = @no+1 %>
+    <%= render 'project_goods/new_item', pgt: @last_good.goodstype %>  
+    <%= render 'project_goods/total' %> 
+    </tbody></table></div>
+  <% end %>
+  <% @last_good = g %>
+  <div class="panel panel-default good_group" id="div_coll_<%= g.goodstype_id %>">
+    <div class="panel-heading table-heading head month"><%= g.goodstype.name %> 
+      <span class="sub btn_add right" itm="<%= g.goodstype_id %>">Добавить позицию</span></div>
+  <table class="tleads twfixed" id="table_<%= g.goodstype_id %>" model="ProjectGood" action="project_goods" color_cls="ordered">
+    <% opened ||= false %>   
+    <thead class="<%= 1>0 || opened ? '' : 'hidden' %>">
+      <%= render partial: 'project_goods/head_row' %>
+    </thead>
+    <tbody>
+  <% @first_table = false %>
+
+<% end %>
+
+
+<tr id="item_<%= g.id %>" class="sw_color <%= class_for_prj_goods(g) %>">
+  <td width='220px'><%= g.name %></td>
+  <td width='210px'><%= action_name=='index' && params[:sort] == 'provider_id' ? g.project_address : g.provider_name %></td>
+  <td width='115px'><%= g.date_place.try('strftime',"%d.%m.%Y") %></td>
+  <td width='230px'><%= g.description %></td>
+  <td width='58px'><%= g.currency_name %></td>
+  <td width='90px' class="" title="<%= all_sum_info(g) %>"><%= all_sum(g) %></td>
+  
+  <td class="edit_delete td_right " style="">
+    <a class="icon basket" data-modal="true" href="/project_goods/<%= g.id %>/edit?owner_id=<%= get_total_key(g) %>"></a>
+    <a data-confirm="Действительно удалить?" class="icon icon_remove " 
+    data-remote="true" rel="nofollow" 
+    data-method="delete" href="/project_goods/<%= g.id %>"></a>
+  </td>
+
+</tr>
