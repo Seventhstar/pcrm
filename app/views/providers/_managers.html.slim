@@ -1,0 +1,19 @@
+.tbl_a
+  .head Менеджеры:
+  = hidden_field 'manager','provider_id', value: @provider.id
+  table#provider_managers.tleads action="provider_managers" model="ProviderManager" 
+    thead
+      tr
+        th.center fld="name" width="380px"  ФИО
+        th.center fld="phone" width="330px"  Телефон
+        th.center fld="email"  E-mail
+        th.edit_delete
+    tbody
+      = render partial: @managers, as: :pm
+      tr.new_item_head
+        td colspan="4"  Новый менеджер:
+      tr#new_item
+        =td_text "manager", :name
+        =td_text "manager", :phone
+        =td_text "manager", :email
+        = td_add_sub_send 'provider_managers', 'manager'

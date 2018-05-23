@@ -227,10 +227,9 @@ class ProjectsController < ApplicationController
   end
 
   def check_sum
-    prms = ['price','price_2','price_real','price_2_real','sum','sum_2','sum_real','sum_2_real',
-      'sum_total','sum_total_real','designer_price', 'designer_price_2','visualer_price',
-      'visualer_sum','designer_sum',
-      'sum_total_executor']
+    prms = %w( price price_2 price_real price_2_real sum sum_2 sum_real sum_2_real
+      sum_total sum_total_real designer_price designer_price_2 visualer_price
+      visualer_sum designer_sum sum_total_executor)
       prms.each do |p|
         project_params[p] = project_params[p].gsub!(' ','') if !project_params[p].nil?
       end
@@ -247,7 +246,7 @@ class ProjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pe_params
-      params.permit(:project_elongation => [:project_id,:new_date,:elongation_type_id] )
+      params.permit(project_elongation: [:project_id, :new_date, :elongation_type_id] )
     end
 
     def client_params

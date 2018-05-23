@@ -20,7 +20,7 @@ module CommonHelper
     "#{t date.try('strftime','%B')} #{date.try('strftime','%Y')}"
   end
 
-  def check_new_table_head(obj, field)
+  def check_new_table_head(obj, field = nil)
     if field.nil? 
       case params[:sort]
       when "users.name"

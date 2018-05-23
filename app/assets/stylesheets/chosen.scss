@@ -165,7 +165,6 @@ tr.editable .chosen-container-single .chosen-single div b, span.cut b {margin-to
   height: 1%;
   background-color: #fff;
   border-radius: 5px;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(1%, #eeeeee), color-stop(8%, #ffffff));
   cursor: text;
 }
 .chosen-container-multi .chosen-choices li { float: left; list-style: none; }
@@ -234,3 +233,5 @@ tr.editable .chosen-container-single .chosen-single div b, span.cut b {margin-to
 
 #project_client_id_chosen{border-radius: 5px 0 0 5px;} 
 #project_client_id_chosen span {max-width: 555px;width: 95%}
+
+.chosen-container-multi .search-field{margin-top: -6px !important;}

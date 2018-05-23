@@ -100,7 +100,7 @@ class Project < ActiveRecord::Base
       s = designer_sum 
     else
       s = designer_price.to_i * f1
-      s = s + designer_price_2.to_i * f2 if footage_2>0
+      s += designer_price_2.to_i * f2 if footage_2>0
     end
     s.to_i
   end
@@ -121,21 +121,21 @@ class Project < ActiveRecord::Base
   end
 
   def rest
-    sum_total_real==0 ? sum_total - executor_sum : sum_total_real - executor_sum
+    sum_total_real ==0 ? sum_total - executor_sum : sum_total_real - executor_sum
   end
 
   def executor_info
      i = f1_info + 'м.'
-     i = [i,' - ',designer_price.to_s,'р.'].join if !designer_price.nil? && designer_price>0
-     i = [i,'</br>',f2_info,'м.'].join if !nil_footage(f2_info)
-     i = [i,' - ',designer_price_2.to_s,'р.'].join if !designer_price_2.nil? && designer_price_2>0
+     i += " - #{designer_price}р." if !designer_price.nil? && designer_price>0
+     i += "</br>#{f2_info}м." if !nil_footage(f2_info)
+     i += " - #{designer_price_2}р." if !designer_price_2.nil? && designer_price_2>0
      i
   end
 
   def executor_prices
     p = ''
-    p = designer_price.to_sum + 'р./м2' if designer_price.to_i>0
-    p = p +' + '+ designer_price_2.to_sum + 'р./м2' if designer_price_2.to_i>0
+    p = "#{designer_price.to_sum}р./м2" if designer_price.to_i>0
+    p += " + #{designer_price_2.to_sum}р./м2" if designer_price_2.to_i>0
     p
   end
 
@@ -146,20 +146,16 @@ class Project < ActiveRecord::Base
   end
 
   def last_elongation
-    new_date = ""
-     if !elongations.nil? && elongations.size > 0
-        new_date = elongations.last.new_date
-     end
-     new_date
+    new_date = elongations.try(:size) > 0 ? elongations.order('new_date').last.new_date : ""
   end
 
   def date_end
-    elongations.size==0 ? date_end_plan : last_elongation #elongations.last.new_date
+    self.elongations.length==0 ? date_end_plan : last_elongation 
   end
 
   def admin_info()
-     i = [f1_info,'м.',' - ',price.to_s,'р.'].join
-     i = i + '</br>'+ [f2_info,'м.',' - ',price_2.to_s,'р.'].join if !nil_footage(f2_info)
+     i = "#{f1_info}м. - #{price}р."
+     i += "</br>#{f2_info}м. - #{price_2}р." if !nil_footage(f2_info)
      i
   end
 

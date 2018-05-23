@@ -111,8 +111,14 @@ class User < ActiveRecord::Base
   def password_reset_expired?
     reset_sent_at < 2.hours.ago
   end
-  private
 
+  def author_of?(obj)
+    puts "cur_user #{self.email} id:#{id} obj.user_id: #{obj.user_id}"
+    self.id == obj.user_id
+  end
+
+
+  private
     # Converts email to all lower-case.
     def downcase_email
       self.email = email.downcase

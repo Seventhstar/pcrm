@@ -1,0 +1,9 @@
+.box_wrap.box_wrap_1
+  .panel.panel-default
+    #tabs
+      ul
+        - @costing.rooms.each do |r|
+          li 
+            a href="#tabs-#{r.id}"
+              =r.name
+

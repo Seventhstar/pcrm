@@ -10,9 +10,9 @@ class AbsencesController < ApplicationController
   # GET /absences
   # GET /absences.json
   def index
-    @wdays = ['пн','вт','ср','чт','пт','сб','вс']
+    @wdays = %w(пн вт ср чт пт сб вс)
     @sort_column = sort_column
-    @only_actual = params[:only_actual].nil? ? true : params[:only_actual]=='true'
+    @only_actual = params[:only_actual].nil? ? true : params[:only_actual] == 'true'
     params['m'] = nil if  params[:sort]!='calendar'
     @current_month = Date.parse(params['m']) if !params['m'].nil?
     @current_month = Date.today.beginning_of_month if @current_month.nil?
@@ -50,34 +50,33 @@ class AbsencesController < ApplicationController
   def show
     @title = 'Просмотр данных об отсутствии'
     @shops  = @absence.shops
+
     @shop  = AbsenceShop.new
     @shop_targets = AbsenceShopTarget.all
     @dt_from = @absence.dt_from.try('strftime',"%d.%m.%Y")
-      @dt_to = @absence.dt_to.try('strftime',"%d.%m.%Y")
-      @t_from = @absence.dt_from.try('strftime',"%H:%M")
-      @t_to = @absence.dt_to.try('strftime',"%H:%M")
-      @checked = @absence.dt_from.beginning_of_day != @absence.dt_to.beginning_of_day
+    @dt_to = @absence.dt_to.try('strftime',"%d.%m.%Y")
+    @t_to = @absence.dt_to.try('strftime',"%H:%M")
+    @t_from = @absence.dt_from.try('strftime',"%H:%M")
+    @checked = @absence.dt_from.beginning_of_day != @absence.dt_to.beginning_of_day
+    
     respond_modal_with @absence, location: root_path
   end
 
   def abs_params(ap = nil)
+    @shop  = AbsenceShop.new
     @reasons = AbsenceReason.order(:id)
     @targets = AbsenceTarget.order(:name)
     @projects = Project.all
-    @shop  = AbsenceShop.new
     @shop_targets = AbsenceShopTarget.all
     @reopen = false
-    #p  "current_user.id",current_user.id
-    @user = current_user.id
-    @absence.user_id = @user if @absence.try(:user_id)
+
     if !@absence.nil?
-      @user = @absence.user_id
-      @shops  = @absence.shops
-      @dt_from = @absence.dt_from.try('strftime',"%d.%m.%Y")
-      @dt_to = @absence.dt_to.try('strftime',"%d.%m.%Y")
-      @t_from = @absence.dt_from.try('strftime',"%H:%M")
-      @t_to = @absence.dt_to.try('strftime',"%H:%M")
-      @checked = @absence.dt_from.beginning_of_day != @absence.dt_to.beginning_of_day
+      @shops    = @absence.shops
+      @dt_from  = @absence.dt_from.try('strftime',"%d.%m.%Y")
+      @t_from   = @absence.dt_from.try('strftime',"%H:%M")
+      @dt_to    = @absence.dt_to.try('strftime',"%d.%m.%Y")
+      @t_to     = @absence.dt_to.try('strftime',"%H:%M")
+      @checked  = @absence.dt_from.beginning_of_day != @absence.dt_to.beginning_of_day
     end
   end
   # GET /absences/new
@@ -130,7 +129,7 @@ class AbsencesController < ApplicationController
   # PATCH/PUT /absences/1.json
   def update
     ap = absence_params
-    ap[:project_id]=0 if ap[:reason_id].to_i<2 || ap[:reason_id].to_i>3
+    ap[:project_id]=0 if ![2,3].include?(ap[:reason_id].to_i)
     ap[:target_id]=0 if ap[:reason_id].to_i!=2
 
     abs_params
@@ -167,7 +166,7 @@ class AbsencesController < ApplicationController
       a = params.require(:absence).permit(:user_id, :dt_from, :dt_to, :reason_id, 
                                           :new_reason_id, :comment, :project_id,
                                           :t_from, :t_to, :checked, :target_id, 
-                                          :reopen, :canceled)
+                                          :reopen, :canceled, :approved)
 
       a['dt_to'] = a['dt_from'] if a['checked']=='false' || a['dt_to'].nil?
       a['dt_from'] = a['dt_from'].gsub("00:00", '')+ ' ' + a['t_from']
@@ -182,7 +181,7 @@ class AbsencesController < ApplicationController
 
     def sort_direction
       default_dir = 'desc'#sort_column =='dt_from' ? "asc": "desc"
-      %w[asc desc].include?(params[:direction]) ? params[:direction] : default_dir
+      %w(asc desc).include?(params[:direction]) ? params[:direction] : default_dir
     end
 
     def sort_2
@@ -191,12 +190,11 @@ class AbsencesController < ApplicationController
 
     def dir_2
       defaul_dir = (sort_column =='dt_from' && @only_actual) ? "asc": "desc"
-      %w[asc desc].include?(params[:dir2]) ? params[:dir2] : defaul_dir
+      %w(asc desc).include?(params[:dir2]) ? params[:dir2] : defaul_dir
     end
 
     def send_changeset_email
       @version = @absence.versions.last
-      # p "current_user:", current_user
       if !@version.nil?
         if @version.event == "create"
           AbsenceMailer.created_email(@absence.id,current_user).deliver_now

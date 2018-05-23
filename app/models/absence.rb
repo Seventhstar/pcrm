@@ -1,8 +1,14 @@
 class MyValidator < ActiveModel::Validator
   def validate(record)
-    if !(record.id.nil? && record.reason_id==3)     
-      record.errors.add('Магазины', "добавьте хотя бы один") if record.shops.count==0 && record.reason_id==3   
-     end
+    case record.reason_id
+    when 0
+      record.errors.add('Причина', "Должна быть указана")
+    when 3
+      record.errors.add('Магазины', "Добавьте хотя бы один") if record.shops.count==0 && record.id.present?
+    when 6
+      record.errors.add('Комментарий', "Должен быть заполнен") if record.comment.length <3
+    else      
+    end
   end
 end
 
@@ -19,10 +25,9 @@ class Absence < ActiveRecord::Base
   has_paper_trail
 
   validates_with MyValidator  
-  validates :reason_id, presence: true
   validates :user, presence: true
   validates :project_id, presence: true, if: Proc.new { |p| p.project_id.nil? && (p.reason_id==2 || p.reason_id==3) }  
-  validates :target_id, presence: true, if: Proc.new { |p| p.target_id.nil? && p.reason_id==2  } 
+  validates :target_id, presence: true, if: Proc.new { |p| p.target_id.nil? && p.reason_id==2 } 
 
   def reason_name
     reason.try(:name)

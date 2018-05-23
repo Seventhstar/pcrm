@@ -13,7 +13,7 @@
 .tbl_a table .disabled td a{color: #aeaeae; }
 .tbl_a table.stripped tr:nth-child(even) td, table.stripped tr:nth-child(even) td {background: #fafafa;}
 
-.tbl_a table tr:hover td, table.tleads tr:hover:not(#new_item):not(.total):not(.ordered) td{ background-color: #f5f5f5;}
+.tbl_a table tr:hover td, table.tleads tr:hover:not(.new_row):not(.total):not(.ordered) td{ background-color: #f5f5f5;}
 tr.hover td{ background-color: #f5f5f5 !important;}
 
 table.tbl_fc{border-collapse:collapse; width: 100%; }

@@ -1,23 +1,31 @@
+<% puts "@absence.user_id: #{@absence.user_id}" %>
+<% is_new = ['new','create'].include?(action_name) %>
+<% disp_obj = [2,3].include?(@absence.reason_id) ? 'table-row;' : 'none;' %>
+<% disp_trgt = @absence.reason_id==2 ? ' ' : 'display: none;' %>
+<% is_author = current_user.author_of?(@absence) %>
+    
+
 <%= simple_form_for(@absence) do |f| %>
 <%= f.hidden_field :reopen, {action_name: action_name} %>
 
 <% if !is_manager? %>
-  <%= f.hidden_field :user_id,  :value => @absence.user_id ||= current_user.id %>
+  <%= f.hidden_field :user_id, value: @absence.user_id ||= current_user.id %>
 <% end %>
 
 <%= render 'shared/error_messages', object: f.object %>
   
   <table class="tbl_fc tbl_fc_1">
     <tr><td class="caption">Причина:</td>
-    <td  colspan="3">         
-      <% if is_manager? || action_name == 'new' || 
-            (!@absence.created_at.nil? && @absence.user_id == current_user.id && @absence.created_at > (Date.today-3.day) && @absence.new_reason_id.nil? )  %>
+    <td  colspan="3">      
+      <% if is_manager? || is_new || 
+            (! @absence.created_at.nil? && @absence.user_id == current_user.id && 
+              @absence.created_at > (Date.today-3.day) && @absence.new_reason_id.nil? ) %>
         <div class="inp_w"><%= chosen_src 'reason_id', @reasons, @absence, {v_model: "reason_id"} %></div>
       <% else %>
         <div class="lbl"><%= @absence.reason_name %><%= f.hidden_field :reason_id %></div>
       <% end %>
     </td>
-    <% if controller.action_name == 'edit'  %>
+    <% if !is_new %>
       <td class="caption caption_sm">=></td>
         <td ><div class="inp_w"><%= chosen_src 'new_reason_id', @reasons,@absence,{nil_value: 'Новая причина...'} %>
         </div></td>
@@ -26,29 +34,29 @@
     <% end -%>
     
     </tr>
-    <% disp_obj = @absence.reason_id==2 || @absence.reason_id==3 ? 'table-row;' : 'none;' %>
-    <% disp_trgt = @absence.reason_id==2 ? ' ' : 'display: none;' %>
     <tr style="display: <%= disp_obj %>" class='p_obj'>
       <td class="caption p_obj">Проект:</td>
       <td colspan="3" class="p_obj">
       <div class="inp_w">
-      <%= chosen_src 'project_id', @projects,@absence,{p_name: 'address'} %></div></td>
-      <td class="caption caption_sm"><span style="<%= disp_trgt %>" class="p_trgt"> Цель: </span></td>
+      <%= chosen_src 'project_id', @projects, @absence,{p_name: 'address'} %></div></td>
+      <td class="caption caption_sm"><span style="<%= disp_trgt %>" class="p_trgt">Цель: </span></td>
       <td ><span style="<%= disp_trgt %>" class="p_trgt">
       <%= chosen_src 'target_id', @targets, @absence %></span></td>
     </tr>
 
     <tr><td class="caption">Дата c:</td>
-      <td width='200px;'><div class="inp_"><%= f.text_field :dt_from, :value => @dt_from, label: false, class: "txt datepicker" %></div></td>
-      <td class="caption caption_to"><%= f.hidden_field :checked %><span class="check_img <%= @checked ? 'checked' : '' %>" id='dt_to_check'></span> по:</td>
+      <td width='200px;'><div class="inp_">
+        <%= f.text_field :dt_from, value: @dt_from, label: false, class: "txt datepicker" %></div></td>
+      <td class="caption caption_to"><%= f.hidden_field :checked %>
+        <span class="check_img <%= @checked ? 'checked' : '' %>" id='dt_to_check'></span> по:</td>
       <td width='180px;'><div class="inp_">
-          <%= f.text_field :dt_to, value: @dt_to, label: false, class: "txt datepicker", disabled: !@checked %>
+        <%= f.text_field :dt_to, value: @dt_to, label: false, class: "txt datepicker", disabled: !@checked %>
         </div></td>
       <td class="caption caption_sm">Время:</td>
-      <td >
-        <div class="inp_w"><%= f.text_field :t_from, :value => @t_from, label: false, class: "txt timepicker" %></div>
+      <td>
+        <div class="inp_w"><%= f.text_field :t_from, value: @t_from, label: false, class: "txt timepicker" %></div>
         <span class="time_separator">–</span>
-        <div class="inp_w"><%= f.text_field :t_to, :value => @t_to, label: false, class: "txt timepicker" %></div></td>
+        <div class="inp_w"><%= f.text_field :t_to, value: @t_to, label: false, class: "txt timepicker" %></div></td>
       <td></td>
     </tr>
 
@@ -57,17 +65,20 @@
     <% if is_manager? %>
       <tr><td class="caption">Сотрудник:</td>
           <td width='490px;' colspan="3"><div class="inp_w" >
-           <%= chosen_src 'absence[user_id]', User.all, @absence, {selected: @user} %></div>
-      </td>
-
-      </tr>
-    <% end %>
-    <!-- <template v-if="show" class="vue-row"> -->
-      <tr><td></td><td class="caption caption_to"><div id='a_canceled' >
-        <%= f.input :canceled, as: :boolean, label: 'Отменить отсутствие', class: 'inp_btn checkbox'  %>
+           <%= chosen_src 'user_id', User.all, @absence %></div>
+      </td></tr>
+      <tr><td></td><td class="caption caption_to"><div id='a_approved' class="left">
+        <%= f.input :approved, as: :boolean, label: 'Согласовано', class: 'inp_btn checkbox' %>
         </div></td>
       </tr>
-    <!-- </template> -->
+    <% end %>
+    
+    <% if !is_new && is_author %>
+      <tr><td></td><td class="caption caption_to"><div id='a_canceled' class="left">
+        <%= f.input :canceled, as: :boolean, label: 'Отменить отсутствие', class: 'inp_btn checkbox' %>
+        </div></td>
+      </tr>
+    <% end %>
         
     
 
@@ -83,9 +94,7 @@
 <% end %>    
 </div>
 
-
-
-<% if is_manager? || action_name == 'new' || @absence.user_id == current_user.id %>
+<% if is_manager? || is_new || is_author %>
   <%= submit_cancel absences_url %>          
 <% end %>
 

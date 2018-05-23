@@ -1,0 +1,16 @@
+.tbl_a
+  .head Типовые работы:
+  table#works.tleads action="room_works" model="RoomWork" 
+    thead
+      tr 
+        th.center fld="name" width="380px" Работа / связанные работы
+        th
+    tbody
+      = render @room.room_works
+      tr.new_item_head
+        td colspan="2" Новая работа:
+      tr
+        td#new_item
+          = hidden_field 'room_work','room_id', value: @room.id
+          = chosen_src 'room_work[work_id]', Work.all
+          = td_add_sub_send 'room_works', 'room_work'

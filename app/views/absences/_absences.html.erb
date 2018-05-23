@@ -6,24 +6,25 @@
 <% @absences.each do |abs| %>
     <% new_date = abs.dt_from? ? abs.dt_from : Date.today %>
       
-      <% if cur_month != new_date.month && (params[:sort] == "dt_from" || (params[:sort] == nil)) %> 
+      <% if cur_month != new_date.month && [nil, "dt_from"].include?(params[:sort]) %> 
           <% cur_month = new_date.month %>
-          <%= render "head", {first_table: first_table, heading: month_year(new_date) } %>
+          <%= render "head", {first_table: first_table, heading: month_year(new_date)} %>
 
-      <% elsif cur_user != user_name(abs.user_id) && (params[:sort] == "users.name")%>
-        <% cur_user = user_name(abs.user_id) %>
-          <%= render "head", {first_table: first_table, heading: user_name(abs.user_id) } %>
+      <% elsif cur_user != abs.user_name && (params[:sort] == "users.name") %>
+        <% cur_user = abs.user_name %>
+          <%= render "head", {first_table: first_table, heading: abs.user_name} %>
      
       <% elsif cur_reason != abs.reason_name && (params[:sort] == "reason_id") %>
         <% cur_reason = abs.reason_name %>
-        <%= render "head", {first_table: first_table, heading: t(abs.reason_name) } %>
+        <%= render "head", {first_table: first_table, heading: t(abs.reason_name)} %>
+
       <% end %>
         <% first_table = false %>        
 
         <tr class="<%= abs_class_td(abs) %>">
         <td ><%= f_date(abs.dt_from) %></td>   
-        <td ><%= abs.dt_from.beginning_of_day!=abs.dt_to.beginning_of_day ? f_date(abs.dt_to) : '' %></td>   
-        <td ><%= abs.user_name %></td>   
+        <td ><%= abs.dt_from.beginning_of_day != abs.dt_to.beginning_of_day ? f_date(abs.dt_to) : '' %></td>   
+        <td title="<%= abs.user_id %>"><%= abs.user_name %></td>   
         <td class="day"><%= abs.reason_id!=3 ? abs.reason_name : ttip( abs.reason_name, 
         raw(abs.shops.collect{ |a| [a.shop_name,a.target_name].join(' ')}.join("\n")),"abs#{abs.reason_id}", abs) %></td>
         <td><%= abs.project_name %></td>

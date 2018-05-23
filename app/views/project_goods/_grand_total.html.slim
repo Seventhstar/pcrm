@@ -1,14 +1,10 @@
-- get_goods(project_id,nil)
-- total = get_project_goods_data
 ul.right
   li
     b Итого предложено:
-    =< total_on_currencies(total, 1).html_safe 
-  - if hash_sum_on_field(total,:sum_supply)
-    li
-      b Итого заказано: 
-      =< total_on_currencies(total, 2).html_safe     
-  - if hash_sum_on_field(total,:sum_fixed)
-    li
-      b Итого закрыто: 
-      =< total_on_currencies(total, 3).html_safe  
+    span#grand_offer 
+  li
+    b Итого заказано: 
+    span#grand_supply
+  li
+    b Итого закрыто: 
+    span#grand_closed  

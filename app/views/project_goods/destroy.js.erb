@@ -1,3 +1,4 @@
 $('#item_<%= @prj_good.id  %>').remove();
 $('tr#total_'+<%= get_total_key(@prj_good) %>).html("<%= j render('total_body', pgt: @prj_good.goodstype ) %>");
 $('#grand_total').html("<%= j render('grand_total', project_id: @prj_good.project_id) %>");
+calc_totals();

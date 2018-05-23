@@ -1,4 +1,7 @@
 tr id="lw_#{work_linker.id}"
   td
     = work_linker.linked_work.name
-  = tool_icons(work_linker, {icons: 'delete', tag: 'span'}) 
+  td.edit_delete
+    = link_to "", edit_work_path(work_linker.linked_work), class: 'icon icon_edit'
+    = link_to "", polymorphic_url(work_linker), method: "delete", 
+                  data: {confirm: 'Действительно удалить?'}, class: 'icon icon_remove',remote: true

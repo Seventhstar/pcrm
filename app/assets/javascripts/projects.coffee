@@ -112,7 +112,56 @@ calc_executor_sum = ->
   calc_rest(ex_sum)
   return
 
+totals_by_group = (g) ->
+  gpr = g.attr('grp')
+  total_offer = ''
+  total_supply = ''
+  $.each [['EUR','€'],['USD', '$'],['RUB','р.']], (i, v) ->
+    sum_offer = 0
+    sum_supply = 0
+    g.find('.sum_' + v[0]).each ->
+      sum_offer += intFromSum($(this).attr('sum_offer'))
+      sum_supply += intFromSum($(this).attr('sum_supply'))
+      return
+    total_offer += to_sum(sum_offer) + v[1] if sum_offer>0
+    total_offer += ', ' if i <2 && sum_offer>0
+    total_supply += to_sum(sum_supply) + v[1] if sum_supply>0
+    total_supply += ', ' if i <2 && sum_supply>0
+  $('#total_offer_' + gpr).text total_offer
+  $('#total_supply_' + gpr).text total_supply
+  return
+
+@calc_totals = ->
+  grand_sum_offer = 0
+  grand_sum_supply = 0
+  $('.good_group').each ->  
+    gpr = $(this).attr('grp')
+    total_offer = ''
+    total_supply = ''
+    g = $(this)
+    $.each [['EUR','€'],['USD', '$'],['RUB','р.']], (i, v) ->
+      sum_offer = 0
+      sum_supply = 0
+      g.find('.sum_' + v[0]).each ->
+        sum_offer += intFromSum($(this).attr('sum_offer'))
+        sum_supply += intFromSum($(this).attr('sum_supply'))
+        return
+      grand_sum_offer += sum_offer
+      total_offer += to_sum(sum_offer) + v[1] if sum_offer>0
+      total_offer += ', ' if i <2 && sum_offer>0
+      total_supply += to_sum(sum_supply) + v[1] if sum_supply>0
+      total_supply += ', ' if i <2 && sum_supply>0
+    $('#total_offer_' + gpr).text total_offer
+    $('#total_supply_' + gpr).text total_supply
+    # totals_by_group($(this))
+  #   sum_offer += intFromSum($('#total_offer_' + gpr).attr('sum_offer'))
+  #   sum_supply += intFromSum($('#total_supply_' + gpr).attr('sum_supply'))
+  $('#grand_offer').text grand_sum_offer
+  # $('#grand_supply').text sum_supply
+
+
 $(document).ready ->
+  calc_totals()
   $(document).on 'click', '.inline_edit', ->
     disable_input_row()
     itm = $(this).attr('item_id')

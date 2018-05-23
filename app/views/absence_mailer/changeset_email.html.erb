@@ -5,10 +5,10 @@
 <ul>
 <%- @history.each do |version_fields| %>
   <%- version = version_fields[1] %>
-	<%- version[:description].each do |descr| %>
-	       <li><%= raw(descr) %></li>
+  <%- version[:description].each do |descr| %>
+         <li><%= raw(descr) %></li>
         <% end %>
 <% end %>
     </ul>
 
-  <%= link_to 'Перейти к отсутствию', [:edit, @abs] %>
+<%= link_to 'Перейти к отсутствию', [:edit, @abs] %>

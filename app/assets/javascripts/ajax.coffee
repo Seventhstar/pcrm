@@ -259,43 +259,52 @@ $(document).ready ->
     $cell.addClass('app_cancel')
     $cell.html '<span class="icon icon_apply" item_id="'+item_id+'"></span><span class="icon icon_cancel" item_id="'+item_rm_id+'"></span>'
     
-   # отмена редактирования
-   $('.container').on 'click', 'span.icon_cancel', ->   
-     disable_input()
-     return
+  # отмена редактирования
+  $('.container').on 'click', 'span.icon_cancel', ->   
+    disable_input()
+    return
 
-   $('.container').on 'click', 'span.icon_hide_edit', ->   
-     disable_input_row()
-     return
+  $('.container').on 'click', 'span.icon_hide_edit', ->   
+    disable_input_row()
+    return
 
-   # отправка новых данных
-   $('.container').on 'click', 'span.icon_apply', -> 
+  # отправка новых данных
+  $('.container').on 'click', 'span.icon_apply', -> 
     apply_opt_change($(this))
 
+  $('body').on 'keyup', '.search-field input', (e) ->
+    if e.keyCode == 13
+      $('.chcreate').trigger('mousedown')
+
+  $('body').on 'keyup', '#new_item input', (e)->
+    if e.keyCode == 13
+      $('#btn-sub-send').trigger('click')
  
-   $('body').on 'keyup', '.editable input', (e) ->
-      if e.keyCode == 13
-        if $(this).offsetParent().hasClass('chosen-search')
-          return  
-        else if $(this).closest('table').attr('model')=='ProjectGood'
-          $(this).closest('td').siblings().last().children('#btn-sub-send').click()
-          e.preventDefault()
-        else if $(this).closest('td').hasClass('l_edit') 
-          i = $('.l_edit.editable')
-        else if $(this).closest('tr').hasClass('editable')
-          i = $(this).closest('td').siblings().last().children('.icon_apply')
-        else 
-          i = $('span.icon_apply')
-        if (i!=undefined)
-          apply_opt_change(i)
-      else if e.keyCode == 27 
-        disable_input()
-      return
-   $('body').on 'keyup keypress','.edit_project input', (e)->
-      if e.keyCode == 13 || e.keyCode == 8
+  $('body').on 'keyup', '.editable input', (e) ->
+    if e.keyCode == 13
+      if $(this).offsetParent().hasClass('chosen-search')
+        return  
+      else if $(this).closest('table').attr('model')=='ProjectGood'
+        $(this).closest('td').siblings().last().children('#btn-sub-send').click()
         e.preventDefault()
-      return 
-   $('body').on 'keyup keypress', '.simple_options_form',(e) ->
+      else if $(this).closest('td').hasClass('l_edit') 
+        i = $('.l_edit.editable')
+      else if $(this).closest('tr').hasClass('editable')
+        i = $(this).closest('td').siblings().last().children('.icon_apply')
+      else 
+        i = $('span.icon_apply')
+      if (i!=undefined)
+        apply_opt_change(i)
+    else if e.keyCode == 27 
+      disable_input()
+    return
+
+  $('body').on 'keyup keypress','.edit_project input', (e)->
+    if e.keyCode == 13 || e.keyCode == 8
+      e.preventDefault()
+    return 
+  
+  $('body').on 'keyup keypress', '.simple_options_form',(e) ->
     code = e.keyCode or e.which
     if code == 13
       e.preventDefault()

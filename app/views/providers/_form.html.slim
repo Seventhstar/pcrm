@@ -1,0 +1,17 @@
+= simple_form_for(@provider) do |f|
+  .box_wrap.box_wrap_1
+    .panel-left
+      table.tbl_fc.tbl_fc
+        = simple_inputs f, [:name, :phone, :address, :url, :spec ]
+        = tr_multi_select f, :goodstype_ids, Goodstype.all, 'Виды товаров'
+        = tr_chosen 'p_status_id', @p_statuses, @provider, 'Статус'
+        = tr_text f, :komment, 'Примечание'
+        = tr_submit_cancel providers_page_url
+    .panel-right
+      .comments_box
+        = render "shared/comments"
+.sep_3
+.managers
+  - if !@provider.id.nil?
+    = render "managers"
+.sep_3

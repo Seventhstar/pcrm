@@ -17,7 +17,7 @@
   </div></td></tr>
 
   <tr><td class="caption">Примечение:</td>
-  <td><div class="inp_w"><%= text_field iname,:description, {value: @prj_good.description,:class => 'txt'} %></div></td></tr>
+  <td><div class="inp_w"><%= text_field iname,:description, {value: @prj_good.description, class: 'txt'} %></div></td></tr>
 
   <tr><td class="caption">Сумма:</td>
       <%= td_sum_field(iname, :gsum ,nil,{value: @prj_good.gsum}) %>

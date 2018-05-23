@@ -26,17 +26,17 @@ class CostingsController < ApplicationController
   def create
     @costing = Costing.new(costing_params)
     @costing.save
-    respond_with(@costing)
+    respond_with @costing, location: costings_path
   end
 
   def update
     @costing.update(costing_params)
-    respond_with(@costing)
+    respond_with @costing, location: costings_path
   end
 
   def destroy
     @costing.destroy
-    respond_with(@costing)
+    respond_with @costing, location: costings_path
   end
 
   private
@@ -45,7 +45,7 @@ class CostingsController < ApplicationController
     end
 
     def costing_params
-      params.require(:costing).permit(:project_id, :user_id, :project_address)
+      params.require(:costing).permit(:project_id, :user_id, :project_address, room_ids: [])
     end
 
     def sort_column

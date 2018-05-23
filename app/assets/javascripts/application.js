@@ -29,11 +29,6 @@
 //= require moment
 //= require cocoon
 //= require contextMenu
-//= require vue
-//= require vue-router
-//= require vue-resource
-//= require vuex
-//= require script
 //= require_tree .
 
 function to_sum(d){ 
@@ -41,6 +36,15 @@ function to_sum(d){
   s = d.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1 ");  
   return s;
 }
+
+$.fn.capitalize = function () {
+    $.each(this, function () {
+        var caps = this.value;
+        caps = caps.charAt(0).toUpperCase() + caps.slice(1);
+        this.value = caps;
+    });
+    return this;
+};
 
 function intFromSum(sum){
   if (sum === undefined) return 0;
@@ -107,36 +111,10 @@ function getInputSelection(elem){
 
 $(function() {
 
-  // el = $('.container');
-  // const app = new Vue({
-  //   el,
-  //   data: {
-  //     reason_id: true
-  //   }
+  // vue = new Vue({
+  //   el: '#tabs-12',
+  //   data: {vue_test: 28}
   // })
-//   new Vue({
-//     el: '.container',
-//     data: {
-//         tableData: [
-//             { id: 1, name: 'Son Goku', race: 'saiyan'},
-//             { id: 2, name: 'Son Gohan', race: 'half-saiyan'},
-//             { id: 3, name: 'Vegeta', race: 'saiyan'},
-//             { id: 4, name: 'Trunks Brief', race: 'half-saiyan'},
-//         ],
-//         tableHeader: ["project", "name", "race"],
-//     },
-// });
-
-  const el = document.body.appendChild(document.createElement('application'))
-  app = new Vue({
-    el,
-    data: {
-      show: true
-    }
-  })
-
-
-  console.log(app.show)
 
   var menu = [
     {name: 'Телефон', fun: function (){$('#lead_phone').val(getInputSelection($('#lead_info')));}}, 

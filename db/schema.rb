@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180514164339) do
+ActiveRecord::Schema.define(version: 20180523124723) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -127,6 +127,15 @@ ActiveRecord::Schema.define(version: 20180514164339) do
     t.datetime "updated_at", null: false
     t.index ["contactable_id", "contactable_type"], name: "index_contacts_on_contactable_id_and_contactable_type"
     t.index ["contactable_type", "contactable_id"], name: "index_contacts_on_contactable_type_and_contactable_id"
+  end
+
+  create_table "costing_rooms", force: :cascade do |t|
+    t.bigint "costing_id"
+    t.bigint "room_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["costing_id"], name: "index_costing_rooms_on_costing_id"
+    t.index ["room_id"], name: "index_costing_rooms_on_room_id"
   end
 
   create_table "costings", force: :cascade do |t|
@@ -458,6 +467,21 @@ ActiveRecord::Schema.define(version: 20180514164339) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "room_works", force: :cascade do |t|
+    t.bigint "room_id"
+    t.bigint "work_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["room_id"], name: "index_room_works_on_room_id"
+    t.index ["work_id"], name: "index_room_works_on_work_id"
+  end
+
+  create_table "rooms", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "special_infos", force: :cascade do |t|
     t.text "content"
     t.string "specialable_type"
@@ -595,16 +619,18 @@ ActiveRecord::Schema.define(version: 20180514164339) do
 
   create_table "works", force: :cascade do |t|
     t.string "name"
-    t.bigint "work_type_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["work_type_id"], name: "index_works_on_work_type_id"
+    t.bigint "work_type_id"
   end
 
+  add_foreign_key "costing_rooms", "costings"
+  add_foreign_key "costing_rooms", "rooms"
   add_foreign_key "costings", "projects"
   add_foreign_key "costings", "users"
   add_foreign_key "leads", "priorities"
   add_foreign_key "project_goods", "goodstypes"
   add_foreign_key "project_goods", "projects"
-  add_foreign_key "works", "work_types"
+  add_foreign_key "room_works", "rooms"
+  add_foreign_key "room_works", "works"
 end

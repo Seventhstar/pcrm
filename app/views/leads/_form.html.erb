@@ -27,7 +27,7 @@
       <td><div class="inp_w"><%= chosen_src 'status_id', @statuses, @lead %>
       </div></td></tr>
     <tr><td class="caption">Дата для статуса:</td>
-      <td><div class="inp_w"><%= f.text_field :status_date,:value => @lead.status_date.try('strftime',"%d.%m.%Y"), label: false, class: "txt datepicker" %>
+      <td><div class="inp_w"><%= f.text_field :status_date, value: @lead.status_date.try('strftime',"%d.%m.%Y"), label: false, class: "txt datepicker" %>
       </div></td></tr>
     <tr><td class="caption">Канал:</td>
       <td><div class="inp_w"><%= chosen_src 'channel_id', @channels ,@lead %>

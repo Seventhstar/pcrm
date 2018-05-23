@@ -1,0 +1,14 @@
+tr class="linked_work_#{room_work.id}"
+  td
+    = room_work.work.name
+  td.edit_delete
+    = link_to "", edit_work_path(room_work.work), class: 'icon icon_edit'
+    = link_to "", polymorphic_url(room_work), method: "delete", 
+                  data: {confirm: 'Действительно удалить?'}, 
+                  class: 'icon icon_remove', 
+                  remote: true
+
+- room_work.work.linked_works.each do |lw|
+  tr
+    td colspan="2" class="linked_work linked_work_#{room_work.id}"
+      = lw.name 

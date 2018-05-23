@@ -1,10 +1,11 @@
 <tr id="item_<%= g.id %>" class="sw_color <%= class_for_prj_goods(g) %>">
   <td width='220px'><%= g.name %></td>
-  <td width='210px'><%= action_name=='index' && params[:sort] == 'provider_id' ? g.project.try(:address) : g.provider_name %></td>
+  <td width='210px'><%= action_name=='index' && params[:sort] == 'provider_id' ? g.project_address : g.provider_name %></td>
   <td width='115px'><%= g.date_place.try('strftime',"%d.%m.%Y") %></td>
   <td width='230px'><%= g.description %></td>
   <td width='58px'><%= g.currency_name %></td>
-  <td width='90px' class="" title="<%= all_sum_info(g) %>"><%= all_sum(g) %></td>
+  <td width='90px' class="sum_<%= g.currency_name %>" title="<%= all_sum_info(g) %>" 
+                   sum_supply="<%= g.sum_supply %>" sum_offer="<%= g.gsum %>"><%= all_sum(g) %></td>
   
   <td class="edit_delete td_right " style="">
     <a class="icon basket" data-modal="true" href="/project_goods/<%= g.id %>/edit?owner_id=<%= get_total_key(g) %>"></a>
@@ -12,5 +13,4 @@
     data-remote="true" rel="nofollow" 
     data-method="delete" href="/project_goods/<%= g.id %>"></a>
   </td>
-
 </tr>

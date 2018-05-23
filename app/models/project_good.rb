@@ -5,7 +5,7 @@ class ProjectGood < ActiveRecord::Base
   belongs_to :goodstype
   attr_accessor :owner_id
 
-  validates :name, :length => { :minimum => 3 }
+  validates :name, length: { minimum: 3 }
   validates :provider_id, presence: true
   validates :gsum, presence: true
 
@@ -15,6 +15,10 @@ class ProjectGood < ActiveRecord::Base
 
   def project_name
     project.try(:name)
+  end
+
+  def last_sum
+    self.sum_supply.nil? ? self.gsum : self.sum_supply
   end
 
   def currency_print_name
@@ -29,8 +33,6 @@ class ProjectGood < ActiveRecord::Base
   end
 
   def currency_name
-    c = ''
-    c = currency_src[self.currency_id-1][0] if !self.currency_id.nil?
-    c
+    self.currency_id.nil? ? '' : currency_src[self.currency_id-1][0]
   end
 end

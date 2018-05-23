@@ -1,0 +1,11 @@
+= render 'shared/edit_head', item: @work, title: "Редактирование работы"
+= simple_form_for(@work) do |f|
+  = render 'shared/error_messages', object: f.object
+  .box_wrap_1 
+    .panel-left
+      table.tbl_fc.tbl_fc_1
+        = tr_text f, :name, 'Наименование'
+        = tr_chosen :work_type_id, WorkType.all, @work, 'Вид работы'
+        = tr_submit_cancel '/options/works'
+  .panel-right
+    = render 'linked_works'

@@ -1,7 +1,7 @@
 module ProjectsHelper
 
   def hash_sum_on_field(total_data, field)
-    total_data.map {|h| h[field] }.sum>0 if t!otal_data.nil?
+    total_data.map {|h| h[field] }.sum>0 if !total_data.nil?
   end
 
   def get_total_id(pgt)
@@ -108,29 +108,35 @@ module ProjectsHelper
     #             }
   end
 
-  def td_sum_field( f, val = 0, label='', params = {})
+  def td_sum_field(f, val = 0, label='', params = {})
+    
+    obj_name = f.class == String ? f : f.object_name
     mask_cls = params[:mask] ? 'float_mask' : 'sum_mask'
-    inp_add_mask = params[:inp_class].nil? ? '' : ' '+params[:inp_class]
+    mask_cls += " #{params[:inp_class]}" if params[:inp_class].present?
+
     lbl = content_tag 'label', params[:translate] ? t(label) : label if !label.nil?
     v = params[:value]
-    disabled = params[:disabled]
     v ||= @project[val] if !@project.nil?
-    obj_name = f.class == String ? f : f.object_name
 
-    txt = content_tag 'input', '', value: v, 
-      onblur:"onBlur(this)", onfocus:"onFocus(this)", 
-      class: 'txt '+mask_cls + inp_add_mask, 
-        type: 'text', 
-        name: "#{obj_name}[#{val}]", 
-        id:   "#{obj_name}_#{val}", 
-        disabled: disabled
+    attrs = {value: v, 
+      type: 'text', 
+      onblur:"onBlur(this)", onfocus:"onFocus(this)",       
+      class: "txt #{mask_cls}", 
+      name: "#{obj_name}[#{val}]", 
+      id:   "#{obj_name}_#{val}", 
+      }
+    attrs[:readonly] = '' if params[:disabled].present? 
 
-    style = ""
-    style = 'width: '+params[:width] if params[:width]
+    txt = content_tag 'input', '', attrs
 
-    add_class = params[:class].nil? ? '' : ' '+params[:class]
-    content_tag 'td', style: style do
-      content_tag 'div', class: "inp_w #{add_class}" do
+      # 'v-model' => "#{obj_name}_#{val}",
+    td_attrs = {}
+    td_attrs[:style] = "width: #{params[:width]}" if params[:width]
+
+    cls = "inp_w" + (params[:class].nil? ? '' : ' '+params[:class])
+
+    content_tag 'td', td_attrs do
+      content_tag 'div', class: cls do
         lbl.nil? ? txt : lbl+txt
       end
     end
@@ -206,10 +212,10 @@ module ProjectsHelper
 
   def icon_for_project (prj)
     cntnt = '<div class="icons-indicate">'   
-    cntnt = cntnt + image_tag('debt.png', title: 'Заказчик должен денег') if prj.debt
-    cntnt = cntnt + image_tag('hammer.png', title: 'Интерес к стройке') if prj.interest
-    cntnt = cntnt + image_tag('attention.png', title: 'Особое внимание') if prj.attention
-    cntnt = cntnt + '</div>'
+    cntnt += image_tag('debt.png', title: 'Заказчик должен денег') if prj.debt
+    cntnt += image_tag('hammer.png', title: 'Интерес к стройке') if prj.interest
+    cntnt += image_tag('attention.png', title: 'Особое внимание') if prj.attention
+    cntnt += '</div>'
   end
 
   def good_state_src

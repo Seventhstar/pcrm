@@ -1,4 +1,4 @@
-<%= content_tag :div, :id => "flash_#{name}", :class => "alert fade-in flash_#{name}" do %>
+<%= content_tag :div, id: "flash_#{name}", class: "alert fade-in flash_#{name}" do %>
   <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
   <% if msg.kind_of?(Array)  %> 
     <% msg.each do |m| %>

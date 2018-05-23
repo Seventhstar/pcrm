@@ -1,0 +1,7 @@
+<% if @room_work.errors.present? %>
+  <%= render 'errors', item: @room_work %>
+<% else %>
+  $('#works tr.new_item_head').before("<%= j render @room_work %>");
+  $('#room_work_work_id option[value="'+$('#room_work_work_id').val()+'"]').remove(); 
+  $('#room_work_work_id').val(0).trigger('chosen:updated');
+<% end %>

@@ -7,8 +7,6 @@
           td.caption Проект:
           td
             =f.hidden_field :project_id
-            .inp_w= f.input :project_address, label: false, data:{autocomplete_source: projects_path}
-        tr
-          td.caption
-          td
-            =submit_cancel costings_path        
+            .inp_w= f.input :project_address, label: false, data: {autocomplete_source: projects_path}
+        = tr_multi_select f, :room_ids, Room.all, 'Помещения', {model: 'room'}
+        = tr_submit_cancel costings_path        

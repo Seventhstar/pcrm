@@ -1,20 +1,20 @@
 <% pgt_id = pgt.id %>
 <% opened ||= false  %>
 <tr id="new_item_<%= pgt_id %>" class="<%= opened ? '' : 'invisible' %> editable new_row">
-    <% iname = "project _good_#{pgt_id}_" %>
+    <% iname = "project_good_#{pgt_id}_" %>
     <%= hidden_field iname,'goodstype_id', value: pgt_id %>
     <%= hidden_field iname,'owner_id', value: pgt_id %>
-    <td class="fw" width='220px'><%= text_field iname,:name, {class: 'txt'} %></td>
+    
+    <%= td_text iname, :name %>
     <td width='216px'>
         <% gt_coll = Goodstype.find_by(id: pgt_id) %>
         <% if gt_coll.present? %>
             <%= chosen_src "provider_id", gt_coll.providers, nil, {nil_value: 'Выберите поставщика...', add_name: iname} %>
         <% end %>
     </td>
-    <td class="caption3" width='115px'>
-        <%= text_field iname, :date_place, {value: f_date(Date.today), class: 'txt datepicker'} %></td>
-    <td class="caption3" width='230px'>
-        <%= text_field iname, :description, {class: 'txt fullwidth'} %></td>
+
+    <%= td_text iname, :date_place, {date: Date.today} %>    
+    <%= td_text iname, :description %>
 
     <td width='58px'><%= chosen_src "currency_id", currency_src,1,{nil_value: '',add_name: iname, add_class: 'currency_src'} %></td>
     <%= td_sum_field(iname, :gsum, '', {width: '90px'}) %>

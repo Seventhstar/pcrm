@@ -1,9 +1,9 @@
 class ProjectGoodsController < ApplicationController
   include ProjectsHelper
   respond_to :html, :json
+  before_action :check_sum, only: [:create, :update]
   before_action :set_project_good, only: [:show, :edit, :update, :destroy]  
   before_action :logged_in_user
-  before_action :check_sum, only: [:create,:update]
   helper_method :sort_column, :sort_direction
   respond_to :html, :json, :js
 
@@ -46,10 +46,12 @@ class ProjectGoodsController < ApplicationController
 
   def update
     @cur_id = pg_params[:owner_id]
-    #p "@cur_id #{@cur_id}"
+    # puts "pg_params[:sum_supply] #{pg_params[:order] == '0'}"
+    # pg_params[:sum_supply] = 0 if pg_params[:order] == '0'
+    # puts "pg_params[:sum_supply] #{pg_params[:sum_supply]}" if pg_params[:order] == '0'
     @prj_good.update(pg_params)    
-    @prj_good.save 
-    
+    respond_with @prj_good
+    # @prj_good.save 
   end
 
   def edit
@@ -62,11 +64,15 @@ class ProjectGoodsController < ApplicationController
 
   private
 
-  def check_sum
-      prms = [:gsum,:sum_supply]
+    def check_sum
+      # new_params = pg_params.clone
+      prms = [:gsum, :sum_supply]
+      # pg_params[:sum_supply] = "0" 
+      # # if new_params[:order] == '0' 
       prms.each do |p|
         pg_params[p] = pg_params[p].gsub!(' ','') if !pg_params[p].nil?
       end
+      # new_params
     end
 
     def sort_column
@@ -86,7 +92,8 @@ class ProjectGoodsController < ApplicationController
 
     def pg_params
       prm = params.permit!.to_h.first[0] 
-      params.require(prm).permit(:goodstype_id,:provider_id,:date_supply,:date_place,:date_offer, 
-        :currency_id,:gsum,:order,:name,:description, :fixed, :sum_supply, :project_id, :owner_id)
+      params.require(prm).permit( :goodstype_id, :provider_id, :date_supply, :date_place, 
+                                  :date_offer, :currency_id, :gsum, :order, :name, :description, 
+                                  :fixed, :sum_supply, :project_id, :owner_id)
     end
   end

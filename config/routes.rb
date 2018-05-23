@@ -117,9 +117,11 @@ Rails.application.routes.draw do
   resources :materials
   resources :consumptions
   resources :works
+  resources :rooms
   resources :work_types
   resources :linked_works
   resources :work_linkers
+  resources :room_works
  
 
   get "ajax/channels"

@@ -24,11 +24,11 @@ class WorksController < ApplicationController
   end
 
   private
-  def set_work
-    @work = Work.find(params[:id])
-  end
+    def set_work
+      @work = Work.find(params[:id])
+    end
 
-  def work_params
-    params.require(:work).permit(:work_type_id, :name)
-  end
+    def work_params
+      params.require(:work).permit(:work_type_id, :name)
+    end
 end

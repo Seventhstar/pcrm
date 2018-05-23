@@ -1,7 +1,7 @@
 .nested-fields
   li
     = f.association :contact_kind, label: false
-    = f.input :val, class: 'left', label: false
-    = f.input :who, class: 'left', label: false
+    = f.input :val, class: 'left', label: false, placeholder: "Контакт"
+    = f.input :who, class: 'left', label: false, placeholder: "Должность"
     .nested-tools.form-group
       = link_to_remove_association "", f, class: "icon icon_remove right" 
