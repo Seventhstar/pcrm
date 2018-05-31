@@ -1,5 +1,5 @@
 class WorksController < ApplicationController
-  before_action :set_work, only: [:edit, :update]
+  before_action :set_work, only: [:edit, :update, :destroy]
 
   respond_to :html, :json
 
@@ -7,8 +7,8 @@ class WorksController < ApplicationController
     respond_with (@pm = Work.create(work_params))
   end
 
-  def edit
-
+  def destroy
+    respond_with @work.destroy, location: '/options/works'
   end
 
   def update

@@ -3,13 +3,18 @@
 
   respond_to :js, :json 
 
-  def projects
+  def autocomplete
+    model = params[:model].classify
+    name_field = model == 'Project' ? 'address' : 'name'
+
     if params[:term]
-      projects = Project.where("lower(address) like lower(?) ", "%#{params[:term]}%")
+      projects = model.constantize.where("lower("+name_field+") like lower(?) ", "%#{params[:term]}%")
     else
-      projects = Project.first(10)
+      projects = model.constantize.first(10)
     end
-    list = projects.map {|u| Hash[ id: u.id, label: u.address, name: u.address]}
+
+    list = projects.map {|u| Hash[ id: u.id, label: u[name_field], name: u[name_field] ]}
+
     render json: list
   end
 

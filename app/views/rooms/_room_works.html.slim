@@ -12,5 +12,9 @@
       tr
         td#new_item
           = hidden_field 'room_work','room_id', value: @room.id
-          = chosen_src 'room_work[work_id]', Work.all
+
+          = hidden_field 'room_work','work_id'
+          .inp_w= text_field 'room_work', :work_name, label: false, model: 'Work', hidden_id: 'room_work_work_id', 
+            class: 'txt autocomplete'
+
           = td_add_sub_send 'room_works', 'room_work'

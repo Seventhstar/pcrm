@@ -19,7 +19,8 @@ class AbsencesController < ApplicationController
     @curr_day = @current_month.beginning_of_month.beginning_of_week
     query_str = "absences.*, date_trunc('month', dt_from) AS month"
 
-    @page = params[:page].try(:to_i) || 1
+    @page = params[:page].try(:to_i)
+    @page = 1 if @page ==0 || @page.nil?
 
     abs = is_manager? ? Absence.all : current_user.absences
     @absences = abs.select(query_str).joins(:reason)
@@ -27,9 +28,8 @@ class AbsencesController < ApplicationController
     if params[:sort]!='calendar'
       if @only_actual
         @absences = @absences.where("dt_from >= ?", (Date.today-2.week))
-      else
-        @absences = @absences.paginate(page: @page, per_page: 50)
       end
+      @absences = @absences.paginate(page: @page, per_page: 50)
     else
       @absences = @absences.where("dt_from >= ?", @curr_day)
     end
@@ -41,7 +41,7 @@ class AbsencesController < ApplicationController
 
     sort_1 = @sort_column == 'dt_from' ? 'month' : @sort_column
     order = "#{sort_1} #{sort_direction}, #{sort_2} #{dir_2}, absences.created_at desc"
-    puts "order #{order}"
+    #puts "order #{order}"
     @absences = @absences.order(order)
   end
 

@@ -12,7 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery-ui  
+//= require jquery-ui/autocomplete
 //= require jquery-ui/accordion
 //= require jquery-ui/datepicker
 //= require jquery-ui/tabs
@@ -28,7 +28,7 @@
 //= require bootstrap-tokenfield
 //= require moment
 //= require cocoon
-//= require contextMenu
+//= require contextMenu.min
 //= require_tree .
 
 function to_sum(d){ 

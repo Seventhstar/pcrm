@@ -1,5 +1,5 @@
 class RoomsController < ApplicationController
-  before_action :set_room, only: [:edit, :update]
+  before_action :set_room, only: [:edit, :update, :destroy]
 
   respond_to :html, :json
 
@@ -7,10 +7,10 @@ class RoomsController < ApplicationController
     respond_with (@room = Room.create(room_params))
   end
 
-  def edit
-
+  def destroy
+    respond_with @room.destroy, location: '/options/rooms'
   end
-
+  
   def update
     respond_to do |format|
       if @room.update(room_params)

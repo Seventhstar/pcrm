@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   resources :absence_shops
   resources :absence_shop_targets
   resources :absences
+  get 'absences&:page', :to => 'absences#index'
 
   resources :wiki_records do
     resources :wiki_records
@@ -126,7 +127,7 @@ Rails.application.routes.draw do
 
   get "ajax/channels"
   get "ajax/leads"
-  get "ajax/projects"
+  get "ajax/autocomplete"
 
   post "ajax/read_comment"
   post "ajax/dev_check" 

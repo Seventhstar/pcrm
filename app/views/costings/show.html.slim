@@ -1,9 +1,28 @@
 .box_wrap.box_wrap_1
-  .panel.panel-default
+  .panel1
     #tabs
       ul
-        - @costing.rooms.each do |r|
+        - ind = 0
+        - @costing.rooms.each do |r, index|
+          - ind += 1
           li 
-            a href="#tabs-#{r.id}"
+            a href="#tabs-#{ind}"
               =r.name
+      - ind = 0          
+      -@costing.rooms.each do |r|          
+        - ind +=1
+        .ptab id="tabs-#{ind}"
+          .panel-left.w50.left
+            .tbl_a
+              .head Проводимые работы
+              ul.costing_works
+          .pabel-right.w50.right
+            .tbl_a
+              .head Типовые работы
+              ul.costing_works
+                - r.works.each do |w|
+                  li 
+                    = check_box_tag "works_ids[]", w.id
+                    span = w.name
+
 

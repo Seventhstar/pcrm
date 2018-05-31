@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180523124723) do
+ActiveRecord::Schema.define(version: 20180525042648) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -136,6 +136,18 @@ ActiveRecord::Schema.define(version: 20180523124723) do
     t.datetime "updated_at", null: false
     t.index ["costing_id"], name: "index_costing_rooms_on_costing_id"
     t.index ["room_id"], name: "index_costing_rooms_on_room_id"
+  end
+
+  create_table "costing_works", force: :cascade do |t|
+    t.bigint "costing_id"
+    t.bigint "work_id"
+    t.integer "qty"
+    t.float "price"
+    t.integer "amounth"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["costing_id"], name: "index_costing_works_on_costing_id"
+    t.index ["work_id"], name: "index_costing_works_on_work_id"
   end
 
   create_table "costings", force: :cascade do |t|
@@ -626,6 +638,8 @@ ActiveRecord::Schema.define(version: 20180523124723) do
 
   add_foreign_key "costing_rooms", "costings"
   add_foreign_key "costing_rooms", "rooms"
+  add_foreign_key "costing_works", "costings"
+  add_foreign_key "costing_works", "works"
   add_foreign_key "costings", "projects"
   add_foreign_key "costings", "users"
   add_foreign_key "leads", "priorities"
