@@ -21,7 +21,7 @@ class Absence < ActiveRecord::Base
   belongs_to :user
   belongs_to :project, optional: true
   has_many :shops, class_name: "AbsenceShop", foreign_key: :absence_id
-  attr_accessor :t_from,:t_to, :checked, :reopen
+  attr_accessor :t_from, :t_to, :checked, :reopen
   has_paper_trail
 
   validates_with MyValidator  

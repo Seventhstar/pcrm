@@ -241,6 +241,7 @@ class ProjectsController < ApplicationController
 
     # Use callbacks to share common setup or constraints between actions.
     def set_project
+      # puts "id: #{params[:id]}, project_id: #{params[:project_id]}"
       @project = Project.find(params[:id])
     end
 

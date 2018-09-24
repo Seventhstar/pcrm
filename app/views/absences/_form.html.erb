@@ -1,9 +1,8 @@
-<% puts "@absence.user_id: #{@absence.user_id}" %>
 <% is_new = ['new','create'].include?(action_name) %>
 <% disp_obj = [2,3].include?(@absence.reason_id) ? 'table-row;' : 'none;' %>
 <% disp_trgt = @absence.reason_id==2 ? ' ' : 'display: none;' %>
 <% is_author = current_user.author_of?(@absence) %>
-    
+<% @reopen = @absence.shops.size == 0 %>
 
 <%= simple_form_for(@absence) do |f| %>
 <%= f.hidden_field :reopen, {action_name: action_name} %>
@@ -25,9 +24,9 @@
         <div class="lbl"><%= @absence.reason_name %><%= f.hidden_field :reason_id %></div>
       <% end %>
     </td>
-    <% if !is_new %>
+    <% if !is_new && !@reopen %>
       <td class="caption caption_sm">=></td>
-        <td ><div class="inp_w"><%= chosen_src 'new_reason_id', @reasons,@absence,{nil_value: 'Новая причина...'} %>
+        <td><div class="inp_w"><%= chosen_src 'new_reason_id', @reasons,@absence,{nil_value: 'Новая причина...'} %>
         </div></td>
     <% else %>
         <td colspan="2"></td>
@@ -67,10 +66,14 @@
           <td width='490px;' colspan="3"><div class="inp_w" >
            <%= chosen_src 'user_id', User.all, @absence %></div>
       </td></tr>
-      <tr><td></td><td class="caption caption_to"><div id='a_approved' class="left">
-        <%= f.input :approved, as: :boolean, label: 'Согласовано', class: 'inp_btn checkbox' %>
-        </div></td>
-      </tr>
+
+      <% if [@absence.reason_id, @absence.new_reason_id].include?(6) %>
+        <tr><td></td><td class="caption caption_to"><div id='a_approved' class="left">
+          <%= f.input :approved, as: :boolean, label: 'Согласовано', class: 'inp_btn checkbox' %>
+          </div></td>
+        </tr>
+      <% end %>
+
     <% end %>
     
     <% if !is_new && is_author %>

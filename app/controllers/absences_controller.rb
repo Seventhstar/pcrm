@@ -111,15 +111,15 @@ class AbsencesController < ApplicationController
     respond_to do |format|
       if @absence.save
         if absence_params[:reopen]=='true'
-          format .html { redirect_to action: "edit", id: @absence.id }
+          format.html { redirect_to action: "edit", id: @absence.id }
         else
-          format .html { redirect_to absences_url, notice: 'Отсутствие успешно создано.' }
+          format.html { redirect_to absences_url, notice: 'Отсутствие успешно создано.' }
         end
         format.json { render :edit, status: :created, location: @absence }
       else
         abs_params
         @reopen = reopen
-        format .html { render "new" }
+        format.html { render "new" }
         format.json { render json: @absence.errors, status: :unprocessable_entity }
       end
     end
