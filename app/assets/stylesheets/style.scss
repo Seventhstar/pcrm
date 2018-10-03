@@ -34,16 +34,24 @@ p {margin:0 0 14px 0; padding: 0 0 0 0; }
 .grey {color: #aeaeae; }
 
 .btn_a, .btn_add,.form-actions .btn-success, a.btn-success, 
-.input-group .btn-warning {display: inline-block; background: #ff8411; height: 34px; line-height: 34px; padding: 0 19px 0 19px; text-decoration:none; font-size: 14px; color: #fff; 
+.input-group .btn-warning {display: inline-block; height: 34px; line-height: 34px; padding: 0 19px 0 19px; text-decoration:none; font-size: 14px; color: #fff; 
   border-radius: 5px; 
-  position:relative;}
+  position:relative;
+  background: #ff8411;
+  
+  &.disabled, &[disabled]{
+    background: gray;
+    cursor: not-allowed;
+  } 
+}
+
 tr.editable .btn_a {line-height: 30px; height: 30px;}
 span.btn_add{ height: 24px; width: 12px; padding: 0px 60px 7px 8px; margin-top: -3px !important;}
 #pgoods span.btn_add{    padding: 0px 12px 7px 21px;
     width: 138px;}
 .btn_slim{ height: 26px; font-size: 13px; padding: 0 12px; line-height: 24px;} 
 //.btn_a:hover {opacity: 0.7; transition: All 0.5s ease;}
-.btn_a:hover { background: asset-url('xbg1_2.png'); transition: All 0.3s ease; box-shadow: 0 -2px 0 0 #cb4f00 inset;}
+.btn_a:hover::enabled { background: asset-url('xbg1_2.png'); transition: All 0.3s ease; box-shadow: 0 -2px 0 0 #cb4f00 inset;}
 .icon:hover {opacity: 0.7;}
 .btn:hover { transition: All 0.5s ease;}
 .only_actual:hover {opacity: 0.8;}

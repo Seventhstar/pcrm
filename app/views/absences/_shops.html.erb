@@ -4,15 +4,29 @@
   <tbody>
 
     <%= render partial: @shops, as: :shop %>
+    <tr>
+      <td>shop: {{this.shop}}</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr v-for="(item, index) in shops">
+      <td>{{ item.shop.label }}</td>
+      <td>{{ item.target.label }}</td>
+      <td><span class="icon icon_del" @click="del_shop(index)"/></td>
+    </tr>
  
     <tr id="new_item"><%= hidden_field 'absence_shop', 'absence_id', value: @absence.id %>
-      <td class="caption3 w_60">
+      <td class="w_60">
         <div class="inp_l inp_w">
-          <%= chosen_src 'shop_id', Provider.all, @shop, {nil_value: 'Выберите магазин...', special_value: '* другой'} %>
+          <v-chosen name="new_shop" :value='new_shop' placeholder="Выберите магазин..."/>          
+          <% chosen_src 'shop_id', Provider.all, @shop, {nil_value: 'Выберите магазин...', special_value: '* другой'} %>
         </div>
       </td>
-      <td class="w_30"> <%= chosen_src "target_id", @shop_targets, @shop, {nil_value: 'Выберите цель...'} %></td>
-      <td><span class="btn_a" id="btn-sub-send" absid="<%= @absence.id %>" action='/absence_shops/' prm='absence_shop' width=''>Добавить магазин</span></td>
+      <td class="w_30"> 
+        <% chosen_src "target_id", @shop_targets, @shop, {nil_value: 'Выберите цель...'} %>
+         <v-chosen name="new_shop_target" :value="new_shop_target" placeholder="Выберите цель..."/>
+        </td>
+      <td><span class="btn_a" @click="add_shop" :disabled="!f_shop">Добавить магазин</span></td>
     </tr>
 
   </tbody>

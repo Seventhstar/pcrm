@@ -89,7 +89,7 @@ class AbsencesController < ApplicationController
     @t_to = '19:00'
 
     @checked = false
-    @shops = {}
+    @shops = @absence.shops
 
   end
 

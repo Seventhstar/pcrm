@@ -30,6 +30,10 @@ class Project < ActiveRecord::Base
 
   has_paper_trail
 
+  def name
+    address
+  end
+
   def client_name
     client.try(:name)
   end

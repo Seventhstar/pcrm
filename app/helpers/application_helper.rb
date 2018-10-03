@@ -182,6 +182,21 @@ module ApplicationHelper
     end
   end
 
+  def v_value(obj, name, attr_name = "name")
+    h = []
+    if !obj.nil? && obj.id? && obj["#{name}_id"]>0
+      h = {}
+      h[:value] = obj["#{name}_id"]
+      h[:label] = obj.try("#{name}_#{attr_name}")
+    end
+
+    h.to_json.html_safe.to_s
+  end
+
+  def select_src(collection, attr_name = "name")
+    collection.collect{|u| {label: u.try(attr_name), value: u.id}}.to_json.html_safe.to_s
+  end
+
   def chosen_src(id, collection, obj = nil, options = {})
     p_name    = options[:p_name].nil? ? 'name' : options[:p_name]
     order     = options[:order].nil? ? p_name : options[:order]

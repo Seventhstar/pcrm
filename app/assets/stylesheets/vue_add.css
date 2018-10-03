@@ -1,0 +1,42 @@
+.dropdown-toggle, .dropdown-menu{
+  font-size: 14px;
+}
+.dropdown-toggle:hover {
+  border: 1px solid #ff8411 !important;
+}
+
+.selected-tag{
+  height: 100%;
+}
+
+/*.fade-enter-active, .fade-leave-active {
+  transition: opacity 1s !important;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8  {
+  opacity: 0;
+}*/
+
+.bounce-enter-active {
+  animation: bounce-in .5s;
+}
+.bounce-leave-active {
+  animation: bounce-in .5s reverse;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/*.slide-enter-active, .slide-leave-active {
+    transition: all 1s cubic-bezier(.65, .05, .36, 1) !important;
+}
+.slide-enter, .slide-leave-active {
+    left: -100%;
+}﻿*/

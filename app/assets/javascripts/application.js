@@ -29,6 +29,7 @@
 //= require moment
 //= require cocoon
 //= require contextMenu.min
+//= require vue
 //= require_tree .
 
 function to_sum(d){ 
@@ -100,6 +101,10 @@ var show_ajax_message = function(msg, type) {
   $(".js-notes").html( message_template(msg,type));    
   showNotifications();
 };
+
+var v_nil = function(v){ 
+  return v === null || v === undefined || v.value === undefined || v.value === 0;
+}
 
 function getInputSelection(elem){
    if(typeof elem != "undefined"){
