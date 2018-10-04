@@ -2,7 +2,8 @@ class AbsencesController < ApplicationController
   include CommonHelper
   respond_to :html, :json, :js
   before_action :set_absence, only: [:show, :edit, :update, :destroy]
-  helper_method :sort_2, :dir_2
+  helper_method :sort_2, :dir_2 
+  
   helper_method :sort_column, :sort_direction
   before_action :logged_in_user
   after_action  :send_changeset_email, only: [:update,:create]
@@ -137,6 +138,7 @@ class AbsencesController < ApplicationController
       if @absence.update(ap)
         format.html { redirect_to absences_url, notice: 'Отсутствие успешно обновлено.' }
         format.json { render :edit, status: :ok, location: @absence }
+        puts "shops: ", ap['shops_attributes']
       else
         format.html { render :edit }
         format.json { render json: @absence.errors, status: :unprocessable_entity }
@@ -166,7 +168,9 @@ class AbsencesController < ApplicationController
       a = params.require(:absence).permit(:user_id, :dt_from, :dt_to, :reason_id, 
                                           :new_reason_id, :comment, :project_id,
                                           :t_from, :t_to, :checked, :target_id, 
-                                          :reopen, :canceled, :approved)
+                                          :reopen, :canceled, :approved, 
+                                          :new_shop_id, :new_shop_target_id,
+                                          shops_attributes: [:id, :shop_id, :target_id, :_destroy])
 
       a['dt_to'] = a['dt_from'] if a['checked']=='false' || a['dt_to'].nil?
       a['dt_from'] = a['dt_from'].gsub("00:00", '')+ ' ' + a['t_from']

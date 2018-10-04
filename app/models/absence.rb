@@ -4,7 +4,7 @@ class MyValidator < ActiveModel::Validator
     when 0
       record.errors.add('Причина', "Должна быть указана")
     when 3
-      record.errors.add('Магазины', "Добавьте хотя бы один") if record.shops.count==0 && record.id.present?
+      # record.errors.add('Магазины', "Добавьте хотя бы один") if record.shops.count==0 && record.id.present?
     when 6
       record.errors.add('Комментарий', "Должен быть заполнен") if record.comment.length <3
     else      
@@ -21,7 +21,8 @@ class Absence < ActiveRecord::Base
   belongs_to :user
   belongs_to :project, optional: true
   has_many :shops, class_name: "AbsenceShop", foreign_key: :absence_id
-  attr_accessor :t_from, :t_to, :checked, :reopen
+  accepts_nested_attributes_for :shops, allow_destroy: true
+  attr_accessor :t_from, :t_to, :checked, :reopen, :new_shop_id, :new_shop_target_id, :shops_array
   has_paper_trail
 
   validates_with MyValidator  

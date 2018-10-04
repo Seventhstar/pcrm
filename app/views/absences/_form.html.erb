@@ -144,30 +144,33 @@
       new_shops: <%= select_src(Provider.all) %>,
       new_shop_target: null,
       new_shop_targets: <%= select_src(@shop_targets) %>,
-      shops: <%= @absence.shops.to_a %>
-    },
-    created(){
-      this.$watch(
-        (vm) => (vm['reason'], vm['target'], vm['project'], vm['shop']), function () { this.input(); }
-      )
+      shops: <%= @absence.shops.map{|s| { id: s.id,
+                  shop: {label: s.shop_name, value: s.shop_id}, 
+                  target: {label: s.target_name, value: s.target_id},
+                  _destroy: false} }.to_json.html_safe %>
     },
     updated(){
         this.input();
     },
     methods: {
+      shop_field(index, field) {
+        return "absence[shops_attributes]["+index+"]["+field+']'
+      },
       add_shop(){
         if (this.new_shop!==null && this.new_shop_target!==null){
-          this.shops.push({shop: this.new_shop, target: this.new_shop_target})
-          this.new_shop = null
+          this.shops.push({shop: this.new_shop, target: this.new_shop_target, _destroy: false})
           this.new_shop_target = null 
+          this.new_shop = null
         }
       },
       del_shop(index){
-        this.shops.splice(index, 1);
+        this.shops[index]['_destroy'] = true
       },
       input(e){
+        let f_shop = true;
         let f_valid = true;
         let reason = this.reason === undefined ? 0 : this.reason.value  
+
         switch(reason){
           case 0:
             f_valid = false; break;
@@ -178,14 +181,9 @@
           case 6:
             if ($('#absence_comment').val().length < 3) {f_valid = false;}
         }
-        // if (v_nil(this.reason)) { f_valid = false; }
-        // else if (this.equals(this.reason, 2) && (v_nil(this.project) || v_nil(this.target))) { f_valid = false; }
-        // else if (this.equals(this.reason, 3) && (v_nil(this.project) || this.shops.length === 0))  { f_valid = false;}
-        // else if (this.equals(this.reason, 6) && $('#absence_comment').val().length < 3) { f_valid = false; }
-        this.f_valid = f_valid;
 
-        let f_shop = true;
         if (v_nil(this.new_shop) || v_nil(this.new_shop_target)) f_shop = false;
+        this.f_valid = f_valid;
         this.f_shop = f_shop;
       },
       equals(obj, v){      

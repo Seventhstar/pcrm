@@ -39,6 +39,7 @@ class FilesController < ApplicationController
     @file.owner_type = params[:owner_type].classify
     @file.user_id    = current_user.id
     @file.name       = filename
+    @file.secret     = current_user.admin?
     @file.save
     @file.id
 
