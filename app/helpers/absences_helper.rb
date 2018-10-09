@@ -24,7 +24,7 @@ module AbsencesHelper
       cls += ' striked' if abs.canceled
       cls += ' nonactual' if abs.try(:dt_from) < Date.today || abs.canceled
 
-      cls = "info" if ( abs.reason_id != abs.new_reason_id && abs.new_reason_id.to_i != 0 ) || 
+      cls += " info" if ( abs.reason_id != abs.new_reason_id && abs.new_reason_id.to_i != 0 ) || 
                       ( abs.reason_id == 6 && !abs.approved)
       cls
   end

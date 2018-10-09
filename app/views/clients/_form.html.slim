@@ -5,7 +5,7 @@
       .gr_caption.hl_tr Основные данные
       table.tbl_fc.tbl_fc
         = simple_inputs f, [:name, :address, :phone, :email]
-        = tr_submit_cancel clients_url, params[:sub]
+        = tr_submit_cancel clients_url, {modal: params[:sub]}
     .panel-right
       .gr_caption.hl_tr Дополнительные контакты
       = render 'shared/contacts', f: f

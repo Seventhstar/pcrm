@@ -20,7 +20,7 @@
               @absence.created_at > (Date.today-3.day) && @absence.new_reason_id.nil? ) %>
 
         <div class="inp_w">
-          <v-chosen name="reason" :value="reason" placeholder="Укажите причину..."/>   
+          <v-chosen name="reason" model="absence" :value="reason" placeholder="Укажите причину..."/>   
         </div>
       <% else %>
         <div class="lbl"><%= @absence.reason_name %><%= f.hidden_field :reason_id %></div>
@@ -39,16 +39,16 @@
     </tr>
     
   <transition name="slide"> 
-      <tr v-if="equals(reason,[2,3])" transition="slide">
+      <tr v-if="equals(reason,[2,3])" transition="bounce">
       <td class="caption p_obj">Проект:</td>
       <td colspan="3" class="p_obj">
       <div class="inp_w">
-        <v-chosen name="project" :value="project" placeholder="Укажите объект..."/></div>
+        <v-chosen name="project" model="absence" :value="project" placeholder="Укажите объект..."/></div>
       </div></td>
       <template v-if="equals(reason,2)">
         <td class="caption caption_sm"><span>Цель:</span></td>
         <td><span>
-          <v-chosen name="target" :value="target" placeholder="Укажите цель..."/> 
+          <v-chosen name="target" model="absence" :value="target" placeholder="Укажите цель..."/> 
         </span></td>
       </template>
     </tr>
@@ -58,10 +58,10 @@
     <tr><td class="caption">Дата c:</td>
       <td width='200px;'><div class="inp_">
         <%= f.text_field :dt_from, value: @dt_from, label: false, class: "txt datepicker" %></div></td>
-      <td class="caption caption_to"><%= f.hidden_field :checked %>
-        <span class="check_img <%= @checked ? 'checked' : '' %>" id='dt_to_check'></span> по:</td>
+      <td class="caption caption_to"><%= f.hidden_field :checked, "v-model"=>"checked" %>
+        <span class="check_img" v-bind:class="{ checked: checked }" id='dt_to_check' @click="check_to"></span> по:</td>
       <td width='180px;'><div class="inp_">
-        <%= f.text_field :dt_to, value: @dt_to, label: false, class: "txt datepicker", disabled: !@checked %>
+        <%= f.text_field :dt_to, value: @dt_to, label: false, class: "txt datepicker", ":disabled"=>"!checked" %>
         </div></td>
       <td class="caption caption_sm">Время:</td>
       <td>
@@ -77,12 +77,14 @@
     <% if is_manager? %>
       <tr><td class="caption">Сотрудник:</td>
           <td width='490px;' colspan="3"><div class="inp_w" >
-           <%= chosen_src 'user_id', User.all, @absence %></div>
+           <v-chosen name="user" model="absence" :value="user" placeholder="Выберите сотрудника..."/>
       </td></tr>
 
       <% if [@absence.reason_id, @absence.new_reason_id].include?(6) %>
         <tr><td></td><td class="caption caption_to"><div id='a_approved' class="left">
-          <%= f.input :approved, as: :boolean, label: 'Согласовано', class: 'inp_btn checkbox' %>
+          
+          <%= f.check_box :approved, class: 'inp_btn checkbox' %>
+          <%= f.label :approved, "Согласовано" %>
           </div></td>
         </tr>
       <% end %>
@@ -91,7 +93,8 @@
     
     <% if !is_new && is_author %>
       <tr><td></td><td class="caption caption_to"><div id='a_canceled' class="left">
-        <%= f.input :canceled, as: :boolean, label: 'Отменить отсутствие', class: 'inp_btn checkbox' %>
+        <%= f.check_box :canceled, class: 'inp_btn checkbox' %> 
+        <%= f.label :canceled, "Отменено" %>
         </div></td>
       </tr>
     <% end %>
@@ -114,12 +117,7 @@
 </transition>
 
 <% if is_manager? || is_new || is_author %>
-  <a class="sub btn_a btn_reset" data-dismiss="" href="/absences">Отмена</a>
-  <input type="submit" name="commit" value="Сохранить" 
-         class="btn btn-default sub btn_a" 
-         :disabled="!f_valid"
-        >
-  <!-- <%= submit_cancel absences_url %> -->
+  <%= submit_cancel absences_url, {disabled: "!f_valid"} %>
 <% end %>
 
 <% end %>
@@ -131,15 +129,18 @@
     el: '.sample',
     data: 
     {
-      comment: '',
+      comment: <%= @absence.comment %>,
       f_valid: true,
       f_shop: false,
+      checked: <%= @checked %>,
       reason:  <%= v_value(@absence, "reason") %>,
       reasons: <%= select_src(@reasons) %>,
       project: <%= v_value(@absence, "project") %>,
       projects:<%= select_src(@projects) %>,
       target:  <%= v_value(@absence, "target") %>,
       targets: <%= select_src(@targets) %>,
+      user:  <%= v_value(@absence, "user", nil, current_user) %>,
+      users: <%= select_src(User.all) %>,
       new_shop:  null,
       new_shops: <%= select_src(Provider.all) %>,
       new_shop_target: null,
@@ -156,9 +157,15 @@
       shop_field(index, field) {
         return "absence[shops_attributes]["+index+"]["+field+']'
       },
+      check_to(){
+        this.checked = !this.checked
+      },
       add_shop(){
-        if (this.new_shop!==null && this.new_shop_target!==null){
-          this.shops.push({shop: this.new_shop, target: this.new_shop_target, _destroy: false})
+        if (this.new_shop_target!==null){
+          
+          let shop = this.new_shop === null ? {label: '*Другой*', value: null} : this.new_shop
+
+          this.shops.push({shop: shop, target: this.new_shop_target, _destroy: false})
           this.new_shop_target = null 
           this.new_shop = null
         }
@@ -177,12 +184,12 @@
           case 2:
             if (v_nil(this.project) || v_nil(this.target)){f_valid = false;} break;
           case 3:
-            if (v_nil(this.project) || this.shops.length === 0){f_valid = false;} break;
+            if (v_nil(this.project) || this.shops.filter(sh => !sh._destroy).length === 0){f_valid = false;} break;
           case 6:
             if ($('#absence_comment').val().length < 3) {f_valid = false;}
         }
 
-        if (v_nil(this.new_shop) || v_nil(this.new_shop_target)) f_shop = false;
+        if (v_nil(this.new_shop_target)) f_shop = false;
         this.f_valid = f_valid;
         this.f_shop = f_shop;
       },

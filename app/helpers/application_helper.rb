@@ -182,14 +182,18 @@ module ApplicationHelper
     end
   end
 
-  def v_value(obj, name, attr_name = "name")
-    h = []
-    if !obj.nil? && obj.id? && obj["#{name}_id"]>0
-      h = {}
-      h[:value] = obj["#{name}_id"]
-      h[:label] = obj.try("#{name}_#{attr_name}")
+  def v_value(obj, name, attr_name = nil, default = nil)
+    attr_name ||= "name"
+    if !obj.nil? && obj.id? 
+      if !obj["#{name}_id"].nil? && obj["#{name}_id"]>0
+        val = obj["#{name}_id"]
+        label = obj.try("#{name}_#{attr_name}")
+      end
+    elsif default.present?
+        val = default.id
+        label = default.name
     end
-
+    h = val.present? ? {value: val, label: label} : []
     h.to_json.html_safe.to_s
   end
 
@@ -352,27 +356,30 @@ module ApplicationHelper
     end
   end
 
-  def tr_submit_cancel(back_url, modal = false)
+  def tr_submit_cancel(back_url, options = {})
     content_tag :tr do
       content_tag(:td, '', class: "caption") + 
       content_tag(:td) do
-        submit_cancel(back_url, modal) 
+        submit_cancel(back_url, options) 
       end
     end
   end
 
-  def submit_cancel(back_url, modal = false)
-    add_cls = modal ? ' update' : ''
-    dd      = modal ? "modal" : ''
-    s = submit_tag 'Сохранить', class: "btn btn-default sub btn_a #{add_cls}"
+  def submit_cancel(back_url, options = {})
+    add_cls = options['modal'] ? ' update' : ''
+    dd      = options['modal'] ? "modal" : ''
+
+    submit_options = {class: "btn btn-default sub btn_a #{add_cls}"}
+    submit_options[":disabled"] = options[:disabled] if options[:disabled]
+    
+    s = submit_tag 'Сохранить', submit_options
     c = link_to 'Отмена', back_url, class: "sub btn_a btn_reset", "data-dismiss": dd
     c+s
   end
 
-  def tool_icons(element, params = nil)
+  def tool_icons(element, params = {})
 
     all_icons = {} #['edit','delete','show'] tag='span',subcount=nil
-    params ||= {}
     params[:tag] ||= 'href'
     params[:icons] ||= 'edit,delete'
     icons = params[:icons].split(',').map { |e| e == 'edit' ? 'icon_edit' : e}

@@ -18,7 +18,7 @@
     <tr id="new_item"><%= hidden_field 'absence_shop', 'absence_id', value: @absence.id %>
       <td class="w_60">
         <div class="inp_l inp_w">
-          <v-chosen name="new_shop" :value='new_shop' placeholder="Выберите магазин..."/>          
+          <v-chosen name="new_shop" :value='new_shop' placeholder="*Другой*"/>          
           <% chosen_src 'shop_id', Provider.all, @shop, {nil_value: 'Выберите магазин...', special_value: '* другой'} %>
         </div>
       </td>

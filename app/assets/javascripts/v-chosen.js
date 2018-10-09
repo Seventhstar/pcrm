@@ -2,13 +2,13 @@ Vue.component('v-chosen', {
     data () {
       return {
         localValue: 0,
-        options: [],
         modelName: "",
         name_id: "",
+        options: [],
         _name: ""
       }
     }, 
-    props: ['name', 'placeholder', 'value' ],
+    props: ['name', 'model', 'placeholder', 'value' ],
     template: `
     <div class="d">
       <v-select :value="value"
@@ -17,12 +17,12 @@ Vue.component('v-chosen', {
         :placeholder="placeholder"
         v-on:input="onUpdate($event)">
       </v-select>
-      <input type="hidden" :value="localValue" :id="name_id" :name="_name">
+      <input type="hidden" :value="localValue" v-if="model!=undefined" :id="name_id" :name="_name">
     </div>`,
     created() {
-      this.name_id =  "absence_" + this.name + "_id";
-      this._name =  "absence[" + this.name + "_id]";
-      //this.modelName = this.$parent[this.name];
+
+      this.name_id =  this.model + "_" + this.name + "_id";
+      this._name =  this.model + "[" + this.name + "_id]";
       this.options = this.$parent[this.name + "s"];
     },
     methods: {

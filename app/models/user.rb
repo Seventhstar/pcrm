@@ -113,7 +113,7 @@ class User < ActiveRecord::Base
   end
 
   def author_of?(obj)
-    puts "cur_user #{self.email} id:#{id} obj.user_id: #{obj.user_id}"
+    #puts "cur_user #{self.email} id:#{id} obj.user_id: #{obj.user_id}"
     self.id == obj.user_id
   end
 

@@ -138,7 +138,6 @@ class AbsencesController < ApplicationController
       if @absence.update(ap)
         format.html { redirect_to absences_url, notice: 'Отсутствие успешно обновлено.' }
         format.json { render :edit, status: :ok, location: @absence }
-        puts "shops: ", ap['shops_attributes']
       else
         format.html { render :edit }
         format.json { render json: @absence.errors, status: :unprocessable_entity }
@@ -169,7 +168,6 @@ class AbsencesController < ApplicationController
                                           :new_reason_id, :comment, :project_id,
                                           :t_from, :t_to, :checked, :target_id, 
                                           :reopen, :canceled, :approved, 
-                                          :new_shop_id, :new_shop_target_id,
                                           shops_attributes: [:id, :shop_id, :target_id, :_destroy])
 
       a['dt_to'] = a['dt_from'] if a['checked']=='false' || a['dt_to'].nil?
