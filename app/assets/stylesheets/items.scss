@@ -1,0 +1,75 @@
+/* Customize the label (the container) */
+.checkcontainer {display: block; position: relative; padding-left: 22px;}
+
+/* Hide the browser's default checkbox */
+.checkcontainer input {position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0; }
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute; top: 0; left: 0;  width: 18px; height: 18px;
+  background: asset-url('pict01.png') no-repeat -87px 0;
+  &.checked{
+    background-position:-87px -20px;
+  }
+}
+
+.actns, .before_30{margin-top: 30px;}
+
+// /* On mouse-over, add a grey background color */
+// .checkcontainer:hover input ~ .checkmark {
+//   background-color: #ccc;
+// }
+
+// /* When the checkbox is checked, add a blue background */
+// .container input:checked ~ .checkmark {
+//   background-color: #2196F3;
+// }
+
+// /* Create the checkmark/indicator (hidden when not checked) */
+// .checkmark:after {
+//   content: "";
+//   position: absolute;
+//   display: none;
+// }
+
+// /* Show the checkmark when checked */
+// .container input:checked ~ .checkmark:after {
+//   display: block;
+// }
+
+// /* Style the checkmark/indicator */
+// .checkcontainer .checkmark:after {
+//   left: 9px;
+//   top: 5px;
+//   width: 5px;
+//   height: 10px;
+//   border: solid white;
+//   border-width: 0 3px 3px 0;
+//   -webkit-transform: rotate(45deg);
+//   -ms-transform: rotate(45deg);
+//   transform: rotate(45deg);
+// }
+
+
+.inp_btn, span.check_img {display: inline-block; background: asset-url('pict0.png') no-repeat -87px 0; position:relative; cursor:pointer; overflow:hidden; vertical-align:top;}
+
+.inp_btn.checkbox, span.check_img {width: 18px; height: 18px; background-position: -87px 0; }
+.inp_btn.checkbox.active, span.check_img.checked {background-position:-87px -20px;}
+.inp_btn.checkbox input {position:absolute; top: 0; left: -50px;}
+
+.inp_btn.checkbox, span.check_img { background: asset-url('pict01.png'); width: 18px; height: 18px; background-position: -87px 0; }
+.inp_btn.checkbox.bigcheck {        background: asset-url('big_check24.png'); width: 24px; height: 24px; } //height: 32px;
+.inp_btn.checkbox.bigcheck.active { background: asset-url('big_check24.png'); background-position: -24px 0;}
+
+
+span.check_img{ text-align: center; }
+
+.inp_btn.radio {width: 18px; height: 18px; background-position: -87px 0; }
+.inp_btn.radio.active {background-position:-87px -20px;}
+.inp_btn.radio input{position:absolute; top: 0; left: -50px;}
+
+
+.inp {display: inline-block; background: asset-url('pict01.png') no-repeat -87px 0; position:relative; cursor:pointer; overflow:hidden; vertical-align:top;}
+.inp.radio {width: 18px; height: 18px; background-position: -193px 0; }
+label.active .inp.radio {background-position:-193px -20px;}
+.inp.radio input{position:absolute; top: 0; left: -50px;}

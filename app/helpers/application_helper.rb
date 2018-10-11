@@ -17,6 +17,10 @@ module ApplicationHelper
     current_user.admin?
   end
 
+  def is_author_of?(obj)
+    current_user.author_of?(obj)
+  end
+
   def is_manager?
     current_user.has_role?(:manager)
   end
@@ -89,6 +93,13 @@ module ApplicationHelper
     else
       time_ago_in_words(day)  + ' назад ('+ day.try('strftime',"%d.%m.%Y") + ')'
     end
+  end
+
+  def allow_days_to_edit(date, days)
+    if date.nil?
+      return false
+    end
+    return date > (Date.today - eval("days.day"))
   end
 
   def calls_color
@@ -182,7 +193,7 @@ module ApplicationHelper
     end
   end
 
-  def v_value(obj, name, attr_name = nil, default = nil)
+  def v_value(obj, name, attr_name = nil, default = nil, safe = false)
     attr_name ||= "name"
     if !obj.nil? && obj.id? 
       if !obj["#{name}_id"].nil? && obj["#{name}_id"]>0
@@ -194,11 +205,53 @@ module ApplicationHelper
         label = default.name
     end
     h = val.present? ? {value: val, label: label} : []
-    h.to_json.html_safe.to_s
+    h = h.to_json.html_safe.to_s if safe
+    h
   end
 
-  def select_src(collection, attr_name = "name")
-    collection.collect{|u| {label: u.try(attr_name), value: u.id}}.to_json.html_safe.to_s
+  def fill_vue_data(obj, data)
+    if data[:boleans].present?
+      data[:boleans].split(' ').each do |b|
+        data[b] = obj[b].nil? ? false : obj[b]
+      end
+      data.delete(:boleans)
+    end
+
+    if data[:texts].present? 
+      data[:texts].split(' ').each do |t|
+        data[t] = obj[t].nil? ? '' : obj[t]
+      end
+      data.delete(:texts)
+    end
+
+    if data[:list_values].present? 
+      data[:list_values].split(' ').each do |li| 
+        data[li] = v_value(obj, li)
+      end
+      data.delete(:list_values)
+    end
+
+    if data[:lists].present?
+      data[:lists].split(' ').each do |l|
+        if l.index(':').nil?
+          collection = eval("@#{l}")
+        else
+          la = l.split(':')
+          collection = eval("#{la[1]}")
+          l = la[0]
+        end
+        data[l] = select_src(collection) if collection.present?
+      end
+      data.delete(:lists)
+    end
+
+    return data.to_json.html_safe.to_s
+  end
+
+  def select_src(collection, attr_name = "name", safe = false)
+    collection = collection.collect{|u| {label: u.try(attr_name), value: u.id}}
+    collection = collection.to_json.html_safe.to_s if safe
+    collection
   end
 
   def chosen_src(id, collection, obj = nil, options = {})
@@ -374,7 +427,9 @@ module ApplicationHelper
     
     s = submit_tag 'Сохранить', submit_options
     c = link_to 'Отмена', back_url, class: "sub btn_a btn_reset", "data-dismiss": dd
-    c+s
+    content_tag :div, class: "actns" do
+      c+s
+    end
   end
 
   def tool_icons(element, params = {})

@@ -1,9 +1,7 @@
 <% is_new = ['new','create'].include?(action_name) %>
-<% is_author = current_user.author_of?(@absence) %>
-<% @reopen = @absence.shops.size == 0 %>
+<% is_author = is_author_of?(@absence) %>
 
 <%= form_for(@absence) do |f| %>
-<%= f.hidden_field :reopen, {action_name: action_name} %>
 
 <% if !is_manager? %>
   <%= f.hidden_field :user_id, value: @absence.user_id ||= current_user.id %>
@@ -11,26 +9,26 @@
 
 <%= render 'shared/error_messages', object: f.object %>
   
-<div class="sample">
+<div class="vue_app">
   <table class="tbl_fc tbl_fc_1">
     <tr><td class="caption">Причина:</td>
     <td  colspan="3">      
       <% if is_manager? || is_new || 
-            (! @absence.created_at.nil? && @absence.user_id == current_user.id && 
-              @absence.created_at > (Date.today-3.day) && @absence.new_reason_id.nil? ) %>
+            (is_author && allow_days_to_edit(@absence.created_at, 1) && @absence.new_reason_id.nil? ) %>
 
-        <div class="inp_w">
+        
           <v-chosen name="reason" model="absence" :value="reason" placeholder="Укажите причину..."/>   
-        </div>
+        
       <% else %>
         <div class="lbl"><%= @absence.reason_name %><%= f.hidden_field :reason_id %></div>
       <% end %>
     </td>
-    <% if !is_new && !@reopen %>
+
+    <% if !is_new %>
       <td class="caption caption_sm">=></td>
-        <td><div class="inp_w">
-          <%= chosen_src 'new_reason_id', @reasons,@absence,{nil_value: 'Новая причина...'} %>
-        </div></td>
+        <td>
+          <v-chosen name="new_reason" model="absence" :value="new_reason" placeholder="Новая причина..."/>
+        </td>
     <% else %>
         <td colspan="2">
         </td>
@@ -38,13 +36,13 @@
     
     </tr>
     
-  <transition name="slide"> 
+  <transition name="bounce"> 
       <tr v-if="equals(reason,[2,3])" transition="bounce">
       <td class="caption p_obj">Проект:</td>
       <td colspan="3" class="p_obj">
-      <div class="inp_w">
+      
         <v-chosen name="project" model="absence" :value="project" placeholder="Укажите объект..."/></div>
-      </div></td>
+      </td>
       <template v-if="equals(reason,2)">
         <td class="caption caption_sm"><span>Цель:</span></td>
         <td><span>
@@ -58,8 +56,10 @@
     <tr><td class="caption">Дата c:</td>
       <td width='200px;'><div class="inp_">
         <%= f.text_field :dt_from, value: @dt_from, label: false, class: "txt datepicker" %></div></td>
-      <td class="caption caption_to"><%= f.hidden_field :checked, "v-model"=>"checked" %>
-        <span class="check_img" v-bind:class="{ checked: checked }" id='dt_to_check' @click="check_to"></span> по:</td>
+      <td class="caption caption_to">
+        <%= f.hidden_field :checked, "v-model"=>"checked" %>
+        <span class="check_img" v-bind:class="{ checked: checked }" id='dt_to_check' @click="check_to"></span> по:
+      </td>
       <td width='180px;'><div class="inp_">
         <%= f.text_field :dt_to, value: @dt_to, label: false, class: "txt datepicker", ":disabled"=>"!checked" %>
         </div></td>
@@ -71,84 +71,70 @@
       <td></td>
     </tr>
 
-      <tr><td class="caption">Комментарий:</td>
-        <td colspan="5"><div class="inp_w" >
-          <%= f.text_area :comment, class: 'txt alone', label: false, "v-model"=>"comment" %></div></td></tr>
+    <tr><td class="caption">Комментарий:</td>
+      <td colspan="5"><div class="inp_w" >
+        <%= f.text_area :comment, class: 'txt alone', label: false, "v-model"=>"comment", ":placeholder"=>"placeholder()" %>    
+      </div></td>
+    </tr>
+    
     <% if is_manager? %>
       <tr><td class="caption">Сотрудник:</td>
-          <td width='490px;' colspan="3"><div class="inp_w" >
+          <td width='490px;' colspan="3">
+        <div class="inp_w" >
            <v-chosen name="user" model="absence" :value="user" placeholder="Выберите сотрудника..."/>
       </td></tr>
-
-      <% if [@absence.reason_id, @absence.new_reason_id].include?(6) %>
-        <tr><td></td><td class="caption caption_to"><div id='a_approved' class="left">
-          
-          <%= f.check_box :approved, class: 'inp_btn checkbox' %>
-          <%= f.label :approved, "Согласовано" %>
-          </div></td>
-        </tr>
-      <% end %>
-
+      
+      <tr v-if="equals(reason, 6) || equals(new_reason, 6)">
+        <td></td><td class="caption caption_to">
+          <div id='a_approved' class="left">
+          <m-checkbox v-model="approved" name="approved" model="absence" label="Согласовано"/> 
+        </div></td>
+      </tr>
     <% end %>
     
     <% if !is_new && is_author %>
       <tr><td></td><td class="caption caption_to"><div id='a_canceled' class="left">
-        <%= f.check_box :canceled, class: 'inp_btn checkbox' %> 
-        <%= f.label :canceled, "Отменено" %>
+        <m-checkbox v-model="canceled" name="canceled" model="absence" label="Отменено"/>
         </div></td>
       </tr>
     <% end %>
-        
-    
-
   </table>
 
+  <transition name="bounce">
+    <div class='shops before_30' id='dshops' v-if="equals(reason,3)">
+        <%= render "shops" %>
+    </div>
+  </transition>
 
-<div class="sep_3"></div>
-<transition name="bounce">
-<template v-if="equals(reason,3)">
-<div class='shops' id='dshops' >
-
-    <%= render "shops" %>
-    <div class="sep_3"></div>
-    
-</div>
-</template>
-</transition>
-
-<% if is_manager? || is_new || is_author %>
-  <%= submit_cancel absences_url, {disabled: "!f_valid"} %>
-<% end %>
+  <% if is_manager? || is_new || is_author %>
+    <%= submit_cancel absences_url, {disabled: "!f_valid"} %>
+  <% end %>
 
 <% end %>
 </div>
+
 <script>
   Vue.component('v-select', VueSelect.VueSelect)
 
-  let sample = new Vue({
-    el: '.sample',
-    data: 
+  let app = new Vue({
+    el: '.vue_app',
+    data: <%= fill_vue_data(@absence,
     {
-      comment: <%= @absence.comment %>,
-      f_valid: true,
-      f_shop: false,
-      checked: <%= @checked %>,
-      reason:  <%= v_value(@absence, "reason") %>,
-      reasons: <%= select_src(@reasons) %>,
-      project: <%= v_value(@absence, "project") %>,
-      projects:<%= select_src(@projects) %>,
-      target:  <%= v_value(@absence, "target") %>,
-      targets: <%= select_src(@targets) %>,
-      user:  <%= v_value(@absence, "user", nil, current_user) %>,
-      users: <%= select_src(User.all) %>,
-      new_shop:  null,
-      new_shops: <%= select_src(Provider.all) %>,
-      new_shop_target: null,
-      new_shop_targets: <%= select_src(@shop_targets) %>,
-      shops: <%= @absence.shops.map{|s| { id: s.id,
+      boleans: 'canceled approved f_valid f_shop',
+      texts: 'comment new_shop new_shop_target',
+      list_values: 'reason new_reason project target',
+      lists: "reasons projects targets users \
+              new_reasons:@reasons users:User.all \
+              new_shops:Provider.all new_shop_targets:@shop_targets",
+      checked: @checked,
+      user:   v_value(@absence, "user", nil, current_user),
+      shops:  @absence.shops.map{|s| { id: s.id,
                   shop: {label: s.shop_name, value: s.shop_id}, 
                   target: {label: s.target_name, value: s.target_id},
-                  _destroy: false} }.to_json.html_safe %>
+                  _destroy: false} } 
+    }) %>,
+    beforeCreate(){
+
     },
     updated(){
         this.input();
@@ -157,12 +143,17 @@
       shop_field(index, field) {
         return "absence[shops_attributes]["+index+"]["+field+']'
       },
+
+      placeholder(){ 
+        return this.equals(this.reason,6) ? 'Обязательно укажите причину' : ''
+      },
+
       check_to(){
         this.checked = !this.checked
       },
+
       add_shop(){
         if (this.new_shop_target!==null){
-          
           let shop = this.new_shop === null ? {label: '*Другой*', value: null} : this.new_shop
 
           this.shops.push({shop: shop, target: this.new_shop_target, _destroy: false})
@@ -170,13 +161,15 @@
           this.new_shop = null
         }
       },
+
       del_shop(index){
         this.shops[index]['_destroy'] = true
       },
+
       input(e){
         let f_shop = true;
         let f_valid = true;
-        let reason = this.reason === undefined ? 0 : this.reason.value  
+        let reason = v_nil(this.reason) ? 0 : this.reason.value  
 
         switch(reason){
           case 0:
@@ -187,12 +180,14 @@
             if (v_nil(this.project) || this.shops.filter(sh => !sh._destroy).length === 0){f_valid = false;} break;
           case 6:
             if ($('#absence_comment').val().length < 3) {f_valid = false;}
+            
         }
 
         if (v_nil(this.new_shop_target)) f_shop = false;
         this.f_valid = f_valid;
         this.f_shop = f_shop;
       },
+
       equals(obj, v){      
         if (obj===null) {return false;} 
         if (v.constructor === Array) return v.includes(obj.value);
