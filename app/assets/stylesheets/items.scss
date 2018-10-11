@@ -1,5 +1,8 @@
 /* Customize the label (the container) */
-.checkcontainer {display: block; position: relative; padding-left: 22px;}
+.checkcontainer {
+  display: block; 
+  position: relative; padding-left: 22px;
+  margin: 8px 0;}
 
 /* Hide the browser's default checkbox */
 .checkcontainer input {position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0; }
@@ -14,6 +17,32 @@
 }
 
 .actns, .before_30{margin-top: 30px;}
+
+/* Анимации появления и исчезновения могут иметь */
+/* различные продолжительности и динамику.       */
+.slide-fade-enter-active {
+  transition: all .6s ease;
+}
+.slide-fade-leave-active {
+  transition: all .4s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active до версии 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}
+
+.caption_to{
+  // padding-top: 7px;
+  float: right;
+  width: 54px;
+  font-weight: 500;
+  font-size: 13px;
+}
+
+.before160{
+  margin-left: 160px;
+}
 
 // /* On mouse-over, add a grey background color */
 // .checkcontainer:hover input ~ .checkmark {

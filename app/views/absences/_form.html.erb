@@ -10,94 +10,83 @@
 <%= render 'shared/error_messages', object: f.object %>
   
 <div class="vue_app">
-  <table class="tbl_fc tbl_fc_1">
-    <tr><td class="caption">Причина:</td>
-    <td  colspan="3">      
-      <% if is_manager? || is_new || 
-            (is_author && allow_days_to_edit(@absence.created_at, 1) && @absence.new_reason_id.nil? ) %>
 
-        
+  <section class="grid_table">
+    <div class="label_col">Причина:</div> 
+    <div>
+       <% if is_manager? || is_new || (@absence.new_reason_id.nil? &&
+             is_author && allow_days_to_edit(@absence.created_at, 1)) %>
           <v-chosen name="reason" model="absence" :value="reason" placeholder="Укажите причину..."/>   
-        
       <% else %>
-        <div class="lbl"><%= @absence.reason_name %><%= f.hidden_field :reason_id %></div>
+        <div class="lbl">{{reason.label}}</div>
       <% end %>
-    </td>
-
-    <% if !is_new %>
-      <td class="caption caption_sm">=></td>
-        <td>
-          <v-chosen name="new_reason" model="absence" :value="new_reason" placeholder="Новая причина..."/>
-        </td>
-    <% else %>
-        <td colspan="2">
-        </td>
-    <% end -%>
-    
-    </tr>
-    
-  <transition name="bounce"> 
-      <tr v-if="equals(reason,[2,3])" transition="bounce">
-      <td class="caption p_obj">Проект:</td>
-      <td colspan="3" class="p_obj">
-      
-        <v-chosen name="project" model="absence" :value="project" placeholder="Укажите объект..."/></div>
-      </td>
-      <template v-if="equals(reason,2)">
-        <td class="caption caption_sm"><span>Цель:</span></td>
-        <td><span>
-          <v-chosen name="target" model="absence" :value="target" placeholder="Укажите цель..."/> 
-        </span></td>
-      </template>
-    </tr>
-  </transition>
+    </div>
+    <div class="label_col">=></div>
+    <div>
+      <% if !is_new %>
+        <v-chosen name="new_reason" model="absence" :value="new_reason" placeholder="Новая причина..."/>
+      <% end %>
+    </div>
+  </section>
   
-
-    <tr><td class="caption">Дата c:</td>
-      <td width='200px;'><div class="inp_">
-        <%= f.text_field :dt_from, value: @dt_from, label: false, class: "txt datepicker" %></div></td>
-      <td class="caption caption_to">
-        <%= f.hidden_field :checked, "v-model"=>"checked" %>
-        <span class="check_img" v-bind:class="{ checked: checked }" id='dt_to_check' @click="check_to"></span> по:
-      </td>
-      <td width='180px;'><div class="inp_">
-        <%= f.text_field :dt_to, value: @dt_to, label: false, class: "txt datepicker", ":disabled"=>"!checked" %>
-        </div></td>
-      <td class="caption caption_sm">Время:</td>
-      <td>
-        <div class="inp_w"><%= f.text_field :t_from, value: @t_from, label: false, class: "txt timepicker" %></div>
-        <span class="time_separator">–</span>
-        <div class="inp_w"><%= f.text_field :t_to, value: @t_to, label: false, class: "txt timepicker" %></div></td>
-      <td></td>
-    </tr>
-
-    <tr><td class="caption">Комментарий:</td>
-      <td colspan="5"><div class="inp_w" >
-        <%= f.text_area :comment, class: 'txt alone', label: false, "v-model"=>"comment", ":placeholder"=>"placeholder()" %>    
-      </div></td>
-    </tr>
+  <transition name="slide-fade">
+    <section class="grid_table" v-show="equals(reason,[2,3])">  
+      <div class="label_col">Проект:</div> 
+      <div :key="2">
+        <v-chosen name="project" model="absence" :value="project" placeholder="Укажите объект..."/>
+      </div>
+      <transition name="slide-fade">
+        <div class="label_col" v-show="equals(reason,2)">Цель:</div>
+      </transition>
+      <transition name="slide-fade">
+        <div v-show="equals(reason,2)" >
+          <v-chosen name="target" model="absence" :value="target" placeholder="Укажите цель..."/> 
+        </div>
+      </transition>
+    </section>
+  </transition>
     
-    <% if is_manager? %>
-      <tr><td class="caption">Сотрудник:</td>
-          <td width='490px;' colspan="3">
-        <div class="inp_w" >
+  <section class="grid_table">
+    <div class="label_col">Дата c:</div> 
+    <div class="inp_">
+      <%= f.text_field :dt_from, value: @dt_from, label: false, class: "txt datepicker left" %>
+      <%= f.text_field :dt_to, value: @dt_to, label: false, class: "txt datepicker right", ":disabled"=>"!checked" %>
+      <div class="caption_to"><m-checkbox v-model="checked" label="по:"/></div>
+    </div>
+    <div class="label_col">Время:</div> 
+    <div>
+      <div class="inp_w"><%= f.text_field :t_from, value: @t_from, label: false, class: "txt timepicker"%></div>
+      <span class="time_separator">–</span>
+      <div class="inp_w"><%= f.text_field :t_to, value: @t_to, label: false, class: "txt timepicker" %></div></td>
+    </div>
+  </section>
+
+  <section class="grid_lbl_name">
+    <div class="label_col">Комментарий:</div> 
+    <%= f.text_area :comment, class: 'txt alone', label: false, "v-model"=>"comment", ":placeholder"=>"placeholder()" %>
+  </section>
+
+  <% if is_manager? %>
+    <section class="grid_table">
+      <div class="label_col">Сотрудник:</div> 
+      <div>
            <v-chosen name="user" model="absence" :value="user" placeholder="Выберите сотрудника..."/>
-      </td></tr>
-      
-      <tr v-if="equals(reason, 6) || equals(new_reason, 6)">
-        <td></td><td class="caption caption_to">
-          <div id='a_approved' class="left">
-          <m-checkbox v-model="approved" name="approved" model="absence" label="Согласовано"/> 
-        </div></td>
-      </tr>
-    <% end %>
+      </div>
+    </section>
+    <div class="before160" v-if="equals(reason, 6) || equals(new_reason, 6)">
+      <m-checkbox v-model="approved" name="approved" model="absence" label="Согласовано"/> 
+    </div>
+  <% end %>
+
+  <% if !is_new && is_author %>
+    <div class="before160">
+      <m-checkbox v-model="canceled" name="canceled" model="absence" label="Отменено"/>
+    </div> 
+  <% end %>
+
+  <table class="tbl_fc tbl_fc_1">
     
-    <% if !is_new && is_author %>
-      <tr><td></td><td class="caption caption_to"><div id='a_canceled' class="left">
-        <m-checkbox v-model="canceled" name="canceled" model="absence" label="Отменено"/>
-        </div></td>
-      </tr>
-    <% end %>
+
   </table>
 
   <transition name="bounce">

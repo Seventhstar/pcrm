@@ -21,7 +21,7 @@ table.tbl_fc{border-collapse:collapse; width: 100%; }
 table.tbl_fc td{vertical-align:top; padding-bottom: 10px; }
 table.tbl_fc td.last_td{padding: 0 !important; }
 
-table.tbl_fc td.caption, .label_col{ padding-right: 15px; padding-top: 7px; text-align:right; font-weight: 500; }
+table.tbl_fc td.caption{ padding-right: 15px; padding-top: 7px; text-align:right; font-weight: 500; }
 table.tbl_fc td.caption2{width: 235px; padding-right: 15px; padding-top: 0px; text-align:right; font-weight: 500; }
 
 .tbl_w_links .head a {text-decoration-style: dotted; text-decoration-color: #999;}
@@ -41,13 +41,28 @@ table.tbl_fc_1 td.caption_sm {width: 70px;}
 
 .table {width: 100%; font-size: 13px;}
 .w50 {width: 50%;}
-.label_col {width: 100px;}
-.short_label .label_col {width: 45px;}
+.short_label {width: 45px;}
 .t_cell {display: table-cell;}
 
-.grid-1 {
-  display: grid;
+.grid-row{
+
 }
+.grid_table {
+  display: grid;
+  grid-template-columns: 150px 1fr 46px 1fr;
+  grid-template-rows: 36px 1px;
+  grid-gap: 10px;
+}
+
+.grid_lbl_name{
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    grid-template-rows: 36px 1px;
+    grid-gap: 10px;
+}
+
+.label_col{ margin-top: 8px; text-align: right;
+    font-weight: 500; font-size: 13px;}
 
 th.center,td.center {text-align:center;}
 

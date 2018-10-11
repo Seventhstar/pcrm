@@ -1,6 +1,6 @@
 Vue.component('m-checkbox', {
   data(){
-    return {_name: null}
+    return {_name: ""}
   },
   props: ['label', 'value', 'name', 'model'],
   template: `
@@ -13,8 +13,8 @@ Vue.component('m-checkbox', {
             @change="$emit('input', $event.target.checked)">
       <span class="checkmark" v-bind:class="{checked: value}"></span>
     </label>`,
-    created() {
-      this._name =  this.model + "[" + this.name + "]";
+    created(){
+        this._name = this.name === undefined ? "" : this.model + "[" + this.name + "]";
     }
 });
 

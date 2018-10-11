@@ -10,8 +10,6 @@ Vue.component('v-chosen', {
     }, 
     props: ['name', 'model', 'placeholder', 'value', 'label' ],
     template: `
-    <div>
-      
         <div class="inp_w">
         <v-select :value="value"
           :options="options"
@@ -20,7 +18,7 @@ Vue.component('v-chosen', {
           v-on:input="onUpdate($event)">
         </v-select>
         <input type="hidden" :value="localValue" v-if="model!=undefined" :id="name_id" :name="_name">
-      </div></div>`,
+      </div>`,
     created() {
 
       this.name_id =  this.model + "_" + this.name + "_id";
