@@ -14,6 +14,9 @@ class User < ActiveRecord::Base
   has_many :options, class_name: 'UserOption'
   has_many :develops, -> { open_tasks }, foreign_key: :ic_user_id
 
+  scope :actual, -> {where(activated: true)}
+  scope :works, -> {where(fired: false)}
+
 
   attr_accessor :remember_token, :activation_token, :reset_token
   before_save   :downcase_email

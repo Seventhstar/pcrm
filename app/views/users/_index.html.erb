@@ -13,6 +13,7 @@
       <th>День рождения</th>
       <th width="60px" class="center">Активен</th>
       <th width="60px" class="center">Админ</th>  
+      <th width="60px" class="center">Уволен</th>  
       <% if current_user.admin? %>    
         <th width="30px"></th>
       <% end -%>
@@ -23,12 +24,16 @@
 
   <!-- %= render @users %> -->
 <% @items.each do |user| %>
-<tr >
+<tr class="<%= class_for_user(user) %>">
   <td width="60"><%= avatar_for(user) %></td>
   <td>  <%= link_to user.name, user %> </br> <%= user.email %> </td>
   <td class ="birthday">  <%= date_of_birth user %> </td>
-  <td class="state"><span class="check_img sw_check <%= user.activated ? "checked" :"" %>" item_id="<%=user.id%>" chk="activated"></span></td>
-  <td class="state"><span class="check_img sw_check <%= user.admin ? "checked" :"" %>" item_id="<%=user.id%>" chk="admin"></span></td>
+  <td class="state">
+    <span class="check_img sw_check <%= user.activated ? "checked" :"" %>" item_id="<%=user.id%>" chk="activated"></span></td>
+  <td class="state">
+    <span class="check_img sw_check <%= user.admin ? "checked" :"" %>" item_id="<%=user.id%>" chk="admin"></span></td>
+  <td class="state">
+    <span class="check_img sw_check <%= user.fired ? "checked" :"" %>" item_id="<%=user.id%>" chk="fired"></span></td>
   
   <% if current_user.admin? %>
      <%= tool_icons(user, {subcount: current_user?(user) ? 1:nil} ) %>

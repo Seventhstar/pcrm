@@ -5,6 +5,9 @@ module UsersHelper
     f.nil? ? false : f.value
   end
 
+  def class_for_user(user)
+    "nonactual" if user.fired
+  end
 
   def date_of_birth(user)
       
@@ -37,7 +40,7 @@ module UsersHelper
             c = content_tag :span, {:class => 'red message'} do
               d + e
             end
-	          a  + c
+            a  + c
           else
             a
          end 
