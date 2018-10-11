@@ -70,7 +70,7 @@
     <section class="grid_table">
       <div class="label_col">Сотрудник:</div> 
       <div>
-           <v-chosen name="user" model="absence" :value="user" placeholder="Выберите сотрудника..."/>
+        <v-chosen name="user" model="absence" :value="user" placeholder="Выберите сотрудника..."/>
       </div>
     </section>
     <div class="before160" v-if="equals(reason, 6) || equals(new_reason, 6)">
@@ -83,11 +83,6 @@
       <m-checkbox v-model="canceled" name="canceled" model="absence" label="Отменено"/>
     </div> 
   <% end %>
-
-  <table class="tbl_fc tbl_fc_1">
-    
-
-  </table>
 
   <transition name="bounce">
     <div class='shops before_30' id='dshops' v-if="equals(reason,3)">
