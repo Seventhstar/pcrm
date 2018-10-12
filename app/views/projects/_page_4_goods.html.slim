@@ -1,19 +1,21 @@
-#tabs-4.ptab 
+#tabs-4.ptab.vue_app
   .box_wrap.items_box_param
     = hidden_field 'g_type','project_id', value: @project.id
-    .left.mgn_right15 style=("width:270px ") 
-      = chosen_src "g_type[g_type_id]", @gtypes,"g_type", {nil_value: 'Выберите вид товара...'}
-    span#btn-sub-send.sub.btn_a action="/projects/add_goodstype" pe_id="#{@project.id}" prm="g_type"  Добавить вид товара
+    .left.mgn_right15 style=("width:400px ") 
+        v-chosen name="gtype" :value='gtype' placeholder="Выберите вид товара"
+    span.btn_a @click="add_gt" :disabled="!f_gt" Добавить вид товара
+
     .right
-      = chosen_src "good_state",good_state_src, params[:good_state],{nil_value: 'Все позиции', class: 'tab-chosen'}
+      = chosen_src "good_state", good_state_src, params[:good_state],{nil_value: 'Все позиции', class: 'tab-chosen'}
       #pdf
         = link_to image_tag('pdf.png'), project_path(@project,format: :pdf), target: :_blank
   .sep_15
   #pgoods
-    - init_totals
-    = render @goods    
-    = render 'close_table'    
+      = render 'goods_vue'
+        
   .total-footer
     | Общий итог:
     #grand_total
       = render 'project_goods/grand_total', project_id: @project.id
+
+= render 'page_4_vue'

@@ -10,7 +10,7 @@ class Project < ActiveRecord::Base
 
   has_many :attachments, as: :owner
   has_many :receipts
-  has_many :project_g_types
+  has_many :project_g_types, dependent: :destroy
   has_many :absence
   has_many :goods, class_name: "ProjectGood", dependent: :destroy
   has_many :elongations, class_name: 'ProjectElongation', dependent: :destroy
@@ -20,9 +20,11 @@ class Project < ActiveRecord::Base
   validates :address, length: { minimum: 3 }
   validates :client_id, presence: true
   validates :footage, presence: true
+  
   accepts_nested_attributes_for :client
   accepts_nested_attributes_for :contacts
   accepts_nested_attributes_for :special_infos
+  accepts_nested_attributes_for :project_g_types
 
   scope :by_executor, ->(executor){where(executor_id: executor) if executor.present? && executor&.to_i>0}
   scope :only_actual, ->(actual){where.not(pstatus_id: 3) if actual}

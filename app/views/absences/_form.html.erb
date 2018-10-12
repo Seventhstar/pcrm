@@ -32,7 +32,7 @@
   <transition name="slide-fade">
     <section class="grid_table" v-show="equals(reason,[2,3])">  
       <div class="label_col">Проект:</div> 
-      <div :key="2">
+      <div>
         <v-chosen name="project" model="absence" :value="project" placeholder="Укажите объект..."/>
       </div>
       <transition name="slide-fade">

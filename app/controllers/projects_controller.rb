@@ -55,7 +55,7 @@ class ProjectsController < ApplicationController
   def show
 
     respond_to do |format|
-      p "format #{format}"
+      # p "format #{format}"
       format.html do
         @title = 'Просмотр проекта'
         @owner = @project
@@ -79,7 +79,8 @@ class ProjectsController < ApplicationController
   def def_params
     @owner = @project
     @holidays =  Holiday.pluck(:day).collect{|d| d.try('strftime',"%Y-%m-%d")}
-    @gtypes = Goodstype.where.not(id: [@pgt]).order(:name)
+    @new_gtypes = Goodstype.where.not(id: [@pgt]).order(:name)
+    @gtypes = Goodstype.where(id: [@pgt]).order(:name)
     
   end
 
@@ -111,15 +112,22 @@ class ProjectsController < ApplicationController
     @new_gt  = Goodstype.new
 
     @goods_sum = ProjectGood.where(project_id: @project.id)
-    @goods = ProjectGood.where(project_id: @project.id).includes(:provider).includes(:goodstype).order(:goodstype_id, :created_at)
+    @goods = ProjectGood.where(project_id: @project.id)
+            .left_joins(:provider)
+            .select("project_goods.*, providers.name as provider_name")
+            .except(:created_at, :updated_at)
+            .group_by {|item| item[:goodstype_id]}
+          
+
+    pgt = Goodstype.where(default: true).pluck(:id)
+    types_from_project = @project.goods.pluck(:goodstype_id).uniq
+    pgt = pgt.concat(types_from_project)
+    @pgt = pgt
+    @prj_good_types = Goodstype.all 
+     # where(id: [pgt]).order(:name)
 
     case @tab
     when 4
-      pgt = Goodstype.where(default: true).pluck(:id)
-      types_from_project = @project.goods.pluck(:goodstype_id).uniq
-      pgt = pgt.concat(types_from_project)
-      @pgt = pgt
-      @prj_good_types = Goodstype.where(id: [pgt]).order(:name)
       # puts "@goods.count #{@goods.count}"
     when 6
       @files        = @project.attachments

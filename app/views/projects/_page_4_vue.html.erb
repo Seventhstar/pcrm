@@ -1,0 +1,31 @@
+<script>
+  Vue.component('v-select', VueSelect.VueSelect)
+
+  let app = new Vue({
+    el: '.vue_app',
+    data: <%= fill_vue_data(@project,
+     {
+      f_gt: true,
+      texts: "gtype",
+      lists: "gtypes",
+      project_g_types: [],
+      goods: @goods
+     }) %>,
+    methods:{
+      g_href(g){
+        return "/project_goods/" + g.id + "/edit?owner_id="+ g.goodstype_id
+      },
+      g_del_ref(g){
+        return "/project_goods/" + g.id 
+      },
+      add_gt(){
+        if (this.gtype!==null){
+          this.project_g_types.push({gtype: this.gtype, _destroy: false})
+          this.gtype = null 
+          
+        }
+      }
+    }
+    })
+
+</script>

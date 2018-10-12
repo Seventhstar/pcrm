@@ -19,11 +19,9 @@
       <td class="w_60">
         <div class="inp_l inp_w">
           <v-chosen name="new_shop" :value='new_shop' placeholder="*Другой*"/>          
-          <% chosen_src 'shop_id', Provider.all, @shop, {nil_value: 'Выберите магазин...', special_value: '* другой'} %>
         </div>
       </td>
       <td class="w_30"> 
-        <% chosen_src "target_id", @shop_targets, @shop, {nil_value: 'Выберите цель...'} %>
          <v-chosen name="new_shop_target" :value="new_shop_target" placeholder="Выберите цель..."/>
         </td>
       <td><span class="btn_a" @click="add_shop" :disabled="!f_shop">Добавить магазин</span></td>
