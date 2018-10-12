@@ -2,7 +2,7 @@
   .box_wrap.items_box_param
     = hidden_field 'g_type','project_id', value: @project.id
     .left.mgn_right15 style=("width:400px ") 
-        v-chosen name="gtype" :value='gtype' placeholder="Выберите вид товара"
+        v-chosen name="new_gtype" :value='new_gtype' placeholder="Выберите вид товара"
     span.btn_a @click="add_gt" :disabled="!f_gt" Добавить вид товара
 
     .right

@@ -6,8 +6,8 @@
     data: <%= fill_vue_data(@project,
      {
       f_gt: true,
-      texts: "gtype",
-      lists: "gtypes",
+      texts: "gtype new_gtype",
+      lists: "gtypes new_gtypes",
       project_g_types: [],
       goods: @goods
      }) %>,
@@ -19,10 +19,11 @@
         return "/project_goods/" + g.id 
       },
       add_gt(){
-        if (this.gtype!==null){
-          this.project_g_types.push({gtype: this.gtype, _destroy: false})
-          this.gtype = null 
-          
+        if (this.new_gtype!==null){
+          this.goods[this.new_gtype.value] = []
+          this.gtypes.push(this.new_gtype)
+          this.new_gtypes.splice(this.new_gtypes.indexOf(this.new_gtype),1)          
+          this.new_gtype = null 
         }
       }
     }
