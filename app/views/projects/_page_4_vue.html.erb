@@ -5,15 +5,35 @@
     el: '.vue_app',
     data: <%= fill_vue_data(@project,
      {
+      orderAmount: {},
+      offerAmount: {},
+      oa: [],
+      currencies: [1,2,3],
       f_gt: true,
       texts: "gtype new_gtype",
       lists: "gtypes new_gtypes",
       project_g_types: [],
+      totalAmount: [],
       goods: @goods
      }) %>,
+    computed: {
+      
+    },
     methods:{
+      fOfferAmount(gt){
+          this.offerAmount[gt] = {}
+          this.currencies.forEach( (c) => this.offerAmount[gt][c] = 0 )
+          for (var gi in this.goods[gt]){
+              g = this.goods[gt][gi]
+              c = g.currency_id
+              console.log("g.gsum", g.gsum)
+              this.offerAmount[gt][c] = this.offerAmount[gt][c] + g.gsum
+              // console.log("g", gt[g].currency_id)
+          }
+        return this.offerAmount[gt]
+      },
       g_href(g){
-        return "/project_goods/" + g.id + "/edit?owner_id="+ g.goodstype_id
+        return "/project_goods/" + g.id + "/edit"
       },
       g_del_ref(g){
         return "/project_goods/" + g.id 

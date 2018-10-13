@@ -47,6 +47,24 @@ $.fn.capitalize = function () {
     return this;
 };
 
+function undateOptionRow(name, json, id){
+  f = searchByKey(app[name], id)
+  for (var i in json) {
+    app[name][f.h][f.i][i] = json[i] 
+  }
+}
+
+function searchByKey(obj, key) {
+    for (var h in obj) {
+      for (var i in obj[h]) {
+        if (obj[h][i].id == key) {
+             return {h: h,i: i};
+        }
+      }
+    }
+    return "Not found";
+}
+
 function intFromSum(sum){
   if (sum === undefined) return 0;
   var s = sum.replace(/ /g,'')

@@ -202,13 +202,14 @@ $(document).ready ->
     prm = $(this).attr('prm')
     action = $(this).attr('action')
     item_id = $(this).attr('item_id')
+    model = $(this).attr('model')
     params = $('[name^='+prm+']').serialize()    
+    upd_param(params+'&model='+model+'&id='+item_id,true,true)
     $.ajax
       url: action+item_id
       data: params
       dataType: 'script'
       type: 'PATCH'
-    # upd_param(params+'&model='+model+'&id='+item_id,true,true)
 
 # поиск 
   $('#search').on 'keyup', (e)-> 

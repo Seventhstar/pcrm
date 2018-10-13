@@ -1,3 +1,2 @@
 $('.modal').modal('hide');
-$("#item_<%= @prj_good.id %>").replaceWith("<%= j render('goods_row', g: @prj_good) %>");
-calc_totals();
+undateOptionRow("goods", <%= @prj_good.to_json.html_safe %>, <%= @prj_good.id %>)
