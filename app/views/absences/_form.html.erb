@@ -21,12 +21,13 @@
         <div class="lbl">{{reason.label}}</div>
       <% end %>
     </div>
-    <div class="label_col">=></div>
-    <div>
-      <% if !is_new %>
+    
+    <% if !is_new %>
+      <div class="label_col">=></div>
+      <div>
         <v-chosen name="new_reason" model="absence" :value="new_reason" placeholder="Новая причина..."/>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
   </section>
   
   <transition name="slide-fade">

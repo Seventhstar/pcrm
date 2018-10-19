@@ -5,7 +5,7 @@ class AbsenceMailer < ActionMailer::Base
   add_template_helper(CommonHelper)
 
   def send_mail_to(subj, curr_user = nil, user_option = nil)
-    if Rails.env.production?
+    if Rails.env.production? && Rails.application.secrets.host.present?
 
       if user_option.nil?
         emails = User.where('admin = true and id <> 10').pluck(:email)

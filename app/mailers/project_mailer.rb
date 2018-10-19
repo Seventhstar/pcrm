@@ -6,7 +6,7 @@ class ProjectMailer < ActionMailer::Base
     @subj = 'У проекта '+@prj.try(:address)+' подошел срок сдачи!'
     
     emails = users_emails(30,@prj.executor_id)
-    if Rails.env.production? && !emails.empty?
+    if Rails.env.production? && !emails.empty? && Rails.application.secrets.host.present?
       mail(to: emails, subject: @subj) do |format|
         format.html
       end

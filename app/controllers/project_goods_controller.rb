@@ -58,7 +58,7 @@ class ProjectGoodsController < ApplicationController
     @title = 'Редактирование заказа'
     @cur_id = params[:owner_id]
     # p "@cur_id #{@cur_id}"
-    puts "@prj_good", @prj_good.to_json
+    # puts "@prj_good", @prj_good.to_json
     respond_modal_with @prj_good, location: root_path
   end
 

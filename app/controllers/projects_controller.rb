@@ -114,7 +114,8 @@ class ProjectsController < ApplicationController
     @goods_sum = ProjectGood.where(project_id: @project.id)
     @goods = ProjectGood.where(project_id: @project.id)
             .left_joins(:provider)
-            .select("project_goods.*, providers.name as provider_name")
+            .left_joins(:currency)
+            .select("project_goods.*, providers.name as provider_name, currencies.name as currency_name")
             .except(:created_at, :updated_at)
             .group_by {|item| item[:goodstype_id]}
           

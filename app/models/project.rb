@@ -20,7 +20,7 @@ class Project < ActiveRecord::Base
   validates :address, length: { minimum: 3 }
   validates :client_id, presence: true
   validates :footage, presence: true
-  
+
   accepts_nested_attributes_for :client
   accepts_nested_attributes_for :contacts
   accepts_nested_attributes_for :special_infos

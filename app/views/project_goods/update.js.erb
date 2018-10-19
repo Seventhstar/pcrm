@@ -1,2 +1,5 @@
 $('.modal').modal('hide');
-undateOptionRow("goods", <%= @prj_good.to_json.html_safe %>, <%= @prj_good.id %>)
+undateOptionRow("goods", 
+                <%= @prj_good.to_json(except: [:created_at, :updated_at], 
+                                      methods: [:currency_name, :provider_name]).html_safe %>, 
+                <%= @prj_good.id %>)

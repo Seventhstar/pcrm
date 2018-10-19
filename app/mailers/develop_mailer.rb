@@ -6,7 +6,7 @@ class DevelopMailer < ActionMailer::Base
   add_template_helper(DevelopsHelper)
 
   def send_mail_to_admins(subj, option_id)
-    if Rails.env.production?
+    if Rails.env.production? && Rails.application.secrets.host.present?
       admins = User.where(admin: true).ids
       admins = admins & UserOption.where(option_id: option_id).pluck(:user_id) if !option_id.nil?
       emails = User.where(id: admins).pluck(:email)

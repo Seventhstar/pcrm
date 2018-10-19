@@ -5,40 +5,84 @@
     el: '.vue_app',
     data: <%= fill_vue_data(@project,
      {
+      f_gt: true,
       orderAmount: {},
       offerAmount: {},
-      oa: [],
-      currencies: [1,2,3],
-      f_gt: true,
+      grandOfferTotal: {},
+      grandOrderTotal: {},
       texts: "gtype new_gtype",
-      lists: "gtypes new_gtypes",
+      lists: "gtypes new_gtypes currencies:Currency.all",
       project_g_types: [],
-      totalAmount: [],
       goods: @goods
      }) %>,
     computed: {
       
     },
     methods:{
-      fOfferAmount(gt){
-          this.offerAmount[gt] = {}
-          this.currencies.forEach( (c) => this.offerAmount[gt][c] = 0 )
-          for (var gi in this.goods[gt]){
-              g = this.goods[gt][gi]
-              c = g.currency_id
-              console.log("g.gsum", g.gsum)
-              this.offerAmount[gt][c] = this.offerAmount[gt][c] + g.gsum
-              // console.log("g", gt[g].currency_id)
-          }
-        return this.offerAmount[gt]
+      emptyGoodsType()
+      {
+        return v_nil(this.new_gtype)
       },
-      g_href(g){
+
+      formatTotal(amountArray){
+        let string = ""
+        this.currencies.forEach( (c) =>{
+            amount = amountArray[c.value]
+            if ( amount > 0){string = string + amount + " " + c.label + ", "}
+        })
+        return string.slice(0, -2)
+      },
+
+      calculateTotal(){
+        let offer =0 
+
+        this.currencies.forEach( (c) => {  
+          for (var gt in this.offerAmount) {      
+          // this.gtypes.forEach( (gt) => {
+            g = this.offerAmount[gt]
+            //if (!v_nil(g)){
+              console.log(g[c.value])
+              offer = offer + g[c.value]
+            //}
+          }
+        })
+        console.log(offer)
+        return offer
+      },
+
+      calculateAmount(gt){
+        this.offerAmount[gt] = {}
+        this.orderAmount[gt] = {}
+
+        this.currencies.forEach( (c) => this.offerAmount[gt][c.value] = 0 )
+        this.currencies.forEach( (c) => this.orderAmount[gt][c.value] = 0 )
+
+        for (var gi in this.goods[gt]){
+            g = this.goods[gt][gi]
+            c = g.currency_id
+            this.offerAmount[gt][c] = this.offerAmount[gt][c] + g.gsum
+            this.orderAmount[gt][c] = this.orderAmount[gt][c] + g.sum_supply
+        }
+        return this.formatTotal(this.offerAmount[gt])
+      },
+
+      allAmount(g){
+        offer = g.gsum > 0 ? g.gsum : ''
+        hasOrder = g.order && g.sum_supply != g.gsum
+        offer = hasOrder ? "<span class='striked'>" + offer + '</span>' : offer
+        order = hasOrder ? "<br>" + g.sum_supply : ''
+        return offer + order
+      },
+
+      goodsEditLink(g){
         return "/project_goods/" + g.id + "/edit"
       },
-      g_del_ref(g){
+
+      goodsDeleteLink(g){
         return "/project_goods/" + g.id 
       },
-      add_gt(){
+
+      addGoodsType(){
         if (this.new_gtype!==null){
           this.goods[this.new_gtype.value] = []
           this.gtypes.push(this.new_gtype)

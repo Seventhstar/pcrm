@@ -12,7 +12,7 @@
    {nil_value: 'Выберите поставщика...', add_name: iname} %></div></td></tr>
   <tr><td class="caption">Дата предложения:</td>
   <td><div class="inp_w">
-    <%= text_field iname, :date_place, {:class => 'txt datepicker', value: @prj_good.date_place.try('strftime',"%d.%m.%Y")} %>
+    <%= text_field iname, :date_place, {class: 'txt datepicker', value: @prj_good.date_place.try('strftime',"%d.%m.%Y")} %>
   </div></td></tr>
 
   <tr><td class="caption">Примечение:</td>

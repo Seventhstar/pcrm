@@ -9,7 +9,7 @@ module OptionsHelper
       options_leads: ['statuses', 'channels', 'lead_sources', 'styles'],
       options_projects: ['project_statuses', 'project_types', 'elongation_types', 'contact_kinds'],
       options_costings: ['uoms', 'materials', "consumptions", "works", "work_types", "rooms"],
-      options_payments: ['payment_types', 'payment_purposes'],
+      options_payments: ['currencies', 'payment_types', 'payment_purposes'],
       options_providers: ['budgets', 'goodstypes', 'styles', 'p_statuses'],
       options_absences: ['holidays', 'absence_reasons', 'absence_targets', 'absence_shop_targets'],
       options_wiki: ['wiki_cats'] }

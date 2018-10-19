@@ -4,6 +4,7 @@ ru:
     next_label: "вперед"
     previous_label: "назад"
     page_gap: '...'
+  Currency: Валюта
   Status: "статус"
   uom: "eд. изм."
   secret: Закрыт

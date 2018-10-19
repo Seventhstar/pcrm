@@ -22,20 +22,20 @@
         <td width='210px'>{{g.provider_name}}</td>
         <td width='115px'>{{g.date_place === null ? '' : g.date_place.split('-').reverse().join('.') }}</td>
         <td width='230px'>{{g.description}}</td>
-        <td width='58px'>{{g.currency_id}}</td>
-        <td width='90px' :class="g.currency_id">{{g.gsum}}</td>
+        <td width='58px'>{{g.currency_name}}</td>
+        <td width='90px' v-html="allAmount(g)"></td>
 
         <td class="edit_delete td_right " style="">
-          <a class="icon basket" data-modal="true" :href="g_href(g)"></a>
+          <a class="icon basket" data-modal="true" :href="goodsEditLink(g)"></a>
           <a data-confirm="Действительно удалить?" class="icon icon_remove " 
           data-remote="true" rel="nofollow" 
-          data-method="delete" :href="g_del_ref(g)"></a>
+          data-method="delete" :href="goodsDeleteLink(g)"></a>
         </td>
       </tr>
     </template>
     <tr class="total">
-      <td colspan="3">Итого предложено: <span>{{fOfferAmount(key)}}</span></td>
-      <td colspan="4">Итого заказано: <span></span></td>      
+      <td colspan="3">Итого предложено: <span>{{calculateAmount(key)}}</span></td>
+      <td colspan="4">Итого заказано: <span>{{formatTotal(orderAmount[key])}}</span></td>      
     </tr>
     </tbody></table>
 </div>
