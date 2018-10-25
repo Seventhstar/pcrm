@@ -1,0 +1,19 @@
+<script>
+  let footages = new Vue({
+    el: '.prj_footage',
+    data: <%= fill_vue_data(@project,
+     {
+      searchQuery: 112,
+      formFields: "footage price",
+      texts: "footage price",
+    }) %>,
+    computed: {
+      sum1(){
+        console.log(this.footage, to_sum(this.footage*100));
+        return parseInt(this.footage*100) * parseInt(this.price) / 100;
+      }
+
+    }
+  });
+
+</script>

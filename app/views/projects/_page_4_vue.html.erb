@@ -28,7 +28,7 @@
         let string = ""
         this.currencies.forEach( (c) =>{
             amount = amountArray[c.value]
-            if ( amount > 0){string = string + amount + " " + c.label + ", "}
+            if (amount > 0){string = string + amount + " " + c.label + ", "}
         })
         return string.slice(0, -2)
       },
@@ -41,12 +41,12 @@
           // this.gtypes.forEach( (gt) => {
             g = this.offerAmount[gt]
             //if (!v_nil(g)){
-              console.log(g[c.value])
+              //console.log(g[c.value])
               offer = offer + g[c.value]
             //}
           }
         })
-        console.log(offer)
+        //console.log(offer)
         return offer
       },
 

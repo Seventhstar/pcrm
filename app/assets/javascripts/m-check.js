@@ -31,3 +31,35 @@ Vue.component('m-label',{
   }
 
 });
+
+Vue.component('m-number', {
+  data(){
+    return {classes: "txt "}
+  },
+  props: ['name', 'label', 'type', 'value'],
+  template: `
+    <div class="inp_w prj_not_simple">
+      <label>{{label}}</label>
+      <input 
+        value="0.0" 
+        type="text"  
+        :class="classes"  
+        :value="$parent[name]"
+        
+        @keyup="onUpdate($event.target.value)"
+        id="project_footag1e" 
+        style="text-align: right;"></div>`,
+    created(){
+      // console.log(this.name)
+      if (this.name.includes('footage'))
+         {this.classes = "txt float_mask"}
+      else {this.classes = "txt sum_mask"}
+
+    },
+    methods:{
+      onUpdate(val) {
+        console.log("val", val)
+        this.$parent[this.name] = val.toString().replace(/\s/g, '');
+      }
+    }
+});

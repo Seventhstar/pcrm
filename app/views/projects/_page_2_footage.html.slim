@@ -1,6 +1,19 @@
 #tabs-2.ptab
   .box_wrap.box_wrap_1
-    .fullwidth
+    .fullwidth.prj_footage
+      section.table_5col
+        .inp_w
+          m-number name="footage" label="Метраж"
+        .inp_w.prj_not_simple
+          m-number name="price" label="Цена за м2"
+        .inp_w.prj_not_simple
+          m-number name="sum1" label="Цена за м2"
+        .inp_w.prj_not_simple
+          input v-model="footage"
+        .inp_w.prj_not_simple
+        .inp_w.prj_not_simple
+          
+          
       table.fullwidth.tbl_fc.fw_form.vue_cmp
         thead
           tr
@@ -67,4 +80,4 @@
               .inp_w
                 label Стоимость дизайнера
                 .lbl.sum_cost.sum_mask =@project.designer_sum_calc.try(:to_sum)
-
+  = render 'page_2_vue'

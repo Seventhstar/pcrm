@@ -34,7 +34,7 @@
 
 function to_sum(d){ 
   if (isNaN(d)) return 0;
-  s = d.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1 ");  
+  s = d.toString().replace(/\s/g, '');
   return s;
 }
 
