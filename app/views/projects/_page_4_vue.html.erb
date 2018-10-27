@@ -35,18 +35,12 @@
 
       calculateTotal(){
         let offer =0 
-
         this.currencies.forEach( (c) => {  
           for (var gt in this.offerAmount) {      
-          // this.gtypes.forEach( (gt) => {
             g = this.offerAmount[gt]
-            //if (!v_nil(g)){
-              //console.log(g[c.value])
-              offer = offer + g[c.value]
-            //}
+            offer = offer + g[c.value]
           }
         })
-        //console.log(offer)
         return offer
       },
 

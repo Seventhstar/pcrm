@@ -271,7 +271,7 @@ class ProjectsController < ApplicationController
         :month_in_gift, :act, :delay_days,  :pstatus_id, :attention,
         :designer_price, :designer_price_2, :visualer_price, :days, 
         :designer_sum, :visualer_sum, :sum_total_executor, :sum_rest,
-        :debt, :interest, :payd_q, :payd_full, :first_comment, :progress,
+        :debt, :interest, :payd_q, :payd_full, :first_comment, :progress, :sum_discount,
         client_attributes: [:name, :address, :phone, :email], 
         contacts_attributes: [:id, :contact_kind_id, :contact_kind, :val, :who, :_destroy],
         elongations_attributes: [:new_date, :elongation_type_id, :_destroy],

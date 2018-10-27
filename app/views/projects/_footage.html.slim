@@ -1,8 +1,9 @@
-- order ||= false
-- real ||= false
-- add = ""
-- add<<"_2" if order
-- add<<"_real" if real
-= td_sum_field(f, "footage#{add}", "Метраж#{order ? ' 2' : ''}", {mask: true, class: 'prj_not_simple'})
-= td_sum_field(f, "price#{add}", 'Цена за м2', {class: 'prj_not_simple'})
-= td_sum_field(f, "sum#{add}", 'Сумма')
+- add = (order ||= false) ? "_2" : ""
+- add<<"_real" if (real ||= false)
+
+.inp_w
+  m-number name="footage#{add}" label="Метраж#{order ? ' 2' : ''}"
+.inp_w
+  m-number name="price#{add}" label="Цена за м2"
+.inp_w
+  m-number name="sum#{add}" label="Сумма"

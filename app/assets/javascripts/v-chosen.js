@@ -2,16 +2,16 @@ Vue.component('v-chosen', {
     data () {
       return {
         localValue: 0,
-        modelName: "",
+        model: "",
         name_id: "",
         options: [],
         _name: ""
       }
     }, 
-    props: ['name', 'model', 'placeholder', 'value', 'label' ],
+    props: ['name', 'placeholder', 'label' ],
     template: `
         <div class="inp_w">
-        <v-select :value="value"
+        <v-select :value="$parent[name]"
           :options="options"
           :clearable="false" 
           :placeholder="placeholder"
@@ -20,7 +20,7 @@ Vue.component('v-chosen', {
         <input type="hidden" :value="localValue" v-if="model!=undefined" :id="name_id" :name="_name">
       </div>`,
     created() {
-
+      this.model = this.$parent.model;
       this.name_id =  this.model + "_" + this.name + "_id";
       this._name =  this.model + "[" + this.name + "_id]";
       this.options = this.$parent[this.name + "s"];

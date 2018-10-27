@@ -162,8 +162,9 @@
     digits: 2
     digitsOptional: !1
     clearMaskOnLostFocus: !1
-  $('.sum_mask').inputmask mask
   $('.float_mask').inputmask mask
+  mask.digits = 0 
+  $('.sum_mask').inputmask mask
   $('.chosen').chosen(width: '99.5%', disable_search: 'true')
   $('.schosen').chosen(width: '99.5%')
   # $('.tel').inputmask(mask: ["999-99-99","+7(999) 999-99-99","8(999) 999-99-99"])

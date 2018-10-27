@@ -74,14 +74,14 @@ calc_proj_sum_real = ->
   calcPrjSum('_real')  
 
 calc_rest = (ex_sum)->
-  sum_total_real = intPrjSum('sum_total_real')
-  if sum_total_real > 0
-    sum_total = sum_total_real
-  else
-    sum_total = intPrjSum('sum_total')
-  if ex_sum == 0
-    ex_sum = intPrjSum('sum_total_executor')
-  $('#project_sum_rest').val(to_sum(sum_total - ex_sum)) 
+  # sum_total_real = intPrjSum('sum_total_real')
+  # if sum_total_real > 0
+  #   sum_total = sum_total_real
+  # else
+  #   sum_total = intPrjSum('sum_total')
+  # if ex_sum == 0
+  #   ex_sum = intPrjSum('sum_total_executor')
+  # $('#project_sum_rest').val(to_sum(sum_total - ex_sum)) 
 
 calc_executor_sum = ->
   footage = prjFloat('footage')
@@ -242,6 +242,6 @@ $(document).ready ->
   $('#project_sum_total_executor').change ->
     $('#project_sum_rest').val( to_sum(intFromSum($('#project_sum_total').val()) - intFromSum($(this).val())) )
   $('#project_designer_price, #project_designer_price_2, #project_visualer_price, #project_designer_sum, #project_visualer_sum').change ->
-    calc_executor_sum()
+    # calc_executor_sum()
     return
   return

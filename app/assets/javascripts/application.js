@@ -20,7 +20,7 @@
 //= require jquery.tokeninput
 //= require chosen.jquery
 //= require jquery.timepicker
-//= require jquery.inputmask.bundle.min
+//= require jquery.inputmask.bundle
 //= require plyr
 //= require jquery.mustache
 //= require tinymce-jquery
@@ -34,7 +34,7 @@
 
 function to_sum(d){ 
   if (isNaN(d)) return 0;
-  s = d.toString().replace(/\s/g, '');
+  s = d.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1 ");
   return s;
 }
 

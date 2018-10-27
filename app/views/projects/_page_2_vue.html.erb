@@ -3,15 +3,136 @@
     el: '.prj_footage',
     data: <%= fill_vue_data(@project,
      {
-      searchQuery: 112,
+      model: 'project',
+      focus: '',
+      discount: 0,
+      m_sum_total: 0,
+      show_2: @project.footage_2>0,
       formFields: "footage price",
-      texts: "footage price",
+      texts: "footage price sum sum_total \
+              footage_2 price_2 sum_2\
+              footage_real price_real sum_real sum_total_real \
+              footage_2_real price_2_real sum_2_real\
+              designer_price designer_price_2 designer_sum\
+              visualer_price visualer_sum sum_total_executor\
+              sum_discount sum_rest",
     }) %>,
-    computed: {
-      sum1(){
-        console.log(this.footage, to_sum(this.footage*100));
-        return parseInt(this.footage*100) * parseInt(this.price) / 100;
+    created() {
+      this.calcRest()
+    },
+    watch: {
+      footage(){
+        this.calcSum("footage", "price")
+      }, 
+      footage_2(){
+        this.calcSum("footage_2", "price_2", "sum_2")
+      },
+      footage_real(){
+        this.calcSum("footage_real", "price_real", "sum_real")
+      }, 
+      footage_2_real(){
+        this.calcSum("footage_2_real", "price_2_real", "sum_2_real")
+      },
+
+
+      price(){
+        this.calcSum("footage", "price")
+      },
+      price_2(){
+        this.calcSum("footage_2", "price_2", "sum_2")
+      },
+      price_real(){
+        this.calcSum("footage_real", "price_real", "sum_real")
+      },
+      price_2_real(){
+        this.calcSum("footage_2_real", "price_2_real", "sum_2_real")
+      },
+
+
+      sum(){
+        this.calcPrice();
+        this.calcTotal();
+      },
+      sum_2(){
+        this.calcPrice("_2");
+        this.calcTotal();
+      },
+
+      sum_total(){
+        if (this.focus.includes('total')){
+          this.m_sum_total = parseInt(this["sum"]) + parseInt(this["sum_2"]);
+          this.sum_discount = this.m_sum_total - parseInt(this.sum_total);
+        }
+        this.calcDiscount();
+      },
+
+      discount(){
+        if (!this.focus.includes('sum')){
+          this.sum_discount = this.discount * this.m_sum_total / 100;
+        }
+        this.calcTotal();
+      },
+      sum_discount(){
+        if (this.focus.includes('sum_discount')){
+          this.calcDiscount();
+        }
+        this.calcTotal();
+      },
+
+      designer_price(){
+         this.designer_sum = this.designer_price * this.mFloat("footage");
+         this.calcSumExecutor();
+      },
+      visualer_price(){
+        this.visualer_sum = this.visualer_price * this.mFloat("footage");
+         this.calcSumExecutor();
       }
+
+
+    },
+    methods: 
+    {
+      mFloat(name){
+          return parseInt(this[name]*100) / 100;
+      },
+      calcSum(footage, price, sum = "sum"){
+        if (!this.focus.includes('sum')){
+          this[sum] = this.mFloat(footage) * parseInt(this[price]);
+        }
+
+        if (this.focus.includes('real')){this.calcTotal("_real");}
+        else{this.calcTotal();}
+        
+      },
+      calcTotal(real = ""){
+        if (!this.focus.includes('sum_total')){ 
+          this["sum_total"+real] = parseInt(this["sum"+real]) + parseInt(this["sum_2"+real]) - this.sum_discount;
+          this.calcRest()
+        }
+      },
+      calcPrice(num = ""){
+        if (this.focus.includes('sum')){
+          this["price"+num] = this.mFloat("sum"+num) / parseInt(this["footage"+num]);
+        }
+      },
+      calcDiscount(){
+        if (this.focus.includes('sum_discount') || this.focus.includes('sum_total')){ 
+          this.discount = this.sum_discount / (this.m_sum_total) *100;
+          this.calcTotal();
+        }
+      },
+      calcSumExecutor(){
+        this.sum_total_executor = this.designer_sum + this.visualer_sum;
+        this.calcRest();
+      },
+      calcRest(){
+        total = this.sum_total_real > 0 ? this.sum_total_real : this.sum_total
+        this.sum_rest = total - this.sum_total_executor
+      }
+
+ 
+    },
+    computed: {
 
     }
   });

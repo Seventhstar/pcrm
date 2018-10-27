@@ -1,16 +1,14 @@
-tr
-  td.gr_caption.hl_tr colspan="5" #{title}
-tr
-  td
-tr
-  = render 'footage', f: f, order: false, real: real
-  td.va_top
+- add = "#{real ? '_real' :''}"
+.hl.gr_caption.hl_tr #{title}
+section.table_5col
+  = render 'footage', order: false, real: real
+  .inp_w
     - if footage_2_nil && !real
-      span#add_footage.sub.btn_a Добавить
-      
-  - add_cls = @project.plan_sum_by_hand? ? 'red' : ''
-  = td_sum_field(f, "sum_total#{real ? '_real' :''}", 'Общая стоимость', {simple: true, inp_class: "sum_total #{add_cls}"} )
+      transition name="bounce" 
+        span.sub.btn_a.add_footage v-on:click="show_2 = !show_2" v-show="!show_2" Добавить
+  .inp_w
+    m-number name="sum_total#{add}" label="Сумма"
 
-tr class=(footage_2_nil ? 'invisible' : '')
-  = render 'footage', f: f, order: true, real: real
-  td
+transition name="slide-fade"
+  section.table_5col v-show="show_2"
+    = render 'footage', order: true, real: real

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181013182253) do
+ActiveRecord::Schema.define(version: 20181026175359) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -413,6 +413,7 @@ ActiveRecord::Schema.define(version: 20181013182253) do
     t.integer "visualer_sum"
     t.boolean "payd_full"
     t.integer "progress"
+    t.integer "sum_discount", default: 0
   end
 
   create_table "provider_budgets", id: :serial, force: :cascade do |t|

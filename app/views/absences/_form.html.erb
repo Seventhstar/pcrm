@@ -16,7 +16,7 @@
     <div>
        <% if is_manager? || is_new || (@absence.new_reason_id.nil? &&
              is_author && allow_days_to_edit(@absence.created_at, 1)) %>
-          <v-chosen name="reason" model="absence" :value="reason" placeholder="Укажите причину..."/>   
+          <v-chosen name="reason" model="absence" placeholder="Укажите причину..."/>   
       <% else %>
         <div class="lbl">{{reason.label}}</div>
       <% end %>
@@ -25,7 +25,7 @@
     <% if !is_new %>
       <div class="label_col">=></div>
       <div>
-        <v-chosen name="new_reason" model="absence" :value="new_reason" placeholder="Новая причина..."/>
+        <v-chosen name="new_reason" model="absence" placeholder="Новая причина..."/>
       </div>
     <% end %>
   </section>
@@ -34,14 +34,14 @@
     <section class="grid_table" v-show="equals(reason,[2,3])">  
       <div class="label_col">Проект:</div> 
       <div>
-        <v-chosen name="project" model="absence" :value="project" placeholder="Укажите объект..."/>
+        <v-chosen name="project" placeholder="Укажите объект..."/>
       </div>
       <transition name="slide-fade">
         <div class="label_col" v-show="equals(reason,2)">Цель:</div>
       </transition>
       <transition name="slide-fade">
         <div v-show="equals(reason,2)" >
-          <v-chosen name="target" model="absence" :value="target" placeholder="Укажите цель..."/> 
+          <v-chosen name="target" placeholder="Укажите цель..."/> 
         </div>
       </transition>
     </section>
@@ -71,7 +71,7 @@
     <section class="grid_table">
       <div class="label_col">Сотрудник:</div> 
       <div>
-        <v-chosen name="user" model="absence" :value="user" placeholder="Выберите сотрудника..."/>
+        <v-chosen name="user" placeholder="Выберите сотрудника..."/>
       </div>
     </section>
     <div class="before160" v-if="equals(reason, 6) || equals(new_reason, 6)">
@@ -105,6 +105,7 @@
     el: '.vue_app',
     data: <%= fill_vue_data(@absence,
     {
+      model: 'absence',
       boleans: 'canceled approved f_valid f_shop',
       texts: 'comment new_shop new_shop_target',
       list_values: 'reason new_reason project target',
@@ -116,7 +117,7 @@
       shops:  @absence.shops.map{|s| { id: s.id,
                   shop: {label: s.shop_name, value: s.shop_id}, 
                   target: {label: s.target_name, value: s.target_id},
-                  _destroy: false} } 
+                  _destroy: false}} 
     }) %>,
     beforeCreate(){
 
@@ -164,8 +165,7 @@
           case 3:
             if (v_nil(this.project) || this.shops.filter(sh => !sh._destroy).length === 0){f_valid = false;} break;
           case 6:
-            if ($('#absence_comment').val().length < 3) {f_valid = false;}
-            
+            if ($('#absence_comment').val().length < 3) {f_valid = false;}        
         }
 
         if (v_nil(this.user)) f_valid = false;
