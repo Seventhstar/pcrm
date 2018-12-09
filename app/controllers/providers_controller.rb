@@ -134,7 +134,8 @@ class ProvidersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_provider
-      @provider = Provider.find(params[:id])
+      @provider = Provider.find(params[:id]) if params[:id].present?
+      @providers = Goodstype.find(params[:goodstype_id]).providers if params[:goodstype_id].present?
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

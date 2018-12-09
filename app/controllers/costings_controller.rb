@@ -17,6 +17,7 @@ class CostingsController < ApplicationController
 
   def new
     @costing = Costing.new
+    @rooms = Room.all
     respond_with(@costing)
   end
 

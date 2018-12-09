@@ -81,12 +81,17 @@ class ProjectsController < ApplicationController
     @holidays =  Holiday.pluck(:day).collect{|d| d.try('strftime',"%Y-%m-%d")}
     @new_gtypes = Goodstype.where.not(id: [@pgt]).order(:name)
     @gtypes = Goodstype.where(id: [@pgt]).order(:name)
-    
+    @clients = Client.order(:name)
+    @project_types = ProjectType.order(:name)
+    @executors = User.order(:name)
+    @visualers = User.order(:name)
   end
 
   # GET /projects/new
   def new
     @project = Project.new
+    @isNewProject = true
+    
     get_debt
     def_params
   end
@@ -94,8 +99,8 @@ class ProjectsController < ApplicationController
   # GET /projects/1/edit
   def edit
     # puts "params #{params}"
+    @isNewProject = false
     @tab = params[:tabs].try(:to_i)
-
     @gs = params[:good_state]
 
     if !@gs.nil? && @gs.to_i>0
@@ -111,7 +116,7 @@ class ProjectsController < ApplicationController
     @new_et  = ProjectElongation.new
     @new_gt  = Goodstype.new
 
-    @goods_sum = ProjectGood.where(project_id: @project.id)
+    # @goods_sum = ProjectGood.where(project_id: @project.id)
     @goods = ProjectGood.where(project_id: @project.id)
             .left_joins(:provider)
             .left_joins(:currency)
@@ -120,26 +125,39 @@ class ProjectsController < ApplicationController
             .group_by {|item| item[:goodstype_id]}
           
 
+
     pgt = Goodstype.where(default: true).pluck(:id)
     types_from_project = @project.goods.pluck(:goodstype_id).uniq
     pgt = pgt.concat(types_from_project)
     @pgt = pgt
-    @prj_good_types = Goodstype.all 
+    # @prj_good_types = Goodstype.all 
+    # puts "goods", @goods
+    pgt.each do |_pgt|
+       @goods[_pgt] = [] if @goods[_pgt].nil?
+    end
+
+    def_params
+
+    @providers = {}
+    @gtypes.each do |gt|
+      @providers = @providers.merge( gt.id => gt.providers.map{|p| {value: p.id, label: p.name}})
+    end
+
+    # puts "providers", @providers[1]
      # where(id: [pgt]).order(:name)
 
-    case @tab
-    when 4
-      # puts "@goods.count #{@goods.count}"
-    when 6
-      @files        = @project.attachments
-    when 7
+    # case @tab
+    # when 4
+    #   # puts "@goods.count #{@goods.count}"
+    # when 6
+      @files    = @project.attachments
+    # when 7
       @history  = get_history_with_files(@project)
-    else
-      @history = []
-      @files        = @project.attachments
-    end
+    # else
+      # @history = []
+      @files    = @project.attachments
+    # end
     
-    def_params
   end
 
   # POST /projects
@@ -271,7 +289,7 @@ class ProjectsController < ApplicationController
         :month_in_gift, :act, :delay_days,  :pstatus_id, :attention,
         :designer_price, :designer_price_2, :visualer_price, :days, 
         :designer_sum, :visualer_sum, :sum_total_executor, :sum_rest,
-        :debt, :interest, :payd_q, :payd_full, :first_comment, :progress, :sum_discount,
+        :debt, :interest, :payd_q, :payd_full, :first_comment, :progress, :sum_discount, :discount,
         client_attributes: [:name, :address, :phone, :email], 
         contacts_attributes: [:id, :contact_kind_id, :contact_kind, :val, :who, :_destroy],
         elongations_attributes: [:new_date, :elongation_type_id, :_destroy],

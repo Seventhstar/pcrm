@@ -6,35 +6,152 @@
     data: <%= fill_vue_data(@project,
      {
       f_gt: true,
+      confirmModal: false,
+      currentKey: 0,
+      currentIndex: 0,
+      currentGoods: '',
+      currentGType: 0,
+      inputs: ['name', 'date_place', 'description', 'gsum'],
+      selects: ['provider', 'currency'],
+      controls: [],
+      fields: [],
       orderAmount: {},
       offerAmount: {},
+      offerA: [],
       grandOfferTotal: {},
       grandOrderTotal: {},
-      texts: "gtype new_gtype",
+      texts: "gtype new_gtype id",
       lists: "gtypes new_gtypes currencies:Currency.all",
       project_g_types: [],
+      providers: @providers,
       goods: @goods
      }) %>,
-    computed: {
-      
+
+    updated(){
+      this.onInput();
     },
+
+    beforeCreate(){
+
+    },
+
+    created(){
+
+      this.gtypes.forEach( (gt) => {
+        let h = {providers: null, gsum: 0}
+        this.inputs.forEach( (c) => h[c] = '' );
+        h.date_place = format_date();
+        
+        this.fields.push(h);
+        this.controls.push({opened: false, valid: false});
+        // this.someObject = Object.assign({}, this.someObject, { a: 1, b: 2 })
+        // this.$set(this.fields, h)
+
+        }
+      )
+      // console.log(this.$refs); 
+    },
+
+    mounted(){
+      this.$root.$on('onInput', this.onInput);
+      this.$root.$on('modalYes', this.modalYes);
+      document.body.addEventListener('keyup', e => {
+        if (e.keyCode === 45) this.addRow();
+      });
+    },
+    
     methods:{
-      emptyGoodsType()
-      {
-        return v_nil(this.new_gtype)
+      saveGoods(key, index, g){
+        if (!this.controls[index].valid) return;
+        let pref = 'project_good_'+key+'_';        
+        let values = {currency_id: app.currency.value, project_id: this.id, goodstype_id: key }
+
+        this.inputs.forEach( (c) => values[c] = this.fields[index][c] );
+        this.selects.forEach( (c) => values[c+'_id'] = app[c].value );
+      
+        // values = $('[name^='+pref+']').serialize()+'&owner_id='+this.id 
+        // console.log(h);
+
+        $.ajax({
+          type: "POST",
+          url: "/project_goods/",
+          data: {gt: values},
+          dataType: "json",
+          encode: true
+        }).done(function(data) {
+          NProgress.done();
+          app.switchOpened(index);
+          values['id'] = data.id;
+          app.selects.forEach( (c) => {values[c+'_name'] = app[c].label} );
+          app.goods[key].push(values);
+          app.inputs.forEach( (c) => { app.fields[index][c] = ''} );
+          app.fields[index].date_place = format_date();
+          app.calculateAmount(key, index);
+        });
+
+      },
+
+      deleteGoods(key, index){
+        this.currentKey = key;
+        this.currentIndex = index;
+        this.confirmModal = true;
+      },
+
+      modalYes(){
+        let index = this.goods[this.currentKey].indexOf(this.currentGoods);
+        if (index<0) return;
+        this.goods[this.currentKey].splice(index, 1);
+        delete_item('/project_goods/'+this.currentGoods.id);
+      },
+
+      onChange(key, index){
+        let valid = true;
+        let pref = 'project_good_'+key+'_'; 
+
+        this.inputs.forEach( (c) => {if (v_nil(this.fields[index][c])) {valid = false;} });
+        this.selects.forEach( (c) => {if (v_nil(app[c])) {valid = false;}});
+
+        this.controls[index].valid = valid;  
+      },
+
+      onInput(e){
+        if (e === undefined || e.index === undefined) return;
+        this.onChange(e.key, e.index);
+
+      },
+
+      addRow(){
+        // if (this.currentKey === -1) this.currentKey = 0;
+        // console.log(this.currentKey);
+        this.switchOpened(this.currentIndex);
+        // this.$refs.controls[this.currentIndex].name.$el.focus()
+        // $('#project_good_'+key+'_name').setFocus();
+      },
+
+      switchOpened(index){
+        this.controls[index].opened = !this.controls[index].opened
+        // this.$refs.fields[index].name.$el.focus();
+      },
+
+      format_date(date){
+        return format_date(date);
+      },
+
+      v_nil(v){
+        return v_nil(v);
       },
 
       formatTotal(amountArray){
         let string = ""
         this.currencies.forEach( (c) =>{
-            amount = amountArray[c.value]
+            amount = amountArray[c.value];
             if (amount > 0){string = string + amount + " " + c.label + ", "}
         })
         return string.slice(0, -2)
       },
 
       calculateTotal(){
-        let offer =0 
+        let offer = 0 
         this.currencies.forEach( (c) => {  
           for (var gt in this.offerAmount) {      
             g = this.offerAmount[gt]
@@ -44,19 +161,22 @@
         return offer
       },
 
-      calculateAmount(gt){
+      calculateAmount(gt, index){
         this.offerAmount[gt] = {}
         this.orderAmount[gt] = {}
 
-        this.currencies.forEach( (c) => this.offerAmount[gt][c.value] = 0 )
-        this.currencies.forEach( (c) => this.orderAmount[gt][c.value] = 0 )
+        this.currencies.forEach( (c) => {
+          this.offerAmount[gt][c.value] = 0 
+          this.orderAmount[gt][c.value] = 0
+        })
 
         for (var gi in this.goods[gt]){
             g = this.goods[gt][gi]
             c = g.currency_id
-            this.offerAmount[gt][c] = this.offerAmount[gt][c] + g.gsum
+            this.offerAmount[gt][c] = this.offerAmount[gt][c] + parseInt(g.gsum)
             this.orderAmount[gt][c] = this.orderAmount[gt][c] + g.sum_supply
         }
+        this.offerA[index] = this.formatTotal(this.offerAmount[gt])
         return this.formatTotal(this.offerAmount[gt])
       },
 
@@ -77,11 +197,27 @@
       },
 
       addGoodsType(){
-        if (this.new_gtype!==null){
-          this.goods[this.new_gtype.value] = []
+        if (!v_nil(this.new_gtype)){
+          let new_gt = this.new_gtype.value
+          this.goods[new_gt] = []
           this.gtypes.push(this.new_gtype)
-          this.new_gtypes.splice(this.new_gtypes.indexOf(this.new_gtype),1)          
+          this.new_gtypes.splice(this.new_gtypes.indexOf(this.new_gtype), 1)          
           this.new_gtype = null 
+
+          $.ajax({
+            type: "GET",
+            url: "/goodstypes/"+new_gt+"/providers.json",
+            dataType: "json",
+            encode: true
+          }).done(function(data) {
+            NProgress.done();
+            console.log(data);
+            // app.providers[new_gt] = []
+            // app.providers[new_gt].$set(new_gt, data)
+            // app.$set(app.providers, , );
+            
+            // app.$set('providers[' + new_gt + ']', []);
+          });
         }
       }
     }

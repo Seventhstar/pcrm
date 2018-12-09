@@ -5,7 +5,9 @@
       - footage_2_nil = @project.footage_2.to_i==0
       - if is_manager?
         = render 'footage_sum', real: false, footage_2_nil: footage_2_nil, title: 'Заявленная площадь и стоимость'
-        = render 'footage_sum', real: true, footage_2_nil: footage_2_nil, title: 'Фактическая площадь и стоимость' 
+        transition name="slide-fade"
+          section v-show="show_fact"
+            = render 'footage_sum', real: true, footage_2_nil: footage_2_nil, title: 'Фактическая площадь и стоимость' 
         = render 'executor'
             
           

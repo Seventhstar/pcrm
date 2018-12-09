@@ -165,9 +165,20 @@
   $('.float_mask').inputmask mask
   mask.digits = 0 
   $('.sum_mask').inputmask mask
+  $('.discount_mask').inputmask mask
+
+  $('#tabs_msg').tabs activate: (event, ui) ->
+    color = undefined
+    if $('#tab_special_info').closest('li').hasClass('ui-tabs-active')
+      color = 'red'
+    else
+      color = '#6acc00'
+    $('.comments_box .box_msg ul.ui-tabs-nav').css 'border-bottom', color + ' 2px solid'
+    return
+
   $('.chosen').chosen(width: '99.5%', disable_search: 'true')
   $('.schosen').chosen(width: '99.5%')
-  # $('.tel').inputmask(mask: ["999-99-99","+7(999) 999-99-99","8(999) 999-99-99"])
+
   $('.tab-chosen').chosen(width: '150px').on 'change', ->
     l = $('form').attr('action');
     p = $(".ui-tabs-active a").attr('href')
@@ -293,6 +304,7 @@ $(document).ready ->
         i = $('.l_edit.editable')
       else if $(this).closest('tr').hasClass('editable')
         i = $(this).closest('td').siblings().last().children('.icon_apply')
+      else if $(this).closest('grid_table_goods') != undefined
       else 
         i = $('span.icon_apply')
       if (i!=undefined)

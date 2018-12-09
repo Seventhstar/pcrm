@@ -1,0 +1,58 @@
+<script>
+
+  Vue.component('v-select', VueSelect.VueSelect)
+  
+  let ptype = new Vue({
+  el: '#costing_app',
+  data: <%= fill_vue_data(@costing,
+    { 
+      model: 'costing',
+      texts: 'room',
+      lists: 'rooms',
+      tabs: [
+        {
+          label: 'tab 1', 
+          active: false,
+          text: 'content of tab1'
+        },
+        {
+          label: 'tab 2', 
+          active: true,
+          text: 'content of tab2'
+        },
+        {
+          label: 'tab 3', 
+          active: false,
+          text: 'content of tab3'
+        },
+      ]
+    })%>,
+
+  methods: {
+    v_nil(v){
+      return v_nil(v);
+    },
+    
+    addRoom(){
+      this.tabs.push({label: this.room.label, active: false})
+      this.rooms.splice(this.rooms.indexOf(this.room), 1)
+      this.room = null
+    },
+    
+    setActive(tab) {
+      this.tabs.forEach(el => {
+        el.active = el === tab;
+      })
+    }
+  },
+
+  computed: {
+    currentTab: function () {
+      console.log();
+      return this.tabs.reduce((accum, curr) => {return curr.active ? curr : accum}, {});
+    }
+  }
+});
+  
+
+</script>

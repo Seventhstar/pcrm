@@ -44,6 +44,12 @@ table.tbl_fc_1 td.caption_sm {width: 70px;}
 .short_label {width: 45px;}
 .t_cell {display: table-cell;}
 
+
+.prj_number { display: grid; grid-template-columns: 1fr 120px 3fr; column-gap: 20px;}
+.prj_new_client { display: grid; grid-template-columns: 2fr 1fr 2fr; column-gap: 20px; }
+.prj_executors { display: grid; grid-template-columns: 1fr 1fr 1fr; column-gap: 20px;}
+
+.table_2col {display: grid; grid-template-columns: 1fr 1fr;}
 .table_5col {display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 60px;
@@ -51,7 +57,15 @@ table.tbl_fc_1 td.caption_sm {width: 70px;}
   row-gap: 10px;
 }
 
-.grid_table {
+.table_period{
+ display: grid;
+  grid-template-columns: 120px 120px 208px 1fr;
+  grid-template-rows: 60px;
+  column-gap: 20px;
+  row-gap: 10px; 
+}
+
+.grid_table_absence {
   display: grid;
   grid-template-columns: 150px 1fr 46px 1fr;
   grid-template-rows: 36px 1px;
@@ -65,11 +79,39 @@ table.tbl_fc_1 td.caption_sm {width: 70px;}
     grid-gap: 10px;
 }
 
+.grid_table_goods{
+  display: grid;
+  grid-template-columns: 260px 254px 103px 1fr 88px 100px 70px;
+
+}
+
+.grid_table_head div{
+  padding: 8px;
+  font-weight: 500;
+  border-bottom: 1px solid #ddd;
+}
+
+.grid_table div{
+  padding: 8px;
+  border-bottom: 1px solid #ebebeb;
+  font-size: 13px;
+}
+
+div.edit_delete{ text-align: center; }
+
+.grid_table_new_item>div{ padding: 2px; }
+.grid_table_new_item input[type="text"] {height: 36px;}
+
+.table_footer{
+  //margin-top: 20px;
+  font-weight: 500;
+  overflow: auto;
+  padding: 8px;
+}
+
 .label_col{ margin-top: 8px; text-align: right; font-weight: 500; font-size: 13px;}
 
-th.center,td.center {text-align:center;}
-
-
+th.center, td.center {text-align:center;}
 #new_item td {padding: 8px 4px 8px 8px;}
 
 table td{font-size: 13px;}

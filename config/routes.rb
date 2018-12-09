@@ -73,7 +73,10 @@ Rails.application.routes.draw do
   resources :dev_projects
   resources :dev_statuses
 
-  resources :goodstypes
+  resources :goodstypes do
+    resource :providers, shallow: true
+  end
+
   resources :budgets
   resources :styles
   resources :provider_managers

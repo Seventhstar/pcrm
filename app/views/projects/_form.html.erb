@@ -6,7 +6,7 @@
 <%= render 'shared/error_messages', object: f.object %>
   
     <h3>Данные</h3>
-    <div class="box_wrap box_wrap_1">
+    <div class="box_wrap box_wrap_1 prj_footage">
       <div class="fullwidth"><table class="fullwidth tbl_fc fw_form projects"><thead>
         <tr><th width="20%"></th><th width="20%"></th><th width="20%"></th><th width="20%"></th><th width="20%"></th></tr></thead>
         <tbody>
@@ -64,8 +64,8 @@
           
 
           <tr><td class="gr_caption">Площадь и стоимость</td></tr>
-          <%= render 'footage', f: f %>
-          <%= render 'executor', f: f %>
+          <% render 'footage', f: f %>
+          <% render 'executor', f: f %>
 
           <tr><td class="gr_caption">Сроки</td></tr>
             <tr>
@@ -88,3 +88,6 @@
 
 <% end %>
 <% end %>
+
+<%= render 'page_2_vue' %>
+ 

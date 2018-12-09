@@ -33,7 +33,7 @@ p {margin:0 0 14px 0; padding: 0 0 0 0; }
 .red {color: #cd1010; }
 .grey {color: #aeaeae; }
 
-.btn_a, .btn_add,.form-actions .btn-success, a.btn-success, 
+.btn, .btn_a, .btn_add,.form-actions .btn-success, a.btn-success, 
 .input-group .btn-warning {display: inline-block; height: 34px; line-height: 34px; padding: 0 19px 0 19px; text-decoration:none; font-size: 14px; color: #fff; 
   border-radius: 5px; 
   position:relative;
@@ -44,6 +44,8 @@ p {margin:0 0 14px 0; padding: 0 0 0 0; }
     cursor: not-allowed;
   } 
 }
+
+.btn_save {padding: 0 13px;}
 
 tr.editable .btn_a {line-height: 30px; height: 30px;}
 span.btn_add{ height: 24px; width: 12px; padding: 0px 60px 7px 8px; margin-top: -3px !important;}
@@ -190,7 +192,7 @@ background-position:-34px 0 !important; width: 16px; height: 16px;}
 
 
 /*----Элементы формы_start----*/
-.txt,.form-control {height: 34px; padding: 2px 10px 0 10px; background: #fff; border:1px solid #e5e5e5; border-top:1px solid #d9d9d9; border-radius: 5px; box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box;}
+.txt,.form-control {height: 34px; padding: 4px 10px 0 10px; background: #fff; border:1px solid #e5e5e5; border-top:1px solid #d9d9d9; border-radius: 5px; box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box;}
 .slim_txt {height: 26px; font-size: 13px;}
 .inp_w .txt, .inp_w, .inp_w input{width: 100%; vertical-align: top;}
 .inp_90 {width: 90%;}

@@ -1,7 +1,6 @@
 #tabs-1.ptab
-  .box_wrap_1
-    .panel-left
-      .sep_15
+  .box_wrap.box_wrap_1
+    .panel-left.prj_type
       table.fullwidth.tbl_fc.fw_form
         thead
           tr
@@ -10,7 +9,7 @@
         tbody
           tr
             td
-              .inp_w= f.input :number,label: 'Номер'
+              .inp_w= f.input :number, label: 'Номер'
             td.va_pt15
               = f.input :interest, as: :boolean, label: 'Интерес к стройке', class: 'inp_btn checkbox'
               = f.input :attention, as: :boolean, label: 'Особое внимание', class: 'inp_btn checkbox'
@@ -39,7 +38,7 @@
             td
               .inp_w
                 label Вид работы
-                = chosen_src :project_type_id, ProjectType.all, @project, {nil_value: 'Вид работы...' }
+                v-chosen name="project_type" placeholder="Вид работы..."
             td= chosen_src :style_id, Style.all, @project,  nil_value: 'Стиль...', label: 'Стиль'  
           tr
             td
@@ -56,3 +55,4 @@
         .sep_3
         .comments_box
           = render "shared/comments"
+    = render "page_1_vue"

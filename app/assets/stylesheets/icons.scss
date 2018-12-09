@@ -42,7 +42,7 @@ a:hover .icon_user, .active .icon_user {background-position:-18px -18px; }
 .icon_lock.locked{background-position:-230px 0; width: 12px; height: 16px;}
 
 
-.tbl_a table td.tools, .edit_delete{width: 41px; padding-right: 10px; margin:0 0 0 0; font-size: 0; white-space:nowrap;}
+.tbl_a table td.tools, td.edit_delete{width: 41px; padding-right: 10px; margin:0 0 0 0; font-size: 0; white-space:nowrap;}
 .tbl_a table td.tools .icon, table .icon {margin:0 10px 0 0;}
 .tbl_a table td.tools .icon:hover {opacity: 0.5;}
 .tbl_a table td.tools .icon.disabled:hover {opacity: 1;}

@@ -33,10 +33,16 @@ input::-webkit-inner-spin-button { padding-right:0}
 .fixed {background: #fafafa; color: #999;}
 .lbl.digits{ text-align: right;}
 
+
+.inp_discount label{display: block;}
+.inp_discount .inp_sum_percent {width: 70%; float: left}
+.inp_discount .inp_percent{width: 25%; float: right; margin-top: 18px;}
+
 // .tbl_a table tr.ordered:nth-child(even) td, table.tleads tr.ordered:nth-child(even) td { background: #84c8d6;}
 // #project_client_id_chosen {max-width: 300px !important;}
-span.add_footage {margin-top: 18px}
+span.add_footage {margin-top: 18px !important;}
 .inp_w label {font-weight: 500; font-size: 13px;}
+// .txt:disabled{background: #fcfcfc !important; }
 
 // #add_footage {font-size: 18px; font-weight: bold;}
 .va_pt15{padding-top: 16px;}
@@ -60,7 +66,7 @@ td.inf.comment {  background-position-x: -17px !important; }
 #project_payd_full {margin-left: 10px;}
 .green { color: #0dd60d;}
 
-#pgoods .datepicker {width: 125px;}
+#pgoods .datepicker {width: 100px;}
 .sw_b {width: 238px !important; font-weight: 500; font-size: 17px;}
 
 #pdf {float: right; margin-left: 15px;}
@@ -69,13 +75,14 @@ td.inf.comment {  background-position-x: -17px !important; }
 tr.fullwidth>td>#project_client_id_chosen {width: 100% !important;}
 // .fullwidth #project_client_id_chosen {width: 100%;}
 
+#pgoods .txt.right {text-align: right;}
 
 .inp_94 {width: 94%;}
 .inp_97 {width: 97%;}
 
 .td_caption {padding-top: 10px;}
 
-#pgoods #btn-sub-send{padding: 0 14px;}
+#pgoods #btn-sub-send{padding: 2px 14px; height: 32px;}
 
 .goods_order_td span{font-size: 17px;font-weight: 500;padding-left: 8px;}
 table.tbl_fc_1 td.caption.goods_closed {font-size: 17px; font-weight: 500; padding-top: 4px; color: red;}

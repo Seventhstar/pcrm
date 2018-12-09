@@ -1,13 +1,27 @@
 = simple_form_for @costing do |f|
   = f.hidden_field :user_id, value: current_user.id
-  .box_wrap.box_wrap_1
-    .panel-left
-      table.tbl_fc.tbl_fc_1
-        tr
-          td.caption Проект:
-          td
-            =f.hidden_field :project_id
-            .inp_w= text_field 'costing', :project_address, label: false, model: 'Project', hidden_id: 'costing_project_id',
-              class: 'txt autocomplete'
-        = tr_multi_select f, :room_ids, Room.all, 'Помещения', {model: 'room'}
-        = tr_submit_cancel costings_path        
+  #costing_app
+    .box_wrap.box_wrap_1
+      .panel-left
+        table.tbl_fc.tbl_fc_1
+          tr
+            td.caption Проект:
+            td
+              =f.hidden_field :project_id
+              .inp_w= text_field 'costing', :project_address, label: false, model: 'Project', hidden_id: 'costing_project_id',
+                class: 'txt autocomplete'
+          = tr_multi_select f, :room_ids, Room.all, 'Помещения', {model: 'room'}
+        .div.left style="width: 400px"  
+          v-chosen name="room" placeholder="Помещение"
+        span.btn_a.left @click="addRoom" :disabled="v_nil(this.room)" Добавить
+
+    .container
+      .vtabs
+        ul
+          li :class=("{'ui-tabs-active': tab.active}") v-for=("tab in tabs") 
+            | <a @click="setActive(tab)">{{tab.label}}
+      tab-content.content :tab="currentTab" /
+
+  = tr_submit_cancel costings_path        
+
+  = render 'form_vue'

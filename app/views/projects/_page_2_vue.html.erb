@@ -1,25 +1,60 @@
 <script>
+  Vue.component('v-select', VueSelect.VueSelect)
+  
   let footages = new Vue({
     el: '.prj_footage',
     data: <%= fill_vue_data(@project,
      {
       model: 'project',
+      formValid: false,
       focus: '',
       discount: 0,
+      toggled: false,
       m_sum_total: 0,
       show_2: @project.footage_2>0,
+      show_fact: true,
+      noteValid: 'tooltip from Vue.js',
+      complexProjectType: false,
+      
+      required: ['project_type', 'client', 'executor', 'address'],
+      fieldsTranslated: ['тип проекта', 'клиент', 'дизайнер', 'адрес'],
+
       formFields: "footage price",
-      texts: "footage price sum sum_total \
+      booleans: 'isNewProject',
+      lists: "clients executors visualers project_types+simple",
+      texts: "address comment\
+              footage price sum sum_total project_type\
               footage_2 price_2 sum_2\
               footage_real price_real sum_real sum_total_real \
               footage_2_real price_2_real sum_2_real\
               designer_price designer_price_2 designer_sum\
               visualer_price visualer_sum sum_total_executor\
-              sum_discount sum_rest",
+              sum_discount sum_rest"
     }) %>,
+
     created() {
+      if (!this.isNewProject){
+        currentPType = this.project_types.find(e => e.value == ptype.project_type.value)
+        this.complexProjectType = !currentPType.simple
+      }
+
+      if (this.complexProjectType)
+        this.m_sum_total = parseInt(this["sum"]) + parseInt(this["sum_2"])
+      else
+        this.m_sum_total = this.sum_total
+
+      this.calcDiscount(true)
       this.calcRest()
     },
+
+    updated(){
+      //console.log("updated");
+    },
+
+    mounted(){
+      this.$root.$on('onInput', this.onInput);
+    },
+
     watch: {
       footage(){
         this.calcSum("footage", "price")
@@ -53,6 +88,7 @@
         this.calcPrice();
         this.calcTotal();
       },
+      
       sum_2(){
         this.calcPrice("_2");
         this.calcTotal();
@@ -60,10 +96,16 @@
 
       sum_total(){
         if (this.focus.includes('total')){
-          this.m_sum_total = parseInt(this["sum"]) + parseInt(this["sum_2"]);
+          if (this.complexProjectType)
+            this.m_sum_total = parseInt(this["sum"]) + parseInt(this["sum_2"]);
+          else
+            this.m_sum_total = this.sum_total;
+
           this.sum_discount = this.m_sum_total - parseInt(this.sum_total);
         }
+
         this.calcDiscount();
+        this.calcRest();
       },
 
       discount(){
@@ -71,7 +113,9 @@
           this.sum_discount = this.discount * this.m_sum_total / 100;
         }
         this.calcTotal();
+        this.calcRest();
       },
+
       sum_discount(){
         if (this.focus.includes('sum_discount')){
           this.calcDiscount();
@@ -83,18 +127,51 @@
          this.designer_sum = this.designer_price * this.mFloat("footage");
          this.calcSumExecutor();
       },
+
       visualer_price(){
         this.visualer_sum = this.visualer_price * this.mFloat("footage");
          this.calcSumExecutor();
-      }
-
+      },
+      
+      project_type(){
+        this.complexProjectType = this.project_type === undefined ? true : !this.project_type.simple;
+        setTimeout(()=>{apply_mask();}, 300);
+      },
 
     },
     methods: 
     {
+      onInput(){
+        let valid = true;
+        let tooltip = "";
+        this.required.forEach( (c, i) => {
+          if (v_nil(this[c])) {
+            valid = false;
+            tooltip = tooltip + this.fieldsTranslated[i] + ', '
+          }
+        });
+
+
+        
+        this.formValid = valid;
+        if (tooltip.trim().length > 0) tooltip = "Не заполнены поля: " + tooltip.slice(0, -2)
+        this.noteValid = tooltip;
+      },
+
+      onSubmit(event){
+        if (event && !this.formValid) {
+          event.preventDefault();
+          show_ajax_message(this.noteValid, 'error');
+        }
+        if (!this.complexProjectType){
+          // чистим поля          
+        }
+      },
+
       mFloat(name){
           return parseInt(this[name]*100) / 100;
       },
+
       calcSum(footage, price, sum = "sum"){
         if (!this.focus.includes('sum')){
           this[sum] = this.mFloat(footage) * parseInt(this[price]);
@@ -104,37 +181,43 @@
         else{this.calcTotal();}
         
       },
+
       calcTotal(real = ""){
-        if (!this.focus.includes('sum_total')){ 
-          this["sum_total"+real] = parseInt(this["sum"+real]) + parseInt(this["sum_2"+real]) - this.sum_discount;
-          this.calcRest()
+        if (!this.focus.includes('sum_total') && this.complexProjectType){ 
+          let discount = parseInt(this.sum_discount);
+          if (isNaN(discount)) discount = 0;
+          this["sum_total"+real] = parseInt(this["sum"+real]) + parseInt(this["sum_2"+real]);
+          if (isNaN(this["sum_total"+real])) this["sum_total"+real] = 0;
+          if (this["sum_total"+real]>0) {
+            this.m_sum_total = this["sum_total"+real];
+            this["sum_total"+real] = this["sum_total"+real] - discount;
+          }
+          this.calcRest();
         }
       },
+
       calcPrice(num = ""){
         if (this.focus.includes('sum')){
           this["price"+num] = this.mFloat("sum"+num) / parseInt(this["footage"+num]);
         }
       },
-      calcDiscount(){
-        if (this.focus.includes('sum_discount') || this.focus.includes('sum_total')){ 
+
+      calcDiscount(force = false){
+        if (this.focus.includes('sum_discount') || this.focus.includes('sum_total') || force){ 
           this.discount = this.sum_discount / (this.m_sum_total) *100;
           this.calcTotal();
         }
       },
+
       calcSumExecutor(){
         this.sum_total_executor = this.designer_sum + this.visualer_sum;
         this.calcRest();
       },
+
       calcRest(){
-        total = this.sum_total_real > 0 ? this.sum_total_real : this.sum_total
-        this.sum_rest = total - this.sum_total_executor
+        this.sum_rest = this.m_sum_total - this.sum_total_executor - this.sum_discount;
       }
-
- 
-    },
-    computed: {
-
-    }
+     }
   });
 
 </script>

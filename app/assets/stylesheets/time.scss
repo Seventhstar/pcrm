@@ -13,7 +13,8 @@
 .projects .inp_w .datepicker{ background: asset-url('ico-date.png') 96% 8px no-repeat; }
 .edit_project .inp_w .datepicker{ background: asset-url('ico-date.png') 96% 8px no-repeat; }
 
-.inp_w .sum_mask { background: asset-url('rub.png') 98% 8px no-repeat; padding-right: 22px; }
+.inp_w .sum_mask { background: asset-url('rub.png') 98% 9px no-repeat; padding-right: 22px; }
+.inp_w .discount_mask {background: asset-url('perc.png') 88% 9px no-repeat; padding-right: 22px}
 
 .modal-content .inp_w .sum_mask { background: asset-url('rub.png') 99% 8px no-repeat; padding-right: 24px; }
 .modal-content .inp_w .sum_mask[disabled]  {background: asset-url('rub-dis.png') 99% 8px no-repeat; color: gray;}
@@ -23,8 +24,13 @@
 .sum_total { border-left: 5px solid #ff8411;}
 .sum_rest { border-left: 5px solid #6acc00; }
 .sum_cost { border-left: 5px solid #009ddd; }
+.inp_sum_total {width: 224px; float: right;}
 
 .tbl_fc_1 .inp_w .datepicker{ background: asset-url('ico-date.png') 98% 8px no-repeat; }
+
+.table_period .datepicker,
+.datepicker.w120{background: asset-url('ico-date.png') 93px 9px no-repeat;}
+
 
 input[disabled].datepicker { background: asset-url('ico-date.png') 95% -27px no-repeat !important; }
 .tbl_fc_1 .inp_w input[disabled].datepicker {background: asset-url('ico-date.png') 98% -27px no-repeat !important;}

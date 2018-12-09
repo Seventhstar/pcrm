@@ -47,7 +47,7 @@ $.fn.capitalize = function () {
     return this;
 };
 
-function undateOptionRow(name, json, id){
+function updateOptionRow(name, json, id){
   f = searchByKey(app[name], id)
   for (var i in json) {
     app[name][f.h][f.i][i] = json[i] 
@@ -121,8 +121,33 @@ var show_ajax_message = function(msg, type) {
 };
 
 var v_nil = function(v){ 
-  return v === null || v === undefined || v.value === undefined || v.value === 0;
+  // console.log(typeof(v), v)
+  if (typeof(v) == "object") 
+    return v === null || v === undefined || v.value === undefined || v.value === 0;
+  else
+    return v === null || v === undefined || v === '';
 }
+
+var e_nil = function(id){
+  return e_val(id) === "";
+}
+
+var e_val = function(id){
+  let v = document.getElementById(id);
+  if (v === null) return "";
+  return v.value;
+}
+
+var format_date = function(date){
+  if (v_nil(date)) {
+    date = new Date().toJSON().slice(0,10).replace(/-/g,'-'); 
+  }
+  if (date.includes('-')){
+    return date.split('-').reverse().join('.');
+  }
+  return date;
+}
+
 
 function getInputSelection(elem){
    if(typeof elem != "undefined"){
@@ -134,21 +159,15 @@ function getInputSelection(elem){
 
 $(function() {
 
-  // vue = new Vue({
-  //   el: '#tabs-12',
-  //   data: {vue_test: 28}
-  // })
-
   var menu = [
     {name: 'Телефон', fun: function (){$('#lead_phone').val(getInputSelection($('#lead_info')));}}, 
     {name: 'email', fun: function () {$('#lead_email').val(getInputSelection($('#lead_info')));}},
     {name: 'ФИО', fun: function (){$('#lead_fio').val(getInputSelection($('#lead_info')));}}, 
     {name: 'Адрес', fun: function () {$('#lead_address').val(getInputSelection($('#lead_info')));}}
-    
   ];
 
   $( document ).ajaxError(function( event, jqxhr, settings, thrownError ) {
-    show_ajax_message(jqxhr.responseText,'error')
+    show_ajax_message('error:' + jqxhr.responseText,'error')
   });
 
   //Calling context menu
@@ -169,19 +188,7 @@ $(function() {
 
   $('.progress').hide();
   $('#file').hide();
-  $('#tabs_msg').tabs({
-    activate: function (event, ui) {
-      var color;
-      if ($('#tab_special_info').closest('li').hasClass('ui-tabs-active')){
-        color = 'red';
-      }
-      else
-      {
-        color = '#6acc00';
-      }
-    $('.comments_box .box_msg ul.ui-tabs-nav').css('border-bottom', color+' 2px solid');
-    }
-  });
+
   $('#tabs').tabs({
     activate: function (event, ui) {
       p = $(".ui-tabs-active a").attr('href');
@@ -189,8 +196,12 @@ $(function() {
       if ($(p).html() == undefined || ($('.good_group').size()==0 &&  p=='#tabs-4' )) {
         l = $('form').attr('action');
         url = l+"/edit"+p.replace('#','?').replace('-','=')
-        $.get(url, null, null, 'script');
-      }
+      //   var request = $.get(url, null, null, 'script')
+
+      //   request.success(function(result) {
+      //     console.log(result);
+      //   });          
+       }
     }
   });
 
@@ -208,7 +219,7 @@ $(function() {
 
   $('.timepicker').timepicker({ 'timeFormat': 'H:i' });
 
-  $(document).on('focus', '.datepicker', function () {$(".datepicker").mask('99.99.9999'); });
+  $(document).on('focus', '.datepicker', function () {$(".datepicker").inputmask('99.99.9999'); });
 
   $('.switcher_a').each(function(){    
     var link = $(this).find('.link_a,.link_c');

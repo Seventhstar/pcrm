@@ -1,0 +1,94 @@
+.hl.hl_a.bd Новый договор
+
+- if is_manager?
+  = simple_form_for(@project) do |f| 
+    .box_wrap.box_wrap_1.prj_footage
+      .fullwidth.prj_number
+        .inp_w =f.input :number, label: 'Номер'
+        .inp_w
+          label Дата
+          = f.text_field :date_sign, value: Date.today.try('strftime',"%d.%m.%Y"), class: "txt datepicker w120"
+        .inp_w
+          label Адрес
+          = f.text_field :address, class: 'txt', "v-model"=>"address", "v-on:input"=>"onInput()"
+      
+      .sep_15
+
+      .switcher_a.sw_b.left.toggled
+        a.link_c.left.on.new_client off=("Новый клиент") on=("Клиент из базы")  Клиент из базы
+        .scale v-on:click="toggled=!toggled"
+          .handle.active
+      
+      .sep style="height: 36px"
+
+      transition name="slide-fade" mode="out-in"
+        .prj_new_client v-if="toggled"
+          .inp_w
+            label ФИО
+            = text_field_tag 'client[name]','',type:"text ", class: 'string optional form-control'
+          .inp_w
+            label Телефон
+            = text_field_tag 'client[phone]','',type:"text ", class: 'string optional form-control'
+          .inp_w
+            label E-mail
+            = text_field_tag 'client[email]','',type:"text ", class: 'string optional form-control'
+        .inp_w v-else=""
+          .sep style="height: 17px"
+          v-chosen name="client" placeholder="Клиент..."
+      .sep_15
+      .sep_15
+      
+      .hl.gr_caption.hl_tr Вид работы и исполнители
+      .prj_executors
+        .inp_w
+          label Вид работы
+          v-chosen name="project_type" placeholder="Вид работы..."
+
+        - if is_manager?
+          .inp_w
+            label Дизайнер
+            v-chosen name="executor" placeholder='Дизайнер...'
+          transition name="slide-fade" mode="out-in" 
+            .inp_w.prj_not_simple v-if="complexProjectType"
+              label Визуализатор 
+              v-chosen name="visualer" placeholder='Визуализатор...'
+            .sums v-else=""
+              .inp_w
+                .inp_sum_total
+                  m-number name="sum_total" label="Сумма"
+      transition name="slide-fade" mode="out-in" 
+        .sums v-if="complexProjectType"
+          .gr_caption Площадь и стоимость
+          .table_5col
+            =render 'footage', f: f 
+            .inp_w
+            .inp_w
+              .inp_sum_total
+                m-number name="sum_total" label="Сумма"
+      
+      .sep_15
+      .sep_15
+      =render 'executor', f: f 
+
+      .gr_caption Сроки
+      .table_period
+        .inp_w
+          label Начало
+          = f.text_field :date_start, value: Date.today.try('strftime',"%d.%m.%Y"), class: "txt datepicker"
+        .inp_w
+          label Окончание
+          = f.text_field :date_end_plan, class: "txt datepicker"
+        .inp_w
+          label Рабоч. дней без уч. праздников
+          = number_field_tag :project_days, 0, {class: 'form-control'}
+
+      .inp_w
+        label Примечание
+        = f.text_area :first_comment, class: :txt, label: false, rows: "2", "v-model"=>"comment"
+
+      = f.hidden_field :owner_id, value: current_user.id
+      = submit_cancel project_page_url, {classValid: "!formValid", tip: 'noteValid', click: 'onSubmit'} 
+
+/= render 'form'
+= render 'page_2_vue' 
+= hidden_field_tag 'holidays', @holidays 

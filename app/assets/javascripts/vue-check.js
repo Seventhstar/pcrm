@@ -38,10 +38,10 @@ Vue.component('m-number', {
       classes: "txt ",
       name_id: ""}
   },
-  props: ['name', 'label', 'type', 'value', 'add_class', 'disabled'],
+  props: ['name', 'label', 'type', 'add_class', 'disabled'],
   template: `
     <div class="inp_w prj_not_simple">
-      <label>{{label}}</label>
+      <label v-if="label">{{label}}</label>
       <input 
         value="0.0" 
         type="text"  
@@ -50,23 +50,33 @@ Vue.component('m-number', {
         :id="name_id" 
         :name="_name"
         :disabled="disabled"
-        @keyup="onUpdate($event.target.value)"
-        @focus="$parent.focus = name"
+        @keyup="onUpdate($event)"
+        @focus="onFocus($event)"
         style="text-align: right;"></div>`,
     created(){
       this.name_id =  this.$parent.model + "_" + this.name;
       this._name =  this.$parent.model + "[" + this.name+"]";
-      if (this.name.includes('footage'))
+      
+      if (this._name.includes('[disc'))
+        {this.classes = "txt discount_mask"}
+      else if (this.name.includes('footage'))
           {this.classes = "txt float_mask"}
       else {this.classes = "txt sum_mask"}
+
       if (this.add_class !== undefined)
         this.classes = this.classes + " " + this.add_class
       else if (this.name.includes('total'))
         this.classes = this.classes + " sum_total"
     },
     methods:{
+      onFocus(el){
+        let val = this.$parent[this.name]
+        this.$parent.focus = this.name;
+        if (val == '0' || val=='0,0' || val=='0.0' )
+            this.$parent[this.name] = '';
+      },
       onUpdate(val) {
-        this.$parent[this.name] = val.toString().replace(/\s/g, '');
+        this.$parent[this.name] = val.target.value.toString().replace(/\s/g, '');
       }
     }
 });

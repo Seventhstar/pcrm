@@ -210,11 +210,12 @@ module ApplicationHelper
   end
 
   def fill_vue_data(obj, data)
-    if data[:boleans].present?
-      data[:boleans].split(' ').each do |b|
-        data[b] = obj[b].nil? ? false : obj[b]
+    if data[:booleans].present?
+      data[:booleans].split(' ').each do |b|
+        data[b] = obj[b].nil? ? eval("@#{b}") : obj[b]
+        # puts "booleans", b, obj[b].nil?
       end
-      data.delete(:boleans)
+      data.delete(:booleans)
     end
 
     if data[:texts].present? 
@@ -231,8 +232,14 @@ module ApplicationHelper
       data.delete(:list_values)
     end
 
-    if data[:lists].present?
+    if data[:lists].present? # collection_name[:source_name][+field1,field2...]
       data[:lists].split(' ').each do |l|
+        fields = nil
+        if l.index('+').present? 
+          lf = l.split('+')
+          fields = lf[1]
+          l = lf[0]
+        end
         if l.index(':').nil?
           collection = eval("@#{l}")
         else
@@ -240,7 +247,8 @@ module ApplicationHelper
           collection = eval("#{la[1]}")
           l = la[0]
         end
-        data[l] = select_src(collection) if collection.present?
+        data[l] = select_src(collection, "name", false, fields) if collection.present?
+        # puts "data[:lists]", data[:lists], collection, fields
       end
       data.delete(:lists)
     end
@@ -248,8 +256,17 @@ module ApplicationHelper
     return data.to_json.html_safe.to_s
   end
 
-  def select_src(collection, attr_name = "name", safe = false)
-    collection = collection.collect{|u| {label: u.try(attr_name), value: u.id}}
+  def select_src(collection, attr_name = "name", safe = false, fields_str = nil)
+    if fields_str.nil? 
+      collection = collection.collect{|u| {label: u.try(attr_name), value: u.id}}
+    else
+      fields = fields_str.split(',')
+      collection = collection.collect{|u| 
+        c = {label: u.try(attr_name), value: u.id}
+        fields.each {|f| c[f] = u.try(f)}
+        c
+      }
+    end
     collection = collection.to_json.html_safe.to_s if safe
     collection
   end
@@ -280,9 +297,9 @@ module ApplicationHelper
     n = [add_name,'[',n,']',].join if !add_name.nil?
 
     def_cls = coll.count < 8 ? 'chosen' : 'schosen'
-    cls       = options[:class].nil? ? def_cls : options[:class]
+    cls     = options[:class].nil? ? def_cls : options[:class]
     cls = cls + ' '+ options[:add_class] if !options[:add_class].nil?
-    cls = cls+" has-error" if is_attr && ( obj.errors[id].any? || obj.errors[id.to_s.gsub('_id','')].any? )
+    cls = cls + " has-error" if is_attr && ( obj.errors[id].any? || obj.errors[id.to_s.gsub('_id','')].any? )
     l = label_tag options[:label]
     s = select_tag n, options_for_select(coll, selected: sel), class: cls, 'v-model' => v_model
     options[:label].nil? ? s : l+s
@@ -422,8 +439,19 @@ module ApplicationHelper
     add_cls = options['modal'] ? ' update' : ''
     dd      = options['modal'] ? "modal" : ''
 
-    submit_options = {class: "btn btn-default sub btn_a #{add_cls}"}
-    submit_options[":disabled"] = options[:disabled] if options[:disabled]
+    submit_options = {}
+    cls = "btn sub btn_a #{add_cls}"
+
+    if options[:classValid] 
+      submit_options[':class'] = "[{disabled: "+options[:classValid]+"}, '#{cls}']"
+    else
+      submit_options['class'] = cls
+    end
+
+    submit_options[':data-original-title'] = options[:tip] if options[:tip]
+    # вернуть если нужен tooltip 
+    # submit_options["data-toggle"] = 'tooltip' if options[:tip]
+    submit_options["v-on:click"] = options[:click] if options[:click]
     
     s = submit_tag 'Сохранить', submit_options
     c = link_to 'Отмена', back_url, class: "sub btn_a btn_reset", "data-dismiss": dd

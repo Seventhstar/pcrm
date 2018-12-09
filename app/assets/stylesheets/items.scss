@@ -30,6 +30,34 @@
   opacity: 0;
 }
 
+.component-fade-enter-active, .component-fade-leave-active {
+  transition: opacity .3s ease;
+}
+.component-fade-enter, .component-fade-leave-to
+/* .component-fade-leave-active до версии 2.1.8 */ {
+  opacity: 0;
+}
+
+.item-enter-active {
+ transition: 1s;
+}
+
+.item-leave-active {
+ opacity: 0;
+ transform: translateX(50px);
+ transition: 0.5s;
+}
+
+.item-enter {
+ opacity: 0;
+ transform: translateY(15px);
+}
+
+.item-move {
+ transition: 0.5s;
+}
+
+
 .caption_to{
   float: right;
   width: 54px;

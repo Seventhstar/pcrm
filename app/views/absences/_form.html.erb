@@ -11,7 +11,7 @@
   
 <div class="vue_app">
 
-  <section class="grid_table">
+  <section class="grid_table_absence">
     <div class="label_col">Причина:</div> 
     <div>
        <% if is_manager? || is_new || (@absence.new_reason_id.nil? &&
@@ -31,7 +31,7 @@
   </section>
   
   <transition name="slide-fade">
-    <section class="grid_table" v-show="equals(reason,[2,3])">  
+    <section class="grid_table_absence" v-show="equals(reason,[2,3])">  
       <div class="label_col">Проект:</div> 
       <div>
         <v-chosen name="project" placeholder="Укажите объект..."/>
@@ -47,7 +47,7 @@
     </section>
   </transition>
     
-  <section class="grid_table">
+  <section class="grid_table_absence">
     <div class="label_col">Дата c:</div> 
     <div class="inp_">
       <%= f.text_field :dt_from, value: @dt_from, label: false, class: "txt datepicker left" %>
@@ -68,7 +68,7 @@
   </section>
 
   <% if is_manager? %>
-    <section class="grid_table">
+    <section class="grid_table_absence">
       <div class="label_col">Сотрудник:</div> 
       <div>
         <v-chosen name="user" placeholder="Выберите сотрудника..."/>
@@ -98,89 +98,4 @@
 <% end %>
 </div>
 
-<script>
-  Vue.component('v-select', VueSelect.VueSelect)
-
-  let app = new Vue({
-    el: '.vue_app',
-    data: <%= fill_vue_data(@absence,
-    {
-      model: 'absence',
-      boleans: 'canceled approved f_valid f_shop',
-      texts: 'comment new_shop new_shop_target',
-      list_values: 'reason new_reason project target',
-      lists: "reasons projects targets users \
-              new_reasons:@reasons users:User.all \
-              new_shops:Provider.all new_shop_targets:@shop_targets",
-      checked: @checked,
-      user:   v_value(@absence, "user", nil, current_user),
-      shops:  @absence.shops.map{|s| { id: s.id,
-                  shop: {label: s.shop_name, value: s.shop_id}, 
-                  target: {label: s.target_name, value: s.target_id},
-                  _destroy: false}} 
-    }) %>,
-    beforeCreate(){
-
-    },
-    updated(){
-        this.input();
-    },
-    methods: {
-      shop_field(index, field) {
-        return "absence[shops_attributes]["+index+"]["+field+']'
-      },
-
-      placeholder(){ 
-        return this.equals(this.reason,6) ? 'Обязательно укажите причину' : ''
-      },
-
-      check_to(){
-        this.checked = !this.checked
-      },
-
-      add_shop(){
-        if (this.new_shop_target!==null){
-          let shop = this.new_shop === null ? {label: '*Другой*', value: null} : this.new_shop
-
-          this.shops.push({shop: shop, target: this.new_shop_target, _destroy: false})
-          this.new_shop_target = null 
-          this.new_shop = null
-        }
-      },
-
-      del_shop(index){
-        this.shops[index]['_destroy'] = true
-      },
-
-      input(e){
-        let f_shop = true;
-        let f_valid = true;
-        let reason = v_nil(this.reason) ? 0 : this.reason.value  
-
-        switch(reason){
-          case 0:
-            f_valid = false; break;
-          case 2:
-            if (v_nil(this.project) || v_nil(this.target)){f_valid = false;} break;
-          case 3:
-            if (v_nil(this.project) || this.shops.filter(sh => !sh._destroy).length === 0){f_valid = false;} break;
-          case 6:
-            if ($('#absence_comment').val().length < 3) {f_valid = false;}        
-        }
-
-        if (v_nil(this.user)) f_valid = false;
-
-        if (v_nil(this.new_shop_target)) f_shop = false;
-        this.f_valid = f_valid;
-        this.f_shop = f_shop;
-      },
-
-      equals(obj, v){      
-        if (obj===null) {return false;} 
-        if (v.constructor === Array) return v.includes(obj.value);
-        return obj.value === v; 
-      }
-    }
-  });
-
-</script>
+<%= render 'form_vue' %>

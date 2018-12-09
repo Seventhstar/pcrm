@@ -22,6 +22,36 @@
     checked = true
   return checked
 
+@save_item = (button) ->
+  attr_url = button.attr('action')
+  prm = button.attr('prm')
+  values = $('[name^='+prm+']').serialize()+'&owner_id='+$('form').attr('id')
+  url = document.URL
+  if url.indexOf('edit')<1 then url = url + '/edit'
+  $.ajax
+    type: 'POST'
+    url: attr_url
+    data: values
+    dataType: 'script'
+    beforeSend: (xhr) ->
+      xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
+      return
+    success: (data, textStatus, jqXHR ) ->
+      show_ajax_message('new item' + data)
+  return
+
+@delete_item = (url) -> 
+  $.ajax
+    url: url
+    data: '_method': 'delete'
+    dataType: 'script'
+    type: 'POST'
+    complete: ->
+      # $.get url, null, null, 'script'
+      show_ajax_message('Успешно удалено')
+      return
+  return
+
 $(document).ready ->
  $(document).on 'click', '.sw_enable', ->
   grp_id = $(this).attr('grp_id')
@@ -80,21 +110,10 @@ $(document).ready ->
        success: ->
         setLoc url
 
+
+
  $(document).on 'click', '#btn-sub-send', (e) ->
-  attr_url = $(this).attr('action')
-  prm = $(this).attr('prm')
-  values = $('[name^='+prm+']').serialize()+'&owner_id='+$('form').attr('id')
-  url = document.URL
-  if url.indexOf('edit')<1 then url = url + '/edit'
-  $.ajax
-    type: 'POST'
-    url: attr_url
-    data: values
-    dataType: 'script'
-    beforeSend: (xhr) ->
-      xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
-      return
-  return
+  save_item($(this))
 
 
 
@@ -152,14 +171,5 @@ $(document).on 'click', ' span.icon_remove', ->
     del = confirm('Действительно удалить?')
     if !del
       return
-    $.ajax
-      url: del_url
-      data: '_method': 'delete'
-      dataType: 'script'
-      type: 'POST'
-      complete: ->
-        # $.get url, null, null, 'script'
-        show_ajax_message('Успешно удалено')
-        return
-    return
+    delete_item(del_url)
 

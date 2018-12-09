@@ -35,10 +35,6 @@ $(document).ready ->
       $('#prj_sum').val 0
     return
    
-  # $('.float_mask').mask "# ##0.00", 
-  #   reverse: true
-  #   maxlength: false
-
   $('.container').on 'click','.calc_proc.enabled', ->
     delim = $(this).attr('delim')
     if delim == '-1'

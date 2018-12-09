@@ -168,13 +168,13 @@ $(document).ready ->
     $('#edit_pgt_item'+itm).show()
     $('#pgt_item'+itm).hide()
 
-  $(".container").on 'click','span.btn_add', ->
-    disable_input_row()
-    id = $(this).attr('itm')
-    $('#new_item_'+id).show()
-    $('#table_'+id+' .hidden').removeClass('hidden')
-    $(this).hide()
-    $('#table_' + id + ' .new_row input')[1].focus()
+  # $(".container").on 'click','span.btn_add', ->
+  #   disable_input_row()
+  #   id = $(this).attr('itm')
+  #   $('#new_item_'+id).show()
+  #   $('#table_'+id+' .hidden').removeClass('hidden')
+  #   $(this).hide()
+  #   $('#table_' + id + ' .new_row input')[1].focus()
 
   $(".container").on 'change','#project_pstatus_id', ->
     $('#project_progress').val(100)
@@ -206,12 +206,7 @@ $(document).ready ->
     $(this).hide()
     $('.invisible').removeClass('invisible')
     return
-  $('#project_executor_id,#project_style_id').chosen
-    width: '99.5%'
-    disable_search: 'true'
-  $('#project_project_type_id').chosen({width: '99.5%', disable_search: 'true'}).on 'change', ->
-    $('.prj_not_simple').toggle('');
-
+  
   $(document).on 'change', '#project_days', ->
     d_st = dateFromString $('#project_date_start').val()
     add  = $(this).val()-1

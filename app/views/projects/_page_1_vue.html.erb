@@ -1,0 +1,22 @@
+<script>
+  Vue.component('v-select', VueSelect.VueSelect)
+  
+  let ptype = new Vue({
+    el: '.prj_type',
+    data: <%= fill_vue_data(@project,
+     {
+      model: 'project',
+      complexProjectType: false,
+      list_values: 'project_type',
+      lists: "project_types+simple"      
+    }) %>,
+
+    watch: {
+      project_type(){
+        this.complexProjectType = this.project_type === undefined ? true : !this.project_type.simple;
+      }
+    }
+
+  });
+
+</script>

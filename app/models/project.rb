@@ -1,7 +1,7 @@
 class Project < ActiveRecord::Base
   include Comments
   include ProjectsHelper
-  attr_accessor :first_comment, :days, :sum_rest
+  attr_accessor :first_comment, :days, :sum_rest, :discount
   belongs_to :client
   belongs_to :executor, class_name: 'User', foreign_key: :executor_id
   belongs_to :project_type

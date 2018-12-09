@@ -30,9 +30,19 @@ class ProjectGoodsController < ApplicationController
 
   def create
     @prj_good = ProjectGood.new(pg_params)
-    @prj_good.project_id = params[:owner_id].split('_').last
+    # puts "prm: #{pg_params}"
+    # @prj_good.project_id = params[:owner_id] #.split('_').last
     @cur_id = pg_params[:owner_id]
-    if @prj_good.save 
+    if @prj_good.save
+      respond_to do |format|
+        format.json do
+          render json: {
+            head: :ok,
+            saved: true,
+            id: @prj_good.id
+          }.to_json
+        end
+      end
     else
       respond_to do |format|
         format.json { render json: @prj_good.errors.full_messages, status: :unprocessable_entity }
@@ -46,19 +56,13 @@ class ProjectGoodsController < ApplicationController
 
   def update
     @cur_id = pg_params[:owner_id]
-    # puts "pg_params[:sum_supply] #{pg_params[:order] == '0'}"
-    # pg_params[:sum_supply] = 0 if pg_params[:order] == '0'
-    # puts "pg_params[:sum_supply] #{pg_params[:sum_supply]}" if pg_params[:order] == '0'
     @prj_good.update(pg_params)    
     respond_with @prj_good
-    # @prj_good.save 
   end
 
   def edit
     @title = 'Редактирование заказа'
     @cur_id = params[:owner_id]
-    # p "@cur_id #{@cur_id}"
-    # puts "@prj_good", @prj_good.to_json
     respond_modal_with @prj_good, location: root_path
   end
 
@@ -66,14 +70,10 @@ class ProjectGoodsController < ApplicationController
   private
 
     def check_sum
-      # new_params = pg_params.clone
       prms = [:gsum, :sum_supply]
-      # pg_params[:sum_supply] = "0" 
-      # # if new_params[:order] == '0' 
       prms.each do |p|
         pg_params[p] = pg_params[p].gsub!(' ','') if !pg_params[p].nil?
       end
-      # new_params
     end
 
     def sort_column
@@ -93,7 +93,7 @@ class ProjectGoodsController < ApplicationController
 
     def pg_params
       prm = params.permit!.to_h.first[0] 
-      params.require(prm).permit( :goodstype_id, :provider_id, :date_supply, :date_place, 
+      params.require(:gt).permit( :goodstype_id, :provider_id, :date_supply, :date_place, 
                                   :date_offer, :currency_id, :gsum, :order, :name, :description, 
                                   :fixed, :sum_supply, :project_id, :owner_id)
     end
