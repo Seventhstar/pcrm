@@ -117,6 +117,7 @@ class LeadsController < ApplicationController
     @lead.ic_user_id = current_user.id
     @lead.channel_id = 1
     @lead.priority_id = 1
+    @lead.city_id = current_user.city_id
 
     def_params
   end
@@ -198,7 +199,7 @@ class LeadsController < ApplicationController
       params[:lead][:phone] = params[:lead][:phone].gsub(/[-()+ .,]/,'')
       params.require(:lead).permit(:info, :fio, :footage, :phone, :email, :address, :channel_id, :source_id,
                       :status_id, :user_id, :status_date, :start_date, :first_comment, :leads_ids, :ic_user_id,
-                      :priority_id)
+                      :priority_id, :city_id)
     end
 
     def flash_interpolation_options

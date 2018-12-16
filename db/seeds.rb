@@ -14,22 +14,28 @@
 #    PaymentPurpose.delete_all
 #    PaymentPurpose.create([{id: 1,name: 'Выплата дизайнеру'},{id: 2, name: 'Выплата визуализатору'},{id: 3, name:'Штраф'},{id: 4, name:'Откат'}])
 
-    if ProjectStatus.count==0  
-      ProjectStatus.create([{name: 'В работе'},{name: 'Приостановлен'},{name: 'Завершен'}])
-    end
+if ProjectStatus.count==0  
+  ProjectStatus.create([{name: 'В работе'},{name: 'Приостановлен'},{name: 'Завершен'}])
+end
 
-    if Currency.count==0  
-      Currency.create([{name: 'RUB', short: 'руб.', code: '643'},
-                       {name: 'USD', short: '$', code: '840'},
-                       {name: 'EUR', short: '€', code: '978'}, ])
-    end
+if Currency.count==0  
+  Currency.create([{name: 'RUB', short: 'руб.', code: '643'},
+   {name: 'USD', short: '$', code: '840'},
+   {name: 'EUR', short: '€', code: '978'}, ])
+end
 
-    if AbsenceReason.count==0  
-      AbsenceReason.create([{name: 'Прогул'},{name: 'На объекте'},{name: 'Выезд в магазин'},{name: 'Отпуск'}])
-    end
-    if AbsenceTarget.count==0  
-      AbsenceTarget.create([{name: 'Приемка кухни'},{name: 'Встреча с заказчиком'},{name: 'Обсуждение вопросов с прорабом'}])
-    end
-    if AbsenceShopTarget.count==0  
-      AbsenceShopTarget.create([{name: 'Подбор'},{name: 'Корректировка'},{name: 'Заказ'}])
-    end
+if AbsenceReason.count==0  
+  AbsenceReason.create([{name: 'Прогул'},{name: 'На объекте'},{name: 'Выезд в магазин'},{name: 'Отпуск'}])
+end
+
+if AbsenceTarget.count==0  
+  AbsenceTarget.create([{name: 'Приемка кухни'},{name: 'Встреча с заказчиком'},{name: 'Обсуждение вопросов с прорабом'}])
+end
+
+if AbsenceShopTarget.count==0  
+  AbsenceShopTarget.create([{name: 'Подбор'},{name: 'Корректировка'},{name: 'Заказ'}])
+end
+
+if City.count == 0 
+  City.create([{name: 'Санкт-Петербург'}, {name: 'Москва'}])
+end

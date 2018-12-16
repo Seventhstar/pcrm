@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181026175359) do
+ActiveRecord::Schema.define(version: 20181216224325) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,6 +74,12 @@ ActiveRecord::Schema.define(version: 20181026175359) do
   end
 
   create_table "channels", id: :serial, force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "cities", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -247,6 +253,8 @@ ActiveRecord::Schema.define(version: 20181026175359) do
     t.integer "ic_user_id"
     t.integer "source_id"
     t.bigint "priority_id"
+    t.bigint "city_id", default: 1
+    t.index ["city_id"], name: "index_leads_on_city_id"
     t.index ["ic_user_id"], name: "index_leads_on_ic_user_id"
     t.index ["priority_id"], name: "index_leads_on_priority_id"
     t.index ["status_id"], name: "index_leads_on_status_id"
@@ -581,6 +589,8 @@ ActiveRecord::Schema.define(version: 20181026175359) do
     t.string "avatar"
     t.string "telegram"
     t.boolean "fired", default: false
+    t.bigint "city_id", default: 1
+    t.index ["city_id"], name: "index_users_on_city_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -652,9 +662,11 @@ ActiveRecord::Schema.define(version: 20181026175359) do
   add_foreign_key "costing_works", "works"
   add_foreign_key "costings", "projects"
   add_foreign_key "costings", "users"
+  add_foreign_key "leads", "cities"
   add_foreign_key "leads", "priorities"
   add_foreign_key "project_goods", "goodstypes"
   add_foreign_key "project_goods", "projects"
   add_foreign_key "room_works", "rooms"
   add_foreign_key "room_works", "works"
+  add_foreign_key "users", "cities"
 end

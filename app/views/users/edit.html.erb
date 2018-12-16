@@ -8,17 +8,21 @@
     <tr><td class="caption">Имя:</td>
         <td><div class="inp_w"><%= f.text_field :name, class: 'form-control' %></div></td></tr>
     <tr><td class="caption">Дата рождения:</td>
-        <td><div class="inp_w"><%= f.text_field :date_birth, :value => @user.date_birth.try('strftime',"%d.%m.%Y"), class: 'form-control datepicker' %></div></td></tr>
+        <td><div class="inp_w"><%= f.text_field :date_birth, value: @user.date_birth.try('strftime',"%d.%m.%Y"), class: 'form-control datepicker' %></div></td></tr>
     <tr><td class="caption">E-mail:</td>
         <td><div class="inp_w"><%= f.text_field :email, class: 'form-control' %></div></td></tr>    
+    <tr><td class="caption">Город:</td>
+        <td><div class="inp_w"><%= chosen_src 'city_id', @cities, @user %>
+            </div></td></tr>    
+
     <tr><td class="caption">Telegram:</td>
         <td><div class="inp_w"><%= f.text_field :telegram, value: @user.telegram.nil? ? ' ' : @user.telegram , class: 'form-control' %></div></td></tr>  
     <tr><td class="caption">Пароль:</td>
         <td><div class="inp_w"><%= f.password_field :password, class: 'form-control' %></div></td></tr>    
 
     <tr><td class="caption"></td>
-      <td><%= link_to 'Отмена', '/options/users', :class => "sub btn_a btn_reset"%>
-        <%= f.button 'Сохранить', :class => 'sub btn_a' %></td></tr>
+      <td><%= link_to 'Отмена', '/options/users', class: "sub btn_a btn_reset"%>
+        <%= f.button 'Сохранить', class: 'sub btn_a' %></td></tr>
 
   </table>
 </div>

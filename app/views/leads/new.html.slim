@@ -1,0 +1,82 @@
+.hl.hl_a.bd Новый лид
+= simple_form_for(@lead) do |f|
+  = render 'shared/error_messages', object: f.object
+  .box_wrap.box_wrap_1
+    table.tbl_fc.tbl_fc_1
+      tr
+        td.caption Информация о запросе:
+        td
+          .inp_w= f.text_area :info, class: 'txt alone',label: false
+    .panel-left
+      table.tbl_fc.tbl_fc_1
+        tr
+          td.caption Фио:
+          td
+            .inp_w= f.input :fio, label: false
+        tr
+          td.caption Телефон:
+          td
+            .inp_w= f.input :phone, label: false, class: :txt
+        tr
+          td.caption E-Mail:
+          td
+            .inp_w= f.input :email, label: false
+        tr
+          td.caption Метраж:
+          td
+            .inp_w= f.input :footage, label: false
+        tr
+          td.caption Адрес объекта:
+          td
+            .inp_w= f.input :address, label: false
+        tr
+          td.caption Приоритет:
+          td
+            .inp_w
+              = chosen_src 'priority_id', @priorities, @lead
+        tr
+          td.caption Ответственный:
+          td
+            .inp_w
+              = chosen_src :ic_user_id, User.all, @lead
+        tr
+          td.caption Город:
+          td
+            .inp_w
+              = chosen_src :city_id, City.order(:id), @lead
+
+        tr
+          td.caption
+          td
+            = submit_cancel leads_path
+    .panel-right
+      table.tbl_fc
+        tbody
+          tr
+            td.caption Дата создания:
+            td
+              .inp_w= f.text_field :start_date, class: "txt datepicker"
+          tr
+            td.caption Канал:
+            td
+              .select_custom.select
+                = chosen_src :channel_id, @channels, @lead
+          tr
+            td.caption Источник:
+            td
+              .select_custom.select
+                = chosen_src :source_id, LeadSource.all, @lead
+          tr
+            td.caption Статус:
+            td
+              .select_custom.select
+                = chosen_src :status_id, @statuses, @lead
+                tr
+                  td.caption Дата статуса:
+                  td
+                    .inp_w= f.text_field :status_date, class: "txt datepicker"
+          tr
+            td.caption Примечание:
+            td
+              .inp_w= f.text_area :first_comment, class: :txt, label: false
+    = f.hidden_field :user_id, value: current_user.id

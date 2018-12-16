@@ -113,6 +113,7 @@ Rails.application.routes.draw do
   resources :channels
   resources :statuses
   resources :wiki_cats
+  resources :cities
 
   resources :users
   resources :roles
