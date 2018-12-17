@@ -41,6 +41,7 @@
     <% end %>
     
     <tr><td class="caption">Ответственный:</td><td><div class="inp_w"><%= chosen_src :ic_user_id, User.all, @lead %></div></td></tr>
+    <tr><td class="caption">Город:</td><td><div class="inp_w"><%= chosen_src :city_id, City.order(:id), @lead %></div></td></tr>
 
     <tr><td class="last_td"></td><td class="last_td"><%= submit_cancel leads_page_url %></td></tr>
     </table>

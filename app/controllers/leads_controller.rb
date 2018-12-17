@@ -129,7 +129,7 @@ class LeadsController < ApplicationController
       return
     end
     def_params
-    @comm_height = 442
+    @comm_height = 486
     
     
   end
