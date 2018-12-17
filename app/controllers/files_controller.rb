@@ -24,7 +24,6 @@ class FilesController < ApplicationController
       dir = Rails.root.join('public', 'uploads',folder,subfolder)
 
       FileUtils.mkdir_p(dir) unless File.exists?(dir)
-      # p "name #{name}"
       id = append_file(name)
       open(dir+(id.to_s+File.extname(name)), 'wb') do |file|
        file.write(uploaded_io.read)
@@ -39,7 +38,7 @@ class FilesController < ApplicationController
     @file.owner_type = params[:owner_type].classify
     @file.user_id    = current_user.id
     @file.name       = filename
-    @file.secret     = current_user.admin?
+    @file.secret     = current_user.has_role?(:manager)
     @file.save
     @file.id
 

@@ -50,9 +50,8 @@
               .inp_w.prj_not_simple
                 label Визуализатор
                 = chosen_src :visualer_id, User.all, @project, {nil_value: 'Визуализатор...' }
-    - if is_manager?
-      .right
-        .sep_3
-        .comments_box
-          = render "shared/comments"
+    .right
+      .sep_3
+      .comments_box
+        = render "shared/comments"
     = render "page_1_vue"

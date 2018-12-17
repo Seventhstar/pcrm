@@ -2,7 +2,7 @@ script#comments_template type="text/html"
   =render "comments/comment.html.mustache"
 
 - @comments = @owner.comments.order('created_at asc')
-- if is_manager? && (@owner.class == Project)
+- if is_manager? && @owner.class == Project
   .box_msg
     #tabs_msg
       ul
@@ -10,7 +10,7 @@ script#comments_template type="text/html"
           a href="#tab-msg-1" 
             span.icon.icon_chat
             | Комментарии
-        li.right.last
+        li.right.last 
           a#tab_special_info href="#tab-msg-2" 
             span.icon.icon_important
             | Важные детали

@@ -33,8 +33,7 @@
             td.caption Дизайнер
             td
               .lbl =@project.executor_name
-    - if is_manager?
-      .box_wrap_1.panel-right
-        .sep_3
-        .comments_box
-          = render "shared/comments"
+    .box_wrap_1.panel-right
+      .sep_3
+      .comments_box
+        = render "shared/comments"

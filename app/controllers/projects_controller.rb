@@ -230,10 +230,16 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1
   # DELETE /projects/1.json
   def destroy
-    @project.destroy
-    respond_to do |format|
-      format.html { redirect_to project_page_url, notice: 'Проект успешно удален' }
-      format.json { head :no_content }
+    if current_user.has_role?(:manager)
+      @project.destroy 
+      respond_to do |format|
+        format.html { redirect_to project_page_url, notice: 'Проект успешно удален' }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to project_page_url, notice: 'Нет прав для удаления проекта' }
+      end
     end
   end
 
