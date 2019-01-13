@@ -43,7 +43,7 @@ module Pcrm
      # config.i18n.default_locale = :de
      config.tinymce.install = :compile
      config.i18n.enforce_available_locales = true
-     config.i18n.available_locales = %i(en ja zh ru)
+     config.i18n.available_locales = %i(en ru)
      config.i18n.default_locale = :ru
      #config.time_zone = 'Moskow'
      #config.active_record.default_timezone = :local

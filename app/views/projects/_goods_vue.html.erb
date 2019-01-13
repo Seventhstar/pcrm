@@ -1,7 +1,10 @@
-<div class="panel panel-default good_group" v-for="(item, key, index) in goods">
+<div v-for="(item, index) in goods">
+<template v-if="controls[index]!==undefined">
+<div class="panel panel-default good_group">
   <div class="panel-heading table-heading head month"> 
-    {{gtypes.filter(word => word.value === parseInt(key))[0].label}}  
-    <span class="sub btn_add right" @click="switchOpened(index)" v-show="!controls[index].opened">Добавить позицию</span></div>
+    {{gtypeName(item[0][0])}}
+    
+    <span class="sub btn_add right" @click="switchOpened(index)" v-show="closedTable(index)">Добавить позицию</span></div>
   
     <div class="grid_table_goods grid_table_head">
       <template class="goods_head">
@@ -16,7 +19,7 @@
     </div>
 
     <transition-group name="item">
-    <template v-for="(g, ind) in item">
+    <template v-for="(g, ind) in item[1]">
       <div class="grid_table_goods grid_table sw_color" :id="'item_'+g.id" :key="g.id">    
           <div>{{g.name}}</div>
           <div>{{g.provider_name}}</div>
@@ -26,73 +29,100 @@
           <div v-html="allAmount(g)"></div>
           <div class="edit_delete td_right " style="">
             <a class="icon basket td_right" data-modal="true" :href="goodsEditLink(g)"></a>
-            <span class="icon icon_del" @click="deleteGoods(key, index)"></span> </div>
+            <span class="icon icon_del" @click="deleteGoods(index, g)"></span> </div>
       </div>
     </template>
     </transition-group>
 
-    <div class="grid_table_goods grid_table_new_item editable new_row" :id="'new_item_'+key" v-show="controls[index].opened">
+    <div class="grid_table_goods grid_table_new_item  new_row" :id="'new_item_'+item[0][0]" v-show="controls[index].opened">
 
-    <input :value="key" type="hidden" :name="'project_good_'+key+'_[goodstype_id]'" :id="'project_good_'+key+'_goodstype_id'">
-    <input :value="key" type="hidden" :name="'project_good_'+key+'_[owner_id]'" :id="'project_good_'+key+'_owner_id'">
+    <input :value="item[0][0]" 
+            type="hidden" 
+           :name="'project_good_'+item[0][0]+'_[goodstype_id]'" 
+           :id="'project_good_'+item[0][0]+'_goodstype_id'">
+
+    <input  :value="item[0][0]" 
+             type="hidden" 
+            :name="'project_good_'+item[0][0]+'_[owner_id]'" 
+            :id="'project_good_'+item[0][0]+'_owner_id'">
+
     <div class="fw">     
       <input type="text" 
-            :name="'project_good_'+key+'_[name]'" 
-            :id="'project_good_'+key+'_name'"
+            :name="'project_good_'+item[0][0]+'_[name]'" 
+            :id="'project_good_'+item[0][0]+'_name'"
             v-model="fields[index].name"             
-            class="txt" 
-            autofocus 
-            @input="onChange(key, index)">
+            class="txt"  
+            @input="onChange(item[0][0], index)">
     </div>
+
     <div>
       <v-chosen name="provider" 
                 src="providers"
-                from_array="true"
-                :k="key" 
+                from_array="list"
+                :owner="'project_good_'+item[0][0]+'_'"
+                :k="item[0][0]" 
                 :index="index" 
                 placeholder="Выберите поставщика..."/>
     </div>
+
     <div class="caption3">
       <input type="text" 
              class="txt datepicker hasDatepicker"
              v-model="fields[index].date_place"
-            @change="input(key, index)">
+            @change="input(item[0][0], index)">
     </div>
+
     <div class="caption3">
       <input type="text" 
             v-model="fields[index].description"  
             class="txt fullwidth"
-            @input="onChange(key, index)">
+            @input="onChange(item[0][0], index)">
     </div>
+
     <div>
       <v-chosen name="currency" 
                 src="currencies" 
-                :owner="'project_good_'+key+'_'" 
-                :k="key" 
+                :owner="'project_good_'+item[0][0]+'_'" 
+                :k="item[0][0]" 
                 :index="index" 
                 placeholder="Валюта..."/>
     </div>
     <div>
       <input type="text" 
             v-model="fields[index].gsum" 
-            @input="onChange(key, index)"
-            @keyup.enter="saveGoods(key,index)"
+            @input="onChange(item[0][0], index)"
+            @keyup.enter="saveGoods(item[0][0], index)"
              class="txt right" style="width: 100%;">
     </div>
     <div>
       <span class="sub btn btn_save" 
-            :pe_id="key" action='/project_goods/' 
-            :id="'btn_save_'+key+'_'"
-            :prm="'project_good_'+key+'_'"
-            @click="saveGoods(key,index)"
+            :pe_id="item[0][0]" 
+            action='/project_goods/' 
+            :id="'btn_save_'+item[0][0]+'_'"
+            :prm="'project_good_'+item[0][0]+'_'"
+            @click="saveGoods(item[0][0],index)"
             :disabled="!controls[index].valid">Сохр.</span></div>
     </div>
 
     <div class="table_2col table_footer">
-      <div>Итого предложено: <span>{{calculateAmount(key, index)}}</span></div>
-      <div>Итого заказано: <span>{{formatTotal(orderAmount[key])}}</span></div>      
+      <div>Итого предложено: <span>{{calculateAmount(index)}}</span></div>
+      <div>Итого заказано: <span>{{formatTotal(orderAmount[index])}}</span></div>      
     </div>
+    </template>
 </div>
+</div>
+
+<div class="total-footer">Общий итог:<div id="grand_total">
+<ul class="right">
+  <li>
+    <b>Итого предложено: </b> <span>{{calculateTotal()}}</span></li>
+  <li>
+    <b>Итого заказано: </b> <span>{{formatTotal(grandOrderTotal)}}</span></li>
+  <li>
+    <b>Итого закрыто: </b><span>{{formatTotal(grandClosedTotal)}}</span></li>
+</ul>
+</div>
+
 <transition name="appear">
   <confirmation-modal v-if='confirmModal'></confirmation-modal>
 </transition>

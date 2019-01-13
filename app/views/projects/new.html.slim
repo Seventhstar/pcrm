@@ -2,6 +2,7 @@
 
 - if is_manager?
   = simple_form_for(@project) do |f| 
+    = render 'shared/error_messages', object: f.object
     .box_wrap.box_wrap_1.prj_footage
       .fullwidth.prj_number
         .inp_w =f.input :number, label: 'Номер'
@@ -81,6 +82,10 @@
         .inp_w
           label Рабоч. дней без уч. праздников
           = number_field_tag :project_days, 0, {class: 'form-control'}
+        .inp_w
+        .inp_w
+          label Город 
+          v-chosen name="city" placeholder='Город...' src='cities'
 
       .inp_w
         label Примечание

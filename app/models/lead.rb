@@ -5,6 +5,8 @@ class Lead < ActiveRecord::Base
   belongs_to :channel
   belongs_to :ic_user, foreign_key: :ic_user_id, class_name: 'User'
   belongs_to :source, foreign_key: :source_id, class_name: 'LeadSource', optional: true
+  belongs_to :city
+  
   has_many :attachments, as: :owner
 
   scope :by_priority, ->(priority) {where(priority_id: priority) if priority.present? && priority&.to_i>0}

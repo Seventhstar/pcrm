@@ -34,6 +34,10 @@
   }
 }
 
+.v-select .dropdown-toggle{
+max-height: 36px;
+}
+
 /*.slide-enter-active, .slide-leave-active {
     transition: all 1s cubic-bezier(.65, .05, .36, 1) !important;
 }

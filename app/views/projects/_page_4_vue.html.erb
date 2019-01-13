@@ -3,27 +3,33 @@
 
   let app = new Vue({
     el: '.vue_app',
-    data: <%= fill_vue_data(@project,
-     {
+    data: <%= fill_vue_data(@project, {
       f_gt: true,
+
       confirmModal: false,
-      currentKey: 0,
       currentIndex: 0,
       currentGoods: '',
-      currentGType: 0,
+      
       inputs: ['name', 'date_place', 'description', 'gsum'],
       selects: ['provider', 'currency'],
-      controls: [],
+      
       fields: [],
+      controls: [],
+      
       orderAmount: {},
       offerAmount: {},
-      offerA: [],
-      grandOfferTotal: {},
-      grandOrderTotal: {},
+      closedAmount: {},
+      
+      grandOfferTotal: [],
+      grandOrderTotal: [],
+      grandClosedTotal: [],
+      
       texts: "gtype new_gtype id",
-      lists: "gtypes new_gtypes currencies:Currency.all",
-      project_g_types: [],
+      lists: "gtypes new_gtypes currencies",
+
       providers: @providers,
+      project_g_types: [],
+
       goods: @goods
      }) %>,
 
@@ -36,41 +42,63 @@
     },
 
     created(){
-
-      this.gtypes.forEach( (gt) => {
-        let h = {providers: null, gsum: 0}
-        this.inputs.forEach( (c) => h[c] = '' );
-        h.date_place = format_date();
-        
-        this.fields.push(h);
-        this.controls.push({opened: false, valid: false});
-        // this.someObject = Object.assign({}, this.someObject, { a: 1, b: 2 })
-        // this.$set(this.fields, h)
-
-        }
-      )
-      // console.log(this.$refs); 
+      this.gtypes.forEach( (gt, index) => {
+        this.calculateAmount(index)
+        this.addControlAndField()
+      })
+      this.calculateTotal()
     },
 
     mounted(){
       this.$root.$on('onInput', this.onInput);
       this.$root.$on('modalYes', this.modalYes);
-      document.body.addEventListener('keyup', e => {
-        if (e.keyCode === 45) this.addRow();
-      });
+      document.body.addEventListener('keyup', e => {if (e.keyCode === 45) this.addRow(); });
     },
-    
-    methods:{
+
+    methods: {
+
+      gtypeName(gt_id){
+        gt = this.gtypes.filter(word => word.value === parseInt(gt_id))
+        return gt[0].label
+      },
+
+      addControlAndField(){
+        let h = {providers: null, gsum: 0}
+        this.inputs.forEach( c => h[c] = '' );
+        h.date_place = format_date();
+        this.fields.push(h);
+        this.controls.push({opened: false, valid: false});
+      },
+
+      addGoodsType(){
+        if (!v_nil(this.new_gtype)){
+          let new_gt = this.new_gtype.value
+          $.ajax({
+            type: "GET",
+            url: "/goodstypes/"+new_gt+"/providers.json",
+            dataType: "json",
+            encode: true
+          }).done(function(data) {
+            NProgress.done();
+            let new_gt = app.new_gtype.value
+            app.providers.push({gt: new_gt, list: data})
+            app.goods.push([[app.new_gtype.value, app.new_gtype.label], new Array()])
+            app.gtypes.push(app.new_gtype)
+            app.new_gtypes.splice(app.new_gtypes.indexOf(app.new_gtype), 1)          
+            app.new_gtype = null 
+            app.addControlAndField()
+          });
+        }
+      },
+
       saveGoods(key, index, g){
         if (!this.controls[index].valid) return;
+        this.currentIndex = index
         let pref = 'project_good_'+key+'_';        
         let values = {currency_id: app.currency.value, project_id: this.id, goodstype_id: key }
 
-        this.inputs.forEach( (c) => values[c] = this.fields[index][c] );
-        this.selects.forEach( (c) => values[c+'_id'] = app[c].value );
-      
-        // values = $('[name^='+pref+']').serialize()+'&owner_id='+this.id 
-        // console.log(h);
+        this.inputs.forEach(  c => values[c] = this.fields[index][c] );
+        this.selects.forEach( c => values[c+'_id'] = app[c].value );
 
         $.ajax({
           type: "POST",
@@ -82,25 +110,25 @@
           NProgress.done();
           app.switchOpened(index);
           values['id'] = data.id;
-          app.selects.forEach( (c) => {values[c+'_name'] = app[c].label} );
-          app.goods[key].push(values);
-          app.inputs.forEach( (c) => { app.fields[index][c] = ''} );
+          app.goods[index][1].push(values);
+          app.selects.forEach( c => values[c+'_name'] = app[c].label );
+          app.inputs.forEach( c => app.fields[index][c] = '' );
           app.fields[index].date_place = format_date();
-          app.calculateAmount(key, index);
+          app.calculateAmount(index);
         });
 
       },
 
-      deleteGoods(key, index){
-        this.currentKey = key;
+      deleteGoods(index, goods){
+        this.currentGoods = goods;
         this.currentIndex = index;
         this.confirmModal = true;
       },
 
       modalYes(){
-        let index = this.goods[this.currentKey].indexOf(this.currentGoods);
+        let index = this.goods[this.currentIndex][1].indexOf(this.currentGoods);
         if (index<0) return;
-        this.goods[this.currentKey].splice(index, 1);
+        this.goods[this.currentIndex][1].splice(index, 1);
         delete_item('/project_goods/'+this.currentGoods.id);
       },
 
@@ -108,8 +136,8 @@
         let valid = true;
         let pref = 'project_good_'+key+'_'; 
 
-        this.inputs.forEach( (c) => {if (v_nil(this.fields[index][c])) {valid = false;} });
-        this.selects.forEach( (c) => {if (v_nil(app[c])) {valid = false;}});
+        this.inputs.forEach( c => {if (v_nil(this.fields[index][c])) {valid = false;} });
+        this.selects.forEach( c => {if (v_nil(app[c])) {valid = false;}});
 
         this.controls[index].valid = valid;  
       },
@@ -117,20 +145,20 @@
       onInput(e){
         if (e === undefined || e.index === undefined) return;
         this.onChange(e.key, e.index);
-
       },
 
       addRow(){
-        // if (this.currentKey === -1) this.currentKey = 0;
-        // console.log(this.currentKey);
         this.switchOpened(this.currentIndex);
-        // this.$refs.controls[this.currentIndex].name.$el.focus()
-        // $('#project_good_'+key+'_name').setFocus();
       },
 
       switchOpened(index){
+        this.currentIndex = index
         this.controls[index].opened = !this.controls[index].opened
-        // this.$refs.fields[index].name.$el.focus();
+      },
+
+      closedTable(index){
+        if (this.controls[index] === undefined) {this.controls.push({opened: true, valid: false})}
+        return !this.controls[index].opened;
       },
 
       format_date(date){
@@ -143,48 +171,58 @@
 
       formatTotal(amountArray){
         let string = ""
-        this.currencies.forEach( (c) =>{
-            amount = amountArray[c.value];
-            if (amount > 0){string = string + amount + " " + c.label + ", "}
+        if (amountArray === undefined) return ""
+        this.currencies.forEach( c => {
+          amount = amountArray[c.value];
+          if (amount > 0) {string = string + to_sum(amount) + " " + c.label + ", "}
         })
         return string.slice(0, -2)
       },
 
       calculateTotal(){
-        let offer = 0 
-        this.currencies.forEach( (c) => {  
+        this.currencies.forEach( c => {  
+          this.grandOrderTotal[c.value] = 0; 
+          this.grandOfferTotal[c.value] = 0; 
+          this.grandClosedTotal[c.value] = 0;
+
           for (var gt in this.offerAmount) {      
-            g = this.offerAmount[gt]
-            offer = offer + g[c.value]
+            this.grandOfferTotal[c.value] = this.grandOfferTotal[c.value] + this.offerAmount[gt][c.value]
+            this.grandOrderTotal[c.value] = this.grandOrderTotal[c.value] + this.orderAmount[gt][c.value]
+            this.grandClosedTotal[c.value] = this.grandClosedTotal[c.value] + this.closedAmount[gt][c.value]
           }
         })
-        return offer
+        return this.formatTotal(this.grandOfferTotal);
       },
 
-      calculateAmount(gt, index){
+      calculateAmount(gt){
         this.offerAmount[gt] = {}
         this.orderAmount[gt] = {}
+        this.closedAmount[gt] = {}
 
-        this.currencies.forEach( (c) => {
+        this.currencies.forEach( c => {
           this.offerAmount[gt][c.value] = 0 
           this.orderAmount[gt][c.value] = 0
+          this.closedAmount[gt][c.value] = 0
         })
 
-        for (var gi in this.goods[gt]){
-            g = this.goods[gt][gi]
+        for (var gi in this.goods[gt][1]){
+            g = this.goods[gt][1][gi]
             c = g.currency_id
             this.offerAmount[gt][c] = this.offerAmount[gt][c] + parseInt(g.gsum)
             this.orderAmount[gt][c] = this.orderAmount[gt][c] + g.sum_supply
+            if (g.fixed)
+              this.closedAmount[gt][c] = this.closedAmount[gt][c] + g.sum_supply 
         }
-        this.offerA[index] = this.formatTotal(this.offerAmount[gt])
+
+        if (this.offerAmount[gt] === undefined) return ""
         return this.formatTotal(this.offerAmount[gt])
       },
 
       allAmount(g){
         offer = g.gsum > 0 ? g.gsum : ''
         hasOrder = g.order && g.sum_supply != g.gsum
-        offer = hasOrder ? "<span class='striked'>" + offer + '</span>' : offer
-        order = hasOrder ? "<br>" + g.sum_supply : ''
+        offer = hasOrder ? "<span class='striked'>" + to_sum(offer) + '</span>' : to_sum(offer)
+        order = hasOrder ? "<br>" + to_sum(g.sum_supply) : ''
         return offer + order
       },
 
@@ -194,32 +232,9 @@
 
       goodsDeleteLink(g){
         return "/project_goods/" + g.id 
-      },
-
-      addGoodsType(){
-        if (!v_nil(this.new_gtype)){
-          let new_gt = this.new_gtype.value
-          this.goods[new_gt] = []
-          this.gtypes.push(this.new_gtype)
-          this.new_gtypes.splice(this.new_gtypes.indexOf(this.new_gtype), 1)          
-          this.new_gtype = null 
-
-          $.ajax({
-            type: "GET",
-            url: "/goodstypes/"+new_gt+"/providers.json",
-            dataType: "json",
-            encode: true
-          }).done(function(data) {
-            NProgress.done();
-            console.log(data);
-            // app.providers[new_gt] = []
-            // app.providers[new_gt].$set(new_gt, data)
-            // app.$set(app.providers, , );
-            
-            // app.$set('providers[' + new_gt + ']', []);
-          });
-        }
       }
+
+      
     }
     })
 

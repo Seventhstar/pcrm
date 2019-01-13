@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181216224325) do
+ActiveRecord::Schema.define(version: 20190106114322) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -422,6 +422,8 @@ ActiveRecord::Schema.define(version: 20181216224325) do
     t.boolean "payd_full"
     t.integer "progress"
     t.integer "sum_discount", default: 0
+    t.bigint "city_id", default: 1
+    t.index ["city_id"], name: "index_projects_on_city_id"
   end
 
   create_table "provider_budgets", id: :serial, force: :cascade do |t|
@@ -666,6 +668,7 @@ ActiveRecord::Schema.define(version: 20181216224325) do
   add_foreign_key "leads", "priorities"
   add_foreign_key "project_goods", "goodstypes"
   add_foreign_key "project_goods", "projects"
+  add_foreign_key "projects", "cities"
   add_foreign_key "room_works", "rooms"
   add_foreign_key "room_works", "works"
   add_foreign_key "users", "cities"

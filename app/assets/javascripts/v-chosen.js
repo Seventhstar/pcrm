@@ -18,6 +18,12 @@ Vue.component('v-chosen', {
           :clearable="false" 
           :placeholder="placeholder"
           @input="onUpdate($event)">
+          <template slot="option" slot-scope="option">
+            <span v-if="option.mark" class='info'>{{ option.label }}!</span>
+            <template v-else>
+              {{ option.label }}
+            </template>
+        </template>
         </v-select>
         <input type="hidden" :name="localName" :value="localValue" 
                v-if="model!=undefined" :id="idName">
@@ -26,8 +32,8 @@ Vue.component('v-chosen', {
     created() {
       let model = '';
       if (this.owner!==undefined) { 
-        model = this.owner; } 
-      else { 
+        model = this.owner; 
+      } else {         
         model = this.$parent.model; 
       }
 
@@ -36,7 +42,8 @@ Vue.component('v-chosen', {
 
       if (this.src !== undefined) {
           src = this.$parent[this.src];
-          this.options = (this.from_array === undefined) ? src : src[this.k];
+          //console.log("src", src, src[this.index], "this.from_array", this.from_array );
+          this.options = (this.from_array === undefined || src[this.index] === undefined) ? src : src[this.index][this.from_array];
       } else {
         this.options = this.$parent[this.name + "s"];
       }

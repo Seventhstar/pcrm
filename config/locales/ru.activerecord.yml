@@ -26,6 +26,7 @@ ru:
         gsum: Стоимость
         provider: Поставщик
       project:
+        city: Город
         executor: Исполнитель
         project_type: Вид проекта
     successful:
@@ -33,7 +34,6 @@ ru:
         created: "%{model} was successfully created."
         updated: "%{model} was successfully updated."
     errors:
-      format: '%{message}: %{attribute}'
       not_saved:
         one: "%{resource}: сохранение не удалось из-за %{count} ошибки"
         few: "%{resource}: сохранение не удалось из-за %{count} ошибок"

@@ -11,6 +11,7 @@
       <th></th>
       <th>Пользователь</th>
       <th>День рождения</th>
+      <th>Город</th>
       <th width="60px" class="center">Активен</th>
       <th width="60px" class="center">Админ</th>  
       <th width="60px" class="center">Уволен</th>  
@@ -28,6 +29,7 @@
   <td width="60"><%= avatar_for(user) %></td>
   <td>  <%= link_to user.name, user %> </br> <%= user.email %> </td>
   <td class ="birthday">  <%= date_of_birth user %> </td>
+  <td> <%= user.city_name %></td>
   <td class="state">
     <span class="check_img sw_check <%= user.activated ? "checked" :"" %>" item_id="<%=user.id%>" chk="activated"></span></td>
   <td class="state">

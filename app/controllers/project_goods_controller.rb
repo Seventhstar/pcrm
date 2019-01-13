@@ -62,6 +62,8 @@ class ProjectGoodsController < ApplicationController
 
   def edit
     @title = 'Редактирование заказа'
+    @providers = Goodstype.find(@prj_good.goodstype_id).providers
+    puts "@prj_good", @prj_good.to_json, @providers.pluck(:id)
     @cur_id = params[:owner_id]
     respond_modal_with @prj_good, location: root_path
   end
@@ -92,8 +94,9 @@ class ProjectGoodsController < ApplicationController
     end
 
     def pg_params
-      prm = params.permit!.to_h.first[0] 
-      params.require(:gt).permit( :goodstype_id, :provider_id, :date_supply, :date_place, 
+      first_param = params.permit!.to_h.first[0] 
+      req = first_param == 'upd_modal' ? :upd_modal : :gt
+      params.require(req).permit( :goodstype_id, :provider_id, :date_supply, :date_place, 
                                   :date_offer, :currency_id, :gsum, :order, :name, :description, 
                                   :fixed, :sum_supply, :project_id, :owner_id)
     end

@@ -24,18 +24,21 @@ class ProvidersController < ApplicationController
     @only_actual = !params[:only_actual] || params[:only_actual] == "true"
 
     all_ids = Provider.order(:name).ids
+    # sp = all_ids
     sp,bp,gtp,ps,s_ids = all_ids,all_ids,all_ids,all_ids,all_ids
 
     if params[:search].present?
       srch = "%#{params[:search]}%"
-      s_ids = Provider.where(%q{LOWER(name) like LOWER(?) 
-                            or LOWER(address) like LOWER(?)'},
+      s_ids = Provider.where('LOWER(name) like LOWER(?) 
+                              or LOWER(address) like LOWER(?)',
                             srch,
                             srch).ids
+      # puts "s_ids #{s_ids}"
+      # dqhgg
     end
 
     if params[:style] && params[:style]!="" && params[:style]!='0'
-        sp = Style.find(params[:style]).providers.ids
+         sp = Style.find(params[:style]).providers.ids
     end
 
     if params[:budget] && params[:budget]!="" && params[:budget]!='0'
@@ -52,6 +55,7 @@ class ProvidersController < ApplicationController
     end
 
     @ids = sp & bp & gtp & ps & s_ids
+    # @ids = s_ids & sp
 
     @providers = Provider.where(id: @ids).order(:name) # find(ids, :order => :name)
     store_providers_path
@@ -63,7 +67,7 @@ class ProvidersController < ApplicationController
     @title = 'Просмотр поставщика'
     @owner = @provider
     # @comments = @provider.comments.order('created_at asc')
-    @owner = @provider
+    # @owner = @provider
     @comm_height = 313
     respond_modal_with @lead, location: root_path
   end

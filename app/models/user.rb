@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
   has_many :options, class_name: 'UserOption'
   has_many :develops, -> { open_tasks }, foreign_key: :ic_user_id
 
+  belongs_to :city
+
   scope :actual, -> {where(activated: true)}
   scope :works, -> {where(fired: false)}
 
@@ -120,6 +122,9 @@ class User < ActiveRecord::Base
     self.id == obj.user_id
   end
 
+  def city_name
+    city.try(:name)
+  end
 
   private
     # Converts email to all lower-case.

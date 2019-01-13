@@ -30,7 +30,7 @@ class ProjectsController < ApplicationController
       src = "%#{params[:search]}%".mb_chars.downcase
       cl_ids = Client.where('LOWER(name) like ? or LOWER(email) like ? or LOWER(phone) like ?',src, src, src).pluck(:id)
       cl_prj = Project.where(client_id: cl_ids) 
-      search_prj =  @projects.where('LOWER(address) like ? or number = ?',src, params[:search].try('to_i')).pluck(:id)
+      search_prj =  @projects.where('LOWER(address) like ? or number = ?', src, params[:search].try('to_i')).pluck(:id)
       @projects = @projects.where(id: cl_prj + search_prj)
     end
 
@@ -79,12 +79,14 @@ class ProjectsController < ApplicationController
   def def_params
     @owner = @project
     @holidays =  Holiday.pluck(:day).collect{|d| d.try('strftime',"%Y-%m-%d")}
-    @new_gtypes = Goodstype.where.not(id: [@pgt]).order(:name)
-    @gtypes = Goodstype.where(id: [@pgt]).order(:name)
+    @new_gtypes = Goodstype.where.not(id: [@pgt_ids]).order(:name)
+    @gtypes = Goodstype.where(id: [@pgt_ids]).order(:name)
     @clients = Client.order(:name)
+    @cities   = City.order(:id)
     @project_types = ProjectType.order(:name)
     @executors = User.order(:name)
     @visualers = User.order(:name)
+    @currencies = Currency.order('id')
   end
 
   # GET /projects/new
@@ -94,6 +96,7 @@ class ProjectsController < ApplicationController
     
     get_debt
     def_params
+    @city = current_user.city
   end
 
   # GET /projects/1/edit
@@ -119,32 +122,43 @@ class ProjectsController < ApplicationController
     # @goods_sum = ProjectGood.where(project_id: @project.id)
     @goods = ProjectGood.where(project_id: @project.id)
             .left_joins(:provider)
+            .left_joins(:goodstype)
             .left_joins(:currency)
-            .select("project_goods.*, providers.name as provider_name, currencies.name as currency_name")
+            .select("project_goods.*, 
+                      providers.name as provider_name, 
+                      currencies.name as currency_name,
+                      goodstypes.name as goodstype_name")
+            .order('goodstypes.name', :created_at)
             .except(:created_at, :updated_at)
-            .group_by {|item| item[:goodstype_id]}
-          
+            .group_by {|i| [i.goodstype_id, i.goodstype_name] }
+            .map{ |g| g }
+            
+    used_pgt = @goods.map{|g| g[0][0]}
 
-
-    pgt = Goodstype.where(default: true).pluck(:id)
-    types_from_project = @project.goods.pluck(:goodstype_id).uniq
-    pgt = pgt.concat(types_from_project)
-    @pgt = pgt
-    # @prj_good_types = Goodstype.all 
-    # puts "goods", @goods
-    pgt.each do |_pgt|
-       @goods[_pgt] = [] if @goods[_pgt].nil?
-    end
-
+    @pgt = Goodstype.where(default: true).pluck(:id, :name)
+    @pgt_ids = @pgt.map{|p| p[0]}
+    
     def_params
 
-    @providers = {}
-    @gtypes.each do |gt|
-      @providers = @providers.merge( gt.id => gt.providers.map{|p| {value: p.id, label: p.name}})
+    @gtypes = @gtypes.to_a
+    gtypes = @gtypes.clone
+
+    gtypes.each do |gt|
+      ind = used_pgt.index(gt.id)
+      if ind.nil?
+        @goods << [[gt.id, gt.name],[]]
+      else
+        @gtypes.insert( ind, @gtypes.delete_at(@gtypes.index(gt)) )
+      end
     end
 
-    # puts "providers", @providers[1]
-     # where(id: [pgt]).order(:name)
+    @providers = []
+    @gtypes.each do |gt|
+      @providers << { gt: gt, list: gt.providers.where('p_status_id > 2')
+                                      .map{|p| {value: p.id, label: p.name, mark: p.p_status_id == 5}} }
+    end
+
+    # where(id: [pgt]).order(:name)
 
     # case @tab
     # when 4
@@ -296,6 +310,7 @@ class ProjectsController < ApplicationController
         :designer_price, :designer_price_2, :visualer_price, :days, 
         :designer_sum, :visualer_sum, :sum_total_executor, :sum_rest,
         :debt, :interest, :payd_q, :payd_full, :first_comment, :progress, :sum_discount, :discount,
+        :city_id,
         client_attributes: [:name, :address, :phone, :email], 
         contacts_attributes: [:id, :contact_kind_id, :contact_kind, :val, :who, :_destroy],
         elongations_attributes: [:new_date, :elongation_type_id, :_destroy],

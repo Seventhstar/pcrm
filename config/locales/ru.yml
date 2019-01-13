@@ -13,6 +13,7 @@ ru:
   Status: Статус
   status_id: Статус
   client_id: Клиент
+  city_id: Город
   style_id: Стиль
   p_status_id: Статус
   dev_status_id: Статус
@@ -91,6 +92,7 @@ ru:
   description: Описание
   DevProject: Проект разработки
   Style: Стиль
+  City: Город
   Budget: Бюджет
   Goodstype: Вид товара
   Priority: Приоритет

@@ -156,7 +156,6 @@ totals_by_group = (g) ->
     # totals_by_group($(this))
   #   sum_offer += intFromSum($('#total_offer_' + gpr).attr('sum_offer'))
   #   sum_supply += intFromSum($('#total_supply_' + gpr).attr('sum_supply'))
-  $('#grand_offer').text grand_sum_offer
   # $('#grand_supply').text sum_supply
 
 
@@ -167,14 +166,6 @@ $(document).ready ->
     itm = $(this).attr('item_id')
     $('#edit_pgt_item'+itm).show()
     $('#pgt_item'+itm).hide()
-
-  # $(".container").on 'click','span.btn_add', ->
-  #   disable_input_row()
-  #   id = $(this).attr('itm')
-  #   $('#new_item_'+id).show()
-  #   $('#table_'+id+' .hidden').removeClass('hidden')
-  #   $(this).hide()
-  #   $('#table_' + id + ' .new_row input')[1].focus()
 
   $(".container").on 'change','#project_pstatus_id', ->
     $('#project_progress').val(100)

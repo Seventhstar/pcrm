@@ -5,7 +5,7 @@
     el: '.prj_footage',
     data: <%= fill_vue_data(@project,
      {
-      model: 'project',
+      model: "project",
       formValid: false,
       focus: '',
       discount: 0,
@@ -13,27 +13,31 @@
       m_sum_total: 0,
       show_2: @project.footage_2>0,
       show_fact: true,
-      noteValid: 'tooltip from Vue.js',
+      noteValid: "tooltip from Vue.js",
       complexProjectType: false,
-      
-      required: ['project_type', 'client', 'executor', 'address'],
-      fieldsTranslated: ['тип проекта', 'клиент', 'дизайнер', 'адрес'],
-
       formFields: "footage price",
-      booleans: 'isNewProject',
-      lists: "clients executors visualers project_types+simple",
-      texts: "address comment\
+      
+      required: ['project_type', 'client', 'executor', 'address', 'city'],
+      fieldsTranslated: ['тип проекта', 'клиент', 'дизайнер', 'адрес', 'город'],
+
+      lists: "clients cities executors visualers project_types+simple",
+      list_values: "city",
+      texts: "address comment \
               footage price sum sum_total project_type\
               footage_2 price_2 sum_2\
               footage_real price_real sum_real sum_total_real \
               footage_2_real price_2_real sum_2_real\
               designer_price designer_price_2 designer_sum\
               visualer_price visualer_sum sum_total_executor\
-              sum_discount sum_rest"
+              sum_discount sum_rest",
+
+      booleans: 'isNewProject'
     }) %>,
 
     created() {
-      if (!this.isNewProject){
+      if (!this.isNewProject && ptype.project_type !==undefined 
+                             && ptype.project_type.value!== undefined ){
+        console.log("this.project_types", this.project_types, ptype.project_type.value)
         currentPType = this.project_types.find(e => e.value == ptype.project_type.value)
         this.complexProjectType = !currentPType.simple
       }

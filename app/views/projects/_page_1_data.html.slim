@@ -50,6 +50,10 @@
               .inp_w.prj_not_simple
                 label Визуализатор
                 = chosen_src :visualer_id, User.all, @project, {nil_value: 'Визуализатор...' }
+            td
+              .inp_w.prj_not_simple
+                label Город
+                v-chosen name="city" placeholder='Город...' src='cities'
     .right
       .sep_3
       .comments_box

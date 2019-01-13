@@ -8,7 +8,7 @@
 
   <tr><td class="caption">Поставщик:</td>
   <td><div class="inp_w">
-  <%= chosen_src "provider_id", Goodstype.find(@prj_good.goodstype_id).providers, @prj_good.provider_id,
+  <%= chosen_src "provider_id", @providers, @prj_good.provider_id,
    {nil_value: 'Выберите поставщика...', add_name: iname} %></div></td></tr>
   <tr><td class="caption">Дата предложения:</td>
   <td><div class="inp_w">
@@ -23,7 +23,7 @@
       </tr>
 
   <td class="caption">Валюта:</td>
-  <td><div class="inp_w"><%= chosen_src "currency_id", currency_src,@prj_good.currency_id,{nil_value: '',add_name: iname, add_class: 'currency_src'} %></div></td></tr>
+  <td><div class="inp_w"><%= chosen_src "currency_id", currency_src, @prj_good.currency_id,{nil_value: '',add_name: iname, add_class: 'currency_src'} %></div></td></tr>
   <tr style="height: 20px;">
     <td>  </td>
   </tr>

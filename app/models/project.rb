@@ -7,6 +7,7 @@ class Project < ActiveRecord::Base
   belongs_to :project_type
   belongs_to :pstatus, class_name: 'ProjectStatus', foreign_key: :pstatus_id
   belongs_to :style, optional: true
+  belongs_to :city
 
   has_many :attachments, as: :owner
   has_many :receipts

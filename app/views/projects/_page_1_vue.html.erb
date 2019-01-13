@@ -6,14 +6,20 @@
     data: <%= fill_vue_data(@project,
      {
       model: 'project',
+
       complexProjectType: false,
-      list_values: 'project_type',
-      lists: "project_types+simple"      
+      list_values: 'project_type city',
+      lists: "project_types+simple cities"      
     }) %>,
 
     watch: {
       project_type(){
-        this.complexProjectType = this.project_type === undefined ? true : !this.project_type.simple;
+        console.log("this.project_type", this.project_type)
+        if (this.project_type === undefined){
+          this.complexProjectType = false
+        } else {
+          this.complexProjectType = !this.project_type.simple;
+        }
       }
     }
 

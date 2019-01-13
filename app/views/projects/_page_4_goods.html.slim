@@ -11,11 +11,11 @@
         = link_to image_tag('pdf.png'), project_path(@project,format: :pdf), target: :_blank
   .sep_15
   #pgoods
-      = render 'goods_vue'
+    = render 'goods_vue'
         
-  .total-footer
-    | Общий итог:
-    #grand_total
-      = render 'project_goods/grand_total', project_id: @project.id
+  / .total-footer
+  /   | Общий итог:
+  /   #grand_total
+  /     = render 'project_goods/grand_total', project_id: @project.id
 
 = render 'page_4_vue'

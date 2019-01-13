@@ -48,26 +48,30 @@ $.fn.capitalize = function () {
 };
 
 function updateOptionRow(name, json, id){
-  f = searchByKey(app[name], id)
-  for (var i in json) {
-    app[name][f.h][f.i][i] = json[i] 
+  found = searchByKey(app[name], id)
+  if (typeof(found) === "string") {
+    show_ajax_message("Ошибка обновления строки заказа", "error")
+  } else {
+    for (var field in json) {
+      app[name][found.gt][1][found.goods][field] = json[field] 
+    }
   }
 }
 
 function searchByKey(obj, key) {
-    for (var h in obj) {
-      for (var i in obj[h]) {
-        if (obj[h][i].id == key) {
-             return {h: h,i: i};
-        }
+  for (var gt in obj) {
+    for (var goods in obj[gt][1]) {
+      if (obj[gt][1][goods].id === key) {
+        return {gt: gt, goods: goods}; 
       }
     }
-    return "Not found";
+  }
+  return "Not found";
 }
 
 function intFromSum(sum){
   if (sum === undefined) return 0;
-  var s = sum.replace(/ /g,'')
+  var s = sum.replace(/ /g, '')
   var i = parseInt(s)
   if (isNaN(i)) return 0;
   return i;
@@ -75,8 +79,8 @@ function intFromSum(sum){
 
 function showNotifications(){ 
   $nt = $(".alert"); 
-  setTimeout("$nt.addClass('in')",800);
-  setTimeout("$nt.removeClass('in').addClass('out')",7000);
+  setTimeout("$nt.addClass('in')", 800);
+  setTimeout("$nt.removeClass('in').addClass('out')", 7000);
 }
 
 function checkTime(i){
