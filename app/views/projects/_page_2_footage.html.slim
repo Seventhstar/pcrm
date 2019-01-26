@@ -7,7 +7,9 @@
         = render 'footage_sum', real: false, footage_2_nil: footage_2_nil, title: 'Заявленная площадь и стоимость'
         transition name="slide-fade"
           section v-show="show_fact"
+            .sep_3
             = render 'footage_sum', real: true, footage_2_nil: footage_2_nil, title: 'Фактическая площадь и стоимость' 
+        .sep_3
         = render 'executor'
             
           
@@ -32,7 +34,7 @@
                 .lbl.float_mask =@project.footage
             td
               .inp_w
-                label Метраж 2
+                label + Метраж 2
                 .lbl.float_mask =@project.footage_2
             td    
             td
@@ -49,7 +51,7 @@
                 .lbl.float_mask =@project.footage_real
             td
               .inp_w
-                label Метраж 2
+                label + Метраж 2
                 .lbl.float_mask =@project.footage_2_real
             td
             td

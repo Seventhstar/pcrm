@@ -3,7 +3,9 @@
 
 .inp_w
   m-number name="footage#{add}" label="Метраж#{order ? ' 2' : ''}" :disabled="#{real ? 'false' : 'fact_filled'}"
+.sign.multiply
 .inp_w
   m-number name="price#{add}" label="Цена за м2" :disabled="#{real ? 'false' : 'fact_filled'}"
+.sign.equal
 .inp_w
   m-number name="sum#{add}" label="Сумма" :disabled="#{real ? 'false' : 'fact_filled'}"

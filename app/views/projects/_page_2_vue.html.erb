@@ -8,12 +8,11 @@
       model: "project",
       formValid: false,
       focus: '',
-      discount: 0,
       toggled: false,
       m_sum_total: 0,
       show_2: @project.footage_2>0,
       show_fact: @project.footage_real>0,
-      fact_filled: false,
+      fact_filled: @project.footage_real>0,
       noteValid: "tooltip from Vue.js",
       complexProjectType: false,
       formFields: "footage price",
@@ -36,7 +35,7 @@
     },'page2') %>,
 
     created() {
-      console.log('created')
+      // console.log('created')
       if (!this.isNewProject && ptype.project_type !==undefined 
                              && ptype.project_type.value!== undefined ){
         // console.log("this.project_types", this.project_types, ptype.project_type.value)
@@ -44,13 +43,17 @@
         this.complexProjectType = !currentPType.simple
       }
 
-      if (this.complexProjectType)
-        this.m_sum_total = parseInt(this["sum"]) + parseInt(this["sum_2"])
+      if (this.complexProjectType){
+        if (this.sum_total_real > 0) 
+          this.m_sum_total = this.sum_total_real
+        else
+          this.m_sum_total = parseInt(this["sum"]) + parseInt(this["sum_2"])
+      }
       else
         this.m_sum_total = this.sum_total
 
-      this.calcDiscount(true)
-      this.calcRest()
+      this.calcSumExecutor();
+      this.calcRest();
     },
 
     updated(){
@@ -64,19 +67,23 @@
     watch: {
       footage(){
         this.calcSum("footage", "price")
-      }, 
+      },
+
       footage_2(){
         this.calcSum("footage_2", "price_2", "sum_2")
       },
+
       footage_real(){
         this.fact_filled = this.footage_real>0;
         if (this.price_real === 0 ) this.price_real = this.price;
         this.calcSum("footage_real", "price_real", "sum_real")
+
       }, 
       footage_2_real(){
         
         if (this.price_2_real === 0 ) this.price_2_real = this.price_2;
         this.calcSum("footage_2_real", "price_2_real", "sum_2_real")
+
       },
 
 
@@ -119,9 +126,6 @@
       },
 
       designer_price_2(){
-        // console.log("designer_price_2")
-         // this.designer_sum = this.designer_price * this.mFloat("footage");
-        this.designer_sum = this.designer_price_2 * this.mFloat("footage_2")
         this.calcSumExecutor();
       },
 
@@ -174,23 +178,21 @@
           this[sum] = this.mFloat(footage) * parseInt(this[price]);
         }
 
-        if (this.focus.includes('real')){this.calcTotal("_real");}
-        else{this.calcTotal();}
+        if (this.focus.includes('real')) 
+          this.calcTotal("_real");
+        else
+          this.calcTotal();
         
       },
 
       calcTotal(real = ""){
-        if (!this.focus.includes('sum_total') && this.complexProjectType){ 
-          sum2 = toInt(this["sum_2"+real])
-          // if (isNaN(sum2)) sum2 = 0 
-          
-          this["sum_total"+real] = toInt(this["sum"+real]) + sum2;
-          // if (isNaN(this["sum_total"+real])) this["sum_total"+real] = 0;
+        if (!this.focus.includes('sum_total') && this.complexProjectType){           
+          this["sum_total"+real] = toInt(this["sum"+real]) + toInt(this["sum_2"+real]);
 
-          if (this["sum_total"+real]>0) {
-            this.m_sum_total = this["sum_total"+real];
-            this["sum_total"+real] = this["sum_total"+real];
-          }
+          if (this.sum_total_real > 0)
+            this.m_sum_total = this.sum_total_real;
+          else 
+            this.m_sum_total = this.sum_total;
         }
 
         this.calcRest();
@@ -199,13 +201,6 @@
       calcPrice(num = ""){
         if (this.focus.includes('sum')){
           this["price"+num] = this.mFloat("sum"+num) / toInt(this["footage"+num]);
-        }
-      },
-
-      calcDiscount(force = false){
-        if (this.focus.includes('sum_discount') || this.focus.includes('sum_total') || force){ 
-          this.discount = this.sum_discount / (this.m_sum_total) *100;
-          this.calcTotal();
         }
       },
 

@@ -1,6 +1,6 @@
 - add = "#{real ? '_real' :''}"
 .hl.gr_caption.hl_tr #{title}
-section.table_5col
+section.table_7col.footages_prices
   = render 'footage', order: false, real: real
   .inp_w
     - if !real
@@ -10,10 +10,10 @@ section.table_5col
     - else 
       span.sub.btn_a.btn_reset.add_footage v-on:click="show_fact = !show_fact" v-show="show_fact" Убрать Факт
   .inp_w
-    m-number name="sum_total#{add}" label="Сумма"
+    m-number name="sum_total#{add}" label="Сумма #{real ? 'факт' : 'план'}"
 
 transition name="slide-fade"
-  section.table_5col v-show="show_2"
+  section.table_7col.footages_prices v-show="show_2"
     = render 'footage', order: true, real: real
     .inp_w
       - if !real

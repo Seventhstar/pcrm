@@ -14,7 +14,11 @@
 .edit_project .inp_w .datepicker{ background: asset-url('ico-date.png') 96% 8px no-repeat; }
 
 .inp_w .sum_mask { background: asset-url('rub.png') 98% 9px no-repeat; padding-right: 22px; }
-.inp_w .sum_mask[disabled]  {background: asset-url('rub-dis.png') 98% 9px no-repeat; color: gray; padding-right: 22px;}
+
+.multiply { background: asset-url('multiply.png') 98% 28px no-repeat; }
+.equal { background: asset-url('equal.png') 98% 28px no-repeat; }
+
+.footages_prices .sum_mask[disabled]  {background: asset-url('rub-dis.png') 98% 9px no-repeat; color: gray; padding-right: 22px;}
 
 
 .inp_w .discount_mask {background: asset-url('perc.png') 88% 9px no-repeat; padding-right: 22px}
@@ -25,9 +29,12 @@
 .inp_w .float_mask { background: asset-url('m2.png') 98% 8px no-repeat; padding-right: 24px; }
 .inp_w .float_mask[disabled]  {background: asset-url('m2-dis.png') 98% 8px no-repeat; color: gray; padding-right: 24px;}
 
-.sum_total { border-left: 5px solid #ff8411;}
-.sum_rest { border-left: 5px solid #6acc00; }
-.sum_cost { border-left: 5px solid #009ddd; }
+.prj_footage .txt {border: 1px solid #f5f5f5;}
+.footages_prices .txt:focus { border-color: rgba(255, 132, 17, 0.8); }
+
+.prj_footage .txt.sum_total { border-left: 5px solid #ff8411;}
+.prj_footage .txt.sum_rest { border-left: 5px solid #6acc00; }
+.prj_footage .txt.sum_cost { border-left: 5px solid #009ddd; }
 .inp_sum_total {width: 224px; float: right;}
 
 .tbl_fc_1 .inp_w .datepicker{ background: asset-url('ico-date.png') 98% 8px no-repeat; }
