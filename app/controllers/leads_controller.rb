@@ -51,6 +51,10 @@ class LeadsController < ApplicationController
           or LOWER(leads.email) like ?}, q, phone_q, q, q, q)
     end
 
+    if @main_city.present? 
+      @leads = @leads.where(city_id: @main_city.id)
+    end
+
     if params[:sort] == 'ic_users.name'
       sort_1 = "users.name"
       includes << :ic_user

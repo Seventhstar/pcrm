@@ -1,11 +1,6 @@
 FactoryBot.define do 
-  sequence :name do |n|
-    "status_#{n}"
-  end
-
   factory :status do
-    name
     actual true
+    sequence(:name) { |n| "status_#{n}" }
   end
-  
 end

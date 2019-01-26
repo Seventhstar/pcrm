@@ -7,25 +7,12 @@
   data: <%= fill_vue_data(@costing,
     { 
       model: 'costing',
-      texts: 'room',
-      lists: 'rooms',
-      tabs: [
-        {
-          label: 'tab 1', 
-          active: false,
-          text: 'content of tab1'
-        },
-        {
-          label: 'tab 2', 
-          active: true,
-          text: 'content of tab2'
-        },
-        {
-          label: 'tab 3', 
-          active: false,
-          text: 'content of tab3'
-        },
-      ]
+      room_works: @room_works,
+      texts: 'room work',
+      lists: 'rooms works costings_types',
+      works: [],
+      tabs: [],
+
     })%>,
 
   methods: {
@@ -34,7 +21,21 @@
     },
     
     addRoom(){
-      this.tabs.push({label: this.room.label, active: false})
+      if (v_nil(this.room)){
+        show_ajax_message('Выберите помещение', 'error');
+        return;
+      }
+      this.tabs.push({label: this.room.label, active: this.tabs.length === 0 ? true : false})
+      this.rooms.splice(this.rooms.indexOf(this.room), 1)
+      this.room = null
+    },
+
+    addWork(){
+      if (v_nil(this.work)){
+        show_ajax_message('Выберите помещение', 'error');
+        return;
+      }
+      this.tabs.push({label: this.room.label, active: this.tabs.length === 0 ? true : false})
       this.rooms.splice(this.rooms.indexOf(this.room), 1)
       this.room = null
     },

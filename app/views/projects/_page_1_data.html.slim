@@ -19,12 +19,14 @@
           tr
             td
               .inp_w
-                = chosen_src :pstatus_id, ProjectStatus.all, @project, {nil_value: 'Статус...' }
+                v-chosen name="pstatus" placeholder="Стиль..." src="pstatuses"
             td= f.input :progress,label: '%'
             td.va_middle
           tr
             td.inp_97 colspan="2" 
-              = chosen_src :client_id, Client.all, @project, {label: 'Клиент:'}
+              label Клиент:
+              .w99_5
+                v-chosen name="client" placeholder="Клиент..." 
               - if @project.client_id
                 #edit_icon
                   = link_to "", edit_client_path(@project.client_id, sub: true), data: {modal: true}, \
@@ -39,17 +41,19 @@
               .inp_w
                 label Вид работы
                 v-chosen name="project_type" placeholder="Вид работы..."
-            td= chosen_src :style_id, Style.all, @project,  nil_value: 'Стиль...', label: 'Стиль'  
+            td
+                label Стиль работы
+                v-chosen name="style" placeholder="Стиль..."
           tr
             td
               .inp_w
                 label Дизайнер
-                = chosen_src :executor_id, User.all, @project, {nil_value: 'Исполнитель...' }
+                v-chosen name="executor" placeholder='Исполнитель...' 
           tr
             td
               .inp_w.prj_not_simple
                 label Визуализатор
-                = chosen_src :visualer_id, User.all, @project, {nil_value: 'Визуализатор...' }
+                v-chosen name="visualer" placeholder='Визуализатор...' 
             td
               .inp_w.prj_not_simple
                 label Город

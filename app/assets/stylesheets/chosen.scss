@@ -43,9 +43,7 @@ tr.editable .chosen-container-single .chosen-single div b, span.cut b {margin-to
 .chosen-container:hover {border-color: #ff8411;}
 
 #project_client_id_chosen {width: 95% !important; float: left;}
-#edit_icon {height: 32px;
-  border: 1px solid #e5e5e5;
-    border-radius: 5px;}
+#edit_icon {height: 34px; border: 1px solid rgba(60,60,60,.26); border-radius: 5px;}
 
 .chosen-container * { -webkit-box-sizing: border-box; -moz-box-sizing: border-box;  box-sizing: border-box;}
 .chosen-container .chosen-drop {

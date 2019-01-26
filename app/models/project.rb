@@ -3,7 +3,10 @@ class Project < ActiveRecord::Base
   include ProjectsHelper
   attr_accessor :first_comment, :days, :sum_rest, :discount
   belongs_to :client
+  
   belongs_to :executor, class_name: 'User', foreign_key: :executor_id
+  belongs_to :visualer, class_name: 'User', foreign_key: :visualer_id
+
   belongs_to :project_type
   belongs_to :pstatus, class_name: 'ProjectStatus', foreign_key: :pstatus_id
   belongs_to :style, optional: true
@@ -29,12 +32,17 @@ class Project < ActiveRecord::Base
 
   scope :by_executor, ->(executor){where(executor_id: executor) if executor.present? && executor&.to_i>0}
   scope :only_actual, ->(actual){where.not(pstatus_id: 3) if actual}
+  scope :by_city, ->(city){where(city: city)}
   scope :by_year,     ->(year){where(date_start: Date.new(year.to_i,1,1)..Date.new(year.to_i,12,31)) if year.present? && year&.to_i>0}
 
   has_paper_trail
 
   def name
     address
+  end
+
+  def city_name
+    city.try(:name)
   end
 
   def client_name
@@ -67,6 +75,10 @@ class Project < ActiveRecord::Base
 
   def executor_name
     executor.try(:name)
+  end
+
+  def visualer_name
+    visualer.try(:name)
   end
 
   def status_name

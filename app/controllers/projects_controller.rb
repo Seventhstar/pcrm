@@ -42,6 +42,7 @@ class ProjectsController < ApplicationController
     @projects = @projects                
                 .includes(includes)
                 .only_actual(@only_actual)
+                .by_city(@main_city)
                 .by_executor(params[:executor_id])
                 .by_year(params[:year])
                 .order("#{sort_1} #{sort_direction}, #{sort_2} #{dir_2}, projects.number desc")
@@ -86,6 +87,8 @@ class ProjectsController < ApplicationController
     @project_types = ProjectType.order(:name)
     @executors = User.order(:name)
     @visualers = User.order(:name)
+    @styles     = Style.order(:name)
+    @pstatuses   = ProjectStatus.order(:name)
     @currencies = Currency.order('id')
   end
 

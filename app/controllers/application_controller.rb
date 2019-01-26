@@ -1,6 +1,7 @@
 require "application_responder"
 
 class ApplicationController < ActionController::Base
+
   self.responder = ApplicationResponder
   respond_to :html
 
@@ -13,6 +14,7 @@ class ApplicationController < ActionController::Base
   before_action :check_policy
   before_action :set_paper_trail_whodunnit
   before_action :gon_user
+
     
 
   def logged_in_user
@@ -30,6 +32,9 @@ class ApplicationController < ActionController::Base
   end
 
   def check_policy
+    @cities = City.order(:id) if @cities.nil?
+    # puts "main_city", @main_city
+    @main_city = current_user.city if @main_city.nil? && !current_user.nil?
 #   p "current_user.roles #{current_user.has_roles}" if !current_user.nil?
   end
 

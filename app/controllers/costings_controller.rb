@@ -18,6 +18,14 @@ class CostingsController < ApplicationController
   def new
     @costing = Costing.new
     @rooms = Room.all
+    @costings_types = CostingsType.all
+    @room_works = RoomWork.joins(:work)
+                          .select('room_works.*, works.name as work_name')
+                          .map{ |e| { room: e.room_id,
+                                      id: e.work_id,
+                                      name: e.work_name}}
+                          .group_by{ |i| i[:room] }
+    puts  @room_works.to_a
     respond_with(@costing)
   end
 
@@ -46,7 +54,7 @@ class CostingsController < ApplicationController
     end
 
     def costing_params
-      params.require(:costing).permit(:project_id, :user_id, :project_address, room_ids: [])
+      params.require(:costing).permit(:project_id, :user_id, :project_address, :costings_types, room_ids: [])
     end
 
     def sort_column

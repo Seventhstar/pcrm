@@ -1,0 +1,2 @@
+class CostingsType < ApplicationRecord
+end

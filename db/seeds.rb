@@ -39,3 +39,8 @@ end
 if City.count == 0 
   City.create([{name: 'Санкт-Петербург'}, {name: 'Москва'}])
 end
+
+
+if CostingsType.count == 0 
+  CostingsType.create([{name: 'Основная'}, {name: 'Дополнительная'}])
+end

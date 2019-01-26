@@ -28,8 +28,8 @@ table.tbl_fc td.caption2{width: 235px; padding-right: 15px; padding-top: 0px; te
 .table-body-scroll{overflow-x: auto;}
 
 
-td.caption3{ font-weight: 500; }
-td.caption3 span{ float: left; padding-top: 8px; padding-right: 15px;}
+td.caption3, .label{ font-weight: 500; }
+td.caption3 span, .label { float: left; padding-top: 8px; padding-right: 15px;}
 td.caption3 .chosen-container span, td.caption3 .chosen-container li { font-weight: normal;}
 td.caption3 .chosen-container span {padding-top: 0px;}
 .inp2{ width: 245px; float: left;}
@@ -45,6 +45,7 @@ table.tbl_fc_1 td.caption_sm {width: 70px;}
 .t_cell {display: table-cell;}
 
 
+.costing_head{display: grid; grid-template-columns: 120px 1fr 120px 1fr; column-gap: 20px;  }
 .prj_number { display: grid; grid-template-columns: 1fr 120px 3fr; column-gap: 20px;}
 .prj_new_client { display: grid; grid-template-columns: 2fr 1fr 2fr; column-gap: 20px; }
 .prj_executors { display: grid; grid-template-columns: 1fr 1fr 1fr; column-gap: 20px;}

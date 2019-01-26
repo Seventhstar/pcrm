@@ -21,7 +21,7 @@
       fieldsTranslated: ['тип проекта', 'клиент', 'дизайнер', 'адрес', 'город'],
 
       lists: "clients cities executors visualers project_types+simple",
-      list_values: "city",
+      list_values: "",
       texts: "address comment \
               footage price sum sum_total project_type\
               footage_2 price_2 sum_2\
@@ -32,9 +32,10 @@
               sum_discount sum_rest",
 
       booleans: 'isNewProject'
-    }) %>,
+    },'page2') %>,
 
     created() {
+      console.log('created')
       if (!this.isNewProject && ptype.project_type !==undefined 
                              && ptype.project_type.value!== undefined ){
         console.log("this.project_types", this.project_types, ptype.project_type.value)
@@ -196,8 +197,8 @@
             this.m_sum_total = this["sum_total"+real];
             this["sum_total"+real] = this["sum_total"+real] - discount;
           }
-          this.calcRest();
         }
+        this.calcRest();
       },
 
       calcPrice(num = ""){

@@ -8,9 +8,13 @@
       model: 'project',
 
       complexProjectType: false,
-      list_values: 'project_type city',
-      lists: "project_types+simple cities"      
-    }) %>,
+      list_values: 'project_type city client executor visualer project_type style pstatus client',
+      lists: "project_types+simple cities executors visualers styles pstatuses clients"      
+    }, 'page1') %>,
+
+    created() {
+      // console.log('created', 'project_type', this.project_type);
+    },
 
     watch: {
       project_type(){

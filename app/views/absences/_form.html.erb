@@ -92,7 +92,7 @@
   </transition>
 
   <% if is_manager? || is_new || is_author %>
-    <%= submit_cancel absences_url, {disabled: "!f_valid"} %>
+    <%= submit_cancel absences_url, {classValid: "!f_valid"} %>
   <% end %>
 
 <% end %>

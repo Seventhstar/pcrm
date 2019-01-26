@@ -42,7 +42,10 @@ Vue.component('v-chosen', {
 
       if (this.src !== undefined) {
           src = this.$parent[this.src];
-          //console.log("src", src, src[this.index], "this.from_array", this.from_array );
+          
+           // console.log("src", this.src);
+          //, src[this.index], "this.from_array", this.from_array );
+
           this.options = (this.from_array === undefined || src[this.index] === undefined) ? src : src[this.index][this.from_array];
       } else {
         this.options = this.$parent[this.name + "s"];
@@ -58,7 +61,7 @@ Vue.component('v-chosen', {
         onUpdate: function(val) {
           this.localValue = (val === null) ? 0 : val.value;
           this.$parent[this.name] = val
-          this.$root.$emit('onInput', {value: this.localValue, key: this.k, index: this.index});
+          this.$root.$emit('onInput', {value: this.localValue, key: this.k, index: this.index, name: this.name, label: val.label});
         }
       }
   })

@@ -118,6 +118,8 @@ Rails.application.routes.draw do
   resources :users
   resources :roles
   resources :user_roles
+
+  resources :costings_types
   resources :uoms
   resources :currencies
   resources :materials
@@ -142,6 +144,7 @@ Rails.application.routes.draw do
   post "ajax/upd_param"
   post "ajax/update_holidays"
   post "ajax/store_cut"
+  post "ajax/set_city"
 
   resources :files
   get  '/download/:id'  => 'files#download'

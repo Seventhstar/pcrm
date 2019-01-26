@@ -209,7 +209,8 @@ module ApplicationHelper
     h
   end
 
-  def fill_vue_data(obj, data)
+  def fill_vue_data(obj, data, where = nil)
+    # puts 'obj', obj, 'data', data, 'where', where
     if data[:booleans].present?
       data[:booleans].split(' ').each do |b|
         data[b] = obj[b].nil? ? eval("@#{b}") : obj[b]
@@ -227,8 +228,9 @@ module ApplicationHelper
 
     if data[:list_values].present? 
       data[:list_values].split(' ').each do |li| 
-        data[li] = v_value(nil, nil, nil, eval("@#{li}"))
-        data[li] = v_value(obj, li) if data[li].nil?
+        v = v_value(nil, nil, nil, eval("@#{li}"))
+        v = v_value(obj, li) if !v.present?
+        data[li] = v
       end
       data.delete(:list_values)
     end
@@ -236,6 +238,7 @@ module ApplicationHelper
     if data[:lists].present? # collection_name[:source_name][+field1,field2...]
       data[:lists].split(' ').each do |l|
         fields = nil
+        raw = false
         if l.index('+').present? 
           lf = l.split('+')
           fields = lf[1]
@@ -245,11 +248,20 @@ module ApplicationHelper
           collection = eval("@#{l}")
         else
           la = l.split(':')
+          if la[1].include?('raw')
+            raw = true
+            la[1].sub! 'raw', ''
+          end
           collection = eval("#{la[1]}")
           l = la[0]
         end
-        data[l] = select_src(collection, "name", false, fields) if collection.present?
-        # puts "data[:lists]", data[:lists], collection, fields
+        if collection.present? 
+          if raw 
+            data[l] = collection 
+          else
+            data[l] = select_src(collection, "name", false, fields) 
+          end
+        end
       end
       data.delete(:lists)
     end
@@ -258,8 +270,9 @@ module ApplicationHelper
   end
 
   def select_src(collection, attr_name = "name", safe = false, fields_str = nil)
+    # puts collection.class
     if fields_str.nil? 
-      collection = collection.collect{|u| {label: u.try(attr_name), value: u.id}}
+      collection = collection.collect{|u| {label: u.try(attr_name), value: u.id} if u.try(attr_name).present? }.compact
     else
       fields = fields_str.split(',')
       collection = collection.collect{|u| 
