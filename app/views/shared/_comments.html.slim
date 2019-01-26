@@ -7,19 +7,19 @@ script#comments_template type="text/html"
     #tabs_msg
       ul
         li.first
-          a href="#tab-msg-1" 
-            span.icon.icon_chat
-            | Комментарии
-        li.right.last 
-          a#tab_special_info href="#tab-msg-2" 
+          a#tab_special_info href="#tab-msg-1" 
             span.icon.icon_important
             | Важные детали
+        li.right.last 
+          a href="#tab-msg-2" 
+            span.icon.icon_chat
+            | Комментарии
       #tab-msg-1.first
-        = render 'shared/comments_list'
-        = render 'comments/form'
-      #tab-msg-2.last
         = render 'shared/comments_list', items: @owner.special_infos
         = render 'special_infos/form'
+      #tab-msg-2.last
+        = render 'shared/comments_list'
+        = render 'comments/form'
 - else
   .box_i
     .hl

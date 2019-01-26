@@ -12,7 +12,8 @@
       toggled: false,
       m_sum_total: 0,
       show_2: @project.footage_2>0,
-      show_fact: true,
+      show_fact: @project.footage_real>0,
+      fact_filled: false,
       noteValid: "tooltip from Vue.js",
       complexProjectType: false,
       formFields: "footage price",
@@ -68,9 +69,13 @@
         this.calcSum("footage_2", "price_2", "sum_2")
       },
       footage_real(){
+        this.fact_filled = this.footage_real>0;
+        if (this.price_real === 0 ) this.price_real = this.price;
         this.calcSum("footage_real", "price_real", "sum_real")
       }, 
       footage_2_real(){
+        
+        if (this.price_2_real === 0 ) this.price_2_real = this.price_2;
         this.calcSum("footage_2_real", "price_2_real", "sum_2_real")
       },
 

@@ -56,8 +56,8 @@
                 v-chosen name="visualer" placeholder='Визуализатор...' 
             td
               .inp_w.prj_not_simple
-                label Город
-                v-chosen name="city" placeholder='Город...' src='cities'
+                = f.hidden_field :city_id, value: @project.city_id
+
     .right
       .sep_3
       .comments_box
