@@ -13,3 +13,5 @@ section.table_5col
 transition name="slide-fade"
   section.table_5col v-show="show_2"
     = render 'footage', order: true, real: real
+    .inp_w
+      span.sub.btn_a.btn_reset.add_footage v-on:click="show_2 = !show_2" v-show="show_2" Убрать

@@ -21,6 +21,7 @@ class UsersController < ApplicationController
   
   def new
     @user = User.new
+    @user.city = current_user.city
     respond_modal_with @user, location: root_path
   end
 

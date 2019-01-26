@@ -26,6 +26,8 @@ class AbsencesController < ApplicationController
     abs = is_manager? ? Absence.all : current_user.absences
     @absences = abs.select(query_str).joins(:reason)
 
+    @absences = @absences.where(user_id: User.where(city: @main_city).ids)
+
     if params[:sort]!='calendar'
       if @only_actual
         @absences = @absences.where("dt_from >= ?", (Date.today-2.week))
@@ -67,7 +69,9 @@ class AbsencesController < ApplicationController
     @shop  = AbsenceShop.new
     @reasons = AbsenceReason.order(:id)
     @targets = AbsenceTarget.order(:name)
-    @projects = Project.all
+    @users    = User.where(city: current_user.city).order(:name)
+    # puts "current_user.city #{current_user.city}", @users.to_a 
+    @projects = Project.where(city: current_user.city).order(:address)
     @shop_targets = AbsenceShopTarget.all
 
     if !@absence.nil?

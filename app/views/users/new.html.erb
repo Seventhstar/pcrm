@@ -2,33 +2,36 @@
 <div class="signin">
 <div class="hl hl_a bd">Новый пользователь</div>
 
- <%= form_for(@user) do |f| %>
+<%= form_for(@user) do |f| %>
 
-<%= render 'shared/error_messages', object: f.object %>
+  <%= f.hidden_field :city_id, value: @user.city_id %>
 
-<div class="box_wrap box_wrap_1">
-<div class="panel-left">
-    
-  <table class="tbl_fc tbl_fc_1">
-    <tr><td class="caption">Имя:</td>
-        <td><div class="inp_w"><%= f.text_field :name, class: 'form-control' %></div></td></tr>
-    <tr><td class="caption">Дата рождения:</td>
-        <td><div class="inp_w"><%= f.text_field :date_birth, :value => @user.date_birth.try('strftime',"%d.%m.%Y"), class: 'form-control datepicker' %></div></td></tr>
-    <tr><td class="caption">E-mail:</td>
-        <td><div class="inp_w"><%= f.text_field :email, class: 'form-control' %></div></td></tr>    
-    <tr><td class="caption">Пароль:</td>
-        <td><div class="inp_w"><%= f.password_field :password, class: 'form-control' %></div></td></tr>    
+  <%= render 'shared/error_messages', object: f.object %>
 
-	<tr><td class="caption">Подтверждение:</td>
-        <td><div class="inp_w"><%= f.password_field :password_confirmation, class: 'form-control' %></div></td></tr>    
+  <div class="box_wrap box_wrap_1">
+  <div class="panel-left">
+      
+    <table class="tbl_fc tbl_fc_1">
+      <tr><td class="caption">Имя:</td>
+          <td><div class="inp_w"><%= f.text_field :name, class: 'form-control' %></div></td></tr>
+      <tr><td class="caption">Дата рождения:</td>
+          <td><div class="inp_w"><%= f.text_field :date_birth, value: @user.date_birth.try('strftime',"%d.%m.%Y"), class: 'form-control datepicker' %></div></td></tr>
+      <tr><td class="caption">E-mail:</td>
+          <td><div class="inp_w"><%= f.text_field :email, class: 'form-control' %></div></td></tr>    
+      <tr><td class="caption">Пароль:</td>
+          <td><div class="inp_w"><%= f.password_field :password, class: 'form-control' %></div></td></tr>    
 
-    <tr><td class="caption"></td>
-      <td><%= link_to 'Отмена', users_path, :class => "sub btn_a btn_reset"%>
-        <%= f.submit 'Сохранить', :class => 'sub btn_a' %></td></tr>
+      <tr><td class="caption">Подтверждение:</td>
+          <td><div class="inp_w"><%= f.password_field :password_confirmation, class: 'form-control' %></div></td></tr>    
 
-  </table>
+      <tr><td class="caption"></td>
+        <td><span class="btn_a btn_reset" data-dismiss="modal">Отмена</span>
+            <%= f.submit 'Сохранить', class: 'sub btn_a' %></td></tr>
+
+    </table>
+  </div>
+  </div>  
+
+<% end %>
 </div>
-</div>  
 
-    <% end %>
-</div>

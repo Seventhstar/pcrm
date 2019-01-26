@@ -60,12 +60,10 @@
       transition name="slide-fade" mode="out-in" 
         .sums v-if="complexProjectType"
           .gr_caption Площадь и стоимость
-          .table_5col
-            =render 'footage', f: f 
-            .inp_w
-            .inp_w
-              .inp_sum_total
-                m-number name="sum_total" label="Сумма"
+          
+          = render 'footage_sum', real: false, footage_2_nil: true, title: 'Заявленная площадь и стоимость'
+          
+          
       
       .sep_15
       .sep_15
@@ -82,16 +80,15 @@
         .inp_w
           label Рабоч. дней без уч. праздников
           = number_field_tag :project_days, 0, {class: 'form-control'}
-        .inp_w
-        .inp_w
-          label Город 
-          v-chosen name="city" placeholder='Город...' src='cities'
+
 
       .inp_w
         label Примечание
         = f.text_area :first_comment, class: :txt, label: false, rows: "2", "v-model"=>"comment"
 
       = f.hidden_field :owner_id, value: current_user.id
+      = f.hidden_field :city_id, value: current_user.city_id
+
       = submit_cancel project_page_url, {classValid: "!formValid", tip: 'noteValid', click: 'onSubmit'} 
 
 /= render 'form'

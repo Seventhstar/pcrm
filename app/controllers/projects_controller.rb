@@ -83,10 +83,10 @@ class ProjectsController < ApplicationController
     @new_gtypes = Goodstype.where.not(id: [@pgt_ids]).order(:name)
     @gtypes = Goodstype.where(id: [@pgt_ids]).order(:name)
     @clients = Client.order(:name)
-    @cities   = City.order(:id)
+    # @cities   = City.order(:id)
     @project_types = ProjectType.order(:name)
-    @executors = User.order(:name)
-    @visualers = User.order(:name)
+    @executors = User.where(city: current_user.city).order(:name)
+    @visualers = User.where(city: current_user.city).order(:name)
     @styles     = Style.order(:name)
     @pstatuses   = ProjectStatus.order(:name)
     @currencies = Currency.order('id')
@@ -99,7 +99,7 @@ class ProjectsController < ApplicationController
     
     get_debt
     def_params
-    @city = current_user.city
+    @project.city = current_user.city
   end
 
   # GET /projects/1/edit

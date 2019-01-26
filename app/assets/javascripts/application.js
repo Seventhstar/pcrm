@@ -32,6 +32,12 @@
 //= require vue
 //= require_tree .
 
+function toInt(d){
+  if (isNaN(d)) return 0;
+  if (d=="") return 0;
+  return parseInt(d);
+}
+
 function to_sum(d){ 
   if (isNaN(d)) return 0;
   s = d.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1 ");
@@ -222,8 +228,11 @@ $(function() {
 
 
   $('.timepicker').timepicker({ 'timeFormat': 'H:i' });
-
-  $(document).on('focus', '.datepicker', function () {$(".datepicker").inputmask('99.99.9999'); });
+  
+  $(document).on('focus', '.datepicker', function () {
+    $(".datepicker").inputmask('99.99.9999'); 
+    $('.ui-datepicker').css('z-index', 99999999999999);
+  });
 
   $('.switcher_a').each(function(){    
     var link = $(this).find('.link_a,.link_c');
