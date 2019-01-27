@@ -114,6 +114,14 @@ class Project < ActiveRecord::Base
     nil_footage(footage_real) ? footage_2.to_f : footage_2_real.to_f
   end
 
+  def price_info
+    nil_footage(footage_real) ? price.to_sum : price_real.to_sum
+  end
+
+  def price_2_info
+    nil_footage(footage_real) ? price_2.to_sum : price_2_real.to_sum
+  end
+
   def designer_sum_calc
     if !designer_sum.nil? && designer_sum > 0
       s = designer_sum 
@@ -173,8 +181,8 @@ class Project < ActiveRecord::Base
   end
 
   def admin_info()
-     i = "#{f1_info}м. - #{price}р."
-     i += "</br>#{f2_info}м. - #{price_2}р." if !nil_footage(f2_info)
+     i = "#{f1_info}м. - #{price_info}р."
+     i += "</br>#{f2_info}м. - #{price_2_info}р." if !nil_footage(f2_info)
      i
   end
 

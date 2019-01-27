@@ -10,9 +10,10 @@
       focus: '',
       toggled: false,
       m_sum_total: 0,
-      show_2: @project.footage_2>0,
-      show_fact: @project.footage_real>0,
-      fact_filled: @project.footage_real>0,
+      show_2:       @project.footage_2_real>0 || @project.footage_2>0,
+      show_fact:    @project.footage_real>0,
+      fact_filled:  @project.footage_real>0,
+
       noteValid: "tooltip from Vue.js",
       complexProjectType: false,
       formFields: "footage price",
@@ -22,8 +23,8 @@
 
       lists: "clients cities executors visualers project_types+simple",
       list_values: "",
-      texts: "address comment \
-              footage price sum sum_total project_type\
+      texts: "address comment project_type\
+              footage price sum sum_total\
               footage_2 price_2 sum_2\
               footage_real price_real sum_real sum_total_real \
               footage_2_real price_2_real sum_2_real\
@@ -40,7 +41,8 @@
                              && ptype.project_type.value!== undefined ){
         // console.log("this.project_types", this.project_types, ptype.project_type.value)
         currentPType = this.project_types.find(e => e.value == ptype.project_type.value)
-        this.complexProjectType = !currentPType.simple
+        if (currentPType !== undefined)
+          this.complexProjectType = !currentPType.simple
       }
 
       if (this.complexProjectType){

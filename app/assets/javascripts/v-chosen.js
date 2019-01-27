@@ -43,7 +43,7 @@ Vue.component('v-chosen', {
       if (this.src !== undefined) {
           src = this.$parent[this.src];
           
-           // console.log("src", this.src);
+           // console.log("src", this.src, "k", this.k, "index", this.index);
           //, src[this.index], "this.from_array", this.from_array );
 
           this.options = (this.from_array === undefined || src[this.index] === undefined) ? src : src[this.index][this.from_array];
@@ -54,14 +54,22 @@ Vue.component('v-chosen', {
     },
 
     mounted(){
-      if (this.options !== undefined && this.options.length === 1) this.onUpdate(this.options[0])
+      if (this.options !== undefined && this.options.length === 1) 
+        this.onUpdate(this.options[0])
+      else{
+        // console.log("this.options.length", this.options.length, this.options[0].label)
+        // this.onUpdate({value: '', label: ''})
+      }
+      //   this.onUpdate()
     },
 
     methods: {
         onUpdate: function(val) {
-          this.localValue = (val === null) ? 0 : val.value;
+          // console.log("val", val)
+          let label = (v_nil(val)) ? undefined : val.label;
+          this.localValue = (v_nil(val)) ? 0 : val.value;
           this.$parent[this.name] = val
-          this.$root.$emit('onInput', {value: this.localValue, key: this.k, index: this.index, name: this.name, label: val.label});
+          this.$root.$emit('onInput', {value: this.localValue, key: this.k, index: this.index, name: this.name, label: label});
         }
       }
   })

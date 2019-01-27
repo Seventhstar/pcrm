@@ -57,8 +57,10 @@
               .inp_w
                 .inp_sum_total
                   m-number name="sum_total" label="Сумма"
+      .
       transition name="slide-fade" mode="out-in" 
         .sums v-if="complexProjectType"
+          .sep_3 
           .gr_caption Площадь и стоимость
           
           = render 'footage_sum', real: false, footage_2_nil: true, title: 'Заявленная площадь и стоимость'

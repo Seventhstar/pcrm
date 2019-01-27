@@ -137,9 +137,12 @@ class ProjectsController < ApplicationController
             .map{ |g| g }
             
     used_pgt = @goods.map{|g| g[0][0]}
-
+    # puts "used_pgt",used_pgt
     @pgt = Goodstype.where(default: true).pluck(:id, :name)
     @pgt_ids = @pgt.map{|p| p[0]}
+    @pgt_ids = @pgt_ids | used_pgt
+    # puts "@pgt_ids", @pgt_ids
+
     
     def_params
 

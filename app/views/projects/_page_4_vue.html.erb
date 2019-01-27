@@ -57,9 +57,19 @@
 
     methods: {
 
+      getProviderIndex(i, id){
+        // console.log("this.providers", this.providers[0].gt, i)
+        let ind = this.providers.filter(w => w.gt.id === toInt(i))
+            // console.log("w.gt.id", 
+        // console.log("i", i, id, "ind", ind, this.providers.indexOf(ind[0]));
+        return this.providers.indexOf(ind[0])
+      },
+
       gtypeName(gt_id){
-        gt = this.gtypes.filter(word => word.value === parseInt(gt_id))
-        return gt[0].label
+        gt = this.gtypes.filter(w => w.value === parseInt(gt_id))
+        // console.log("gt_id", gt_id, gt)
+        let name = gt.length>0 ? gt[0].label : 'Ошибка'
+        return name
       },
 
       addControlAndField(){
@@ -81,9 +91,10 @@
           }).done(function(data) {
             NProgress.done();
             let new_gt = app.new_gtype.value
-            app.providers.push({gt: new_gt, list: data})
-            app.goods.push([[app.new_gtype.value, app.new_gtype.label], new Array()])
-            app.gtypes.push(app.new_gtype)
+            // console.log("data", data)
+            app.providers.unshift({gt: {id: new_gt, name: app.new_gtype.label }, list: data})
+            app.goods.unshift([[app.new_gtype.value, app.new_gtype.label], new Array()])
+            app.gtypes.unshift(app.new_gtype)
             app.new_gtypes.splice(app.new_gtypes.indexOf(app.new_gtype), 1)          
             app.new_gtype = null 
             app.addControlAndField()
@@ -94,7 +105,8 @@
       saveGoods(key, index, g){
         if (!this.controls[index].valid) return;
         this.currentIndex = index
-        let pref = 'project_good_'+key+'_';        
+        // console.log("this.currentIndex", this.currentIndex)
+        let pref = 'goods_'+key+'_';        
         let values = {currency_id: app.currency.value, project_id: this.id, goodstype_id: key }
 
         this.inputs.forEach(  c => values[c] = this.fields[index][c] );
@@ -134,7 +146,7 @@
 
       onChange(key, index){
         let valid = true;
-        let pref = 'project_good_'+key+'_'; 
+        let pref = 'goods_'+key+'_'; 
 
         this.inputs.forEach( c => {if (v_nil(this.fields[index][c])) {valid = false;} });
         this.selects.forEach( c => {if (v_nil(app[c])) {valid = false;}});

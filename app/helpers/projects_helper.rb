@@ -212,7 +212,7 @@ module ProjectsHelper
 
   def icon_for_project (prj)
     cntnt = '<div class="icons-indicate">'   
-    cntnt += image_tag('debt.png', title: 'Заказчик должен денег') if prj.debt
+    # cntnt += image_tag('debt.png', title: 'Заказчик должен денег') if prj.debt
     cntnt += image_tag('hammer.png', title: 'Интерес к стройке') if prj.interest
     cntnt += image_tag('attention.png', title: 'Особое внимание') if prj.attention
     cntnt += '</div>'

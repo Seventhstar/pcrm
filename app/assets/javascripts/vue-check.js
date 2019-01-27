@@ -38,7 +38,7 @@ Vue.component('m-number', {
       classes: "txt ",
       name_id: ""}
   },
-  props: ['name', 'label', 'type', 'add_class', 'disabled'],
+  props: ['name', 'label', 'type', 'add_class', 'disabled', 'readonly'],
   template: `
     <div class="inp_w prj_not_simple">
       <label v-if="label">{{label}}</label>
@@ -50,6 +50,7 @@ Vue.component('m-number', {
         :id="name_id" 
         :name="_name"
         :disabled="disabled"
+        :readonly="readonly"
         @keyup="onUpdate($event)"
         @focus="onFocus($event)"
         style="text-align: right;"></div>`,

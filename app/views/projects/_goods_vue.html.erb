@@ -2,7 +2,7 @@
 <template v-if="controls[index]!==undefined">
 <div class="panel panel-default good_group">
   <div class="panel-heading table-heading head month"> 
-    {{gtypeName(item[0][0])}}
+    {{gtypeName(item[0][0])}} 
     
     <span class="sub btn_add right" @click="switchOpened(index)" v-show="closedTable(index)">Добавить позицию</span></div>
   
@@ -38,18 +38,18 @@
 
     <input :value="item[0][0]" 
             type="hidden" 
-           :name="'project_good_'+item[0][0]+'_[goodstype_id]'" 
-           :id="'project_good_'+item[0][0]+'_goodstype_id'">
+           :name="'goods_'+item[0][0]+'_[goodstype_id]'" 
+           :id="'goods_'+item[0][0]+'_goodstype_id'">
 
     <input  :value="item[0][0]" 
              type="hidden" 
-            :name="'project_good_'+item[0][0]+'_[owner_id]'" 
-            :id="'project_good_'+item[0][0]+'_owner_id'">
+            :name="'goods_'+item[0][0]+'_[owner_id]'" 
+            :id="'goods_'+item[0][0]+'_owner_id'">
 
     <div class="fw">     
       <input type="text" 
-            :name="'project_good_'+item[0][0]+'_[name]'" 
-            :id="'project_good_'+item[0][0]+'_name'"
+            :name="'goods_'+item[0][0]+'_[name]'" 
+            :id="'goods_'+item[0][0]+'_name'"
             v-model="fields[index].name"             
             class="txt"  
             @input="onChange(item[0][0], index)">
@@ -59,9 +59,9 @@
       <v-chosen name="provider" 
                 src="providers"
                 from_array="list"
-                :owner="'project_good_'+item[0][0]+'_'"
-                :k="item[0][0]" 
-                :index="index" 
+                :owner="'goods_'+item[0][0]+'_'"
+                :key = "item[0][0]"
+                :index="getProviderIndex(item[0][0], index)" 
                 placeholder="Выберите поставщика..."/>
     </div>
 
@@ -82,9 +82,7 @@
     <div>
       <v-chosen name="currency" 
                 src="currencies" 
-                :owner="'project_good_'+item[0][0]+'_'" 
-                :k="item[0][0]" 
-                :index="index" 
+                :owner="'goods_'+item[0][0]+'_'" 
                 placeholder="Валюта..."/>
     </div>
     <div>
@@ -99,7 +97,7 @@
             :pe_id="item[0][0]" 
             action='/project_goods/' 
             :id="'btn_save_'+item[0][0]+'_'"
-            :prm="'project_good_'+item[0][0]+'_'"
+            :prm="'goods_'+item[0][0]+'_'"
             @click="saveGoods(item[0][0],index)"
             :disabled="!controls[index].valid">Сохр.</span></div>
     </div>
