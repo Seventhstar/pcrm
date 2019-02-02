@@ -1,13 +1,129 @@
-<table class="tleads twfixed" id="table_<%= pgt.id %>"  model="ProjectGood" action="project_goods" color_cls="ordered">
-  <% opened ||= false %>   
-  <% get_goods(@project.id, pgt) %>
-  <thead class="<%= @goods.size>0 || opened ? '' : 'hidden' %>">
-    <%= render partial: 'project_goods/head_row' %>
-  </thead>
-  <tbody>
-    <%= render @goods %>
-    <%= render partial: "project_goods/new_item", locals: {pgt: pgt, opened: opened} %>
-    <% @cur_id = pgt.id %>
-    <%= render partial: 'project_goods/total', locals: {pgt: pgt, opened: opened} %>    
-  </tbody>
-</table>
+<div v-for="(item, index) in goods">
+<template v-if="controls[index]!==undefined">
+  <div class="panel panel-default good_group">
+    <div class="panel-heading table-heading head month"> 
+      {{gtypeName(item[0][0])}}
+    
+    <span class="sub btn_add right" @click="switchOpened(index)" v-show="closedTable(index)">Добавить позицию</span></div>
+  
+    <div class="grid_table_goods grid_table_head" v-show="openedOrHaveData(index, item[1].length)">
+      <template class="goods_head">
+        <div>Позиция</div>
+        <div>Поставщик</div>
+        <div>Дата</div>
+        <div>Примечание</div>
+        <div>Валюта</div>
+        <div>Стоимость</div>
+        <div></div>
+      </template>
+    </div>
+
+    <transition-group name="item">
+    <template v-for="(g, ind) in item[1]">
+      <div :class="rowClass(g)" :id="'item_'+g.id" :key="g.id">    
+          <div>{{g.name}}</div>
+          <div>{{g.provider_name}}</div>
+          <div>{{format_date(g.date_place)}}</div>
+          <div>{{g.description}}</div>
+          <div>{{g.currency_name}}</div>
+          <div v-html="allAmount(g)"></div>
+          <div class="edit_delete td_right " style="">
+            <a class="icon basket td_right" data-modal="true" :href="goodsEditLink(g)"></a>
+            <span class="icon icon_del" @click="deleteGoods(index, g)"></span> </div>
+      </div>
+    </template>
+    </transition-group>
+
+    <div class="grid_table_goods grid_table_new_item  new_row" :id="'new_item_'+item[0][0]" v-show="controls[index].opened">
+
+    <input :value="item[0][0]" 
+            type="hidden" 
+           :name="'goods_'+item[0][0]+'_[goodstype_id]'" 
+           :id="'goods_'+item[0][0]+'_goodstype_id'">
+
+    <input  :value="item[0][0]" 
+             type="hidden" 
+            :name="'goods_'+item[0][0]+'_[owner_id]'" 
+            :id="'goods_'+item[0][0]+'_owner_id'">
+
+    <div class="fw">     
+      <input type="text" 
+            :name="'goods_'+item[0][0]+'_[name]'" 
+            :id="'goods_'+item[0][0]+'_name'"
+            v-model="fields[index].name"             
+            class="txt"  
+            @input="onChange(item[0][0], index)">
+    </div>
+
+    <div>
+      <v-chosen name="provider" 
+                src="providers"
+                from_array="list"
+                :owner="'goods_'+item[0][0]+'_'"
+                :key = "item[0][0]"
+                :index="getProviderIndex(item[0][0], index)" 
+                placeholder="Выберите поставщика..."/>
+    </div>
+
+    <div class="caption3">
+      <input type="text" 
+             class="txt datepicker hasDatepicker"
+             v-model="fields[index].date_place"
+            @change="input(item[0][0], index)">
+    </div>
+
+    <div class="caption3">
+      <input type="text" 
+            v-model="fields[index].description"  
+            class="txt fullwidth"
+            @input="onChange(item[0][0], index)">
+    </div>
+
+    <div>
+      <v-chosen name="currency" 
+                src="currencies" 
+                :owner="'goods_'+item[0][0]+'_'" 
+                placeholder="Валюта..."/>
+    </div>
+    <div>
+      <input type="text" 
+            v-model="fields[index].gsum" 
+            @input="onChange(item[0][0], index)"
+            @keyup.enter="saveGoods(item[0][0], index)"
+             class="txt right" style="width: 100%;">
+    </div>
+    <div>
+      <span class="sub btn btn_save" 
+            :pe_id="item[0][0]" 
+            action='/project_goods/' 
+            :id="'btn_save_'+item[0][0]+'_'"
+            :prm="'goods_'+item[0][0]+'_'"
+            @click="saveGoods(item[0][0],index)"
+            :disabled="!controls[index].valid">Сохр.</span></div>
+    </div>
+
+    <div class="table_3col table_footer" v-show="openedOrHaveData(index, item[1].length)">
+      <div>Предложено: <span>{{calculateAmount(index)}}</span></div>
+      <div>Заказано: <span>{{formatTotal(orderAmount[index])}}</span></div>      
+      <div>Закрыто: <span>{{formatTotal(closedAmount[index])}}</span></div>      
+    </div>
+  </template>
+</div>
+</div>
+
+<div class="total-footer">Общий итог:<div id="grand_total">
+<ul class="right">
+  <li>
+    <b>Итого предложено: </b> <span>{{calculateTotal()}}</span></li>
+  <li>
+    <b>Итого заказано: </b> <span>{{formatTotal(grandOrderTotal)}}</span></li>
+  <li>
+    <b>Итого закрыто: </b><span>{{formatTotal(grandClosedTotal)}}</span></li>
+</ul>
+</div>
+
+<transition name="appear">
+  <confirmation-modal v-if='confirmModal'></confirmation-modal>
+</transition>
+
+

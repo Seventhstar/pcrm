@@ -21,6 +21,7 @@
           this.$parent.confirmModal = false;
         },
         onCancel() {
+          this.$root.$emit('modalCancel');
           this.$parent.confirmModal = false;
         }
       }

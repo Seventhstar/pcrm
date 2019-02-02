@@ -7,10 +7,10 @@ module OptionsHelper
   def get_menu
     { options_users: ['users','roles','user_roles'],
       options_leads: ['statuses', 'channels', 'lead_sources', 'styles', 'cities'],
-      options_projects: ['project_statuses', 'project_types', 'elongation_types', 'contact_kinds'],
+      options_projects: ['goodstypes', 'project_statuses', 'project_types', 'elongation_types', 'contact_kinds'],
       options_costings: ['costings_types', 'uoms', 'materials', "consumptions", "works", "work_types", "rooms"],
       options_payments: ['currencies', 'payment_types', 'payment_purposes'],
-      options_providers: ['budgets', 'goodstypes', 'styles', 'p_statuses'],
+      options_providers: ['budgets', 'styles', 'p_statuses'],
       options_absences: ['holidays', 'absence_reasons', 'absence_targets', 'absence_shop_targets'],
       options_wiki: ['wiki_cats'] }
   end

@@ -14,6 +14,9 @@
       show_fact:    @project.footage_real>0,
       fact_filled:  @project.footage_real>0,
 
+      mFootage: 0,
+      mFootage2: 0,
+
       noteValid: "tooltip from Vue.js",
       complexProjectType: false,
       formFields: "footage price",
@@ -77,13 +80,12 @@
 
       footage_real(){
         this.fact_filled = this.footage_real>0;
-        if (this.price_real === 0 ) this.price_real = this.price;
+        if (toInt(this.price_real) === 0 ) this.price_real = this.price;
         this.calcSum("footage_real", "price_real", "sum_real")
 
       }, 
       footage_2_real(){
-        
-        if (this.price_2_real === 0 ) this.price_2_real = this.price_2;
+        if (toInt(this.price_2_real) === 0 ) this.price_2_real = this.price_2;
         this.calcSum("footage_2_real", "price_2_real", "sum_2_real")
 
       },
@@ -132,7 +134,7 @@
       },
 
       visualer_price(){
-        this.visualer_sum = this.visualer_price * this.mFloat("footage");
+        this.visualer_sum = this.visualer_price * this.mFootage;
          this.calcSumExecutor();
       },
       
@@ -153,8 +155,6 @@
             tooltip = tooltip + this.fieldsTranslated[i] + ', '
           }
         });
-
-
         
         this.formValid = valid;
         if (tooltip.trim().length > 0) tooltip = "Не заполнены поля: " + tooltip.slice(0, -2)
@@ -169,6 +169,23 @@
         if (!this.complexProjectType){
           // чистим поля          
         }
+      },
+
+      delM2(){
+        this.show_2 = false
+        this.footage_2 = 0 
+        this.price_2 = 0
+        this.sum_2 = 0
+      },
+
+      delReal(){
+        this.show_fact = false
+        this.price_real = 0 
+        this.footage_real = 0
+        this.price_2_real = 0 
+        this.footage_2_real = 0
+        this.sum_total_real = 0
+        this.fact_filled = false
       },
 
       mFloat(name){
@@ -206,9 +223,21 @@
         }
       },
 
+      checkFootages(){
+        this.mFootage = this.mFloat("footage_real")
+        if (this.mFootage >0){
+          this.mFootage2 = this.mFloat("footage_2_real")
+        } else {
+          this.mFootage = this.mFloat("footage")
+          this.mFootage2 = this.mFloat("footage_2")
+        }
+      },
+
       calcSumExecutor(){
-         this.designer_sum = toInt(this.designer_price) * this.mFloat("footage") + 
-                             toInt(this.designer_price_2) * this.mFloat("footage_2");
+        this.checkFootages();
+
+        this.designer_sum = toInt(this.designer_price) * this.mFootage + 
+                             toInt(this.designer_price_2) * this.mFootage2;
         this.sum_total_executor = this.designer_sum + this.visualer_sum;
         this.calcRest();
       },

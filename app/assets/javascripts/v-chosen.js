@@ -37,8 +37,14 @@ Vue.component('v-chosen', {
         model = this.$parent.model; 
       }
 
-      this.idName =  model + "_" + this.name + "_id";
-      this.localName =  model + "[" + this.name + "_id]";
+      if (model === undefined) {
+        this.idName =  this.name + "_id";
+        this.localName = this.name + "_id";
+      } else {
+        this.idName =  model + "_" + this.name + "_id";
+        this.localName =  model + "[" + this.name + "_id]";
+      }
+
 
       if (this.src !== undefined) {
           src = this.$parent[this.src];

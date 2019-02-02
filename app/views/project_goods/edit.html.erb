@@ -15,7 +15,7 @@
     <%= text_field iname, :date_place, {class: 'txt datepicker', value: @prj_good.date_place.try('strftime',"%d.%m.%Y")} %>
   </div></td></tr>
 
-  <tr><td class="caption">Примечение:</td>
+  <tr><td class="caption">Примечание:</td>
   <td><div class="inp_w"><%= text_field iname,:description, {value: @prj_good.description, class: 'txt'} %></div></td></tr>
 
   <tr><td class="caption">Сумма:</td>

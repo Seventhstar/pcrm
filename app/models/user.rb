@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   has_many :leads
   has_many :roles, class_name: 'UserRole'
   has_many :absences
-  has_many :projects, foreign_key: :executor_id
+  has_many :projects, foreign_key: :executor_id, class_name: 'Project'
   has_many :ic_leads, foreign_key: :ic_user_id, class_name: 'Lead'
   has_many :files, class_name: 'LeadFile'
   has_many :options, class_name: 'UserOption'

@@ -34,7 +34,7 @@
 
 function toInt(d){
   if (isNaN(d)) return 0;
-  if (d=="") return 0;
+  if (v_nil(d)) return 0;
   return parseInt(d);
 }
 

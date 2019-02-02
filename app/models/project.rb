@@ -123,12 +123,13 @@ class Project < ActiveRecord::Base
   end
 
   def designer_sum_calc
-    if !designer_sum.nil? && designer_sum > 0
-      s = designer_sum 
-    else
+    # if !designer_sum.nil? && designer_sum > 0
+    #   s = designer_sum 
+    # else
+    # puts "designer_sum_calc", f1
       s = designer_price.to_i * f1
       s += designer_price_2.to_i * f2 if footage_2>0
-    end
+    # end
     s.to_i
   end
 

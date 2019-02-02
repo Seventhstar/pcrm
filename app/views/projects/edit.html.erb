@@ -11,7 +11,7 @@
     <li><a href="#tabs-4">Заказы</a></li>
     <li><a href="#tabs-5">Выплаты</a></li>
     <li><a href="#tabs-6">Файлы</a></li>  
-    <% if is_admin? %>  
+    <% if is_manager? %>  
       <li><a href="#tabs-7">История</a></li>
     <% end %>
     <li class="last"><a href="#tabs-9">Контакты</a></li>
@@ -88,7 +88,7 @@
   </div>
 </div> 
 
-<% if is_admin? %>
+<% if is_manager? %>
   <div id="tabs-7" class="ptab">
     <div class="box_wide">
       <div class="box_wrap box_wrap_1">

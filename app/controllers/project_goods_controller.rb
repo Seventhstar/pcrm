@@ -17,14 +17,34 @@ class ProjectGoodsController < ApplicationController
     @goods = ProjectGood.order(@sort_column)
     clarify_params
 
-    case params[:good_state]
-    when '1'
-      @goods = @goods.where(order: false)
-    when '2'
-      @goods = @goods.where(order: true, fixed: false)
-    when '3'
-      @goods = @goods.where(fixed: true)
-    end
+    # case params[:good_state]
+    # when '1'
+    #   @goods = @goods.where(order: false)
+    # when '2'
+    #   @goods = @goods.where(order: true, fixed: false)
+    # when '3'
+    #   @goods = @goods.where(fixed: true)
+    # end
+
+    @goods = ProjectGood.left_joins(:provider)
+            .left_joins(:project)
+            .left_joins(:currency)
+            .select("project_goods.*, 
+                      providers.name as provider_name, 
+                      currencies.name as currency_name,
+                      projects.address as address")
+            .order('projects.address', :created_at)
+            .except(:created_at, :updated_at)
+            .group_by {|i| [i.project_id, i.address] }
+            .map{ |g| g }
+
+    prj_ids = []
+    @goods.each do |g|
+      prj_ids << g[0][0]
+    end          
+
+    @projects   = Project.where(id: prj_ids)
+    @currencies = Currency.order(:id)
 
   end
 

@@ -71,7 +71,7 @@ class AbsencesController < ApplicationController
     @targets = AbsenceTarget.order(:name)
     @users    = User.where(city: current_user.city).order(:name)
     # puts "current_user.city #{current_user.city}", @users.to_a 
-    @projects = Project.where(city: current_user.city).order(:address)
+    @projects = Project.where(id: current_user.projects.ids).order(:address)
     @shop_targets = AbsenceShopTarget.all
 
     if !@absence.nil?

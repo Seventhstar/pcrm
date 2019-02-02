@@ -13,7 +13,7 @@ script#comments_template type="text/html"
         li.right.last 
           a href="#tab-msg-2" 
             span.icon.icon_chat
-            | Комментарии
+            | Общие комментарии
       #tab-msg-1.first
         = render 'shared/comments_list', items: @owner.special_infos
         = render 'special_infos/form'
@@ -24,7 +24,7 @@ script#comments_template type="text/html"
   .box_i
     .hl
       span.icon.icon_chat
-      | Комментарии:
+      | Общие комментарии:
     = render partial: 'shared/comments_list'
     = render 'comments/form'
 

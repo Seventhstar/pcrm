@@ -90,6 +90,7 @@ class ProjectsController < ApplicationController
     @styles     = Style.order(:name)
     @pstatuses   = ProjectStatus.order(:name)
     @currencies = Currency.order('id')
+    puts "@currencies ",@currencies.to_json
   end
 
   # GET /projects/new

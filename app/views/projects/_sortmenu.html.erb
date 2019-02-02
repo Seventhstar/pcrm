@@ -3,7 +3,7 @@
   <div class="panel-left"><ul class="ul_pill"><li id="clients" class="selected "><%= link_to 'Клиенты', :clients %></li></ul></div>
 
   <%= sortable_pil "number", "По № договора" %>
-  <% if is_admin? %>  
+  <% if is_manager? %>  
     <%= sortable_pil "executor_id", "По исполнителям", 'asc' %>
   <% end %>
   <%= sortable_pil "pstatus_id", "По статусам" %>

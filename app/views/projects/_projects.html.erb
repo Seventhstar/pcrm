@@ -8,7 +8,7 @@
       <th width="25px"><%= sortable_th(:number, '№', @numsort) %></th>
       <th><%= sortable_th(:address, 'Адрес', @numsort) %></th>
 
-      <% if is_admin? %>
+      <% if is_manager? %>
         <th width='110px'><%= sortable_th(:project_type_id, 'Вид проекта', @numsort) %></th>
         <th width='150px'><%= sortable_th(:client_id, 'Заказчик', @numsort) %></th>
       
@@ -27,7 +27,7 @@
       <th width="85px"><%= sortable_th(:date_end_plan, 'Оконч.', @numsort) %> </th>
       <th style="width: 105px;" class=""><%= sortable_th(:footage, 'м2 / Цена', @numsort) %></th>
       <th class="td_right" style="width: 77px;" ><%= sortable_th(:sum_total, 'Стоимость', @numsort) %></th>
-      <% if is_admin? %>
+      <% if is_manager? %>
         <th ></th>
       <% end %>
     </tr>
@@ -44,7 +44,7 @@
     <td rowspan="2"><%= tooltip(project.client_name, 
                           tooltip_str_from_hash({'Телефон:' => phone_format(project.client_phone), 
                                                   'E-mail:' => project.client_email}), true ) %></td>
-    <% if is_admin? && @sort!="users.name" %><td rowspan="2"><%= project.executor_name %></td> <% end %>
+    <% if is_manager? && @sort!="users.name" %><td rowspan="2"><%= project.executor_name %></td> <% end %>
 
     <td class="td_prgrs"><%= f_date(project.date_start) %></td>
     <td class="<%= class_prj_td(project) %> td_prgrs"><%= f_date(project.date_end) %></td>
