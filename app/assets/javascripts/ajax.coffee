@@ -216,12 +216,17 @@ $(document).ready ->
     item_id = $(this).attr('item_id')
     model = $(this).attr('model')
     params = $('[name^='+prm+']').serialize()    
-    upd_param(params+'&model='+model+'&id='+item_id,true,true)
+    # upd_param(params+'&model='+model+'&id='+item_id,true,true)
     $.ajax
       url: action+item_id
       data: params
       dataType: 'script'
       type: 'PATCH'
+      success: (event, xhr, settings) ->
+        show_ajax_message('Успешно обновлено','success')
+      error: (evt, xhr, status, error) ->  
+        show_ajax_message(status.message,'error')        
+
 
 # поиск 
   $('#search').on 'keyup', (e)-> 

@@ -23,7 +23,10 @@
       grandOfferTotal: [],
       grandOrderTotal: [],
       grandClosedTotal: [],
-      
+
+      grouped: [],
+      groupHeaders: [],
+      groupKey: 'project_id',
 
       lists: "projects currencies+short",
 
@@ -43,7 +46,22 @@
 
     created(){
       this.projects.forEach(()=>this.addControlAndField())
-      this.calculateTotal()
+      //this.calculateTotal()
+
+
+      // this.groupHeaders = _.groupBy(this.goods, function(v){
+      //     return v.project_id + '#' + v.address;
+      // });
+
+      // // this.grouped = _.map(this.groupHeaders, function(group){
+      // //     return {
+      // //         address: group[0].address,
+      // //         project_id: group[0].project_id,
+      // //         goods: _.pluck(group, 'deal_id')
+      // //     }
+      // // });
+      this.makeGroup('project_id')
+      // console.log('headers', this.groupHeaders)
     },
 
     mounted(){
@@ -65,8 +83,13 @@
       },
 
       projectAddress(prj_id){
-        let prj = this.projects.filter(w => w.value === parseInt(prj_id))
-        let name = prj.length>0 ? prj[0].label  : 'Ошибка'
+        let name = this.grouped[prj_id][0]
+        if (this.groupKey == 'project_id')
+          name = name.address
+        else
+          name = name.provider_name
+        // let prj = this.projects.filter(w => w.value === parseInt(prj_id))
+        // let name = prj.length>0 ? prj[0].label  : 'Ошибка'
         return name
       },
 
@@ -82,13 +105,15 @@
         this.currentGoods = goods;
         this.currentIndex = index;
         this.confirmModal = true;
+        // console.log('goods', goods, 'index', index)
       },
 
       modalYes(){
         if (this.currentGoods === '' || !this.confirmModal ) return;
-        let index = this.goods[this.currentIndex][1].indexOf(this.currentGoods);
+        let index = this.grouped[this.currentIndex].indexOf(this.currentGoods);
+
         if (index<0) return;
-        this.goods[this.currentIndex][1].splice(index, 1);
+        this.grouped[this.currentIndex].splice(index, 1);
         delete_item('/project_goods/'+this.currentGoods.id);
       },
 
@@ -139,28 +164,30 @@
         return string.slice(0, -2)
       },
 
-      calculateAmount(gt){
-        this.offerAmount[gt] = {}
-        this.orderAmount[gt] = {}
-        this.closedAmount[gt] = {}
+      calculateAmount(prj_id){
+        this.offerAmount[prj_id] = {}
+        this.orderAmount[prj_id] = {}
+        this.closedAmount[prj_id] = {}
 
         this.currencies.forEach( c => {
-          this.offerAmount[gt][c.value] = 0 
-          this.orderAmount[gt][c.value] = 0
-          this.closedAmount[gt][c.value] = 0
+          this.offerAmount[prj_id][c.value] = 0 
+          this.orderAmount[prj_id][c.value] = 0
+          this.closedAmount[prj_id][c.value] = 0
         })
 
-        for (var gi in this.goods[gt][1]){
-            g = this.goods[gt][1][gi]
+        // console.log("this.grouped[prj_id]", prj_id, this.grouped)
+
+        for (var gi in this.grouped[prj_id]){
+            g = this.grouped[prj_id][gi]
             c = g.currency_id
-            this.offerAmount[gt][c] = this.offerAmount[gt][c] + parseInt(g.gsum)
-            this.orderAmount[gt][c] = this.orderAmount[gt][c] + toInt(g.sum_supply)
+            this.offerAmount[prj_id][c] = this.offerAmount[prj_id][c] + parseInt(g.gsum)
+            this.orderAmount[prj_id][c] = this.orderAmount[prj_id][c] + toInt(g.sum_supply)
             if (g.fixed)
-              this.closedAmount[gt][c] = this.closedAmount[gt][c] + toInt(g.sum_supply)
+              this.closedAmount[prj_id][c] = this.closedAmount[prj_id][c] + toInt(g.sum_supply)
         }
 
-        if (this.offerAmount[gt] === undefined) return ""
-        return this.formatTotal(this.offerAmount[gt])
+        if (this.offerAmount[prj_id] === undefined) return ""
+        return this.formatTotal(this.offerAmount[prj_id])
       },
 
       allAmount(g){
@@ -169,6 +196,18 @@
         offer = hasOrder ? "<span class='striked'>" + to_sum(offer) + '</span>' : to_sum(offer)
         order = hasOrder ? "<br>" + to_sum(g.sum_supply) : ''
         return offer + order
+      },
+
+      makeGroup(id){
+        this.groupKey = id
+        this.grouped = _.groupBy(this.goods, id)
+        this.groupHeaders  = Object.keys(this.grouped)
+      },
+
+      
+      sortBy(id){
+        // console.log('sort', id);
+        this.makeGroup(id)
       },
 
       rowClass(g){

@@ -33,15 +33,17 @@ class ProjectGoodsController < ApplicationController
                       providers.name as provider_name, 
                       currencies.name as currency_name,
                       projects.address as address")
-            .order('projects.address', :created_at)
-            .except(:created_at, :updated_at)
-            .group_by {|i| [i.project_id, i.address] }
-            .map{ |g| g }
+            # .order('projects.address', :created_at)
+            # .except(:created_at, :updated_at)
+            # .group_by {|i| [i.project_id, i.address] }
+            # .map{ |g| g }
 
-    prj_ids = []
-    @goods.each do |g|
-      prj_ids << g[0][0]
-    end          
+    prj_ids = @goods.pluck(:project_id).uniq
+    puts "prj_ids", prj_ids
+    # prj_ids = []
+    # @goods.each do |g|
+    #   prj_ids << g[0][0]
+    # end          
 
     @projects   = Project.where(id: prj_ids)
     @currencies = Currency.order(:id)

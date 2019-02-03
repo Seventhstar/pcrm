@@ -319,7 +319,7 @@ module ApplicationHelper
     options[:label].nil? ? s : l+s
   end
 
-  def sortable_pil(column, title = nil, default_dir = 'desc')
+  def sortable_pil(column, title = nil, default_dir = 'desc', fn = nil)
 
     title ||= column.titleize
     sort_col = @sort_column == 'month' ?  "start_date": @sort_column
@@ -333,7 +333,12 @@ module ApplicationHelper
     if (direction == false)
       direction = default_dir
     end
-    content_tag :span, title, {class: css_class, sort: column, direction: direction }
+
+    css_class.concat(" vue_sort") if !fn.nil?
+
+    tags = {class: css_class, sort: column, direction: direction }
+    tags['v-on:click'] = fn if !fn.nil?
+    content_tag :span, title, tags
   end
 
   def sortable_th(column, title = nil, nosort = false)

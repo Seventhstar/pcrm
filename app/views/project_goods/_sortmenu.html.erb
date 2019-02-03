@@ -1,6 +1,6 @@
 <div class="subnav submenu">
-  <%= sortable_pil "project_id", "По проектам" %>
-  <%= sortable_pil "provider_id", "По поставщикам" %>
+  <%= sortable_pil "project_id", "По проектам", 'desc', 'sortBy("project_id")' %>
+  <%= sortable_pil "provider_id", "По поставщикам", 'desc', 'sortBy("provider_id")' %>
 
   <%= chosen_src 'year', @years, params[:year], {class: 'ychosen', nil_value: 'Год'} %>
   <%= chosen_src "currency_id", currency_src, params[:currency], {nil_value: 'Валюта', class: 'ychosen'} %>

@@ -54,20 +54,40 @@ $.fn.capitalize = function () {
 };
 
 function updateOptionRow(name, json, id){
-  found = searchByKey(app[name], id)
+  let where = app[name];
+  let first = true
+  if (app != undefined && app.grouped != undefined)
+  {
+    console.log('has grouped')
+    where = app.grouped;
+    first = false;
+  }
+
+  found = searchByKey(where, id, first)
+
+  if (first) {
+    replace = where[found.gt][1]
+  } else {
+    replace = where[found.gt]
+  }
+  // console.log('found', 1);
   if (typeof(found) === "string") {
     show_ajax_message("Ошибка обновления строки заказа", "error")
   } else {
     for (var field in json) {
-      app[name][found.gt][1][found.goods][field] = json[field] 
+      replace[found.goods][field] = json[field] 
     }
   }
 }
 
-function searchByKey(obj, key) {
+function searchByKey(obj, key, first = true) {
   for (var gt in obj) {
-    for (var goods in obj[gt][1]) {
-      if (obj[gt][1][goods].id === key) {
+    let gt_obj = obj[gt]
+    if (first) gt_obj = gt_obj[1]
+    for (var goods in gt_obj) {
+      
+      console.log('goods', goods, gt_obj[goods].id, key)
+      if (gt_obj[goods].id === key) {
         return {gt: gt, goods: goods}; 
       }
     }
@@ -177,7 +197,7 @@ $(function() {
   ];
 
   $( document ).ajaxError(function( event, jqxhr, settings, thrownError ) {
-    show_ajax_message('error:' + jqxhr.responseText,'error')
+    if (jqxhr.status != 200) show_ajax_message('error:' + jqxhr.responseText,'error')
   });
 
   //Calling context menu

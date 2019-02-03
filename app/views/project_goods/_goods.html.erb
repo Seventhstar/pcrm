@@ -1,8 +1,8 @@
-<div v-for="(item, index) in goods">
+<div v-for="(item, index) in groupHeaders">
 <template v-if="controls[index]!==undefined">
   <div class="panel panel-default good_group">
     <div class="panel-heading table-heading head month"> 
-      <a :href='projectLink(item[0][0])'>{{projectAddress(item[0][0])}}</a> 
+      <a :href='projectLink(item)'>{{projectAddress(item)}}</a> 
       <span class="cut cutted" :cut_id="index" @click="switchOpened(index)"><b></b></span>
     </div>
     
@@ -18,9 +18,9 @@
       </template>
     </div>
 
-    <transition-group name="item" v-show="openedOrHaveData(index)">
-    <template v-for="(g, ind) in item[1]">
-      <div :class="rowClass(g)" :id="'item_'+g.id" :key="g.id">    
+    <transition-group name="item" >
+    <template v-for="(g, ind) in grouped[item]" >
+      <div :class="rowClass(g)" :id="'item_'+item" :key="item">    
           <div>{{g.name}}</div>
           <div>{{g.provider_name}}</div>
           <div>{{format_date(g.date_place)}}</div>
@@ -29,15 +29,15 @@
           <div v-html="allAmount(g)"></div>
           <div class="edit_delete td_right " style="">
             <a class="icon basket td_right" data-modal="true" :href="goodsEditLink(g)"></a>
-            <span class="icon icon_del" @click="deleteGoods(index, g)"></span> </div>
+            <span class="icon icon_del" @click="deleteGoods(item, g)"></span> </div>
       </div>
     </template>
     </transition-group>
 
     <div class="table_3col table_footer">
-      <div>Предложено: <span>{{calculateAmount(index)}}</span></div>
-      <div>Заказано: <span>{{formatTotal(orderAmount[index])}}</span></div>      
-      <div>Закрыто: <span>{{formatTotal(closedAmount[index])}}</span></div>      
+      <div>Предложено: <span>{{calculateAmount(item)}}</span></div>
+      <div>Заказано: <span>{{formatTotal(orderAmount[item])}}</span></div>      
+      <div>Закрыто: <span>{{formatTotal(closedAmount[item])}}</span></div>      
     </div>
   </template>
 </div>
