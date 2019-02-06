@@ -56,9 +56,7 @@ $.fn.capitalize = function () {
 function updateOptionRow(name, json, id){
   let where = app[name];
   let first = true
-  if (app != undefined && app.grouped != undefined)
-  {
-    console.log('has grouped')
+  if (app != undefined && app.grouped != undefined){
     where = app.grouped;
     first = false;
   }
@@ -70,7 +68,7 @@ function updateOptionRow(name, json, id){
   } else {
     replace = where[found.gt]
   }
-  // console.log('found', 1);
+
   if (typeof(found) === "string") {
     show_ajax_message("Ошибка обновления строки заказа", "error")
   } else {
@@ -85,8 +83,6 @@ function searchByKey(obj, key, first = true) {
     let gt_obj = obj[gt]
     if (first) gt_obj = gt_obj[1]
     for (var goods in gt_obj) {
-      
-      console.log('goods', goods, gt_obj[goods].id, key)
       if (gt_obj[goods].id === key) {
         return {gt: gt, goods: goods}; 
       }

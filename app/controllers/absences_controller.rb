@@ -26,7 +26,10 @@ class AbsencesController < ApplicationController
     abs = is_manager? ? Absence.all : current_user.absences
     @absences = abs.select(query_str).joins(:reason)
 
-    @absences = @absences.where(user_id: User.where(city: @main_city).ids)
+    user_ids = User.where(city: @main_city).ids
+    # puts "user_ids #{user_ids}"
+    # wee
+    @absences = @absences.where(user_id: user_ids)
 
     if params[:sort]!='calendar'
       if @only_actual
@@ -71,10 +74,16 @@ class AbsencesController < ApplicationController
     @targets = AbsenceTarget.order(:name)
     @users    = User.where(city: current_user.city).order(:name)
     # puts "current_user.city #{current_user.city}", @users.to_a 
-    @projects = Project.where(id: current_user.projects.ids).order(:address)
+    @projects = Project.order(:address)
     @shop_targets = AbsenceShopTarget.all
 
     if !@absence.nil?
+
+      # @shops = @absence.shops.map{|s| { id: s.id,
+      #             shop: {label: s.shop_name, value: s.shop_id}, 
+      #             target: {label: s.target_name, value: s.target_id},
+      #             _destroy: false}}
+
       @shops    = @absence.shops
       @dt_from  = @absence.dt_from.try('strftime',"%d.%m.%Y")
       @t_from   = @absence.dt_from.try('strftime',"%H:%M")

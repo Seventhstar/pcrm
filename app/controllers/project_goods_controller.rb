@@ -11,39 +11,26 @@ class ProjectGoodsController < ApplicationController
   end
 
   def index
+    params[:year] = Date.today.year if params[:year].nil? 
     params.delete_if{|k,v| v=='' || v=='0' }
     
+    @groupKey = sort_column
     @sort_column = sort_column
     @goods = ProjectGood.order(@sort_column)
     clarify_params
 
-    # case params[:good_state]
-    # when '1'
-    #   @goods = @goods.where(order: false)
-    # when '2'
-    #   @goods = @goods.where(order: true, fixed: false)
-    # when '3'
-    #   @goods = @goods.where(fixed: true)
-    # end
-
     @goods = ProjectGood.left_joins(:provider)
+            .by_year(params[:year])
+            .currency(params[:currency])
+            .good_state(params[:good_state])
             .left_joins(:project)
             .left_joins(:currency)
             .select("project_goods.*, 
                       providers.name as provider_name, 
                       currencies.name as currency_name,
                       projects.address as address")
-            # .order('projects.address', :created_at)
-            # .except(:created_at, :updated_at)
-            # .group_by {|i| [i.project_id, i.address] }
-            # .map{ |g| g }
 
-    prj_ids = @goods.pluck(:project_id).uniq
-    puts "prj_ids", prj_ids
-    # prj_ids = []
-    # @goods.each do |g|
-    #   prj_ids << g[0][0]
-    # end          
+    prj_ids = @goods.pluck(:project_id).uniq         
 
     @projects   = Project.where(id: prj_ids)
     @currencies = Currency.order(:id)
@@ -52,8 +39,7 @@ class ProjectGoodsController < ApplicationController
 
   def create
     @prj_good = ProjectGood.new(pg_params)
-    # puts "prm: #{pg_params}"
-    # @prj_good.project_id = params[:owner_id] #.split('_').last
+
     @cur_id = pg_params[:owner_id]
     if @prj_good.save
       respond_to do |format|
@@ -85,7 +71,7 @@ class ProjectGoodsController < ApplicationController
   def edit
     @title = 'Редактирование заказа'
     @providers = Goodstype.find(@prj_good.goodstype_id).providers
-    puts "@prj_good", @prj_good.to_json, @providers.pluck(:id)
+    # puts "@prj_good", @prj_good.to_json, @providers.pluck(:id)
     @cur_id = params[:owner_id]
     respond_modal_with @prj_good, location: root_path
   end

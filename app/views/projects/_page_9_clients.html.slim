@@ -11,11 +11,11 @@
           tr
             td.caption Телефон
             td
-              .lbl =@project.client.phone
+              .lbl =@project.client.try(:phone)
           tr
             td.caption E-Mail
             td
-              .lbl =@project.client.email
+              .lbl =@project.client.try(:email)
 
         br/
       .panel-right

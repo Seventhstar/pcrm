@@ -91,7 +91,7 @@ class LeadMailer < ActionMailer::Base
               "Информация:",
               "#{raw(@lead.info)}"].compact.join("\n")
               
-      bot.send_message chat_id: chat_id, text: text, reply_markup: markup
+      # bot.send_message chat_id: chat_id, text: text, reply_markup: markup
     end
   end
 

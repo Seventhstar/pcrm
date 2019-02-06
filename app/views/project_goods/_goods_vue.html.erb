@@ -26,9 +26,10 @@
 
       grouped: [],
       groupHeaders: [],
-      groupKey: 'project_id',
+      groupKey1: 'project_id',
 
       lists: "projects currencies+short",
+      texts: 'groupKey',
 
       providers: @providers,
       project_g_types: [],
@@ -45,23 +46,7 @@
     },
 
     created(){
-      this.projects.forEach(()=>this.addControlAndField())
-      //this.calculateTotal()
-
-
-      // this.groupHeaders = _.groupBy(this.goods, function(v){
-      //     return v.project_id + '#' + v.address;
-      // });
-
-      // // this.grouped = _.map(this.groupHeaders, function(group){
-      // //     return {
-      // //         address: group[0].address,
-      // //         project_id: group[0].project_id,
-      // //         goods: _.pluck(group, 'deal_id')
-      // //     }
-      // // });
       this.makeGroup('project_id')
-      // console.log('headers', this.groupHeaders)
     },
 
     mounted(){
@@ -88,16 +73,16 @@
           name = name.address
         else
           name = name.provider_name
-        // let prj = this.projects.filter(w => w.value === parseInt(prj_id))
-        // let name = prj.length>0 ? prj[0].label  : 'Ошибка'
         return name
       },
 
+      nonGroupKey(g) {
+        if (this.groupKey == 'project_id')
+          return g.provider_name
+        return g.address
+      },
+
       addControlAndField(){
-        // let h = {providers: null, gsum: 0}
-        // this.inputs.forEach( c => h[c] = '' );
-        // h.date_place = format_date();
-        // this.fields.push(h);
         this.controls.push({opened: false, valid: false});
       },
 
@@ -202,11 +187,12 @@
         this.groupKey = id
         this.grouped = _.groupBy(this.goods, id)
         this.groupHeaders  = Object.keys(this.grouped)
+        this.controls.length = 0
+        this.groupHeaders.forEach(()=>this.addControlAndField())
+        // console.log('this.controls.length', this.controls.length)
       },
-
       
       sortBy(id){
-        // console.log('sort', id);
         this.makeGroup(id)
       },
 

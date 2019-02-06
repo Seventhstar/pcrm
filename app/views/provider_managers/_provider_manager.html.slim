@@ -3,5 +3,6 @@ tr id="ProviderManager_#{pm.id}"
   td = pm.name 
   td = pm.phone
   td = pm.email
-  = tool_icons pm, {tag:'span'}
+  - if is_manager?
+    = tool_icons pm, {tag:'span'}
 

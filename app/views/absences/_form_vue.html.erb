@@ -5,10 +5,12 @@
     el: '.vue_app',
     data: <%= fill_vue_data(@absence, {
       model: 'absence',
-      booleans: 'canceled approved f_valid f_shop',
+      noteValid: '',
+      formValid: false,
+      booleans: 'canceled approved f_shop',
       texts: 'comment new_shop new_shop_target',
       list_values: 'reason new_reason project target',
-      lists: "reasons projects targets users \
+      lists: "reasons projects+executor_id targets users \
               new_reasons:@reasons \
               new_shops:Provider.all new_shop_targets:@shop_targets",
       checked: @checked,
@@ -26,6 +28,20 @@
 
     mounted(){
       this.$root.$on('onInput', this.onInput);
+    },
+
+    created(){
+      // this.filteredProjects = this.projects
+      //.filter(p => p.executor_id == this.user)
+    },
+
+    computed:{
+      filteredProjects(){
+        let n = this.projects.filter(p => p.executor_id == this.user.value)
+        console.log('n', n);
+        return n
+        // return this.projects
+      }
     },
 
     methods: {
@@ -57,25 +73,53 @@
 
       onInput(e){
         let f_shop = true;
-        let f_valid = true;
+        let formValid = true;
         let reason = v_nil(this.reason) ? 0 : this.reason.value  
+
+        if (e !== undefined && e.name == 'user') {
+          // this.filteredProjects = this.projects.filter(p => p.executor_id == e.value)
+          // console.log('e', e, 'f', this.filteredProjects)
+        }
 
         switch(reason){
           case 0:
-            f_valid = false; break;
+            formValid = false; 
+            this.noteValid = 'Не указана причина';
+            break;
           case 2:
-            if (v_nil(this.project) || v_nil(this.target)){f_valid = false;} break;
+            noteValid = ''
+            if (v_nil(this.project)){
+              noteValid = 'Не указан объект, ';  
+              formValid = false;
+            }
+            if (v_nil(this.target)){
+              noteValid = noteValid + 'Не указана цель, ';  
+              formValid = false;
+            } 
+            this.noteValid = noteValid.slice(0, -2)
+            break;
           case 3:
-            if (v_nil(this.project) || this.shops.filter(sh => !sh._destroy).length === 0){f_valid = false;} break;
+            if (v_nil(this.project) || this.shops.filter(sh => !sh._destroy).length === 0){formValid = false;} break;
           case 6:
-            if ($('#absence_comment').val().length < 3) {f_valid = false;}        
+            if ($('#absence_comment').val().length < 3) {
+              this.noteValid = 'Не указан комментарий личной причины';
+              formValid = false;
+            }        
         }
 
-        if (v_nil(this.user)) f_valid = false;
+        if (v_nil(this.user)) formValid = false;
 
         if (v_nil(this.new_shop_target)) f_shop = false;
-        this.f_valid = f_valid;
+        this.formValid = formValid;
         this.f_shop = f_shop;
+      },
+
+      onSubmit(event){
+        if (event && !this.formValid) {
+          event.preventDefault();
+          show_ajax_message(this.noteValid, 'error');
+        }
+
       },
 
       equals(obj, v){      

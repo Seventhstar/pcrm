@@ -1,4 +1,4 @@
-= simple_form_for(@provider) do |f|
+= simple_form_for(@provider, defaults: { disabled: !is_manager? }) do |f|
   .box_wrap.box_wrap_1
     .panel-left
       table.tbl_fc.tbl_fc
@@ -6,10 +6,12 @@
         = tr_multi_select f, :goodstype_ids, Goodstype.all, 'Виды товаров'
         = tr_chosen 'p_status_id', @p_statuses, @provider, 'Статус'
         = tr_text f, :komment, 'Примечание'
-        = tr_submit_cancel providers_page_url
+        = tr_chosen 'city_id', @cities, @provider, 'Город'
+        = tr_submit_cancel providers_page_url if is_manager?
     .panel-right
-      .comments_box
-        = render "shared/comments"
+      - if controller.action_name == 'edit'
+        .comments_box
+          = render "shared/comments"
 .sep_3
 .managers
   - if !@provider.id.nil?

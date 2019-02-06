@@ -5,5 +5,5 @@
 $(document).ready ->
 
   $('#goodstype').chosen({width: '370px', allow_single_deselect: true} )
-  $('.chosen-select').chosen({width: '452px', display_selected_options: false, display_disabled_options:false})
+  $('.chosen-select').chosen({width: '458px', display_selected_options: false, display_disabled_options:false})
     

@@ -194,7 +194,7 @@
     $(this).width(w+'%')
     col = $(this).attr('c')
     if col == undefined then col = 'c7c7c7'
-    col = '#'+col
+    if col.charAt(0) != '#' then col = '#'+col 
     $(this).css("backgroundColor", col) 
   # подкрашиваем остатки из-за rowspan
   $("tr").hover (->

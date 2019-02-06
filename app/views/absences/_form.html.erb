@@ -34,7 +34,7 @@
     <section class="grid_table_absence" v-show="equals(reason,[2,3])">  
       <div class="label_col">Проект:</div> 
       <div>
-        <v-chosen name="project" placeholder="Укажите объект..."/>
+        <v-chosen name="project" placeholder="Укажите объект..." src="filteredProjects"/>
       </div>
       <transition name="slide-fade">
         <div class="label_col" v-show="equals(reason,2)">Цель:</div>
@@ -92,7 +92,7 @@
   </transition>
 
   <% if is_manager? || is_new || is_author %>
-    <%= submit_cancel absences_url, {classValid: "!f_valid"} %>
+    <%= submit_cancel absences_url, {classValid: "!formValid", tip: 'noteValid', click: 'onSubmit'} %>
   <% end %>
 
 <% end %>

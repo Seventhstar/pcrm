@@ -2,14 +2,14 @@
 <template v-if="controls[index]!==undefined">
   <div class="panel panel-default good_group">
     <div class="panel-heading table-heading head month"> 
-      <a :href='projectLink(item)'>{{projectAddress(item)}}</a> 
+      <a :href='projectLink(item)'>{{projectAddress(item)}} ({{grouped[item].length}} поз.)</a> 
       <span class="cut cutted" :cut_id="index" @click="switchOpened(index)"><b></b></span>
     </div>
     
     <div class="grid_table_goods grid_table_head" v-show="openedOrHaveData(index)">
       <template class="goods_head">
         <div>Позиция</div>
-        <div>Поставщик</div>
+        <div>{{groupKey == 'project_id' ? 'Поставщик' : 'Проект'}}</div>
         <div>Дата</div>
         <div>Примечание</div>
         <div>Валюта</div>
@@ -18,11 +18,11 @@
       </template>
     </div>
 
-    <transition-group name="item" >
+    <transition-group name="item" v-show="openedOrHaveData(index)">
     <template v-for="(g, ind) in grouped[item]" >
       <div :class="rowClass(g)" :id="'item_'+item" :key="item">    
           <div>{{g.name}}</div>
-          <div>{{g.provider_name}}</div>
+          <div>{{nonGroupKey(g)}}</div>
           <div>{{format_date(g.date_place)}}</div>
           <div>{{g.description}}</div>
           <div>{{g.currency_name}}</div>

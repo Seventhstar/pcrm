@@ -9,6 +9,18 @@ class ProjectGood < ActiveRecord::Base
   validates :name, length: { minimum: 3 }
   validates :provider_id, presence: true
   validates :gsum, presence: true
+  scope :by_year, ->(year){where(date_place: Date.new(year.to_i,1,1)..Date.new(year.to_i,12,31)) if year.present? && year&.to_i>0}
+  scope :currency, ->(c){where(currency_id: c) if c.present?}
+  scope :good_state, ->(gs){
+    case gs
+    when '1'
+      where(order: false)
+    when '2'
+      where(order: true, fixed: false)
+    when '3'
+      where(fixed: true)
+    end
+  }
 
   def provider_name
     provider.try(:name)

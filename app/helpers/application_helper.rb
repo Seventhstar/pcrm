@@ -221,14 +221,16 @@ module ApplicationHelper
 
     if data[:texts].present? 
       data[:texts].split(' ').each do |t|
-        data[t] = obj[t].nil? ? '' : obj[t]
+        data[t] = eval("@#{t}")
+        puts data[t], t
+        data[t] = obj[t].nil? ? '' : obj[t] if data[t].nil?
       end
       data.delete(:texts)
     end
 
     if data[:list_values].present? 
       data[:list_values].split(' ').each do |li| 
-        v = v_value(nil, nil, nil, eval("@#{li}"))
+        v = v_value(nil, nil, nil, eval("@#{li}"))        
         v = v_value(obj, li) if !v.present?
         data[li] = v
       end

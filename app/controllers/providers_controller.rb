@@ -57,7 +57,10 @@ class ProvidersController < ApplicationController
     @ids = sp & bp & gtp & ps & s_ids
     # @ids = s_ids & sp
 
-    @providers = Provider.where(id: @ids).order(:name) # find(ids, :order => :name)
+    puts "@main_city #{@main_city}"
+    @providers = Provider.by_city(@main_city)
+                         .where(id: @ids)
+                         .order(:name) # find(ids, :order => :name)
     store_providers_path
   end
 
@@ -78,6 +81,7 @@ class ProvidersController < ApplicationController
     @managers = {}
     @manager  = ProviderManager.new
     @p_statuses = PStatus.order(:name)
+    @provider.city_id = current_user.city_id
     @owner = @provider
   end
 
@@ -88,7 +92,7 @@ class ProvidersController < ApplicationController
     @manager  = ProviderManager.new
     @p_statuses = PStatus.order(:name)
 
-    @comm_height = 310
+    @comm_height = 340
     # @comments = @provider.comments.order('created_at asc')
     @owner = @provider
   end
@@ -144,16 +148,17 @@ class ProvidersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def provider_params
-      params.require(:provider).permit(:name, :manager, :phone, :komment, :address, :email, :url, :spec, :p_status_id,:budget_ids =>[], :style_ids=>[], :goodstype_ids =>[] )
+      params.require(:provider).permit( :name, :manager, :phone, :komment, :address, 
+                                        :email, :url, :spec, :p_status_id, :city_id,
+        budget_ids: [], style_ids: [], goodstype_ids: [])
     end
 
-  def sort_column
-    Provider.column_names.include?(params[:sort]) ? params[:sort] : "name"
-  end
+    def sort_column
+      Provider.column_names.include?(params[:sort]) ? params[:sort] : "name"
+    end
 
-  def sort_direction
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
-  end
-
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    end
 
 end

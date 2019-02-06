@@ -9,7 +9,10 @@ class Provider < ActiveRecord::Base
     has_many :goodstypes, through: :provider_goodstypes
     has_many :receipts
     belongs_to :p_status
+    belongs_to :city
     has_paper_trail
+
+    scope :by_city, ->(city){where(city: city)}
 
     attr_reader :style_tokens
     attr_reader :budget_tokens

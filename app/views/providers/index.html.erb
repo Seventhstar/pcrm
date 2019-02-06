@@ -1,6 +1,6 @@
 <div class="items_box_head">
 <div class="panel-left">
-<%= form_tag providers_path, :method => 'get', :id => "p_search" ,class: 'index_filter' do %>
+<%= form_tag providers_path, method: 'get', id: "p_search", class: 'index_filter' do %>
 
 <label class="combobox">
 <%= chosen_src "goodstype", Goodstype.order(:name), @param_goodstype, {nil_value: 'Вид товара...',class: ''} %>
@@ -18,7 +18,7 @@
 </div>
 </div>
 <div class ="container">
-	<div id="div_tproviders">
-	 	<%= render "providers" %>
-	</div>
+  <div id="div_tproviders">
+    <%= render "providers" %>
+  </div>
 </div>

@@ -1,1 +1,2 @@
-$("#div_tprojects").html("<%= escape_javascript(render("goods")) %>");
+app.goods = JSON.parse('<%= j(fill_vue_data(@project, {goods: @goods})) %>').goods
+app.makeGroup('<%= @groupKey %>')

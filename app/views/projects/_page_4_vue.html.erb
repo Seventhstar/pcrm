@@ -10,7 +10,9 @@
       currentIndex: 0,
       currentGoods: '',
       
-      inputs: ['name', 'date_place', 'description', 'gsum'],
+      inputs: ['name', 'date_place', 'gsum', 'description'],
+      required: ['name', 'date_place', 'gsum'],
+
       selects: ['provider', 'currency'],
       
       fields: [],
@@ -95,6 +97,7 @@
             app.new_gtypes.splice(app.new_gtypes.indexOf(app.new_gtype), 1)          
             app.new_gtype = null 
             app.addControlAndField()
+
           });
         }
       },
@@ -128,6 +131,10 @@
 
       },
 
+      clearFields(){
+        
+      },
+
       deleteGoods(index, goods){
         this.currentGoods = goods;
         this.currentIndex = index;
@@ -146,9 +153,21 @@
         let valid = true;
         let pref = 'goods_'+key+'_'; 
 
-        this.inputs.forEach( c => {if (v_nil(this.fields[index][c])) {valid = false;} });
-        this.selects.forEach( c => {if (v_nil(app[c])) {valid = false;}});
+        this.required.forEach( c => {
+          if (v_nil(this.fields[index][c])) {
+            valid = false;
+          } 
+        });
+            
+        // console.log("c",c, "index", index);
 
+        this.selects.forEach( c => {
+          if (v_nil(app[c])) {
+            valid = false;
+            console.log('valid', valid, 'c', c, app[c]);
+          }
+        });
+        console.log("valid", valid);
         this.controls[index].valid = valid;  
       },
 

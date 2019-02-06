@@ -3,7 +3,7 @@
 
 
 <% @goodstypes.each do  |gt| %>
-<% prv = gt.providers.where(id: @ids) %>
+<% prv = gt.providers.by_city(@main_city).where(id: @ids) %>
 <% if prv.size>0 %>
 
 <div class="panel panel-default">

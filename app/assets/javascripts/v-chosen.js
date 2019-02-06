@@ -8,7 +8,7 @@ Vue.component('v-chosen', {
         options: []
       }
     }, 
-    props: ['name', 'placeholder', 'label', 'src', 
+    props: ['name', 'placeholder', 'label', 'src', 'selected', 
             'owner', 'k', 'index', 'from_array'],
     template: `
         <div class="inp_w">
@@ -57,21 +57,28 @@ Vue.component('v-chosen', {
         this.options = this.$parent[this.name + "s"];
       }
 
+
+      if (this.options !== undefined){
+        if (this.selected !== undefined) this.onUpdate(this.options[this.selected])
+        else if (this.options.length === 1) {
+          console.log('this.options[0]', this.options[0])
+          this.onUpdate(this.options[0])
+        }
+        // else this.onUpdate()
+
+      } else {
+        // this.onUpdate()
+      }
     },
 
     mounted(){
-      if (this.options !== undefined && this.options.length === 1) 
-        this.onUpdate(this.options[0])
-      else{
-        // console.log("this.options.length", this.options.length, this.options[0].label)
-        // this.onUpdate({value: '', label: ''})
-      }
+
       //   this.onUpdate()
     },
 
     methods: {
         onUpdate: function(val) {
-          // console.log("val", val)
+          if (val === undefined) {this.$parent[this.name] = []; return;}
           let label = (v_nil(val)) ? undefined : val.label;
           this.localValue = (v_nil(val)) ? 0 : val.value;
           this.$parent[this.name] = val

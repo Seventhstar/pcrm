@@ -36,7 +36,10 @@ $(document).ready ->
     else
       $('.sort-span').removeClass('active')
       $(this).addClass('active')
-    if !$(this).hasClass('vue_sort')
+      
+    if $(this).hasClass('vue_sort')
+      sortable_prepare({sort: srt, direction: dir})
+    else
       sortable_query({sort: srt, direction: dir})
     return
 
