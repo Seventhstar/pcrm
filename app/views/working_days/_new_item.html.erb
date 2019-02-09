@@ -1,0 +1,13 @@
+<%= form_for(@item, html: {class: 'simple_options_form'}) do |f| %>
+<div class="itemAdd_form">
+  <table><tbody>
+  <tr><td class="caption">Новый рабочий день:</td>
+      <td><%= f.text_field :day, class: "txt datepicker" %></td>
+      <td><div class="inp_w">
+          <%= f.text_field :name, class: 'txt' %>
+          <span class="sub btn_a" id="btn-send"> Добавить</span>
+          <span class="sub btn_a" id="get-holidays">Обновить</span>
+      </td></tr>
+  </tbody></table>
+</div>
+<% end %>

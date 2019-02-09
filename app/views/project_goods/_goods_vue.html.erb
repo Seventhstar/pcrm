@@ -63,7 +63,7 @@
 
       projectLink(prj_id){
         let prj = this.projects.filter(w => w.value === parseInt(prj_id))
-        let name = prj.length>0 ? "/projects/"+prj[0].value+"/edit" : 'Ошибка'
+        let name = prj.length>0 ? "/projects/"+prj[0].value+"/edit#tabs-4" : 'Ошибка'
         return name
       },
 
@@ -203,8 +203,7 @@
         else if (g.sum_supply>0)
           cls = "ordered" 
         else
-          cls = "placed"
-        
+          cls = "placed"    
         return "grid_table_goods grid_table sw_color " + cls
       },
 

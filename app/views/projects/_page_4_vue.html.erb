@@ -17,17 +17,21 @@
       
       fields: [],
       controls: [],
+      provider: [],
       
       offerAmount: {},
       orderAmount: {},
       closedAmount: {},
+
+      filter: [],
       
       grandOfferTotal: [],
       grandOrderTotal: [],
       grandClosedTotal: [],
+      grouped: [],
       
       texts: "gtype new_gtype id",
-      lists: "gtypes new_gtypes currencies+short",
+      lists: "gtypes new_gtypes currencies+short goods_priorities goods_states:raw@goods_states",
 
       providers: @providers,
       project_g_types: [],
@@ -39,34 +43,72 @@
       this.onInput();
     },
 
-    beforeCreate(){
-
-    },
-
     created(){
       this.gtypes.forEach(()=>this.addControlAndField())
       this.calculateTotal()
+      document.body.addEventListener('keyup', e => {if (e.keyCode === 45) this.addRow(); });
+      this.$root.$on('onInput', this.onInput);
+      this.filter.push({field: 'goods_priority_id', value: 1})
+      this.makeFilter()
     },
 
     mounted(){
-      this.$root.$on('onInput', this.onInput);
       this.$root.$on('modalYes', this.modalYes);
-      document.body.addEventListener('keyup', e => {if (e.keyCode === 45) this.addRow(); });
     },
 
     methods: {
 
+      makeFilter(){
+        var vm = this
+        this.filter = []
+        
+        if (!v_nil(this.goods_priority)) {
+          this.filter.push({field: 'goods_priority_id', value: this.goods_priority.value})
+        }
+
+        if (!v_nil(this.goods_state)) {
+          switch(this.goods_state.value){
+            case 3: 
+              this.filter.push({field: 'fixed', value: true})
+              break;
+            case 2: 
+              this.filter.push({field: 'order', value: true})
+              this.filter.push({field: 'fixed', value: false})
+              break;
+            default:
+              this.filter.push({field: 'order', value: false})
+          }
+        }
+
+        for (i = 0; i < this.goods.length; ++i) { 
+           let filtered = this.goods[i][1].filter(function (item) {
+            for (q in vm.filter) {
+              let f = vm.filter[q]
+              if (item[f.field] !== f.value) return false
+            }
+            return true
+          })
+          Vue.set(this.grouped, i, filtered);
+        }
+
+      },
+
+      toolTip(g){
+        let toolTip = ''
+        if (!v_nil(g.date_place)) toolTip = 'Дата предложения: ' + format_date(g.date_place) + '\n'
+        if (!v_nil(g.date_offer)) toolTip = toolTip + 'Дата заказа: ' + format_date(g.date_offer) + '\n'
+        if (!v_nil(g.date_supply)) toolTip = toolTip + 'Дата поставки: ' + format_date(g.date_supply) + '\n'
+
+        return toolTip
+      },
+
       getProviderIndex(i, id){
-        // console.log("this.providers", this.providers[0].gt, i)
         let ind = this.providers.filter(w => w.gt.id === toInt(i))
-            // console.log("w.gt.id", 
-        // console.log("i", i, id, "ind", ind, this.providers.indexOf(ind[0]));
         return this.providers.indexOf(ind[0])
       },
 
       gtypeName(gt_id){
         gt = this.gtypes.filter(w => w.value === parseInt(gt_id))
-        // console.log("gt_id", gt_id, gt)
         let name = gt.length>0 ? gt[0].label : 'Ошибка'
         return name
       },
@@ -104,13 +146,20 @@
 
       saveGoods(key, index, g){
         if (!this.controls[index].valid) return;
+        this.controls[index].valid = false
         this.currentIndex = index
+        
         // console.log("this.currentIndex", this.currentIndex)
+        let goods_priority_id = v_nil(app.goods_priority) ? 1 : app.goods_priority.value
+
         let pref = 'goods_'+key+'_';        
-        let values = {currency_id: app.currency.value, project_id: this.id, goodstype_id: key }
+        let values = {currency_id: app['currency_'+key].value, 
+                      project_id: this.id, 
+                      goodstype_id: key, 
+                      goods_priority_id: goods_priority_id}
 
         this.inputs.forEach(  c => values[c] = this.fields[index][c] );
-        this.selects.forEach( c => values[c+'_id'] = app[c].value );
+        this.selects.forEach( c => values[c+'_id'] = app[c+'_'+key].value );
 
         $.ajax({
           type: "POST",
@@ -123,9 +172,10 @@
           app.switchOpened(index);
           values['id'] = data.id;
           app.goods[index][1].push(values);
-          app.selects.forEach( c => values[c+'_name'] = app[c].label );
+          app.selects.forEach( c => values[c+'_name'] = app[c+'_'+key].label );
           app.inputs.forEach( c => app.fields[index][c] = '' );
           app.fields[index].date_place = format_date();
+          app.makeFilter()
           app.calculateAmount(index);
         });
 
@@ -144,35 +194,32 @@
       modalYes(){
         if (this.currentGoods === '' || !this.confirmModal ) return;
         let index = this.goods[this.currentIndex][1].indexOf(this.currentGoods);
-        if (index<0) return;
+        if (index < 0) return;
         this.goods[this.currentIndex][1].splice(index, 1);
         delete_item('/project_goods/'+this.currentGoods.id);
+        this.makeFilter()
       },
+
 
       onChange(key, index){
         let valid = true;
-        let pref = 'goods_'+key+'_'; 
+        if (key === undefined) return;
 
-        this.required.forEach( c => {
-          if (v_nil(this.fields[index][c])) {
-            valid = false;
-          } 
-        });
-            
-        // console.log("c",c, "index", index);
-
-        this.selects.forEach( c => {
-          if (v_nil(app[c])) {
-            valid = false;
-            console.log('valid', valid, 'c', c, app[c]);
-          }
-        });
-        console.log("valid", valid);
+        this.required.forEach( c => {if (v_nil(this.fields[index][c])) valid = false} );
+        this.selects.forEach( c => {if (v_nil(app[c+'_'+key])) valid = false} );
         this.controls[index].valid = valid;  
+        // console.log("onChange");
       },
 
       onInput(e){
-        if (e === undefined || e.index === undefined) return;
+        if (e === undefined) return;
+
+        if (e.name === 'goods_priority' || e.name === 'goods_state') {
+          this.makeFilter();
+          return;
+        }
+
+        if (e.index === undefined) return;
         this.onChange(e.key, e.index);
       },
 
@@ -180,9 +227,11 @@
         this.switchOpened(this.currentIndex);
       },
 
-      switchOpened(index){
+      switchOpened(index, id){
         this.currentIndex = index
         this.controls[index].opened = !this.controls[index].opened
+        if (id === undefined) id = this.goods[index][0][0]
+        setTimeout(()=>{$('#goods_'+id+"_name").focus(); apply_mask();}, 300);
       },
 
       openedOrHaveData(index, length){
@@ -190,7 +239,9 @@
       },
 
       closedTable(index){
-        if (this.controls[index] === undefined) {this.controls.push({opened: true, valid: false})}
+        if (this.controls[index] === undefined) {
+          this.controls.push({opened: true, valid: false})
+        }
         return !this.controls[index].opened;
       },
 
@@ -238,8 +289,8 @@
           this.closedAmount[gt][c.value] = 0
         })
 
-        for (var gi in this.goods[gt][1]){
-            g = this.goods[gt][1][gi]
+        for (var gi in this.grouped[gt]){
+            g = this.grouped[gt][gi]
             c = g.currency_id
             this.offerAmount[gt][c] = this.offerAmount[gt][c] + parseInt(g.gsum)
             this.orderAmount[gt][c] = this.orderAmount[gt][c] + toInt(g.sum_supply)
@@ -267,6 +318,15 @@
           cls = "ordered" 
         else
           cls = "placed"
+        
+        switch(g.goods_priority_id){
+          case 1: cls = cls + ' high_priority'
+                break;
+          case 2: cls = cls + ' alt_priority'
+                break;
+          default: 
+            cls = cls + ' no_priority'
+        }
         
         return "grid_table_goods grid_table sw_color " + cls
       },

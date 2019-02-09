@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190205192223) do
+ActiveRecord::Schema.define(version: 20190207160748) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -222,6 +222,12 @@ ActiveRecord::Schema.define(version: 20190205192223) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "goods_priorities", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "goodstypes", id: :serial, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -362,7 +368,9 @@ ActiveRecord::Schema.define(version: 20190205192223) do
     t.integer "project_id"
     t.integer "goodstype_id"
     t.integer "project_g_type_id"
+    t.bigint "goods_priority_id", default: 1
     t.index ["fixed"], name: "index_project_goods_on_fixed"
+    t.index ["goods_priority_id"], name: "index_project_goods_on_goods_priority_id"
     t.index ["goodstype_id"], name: "index_project_goods_on_goodstype_id"
     t.index ["project_id"], name: "index_project_goods_on_project_id"
   end
@@ -659,6 +667,13 @@ ActiveRecord::Schema.define(version: 20190205192223) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "working_days", force: :cascade do |t|
+    t.date "day"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "works", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -674,6 +689,7 @@ ActiveRecord::Schema.define(version: 20190205192223) do
   add_foreign_key "costings", "users"
   add_foreign_key "leads", "cities"
   add_foreign_key "leads", "priorities"
+  add_foreign_key "project_goods", "goods_priorities"
   add_foreign_key "project_goods", "goodstypes"
   add_foreign_key "project_goods", "projects"
   add_foreign_key "projects", "cities"

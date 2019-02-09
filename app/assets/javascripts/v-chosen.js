@@ -5,17 +5,19 @@ Vue.component('v-chosen', {
         idName: "",
         localName: "",
         localValue: 0,
-        options: []
+        options: [],
+        clearable: false
       }
     }, 
     props: ['name', 'placeholder', 'label', 'src', 'selected', 
-            'owner', 'k', 'index', 'from_array'],
+            'owner', 'k', 'index', 'from_array', 'clear'
+            ],
     template: `
         <div class="inp_w">
         <v-select 
           :value="$parent[name]"
           :options="options"
-          :clearable="false" 
+          :clearable=clearable 
           :placeholder="placeholder"
           @input="onUpdate($event)">
           <template slot="option" slot-scope="option">
@@ -30,28 +32,29 @@ Vue.component('v-chosen', {
       </div>`,
 
     created() {
+
+       // console.log('this.clear', this.clear, typeof(this.clear))
+      if (this.clear != undefined) this.clearable = (this.clear == 'true')
+      else 
+        this.clearable = false
+
       let model = '';
-      if (this.owner!==undefined) { 
+      if (this.owner !== undefined) { 
         model = this.owner; 
       } else {         
         model = this.$parent.model; 
       }
 
       if (model === undefined) {
-        this.idName =  this.name + "_id";
+        this.idName = this.name + "_id";
         this.localName = this.name + "_id";
       } else {
-        this.idName =  model + "_" + this.name + "_id";
-        this.localName =  model + "[" + this.name + "_id]";
+        this.idName = model + "_" + this.name + "_id";
+        this.localName = model + "[" + this.name + "_id]";
       }
-
 
       if (this.src !== undefined) {
           src = this.$parent[this.src];
-          
-           // console.log("src", this.src, "k", this.k, "index", this.index);
-          //, src[this.index], "this.from_array", this.from_array );
-
           this.options = (this.from_array === undefined || src[this.index] === undefined) ? src : src[this.index][this.from_array];
       } else {
         this.options = this.$parent[this.name + "s"];
@@ -59,21 +62,13 @@ Vue.component('v-chosen', {
 
 
       if (this.options !== undefined){
-        if (this.selected !== undefined) this.onUpdate(this.options[this.selected])
-        else if (this.options.length === 1) {
-          console.log('this.options[0]', this.options[0])
+        if (this.selected !== undefined) {
+          this.onUpdate(this.options[this.selected])
+        } else if (this.options.length === 1) {
           this.onUpdate(this.options[0])
         }
-        // else this.onUpdate()
-
-      } else {
-        // this.onUpdate()
+        if ( this.options.indexOf(this.$parent[this.name]) === -1) this.onUpdate()
       }
-    },
-
-    mounted(){
-
-      //   this.onUpdate()
     },
 
     methods: {

@@ -6,17 +6,17 @@ class OptionsController < ApplicationController
     o = option_model.name
     case o
     when "Holiday"
-        sort = :day
+        sort = 'day desc'
     else
         sort = :name 
     end
-    # p "sort",sort
     @items = option_model.order(sort)
     @item = option_model.new
   end
 
   def index
     _sort
+    @menu = t('options_menu')
   end
 
   def create
@@ -35,6 +35,7 @@ class OptionsController < ApplicationController
   end
 
   def edit
+    @menu = t('options_menu')
     @page = params[:options_page]
     @page ||= "statuses"
     _sort

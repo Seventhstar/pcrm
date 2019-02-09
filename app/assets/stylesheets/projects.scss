@@ -26,9 +26,15 @@ input::-webkit-inner-spin-button { padding-right:0}
 
 .space20 {margin-left: 20px !important;}
 .space10 {margin-left: 10px !important;}
-.ordered {background: #ffca98; }
-.ordered td:hover,table.tleads tr.ordered:hover:not(#new_item) td{ background: #ff7f05;}
+.ordered {background: #FFFADD; }
+.ordered:hover {background: #FFFFCC;}
+// .ordered td:hover, table.tleads tr.ordered:hover:not(#new_item) td{ background: #ffFf05;}
 .placed {background: #fff;}
+.placed:hover {background: #FAFAFA;} 
+
+.no_priority{ color: #aaa !important; }
+.high_priority {color: #ef7706 !important;}
+
 // table.tleads tr.placed:nth-child(even) td
 .fixed {background: #fafafa; color: #999;}
 .lbl.digits{ text-align: right;}
@@ -67,7 +73,7 @@ td.inf.comment {  background-position-x: -17px !important; }
 #project_payd_full {margin-left: 10px;}
 .green { color: #0dd60d;}
 
-#pgoods .datepicker {width: 100px; font-size: 13px;}
+#pgoods .datepicker {width: 100px; font-size: 13px; padding: 6px;}
 .sw_b {width: 238px !important; font-weight: 500; font-size: 17px;}
 
 #pdf {float: right; margin-left: 15px;}

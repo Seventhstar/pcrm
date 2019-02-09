@@ -120,6 +120,8 @@ ru:
   work_type_id: Вид работы
   work_id: Связанная работа
   ProviderManager: менеджер
+  WorkingDay: рабочий день
+  Holiday: праздник
 
   comment: Комментарий
 

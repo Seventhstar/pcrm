@@ -98,8 +98,9 @@
   fld = table.find('th:eq('+cl.index()+')').attr('fld')
   cl.attr('ind', fld)
   type = cl.attr('type')
-  type = if type == undefined then 'text' else type      
-  $input = $('<input type="'+type+'" name=upd['+fld+'] />').val(cl.data('text')).width(cl.width() )
+  type = if type == undefined then 'text' else type    
+  cls  = if cl.hasClass('option_day') then 'datepicker' else '' 
+  $input = $('<input type="'+type+'" class="'+cls+'"  name=upd['+fld+'] />').val(cl.data('text')).width(cl.width() )
   cl.append $input
   cl.context.firstChild.focus()
 
@@ -307,7 +308,7 @@ $(document).ready ->
         e.preventDefault()
       else if $(this).closest('td').hasClass('l_edit') 
         i = $('.l_edit.editable')
-      else if $(this).closest('tr').hasClass('editable')
+      else if $(this).closest('td').hasClass('editable')
         i = $(this).closest('td').siblings().last().children('.icon_apply')
       else if $(this).closest('grid_table_goods') != undefined
       else 

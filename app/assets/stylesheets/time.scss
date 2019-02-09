@@ -8,7 +8,10 @@
 .time_separator{ padding: 7px; float: left; display: inline-block; width: 14px; text-align: center; color: #737373; }
 
 .datepicker { background: asset-url('ico-date.png') 95% 8px no-repeat; cursor: pointer;}
+#pgoods .datepicker{    background-position-x: 93%;}
+
 .editable input[type="text"].datepicker { background: asset-url('ico-date.png') 95% 5px no-repeat; cursor: pointer; }
+
 .inp_w .datepicker{ background: asset-url('ico-date.png') 98% 8px no-repeat; }
 .projects .inp_w .datepicker{ background: asset-url('ico-date.png') 96% 8px no-repeat; }
 .edit_project .inp_w .datepicker{ background: asset-url('ico-date.png') 96% 8px no-repeat; }
@@ -24,6 +27,7 @@
 .inp_w .discount_mask {background: asset-url('perc.png') 88% 9px no-repeat; padding-right: 22px}
 
 .modal-content .inp_w .sum_mask { background: asset-url('rub.png') 99% 8px no-repeat; padding-right: 24px; }
+.modal-content .inp_w.w118 .sum_mask { background: asset-url('rub.png') 92% 8px no-repeat; padding-right: 28px; }
 .modal-content .inp_w .sum_mask[disabled]  {background: asset-url('rub-dis.png') 99% 8px no-repeat; color: gray;}
 
 .inp_w .float_mask { background: asset-url('m2.png') 98% 8px no-repeat; padding-right: 24px; }
@@ -38,6 +42,7 @@
 .inp_sum_total {width: 224px; float: right;}
 
 .tbl_fc_1 .inp_w .datepicker{ background: asset-url('ico-date.png') 98% 8px no-repeat; }
+.tbl_fc_1 .inp_w.w118 .datepicker{ background: asset-url('ico-date.png') 90% 8px no-repeat; padding: 4px 10px 0 12px;}
 
 .table_period .datepicker,
 .datepicker.w120{background: asset-url('ico-date.png') 93px 9px no-repeat;}
@@ -98,3 +103,5 @@ border-radius: 5px; box-shadow: 0 0 20px rgba(0,0,0,0.2); position:relative; lin
 .ui-datepicker.ui-position-top {margin-top: 50px;}
 .ui-datepicker.ui-position-top:after {top: auto; bottom: 0;}
 
+td.option_day {width: 84px;}
+td.option_day.editable {width: 100px;}

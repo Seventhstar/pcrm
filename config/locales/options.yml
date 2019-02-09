@@ -1,4 +1,14 @@
 ru:
+  options_menu: {
+    options_users: ['users', 'roles', 'user_roles'],
+    options_leads: ['statuses', 'channels', 'lead_sources', 'styles', 'cities'],
+    options_projects: ['goodstypes', 'goods_priorities', 'project_statuses', 'project_types', 'elongation_types', 'contact_kinds'],
+    options_costings: ['costings_types', 'uoms', 'materials', "consumptions", "works", "work_types", "rooms"],
+    options_payments: ['currencies', 'payment_types', 'payment_purposes'],
+    options_providers: ['budgets', 'styles', 'p_statuses'],
+    options_absences: ['holidays', 'working_days' ,'absence_reasons', 'absence_targets', 'absence_shop_targets'],
+    options_wiki: ['wiki_cats']
+  }
   options_users: Настройки пользователей
   options_leads: Настройки лидов
   options_projects: Настройки проектов
@@ -27,6 +37,7 @@ ru:
 
   project_statuses: ["Статусы", "статус", "статусов"]
   project_types: ["Виды проектов", "вид проекта", "видов проектов"]
+  goods_priorities: ['Приоритет товаров' ,'приоритет товара' ,'приоритетов товаров']
   elongation_types: ["Причины продления", "-Новая причина продления", "причин продления"]
   contact_kinds: ["Виды контактов", 'вид контакта', 'видов контактов']
   
@@ -47,6 +58,7 @@ ru:
   p_statuses: ["Статусы", "статус","статусов"]
 
   holidays: ["Праздники", "праздник", "праздников"]
+  working_days: ['Рабочие дни', 'рабочий день', 'рабочих дней']
   absence_reasons: ["Причины отсутствий", "-Новая причина","причин"]
   absence_targets: ["Цели", "-Новая цель","целей"]
   absence_shop_targets: ["Цели для магазинов", "-Новая цель для магазина","целей для магазинов"]

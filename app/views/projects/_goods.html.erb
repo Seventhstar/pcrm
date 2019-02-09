@@ -3,10 +3,10 @@
   <div class="panel panel-default good_group">
     <div class="panel-heading table-heading head month"> 
       {{gtypeName(item[0][0])}}
-    
-    <span class="sub btn_add right" @click="switchOpened(index)" v-show="closedTable(index)">Добавить позицию</span></div>
+      <span class="sub btn_add right" @click="switchOpened(index, item[0][0])" v-show="closedTable(index)">Добавить позицию</span>
+    </div>
   
-    <div class="grid_table_goods grid_table_head" v-show="openedOrHaveData(index, item[1].length)">
+    <div class="grid_table_goods grid_table_head" v-show="openedOrHaveData(index, grouped[index].length)">
       <template class="goods_head">
         <div>Позиция</div>
         <div>Поставщик</div>
@@ -19,11 +19,11 @@
     </div>
 
     <transition-group name="item">
-    <template v-for="(g, ind) in item[1]">
-      <div :class="rowClass(g)" :id="'item_'+g.id" :key="g.id">    
-          <div>{{g.name}}</div>
+    <template v-for="(g, ind) in grouped[index]">
+      <div :class="rowClass(g)" :id="'item_'+g.id" :key="g.id">
+          <div :title="ind+1">{{g.name}}</div>
           <div>{{g.provider_name}}</div>
-          <div>{{format_date(g.date_place)}}</div>
+          <div :title="toolTip(g)">{{format_date(g.date_place)}}</div>
           <div>{{g.description}}</div>
           <div>{{g.currency_name}}</div>
           <div v-html="allAmount(g)"></div>
@@ -56,7 +56,7 @@
     </div>
 
     <div>
-      <v-chosen name="provider" 
+      <v-chosen :name="'provider_'+item[0][0]" 
                 src="providers"
                 from_array="list"
                 :owner="'goods_'+item[0][0]+'_'"
@@ -80,7 +80,7 @@
     </div>
 
     <div>
-      <v-chosen name="currency" 
+      <v-chosen :name="'currency_'+item[0][0]" 
                 src="currencies" 
                 selected='0'
                 :owner="'goods_'+item[0][0]+'_'" 
@@ -93,6 +93,7 @@
             @keyup.enter="saveGoods(item[0][0], index)"
              class="txt right" style="width: 100%;">
     </div>
+
     <div>
       <span class="sub btn btn_save" 
             :pe_id="item[0][0]" 
@@ -103,7 +104,7 @@
             :disabled="!controls[index].valid">Сохр.</span></div>
     </div>
 
-    <div class="table_3col table_footer" v-show="openedOrHaveData(index, item[1].length)">
+    <div class="table_3col table_footer" v-show="openedOrHaveData(index, grouped[index].length)">
       <div>Предложено: <span>{{calculateAmount(index)}}</span></div>
       <div>Заказано: <span>{{formatTotal(orderAmount[index])}}</span></div>      
       <div>Закрыто: <span>{{formatTotal(closedAmount[index])}}</span></div>      

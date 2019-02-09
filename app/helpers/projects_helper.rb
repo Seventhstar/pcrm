@@ -132,12 +132,21 @@ module ProjectsHelper
       # 'v-model' => "#{obj_name}_#{val}",
     td_attrs = {}
     td_attrs[:style] = "width: #{params[:width]}" if params[:width]
-
+    
     cls = "inp_w" + (params[:class].nil? ? '' : ' '+params[:class])
 
-    content_tag 'td', td_attrs do
-      content_tag 'div', class: cls do
+    div_attrs = {}
+    div_attrs[:class] = cls
+    div_attrs[:style] = "width: #{params[:iwidth]}" if params[:iwidth].present?
+ 
+    input = content_tag 'div', div_attrs do
         lbl.nil? ? txt : lbl+txt
+    end
+    if params[:no_td].present? 
+      input
+    else
+      content_tag 'td', td_attrs do
+        input  
       end
     end
   end

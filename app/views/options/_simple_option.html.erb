@@ -41,7 +41,7 @@
             </td> 
 
           <% elsif attr_date?(@item, a0) %>  
-            <td><%= item[a0].try('strftime',"%d.%m.%Y") %></td>
+            <td class="option_day"><%= item[a0].try('strftime',"%d.%m.%Y") %></td>
 
           <% elsif a0.last(3) == '_id' %>
             <td title='<%= item.id %>'><%= item.try(a0[0..-4]).try(:name) %></td>

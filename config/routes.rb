@@ -67,8 +67,10 @@ Rails.application.routes.draw do
 
   resources :p_statuses
   resources :holidays
+  resources :working_days
 
   resources :priorities
+  resources :goods_priorities
 
   resources :dev_projects
   resources :dev_statuses

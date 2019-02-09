@@ -18,11 +18,19 @@ $ ->
       $(modal_holder_selector).html(data).find(modal_selector).modal()
     false
 
-  $(document).on 'keypress keyup', '#mainModal', (e)->
+  $('body').on 'keypress keyup', '#mainModal', (e)->
     if e.keyCode == 13
       $('#btn-modal').click()
     else if e.keyCode == 27
       $('.close').click()
+      # $('#ui-datepicker-div').hide
+      # if $("#ui-datepicker-div:visible").css('display') == 'block' 
+        # console.log('closed here', document.getElementById("ui-datepicker-div").style.display )
+        
+        # con
+      # else
+
+
 
   $(document).on 'click','.update', ->
     $('.close').click()

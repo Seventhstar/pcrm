@@ -90,6 +90,8 @@ class ProjectsController < ApplicationController
     @styles     = Style.order(:name)
     @pstatuses   = ProjectStatus.order(:name)
     @currencies = Currency.order('id')
+    @goods_priorities = GoodsPriority.order(:id)
+    @goods_states = [{label: 'Предложенные', value: 1}, {label: 'Заказанные', value: 2}, {label: 'Закрытые', value: 3}]
     # puts "@currencies ",@currencies.to_json
   end
 
