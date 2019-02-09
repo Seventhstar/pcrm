@@ -107,6 +107,7 @@ class ProjectGoodsController < ApplicationController
       req = first_param == 'upd_modal' ? :upd_modal : :gt
       params.require(req).permit( :goodstype_id, :provider_id, :date_supply, :date_place, 
                                   :date_offer, :currency_id, :gsum, :order, :name, :description, 
-                                  :fixed, :sum_supply, :project_id, :owner_id, :goods_priority_id)
+                                  :fixed, :sum_supply, :project_id, :owner_id, 
+                                  :goods_priority_id, :delivery_time_id)
     end
   end

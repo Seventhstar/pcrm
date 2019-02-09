@@ -28,6 +28,7 @@
 
 .modal-content .inp_w .sum_mask { background: asset-url('rub.png') 99% 8px no-repeat; padding-right: 24px; }
 .modal-content .inp_w.w118 .sum_mask { background: asset-url('rub.png') 92% 8px no-repeat; padding-right: 28px; }
+
 .modal-content .inp_w .sum_mask[disabled]  {background: asset-url('rub-dis.png') 99% 8px no-repeat; color: gray;}
 
 .inp_w .float_mask { background: asset-url('m2.png') 98% 8px no-repeat; padding-right: 24px; }
@@ -50,6 +51,7 @@
 
 input[disabled].datepicker { background: asset-url('ico-date.png') 95% -27px no-repeat !important; }
 .tbl_fc_1 .inp_w input[disabled].datepicker {background: asset-url('ico-date.png') 98% -27px no-repeat !important;}
+.modal-content .inp_w.w118 input[disabled].datepicker { background: asset-url('ico-date.png') 90% -27px no-repeat !important; padding-right: 28px; }
 
 input[disabled] {cursor: default; box-shadow: none !important;}
 td.disabled {color: gray !important;}

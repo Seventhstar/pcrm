@@ -4,6 +4,7 @@ class ProjectGood < ActiveRecord::Base
   belongs_to :project
   belongs_to :goodstype
   belongs_to :currency
+  belongs_to :delivery_time
   attr_accessor :owner_id
 
   validates :name, length: { minimum: 3 }
@@ -36,7 +37,7 @@ class ProjectGood < ActiveRecord::Base
 
   def currency_print_name
     c = ''
-    cpn = ['р.', 'евро', 'дол.']
+    cpn = ['р.', 'дол.', 'евро']
     c = cpn[self.currency_id-1] if !self.currency_id.nil?
     c
   end

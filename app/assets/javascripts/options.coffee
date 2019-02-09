@@ -52,14 +52,23 @@
       return
   return
 
+@enableControls = (items, checked) ->
+  items.children().each ->
+    if checked then $(this).addClass('disabled') 
+    else $(this).removeClass('disabled')
+    if $(this).children().length >0 
+      enableControls($(this), checked)
+
+
 $(document).ready ->
  $(document).on 'click', '.sw_enable', ->
   grp_id = $(this).attr('grp_id')
   ch = $(this).find('.checkbox').hasClass('active')
   $('.grp'+grp_id).prop('disabled',ch)
   $('.grp'+grp_id).prop('readonly',ch)
-  $('.grp'+grp_id).children().each ->
-    if ch then $(this).addClass('disabled') else $(this).removeClass('disabled')
+  enableControls($('.grp'+grp_id), ch)
+  # $('.grp'+grp_id).children().each ->
+    # if ch then $(this).addClass('disabled') else $(this).removeClass('disabled')
 
  $('.page-wrapper').on 'click', 'span.role_check',  ->
     checked = switch_check($(this))    

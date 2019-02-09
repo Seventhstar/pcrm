@@ -71,6 +71,7 @@ Rails.application.routes.draw do
 
   resources :priorities
   resources :goods_priorities
+  resources :delivery_times
 
   resources :dev_projects
   resources :dev_statuses

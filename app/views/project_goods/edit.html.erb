@@ -57,13 +57,20 @@
 
 
   <tr class="grp1"><td class="caption grp1 <%= row_cls %>">Дата заказа:</td>
-  <td><div class="inp_w">
+  <td><div class="inp_w w118 left">
     <%= text_field iname, :date_offer, {class: 'txt datepicker grp1', value: @prj_good.date_offer.try('strftime',"%d.%m.%Y"), disabled: !@prj_good.order} %>
   </div></td></tr>
   <tr class="grp1"><td class="caption grp1 <%= row_cls %>">Дата поставки:</td>
-  <td><div class="inp_w">
+  <td><div class="inp_w w118 left">
     <%= text_field iname, :date_supply, {class: 'txt datepicker grp1', value: @prj_good.date_supply.try('strftime',"%d.%m.%Y"), disabled: !@prj_good.order} %>
-  </div></td></tr>
+    </div>
+
+    <div class="label space20">Срок:</div>
+    <div class="inp_w w218 left">
+      <%= chosen_src "delivery_time_id", DeliveryTime.order(:id), @prj_good.delivery_time_id, {nil_value: '', add_name: iname} %>
+    </div></td></tr>
+
+  </td></tr>
   <tr class="grp1"><td class="caption grp1 <%= row_cls %>" >Сумма заказа:</td>
       <%= td_sum_field(iname, :sum_supply ,nil, {value: @prj_good.sum_supply,disabled: !@prj_good.order, inp_class: 'grp1'}) %>
       </tr>

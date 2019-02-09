@@ -19,16 +19,9 @@
 }
 
 /* Анимации появления и исчезновения */
-.slide-fade-enter-active {
-  transition: all .6s ease;
-}
-.slide-fade-leave-active {
-  transition: all .4s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
-.slide-fade-enter, .slide-fade-leave-to {
-  transform: translateX(15px);
-  opacity: 0;
-}
+.slide-fade-enter-active {transition: all .6s ease; }
+.slide-fade-leave-active {transition: all .4s cubic-bezier(1.0, 0.5, 0.8, 1.0); }
+.slide-fade-enter, .slide-fade-leave-to {transform: translateX(15px); opacity: 0; }
 
 .component-fade-enter-active, .component-fade-leave-active {
   transition: opacity .3s ease;
@@ -38,25 +31,12 @@
   opacity: 0;
 }
 
-.item-enter-active {
- transition: 1s;
-}
+.item-enter-active {transition: 1s;}
+.item-leave-active {opacity: 0; transform: translateX(50px); transition: 0.5s; }
+.item-enter {opacity: 0; transform: translateY(15px);}
+.item-move {transition: 0.5s;}
 
-.item-leave-active {
- opacity: 0;
- transform: translateX(50px);
- transition: 0.5s;
-}
-
-.item-enter {
- opacity: 0;
- transform: translateY(15px);
-}
-
-.item-move {
- transition: 0.5s;
-}
-
+.h36{height: 36px !important; line-height: 37px !important;}
 
 .caption_to{
   float: right;
