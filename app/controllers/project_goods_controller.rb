@@ -41,6 +41,7 @@ class ProjectGoodsController < ApplicationController
 
     @projects   = Project.where(id: prj_ids)
     @currencies = Currency.order(:id)
+    @goodstypes = Goodstype.order(:id)
 
   end
 

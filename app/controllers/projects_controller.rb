@@ -78,21 +78,19 @@ class ProjectsController < ApplicationController
   end
 
   def def_params
-    @owner = @project
-    @holidays =  Holiday.pluck(:day).collect{|d| d.try('strftime',"%Y-%m-%d")}
-    @new_gtypes = Goodstype.where.not(id: [@pgt_ids]).order(:name)
-    @gtypes = Goodstype.where(id: [@pgt_ids]).order(:name)
-    @clients = Client.where(city: @main_city).order(:name)
-    # @cities   = City.order(:id)
-    @project_types = ProjectType.order(:name)
-    @executors = User.where(city: current_user.city).order(:name)
-    @visualers = User.where(city: current_user.city).order(:name)
+    @owner      = @project
     @styles     = Style.order(:name)
-    @pstatuses   = ProjectStatus.order(:name)
+    @gtypes     = Goodstype.where(id: [@pgt_ids]).order(:name)
+    @clients    = Client.where(city: @main_city).order(:name)
+    @holidays   = Holiday.pluck(:day).collect{|d| d.try('strftime',"%Y-%m-%d")}
     @currencies = Currency.order('id')
+    @new_gtypes = Goodstype.where.not(id: [@pgt_ids]).order(:name)
+    @executors  = User.where(city: current_user.city).order(:name)
+    @visualers  = User.where(city: current_user.city).order(:name)
+    @pstatuses  = ProjectStatus.order(:name)
+    @project_types = ProjectType.order(:name)
     @goods_priorities = GoodsPriority.order(:id)
     @goods_states = [{label: 'Предложенные', value: 1}, {label: 'Заказанные', value: 2}, {label: 'Закрытые', value: 3}]
-    # puts "@currencies ",@currencies.to_json
   end
 
   # GET /projects/new

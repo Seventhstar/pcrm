@@ -2,7 +2,7 @@
 <template v-if="controls[index]!==undefined">
   <div class="panel panel-default good_group">
     <div class="panel-heading table-heading head month"> 
-      <a :href='projectLink(item)'>{{projectAddress(item)}} ({{grouped[item].length}} поз.)</a> 
+      <a :href='projectLink(item)'>{{projectAddress(item, index)}} ({{grouped[item].length}} поз.)</a> 
       <span :class="cutClass(index)" :cut_id="index" @click="switchOpened(index)"><b></b></span>
     </div>
     
@@ -18,8 +18,11 @@
       </template>
     </div>
 
+    <template v-for="(gt, idx) in grouped[item]" >
+    <div class='alt_goods_head goods_head' :key='-1'>{{goodstypeName(idx)}}</div>
+
     <transition-group name="item" v-show="openedOrHaveData(index)">
-    <template v-for="(g, ind) in grouped[item]" >
+    <template v-for="(g, ind) in grouped[item][idx]" >
       <div :class="rowClass(g)" :id="'item_'+item" :key="item">    
           <div>{{g.name}}</div>
           <div>{{nonGroupKey(g)}}</div>
@@ -33,6 +36,8 @@
       </div>
     </template>
     </transition-group>
+
+    </template>
 
     <div class="table_3col table_footer">
       <div>Предложено: <span>{{calculateAmount(item)}}</span></div>

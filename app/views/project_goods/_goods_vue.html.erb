@@ -28,7 +28,7 @@
       groupHeaders: [],
       groupKey1: 'project_id',
 
-      lists: "projects currencies+short",
+      lists: "projects currencies+short goodstypes",
       texts: 'groupKey',
 
       providers: @providers,
@@ -70,14 +70,30 @@
 
       projectLink(prj_id){
         let prj = this.projects.filter(w => w.value === parseInt(prj_id))
-        let name = prj.length>0 ? "/projects/"+prj[0].value+"/edit#tabs-4" : 'Ошибка'
+        let key = _.keys(this.grouped[prj_id])[0]
+        let id = this.grouped[prj_id][key][0].project_id
+        // console.log('id', id)
+        let name = id > 0 ? "/projects/"+id+"/edit#tabs-4" : 'Ошибка'
         return name
       },
 
-      projectAddress(prj_id){
-        let name = this.grouped[prj_id][0]
-        if (this.groupKey == 'project_id')
-          name = name.address
+      goodstypeName(idx){
+        let gt = this.goodstypes.filter(w => w.value === parseInt(idx))
+        // console.log(gt)
+        // gt = this.goodstypes[idx]
+        if (gt == undefined) return 'no'
+        return gt[0].label
+      },
+
+      projectAddress(prj_id, index = null){
+        let name = this.grouped[prj_id]
+        if (this.groupKey == 'project_id'){
+
+          let key = _.keys(this.grouped[prj_id])[0]
+          name = this.grouped[prj_id][key][0].address
+          // console.log('name', name);
+        }
+          // name = 'Адрес'
         else
           name = name.provider_name
         return name
@@ -191,21 +207,29 @@
       },
 
       makeGroup(id){
-        this.groupKey = id
-        this.grouped = _.groupBy(this.goods, id)
-        this.groupHeaders  = Object.keys(this.grouped)
-        this.controls.length = 0
+        this.groupKey         = id
+        
+        grouped          = _.groupBy(this.goods, id)
+        // grouped          = _.groupBy(this.goods, function(g){
+        //     return g[id] + '#' + g.goodstype_id;
+        // });
+
+        var data = _.map(grouped, (group)=>{
+          // console.log('keys', _.keys(group[0]), group);
+          return _.groupBy(group, 'goodstype_id')
+        });
+
+        this.grouped = data;
+
+        this.groupHeaders     = Object.keys(this.grouped)
+        this.controls.length  = 0
         this.groupHeaders.forEach(()=>this.addControlAndField())
 
         if (this.opened !== null){
-        let opened = this.opened.split('.');
-        let t = this
-        opened.forEach(function(i) {
-            console.log(i);
-            if (i!=='') t.controls[i].opened = true
-           });
+          let opened = this.opened.split('.');
+          let t = this
+          opened.forEach((i)=>{if (i!=='') t.controls[i].opened = true });
         }
-        // console.log('this.controls.length', this.controls.length)
       },
       
       sortBy(id){
