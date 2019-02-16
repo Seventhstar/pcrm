@@ -82,7 +82,7 @@ class ProjectsController < ApplicationController
     @holidays =  Holiday.pluck(:day).collect{|d| d.try('strftime',"%Y-%m-%d")}
     @new_gtypes = Goodstype.where.not(id: [@pgt_ids]).order(:name)
     @gtypes = Goodstype.where(id: [@pgt_ids]).order(:name)
-    @clients = Client.order(:name)
+    @clients = Client.where(city: @main_city).order(:name)
     # @cities   = City.order(:id)
     @project_types = ProjectType.order(:name)
     @executors = User.where(city: current_user.city).order(:name)

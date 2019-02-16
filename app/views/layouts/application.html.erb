@@ -33,8 +33,9 @@
           </div>
         <% end %>
         <div class="user_h">
-          <div class="time_h">20:06:28</div><span class="name"><%= current_user.name %></span>
-          <%= link_to logout_path, method: :delete, class: "orange logout" do %>
+          <div class="time_h">20:06:28</div><span class="name">
+            <%= link_to current_user.name, edit_user_path(current_user) %></span>
+            <%= link_to logout_path, method: :delete, class: "orange logout" do %>
             <span class="icon icon_logout"></span>выйти
           <% end %>
         </div>
