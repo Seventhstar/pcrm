@@ -3,10 +3,10 @@
 
     <div class="panel-left">  
     <table class="tbl_fc tbl_fc_1">
-      <% a = [:name,:address,:phone, :email ] %>
+      <% a = [:name, :address,:phone, :email, :city ] %>
       <% a.each do |el| %>
           <tr><td class="caption"><%= t(el) %>:</td>
-              <td><div class="lbl"><%= @client[el] %></div></td></tr>
+              <td><div class="lbl"><%= get_attribute(@client,el) %></div></td></tr>
       <% end %>  
      </table>
     </div>

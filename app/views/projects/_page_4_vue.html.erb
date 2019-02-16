@@ -5,7 +5,7 @@
     el: '.vue_app',
     data: <%= fill_vue_data(@project, {
       f_gt: true,
-
+      project_id: @project.id,
       confirmModal: false,
       currentIndex: 0,
       currentGoods: '',
@@ -46,7 +46,6 @@
     created(){
       this.gtypes.forEach(()=>this.addControlAndField())
       this.calculateTotal()
-      document.body.addEventListener('keyup', e => {if (e.keyCode === 45) this.addRow(); });
       this.$root.$on('onInput', this.onInput);
       this.filter.push({field: 'goods_priority_id', value: 1})
       this.makeFilter()
@@ -54,6 +53,7 @@
 
     mounted(){
       this.$root.$on('modalYes', this.modalYes);
+      document.body.addEventListener('keyup', e => {if (e.keyCode === 45) {this.addRow();} });
     },
 
     methods: {
@@ -61,10 +61,6 @@
       makeFilter(){
         var vm = this
         this.filter = []
-        
-        if (!v_nil(this.goods_priority)) {
-          this.filter.push({field: 'goods_priority_id', value: this.goods_priority.value})
-        }
 
         if (!v_nil(this.goods_state)) {
           switch(this.goods_state.value){
@@ -88,7 +84,9 @@
             }
             return true
           })
-          Vue.set(this.grouped, i, filtered);
+
+          grouped = _.groupBy(filtered, 'goods_priority_id')
+          Vue.set(this.grouped, i, grouped);
         }
 
       },
@@ -118,7 +116,7 @@
         this.inputs.forEach( c => h[c] = '' );
         h.date_place = format_date();
         this.fields.push(h);
-        this.controls.push({opened: false, valid: false});
+        this.controls.push({opened: false, openedAlt: false, valid: false});
       },
 
       addGoodsType(){
@@ -139,7 +137,7 @@
             app.new_gtypes.splice(app.new_gtypes.indexOf(app.new_gtype), 1)          
             app.new_gtype = null 
             app.addControlAndField()
-
+            app.makeFilter()
           });
         }
       },
@@ -224,7 +222,9 @@
       },
 
       addRow(){
-        this.switchOpened(this.currentIndex);
+        console.log('#newGoods_'+this.currentIndex)
+        setTimeout(()=>{$('#newGoods_'+this.currentIndex).click();},200);
+        setTimeout(()=>{$('#upd_modal_name').focus();}, 400);
       },
 
       switchOpened(index, id){
@@ -234,16 +234,32 @@
         setTimeout(()=>{$('#goods_'+id+"_name").focus(); apply_mask();}, 300);
       },
 
-      openedOrHaveData(index, length){
-        return !this.closedTable(index) || length>0; 
+      switchOpenAlt(index){
+        this.controls[index].openedAlt = !this.controls[index].openedAlt
+      },
+
+      openedOrHaveData(index, items){
+        let closed = this.closedTable(index)
+        if (items === undefined) return !closed;
+        return this.closedTable(index) || length>0; 
       },
 
       closedTable(index){
         if (this.controls[index] === undefined) {
-          this.controls.push({opened: true, valid: false})
+          this.controls.push({opened: true, openedAlt: false, valid: false})
         }
         return !this.controls[index].opened;
       },
+
+      openedAlt(index){
+        return this.controls[index].openedAlt;
+      },  
+
+      altCount(g){
+        if (g === undefined ) return 0;
+        return g.length;
+      },
+
 
       format_date(date){
         return format_date(date);
@@ -337,7 +353,13 @@
 
       goodsDeleteLink(g){
         return "/project_goods/" + g.id 
-      }
+      },
+
+      goodsCreateLink(index){
+        // console.log('this.goods[index]', this.goods[index])
+        return "/project_goods/new?goodstype_id="+index+'&project_id='+this.project_id
+      },
+
 
       
     }

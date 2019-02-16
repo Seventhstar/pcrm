@@ -20,7 +20,7 @@
 
   def set_city
     @main_city = City.find(params[:city]) if params[:city]
-    puts "city", params[:city], @main_city
+    # puts "city", params[:city], @main_city
     current_user.update_attribute('city', @main_city) if @main_city.present?
   end
 

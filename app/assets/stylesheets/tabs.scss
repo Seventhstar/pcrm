@@ -4,8 +4,10 @@
     cursor: text;
 }
 
-.ui-tabs .ui-tabs-nav li {list-style: none; float: left; position: relative; top: 0; margin: 1px .2em 0 0; 
+.ui-tabs .ui-tabs-nav li {list-style: none; float: left; position: relative; top: 0; margin: 6px .2em 0 0; 
     border-bottom-width: 0; padding: 0; white-space: nowrap;}
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-active{margin: 0 .2em 0 0}
 
 .nested-fields li .form-group {float: left; margin-right: 4px;}
 .nested-fields li {display: inline-block;}
@@ -17,6 +19,8 @@
 .nested-fields .text {width: 100%;}
  
 .ui-tabs .ui-tabs-nav .ui-tabs-anchor {float: left; padding: 8px 14px; text-decoration: none;}
+#tabs>.ui-tabs-nav>.ui-state-active>.ui-tabs-anchor{padding: 11px 14px;}
+
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {color: #212121;}
 
 .ui-widget-header .ui-state-default {background: #e6e6e6; color: #555555;}

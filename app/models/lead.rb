@@ -9,6 +9,7 @@ class Lead < ActiveRecord::Base
   
   has_many :attachments, as: :owner
 
+  scope :by_city, ->(city){where(city: city)}
   scope :by_priority, ->(priority) {where(priority_id: priority) if priority.present? && priority&.to_i>0}
   scope :only_actual, ->(actual){where(status_id: Status.where(actual: true).ids) if actual}
   scope :by_year,     ->(year){where(start_date: Date.new(year.to_i,1,1)..Date.new(year.to_i,12,31)) if year.present? && year&.to_i>0}

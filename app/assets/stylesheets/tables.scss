@@ -1,6 +1,7 @@
 /*----Таблица списка итемов_start----*/
 .tbl_a, .panel {border:1px solid #e5e5e5; border-radius: 6px 6px 5px 5px; position:relative; line-height: 1.3;}
 .tbl_a .head,.panel-default .table-heading{ background: #f2f2f2; padding: 8px; font-size: 17px; position:relative; font-weight: 500;}
+.alt_goods_head {background: #fafafa; padding: 8px; font-size: 14px; position: relative; font-weight: 500; }
 .tbl_a .head {padding: 8px 12px;}
 
 .tbl_a table{border-collapse:collapse; width: 100%; }
@@ -32,6 +33,7 @@ td.caption3, .label{ font-weight: 500; }
 td.caption3 span, .label { float: left; padding-top: 8px; padding-right: 15px;}
 td.caption3 .chosen-container span, td.caption3 .chosen-container li { font-weight: normal;}
 td.caption3 .chosen-container span {padding-top: 0px;}
+
 .inp2{ width: 245px; float: left;}
 .btn_reset {margin-right: 10px;}
 .mgn_right15 {margin-right: 15px;}
@@ -40,10 +42,10 @@ table.tbl_fc_1 td.caption{width: 160px; }
 table.tbl_fc_1 td.caption_sm {width: 70px;}
 
 .table {width: 100%; font-size: 13px;}
-.w50 {width: 50%;}
 
 .short_label {width: 45px;}
 .t_cell {display: table-cell;}
+.w50 {width: 50%;}
 
 
 .costing_head{display: grid; grid-template-columns: 120px 1fr 120px 1fr; column-gap: 20px;  }
@@ -55,7 +57,7 @@ table.tbl_fc_1 td.caption_sm {width: 70px;}
 .table_3col {display: grid; grid-template-columns: 1fr 1fr 1fr;}
 
 .table_5col {display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(5, 1fr);
   grid-template-rows: 60px;
   column-gap: 20px;
   row-gap: 10px;
@@ -76,25 +78,11 @@ table.tbl_fc_1 td.caption_sm {width: 70px;}
   row-gap: 10px; 
 }
 
-.grid_table_absence {
-  display: grid;
-  grid-template-columns: 150px 1fr 46px 1fr;
-  grid-template-rows: 36px 1px;
-  grid-gap: 10px;
-}
+.grid_table_absence {display: grid; grid-template-columns: 150px 1fr 46px 1fr; grid-template-rows: 36px 1px; grid-gap: 10px; }
 
-.grid_lbl_name{
-    display: grid;
-    grid-template-columns: 150px 1fr;
-    grid-template-rows: 36px 1px;
-    grid-gap: 10px;
-}
+.grid_lbl_name { display: grid; grid-template-columns: 150px 1fr; grid-template-rows: 36px 1px; grid-gap: 10px; }
 
-.grid_table_goods{
-  display: grid;
-  grid-template-columns: 260px 254px 103px 1fr 88px 100px 70px;
-
-}
+.grid_table_goods{display: grid; grid-template-columns: 260px 254px 103px 1fr 88px 100px 70px;}
 
 .grid_table_head div{
   padding: 8px;
@@ -113,12 +101,7 @@ div.edit_delete{ text-align: center; }
 .grid_table_new_item>div{ padding: 2px; }
 .grid_table_new_item input[type="text"] {height: 36px;}
 
-.table_footer{
-  //margin-top: 20px;
-  font-weight: 500;
-  overflow: auto;
-  padding: 8px;
-}
+.table_footer{  font-weight: 500; overflow: auto; padding: 8px; }
 
 .label_col{ margin-top: 8px; text-align: right; font-weight: 500; font-size: 13px;}
 
@@ -155,15 +138,22 @@ tr.editable td.e_edit { padding: 3px 7px; }
 .shops td{padding: 8px 12px;  }
 .tbl_a span.check_img{    width: 18px; height: 18px; }
 
-.cut {
+.cut {float: right; width: 24px; height: 24px; border-radius: 5px; background-color: white; border: 1px solid #ddd;}
+
+.altcut {
     float: right;
-    width: 24px;
+    // width: 24px;
+    padding: 1px 5px;
+    width: auto;
     height: 24px;
     border-radius: 5px;
     background-color: white;
-        border: 1px solid #ddd;
+    margin-top: -5px;
+    border: 1px solid #ddd;
 }
-span.cut b { display: block;
+.altcut span {padding-top: 3px; display: block; float: left; font-weight: normal; }
+
+span.cut b, span.altcut b{ display: block;
   margin-top: 9px;
   margin-left: 6px;
   width: 12px;
@@ -171,9 +161,13 @@ span.cut b { display: block;
   background: asset-url('arr1.png') no-repeat -18px -9px;
 }
 
-.total td {font-size: 14px; }
+span.altcut b {float: right;}
 
 .cut.cutted b {background-position: -18px 0;}
+.altcut.cutted b {background-position: -18px 0;}
+
+.total td {font-size: 14px; }
+
 
 td.edit_delete, th.edit_delete, .tbl_a table td.edit_delete{  width: 45px; vertical-align: middle;} //, td.e_edit padding: 12px 4px !important;
 .tbl_a table td.edit_delete {    padding-left: 12px;}

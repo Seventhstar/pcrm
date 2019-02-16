@@ -189,12 +189,13 @@ class ProjectsController < ApplicationController
     pp = project_params
     pp['pstatus_id'] ||= 1
     @project = Project.new(pp)
-    if project_params[:client_id] == "0" 
+    cl_id = project_params[:client_id]
+    if cl_id == "0" || cl_id.nil?
       @client = @project.create_client(client_params)
       @client.save
       @project.client_id = @client.id
     else
-      @client = Client.find(project_params[:client_id])
+      @client = Client.find(cl_id)
     end
 
     respond_to do |format|

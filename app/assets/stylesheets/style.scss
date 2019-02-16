@@ -1,6 +1,17 @@
-html,body { width: 100%; height: 100%;  min-width: 1140px; }
 
+$body-size: 1326px;
+$body-min-size: 1266px; // 1140
+$body-over: 1400px;
+
+html,body { width: 100%; height: 100%;  min-width: $body-min-size; }
 body {background: #fff; font: normal 14px 'Pragmatica', sans-serif; color: #000000; line-height: 1.4;}
+
+.container {  width: $body-size;    margin: 0 auto;}
+.h_container{  width: $body-over;    margin: 0 auto;}
+
+.subnav{ display: block; max-width: $body-size; padding: 0; margin-bottom: 10px; height: 28px; }
+.subnav .active { background: #6acc00; color: #fff; border-color: #6acc00; }
+
 
 a {outline: none; color: #000000; }
 a:hover {text-decoration:none;}
@@ -45,8 +56,8 @@ p {margin:0 0 14px 0; padding: 0 0 0 0; }
 
 tr.editable .btn_a {line-height: 30px; height: 30px;}
 span.btn_add{ height: 24px; width: 12px; padding: 0px 60px 7px 8px; margin-top: -3px !important;}
-#pgoods span.btn_add{    padding: 0px 12px 7px 21px;
-    width: 138px;}
+#pgoods span.btn_add{    padding: 0px 12px 7px 21px; width: 138px;}
+#pgoods a.btn_add{    padding: 0px 12px 7px 21px; width: 138px;     height: 24px; margin-top: -3px !important;}
 .btn_slim{ height: 26px; font-size: 13px; padding: 0 12px; line-height: 24px;} 
 //.btn_a:hover {opacity: 0.7; transition: All 0.5s ease;}
 .btn_a:hover::enabled { background: asset-url('xbg1_2.png'); transition: All 0.3s ease; box-shadow: 0 -2px 0 0 #cb4f00 inset;}
@@ -78,7 +89,7 @@ label a.btn_c:hover{cursor: pointer;}
 // .bw_i:after {content: ' '; clear:both; display: block; width: 0; height: 0; overflow: hidden; font-size: 0;}
 
 
-.header {margin: 0 auto; position:relative; width: 1200px; }
+.header {margin: 0 auto; position:relative; width: $body-size; }
 .header .bw_i{padding: 30px 0 0 0; height: 40px; }
 .header .btn_call{position:absolute; top: 39px; left: 0;}
 .header .logo {position:absolute; top: 39px; left: 0;}
@@ -332,7 +343,7 @@ input[type='number']::-webkit-inner-spin-button {
 /*.only_actual.active,.only_actual:hover{ background:#428bca !important;   border-color: #428bca !important;}*/
 
 .left,.panel-left {float: left;}
-.right, .panel-right{float: right;}
+.right, .panel-right, .panel-right2{float: right;}
  
 .history_box {}
 .history_box .items_box_head{}
@@ -370,9 +381,10 @@ input[type='number']::-webkit-inner-spin-button {
 /*.box_wrap .panel-left{float:left;}*/
 /*.box_wrap .right{float:right;}*/
 
-.box_wrap_1 .panel-left{width: 584px; }
+.box_wrap_1 .panel-left{width: 600px; } //584px
 .box_wrap_1 .panel-left2{width: 490px; }
-.box_wrap_1 .panel-right{width: 584px; }
+.box_wrap_1 .panel-right{width: 726px; } //584px;
+.box_wrap_1 .panel-right2{width: 588px; } //584px;
 
 #tabs-1 .panel-left{width: 604px;}
 

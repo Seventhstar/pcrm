@@ -67,7 +67,7 @@ Vue.component('v-chosen', {
         } else if (this.options.length === 1) {
           this.onUpdate(this.options[0])
         }
-        if ( this.options.indexOf(this.$parent[this.name]) === -1) this.onUpdate()
+        if (this.options.indexOf(this.$parent[this.name]) === -1 && this.from_array !== undefined) this.onUpdate()
       }
     },
 

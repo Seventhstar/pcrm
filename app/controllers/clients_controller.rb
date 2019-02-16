@@ -6,16 +6,22 @@ class ClientsController < ApplicationController
   # GET /clients.json
   def index
    # @clients = Client.all
-    if !params[:search].nil?
-      s = '%'+params[:search]+'%'
-      @clients = Client.where('LOWER(name) like LOWER(?) or LOWER(address) like LOWER(?)',s,s).order(:name)
-    else
-      @clients = Client.order(:name)
-    end
+    # if !params[:search].nil?
+    #   s = '%'+params[:search]+'%'
+    #   @clients = Client.where('LOWER(name) like LOWER(?) or LOWER(address) like LOWER(?)',s,s).order(:name)
+    # else
+    #   @clients = Client.order(:name)
+    # end
 
-    if !current_user.has_role?(:manager)
-      @clients = @clients.where('id in (?)', current_user.projects.pluck(:client_id))
-    end
+    @clients = Client.by_city(@main_city)
+                    .by_search(params[:search])
+                    .by_owner(current_user)
+
+    # if !current_user.has_role?(:manager)
+    #   @clients = @clients.where('id in (?)', current_user.projects.pluck(:client_id))
+    # end
+
+
   end
 
   # GET /clients/1
@@ -42,7 +48,7 @@ class ClientsController < ApplicationController
 
     respond_to do |format|
       if @client.save
-        format.html { redirect_to clients_url, notice: 'Client was successfully created.' }
+        format.html { redirect_to clients_url, notice: 'Клиент успешно обновлен.' }
         format.json { render :show, status: :created, location: @client }
       else
         format.html { render :new }
@@ -85,7 +91,8 @@ class ClientsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def client_params
-      params.require(:client).permit(:name, :address, :phone, :email, 
-                                    contacts_attributes: [:id, :contact_kind_id, :contact_kind, :val, :who, :_destroy])
+      params.require(:client).permit(:name, :address, :phone, :email, :city_id,
+                                      contacts_attributes: 
+                                        [:id, :contact_kind_id, :contact_kind, :val, :who, :_destroy])
     end
 end

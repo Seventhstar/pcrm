@@ -213,8 +213,8 @@ module ApplicationHelper
     # puts 'obj', obj, 'data', data, 'where', where
     if data[:booleans].present?
       data[:booleans].split(' ').each do |b|
+        puts "booleans", b, obj[b].nil?
         data[b] = obj[b].nil? ? eval("@#{b}") : obj[b]
-        # puts "booleans", b, obj[b].nil?
       end
       data.delete(:booleans)
     end
@@ -287,6 +287,12 @@ module ApplicationHelper
     collection
   end
 
+  def get_attribute(obj, el)
+    r = obj[el]
+    r = obj.try(el.to_s + '_name') if r.nil?
+    r
+  end
+
   def chosen_src(id, collection, obj = nil, options = {})
     p_name    = options[:p_name].nil? ? 'name' : options[:p_name]
     order     = options[:order].nil? ? p_name : options[:order]
@@ -317,7 +323,12 @@ module ApplicationHelper
     cls = cls + ' '+ options[:add_class] if !options[:add_class].nil?
     cls = cls + " has-error" if is_attr && ( obj.errors[id].any? || obj.errors[id.to_s.gsub('_id','')].any? )
     l = label_tag options[:label]
-    s = select_tag n, options_for_select(coll, selected: sel), class: cls, 'v-model' => v_model
+
+    select_params = {class: cls, 'v-model' => v_model}
+    select_params[:disabled] = options[:disabled] if options[:disabled].present?
+    select_params[:tabindex] = options[:tabindex] if options[:tabindex].present?
+
+    s = select_tag n, options_for_select(coll, selected: sel), select_params
     options[:label].nil? ? s : l+s
   end
 

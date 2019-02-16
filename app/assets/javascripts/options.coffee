@@ -52,12 +52,17 @@
       return
   return
 
-@enableControls = (items, checked) ->
+@enableControls = (items, checked, level = 3) ->
   items.children().each ->
+    # console.log('$(this)', $(this)) 
+    $(this).prop('disabled', checked)
+    if $(this).hasClass('chosen')
+      $(this).prop('disabled', checked).trigger("chosen:updated")
+    # if $(this)
     if checked then $(this).addClass('disabled') 
     else $(this).removeClass('disabled')
-    if $(this).children().length >0 
-      enableControls($(this), checked)
+    if $(this).children().length >0 && level >0
+      enableControls($(this), checked, level-1)
 
 
 $(document).ready ->

@@ -4,11 +4,11 @@ class Develop < ActiveRecord::Base
   belongs_to :dev_status
   belongs_to :ic_user, foreign_key: :ic_user_id, class_name: 'User'
   has_many :files, class_name: 'DevelopsFile', foreign_key: :develop_id
-  has_many :attachments, :as => :owner
+  has_many :attachments, as: :owner
   
   scope :open_tasks, -> {where(dev_status_id: 1)}
 
-  validates :name, :length => { :minimum => 3 }
+  validates :name, length: { minimum: 3 }
   has_paper_trail
   after_save :send_changeset_email
 
@@ -17,7 +17,7 @@ class Develop < ActiveRecord::Base
   def self.search(search)
     if search
       se = search.mb_chars.downcase
- 	    where('LOWER(name) LIKE LOWER(?) ', "%#{se}%")
+      where('LOWER(name) LIKE LOWER(?) ', "%#{se}%")
     else
       all
     end
@@ -26,7 +26,6 @@ class Develop < ActiveRecord::Base
 
   def send_changeset_email
      @version =  versions.last
-     #puts "version.event: "+@version.event
      if version.event == "create"
         DevelopMailer.created_email(id).deliver_now
      else

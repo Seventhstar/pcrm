@@ -53,18 +53,27 @@ $.fn.capitalize = function () {
     return this;
 };
 
-function updateOptionRow(name, json, id){
+function updateOptionRow(name, json, id, newItem = false){
   let where = app[name];
-  let first = true
+  let first = 1
   if (app != undefined && app.grouped != undefined){
     where = app.grouped;
-    first = false;
+    // first = false;
   }
+
+  if (newItem) {
+    gt = app.goods.filter(n => n[0][0] == id)[0]
+    gt_index = app.goods.indexOf(gt)
+    // console.log('gt_index', gt_index)
+    app[name][gt_index][1].push(json);
+    return;
+  }
+
 
   found = searchByKey(where, id, first)
 
-  if (first) {
-    replace = where[found.gt][1]
+  if (found.index !== null) {
+    replace = where[found.gt][found.index]
   } else {
     replace = where[found.gt]
   }
@@ -78,16 +87,21 @@ function updateOptionRow(name, json, id){
   }
 }
 
-function searchByKey(obj, key, first = true) {
+function searchByKey(obj, key, index = null) {
   for (var gt in obj) {
     let gt_obj = obj[gt]
-    if (first) gt_obj = gt_obj[1]
+    if (index!==null) gt_obj = gt_obj[index]
     for (var goods in gt_obj) {
       if (gt_obj[goods].id === key) {
-        return {gt: gt, goods: goods}; 
+        return {gt: gt, goods: goods, index: index}; 
       }
     }
   }
+  if (index!==null && gt_obj.length<index+1) {
+    return searchByKey(obj, key, index+1)
+  }
+
+  console.log("Not found");
   return "Not found";
 }
 

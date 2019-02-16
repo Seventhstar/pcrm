@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190209165324) do
+ActiveRecord::Schema.define(version: 20190216124457) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,6 +92,8 @@ ActiveRecord::Schema.define(version: 20190209165324) do
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "city_id", default: 1
+    t.index ["city_id"], name: "index_clients_on_city_id"
   end
 
   create_table "comment_unreads", id: :serial, force: :cascade do |t|
@@ -689,6 +691,7 @@ ActiveRecord::Schema.define(version: 20190209165324) do
     t.bigint "work_type_id"
   end
 
+  add_foreign_key "clients", "cities"
   add_foreign_key "costing_rooms", "costings"
   add_foreign_key "costing_rooms", "rooms"
   add_foreign_key "costing_works", "costings"

@@ -34,7 +34,8 @@
       providers: @providers,
       project_g_types: [],
 
-      goods: @goods
+      goods: @goods,
+      opened: @opened
      }, 'pgoods') %>,
 
     updated(){
@@ -47,6 +48,10 @@
 
     created(){
       this.makeGroup('project_id')
+      
+      // console.log('opened', this.opened, this.controls)
+
+      
     },
 
     mounted(){
@@ -57,8 +62,10 @@
 
     methods: {
 
-      getProject(){
-
+      cutClass(index){
+        let cls = 'cut'
+        if (!this.controls[index].opened) cls = cls + ' cutted'
+        return cls
       },
 
       projectLink(prj_id){
@@ -189,6 +196,15 @@
         this.groupHeaders  = Object.keys(this.grouped)
         this.controls.length = 0
         this.groupHeaders.forEach(()=>this.addControlAndField())
+
+        if (this.opened !== null){
+        let opened = this.opened.split('.');
+        let t = this
+        opened.forEach(function(i) {
+            console.log(i);
+            if (i!=='') t.controls[i].opened = true
+           });
+        }
         // console.log('this.controls.length', this.controls.length)
       },
       

@@ -16,11 +16,18 @@ class ProjectGoodsController < ApplicationController
     
     @groupKey = sort_column
     @sort_column = sort_column
-    @goods = ProjectGood.order(@sort_column)
     clarify_params
+    @opened = params[:cut]
+
+    year = params[:year].try(:to_i)
+    force_year = false
+    if year.present?
+      prj_ids = ProjectGood.where(date_place: Date.new(year,1,1)..Date.new(year,12,31)).pluck(:project_id).uniq
+      force_year = true
+    end
 
     @goods = ProjectGood.left_joins(:provider)
-            .by_year(params[:year])
+            .by_project_ids(prj_ids, force_year)
             .currency(params[:currency])
             .good_state(params[:good_state])
             .left_joins(:project)
@@ -37,20 +44,32 @@ class ProjectGoodsController < ApplicationController
 
   end
 
+  def new
+    @prj_good = ProjectGood.new
+    @prj_good.goodstype_id = params[:goodstype_id]
+    @prj_good.project_id   = params[:project_id]
+    @title = "Создание заказа (Для проекта: #{@prj_good.project.address})"
+    @providers = Goodstype.find(params[:goodstype_id]).providers
+    @goods_priorities = GoodsPriority.order(:id)
+    @cur_id = params[:owner_id]
+    respond_modal_with @prj_good, location: root_path
+  end
+
   def create
     @prj_good = ProjectGood.new(pg_params)
 
     @cur_id = pg_params[:owner_id]
     if @prj_good.save
-      respond_to do |format|
-        format.json do
-          render json: {
-            head: :ok,
-            saved: true,
-            id: @prj_good.id
-          }.to_json
-        end
-      end
+      respond_with @prj_good
+      # respond_to do |format|
+      #   format.json do
+      #     render json: {
+      #       head: :ok,
+      #       saved: true,
+      #       id: @prj_good.id
+      #     }.to_json
+      #   end
+      # end
     else
       respond_to do |format|
         format.json { render json: @prj_good.errors.full_messages, status: :unprocessable_entity }

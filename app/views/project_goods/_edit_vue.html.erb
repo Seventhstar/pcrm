@@ -1,0 +1,34 @@
+<script>
+  Vue.component('v-select', VueSelect.VueSelect)
+
+  let edit_app = new Vue({
+    el: '.edit_vue_app',
+    data: <%= fill_vue_data(@prj_good, {
+      model: 'prj_good',
+      noteValid: '',
+      formValid: false,
+      booleans: 'order checked'
+    })%>,
+    
+    updated(){
+      this.onInput();
+    },
+
+    mounted(){
+      this.$root.$on('onInput', this.onInput);
+    },
+
+
+    methods: {
+      onInput(){
+
+      },
+      
+      check_to(){
+        this.checked = !this.checked
+      },
+
+    }
+  });
+
+</script>

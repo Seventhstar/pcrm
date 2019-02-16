@@ -6,7 +6,6 @@
         client_id: $("#project_client_id option:selected").val()
       }
 
-
 $ ->
   modal_holder_selector = '#modal-holder'
   modal_selector = '.modal'
@@ -18,32 +17,29 @@ $ ->
       $(modal_holder_selector).html(data).find(modal_selector).modal()
     false
 
+  $('body').on 'click', '.autoresize', ->
+    ael = document.activeElement
+    ael.height = 'auto';
+    ael.style.height = ael.scrollHeight+'px';
+
   $('body').on 'keypress keyup', '#mainModal', (e)->
     if e.keyCode == 13
-      $('#btn-modal').click()
+      ael = document.activeElement
+      if ael.type == 'textarea'
+        ael.height = 'auto';
+        ael.style.height = ael.scrollHeight+'px';
+      else
+        $('#btn-modal').click()
     else if e.keyCode == 27
       $('.close').click()
-      # $('#ui-datepicker-div').hide
-      # if $("#ui-datepicker-div:visible").css('display') == 'block' 
-        # console.log('closed here', document.getElementById("ui-datepicker-div").style.display )
-        
-        # con
-      # else
-
-
 
   $(document).on 'click','.update', ->
     $('.close').click()
     delay('upd_ch_client({})',100)
 
-  # $(document).ajaxSuccess (event, xhr, settings) ->
-  #   alert(xhr.responseText)
-
   $(document).on 'ajax:success', 'form[data-modal]', (event, data, status, xhr)->
       url = xhr.getResponseHeader('Location')
       if url
-        #alet(34)
-        # Redirect to url
         window.location = url
       else
         # Remove old modal backdrop

@@ -3,7 +3,7 @@
   <div class="panel panel-default good_group">
     <div class="panel-heading table-heading head month"> 
       <a :href='projectLink(item)'>{{projectAddress(item)}} ({{grouped[item].length}} поз.)</a> 
-      <span class="cut cutted" :cut_id="index" @click="switchOpened(index)"><b></b></span>
+      <span :class="cutClass(index)" :cut_id="index" @click="switchOpened(index)"><b></b></span>
     </div>
     
     <div class="grid_table_goods grid_table_head" v-show="openedOrHaveData(index)">

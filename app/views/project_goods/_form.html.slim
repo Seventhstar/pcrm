@@ -1,0 +1,84 @@
+- iname = 'upd_modal'
+
+.box_wrap.box_wrap_1
+  .panel-left
+    table.tbl_fc.tbl_fc_1
+      tr
+        td.caption Товар:
+        td
+          .inp_w= text_field iname, :name, value: @prj_good.name, class: 'txt', tabindex: 500
+      tr
+        td.caption Поставщик:
+        td
+          .inp_w
+            = chosen_src "provider_id", @providers, @prj_good.provider_id, \
+              {nil_value: 'Выберите поставщика...', add_name: iname, tabindex: 501}       
+      tr
+        td.caption Вариант предложения:
+        td
+          .inp_w
+            = chosen_src "goods_priority_id", @goods_priorities, @prj_good.goods_priority_id, \
+              {nil_value: 'Выберите вариант...', add_name: iname, tabindex:'3'}                             
+      tr
+        td.caption Дата предложения:
+        td
+          .inp_w.w118.left
+            = text_field iname, :date_place, {class: 'txt datepicker', value: @prj_good.date_place.try('strftime',"%d.%m.%Y")}
+          .label.space20 Срок поставки:
+          .inp_w.w170.left
+            = chosen_src "delivery_time_id", DeliveryTime.order(:id), @prj_good.delivery_time_id, 
+              {nil_value: '', add_name: iname}
+      tr
+        td.caption Сумма предложения:
+        td
+          = td_sum_field(iname, :gsum , nil, {value: @prj_good.gsum, no_td: true, class: 'left w118'})
+          .label.space20 Валюта:
+          .inp_w.w80.left
+            = chosen_src "currency_id", currency_src, @prj_good.currency_id, {nil_value: '',add_name: iname, add_class: 'currency_src'}
+      tr style="height: 20px;" 
+        td
+      tr
+        td.caption Примечание:
+        td
+          .inp_w= text_area iname, :description,  value: @prj_good.description, class: 'txt autoresize', style: "resize: vertical"
+      tr style="height: 20px;"
+        td
+      tr
+        td.last_td
+        td.last_td
+          = hidden_field_tag :upd_modal_goodstype_id, @prj_good.goodstype_id, {name: "upd_modal[goodstype_id]"}
+          = hidden_field_tag :upd_modal_project_id, @prj_good.project_id, {name: "upd_modal[project_id]"}
+          button.sub.btn_a.btn_reset aria-hidden="true" data-dismiss="modal" type="button"  Отмена
+          span#btn-modal.sub.btn_a.modal_apply.new action="/project_goods/" item_id="#{@prj_good.id}" model="ProjectGood" prm="upd_modal"  Сохранить
+  .panel-right2
+    table.tbl_fc.tbl_fc_1
+      tr
+        td.goods_order_td colspan="2" 
+          label.inp_btn_label.sw_enable grp_id="1"
+            div class="inp_btn checkbox #{@prj_good.order ? 'active':''}"
+              = check_box iname, :order, {checked: @prj_good.order }
+            span Товар заказан
+      - row_cls = @prj_good.order ? '' : 'disabled'
+      tr.grp1
+        td class="caption grp1 #{row_cls}" Дата заказа:
+        td
+          .inp_w.w118.left
+            = text_field iname, :date_offer, {class: 'txt datepicker grp1', value: @prj_good.date_offer.try('strftime',"%d.%m.%Y"), disabled: !@prj_good.order}
+      tr.grp1
+        td class="caption grp1 #{row_cls}" Дата поставки:
+        td class="#{row_cls}"
+          .inp_w.w118.left
+            = text_field iname, :date_supply, {class: 'txt datepicker grp1', \
+              value: @prj_good.date_supply.try('strftime',"%d.%m.%Y"), disabled: !@prj_good.order}
+          
+      tr.grp1
+        td class="caption grp1 #{row_cls}" Сумма заказа:
+        = td_sum_field(iname, :sum_supply ,nil, {value: @prj_good.sum_supply, disabled: !@prj_good.order, inp_class: 'grp1'})
+      tr
+        td
+      tr.grp1
+        td class=("caption grp1 goods_closed #{row_cls}") Закрыт
+        td
+          label.inp_btn_label
+            div class=("inp_btn checkbox #{@prj_good.fixed ? 'active':''} td_v_center") 
+              = check_box iname, :fixed, {value: @prj_good.fixed,  checked: @prj_good.fixed, disabled: !@prj_good.order}, "true", "false"

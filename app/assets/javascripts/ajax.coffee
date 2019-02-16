@@ -112,6 +112,15 @@
 @sortable_prepare = (params)->
   actual = if $('.only_actual').length==0 then null else $('.only_actual').hasClass('on')
 
+  cut = ''
+  cut_selecter = '.cutted'
+  if $('.goods_list').length>0
+    cut_selecter = '.cut:not(".cutted")'
+  
+  $(cut_selecter).each ->
+    cut = cut+$(this).attr('cut_id')+'.'
+
+
   url = {    
     only_actual: $('.only_actual').hasClass('on')
     sort: $('span.active').attr('sort')
@@ -123,6 +132,7 @@
     priority_id: $('#priority_id').val()
     currency: $('#currency_id').val()
     good_state: $('#good_state').val()
+    cut: cut
   }
   
   l = window.location.toString().split('?');
@@ -217,12 +227,20 @@ $(document).ready ->
     item_id = $(this).attr('item_id')
     model = $(this).attr('model')
     params = $('[name^='+prm+']').serialize()    
+    console.log()
+    if $(this).hasClass('new') 
+      type = 'POST' 
+      url  = action
+    else 
+      type = 'PATCH'
+      url  = action+item_id
+
     # upd_param(params+'&model='+model+'&id='+item_id,true,true)
     $.ajax
-      url: action+item_id
+      url: url
       data: params
       dataType: 'script'
-      type: 'PATCH'
+      type: type
       success: (event, xhr, settings) ->
         show_ajax_message('Успешно обновлено','success')
       error: (evt, xhr, status, error) ->  
@@ -333,7 +351,11 @@ $(document).ready ->
         return
       return false
     return
-    
+
+  $(document).on 'click', '.altcut', ->
+    $(this).toggleClass('cutted')
+    id = 'table_' + $(this).attr('cut_id')
+
   $(document).on 'click', '.cut', ->
     $(this).toggleClass('cutted')
     id = 'table_' + $(this).attr('cut_id')
@@ -341,7 +363,12 @@ $(document).ready ->
     url = sortable_prepare({})
     base_url = sort_base_url()
     cut = ""
-    $('.cutted').each ->
+
+    cut_selecter = '.cutted'
+    if $('.goods_list').length>0
+      cut_selecter = '.cut:not(".cutted")'
+    
+    $(cut_selecter).each ->
       cut = cut+$(this).attr('cut_id')+'.'
     
     url['cut'] = cut if cut!=''
