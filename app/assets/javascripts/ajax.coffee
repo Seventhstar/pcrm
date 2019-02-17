@@ -221,7 +221,7 @@ $(document).ready ->
   $(document).on 'click', '.close', ->
       $(this).closest('.alert').removeClass("in").addClass('out');
 
-  $(document).on 'click', 'span.modal_apply', ->
+  $(document).off('click', 'span.modal_apply').on 'click', 'span.modal_apply', ->
     prm = $(this).attr('prm')
     action = $(this).attr('action')
     item_id = $(this).attr('item_id')
@@ -245,7 +245,6 @@ $(document).ready ->
         show_ajax_message('Успешно обновлено','success')
       error: (evt, xhr, status, error) ->  
         show_ajax_message(status.message,'error')        
-
 
 # поиск 
   $('#search').on 'keyup', (e)-> 

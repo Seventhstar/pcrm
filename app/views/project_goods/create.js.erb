@@ -1,6 +1,8 @@
-$('.modal').modal('hide');
-updateOptionRow("goods", 
-                <%= @prj_good.to_json(except: [:created_at, :updated_at], 
-                                      methods: [:currency_name, :provider_name]).html_safe %>, 
-                <%= @prj_good.goodstype_id %>, true);
-app.makeFilter();
+<% if @prj_good.present? %>
+  $('.modal').modal('hide');
+  updateOptionRow("goods", 
+                  <%= @prj_good.to_json(except: [:created_at, :updated_at], 
+                                        methods: [:currency_name, :provider_name]).html_safe %>, 
+                  <%= @prj_good.goodstype_id %>, true);
+  app.makeFilter();
+<% end %>

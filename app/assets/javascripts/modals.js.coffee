@@ -22,7 +22,7 @@ $ ->
     ael.height = 'auto';
     ael.style.height = ael.scrollHeight+'px';
 
-  $('body').on 'keypress keyup', '#mainModal', (e)->
+  $('body').off('keypress keyup','#mainModal').on 'keypress keyup','#mainModal', (e)->
     if e.keyCode == 13
       ael = document.activeElement
       if ael.type == 'textarea'

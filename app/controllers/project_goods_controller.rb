@@ -57,20 +57,21 @@ class ProjectGoodsController < ApplicationController
   end
 
   def create
+    check_sum
+    prms = pg_params.slice( :project_id, :goodstype_id, :gsum, :name, :description, 
+                            :currency_id, :date_place, :goods_priority_id, :delivery_time_id)
+    already = ProjectGood.where(prms)
+    # puts "pg_params[:project_id] #{pg_params[:project_id]}"
+    puts "aready #{already.to_json} #{already.count}"
+    if already.count>0 || pg_params.nil? then
+      return
+    end
     @prj_good = ProjectGood.new(pg_params)
+
 
     @cur_id = pg_params[:owner_id]
     if @prj_good.save
       respond_with @prj_good
-      # respond_to do |format|
-      #   format.json do
-      #     render json: {
-      #       head: :ok,
-      #       saved: true,
-      #       id: @prj_good.id
-      #     }.to_json
-      #   end
-      # end
     else
       respond_to do |format|
         format.json { render json: @prj_good.errors.full_messages, status: :unprocessable_entity }

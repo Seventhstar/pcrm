@@ -49,7 +49,7 @@
           = hidden_field_tag :upd_modal_goodstype_id, @prj_good.goodstype_id, {name: "upd_modal[goodstype_id]"}
           = hidden_field_tag :upd_modal_project_id, @prj_good.project_id, {name: "upd_modal[project_id]"}
           button.sub.btn_a.btn_reset aria-hidden="true" data-dismiss="modal" type="button"  Отмена
-          span#btn-modal.sub.btn_a.modal_apply.new action="/project_goods/" item_id="#{@prj_good.id}" model="ProjectGood" prm="upd_modal"  Сохранить
+          span#btn-modal class="sub btn_a modal_apply #{controller.action_name}" action="/project_goods/" item_id="#{@prj_good.id}" model="ProjectGood" prm="upd_modal"  Сохранить
   .panel-right2
     table.tbl_fc.tbl_fc_1
       tr

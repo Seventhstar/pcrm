@@ -180,7 +180,7 @@
   end
 
   def upd_param
-    if params['model'] && params['model']!='undefined'
+    if params['model'] && params['model']!='undefined' && params['id'].present?
 
       obj = Object.const_get(params['model']).find(params['id'])
       prms = params[:upd]
@@ -196,7 +196,6 @@
 
 
       if !obj.save
-
         render html: obj.errors.full_messages, status: :unprocessable_entity
       else
         # p "obj.errors.full_messages #{obj.errors.full_messages}"

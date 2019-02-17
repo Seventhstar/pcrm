@@ -16,7 +16,7 @@
       .sep_15
 
       .switcher_a.sw_b.left.toggled
-        a.link_c.left.on.new_client off=("Новый клиент") on=("Клиент из базы")  Клиент из базы
+        a.link_c.left.on.new_client off=("Новый клиент") on=("Клиент из базы") Клиент из базы
         .scale v-on:click="toggled=!toggled"
           .handle.active
       
@@ -26,7 +26,7 @@
         .prj_new_client v-if="toggled"
           .inp_w
             label ФИО
-            = text_field_tag 'client[name]','',type:"text ", class: 'string optional form-control'
+            = text_field_tag 'client[name]', ' ', "v-model"=>"client_name", "v-on:input"=>"onInput()", type:"text ", class: 'string optional form-control'
           .inp_w
             label Телефон
             = text_field_tag 'client[phone]','',type:"text ", class: 'string optional form-control'

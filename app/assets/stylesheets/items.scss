@@ -23,6 +23,11 @@
 .slide-fade-leave-active {transition: all .4s cubic-bezier(1.0, 0.5, 0.8, 1.0); }
 .slide-fade-enter, .slide-fade-leave-to {transform: translateX(15px); opacity: 0; }
 
+
+.slide-fade-y-enter-active {transition: all .6s ease; }
+.slide-fade-y-leave-active {transition: all .4s cubic-bezier(1.0, 0.5, 0.8, 1.0); }
+.slide-fade-y-enter, .slide-fade-y-leave-to {transform: translateY(-15px); opacity: 0; }
+
 .component-fade-enter-active, .component-fade-leave-active {
   transition: opacity .3s ease;
 }

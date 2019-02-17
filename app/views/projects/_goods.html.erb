@@ -43,8 +43,8 @@
 
     <div class='alt_goods_head goods_head' :key='-1' v-show="openedOrHaveData(index, grouped[index][1])">Альтернативные заказы
       <span cut_id="0" class="altcut cutted" @click="switchOpenAlt(index)">
-        <span>Позиций {{altCount(grouped[index][2])}}шт.</span><b></b></span></div>
-    <transition-group name="slide-fade">
+        <span>Позиций: {{altCount(grouped[index][2])}}</span><b></b></span></div>
+    <transition-group name="slide-fade-y">
     <div class='alt_goods' :key='-2' v-show="openedAlt(index)">
     <template v-for="(g, ind) in grouped[index][2]">
       <div :class="rowClass(g)" :id="'item_'+g.id" :key="g.id">

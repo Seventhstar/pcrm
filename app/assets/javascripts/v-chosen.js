@@ -73,10 +73,12 @@ Vue.component('v-chosen', {
 
     methods: {
         onUpdate: function(val) {
+          console.log('send onInput')
           if (val === undefined) {this.$parent[this.name] = []; return;}
           let label = (v_nil(val)) ? undefined : val.label;
           this.localValue = (v_nil(val)) ? 0 : val.value;
           this.$parent[this.name] = val
+                                       
           this.$root.$emit('onInput', {value: this.localValue, key: this.k, index: this.index, name: this.name, label: label});
         }
       }

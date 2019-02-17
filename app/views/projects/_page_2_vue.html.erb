@@ -22,10 +22,11 @@
       formFields: "footage price",
       
       required: ['project_type', 'executor', 'address'],
-      fieldsTranslated: ['тип проекта', 'клиент', 'дизайнер', 'адрес'],
+      fieldsTranslated: ['тип проекта', 'дизайнер', 'адрес'],
 
       lists: "clients cities executors visualers project_types+simple",
       list_values: "",
+      client_name: '',
       texts: "address comment project_type\
               footage price sum sum_total\
               footage_2 price_2 sum_2\
@@ -59,6 +60,7 @@
 
       this.calcSumExecutor();
       this.calcRest();
+      this.$root.$on('onInput', this.onInput);
     },
 
     updated(){
@@ -66,7 +68,6 @@
     },
 
     mounted(){
-      this.$root.$on('onInput', this.onInput);
     },
 
     watch: {
@@ -148,6 +149,7 @@
     {
       onInput(){
         let valid = true;
+        // console.log("client", this.client, "this.client_name", this.client_name)  
         let tooltip = "";
         this.required.forEach( (c, i) => {
           if (v_nil(this[c])) {
@@ -155,6 +157,11 @@
             tooltip = tooltip + this.fieldsTranslated[i] + ', '
           }
         });
+
+        if (v_nil(this.client) && v_nil(this.client_name)) {
+          valid = false
+          tooltip = tooltip + 'клиент, '
+        }
         
         this.formValid = valid;
         if (tooltip.trim().length > 0) tooltip = "Не заполнены поля: " + tooltip.slice(0, -2)

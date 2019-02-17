@@ -321,9 +321,9 @@
       allAmount(g){
         offer = g.gsum > 0 ? g.gsum : ''
         hasOrder = g.order && g.sum_supply != g.gsum
-        offer = hasOrder ? "<span class='striked'>" + to_sum(offer) + '</span>' : to_sum(offer)
-        order = hasOrder ? "<br>" + to_sum(g.sum_supply) : ''
-        return offer + order
+        order = hasOrder ? to_sum(g.sum_supply) : ''
+        offer = hasOrder ? " <span class='striked'> " + to_sum(offer) + '</span>' : to_sum(offer)
+        return order + ' '+  offer
       },
 
       rowClass(g){

@@ -71,16 +71,13 @@
       projectLink(prj_id){
         let prj = this.projects.filter(w => w.value === parseInt(prj_id))
         let key = _.keys(this.grouped[prj_id])[0]
-        let id = this.grouped[prj_id][key][0].project_id
-        // console.log('id', id)
-        let name = id > 0 ? "/projects/"+id+"/edit#tabs-4" : 'Ошибка'
+        let id  = this.grouped[prj_id][key][0].project_id
+        let name = id > 0 ? "/projects/"+id+"/edit#tabs-4" : '/projects'
         return name
       },
 
       goodstypeName(idx){
         let gt = this.goodstypes.filter(w => w.value === parseInt(idx))
-        // console.log(gt)
-        // gt = this.goodstypes[idx]
         if (gt == undefined) return 'no'
         return gt[0].label
       },
@@ -89,8 +86,9 @@
         let name = this.grouped[prj_id]
         if (this.groupKey == 'project_id'){
 
-          let key = _.keys(this.grouped[prj_id])[0]
-          name = this.grouped[prj_id][key][0].address
+          let key  = _.keys(this.grouped[prj_id])[0]
+          let rows = this.grouped[prj_id][key]
+          name = rows[0].address + " (позиций: " + rows.length + ")" 
           // console.log('name', name);
         }
           // name = 'Адрес'
@@ -185,13 +183,15 @@
 
         // console.log("this.grouped[prj_id]", prj_id, this.grouped)
 
-        for (var gi in this.grouped[prj_id]){
-            g = this.grouped[prj_id][gi]
+        for (var gt in this.grouped[prj_id]){
+          for (var gi in this.grouped[prj_id][gt]){
+            g = this.grouped[prj_id][gt][gi]
             c = g.currency_id
             this.offerAmount[prj_id][c] = this.offerAmount[prj_id][c] + parseInt(g.gsum)
             this.orderAmount[prj_id][c] = this.orderAmount[prj_id][c] + toInt(g.sum_supply)
             if (g.fixed)
               this.closedAmount[prj_id][c] = this.closedAmount[prj_id][c] + toInt(g.sum_supply)
+          }
         }
 
         if (this.offerAmount[prj_id] === undefined) return ""
