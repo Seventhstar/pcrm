@@ -149,18 +149,17 @@
     {
       onInput(){
         let valid = true;
-        // console.log("client", this.client, "this.client_name", this.client_name)  
         let tooltip = "";
         this.required.forEach( (c, i) => {
           if (v_nil(this[c])) {
             valid = false;
-            tooltip = tooltip + this.fieldsTranslated[i] + ', '
+            tooltip = tooltip + this.fieldsTranslated[i] + ', ';
           }
         });
 
         if (v_nil(this.client) && v_nil(this.client_name)) {
-          valid = false
-          tooltip = tooltip + 'клиент, '
+          valid = false;
+          tooltip = tooltip + 'клиент, ';
         }
         
         this.formValid = valid;

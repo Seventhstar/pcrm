@@ -5,14 +5,12 @@
         v-chosen name="new_gtype" :value='new_gtype' placeholder="Выберите вид товара"
     span.btn_a.left.mgn_right15.h36 @click="addGoodsType" :disabled="v_nil(this.new_gtype)" Добавить вид товара
 
-    .left.mgn_right15 style="width:250px"
-      v-chosen name="goods_priority" src="goods_priorities" clear='true' placeholder="Выберите вариант..." selected=0
-    .left.mgn_right15 style="width:250px"
-      v-chosen name="goods_state" clear='true' placeholder="Предложено/заказано..." 
     .right
       / = chosen_src "good_state", good_state_src, params[:good_state], {nil_value: 'Все позиции', class: 'tab-chosen'}
       #pdf
         = link_to image_tag('pdf.png'), project_path(@project, format: :pdf), target: :_blank
+    .right style="width:250px"
+      v-chosen name="goods_state" clear='true' placeholder="Предложено/заказано..." 
   .sep_15
   #pgoods
     = render 'goods'
