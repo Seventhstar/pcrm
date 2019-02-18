@@ -1,9 +1,30 @@
-  class AjaxController < ApplicationController
+class AjaxController < ApplicationController
   before_action :logged_in_user
 
   respond_to :js, :json 
 
   def autocomplete
+
+    if params[:model] == 'Option'
+      # menu = get_menu()
+      list = []
+      menu = t('options_menu')
+      # puts "menu: #{menu}"
+      menu.each do |m0|
+        # puts "m0: #{m0}"
+        m0[1].each do |m1|
+          m2_name = t(m1)[0]
+          if m2_name.downcase.include?(params[:term].downcase)
+            # puts "m1: #{m1}, m2_name: #{m2_name}"
+            list << {id: m1, label: m2_name, name: 'options'}
+          end
+
+        end
+      end
+      render json: list
+      return
+    end
+
     model = params[:model].classify
     name_field = model == 'Project' ? 'address' : 'name'
 
@@ -71,12 +92,12 @@
 
   def add_comment
    if params[:owner_id]
-      com = Comment.new
-      com.comment = params[:comment]
-      com.user_id = current_user.id
-      com.owner_id = params[:owner_id]
-      com.owner_type = params[:owner_type]
-      com.save
+    com = Comment.new
+    com.comment = params[:comment]
+    com.user_id = current_user.id
+    com.owner_id = params[:owner_id]
+    com.owner_type = params[:owner_type]
+    com.save
       admins = User.where(admin: true).ids # помечаем сообщения непрочитанными
       admins.delete(current_user.id) # кроме себя
       admins.each do |a|
@@ -86,20 +107,20 @@
         cu.save
       end
 
-   end
-   head :ok
+    end
+    head :ok
   end
 
   def del_comment
    if params[:comment_id] 
-      leadcomment = Comment.find(params[:comment_id]).destroy
-   end
-    head :ok
+    leadcomment = Comment.find(params[:comment_id]).destroy
   end
+  head :ok
+end
 
-  def store_cut
-      ls = session['last_'+params['cntr']+'_page']
-      ls = url_for(action: 'index', controller: params['cntr'])
+def store_cut
+  ls = session['last_'+params['cntr']+'_page']
+  ls = url_for(action: 'index', controller: params['cntr'])
       # p params,ls
       url = URI.parse(ls) 
       url.query = params['cut'] #Rack::Utils.parse_nested_query(url.query).merge({cut: params['cut']}).to_query  
@@ -108,12 +129,12 @@
       # p session["last_"+params['cntr']+"_page"]
 
       head :ok
-  end
+    end
 
 
-  def read_comment
-    if params[:comment_id]
-      c = CommentUnread.where(comment_id: params[:comment_id], user_id: current_user.id)
+    def read_comment
+      if params[:comment_id]
+        c = CommentUnread.where(comment_id: params[:comment_id], user_id: current_user.id)
       # p "c.count",c.count
       if c.count >0
         c.destroy_all
@@ -129,53 +150,53 @@
 
   def dev_check
    if params[:develop_id]
-      develop = Develop.find(params[:develop_id])
-      if params[:field] == "boss"    
-        develop.dev_status_id = params[:checked]=='true' ? 3 : 4
+    develop = Develop.find(params[:develop_id])
+    if params[:field] == "boss"    
+      develop.dev_status_id = params[:checked]=='true' ? 3 : 4
+      develop.save  
+    else
+      if [1,2,4].include?(develop.dev_status_id)
+        develop.dev_status_id = params[:checked]=='true' ? 2 : 4
         develop.save  
-      else
-        if [1,2,4].include?(develop.dev_status_id)
-          develop.dev_status_id = params[:checked]=='true' ? 2 : 4
-          develop.save  
-        end
       end
-      
-   end
-   head :ok
-  end
+    end
 
-  def switch_check
+  end
+  head :ok
+end
+
+def switch_check
     # p "params[:model]",params[:model]
     if params[:model] == 'UserRole'
       item = UserRole.where(user_id: params[:item_id], role_id: params[:field])
       if params[:checked] == 'true'
-         item = UserRole.new
-         item.user_id = params[:item_id]
-         item.role_id = params[:field]
-         item.save
-      else
-        item.destroy_all
-      end
-
-    elsif params[:model]
-      item = params[:model].classify.constantize.find(params[:item_id])
-      if !item.nil?
-          item[params[:field]] = params[:checked]
-          item.save
-      end
+       item = UserRole.new
+       item.user_id = params[:item_id]
+       item.role_id = params[:field]
+       item.save
+     else
+      item.destroy_all
     end
-    head :ok
+
+  elsif params[:model]
+    item = params[:model].classify.constantize.find(params[:item_id])
+    if !item.nil?
+      item[params[:field]] = params[:checked]
+      item.save
+    end
   end
+  head :ok
+end
 
-  def switch_locked
-    if current_user.has_role?(:manager)
+def switch_locked
+  if current_user.has_role?(:manager)
     puts "current_user #{current_user.name} #{current_user.has_role?(:manager)}" 
-      file = Attachment.find(params[:file])
-      file.update_attribute(:secret,!file.secret)
-      head :ok
-    else
-      head :error
-    end
+    file = Attachment.find(params[:file])
+    file.update_attribute(:secret,!file.secret)
+    head :ok
+  else
+    head :error
+  end
     # render nothing: true
   end
 
@@ -210,11 +231,11 @@
         #   # respond_with(obj, location: )
         # end
       end
-     else
+    else
       # render json: nil, status: :ok
-     end
+    end
      # render :nothing => true 
      
-    end
+   end
 
-end
+ end

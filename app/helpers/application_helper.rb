@@ -213,7 +213,7 @@ module ApplicationHelper
     # puts 'obj', obj, 'data', data, 'where', where
     if data[:booleans].present?
       data[:booleans].split(' ').each do |b|
-        puts "booleans", b, obj[b].nil?
+        # puts "booleans", b, obj[b].nil?
         data[b] = obj[b].nil? ? eval("@#{b}") : obj[b]
       end
       data.delete(:booleans)
@@ -222,7 +222,7 @@ module ApplicationHelper
     if data[:texts].present? 
       data[:texts].split(' ').each do |t|
         data[t] = eval("@#{t}")
-        puts data[t], t
+        # puts data[t], t
         data[t] = obj[t].nil? ? '' : obj[t] if data[t].nil?
       end
       data.delete(:texts)
@@ -262,6 +262,7 @@ module ApplicationHelper
             data[l] = collection 
           else
             data[l] = select_src(collection, "name", false, fields) 
+            # puts "l #{l} collection: #{collection}"
           end
         end
       end
@@ -274,7 +275,11 @@ module ApplicationHelper
   def select_src(collection, attr_name = "name", safe = false, fields_str = nil)
     # puts collection.class
     if fields_str.nil? 
-      collection = collection.collect{|u| {label: u.try(attr_name), value: u.id} if u.try(attr_name).present? }.compact
+      collection = collection.collect{|u| 
+        {label: u.try(attr_name), value: u.id} if u.try(attr_name).present? 
+        {label: u[attr_name.to_sym], value: u[:id]} if u[attr_name.to_sym].present? 
+      }.compact
+      # puts "collection2: #{collection}"
     else
       fields = fields_str.split(',')
       collection = collection.collect{|u| 

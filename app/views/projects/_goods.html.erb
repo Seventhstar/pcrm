@@ -41,7 +41,7 @@
       <div>Закрыто: <span>{{formatTotal(closedAmount[index])}}</span></div>      
     </div>
 
-    <div class='alt_goods_head goods_head' :key='-1' v-show="openedOrHaveData(index, grouped[index][1])">Альтернативные заказы
+    <div class='alt_goods_head goods_head' :key='-1' v-show="openedOrHaveData(index, grouped[index][1])">Альтернативные предложения
       <span cut_id="0" class="altcut cutted" @click="switchOpenAlt(index)">
         <span>Позиций: {{altCount(grouped[index][2])}}</span><b></b></span></div>
     <transition-group name="slide-fade-y">

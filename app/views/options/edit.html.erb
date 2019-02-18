@@ -1,20 +1,25 @@
 <div class="sidebar">
-  
+
+  <div class="inp_w vue_options">
+    <div>
+      <v-chosen name="menu_item" placeholder="Поиск настройки"/>
+    </div>
+  </div>
+
+  <%= render "options_vue" %>
+
   <div id="accordion" class="menu_sb menu_sb_a" active=<%= get_active_option_page %> >
     <% @menu.each do |m| %>
-      <h3><%= t m[0] %></h3><div><ul>
-        <% m[1].each  do |opt| %>
-          <%= option_li(opt, t(opt)[0]) %>
-        <% end %>
-      </ul></div>
+    <h3><%= t m[0] %></h3><div><ul>
+      <% m[1].each  do |opt| %>
+      <%= option_li(opt, t(opt)[0]) %>
+      <% end %>
+    </ul></div>
     <% end %>
   </div>
 </div>
 
 <div class="content option_list">
   <%= render("simple_option") %>
-<div class="sep_3"></div>
-</div>
-
-
+  <div class="sep_3"></div>
 </div>

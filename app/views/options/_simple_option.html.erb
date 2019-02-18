@@ -25,7 +25,14 @@
 <table class="tleads" model="<%= @item.class.name %>">
   <thead>
   <% attrs.each do |attr| %>
-    <th <%= attr_date_or_bool?(@item, attr[0]) ? "width=60px;":'' %> fld='<%= attr[0] %>'><%= t(attr[0]) %></th>
+    <th <%= attr_date_or_bool?(@item, attr[0]) ? "width=60px;":'' %> fld='<%= attr[0] %>'>
+      <% if t(attr[0]).is_a?(Array) %> 
+        <%= t(attr[0])[1].capitalize %>
+      <% else %>
+        <%= t(attr[0]) %>
+      <% end %>
+        
+    </th>
   <% end %>
   <th></th>
   </thead>

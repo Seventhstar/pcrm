@@ -11,7 +11,7 @@ class ProvidersController < ApplicationController
 
     @styles = Style.all
     @budgets = Budget.order(:name)
-    @goodstypes = Goodstype.order(:name)
+    @goodstypes = Goodstype.order(:priority, :name)
     @p_statuses = PStatus.order(:name)
 
     @param_style = params[:style]
@@ -57,7 +57,7 @@ class ProvidersController < ApplicationController
     @ids = sp & bp & gtp & ps & s_ids
     # @ids = s_ids & sp
 
-    puts "@main_city #{@main_city}"
+    # puts "@main_city #{@main_city}"
     @providers = Provider.by_city(@main_city)
                          .where(id: @ids)
                          .order(:name) # find(ids, :order => :name)

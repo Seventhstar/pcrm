@@ -5,10 +5,14 @@
 $(document).ready ->
   $('.autocomplete').autocomplete
     source: (request, response) ->
-      $.getJSON "/ajax/autocomplete?model="+$(this.element).attr('model') + "&term=" + request.term, (data) ->
+      model = $(this.element).attr('model')
+      $.getJSON "/ajax/autocomplete?model="+ model+ "&term=" + request.term, (data) ->
         response data
     select: (event,ui) ->
-      $("#"+$(this).attr('hidden_id')).val(ui.item.id)
+      if ui.item.name == 'options' 
+        window.location.href = '/options/'+ui.item.id;
+      else
+        $("#"+$(this).attr('hidden_id')).val(ui.item.id)
       return
     change: (event, ui) ->
       return

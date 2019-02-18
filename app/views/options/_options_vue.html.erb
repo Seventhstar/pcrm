@@ -1,0 +1,18 @@
+<script>
+  Vue.component('v-select', VueSelect.VueSelect)
+
+  let menuOptions = new Vue({
+    el: '.vue_options',
+    data: <%= fill_vue_data(nil, {
+      list_values: 'menu_item',
+      lists: 'menu_items'
+    }, 'app') %>,
+
+    watch: {
+      menu_item(){
+        if (!v_nil(this.menu_item))
+          window.location.href = '/options/' + this.menu_item.value;
+      }
+    }
+   })
+</script>
