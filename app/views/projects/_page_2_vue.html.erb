@@ -195,12 +195,16 @@
       },
 
       mFloat(name){
-          return parseInt(this[name]*100) / 100;
+        return parseInt(this[name]*100) / 100;
+      },
+      mFloat10000(name){
+        console.log()
+        return parseInt(this[name]*10000);
       },
 
       calcSum(footage, price, sum = "sum"){
         if (!this.focus.includes('sum')){
-          this[sum] = this.mFloat(footage) * parseInt(this[price]);
+          this[sum] = this.mFloat10000(footage) * parseInt(this[price]) / 10000;
         }
 
         if (this.focus.includes('real')) 
