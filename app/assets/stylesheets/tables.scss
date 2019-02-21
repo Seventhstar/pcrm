@@ -20,8 +20,8 @@
 // }
 .alt_goods_head {
     background: #f7f7f7;
-    padding: 8px 30px;
-    font-size: 16px;
+    padding: 8px 13px 8px 30px;
+    font-size: 15px;
     border-top: 2px solid #bbb;
 }
 
@@ -124,7 +124,7 @@ div.edit_delete{ text-align: center; }
 .grid_table_new_item>div{ padding: 2px; }
 .grid_table_new_item input[type="text"] {height: 36px;}
 
-.table_footer{  font-weight: 500; overflow: auto; padding: 8px; }
+.table_footer{  font-weight: 500; overflow: auto; padding: 8px;     font-size: 16px}
 
 .label_col{ margin-top: 8px; text-align: right; font-weight: 500; font-size: 13px;}
 
@@ -167,12 +167,12 @@ tr.editable td.e_edit { padding: 3px 7px; }
     float: right;
     // width: 24px;
     cursor: pointer;
-    padding: 1px 5px;
+    padding: 1px 2px;
     width: auto;
-    height: 24px;
+    height: 22px;
     border-radius: 5px;
     background-color: white;
-    margin-top: -5px;
+    margin-top: -3px;
     border: 1px solid #ddd;
 }
 .altcut span {padding-top: 3px; display: block; float: left; font-weight: normal; }
@@ -185,7 +185,7 @@ span.cut b, span.altcut b{ display: block;
   background: asset-url('arr1.png') no-repeat -18px -9px;
 }
 
-span.altcut b {float: right;}
+span.altcut b {float: right; margin: 8px 4px}
 
 .cut.cutted b {background-position: -18px 0;}
 .altcut.cutted b {background-position: -18px 0;}

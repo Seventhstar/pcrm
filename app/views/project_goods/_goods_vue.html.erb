@@ -8,6 +8,7 @@
 
       confirmModal: false,
       currentIndex: 0,
+      currentIdx: 0,
       currentGoods: '',
       
       inputs: ['name', 'date_place', 'description', 'gsum'],
@@ -62,8 +63,11 @@
 
     methods: {
 
-      cutClass(index){
-        let cls = 'cut'
+      cutClass(index, alt = false){
+        
+        let cls = alt ? 'altcut' : 'cut'
+
+
         if (!this.controls[index].opened) cls = cls + ' cutted'
         return cls
       },
@@ -80,6 +84,10 @@
         let gt = this.goodstypes.filter(w => w.value === parseInt(idx))
         if (gt == undefined) return 'no'
         return gt[0].label
+      },
+
+      goodstypeHead(idx, item){
+         return this.goodstypeName(idx) + ' (' + this.grouped[item][idx].length + ')'
       },
 
       projectAddress(prj_id, index = null){
@@ -104,23 +112,30 @@
       },
 
       addControlAndField(){
-        this.controls.push({opened: false, valid: false});
+        this.controls.push({opened: false, valid: false, openedRow: []});
       },
 
-      deleteGoods(index, goods){
+      deleteGoods(index, goods, idx){
         this.currentGoods = goods;
         this.currentIndex = index;
+        this.currentIdx   = idx;
         this.confirmModal = true;
         // console.log('goods', goods, 'index', index)
       },
 
       modalYes(){
         if (this.currentGoods === '' || !this.confirmModal ) return;
-        let index = this.grouped[this.currentIndex].indexOf(this.currentGoods);
+        
+        // console.log('this.currentIndex', this.currentIndex, 
+                    // 'this.currentIdx',  this.currentIdx,
+                    // 'this.currentGoods', this.currentGoods);
 
-        if (index<0) return;
-        this.grouped[this.currentIndex].splice(index, 1);
-        delete_item('/project_goods/'+this.currentGoods.id);
+        let index = this.grouped[this.currentIndex][this.currentIdx].indexOf(this.currentGoods);
+
+        if (index < 0) return;
+        this.grouped[this.currentIndex][this.currentIdx].splice(index, 1);
+        // console.log('this.currentGoods.id', this.currentGoods.id)
+        delete_item('/project_goods/' + this.currentGoods.id);
       },
 
       onChange(key, index){
@@ -141,14 +156,27 @@
       switchOpened(index){
         this.currentIndex = index
         this.controls[index].opened = !this.controls[index].opened
+        _.keys(this.grouped[index]).forEach( k => {
+          Vue.set(this.controls[index].openedRow, k, this.controls[index].opened);
+        })
+      },
+
+      switchOpenedRow(index, idx){
+        this.currentIndex = index
+        if (this.controls[index].openedRow[idx] == undefined) this.controls[index].openedRow[idx] = false
+        Vue.set(this.controls[index].openedRow, idx, !this.controls[index].openedRow[idx]);
       },
 
       openedOrHaveData(index, length){
         return !this.closedTable(index); 
       },
 
+      gtRowsOpened(index, idx){
+        return this.controls[index].openedRow[idx];
+      },
+
       closedTable(index){
-        if (this.controls[index] === undefined) {this.controls.push({opened: false, valid: false})}
+        if (this.controls[index] === undefined) {this.controls.push({opened: false, valid: false, openedRow: []})}
         return !this.controls[index].opened;
       },
 
@@ -210,13 +238,10 @@
         this.groupKey         = id
         
         grouped          = _.groupBy(this.goods, id)
-        // grouped          = _.groupBy(this.goods, function(g){
-        //     return g[id] + '#' + g.goodstype_id;
-        // });
-
         var data = _.map(grouped, (group)=>{
-          // console.log('keys', _.keys(group[0]), group);
-          return _.groupBy(group, 'goodstype_id')
+            _.sortBy(group, 'created_at')
+           return _.groupBy(group, 'goodstype_id')
+
         });
 
         this.grouped = data;
@@ -228,7 +253,10 @@
         if (this.opened !== null){
           let opened = this.opened.split('.');
           let t = this
-          opened.forEach((i)=>{if (i!=='') t.controls[i].opened = true });
+          opened.forEach(i=>{
+            if (i!=='') t.controls[i].opened = true 
+            _.keys(this.grouped[i]).forEach( k => {Vue.set(this.controls[i].openedRow, k, true); })
+          });
         }
       },
       

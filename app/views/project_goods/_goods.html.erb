@@ -19,11 +19,11 @@
     </div>
 
     <template v-for="(gt, idx) in grouped[item]" >
-    <div class='alt_goods_head goods_head' :key='-1'>{{goodstypeName(idx)}}
-    <span cut_id="0" class="altcut cutted" @click="switchOpenAlt(index)">
-        <span>Позиций: {{grouped[item][idx].length}}</span><b></b></span></div>
+    <div class='alt_goods_head goods_head' :key='-1'>{{goodstypeHead(idx, item)}}
+    <span cut_id="0" :class="cutClass(index, true)" @click="switchOpenedRow(index, idx)">
+        <span></span><b></b></span></div>
 
-    <transition-group name="item" v-show="openedOrHaveData(index)">
+    <transition-group name="item" v-show="gtRowsOpened(index, idx)">
     <template v-for="(g, ind) in grouped[item][idx]" >
       <div :class="rowClass(g)" :id="'item_'+item" :key="item">    
           <div>{{g.name}}</div>
@@ -34,7 +34,7 @@
           <div v-html="allAmount(g)"></div>
           <div class="edit_delete td_right " style="">
             <a class="icon basket td_right" data-modal="true" :href="goodsEditLink(g)"></a>
-            <span class="icon icon_del" @click="deleteGoods(item, g)"></span> </div>
+            <span class="icon icon_del" @click="deleteGoods(item, g, idx)"></span> </div>
       </div>
     </template>
     </transition-group>
