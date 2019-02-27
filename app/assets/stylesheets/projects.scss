@@ -15,8 +15,9 @@ span.calc_proc{ padding: 8px 6px;  margin-left: 6px;  display: inline-block;  bo
 input[type='number'] {text-align: right;}
 input::-webkit-inner-spin-button { padding-right:0}
 
-.striked {text-decoration: line-through gray; font-size: 10px; margin-top: 2px;}
+.striked {text-decoration: line-through gray; margin-top: 2px;}
 
+.btn_add:hover, .btn_a:hover {background: orange;}
 
 .icon.basket { display: inline-block;
     background: asset-url('basket.png') no-repeat;
@@ -27,7 +28,10 @@ input::-webkit-inner-spin-button { padding-right:0}
     cursor: pointer;}
 
 .space20 {margin-left: 20px !important;}
+.space66 {margin-left: 66px !important;}
 .space10 {margin-left: 10px !important;}
+
+
 .ordered {background: #FFFADD; }
 .ordered:hover {background: #FFFFCC;}
 // .ordered td:hover, table.tleads tr.ordered:hover:not(#new_item) td{ background: #ffFf05;}
@@ -53,8 +57,8 @@ span.add_footage {margin-top: 18px !important;}
 // .txt:disabled{background: #fcfcfc !important; }
 
 // #add_footage {font-size: 18px; font-weight: bold;}
-.va_pt15{padding-top: 16px;}
-.w99_5{width: 95% !important; float: left;}
+.va_pt15 {padding-top: 16px;}
+.w99_5 {width: 95% !important; float: left;}
 
 td.inf.attention, td.inf.comment {background: asset-url('p_inf.png') no-repeat !important;
                              background-position-y: 5px !important; background-position-x: 7px !important;
@@ -68,7 +72,7 @@ td.inf.attention, td.inf.comment {background: asset-url('p_inf.png') no-repeat !
 
 .icons-indicate img {margin:0 5px 0 0;}
 
-td.inf.comment {  background-position-x: -17px !important; }
+td.inf.comment {background-position-x: -17px !important; }
 
 .icon_comment {background: asset-url('comment.png') no-repeat;}
 
@@ -82,7 +86,6 @@ td.inf.comment {  background-position-x: -17px !important; }
 
 .inp_94 #project_client_id_chosen {width: 98% !important;}
 tr.fullwidth>td>#project_client_id_chosen {width: 100% !important;}
-// .fullwidth #project_client_id_chosen {width: 100%;}
 
 #pgoods .txt.right {text-align: right;}
 

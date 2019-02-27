@@ -21,6 +21,9 @@ ru:
       project_elongation:
         new_date: Новая дата
         elongation_type: Причина продления
+      provider:
+        p_status: Статус
+        city: Город
       project_good:
         name: Наименование
         gsum: Стоимость

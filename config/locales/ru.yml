@@ -16,6 +16,8 @@ ru:
   city_id: Город
   style_id: Стиль
   p_status_id: Статус
+  p_status: Статус
+  PStatus: Статус
   dev_status_id: Статус
   channel_id: Канал
   source_id: Источник
@@ -44,6 +46,10 @@ ru:
   payd_full: Оплачено 100%  
   default: Базов.
   date_start: Дата начала
+  sum_supply: Сумма заказа
+  date_offer: Дата предложения
+  order: Заказано
+  delivery_time: Срок поставки
   
   number: Номер
   pdate: Дата

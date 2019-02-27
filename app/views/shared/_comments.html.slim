@@ -2,7 +2,7 @@ script#comments_template type="text/html"
   =render "comments/comment.html.mustache"
 
 - @comments = @owner.comments.order('created_at asc')
-- if is_manager? && @owner.class == Project
+- if is_manager? && (@owner.class == Project || @owner.class == Provider)
   .box_msg
     #tabs_msg
       ul

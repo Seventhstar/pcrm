@@ -27,18 +27,19 @@
 
       grouped: [],
       groupHeaders: [],
-      groupKey1: 'project_id',
 
-      lists: "projects currencies+short goodstypes",
+      lists: "currencies+short goodstypes",
       texts: 'groupKey',
 
       providers: @providers,
+      projects: @projects,
       project_g_types: [],
 
       goods: @goods,
       opened: @opened
      }, 'pgoods') %>,
 
+      // goodstypes: @goodstypes,
     updated(){
       this.onInput();
     },
@@ -64,13 +65,18 @@
     methods: {
 
       cutClass(index, alt = false){
-        
         let cls = alt ? 'altcut' : 'cut'
-
-
         if (!this.controls[index].opened) cls = cls + ' cutted'
         return cls
       },
+
+      cutAllClass(index){
+        let cls = 'allcut'
+        if (!this.controls[index].opened) cls = cls + ' cutted'
+        return cls
+      },
+
+
 
       projectLink(prj_id){
         let prj = this.projects.filter(w => w.value === parseInt(prj_id))
@@ -81,9 +87,17 @@
       },
 
       goodstypeName(idx){
-        let gt = this.goodstypes.filter(w => w.value === parseInt(idx))
-        if (gt == undefined) return 'no'
-        return gt[0].label
+        let gt = 0
+        let field = 'label'
+        if (this.groupKey == 'project_id')
+          gt = this.goodstypes.filter(w => w.value === parseInt(idx))
+        else {
+          gt = this.projects.filter(w => w.id === parseInt(idx))
+          field = 'address'
+        }
+
+        if (gt === undefined || gt[0] === undefined) return 'no'
+        return gt[0][field]
       },
 
       goodstypeHead(idx, item){
@@ -92,17 +106,15 @@
 
       projectAddress(prj_id, index = null){
         let name = this.grouped[prj_id]
-        if (this.groupKey == 'project_id'){
-
-          let key  = _.keys(this.grouped[prj_id])[0]
-          let rows = this.grouped[prj_id][key]
-          name = rows[0].address + " (позиций: " + rows.length + ")" 
-          // console.log('name', name);
+        let key  = _.keys(this.grouped[prj_id])[0]
+        let rows = this.grouped[prj_id][key]
+        if (this.groupKey == 'project_id') {
+          name = rows[0].address  
+        } else {
+          // name = name.provider_name
+          name = rows[0].provider_name  
         }
-          // name = 'Адрес'
-        else
-          name = name.provider_name
-        return name
+        return name + " [" + rows.length + "]"
       },
 
       nonGroupKey(g) {
@@ -125,11 +137,6 @@
 
       modalYes(){
         if (this.currentGoods === '' || !this.confirmModal ) return;
-        
-        // console.log('this.currentIndex', this.currentIndex, 
-                    // 'this.currentIdx',  this.currentIdx,
-                    // 'this.currentGoods', this.currentGoods);
-
         let index = this.grouped[this.currentIndex][this.currentIdx].indexOf(this.currentGoods);
 
         if (index < 0) return;
@@ -155,16 +162,31 @@
 
       switchOpened(index){
         this.currentIndex = index
-        this.controls[index].opened = !this.controls[index].opened
+        let opened = !this.controls[index].opened
+        this.controls[index].opened = opened
+
+        if (!opened){
+            _.keys(this.grouped[index]).forEach( k => {
+              Vue.set(this.controls[index].openedRow, k, opened);
+            })
+        }
+      },      
+
+      switchAllOpened(index){
+        this.currentIndex = index
+        let opened = !this.controls[index].opened
+        this.controls[index].opened = opened
         _.keys(this.grouped[index]).forEach( k => {
-          Vue.set(this.controls[index].openedRow, k, this.controls[index].opened);
+          Vue.set(this.controls[index].openedRow, k, opened);
         })
       },
 
       switchOpenedRow(index, idx){
         this.currentIndex = index
         if (this.controls[index].openedRow[idx] == undefined) this.controls[index].openedRow[idx] = false
-        Vue.set(this.controls[index].openedRow, idx, !this.controls[index].openedRow[idx]);
+        let opened = !this.controls[index].openedRow[idx];
+        Vue.set(this.controls[index].openedRow, idx, opened);
+
       },
 
       openedOrHaveData(index, length){
@@ -209,14 +231,14 @@
           this.closedAmount[prj_id][c.value] = 0
         })
 
-        // console.log("this.grouped[prj_id]", prj_id, this.grouped)
-
         for (var gt in this.grouped[prj_id]){
           for (var gi in this.grouped[prj_id][gt]){
-            g = this.grouped[prj_id][gt][gi]
-            c = g.currency_id
+            let g = this.grouped[prj_id][gt][gi]
+            let c = g.currency_id
+            
             this.offerAmount[prj_id][c] = this.offerAmount[prj_id][c] + parseInt(g.gsum)
             this.orderAmount[prj_id][c] = this.orderAmount[prj_id][c] + toInt(g.sum_supply)
+
             if (g.fixed)
               this.closedAmount[prj_id][c] = this.closedAmount[prj_id][c] + toInt(g.sum_supply)
           }
@@ -231,31 +253,38 @@
         hasOrder = g.order && g.sum_supply != g.gsum
         offer = hasOrder ? "<span class='striked'>" + to_sum(offer) + '</span>' : to_sum(offer)
         order = hasOrder ? "<br>" + to_sum(g.sum_supply) : ''
-        return offer + order
+        console.log('g.currency_name', g.currency_name)
+        return offer + order + g.currency_name
       },
 
       makeGroup(id){
-        this.groupKey         = id
-        
-        grouped          = _.groupBy(this.goods, id)
-        var data = _.map(grouped, (group)=>{
-            _.sortBy(group, 'created_at')
-           return _.groupBy(group, 'goodstype_id')
+        this.groupKey = id
 
+        if (id == 'project_id')
+          secondGroup = 'goodstype_id'
+        else
+          secondGroup = 'project_id'
+
+        _.sortBy(this.goods, 'goods_priority_id')
+
+        grouped  = _.groupBy(this.goods, id)
+        var data = _.map(grouped, group => {
+          _.sortBy(group, 'created_at')
+          return _.groupBy(group, secondGroup)
         });
 
         this.grouped = data;
 
-        this.groupHeaders     = Object.keys(this.grouped)
+        this.groupHeaders     = _.keys(this.grouped)
         this.controls.length  = 0
-        this.groupHeaders.forEach(()=>this.addControlAndField())
+        this.groupHeaders.forEach(() => this.addControlAndField())
 
         if (this.opened !== null){
           let opened = this.opened.split('.');
           let t = this
-          opened.forEach(i=>{
-            if (i!=='') t.controls[i].opened = true 
-            _.keys(this.grouped[i]).forEach( k => {Vue.set(this.controls[i].openedRow, k, true); })
+          opened.forEach(i => {
+            if (i !== '') t.controls[i].opened = true 
+            _.keys(this.grouped[i]).forEach(k => { Vue.set(this.controls[i].openedRow, k, true); })
           });
         }
       },
@@ -276,7 +305,7 @@
       },
 
       goodsEditLink(g){
-        return "/project_goods/" + g.id + "/edit"
+        return "/project_goods/" + g.id + "/edit?group="+ this.groupKey
       },
 
       goodsDeleteLink(g){

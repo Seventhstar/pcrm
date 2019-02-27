@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190218184703) do
+ActiveRecord::Schema.define(version: 20190227053931) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -185,6 +185,7 @@ ActiveRecord::Schema.define(version: 20190218184703) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "priority", default: 100
   end
 
   create_table "dev_projects", id: :serial, force: :cascade do |t|
@@ -336,6 +337,13 @@ ActiveRecord::Schema.define(version: 20190218184703) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "positions", force: :cascade do |t|
+    t.string "name"
+    t.boolean "secret", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "priorities", id: :serial, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -476,6 +484,8 @@ ActiveRecord::Schema.define(version: 20190218184703) do
     t.integer "provider_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "position_id", default: 2
+    t.index ["position_id"], name: "index_provider_managers_on_position_id"
     t.index ["provider_id"], name: "index_provider_managers_on_provider_id"
   end
 
@@ -706,6 +716,7 @@ ActiveRecord::Schema.define(version: 20190218184703) do
   add_foreign_key "project_goods", "goodstypes"
   add_foreign_key "project_goods", "projects"
   add_foreign_key "projects", "cities"
+  add_foreign_key "provider_managers", "positions"
   add_foreign_key "providers", "cities"
   add_foreign_key "room_works", "rooms"
   add_foreign_key "room_works", "works"

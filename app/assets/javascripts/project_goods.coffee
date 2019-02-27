@@ -7,6 +7,8 @@ $(document).ready ->
   ch = $('#upd_modal_order').val()
   sum_supply = $('#upd_modal_sum_supply')
   if (ch=="true" && (sum_supply.val().length == 0 || sum_supply.val() == "0"))
-  	sum_supply.val($('#upd_modal_gsum').val())
+    sum_supply.val($('#upd_modal_gsum').val())
+  else
+    sum_supply.val(0)
   return
 

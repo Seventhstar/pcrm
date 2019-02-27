@@ -1,6 +1,8 @@
 $('.modal').modal('hide');
+console.log('group', <%= @group %>);
 updateOptionRow("goods", 
                 <%= @prj_good.to_json(except: [:created_at, :updated_at], 
-                                      methods: [:currency_name, :provider_name]).html_safe %>, 
-                <%= @prj_good.id %>);
+                                      methods: [:currency_short, :provider_name]).html_safe %>, 
+                <%= @prj_good.id %>, false);
+
 app.makeFilter();

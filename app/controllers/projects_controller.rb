@@ -130,7 +130,7 @@ class ProjectsController < ApplicationController
             .left_joins(:currency)
             .select("project_goods.*, 
                       providers.name as provider_name, 
-                      currencies.name as currency_name,
+                      currencies.short as currency_short,
                       goodstypes.name as goodstype_name")
             .order('goodstypes.name', :created_at)
             .except(:created_at, :updated_at)

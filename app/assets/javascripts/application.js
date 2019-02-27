@@ -45,12 +45,12 @@ function to_sum(d){
 }
 
 $.fn.capitalize = function () {
-    $.each(this, function () {
-        var caps = this.value;
-        caps = caps.charAt(0).toUpperCase() + caps.slice(1);
-        this.value = caps;
-    });
-    return this;
+  $.each(this, function () {
+      var caps = this.value;
+      caps = caps.charAt(0).toUpperCase() + caps.slice(1);
+      this.value = caps;
+  });
+  return this;
 };
 
 function updateOptionRow(name, json, id, newItem = false){
@@ -88,9 +88,10 @@ function updateOptionRow(name, json, id, newItem = false){
 }
 
 function searchByKey(obj, key, index = null) {
+  let gt_obj = ''
   for (var gt in obj) {
-    let gt_obj = obj[gt]
-    if (index!==null) gt_obj = gt_obj[index]
+    gt_obj = obj[gt]
+    if (index !== null) gt_obj = gt_obj[index]
     for (var goods in gt_obj) {
       if (gt_obj[goods].id === key) {
         return {gt: gt, goods: goods, index: index}; 

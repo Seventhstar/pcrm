@@ -19,7 +19,7 @@ class OptionsController < ApplicationController
         @menu_items << {id: m1, name: m2_name}
       end
     end
-    puts "menu_items #{@menu_items}"
+    # puts "menu_items #{@menu_items}"
   end
 
   def index

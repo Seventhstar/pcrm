@@ -1,21 +1,23 @@
+.hl.gr_caption.hl_tr Контакты поставщика
 .tbl_a
-  .head Менеджеры:
   = hidden_field 'manager','provider_id', value: @provider.id
   table#provider_managers.tleads action="provider_managers" model="ProviderManager" 
     thead
-      tr
+      tr.head
+        th.center fld="name" width="120px"  Должность
         th.center fld="name" width="380px"  ФИО
         th.center fld="phone" width="330px"  Телефон
         th.center fld="email"  E-mail
         - if is_manager?
           th.edit_delete
     tbody
-      = render partial: @managers, as: :pm
+      = render partial: @managers, as: :pm if @managers.present?
       - if is_manager?
         tr.new_item_head
-          td colspan="4"  Новый менеджер:
+          td colspan="5"  Новый менеджер:
         tr#new_item
-          =td_text "manager", :name
-          =td_text "manager", :phone
-          =td_text "manager", :email
+          td
+          = td_text "manager", :name
+          = td_text "manager", :phone
+          = td_text "manager", :email
           = td_add_sub_send 'provider_managers', 'manager'

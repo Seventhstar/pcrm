@@ -55,7 +55,7 @@
 @enableControls = (items, checked, level = 3) ->
   items.children().each ->
     # console.log('$(this)', $(this)) 
-    $(this).prop('disabled', checked)
+    $(this).prop('readonly', checked)
     if $(this).hasClass('chosen')
       $(this).prop('disabled', checked).trigger("chosen:updated")
     # if $(this)
@@ -69,7 +69,7 @@ $(document).ready ->
  $(document).on 'click', '.sw_enable', ->
   grp_id = $(this).attr('grp_id')
   ch = $(this).find('.checkbox').hasClass('active')
-  $('.grp'+grp_id).prop('disabled',ch)
+  #$('.grp'+grp_id).prop('readonly',ch)
   $('.grp'+grp_id).prop('readonly',ch)
   enableControls($('.grp'+grp_id), ch)
   # $('.grp'+grp_id).children().each ->

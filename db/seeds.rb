@@ -48,7 +48,10 @@ if GoodsPriority.count == 0
   GoodsPriority.create([{name: 'Основной'}, {name: 'Альтернативный'}, {name: 'Отложено'}])
 end
 
-
 if DeliveryTime.count == 0
   DeliveryTime.create([{name: 'По согласованию'}, {name: '2 недели'}, {name: 'Месяц'}])
+end
+
+if Position.count == 0
+  Position.create([{name: 'Директор', secret: true}, {name: 'Менеджер', secret: false}])
 end

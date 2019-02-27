@@ -354,6 +354,10 @@ $(document).ready ->
   $(document).on 'click', '.altcut', ->
     $(this).toggleClass('cutted')
     id = 'table_' + $(this).attr('cut_id')
+  
+  $(document).on 'click', '.allcut', ->
+    $(this).toggleClass('cutted')
+    id = 'table_' + $(this).attr('cut_id')
 
   $(document).on 'click', '.cut', ->
     $(this).toggleClass('cutted')

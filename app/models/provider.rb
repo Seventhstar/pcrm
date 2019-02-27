@@ -8,6 +8,10 @@ class Provider < ActiveRecord::Base
     has_many :budgets, through: :provider_budgets
     has_many :goodstypes, through: :provider_goodstypes
     has_many :receipts
+
+    has_many :special_infos, as: :specialable, dependent: :destroy
+    accepts_nested_attributes_for :special_infos
+    
     belongs_to :p_status
     belongs_to :city
     has_paper_trail

@@ -62,7 +62,7 @@ Rails.application.routes.draw do
   resources :elongation_types
   resources :project_g_types
   resources :contact_kinds
-  
+  resources :positions
   resources :clients
 
   resources :p_statuses

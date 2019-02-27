@@ -34,7 +34,7 @@ class ProjectGoodsController < ApplicationController
             .left_joins(:currency)
             .select("project_goods.*, 
                       providers.name as provider_name, 
-                      currencies.name as currency_name,
+                      currencies.short as currency_short,
                       projects.address as address")
 
     prj_ids = @goods.pluck(:project_id).uniq         
@@ -58,16 +58,10 @@ class ProjectGoodsController < ApplicationController
 
   def create
     check_sum
-    prms = pg_params.slice( :project_id, :goodstype_id, :gsum, :name, :description, 
-                            :currency_id, :date_place, :goods_priority_id, :delivery_time_id)
-    already = ProjectGood.where(prms)
-    # puts "pg_params[:project_id] #{pg_params[:project_id]}"
-    puts "aready #{already.to_json} #{already.count}"
-    if already.count>0 || pg_params.nil? then
-      return
-    end
-    @prj_good = ProjectGood.new(pg_params)
 
+    return if find_by_params
+
+    @prj_good = ProjectGood.new(pg_params)
 
     @cur_id = pg_params[:owner_id]
     if @prj_good.save
@@ -84,15 +78,22 @@ class ProjectGoodsController < ApplicationController
   end
 
   def update
-    @cur_id = pg_params[:owner_id]
-    @prj_good.update(pg_params)    
-    respond_with @prj_good
+    if !find_by_params(true)
+      @cur_id = pg_params[:owner_id]
+      @prj_good.update(pg_params)  
+      # puts "params #{params}"
+      respond_with @prj_good
+    end
   end
 
   def edit
     @title = 'Редактирование заказа'
     @providers = Goodstype.find(@prj_good.goodstype_id).providers
     @goods_priorities = GoodsPriority.order(:id)
+    
+    @group = params[:group]  
+    puts "@group #{@group}"
+    puts "@prj_good #{@prj_good}"
     # puts "@prj_good", @prj_good.to_json, @providers.pluck(:id)
     @cur_id = params[:owner_id]
     respond_modal_with @prj_good, location: root_path
@@ -100,6 +101,19 @@ class ProjectGoodsController < ApplicationController
 
 
   private
+
+    def find_by_params(update = false)
+      list = [:project_id, :goodstype_id, :gsum, :name, :description, 
+              :currency_id, :date_place, :goods_priority_id, :delivery_time_id]
+      prms = pg_params
+      prms = prms.slice(list) if !update
+      already = ProjectGood.where(prms)
+      
+      if already.count>0 || pg_params.nil? then
+        return true
+      end
+      false
+    end
 
     def check_sum
       prms = [:gsum, :sum_supply]
@@ -129,6 +143,6 @@ class ProjectGoodsController < ApplicationController
       params.require(req).permit( :goodstype_id, :provider_id, :date_supply, :date_place, 
                                   :date_offer, :currency_id, :gsum, :order, :name, :description, 
                                   :fixed, :sum_supply, :project_id, :owner_id, 
-                                  :goods_priority_id, :delivery_time_id)
+                                  :goods_priority_id, :delivery_time_id, :group)
     end
   end

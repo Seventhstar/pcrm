@@ -29,6 +29,17 @@ module ApplicationHelper
     [["Телефон",1],["E-mail",2]]
   end
 
+  def parents_count(item)
+    links = item.class.name.constantize.reflect_on_all_associations(:has_many).map(&:name)
+    links.each do |l|
+      if item.try(links[0]).count >0 
+        return 1
+      end
+    end
+
+    return 0
+  end
+
   # def td_actions(url, f)
   #   # <td><%= link_to 'Отмена', url, class: "sub btn_a btn_reset"%>
   #           # <%= f.button :submit, value: 'Сохранить', :class => 'sub btn_a ' %></td>

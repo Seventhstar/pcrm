@@ -60,7 +60,7 @@
         <% end %>
         
         <% tag = is_inside_edit.include?(item.class.name) ? 'link' : 'span' %>
-        <%= tool_icons(item, {tag: tag, subcount: item.try(:parents_count)} )%>
+        <%= tool_icons(item, {tag: tag, subcount: parents_count(item)} )%>
         
       </tr>
     <% end %>

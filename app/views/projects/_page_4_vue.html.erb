@@ -238,10 +238,12 @@
         this.controls[index].openedAlt = !this.controls[index].openedAlt
       },
 
-      openedOrHaveData(index, items){
+      openedOrHaveData(index, items, alt = false){
         let closed = this.closedTable(index)
         if (items === undefined) return !closed;
-        return this.closedTable(index) || length>0; 
+        let openAlt = alt ? this.altCount(this.grouped[index][2]) : true
+
+        return (this.closedTable(index) || length>0) && openAlt; 
       },
 
       closedTable(index){
@@ -305,8 +307,9 @@
           this.closedAmount[gt][c.value] = 0
         })
 
-        for (var gi in this.grouped[gt]){
-            g = this.grouped[gt][gi]
+        for (var gi in this.grouped[gt][1]){
+            g = this.grouped[gt][1][gi]
+            // console.log('gi', gi, g)
             c = g.currency_id
             this.offerAmount[gt][c] = this.offerAmount[gt][c] + parseInt(g.gsum)
             this.orderAmount[gt][c] = this.orderAmount[gt][c] + toInt(g.sum_supply)
@@ -318,12 +321,23 @@
         return this.formatTotal(this.offerAmount[gt])
       },
 
+      toCurrencyAmount(amount, currency_short){
+
+        if (currency_short[0] == 'р') return ' ' + to_sum(amount) +' ' +currency_short
+        return ' ' + currency_short + to_sum(amount)
+
+      },
+
       allAmount(g){
+        let cur_name = ' ' + g.currency_short
+
+
         offer = g.gsum > 0 ? g.gsum : ''
         hasOrder = g.order && g.sum_supply != g.gsum
-        order = hasOrder ? to_sum(g.sum_supply) : ''
-        offer = hasOrder ? " <span class='striked'> " + to_sum(offer) + '</span>' : to_sum(offer)
-        return order + ' '+  offer
+        order = hasOrder ? this.toCurrencyAmount(g.sum_supply, g.currency_short) : ''
+        offer = hasOrder ? "</br><span class='striked'> " + to_sum(offer) + '</span>' : this.toCurrencyAmount(offer, g.currency_short)
+        // console.log('g.currency_name', )
+        return order + ' ' + offer
       },
 
       rowClass(g){

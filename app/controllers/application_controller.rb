@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
   def check_policy
     @cities = City.order(:id) if @cities.nil?
     @main_city = current_user.city if @main_city.nil? && !current_user.nil?
-    puts "main_city", @main_city
+#   puts "main_city", @main_city
 #   p "current_user.roles #{current_user.has_roles}" if !current_user.nil?
   end
 
