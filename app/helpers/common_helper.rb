@@ -103,8 +103,11 @@ module CommonHelper
       from = changeset[0].try('strftime',"%Y.%m.%d %H:%M" )
       to   = changeset[1].try('strftime',"%Y.%m.%d %H:%M" )
 
-    when "channel_id", 'reason_id','new_reason_id','target_id','dev_status_id','status_id','p_status_id', 'priority_id', 'project_id',"user_id","ic_user_id",
-         "executor_id","pstatus_id", "project_type_id", 'payment_purpose_id', 'payment_type_id', 'source_id', 'city_id'
+    when "channel_id", 'reason_id','new_reason_id','target_id','dev_status_id',
+         'status_id','p_status_id', 'priority_id', 'project_id',"user_id","ic_user_id",
+         "executor_id","pstatus_id", "project_type_id", 'payment_purpose_id', 
+         'payment_type_id', 'source_id', 'city_id', 'delivery_time_id', 'currency_id',
+         'goods_priority_id'
 
       attrib = event.gsub('_id','').gsub('new_','')
       cls = obj["item_type"].constantize.find_by_id(obj["item_id"])
@@ -222,7 +225,11 @@ module CommonHelper
     when "destroy"    
       ch.store(0,'Удален')
       file = YAML.load(version['object'])
-      if file['owner_type'].nil?
+      
+      if version['item_type'] == 'ProjectGood'
+        lnk = link_to_obj('Project', file['project_id'])
+        desc = "Удален заказ в #{lnk} [#{file['name']} на сумму #{file['gsum']}]"
+      elsif file['owner_type'].nil?
         desc = "Удален объект: #{t(version['item_type'])} ##{version['item_id']} [#{version['object']}]"
       else
         desc = "Удален файл #{file['name']} у объекта: #{link_to_obj(file['owner_type'], file['owner_id'])}"

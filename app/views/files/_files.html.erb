@@ -1,5 +1,5 @@
 <% if is_manager? %>
-  <%= render @files.order(:created_at) %>
+  <%= render @owner.attachments.order(:created_at) %>
 <% else %>
-  <%= render @files.where(secret: false).order(:created_at) %>
+  <%= render @owner.attachments.where(secret: false).order(:created_at) %>
 <% end %>

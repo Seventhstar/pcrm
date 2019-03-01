@@ -242,7 +242,10 @@ $(document).ready ->
       dataType: 'script'
       type: type
       success: (event, xhr, settings) ->
-        show_ajax_message('Успешно обновлено','success')
+        if event.includes('.js-notes')
+          eval(event)
+        else
+          show_ajax_message('Успешно обновлено','success')
       error: (evt, xhr, status, error) ->  
         show_ajax_message(status.message,'error')        
 

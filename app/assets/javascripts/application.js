@@ -53,57 +53,34 @@ $.fn.capitalize = function () {
   return this;
 };
 
-function updateOptionRow(name, json, id, newItem = false){
+function updateOptionRow(name, json, id, newItem = false, group = ''){
   let where = app[name];
-  let first = 1
-  if (app != undefined && app.grouped != undefined){
-    where = app.grouped;
-    // first = false;
+  console.log('gt', json.goodstype_id, 'group', group)
+  if (group == 'project_id'){
+    gt = where
+    replace = where.filter(i => i.id === id)[0]
+  } else {
+    gt = where.filter(n => n[0][0] === json.goodstype_id)[0]
+    replace = gt[1].filter(i => i.id === id)[0]
   }
+  // console.log('gt', gt)
+  // console.log('replace', replace)
 
-  if (newItem) {
-    gt = app.goods.filter(n => n[0][0] == id)[0]
-    gt_index = app.goods.indexOf(gt)
-    // console.log('gt_index', gt_index)
-    app[name][gt_index][1].push(json);
+  if (newItem) { 
+    gt[1].push(json); // в 0 - группа товаров, 1 - товары
     return;
   }
 
 
-  found = searchByKey(where, id, first)
-
-  if (found.index !== null) {
-    replace = where[found.gt][found.index]
-  } else {
-    replace = where[found.gt]
-  }
-
   if (typeof(found) === "string") {
     show_ajax_message("Ошибка обновления строки заказа", "error")
   } else {
+    // json.forEach( f => replace[field] = json[field])
+    console.log('json', typeof(json))
     for (var field in json) {
-      replace[found.goods][field] = json[field] 
-    }
+      replace[field] = json[field] 
+    } 
   }
-}
-
-function searchByKey(obj, key, index = null) {
-  let gt_obj = ''
-  for (var gt in obj) {
-    gt_obj = obj[gt]
-    if (index !== null) gt_obj = gt_obj[index]
-    for (var goods in gt_obj) {
-      if (gt_obj[goods].id === key) {
-        return {gt: gt, goods: goods, index: index}; 
-      }
-    }
-  }
-  if (index!==null && gt_obj.length<index+1) {
-    return searchByKey(obj, key, index+1)
-  }
-
-  console.log("Not found");
-  return "Not found";
 }
 
 function intFromSum(sum){
@@ -234,15 +211,15 @@ $(function() {
     activate: function (event, ui) {
       p = $(".ui-tabs-active a").attr('href');
       window.location.hash = p;
-      if ($(p).html() == undefined || ($('.good_group').size()==0 &&  p=='#tabs-4' )) {
+      if ($(p).html() == undefined || ($('.good_group').size()==0 && p=='#tabs-4' )) {
         l = $('form').attr('action');
         url = l+"/edit"+p.replace('#','?').replace('-','=')
-      //   var request = $.get(url, null, null, 'script')
-
-      //   request.success(function(result) {
-      //     console.log(result);
-      //   });          
-       }
+      } else if (p=='#tabs-6' ) {
+        console.log('fu')
+        $('#attach_list').attr('owner_id', $('#upd_modal_project_id').val())
+        $('#attach_list').attr('owner_type', 'Project')
+      }
+      $('body,html').animate({ scrollTop:(223) }, 0)
     }
   });
 

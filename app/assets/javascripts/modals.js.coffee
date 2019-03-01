@@ -29,7 +29,7 @@ $ ->
         ael.height = 'auto';
         ael.style.height = ael.scrollHeight+'px';
       else
-        $('#btn-modal').click()
+        #$('#btn-modal').click()
     else if e.keyCode == 27
       $('.close').click()
 

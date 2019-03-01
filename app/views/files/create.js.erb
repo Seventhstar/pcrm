@@ -1,1 +1,1 @@
-$('.files_list_a').append("<%= j render('attachments/attachment', odd: true, attachment: @file) %>");
+$('.files_list_<%=@file.owner.class %>').append("<%= j render('attachments/attachment', odd: true, attachment: @file) %>");

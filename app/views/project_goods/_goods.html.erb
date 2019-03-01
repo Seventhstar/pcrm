@@ -2,9 +2,10 @@
 <template v-if="controls[index]!==undefined">
   <div class="panel panel-default good_group">
     <div class="panel-heading table-heading head month goods-list"> 
-      <a :href='projectLink(item)'>{{projectAddress(item, index)}}</a> 
-      <span :class="cutClass(index)" :cut_id="index" @click="switchOpened(index)"><b></b></span>
+      <a :href='projectLink(item)'>{{projectAddress(item, index)}} [{{goodsCount(item)}}]</a> 
+      <span class="title" @click="switchOpened(index)"></span>
       <span :class="cutAllClass(index)" :cut_id="index" @click="switchAllOpened(index)"><b></b></span>
+      <span :class="cutClass(index)" :cut_id="index" @click="switchOpened(index)"><b></b></span>
     </div>
     
     <div class="grid_table_goods grid_table_head" v-show="gtRowsOpened(index)">
@@ -13,16 +14,16 @@
         <div>{{groupKey == 'project_id' ? 'Поставщик' : 'Проект'}}</div>
         <div>Дата</div>
         <div>Примечание</div>
-        <div>Валюта</div>
         <div>Стоимость</div>
         <div></div>
       </template>
     </div>
 
     <template v-for="(gt, idx) in grouped[item]">
-    <div class='alt_goods_head goods_head' :key='-1' v-show="openedOrHaveData(index)">{{goodstypeHead(idx, item)}}
-    <span cut_id="0" :class="cutClass(index, true)" @click="switchOpenedRow(index, idx)">
-        <span></span><b></b></span></div>
+    <div class='alt_goods_head goods_head' :key='-1' v-show="openedOrHaveData(index)">
+      <span class="title" @click="switchOpenedRow(index, idx)">{{goodstypeHead(idx, item)}}</span>
+      <span cut_id="0" :class="cutRowClass(index, idx)" @click="switchOpenedRow(index, idx)">
+      <b></b></span></div>
 
     <transition-group name="item" v-show="gtRowsOpened(index, idx)">
     <template v-for="(g, ind) in grouped[item][idx]" >
@@ -31,8 +32,7 @@
           <div>{{nonGroupKey(g)}}</div>
           <div>{{format_date(g.date_place)}}</div>
           <div>{{g.description}}</div>
-          <div>{{g.currency_name}}</div>
-          <div v-html="allAmount(g)"></div>
+          <div v-html="allAmount(g)" class="td_right"></div>
           <div class="edit_delete td_right " style="">
             <a class="icon basket td_right" data-modal="true" :href="goodsEditLink(g)"></a>
             <span class="icon icon_del" @click="deleteGoods(item, g, idx)"></span> </div>

@@ -16,6 +16,7 @@
       
       fields: [],
       controls: [],
+      counts: [],
       
       offerAmount: {},
       orderAmount: {},
@@ -39,7 +40,6 @@
       opened: @opened
      }, 'pgoods') %>,
 
-      // goodstypes: @goodstypes,
     updated(){
       this.onInput();
     },
@@ -50,16 +50,12 @@
 
     created(){
       this.makeGroup('project_id')
-      
-      // console.log('opened', this.opened, this.controls)
-
-      
     },
 
     mounted(){
       this.$root.$on('onInput', this.onInput);
       this.$root.$on('modalYes', this.modalYes);
-      document.body.addEventListener('keyup', e => {if (e.keyCode === 45) this.addRow(); });
+      document.body.addEventListener('keyup', e => {if (e.keyCode === 45) this.addRow();});
     },
 
     methods: {
@@ -76,7 +72,11 @@
         return cls
       },
 
-
+      cutRowClass(index, idx){
+        let cls = 'cut'
+        if (!this.controls[index].openedRow[idx]) cls = cls + ' cutted'
+        return cls
+      },
 
       projectLink(prj_id){
         let prj = this.projects.filter(w => w.value === parseInt(prj_id))
@@ -104,17 +104,23 @@
          return this.goodstypeName(idx) + ' (' + this.grouped[item][idx].length + ')'
       },
 
+      goodsCount(item){
+        let count = 0
+        for (let i in this.grouped[item]){count = count + this.grouped[item][i].length}
+        return count
+      },
+
       projectAddress(prj_id, index = null){
         let name = this.grouped[prj_id]
         let key  = _.keys(this.grouped[prj_id])[0]
         let rows = this.grouped[prj_id][key]
+
         if (this.groupKey == 'project_id') {
           name = rows[0].address  
         } else {
-          // name = name.provider_name
           name = rows[0].provider_name  
         }
-        return name + " [" + rows.length + "]"
+        return name
       },
 
       nonGroupKey(g) {
@@ -124,7 +130,7 @@
       },
 
       addControlAndField(){
-        this.controls.push({opened: false, valid: false, openedRow: []});
+        this.controls.push({opened: false, valid: false, count: 0, openedRow: []});
       },
 
       deleteGoods(index, goods, idx){
@@ -132,7 +138,6 @@
         this.currentIndex = index;
         this.currentIdx   = idx;
         this.confirmModal = true;
-        // console.log('goods', goods, 'index', index)
       },
 
       modalYes(){
@@ -141,7 +146,6 @@
 
         if (index < 0) return;
         this.grouped[this.currentIndex][this.currentIdx].splice(index, 1);
-        // console.log('this.currentGoods.id', this.currentGoods.id)
         delete_item('/project_goods/' + this.currentGoods.id);
       },
 
@@ -166,9 +170,9 @@
         this.controls[index].opened = opened
 
         if (!opened){
-            _.keys(this.grouped[index]).forEach( k => {
-              Vue.set(this.controls[index].openedRow, k, opened);
-            })
+          _.keys(this.grouped[index]).forEach( k => {
+            Vue.set(this.controls[index].openedRow, k, opened);
+          })
         }
       },      
 
@@ -198,7 +202,7 @@
       },
 
       closedTable(index){
-        if (this.controls[index] === undefined) {this.controls.push({opened: false, valid: false, openedRow: []})}
+        if (this.controls[index] === undefined) {this.controls.push({opened: false, valid: false, count: 0, openedRow: []})}
         return !this.controls[index].opened;
       },
 
@@ -215,7 +219,7 @@
         if (amountArray === undefined) return ""
         this.currencies.forEach( c => {
           amount = amountArray[c.value];
-          if (amount > 0) {string = string + to_sum(amount) + " " + c.short + ", "}
+          if (amount > 0) {string = string + to_sum(amount) + c.short + ", "}
         })
         return string.slice(0, -2)
       },
@@ -248,24 +252,30 @@
         return this.formatTotal(this.offerAmount[prj_id])
       },
 
+      toCurrencyAmount(amount, currency_short){
+        return ' ' + to_sum(amount) + currency_short
+      },
+
       allAmount(g){
+        let cur_name = ' ' + g.currency_short
         offer = g.gsum > 0 ? g.gsum : ''
         hasOrder = g.order && g.sum_supply != g.gsum
-        offer = hasOrder ? "<span class='striked'>" + to_sum(offer) + '</span>' : to_sum(offer)
-        order = hasOrder ? "<br>" + to_sum(g.sum_supply) : ''
-        console.log('g.currency_name', g.currency_name)
-        return offer + order + g.currency_name
+        order = hasOrder ? this.toCurrencyAmount(g.sum_supply, g.currency_short) : ''
+        offer = hasOrder ? "<span class='striked'> " + to_sum(offer) + '</span></br>' : this.toCurrencyAmount(offer, g.currency_short)
+        return offer + ' ' + order
+      },
+
+      makeFilter(){
+
       },
 
       makeGroup(id){
         this.groupKey = id
-
-        if (id == 'project_id')
-          secondGroup = 'goodstype_id'
-        else
-          secondGroup = 'project_id'
+        secondGroup = id == 'project_id' ? 'goodstype_id' : 'project_id'
 
         _.sortBy(this.goods, 'goods_priority_id')
+
+        this.controls.length  = 0
 
         grouped  = _.groupBy(this.goods, id)
         var data = _.map(grouped, group => {
@@ -276,15 +286,17 @@
         this.grouped = data;
 
         this.groupHeaders     = _.keys(this.grouped)
-        this.controls.length  = 0
-        this.groupHeaders.forEach(() => this.addControlAndField())
+        this.groupHeaders.forEach((gh, i) => {this.addControlAndField(); })
 
         if (this.opened !== null){
           let opened = this.opened.split('.');
           let t = this
           opened.forEach(i => {
             if (i !== '') t.controls[i].opened = true 
-            _.keys(this.grouped[i]).forEach(k => { Vue.set(this.controls[i].openedRow, k, true); })
+            _.keys(this.grouped[i]).forEach(k => { 
+              Vue.set(this.controls[i].openedRow, k, true);
+            });
+
           });
         }
       },
@@ -294,7 +306,6 @@
       },
 
       rowClass(g){
-
         if (g.fixed)
           cls = "fixed"
         else if (g.sum_supply>0)
@@ -311,9 +322,7 @@
       goodsDeleteLink(g){
         return "/project_goods/" + g.id 
       }
-
-      
     }
-    })
+  })
 
 </script>

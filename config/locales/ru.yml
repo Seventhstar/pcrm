@@ -5,6 +5,8 @@ ru:
     previous_label: "назад"
     page_gap: '...'
   Currency: Валюта
+  currency_id: Валюта
+
   Status: "статус"
   uom: "eд. изм."
   secret: Закрыт
@@ -18,6 +20,10 @@ ru:
   p_status_id: Статус
   p_status: Статус
   PStatus: Статус
+  
+  goods_priority: Вариант предложения
+  goods_priority_id: Вариант предложения
+
   dev_status_id: Статус
   channel_id: Канал
   source_id: Источник
@@ -50,6 +56,8 @@ ru:
   date_offer: Дата предложения
   order: Заказано
   delivery_time: Срок поставки
+  delivery_time_id: Срок поставки
+  DeliveryTime: Срок поставки
   
   number: Номер
   pdate: Дата
@@ -110,7 +118,7 @@ ru:
   Absence: Отсутствие
   Develop: Задача
   Provider: Поставщик
-  ProjectGood: Позиция в проекте
+  ProjectGood: Заказ в проекте
   ProjectStatus: Статус
   Pstatus: Статус
   LeadSource: Источник

@@ -21,7 +21,12 @@
     return
 
 $(document).ready ->
-
+  $(document).on 'click', '.basket', ->
+    g_id = $(this).attr('g_id')
+    if g_id != undefined
+      $('#attach_list').attr 'owner_id', g_id
+      $('#attach_list').attr 'owner_type', 'ProjectGood'
+    return
   $(document).on 'click', '.inline_edit', ->
     disable_input_row()
     itm = $(this).attr('item_id')

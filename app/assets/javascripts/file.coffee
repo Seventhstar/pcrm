@@ -8,14 +8,17 @@
 
 $(document).ready ->
   $('#attach_list').fileupload
+    submit: (e, data) ->
+      data.formData =
+        owner_id: $('#attach_list').attr('owner_id')
+        owner_type: $('#attach_list').attr('owner_type')
+      data.submit
     formData:
       owner_id: $('#attach_list').attr('owner_id')
       owner_type: $('#attach_list').attr('owner_type')
     url: 'files'
     pasteZone: null
     done: (e, data) ->
-      owner_id = $('#attach_list').attr('owner_id')
-      owner_type = $('#attach_list').attr('owner_type')
       $('.progress').hide()
       return
     progressall: (e, data) ->
@@ -25,7 +28,7 @@ $(document).ready ->
       $('.progress-bar').css width: progress + '%'
       $('.progress-bar span').text progress + '%'
       return
-  $('.icon_lock').on 'click', ->
+  $('body').on 'click', '.icon_lock', ->
     $(this).toggleClass 'locked'
     li = $(this).closest('li')
     file_id = $(this).attr('file-id')

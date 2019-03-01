@@ -30,7 +30,11 @@ module ApplicationHelper
   end
 
   def parents_count(item)
-    links = item.class.name.constantize.reflect_on_all_associations(:has_many).map(&:name)
+    links = item.class.name
+                .constantize
+                .reflect_on_all_associations(:has_many)
+                .map(&:name)
+
     links.each do |l|
       if item.try(links[0]).count >0 
         return 1
@@ -39,14 +43,6 @@ module ApplicationHelper
 
     return 0
   end
-
-  # def td_actions(url, f)
-  #   # <td><%= link_to 'Отмена', url, class: "sub btn_a btn_reset"%>
-  #           # <%= f.button :submit, value: 'Сохранить', :class => 'sub btn_a ' %></td>
-  #   content_tag :td do
-  #     link_to 'Отмена', url, class: "sub btn_a btn_reset"
-  #   end
-  # end
 
   def month_year(date)
     "#{t date.try('strftime','%B')} #{date.try('strftime','%Y')}"
@@ -320,8 +316,9 @@ module ApplicationHelper
     if coll.nil?  
       return
     end
+
     coll = coll.collect{ |u| [u[p_name], u.id] } if coll.class.name != 'Array'
-    coll.insert(0,[nil_value,0,{class: 'def_value'}]) if nil_value != ''
+    coll.insert(0,[nil_value, 0, {class: 'def_value'}]) if nil_value != ''
     coll.insert(1,[options[:special_value],-1]) if !options[:special_value].nil?
 
     if !options[:selected].nil?

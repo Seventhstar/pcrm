@@ -44,6 +44,7 @@
     },
 
     created(){
+      this.new_gtype = null
       this.gtypes.forEach(()=>this.addControlAndField())
       this.calculateTotal()
       this.$root.$on('onInput', this.onInput);
@@ -54,6 +55,10 @@
     mounted(){
       this.$root.$on('modalYes', this.modalYes);
       document.body.addEventListener('keyup', e => {if (e.keyCode === 45) {this.addRow();} });
+    },
+
+    computed: {
+
     },
 
     methods: {
@@ -234,6 +239,12 @@
         setTimeout(()=>{$('#goods_'+id+"_name").focus(); apply_mask();}, 300);
       },
 
+      altClass(index){
+        let cls = "altcut";
+        if (!this.controls[index].openedAlt) cls = cls + ' cutted'
+        return cls
+      },
+
       switchOpenAlt(index){
         this.controls[index].openedAlt = !this.controls[index].openedAlt
       },
@@ -244,6 +255,10 @@
         let openAlt = alt ? this.altCount(this.grouped[index][2]) : true
 
         return (this.closedTable(index) || length>0) && openAlt; 
+      },
+
+      filteredOrHaveData(index){
+        return v_nil(this.goods_state) || this.grouped[index][1] !== undefined
       },
 
       closedTable(index){
@@ -276,7 +291,7 @@
         if (amountArray === undefined) return ""
         this.currencies.forEach( c => {
           amount = amountArray[c.value];
-          if (amount > 0) {string = string + to_sum(amount) + " " + c.short + ", "}
+          if (amount > 0) {string = string + this.toCurrencyAmount(amount, c.short) + ", "}
         })
         return string.slice(0, -2)
       },
@@ -322,22 +337,16 @@
       },
 
       toCurrencyAmount(amount, currency_short){
-
-        if (currency_short[0] == 'р') return ' ' + to_sum(amount) +' ' +currency_short
-        return ' ' + currency_short + to_sum(amount)
-
+        return ' ' + to_sum(amount) + currency_short
       },
 
       allAmount(g){
         let cur_name = ' ' + g.currency_short
-
-
         offer = g.gsum > 0 ? g.gsum : ''
         hasOrder = g.order && g.sum_supply != g.gsum
         order = hasOrder ? this.toCurrencyAmount(g.sum_supply, g.currency_short) : ''
-        offer = hasOrder ? "</br><span class='striked'> " + to_sum(offer) + '</span>' : this.toCurrencyAmount(offer, g.currency_short)
-        // console.log('g.currency_name', )
-        return order + ' ' + offer
+        offer = hasOrder ? "<span class='striked'> " + to_sum(offer) + '</span></br>' : this.toCurrencyAmount(offer, g.currency_short)
+        return offer + ' '+ order 
       },
 
       rowClass(g){

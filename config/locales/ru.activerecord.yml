@@ -28,6 +28,7 @@ ru:
         name: Наименование
         gsum: Стоимость
         provider: Поставщик
+        goods_priority: Вариант предложения
       project:
         city: Город
         executor: Исполнитель

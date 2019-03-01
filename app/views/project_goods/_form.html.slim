@@ -18,7 +18,7 @@
         td
           .inp_w
             = chosen_src "goods_priority_id", @goods_priorities, @prj_good.goods_priority_id, \
-              {nil_value: 'Выберите вариант...', add_name: iname, tabindex:'3'}                             
+              {nil_value: 'Выберите вариант...', add_name: iname, tabindex: '3'}                             
       tr
         td.caption Дата предложения:
         td
@@ -31,7 +31,7 @@
       tr
         td.caption Сумма предложения:
         td
-          = td_sum_field(iname, :gsum , nil, {value: @prj_good.gsum, no_td: true, class: 'left w118'})
+          = td_sum_field(iname, :gsum, nil, {value: @prj_good.gsum, no_td: true, class: 'left w118'})
           .label.space66 Валюта:
           .inp_w.w80.left
             = chosen_src "currency_id", currency_src, @prj_good.currency_id, {nil_value: '',add_name: iname, add_class: 'currency_src'}
@@ -85,3 +85,7 @@
             label.inp_btn_label
               div class=("inp_btn checkbox #{@prj_good.fixed ? 'active':''} td_v_center") 
                 = check_box iname, :fixed, {value: @prj_good.fixed,  checked: @prj_good.fixed, disabled: !@prj_good.order}, "true", "false"
+    / .pg_files
+    /   .sep_15
+    /   = render "shared/attach_list"
+    

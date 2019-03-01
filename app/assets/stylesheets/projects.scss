@@ -6,6 +6,10 @@ span.add_pay, span.calc_proc{ color: white; background-color: #c3c3c3; padding: 
 span.calc_proc.enabled{background-color: #ff8411; cursor: pointer;}
 span.calc_proc.enabled:hover{opacity: 0.7;}
 
+.pg_files{margin-left: 40px;}
+.add_progress{display: block; height: 46px;}
+.attach_list{float: left;}
+
 span.calc_proc{ padding: 8px 6px;  margin-left: 6px;  display: inline-block;  border-radius: 5px;}
 
 .calc_div{float: right; display: table-cell;}

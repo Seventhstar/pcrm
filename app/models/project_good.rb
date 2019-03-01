@@ -5,14 +5,17 @@ class ProjectGood < ActiveRecord::Base
   belongs_to :goodstype
   belongs_to :currency
   belongs_to :delivery_time
+  belongs_to :goods_priority
   attr_accessor :owner_id, :group
 
   has_paper_trail
+  has_many :attachments, as: :owner
 
   validates :name, length: { minimum: 3 }
   validates :provider_id, presence: true
   validates :gsum, presence: true
-  # scope :by_year, ->(year){where(date_place: Date.new(year.to_i,1,1)..Date.new(year.to_i,12,31)) if year.present? && year&.to_i>0}
+  validates :goods_priority_id, presence: true
+
   scope :currency, -> (c) {where(currency_id: c) if c.present?}
   scope :by_project_ids, -> (ids, force_year) {where(project_id: ids) if ids.present? || force_year}
   scope :good_state, -> (gs) {
@@ -36,6 +39,10 @@ class ProjectGood < ActiveRecord::Base
 
   def last_sum
     self.sum_supply.nil? ? self.gsum : self.sum_supply
+  end
+
+  def print_amount
+    self.gsum.to_sum + currency.try(:short)
   end
 
   def currency_print_name

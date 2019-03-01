@@ -1,5 +1,5 @@
-<div v-for="(item, index) in goods">
-<template v-if="controls[index]!==undefined">
+<div v-for="(item, index) in goods" v-show="filteredOrHaveData(index)">
+<template v-if="controls[index]!==undefined" >
   <div class="panel panel-default good_group">
     <div class="panel-heading table-heading head month"> 
       {{gtypeName(item[0][0])}}
@@ -27,7 +27,7 @@
           <div>{{g.description}}</div>
           <div v-html="allAmount(g)" class="td_right"></div>
           <div class="edit_delete td_right " style="">
-            <a class="icon basket td_right" data-modal="true" :href="goodsEditLink(g)"></a>
+            <a class="icon basket td_right" data-modal="true" :g_id='g.id' :href="goodsEditLink(g)"></a>
             <span class="icon icon_del" @click="deleteGoods(index, g)"></span> </div>
       </div>
     </template>
@@ -39,9 +39,12 @@
       <div>Закрыто: <span>{{formatTotal(closedAmount[index])}}</span></div>      
     </div>
 
-    <div class='alt_goods_head goods_head' :key='-1' v-show="openedOrHaveData(index, grouped[index][1], true)">Альтернативные предложения ({{altCount(grouped[index][2])}})
-      <span cut_id="0" class="altcut cutted" @click="switchOpenAlt(index)">
+    <div class='alt_goods_head goods_head' :key='-1' 
+        v-show="openedOrHaveData(index, grouped[index][1], true)">
+        <span class="title" @click="switchOpenAlt(index)"> Альтернативные предложения ({{altCount(grouped[index][2])}}) </span>
+        <span cut_id="0" :class="altClass(index)" @click="switchOpenAlt(index)">
         <b></b></span></div>
+        
     <transition-group name="slide-fade-y">
     <div class='alt_goods' :key='-2' v-show="openedAlt(index)">
     <template v-for="(g, ind) in grouped[index][2]">
@@ -50,10 +53,9 @@
           <div>{{g.provider_name}}</div>
           <div :title="toolTip(g)">{{format_date(g.date_place)}}</div>
           <div>{{g.description}}</div>
-          <div>{{g.currency_name}}</div>
-          <div v-html="allAmount(g)"></div>
+          <div v-html="allAmount(g)" class="td_right"></div>
           <div class="edit_delete td_right " style="">
-            <a class="icon basket td_right" data-modal="true" :href="goodsEditLink(g)"></a>
+            <a class="icon basket td_right" data-modal="true" :g_id='g.id' :href="goodsEditLink(g)"></a>
             <span class="icon icon_del" @click="deleteGoods(index, g)"></span> </div>
       </div>
     </template>

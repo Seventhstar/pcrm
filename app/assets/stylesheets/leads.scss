@@ -2,20 +2,15 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.files{ margin-top: 10px; width:88% !important; }
-.file_progress{ margin-top: 15px; width:88% !important; height: 20px; }
- td.right_icon { width: 18px; padding-right: 4px !important; padding-left: 4px !important; }
+.files{ margin-top: 10px; width: 360px;}
+.file_progress {margin-top: 15px; width: 360px; height: 20px; float: left; margin: 8px; background: #fafafa;}
+
+td.right_icon { width: 18px; padding-right: 4px !important; padding-left: 4px !important; }
 
 .btn_remove{cursor: pointer;}
 
-
-
 ::-webkit-scrollbar { width: 10px; height: 10px; background: #f5f5f5; border-radius: 4px;}
-::-webkit-scrollbar-thumb {
-    background: #ccc;
-    border-radius: 4px;
-    border: 1px solid #ccc; 
-}
+::-webkit-scrollbar-thumb {background: #ccc; border-radius: 4px; border: 1px solid #ccc;}
 
 
 .lead_comments{ width: 500px; float: right; }
