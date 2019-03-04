@@ -20,7 +20,7 @@
       <div class="bw_i">
         <% if controller.action_name == 'index' %>
         <div class="nav_city"> 
-          <v-chosen name="main_city" placeholder='Город...' src='cities'>
+          <v-chosen name="main_city" placeholder='Город...' src='cities' clear=false>
         </div>
         <%= render 'main_app_vue' %> 
           <div class="navsearch"> 

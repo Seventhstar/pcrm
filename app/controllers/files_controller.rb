@@ -16,13 +16,19 @@ class FilesController < ApplicationController
 
   def create
     if params[:files]
-      folder = params[:owner_type].classify
-      subfolder = params[:owner_id]
+
+      if params[:owner_id] == ''
+        folder = 'cache'
+        subfolder = params[:owner_cache]
+      else      
+        folder = params[:owner_type].classify
+        subfolder = params[:owner_id]
+      end
       uploaded_io = params[:files]
 
       name = uploaded_io.original_filename
-      dir = Rails.root.join('public', 'uploads',folder,subfolder)
-
+      dir = Rails.root.join('public', 'uploads', folder, subfolder)
+      puts "dir #{dir}"
       FileUtils.mkdir_p(dir) unless File.exists?(dir)
       id = append_file(name)
       open(dir+(id.to_s+File.extname(name)), 'wb') do |file|
@@ -34,12 +40,13 @@ class FilesController < ApplicationController
 
   def append_file(filename) #,lead_id
     @file = Attachment.new
-    @file.owner_id   = params[:owner_id]
+    @file.owner_id   = params[:owner_id]  
     @file.owner_type = params[:owner_type].classify
     @file.user_id    = current_user.id
     @file.name       = filename
     @file.secret     = current_user.has_role?(:manager)
     @file.save
+    puts "errors #{@file.errors.full_messages}"
     @file.id
 
   end

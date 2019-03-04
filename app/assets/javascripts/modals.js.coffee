@@ -37,6 +37,15 @@ $ ->
     $('.close').click()
     delay('upd_ch_client({})',100)
 
+  $(modal_holder_selector).on 'show', ->
+    cache = $('#upd_modal_file_cache').val()
+    if cache != undefined
+      $('#attach_list').each ->
+         $(this).attr 'owner_cache', cache
+    # console.log('modal', cache)
+        # $('#myModal').modal('show');
+    
+
   $(document).on 'ajax:success', 'form[data-modal]', (event, data, status, xhr)->
       url = xhr.getResponseHeader('Location')
       if url

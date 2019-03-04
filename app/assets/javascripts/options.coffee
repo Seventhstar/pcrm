@@ -56,7 +56,7 @@
   items.children().each ->
     # console.log('$(this)', $(this)) 
     $(this).prop('readonly', checked)
-    if $(this).hasClass('chosen')
+    if $(this).hasClass('chosen') || $(this).hasClass('datepicker')
       $(this).prop('disabled', checked).trigger("chosen:updated")
     # if $(this)
     if checked then $(this).addClass('disabled') 

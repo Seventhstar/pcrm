@@ -49,6 +49,7 @@
         td.last_td
           = hidden_field_tag :upd_modal_goodstype_id, @prj_good.goodstype_id, {name: "upd_modal[goodstype_id]"}
           = hidden_field_tag :upd_modal_project_id, @prj_good.project_id, {name: "upd_modal[project_id]"}
+          = hidden_field_tag :upd_modal_file_cache, @file_cache, {name: "upd_modal[file_cache]"}
           = hidden_field_tag :group, @group, {name: "upd_modal[group]"}
           button.sub.btn_a.btn_reset aria-hidden="true" data-dismiss="modal" type="button"  Отмена
           span#btn-modal class="sub btn_a modal_apply #{controller.action_name}" action="/project_goods/" item_id="#{@prj_good.id}" model="ProjectGood" prm="upd_modal"  Сохранить
@@ -85,7 +86,7 @@
             label.inp_btn_label
               div class=("inp_btn checkbox #{@prj_good.fixed ? 'active':''} td_v_center") 
                 = check_box iname, :fixed, {value: @prj_good.fixed,  checked: @prj_good.fixed, disabled: !@prj_good.order}, "true", "false"
-    / .pg_files
-    /   .sep_15
-    /   = render "shared/attach_list"
+    .pg_files
+      .sep_15
+      = render "shared/attach_list"
     

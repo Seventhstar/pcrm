@@ -10,7 +10,7 @@
       #pdf
         = link_to image_tag('pdf.png'), project_path(@project, format: :pdf), target: :_blank
     .right style="width:250px"
-      v-chosen name="goods_state" clear='true' placeholder="Предложено/заказано..." 
+      v-chosen name="goods_state" placeholder="Предложено/заказано..." 
   .sep_15
   #pgoods
     = render 'goods'

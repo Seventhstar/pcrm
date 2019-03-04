@@ -44,6 +44,8 @@
 
 .tbl_fc_1 .inp_w .datepicker{ background: asset-url('ico-date.png') 98% 8px no-repeat; }
 .tbl_fc_1 .inp_w.w118 .datepicker{ background: asset-url('ico-date.png') 90% 8px no-repeat; padding: 4px 10px 0 12px;}
+.tbl_fc_1 .inp_w.w118 input[disabled].datepicker{ 
+  background: asset-url('ico-date.png') 90% -27px no-repeat !important; padding: 4px 10px 0 12px;}
 
 .table_period .datepicker,
 .datepicker.w120{background: asset-url('ico-date.png') 93px 9px no-repeat;}
@@ -56,6 +58,7 @@ input[disabled].datepicker { background: asset-url('ico-date.png') 95% -27px no-
 input[disabled] {cursor: default; box-shadow: none !important;}
 // td.disabled {color: gray !important;}
 .disabled {color: gray !important;}
+.btn.disabled {color: white !important;}
 
 
 .datepicker.slim_txt{ background: asset-url('ico-date.png') 94% 4px no-repeat; }

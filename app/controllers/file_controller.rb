@@ -27,8 +27,8 @@ before_action :logged_in_user
       subfolder = params[:owner_id]
       uploaded_io = params[:file]
 
-      name = check_file_name(uploaded_io.original_filename,subfolder,folder)
-      dir = Rails.root.join('public', 'uploads',folder,subfolder)
+      name = check_file_name(uploaded_io.original_filename, subfolder, folder)
+      dir = Rails.root.join('public', 'uploads', folder, subfolder)
 
       FileUtils.mkdir_p(dir) unless File.exists?(dir)
       id = append_file(name)
@@ -74,9 +74,9 @@ before_action :logged_in_user
   end
 
   def download
-    dir = Rails.root.join('public', 'uploads',params[:type],params[:id],params[:basename]+"."+params[:extension])
+    dir = Rails.root.join('public', 'uploads', params[:type], params[:id], params[:basename]+"."+params[:extension])
     f = Attachment.find(params[:basename])
-    send_file dir, :disposition => 'attachment', :filename => f.name
+    send_file dir, disposition: 'attachment', filename: f.name
   end
 
 end

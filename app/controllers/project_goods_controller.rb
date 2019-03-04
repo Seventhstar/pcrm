@@ -1,5 +1,7 @@
 class ProjectGoodsController < ApplicationController
   include ProjectsHelper
+  include FileHelper
+  
   respond_to :html, :json
   before_action :check_sum, only: [:create, :update]
   before_action :set_project_good, only: [:show, :edit, :update, :destroy]  
@@ -22,7 +24,12 @@ class ProjectGoodsController < ApplicationController
     year = params[:year].try(:to_i)
     force_year = false
     if year.present?
-      prj_ids = ProjectGood.where(date_place: Date.new(year,1,1)..Date.new(year,12,31)).pluck(:project_id).uniq
+      query = {date_place: Date.new(year,1,1)..Date.new(year,12,31)} 
+      prj_ids = ProjectGood.where(query).pluck(:project_id).uniq 
+      if !current_user.has_role?(:manager)
+        u_ids = Project.where(executor_id: current_user.id).pluck(:id) 
+        prj_ids &= u_ids
+      end
       force_year = true
     end
 
@@ -54,6 +61,9 @@ class ProjectGoodsController < ApplicationController
     @goods_priorities = GoodsPriority.order(:id)
     @cur_id = params[:owner_id]
     @owner = @prj_good
+
+    @file_cache = generate_cache_id
+    # puts "@file_cache #{@file_cache}"
     respond_modal_with @prj_good, location: root_path
   end
 
@@ -63,9 +73,11 @@ class ProjectGoodsController < ApplicationController
     # return if find_by_params
     pg_params.delete :group
     @prj_good = ProjectGood.new(pg_params)
-
+    @file_cache = pg_params[:file_cache]
+    # puts "@file_cache", @file_cache
     @cur_id = pg_params[:owner_id]
     if @prj_good.save
+      update_cache_files(@prj_good, @file_cache)
       respond_with @prj_good
     else
       respond_to do |format|
@@ -147,6 +159,6 @@ class ProjectGoodsController < ApplicationController
       params.require(req).permit( :goodstype_id, :provider_id, :date_supply, :date_place, 
                                   :date_offer, :currency_id, :gsum, :order, :name, :description, 
                                   :fixed, :sum_supply, :project_id, :owner_id, 
-                                  :goods_priority_id, :delivery_time_id, :group)
+                                  :goods_priority_id, :delivery_time_id, :group, :file_cache)
     end
   end

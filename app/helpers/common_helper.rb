@@ -84,47 +84,47 @@ module CommonHelper
   end
 
 
-  def from_to_from_changeset(obj,changeset,event)
+  def from_to_from_changeset(obj, changeset, event)
     
     from = ""  
     to = ""
 
     case event 
     when "updated_at"
-    when "verified", "payd_q", "attention", "debt", "interest", "payd_full", "secret", 'order'
-      from = changeset[0] ? 'Да' : 'Нет'
-      to =  changeset[1] ? 'Да' : 'Нет'
+    when "verified", "payd_q", "attention", "debt", "interest", "payd_full", "secret", 'order', 'fixed'
+      from  = changeset[0] ? 'Да' : 'Нет'
+      to    = changeset[1] ? 'Да' : 'Нет'
+
     when "coder", "boss"
       from = nil
       pref = changeset[1]? '': ' не '
       status = event == "coder" ? "выполнено" : "проверено"  
       to = "Помечен как <b>#{pref} #{status}</b>"
+
     when 'dt_to', 'dt_from'
-      from = changeset[0].try('strftime',"%Y.%m.%d %H:%M" )
-      to   = changeset[1].try('strftime',"%Y.%m.%d %H:%M" )
+      from = changeset[0].try('strftime', "%Y.%m.%d %H:%M")
+      to   = changeset[1].try('strftime', "%Y.%m.%d %H:%M")
 
-    when "channel_id", 'reason_id','new_reason_id','target_id','dev_status_id',
-         'status_id','p_status_id', 'priority_id', 'project_id',"user_id","ic_user_id",
-         "executor_id","pstatus_id", "project_type_id", 'payment_purpose_id', 
-         'payment_type_id', 'source_id', 'city_id', 'delivery_time_id', 'currency_id',
-         'goods_priority_id'
+    else 
+      if event[-3,3] == '_id'
+        attrib = event.gsub('_id','').gsub('new_','')
 
-      attrib = event.gsub('_id','').gsub('new_','')
-      cls = obj["item_type"].constantize.find_by_id(obj["item_id"])
-      if !cls.nil?
-        cls = cls.try(attrib).class
-        if !cls.nil? && cls != NilClass
-          from = cls.where(id: changeset[0]).first_or_initialize.try(:name) if !changeset[0].nil? && changeset[0]!=0
-          to = cls.where(id: changeset[1]).first_or_initialize.try(:name) if !changeset[1].nil? && changeset[1]!=0
+        if !attrib.nil? 
+          cls = obj.item_type.classify.constantize.reflections[attrib].class_name.constantize
+          if !cls.nil? && cls != NilClass
+            from = cls.find_or_create_by(id: changeset[0]).try(:name) if !changeset[0].nil? && changeset[0]!=0
+            to   = cls.find_or_create_by(id: changeset[1]).try(:name) if !changeset[1].nil? && changeset[1]!=0
+            from  = "[id = #{changeset[0]}]" if from.nil?
+            to    = "[id = #{changeset[1]}]" if to.nil?
+          end
+        else
+          from = changeset[0]
+          to = changeset[1]
         end
       else
         from = changeset[0]
         to = changeset[1]
       end
-    else
-
-      from = changeset[0]
-      to = changeset[1]
     end
     {from: from, to: to }
   end
@@ -139,6 +139,7 @@ module CommonHelper
     changeset = version.changeset 
     ch = Hash.new
     desc = []
+    # puts "get_history"
     changeset.keys.each_with_index do |k,index| 
       from_to = from_to_from_changeset(version, changeset[k], k)
       from = from_to[:from] 
@@ -156,18 +157,19 @@ module CommonHelper
         end
         
         desc << (from.empty? ? filled : ('Изменено поле <b>'+t(k)+'</b>: c <br>«'+from+'»<br><b> на </b><br>«'+to+'»') )
-        ch.store( index, {field: t(k), from: from, to: to, description: desc } )
+        ch.store(index, {field: t(k), from: from, to: to, description: desc } )
       end
     end
 
-    history.store( at.to_s, {at: at_hum, type: 'ch', author: author, changeset: ch, description: desc})
+    history.store(at.to_s, {at: at_hum, type: 'ch', author: author, changeset: ch, description: desc})
      # end
     history
   end
 
-  def link_to_obj(obj, id)
+  def link_to_obj(obj, id, name = nil)
     _obj = obj.nil? ? '' : obj.tableize
-    obj_name = obj.present? ? t(obj) : ''
+    obj_name = name
+    obj_name = obj.present? ? t(obj) : '' if name.nil?
     "<a href=#{[_obj, id, 'edit'].join('/')}>#{obj_name} ##{id}</a>"
   end
 
@@ -180,14 +182,13 @@ module CommonHelper
     full_path = Rails.root.join('public', 'uploads', type, id.to_s, filename)
     data_modal = ['jpg','gif','png'].include?(ext) ?  "data-modal='true'" : ''
     if File.exists?(full_path)
-      # "<a href=#{['files', obj['id'][1]].join('/')} #{data_modal}>#{name}</a>"
       file_default_action(obj['id'][1],'',false)
     else
       "<span class='striked'>#{name}</span>"
     end
   end
 
-  def changeset_detail(version)
+  def changeset_detail(version, internal = false)
     obj = YAML.load(version['object_changes']) if !version['object_changes'].nil?
     obj = YAML.load(version['object']) if obj.nil?
     lnk = link_to_obj(version["item_type"], version['item_id'])
@@ -215,6 +216,9 @@ module CommonHelper
         when 'Attachment' 
           lnk = link_to_obj(obj['owner_type'][1], obj['owner_id'][1])
           desc = "Прикреплен файл #{link_to_file(obj)} к объекту: #{lnk}"
+        when 'ProjectGood'
+          # lnk = link_to_obj('ProjectGood', obj['id'][1], "Заказ <b>#{obj['name'][1]}</b> на сумму #{obj['gsum'][1]}")
+          desc = "Создан заказ <b>#{obj['name'][1]}</b> на сумму #{obj['gsum'][1].to_sum}"
         when 'Develop'
           desc = "Создана #{lnk}"
         when 'Absence'
@@ -228,7 +232,7 @@ module CommonHelper
       
       if version['item_type'] == 'ProjectGood'
         lnk = link_to_obj('Project', file['project_id'])
-        desc = "Удален заказ в #{lnk} [#{file['name']} на сумму #{file['gsum']}]"
+        desc = "Удален заказ в #{lnk} [#{file['name']} на сумму #{file['gsum'].to_sum}]"
       elsif file['owner_type'].nil?
         desc = "Удален объект: #{t(version['item_type'])} ##{version['item_id']} [#{version['object']}]"
       else
@@ -253,7 +257,7 @@ module CommonHelper
         created = version.created_at.localtime
         at = created.strftime("%Y.%m.%d %H:%M:%S")         
         info = changeset_detail(version)['inf']
-        history.store( at.to_s, {at: created.strftime("%d.%m.%Y %H:%M:%S"), 
+        history.store( at.to_s, { at: created.strftime("%d.%m.%Y %H:%M:%S"), 
                                   type: 'ch', 
                                   author: find_version_author_name(version), 
                                   changeset: info[:ch], 
@@ -261,10 +265,61 @@ module CommonHelper
       end
     end
    
-    created = PaperTrail::Version.where_object_changes(owner_id: obj.id, owner_type: obj.class.name)
+    obj_id = obj.id
+
+    updated_pg = PaperTrail::Version.where_object(project_id: obj.id, goods_priority_id: 1)
+    puts "updated_pg #{updated_pg} #{updated_pg.count}"
+    updated_pg.each_with_index do |pg, index|
+      created = pg.created_at.localtime
+      at = created.strftime("%Y.%m.%d %H:%M:%S")         
+      info = changeset_detail(pg)
+      ch = info['inf']
+        # gdg
+        puts "info #{info.class} #{info['id']} #{info}"
+        puts "pg #{pg} #{pg.item_type}"
+        puts "info desc #{info['desc']} #{info[:id]}"
+        history.store( at.to_s, { at: created.strftime("%d.%m.%Y %H:%M:%S"), 
+                                    type: 'ch_2', 
+                                    author: find_version_author_name(pg), 
+                                    changeset: '', 
+                                    description: ch[:desc]})
+      # end
+    end
+
+    created = PaperTrail::Version.where_object_changes(owner_id: obj_id, owner_type: obj.class.name)
     created.each_with_index do |file, index|
+      
       file_changes(history, file, index, 'object_changes', 'add', 'Добавлен', '1')
     end  
+
+    # created = ProjectGood.versions.where(project_id: obj.id)
+    created = PaperTrail::Version.where_object_changes(project_id: obj.id)
+    # created.where(item_type: 'ProjectGood')
+    created.each_with_index do |data, index|
+      # puts "file #{file}: #{history}"
+      changes = YAML.load(data['object_changes'])
+      case data.item_type
+      when 'Absence'
+        info = changeset_detail(data, true)
+        # hrr
+      when 'ProjectGood'
+        # puts "data #{data}"
+        info = changeset_detail(data, true)
+        # rr
+      end
+
+      localtime = data.created_at.localtime
+      at = localtime.strftime("%Y.%m.%d %H:%M:%S")         
+      time = localtime.strftime("%d.%m.%Y %H:%M:%S")         
+      history.store( at.to_s, { at: time, 
+                                    type: 'ch_2', 
+                                    author: find_version_author_name(data), 
+                                    changeset: '', 
+                                    description: info['inf'][:desc]}) if info.present?
+
+      # file_changes(history, file, index, 'object_changes', 'add', 'Добавлен', '1')
+    end  
+
 
     # удаленные файлы
     file_id = []
@@ -281,6 +336,10 @@ module CommonHelper
       file_changes(history, file, index, 'object_changes', 'add', 'Добавлен', '1')
     end  
     history.sort.reverse
+  end
+
+  def abs_changes(history, file)
+    obj = YAML.load(file[fields])
   end
 
   def file_changes(history, file, index, fields, type, type_t, order)

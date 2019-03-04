@@ -10,6 +10,7 @@ ru:
   Status: "статус"
   uom: "eд. изм."
   secret: Закрыт
+  fixed: Закрыт
   Source: источник
   Channel: Канал
   Status: Статус
@@ -52,6 +53,7 @@ ru:
   payd_full: Оплачено 100%  
   default: Базов.
   date_start: Дата начала
+  gsum: Сумма предложения
   sum_supply: Сумма заказа
   date_offer: Дата предложения
   order: Заказано

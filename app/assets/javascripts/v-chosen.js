@@ -10,8 +10,7 @@ Vue.component('v-chosen', {
       }
     }, 
     props: ['name', 'placeholder', 'label', 'src', 'selected', 
-            'owner', 'k', 'index', 'from_array', 'clear'
-            ],
+            'owner', 'k', 'index', 'from_array', 'clear'],
     template: `
         <div class="inp_w">
         <v-select 
@@ -34,9 +33,9 @@ Vue.component('v-chosen', {
     created() {
 
        // console.log('this.clear', this.clear, typeof(this.clear))
-      //if (this.clear != undefined) this.clearable = (this.clear == 'true')
-      //else 
-      //  this.clearable = false
+      if (this.clear != undefined) this.clearable = (!this.clear)
+      else 
+        this.clearable = true
 
       let model = '';
       if (this.owner !== undefined) { 

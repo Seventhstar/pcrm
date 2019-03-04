@@ -27,8 +27,16 @@ class Provider < ActiveRecord::Base
 
   def full_info
     info = self.name
-    info = info + ', Адрес: ' + self.try(:address) if self.try(:address).present?
-    info = info + ', Телефон: ' + self.try(:phone) if self.try(:phone).present?
+    info = info + "\n Адрес: " + self.try(:address) if self.try(:address).present?
+    info = info + "\n Телефон: " + self.try(:phone) if self.try(:phone).present?
+
+    managers = self.provider_managers.where(position_id: 2)
+    info = info + "\n Менеджеры: " if managers.count>0
+    managers.each do |m|
+      info = info + "\n" + m.name
+      info = info + " " + m.phone if m.phone.present?
+      info = info + " " + m.email if m.email.present?
+    end
     # [,, self.try(:phone)].copact.join(', ')
     info
   end

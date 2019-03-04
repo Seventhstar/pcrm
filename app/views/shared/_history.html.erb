@@ -12,6 +12,9 @@
         <%- version[:description].each do |descr| %>
           <li><%= raw(descr) %></li>
         <% end %>
+      <% else %>
+      <% puts "version #{version}" %>
+        <li><%= raw(version[:description]) %></li>
       <% end %>
     </ul>
   </div>

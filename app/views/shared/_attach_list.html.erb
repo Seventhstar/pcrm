@@ -11,7 +11,14 @@
 </div>
 </div>
 
-<input id="attach_list<%= @owner.class.name == 'ProjectGood' ? '_pg' : '' %>" type="file" owner_id="<%= @owner.id %>" owner_type="<%= self.controller_name %>" name="files" data-url="/files" multiple="" style="display: none;">
-<ul class="files_list_a files_list_<%=@owner.class %>">
+<input id="attach_list<%= @owner.class.name == 'ProjectGood' ? '_pg' : '' %>" 
+        type="file" 
+        owner_id="<%= @owner.id %>" 
+        owner_type="<%= self.controller_name %>" 
+        owner_cache=""
+        name="files" 
+        data-url="/files" 
+        multiple="" style="display: none;">
+<ul class="files_list_a files_list_<%= controller.action_name == 'new' ? 'NilClass' : @owner.class %>">
  <%= render "files/files" %>
 </ul>

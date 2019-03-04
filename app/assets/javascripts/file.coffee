@@ -12,10 +12,8 @@ $(document).ready ->
       data.formData =
         owner_id: $('#attach_list').attr('owner_id')
         owner_type: $('#attach_list').attr('owner_type')
+        owner_cache: $('#attach_list').attr('owner_cache')
       data.submit
-    formData:
-      owner_id: $('#attach_list').attr('owner_id')
-      owner_type: $('#attach_list').attr('owner_type')
     url: 'files'
     pasteZone: null
     done: (e, data) ->

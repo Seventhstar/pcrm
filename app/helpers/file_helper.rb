@@ -1,7 +1,38 @@
 module FileHelper
+  # require 'uri'
+  require 'find'
+  require 'pathname'
+  require 'fileutils'
 
   def audio_file(lead)
     file = lead.attachments.select{ |f| ['mp3', 'ogg'].include?(f.name.last(3)) if !f.nil? }.first
+  end
+
+  def generate_cache_id
+    [Time.now.utc.to_i,
+      Process.pid,
+      '%04d' % (CarrierWave::CacheCounter.increment % 1000),
+      '%04d' % rand(9999)
+    ].map(&:to_s).join('-')
+  end
+
+  def update_cache_files(owner, cache)
+    dir = Rails.root.join('public', 'uploads', 'cache', cache)
+    new_dir = Rails.root.join('public', 'uploads', owner.class.name, owner.id.to_s)
+    FileUtils.makedirs new_dir
+    Find.find(dir) do |path|
+      name = Pathname.new(path).basename.to_s
+      if name != cache
+        # puts "name '#{name}' #{name.split('.')}"
+        id = name.split('.')[0]
+        if id.present?
+          att = Attachment.find(id)
+          att.update_attribute('owner_id', owner.id)
+          FileUtils.mv path, new_dir+name
+        end
+      end
+    end
+    FileUtils.rm_rf(dir) 
   end
 
   def file_default_action(file, add_name=nil, decoration=true)    

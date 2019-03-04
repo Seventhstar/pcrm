@@ -74,7 +74,7 @@ SimpleNavigation::Configuration.run do |navigation|
       sub_nav.item :payments, 'Расходы', payments_path  
     end
 
-    primary.item :providers, 'Заказы', project_goods_path, if: -> { current_user.has_role?(:superadmin) }
+    primary.item :providers, 'Заказы', project_goods_path
 
     primary.item :absence, 'Календарь', absences_path
 

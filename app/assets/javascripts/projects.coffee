@@ -27,6 +27,15 @@ $(document).ready ->
       $('#attach_list').attr 'owner_id', g_id
       $('#attach_list').attr 'owner_type', 'ProjectGood'
     return
+
+  $(document).on 'click', '#pgoods .btn_add', ->
+    # g_id = $(this).attr('g_id')
+    # if g_id != undefined
+      # $('#attach_list').attr 'owner_cache', 
+    $('#attach_list').attr 'owner_id', ''
+    $('#attach_list').attr 'owner_type', 'ProjectGood'
+    return
+
   $(document).on 'click', '.inline_edit', ->
     disable_input_row()
     itm = $(this).attr('item_id')
