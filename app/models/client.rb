@@ -4,7 +4,7 @@ class Client < ActiveRecord::Base
   belongs_to :city
 
   accepts_nested_attributes_for :contacts
-  # validates :name, :length => { :minimum => 3 } 
+  # validates :name, length: { minimum: 3 } 
 
   scope :by_city, ->(city){where(city: city)}
   

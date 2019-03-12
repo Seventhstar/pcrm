@@ -10,7 +10,7 @@ namespace :check_prj do
     all_pe = ProjectElongation.where(project_id: prj_ids).pluck(:project_id).uniq
 
     # отбираем для них последние даты продления
-    pe = ProjectElongation.select(:id, :project_id, :new_date).where('project_id in (?)', prj+prj_todtom).group(:project_id).maximum(:new_date)
+    pe = ProjectElongation.select(:id, :project_id, :new_date).where('project_id in (?)', prj_todtom+prj_ids).group(:project_id).maximum(:new_date)
 
     # подходит срок
     prj_wo_pe = prj_todtom - all_pe

@@ -37,5 +37,4 @@ class ProjectMailer < ActionMailer::Base
       emails = User.where(id: users_ids).pluck(:email)
     end
 
-
 end

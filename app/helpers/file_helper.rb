@@ -17,22 +17,24 @@ module FileHelper
   end
 
   def update_cache_files(owner, cache)
-    dir = Rails.root.join('public', 'uploads', 'cache', cache)
-    new_dir = Rails.root.join('public', 'uploads', owner.class.name, owner.id.to_s)
-    FileUtils.makedirs new_dir
-    Find.find(dir) do |path|
-      name = Pathname.new(path).basename.to_s
-      if name != cache
-        # puts "name '#{name}' #{name.split('.')}"
-        id = name.split('.')[0]
-        if id.present?
-          att = Attachment.find(id)
-          att.update_attribute('owner_id', owner.id)
-          FileUtils.mv path, new_dir+name
+    dir = Rails.root.join('public', 'uploads', 'cache', cache).to_s 
+    # puts "Dir.exist?(dir) #{Dir.exist?(dir)}"
+    if Dir.exist?(dir)
+      new_dir = Rails.root.join('public', 'uploads', owner.class.name, owner.id.to_s)
+      FileUtils.makedirs new_dir
+      Find.find(dir) do |path|
+        name = Pathname.new(path).basename.to_s
+        if name != cache
+          id = name.split('.')[0]
+          if id.present?
+            att = Attachment.find(id)
+            att.update_attribute('owner_id', owner.id)
+            FileUtils.mv path, new_dir+name
+          end
         end
       end
+      FileUtils.rm_rf(dir) 
     end
-    FileUtils.rm_rf(dir) 
   end
 
   def file_default_action(file, add_name=nil, decoration=true)    
@@ -59,7 +61,7 @@ module FileHelper
       a = content_tag :span do
         filename[0..-5]
       end
-      
+
       b = content_tag 'audio', 'controls':'' do
         content_tag 'source', src: file.download_path, type: "audio/mp3" do
         end

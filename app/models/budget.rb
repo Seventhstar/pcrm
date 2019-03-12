@@ -1,7 +1,7 @@
 class Budget < ActiveRecord::Base
   has_many :provider_budgets
   has_many :providers, through: :provider_budgets
-  validates :name, :length => { :minimum => 3 }
+  validates :name, length: { minimum: 3 }
 
   def self.tokens(query)
     budgets = where("name like ?", "%#{query}%")

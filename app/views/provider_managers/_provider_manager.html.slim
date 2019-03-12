@@ -1,9 +1,10 @@
 - pm ||= @pm
-tr id="ProviderManager_#{pm.id}"
+- provider ||= pm.provider
+tr id="ProviderManager_#{pm.id}" class="#{pm&.position&.secret ? 'locked':''}"
   td = pm.position_name
   td = pm.name 
   td = pm.phone
   td = pm.email
-  - if is_manager?
-    = tool_icons pm, {tag:'span'}
+  - if is_manager? || provider.p_status_id == 7
+    = tool_icons pm, {tag: 'span'}
 

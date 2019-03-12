@@ -32,7 +32,9 @@ class Project < ActiveRecord::Base
 
   scope :by_executor, ->(executor){where(executor_id: executor) if executor.present? && executor&.to_i>0}
   scope :only_actual, ->(actual){where.not(pstatus_id: 3) if actual}
-  scope :by_city, ->(city){where(city: city)}
+  scope :active,      ->{where(pstatus_id: 1)}
+  scope :by_city,     ->(city){where(city: city)}
+  scope :by_ids,      ->(ids){where(id: ids) if !ids.nil?}
   scope :by_year,     ->(year){where(date_start: Date.new(year.to_i,1,1)..Date.new(year.to_i,12,31)) if year.present? && year&.to_i>0}
 
   has_paper_trail

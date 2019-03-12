@@ -4,6 +4,10 @@ module CommonHelper
     user = User.find_version_author(version).try(:name)
   end
 
+  def clean_params
+    params.delete_if{|k,v| v=='' || v=='0' }
+  end
+
   def user_name(id)
     if !id.nil? && id&.to_i>0
      user = User.find(id).try(:name)
@@ -110,12 +114,16 @@ module CommonHelper
         attrib = event.gsub('_id','').gsub('new_','')
 
         if !attrib.nil? 
-          cls = obj.item_type.classify.constantize.reflections[attrib].class_name.constantize
-          if !cls.nil? && cls != NilClass
-            from = cls.find_or_create_by(id: changeset[0]).try(:name) if !changeset[0].nil? && changeset[0]!=0
-            to   = cls.find_or_create_by(id: changeset[1]).try(:name) if !changeset[1].nil? && changeset[1]!=0
-            from  = "[id = #{changeset[0]}]" if from.nil?
-            to    = "[id = #{changeset[1]}]" if to.nil?
+          cls_name = obj.item_type.classify.constantize.reflections[attrib]
+          if cls_name != 'Owner' && !cls_name.nil? 
+            cls_name = cls_name.class_name 
+            cls = cls_name.constantize
+            if !cls_name.nil? && cls != NilClass
+              from = cls.find_or_create_by(id: changeset[0]).try(:name) if !changeset[0].nil? && changeset[0]!=0
+              to   = cls.find_or_create_by(id: changeset[1]).try(:name) if !changeset[1].nil? && changeset[1]!=0
+              from  = "[id = #{changeset[0]}]" if from.nil?
+              to    = "[id = #{changeset[1]}]" if to.nil?
+            end
           end
         else
           from = changeset[0]
@@ -214,8 +222,12 @@ module CommonHelper
     when "create"
         case version['item_type']
         when 'Attachment' 
-          lnk = link_to_obj(obj['owner_type'][1], obj['owner_id'][1])
-          desc = "Прикреплен файл #{link_to_file(obj)} к объекту: #{lnk}"
+          if obj['owner_id'].present? 
+            lnk = link_to_obj(obj['owner_type'][1], obj['owner_id'][1]) 
+            desc = "Прикреплен файл #{link_to_file(obj)} к объекту: #{lnk}" 
+          else
+            desc = ''
+          end
         when 'ProjectGood'
           # lnk = link_to_obj('ProjectGood', obj['id'][1], "Заказ <b>#{obj['name'][1]}</b> на сумму #{obj['gsum'][1]}")
           desc = "Создан заказ <b>#{obj['name'][1]}</b> на сумму #{obj['gsum'][1].to_sum}"
@@ -232,7 +244,10 @@ module CommonHelper
       
       if version['item_type'] == 'ProjectGood'
         lnk = link_to_obj('Project', file['project_id'])
-        desc = "Удален заказ в #{lnk} [#{file['name']} на сумму #{file['gsum'].to_sum}]"
+        # puts "file['gsum'] #{file['gsum']} #{file['name']}"
+        sum = file['gsum'].present? ? "на сумму #{file['gsum'].to_sum}]" : ''
+
+        desc = "Удален заказ в #{lnk} [#{file['name']} #{sum}"
       elsif file['owner_type'].nil?
         desc = "Удален объект: #{t(version['item_type'])} ##{version['item_id']} [#{version['object']}]"
       else
@@ -261,28 +276,28 @@ module CommonHelper
                                   type: 'ch', 
                                   author: find_version_author_name(version), 
                                   changeset: info[:ch], 
-                                  description: info[:desc]})
+                                  description: info[:desc]}) if info[:desc].present? 
       end
     end
    
     obj_id = obj.id
 
     updated_pg = PaperTrail::Version.where_object(project_id: obj.id, goods_priority_id: 1)
-    puts "updated_pg #{updated_pg} #{updated_pg.count}"
+    # puts "updated_pg #{updated_pg} #{updated_pg.count}"
     updated_pg.each_with_index do |pg, index|
       created = pg.created_at.localtime
       at = created.strftime("%Y.%m.%d %H:%M:%S")         
       info = changeset_detail(pg)
       ch = info['inf']
         # gdg
-        puts "info #{info.class} #{info['id']} #{info}"
-        puts "pg #{pg} #{pg.item_type}"
-        puts "info desc #{info['desc']} #{info[:id]}"
+        # puts "info #{info.class} #{info['id']} #{info}"
+        # puts "pg #{pg} #{pg.item_type}"
+        # puts "info desc #{info['desc']} #{info[:id]}"
         history.store( at.to_s, { at: created.strftime("%d.%m.%Y %H:%M:%S"), 
                                     type: 'ch_2', 
                                     author: find_version_author_name(pg), 
                                     changeset: '', 
-                                    description: ch[:desc]})
+                                    description: ch[:desc]}) if ch[:desc].present?
       # end
     end
 
@@ -315,7 +330,7 @@ module CommonHelper
                                     type: 'ch_2', 
                                     author: find_version_author_name(data), 
                                     changeset: '', 
-                                    description: info['inf'][:desc]}) if info.present?
+                                    description: info['inf'][:desc]}) if info.present? && info['inf'][:desc].present?
 
       # file_changes(history, file, index, 'object_changes', 'add', 'Добавлен', '1')
     end  
@@ -347,11 +362,11 @@ module CommonHelper
     fname = type == 'del' ? obj['name'] : obj['name'][1]
     created = file.created_at.localtime
     at      = created.strftime("%Y.%m.%d %H:%M:%S") 
-    history.store( at+order, {at: created.strftime("%d.%m.%Y %H:%M:%S"), 
-                              type: type, 
-                              author: user_name(file.whodunnit), 
-                              changeset: {'index' => {file: fname}}, 
-                              description: ["#{type_t} файл <b>#{fname}</b>"]})
+    history.store( at + order, { at: created.strftime("%d.%m.%Y %H:%M:%S"), 
+                                type: type, 
+                                author: user_name(file.whodunnit), 
+                                changeset: {'index' => {file: fname}}, 
+                                description: ["#{type_t} файл <b>#{fname}</b>"]})
   end
 
 end

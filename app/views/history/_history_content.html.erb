@@ -8,8 +8,8 @@
   <div class="historyChange_list_a">
 
     <% @history.each do |version| %>
-    
-    <% day = (version['created_at'] +3.hours).beginning_of_day %>
+    <% if version['event'] != 'update' && version["item_type"]!= 'Attachment' %>
+    <% day = (version['created_at'].localtime).beginning_of_day %>
     
     <% if cur_day != day %>
     <% if !first_table %> </ul></div> <% end %>
@@ -23,7 +23,7 @@
         <% author = find_version_author_name(version) %>    
         <% _obj = get_version_details(version) %> 
 
-        <li><span><%= (version['created_at']+3.hours).try('strftime',"%H:%M:%S") %></span> 
+        <li><span><%= (version['created_at'].localtime).try('strftime',"%H:%M:%S") %></span> 
           <%# puts "version['event'] #{version['event']}" %>
           <% if version['event'] == 'update' %>
 
@@ -41,6 +41,7 @@
           <% end %>  
         </li>
 
+        <% end %>
         <% end %>
       </div>
     </div>

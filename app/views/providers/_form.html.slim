@@ -1,14 +1,25 @@
-= simple_form_for(@provider, defaults: { disabled: !is_manager? }) do |f|
+= simple_form_for(@provider) do |f|
   = render 'shared/error_messages', object: f.object
   .box_wrap.box_wrap_1
     .panel-left
       table.tbl_fc.tbl_fc
-        = simple_inputs f, [:name, :phone, :address, :url, :spec ]
+        = simple_inputs f, [:name, :phone, :address, :url ]
+        = tr_text f, :spec, 'Специализация', 'Напишите особенности поставщика'
         = tr_multi_select f, :goodstype_ids, Goodstype.all, 'Виды товаров'
-        = tr_chosen 'p_status_id', PStatus.order(:name), @provider, 'Статус'
+        
+        - if is_manager?
+          = tr_chosen 'p_status_id', PStatus.order(:name), @provider, 'Статус' 
+        - else
+          = f.hidden_field :p_status_id, value: @provider.p_status_id
+        
         = tr_text f, :komment, 'Примечание'
-        = tr_chosen 'city_id', @cities, @provider, 'Город'
-        = tr_submit_cancel providers_page_url if is_manager?
+
+        - if is_manager?
+          = tr_chosen 'city_id', @cities, @provider, 'Город'
+        - else
+          = f.hidden_field :city_id, value: @provider.city_id
+
+        = tr_submit_cancel providers_page_url 
     .right
       - if controller.action_name == 'edit'
         .comments_box

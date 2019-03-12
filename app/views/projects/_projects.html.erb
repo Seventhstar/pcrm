@@ -15,20 +15,17 @@
         <% if @sort!="users.name" %>
           <th width='120px'><%= sortable_th(:executor_id, 'Исполнитель', @numsort) %></th>
         <% end %>
-
       <% else %>
-      
         <th width='200px'><%= sortable_th(:project_type_id, 'Вид проекта', @numsort) %></th>
         <th width='220px'><%= sortable_th(:client_id, 'Заказчик', @numsort) %></th>
-      
       <% end %>
 
       <th style="width: 75px;"><%= sortable_th(:date_start, 'Начало', @numsort) %></th>
       <th width="85px"><%= sortable_th(:date_end_plan, 'Оконч.', @numsort) %> </th>
-      <th style="width: 105px;" class=""><%= sortable_th(:footage, 'м2 / Цена', @numsort) %></th>
-      <th class="td_right" style="width: 77px;" ><%= sortable_th(:sum_total, 'Стоимость', @numsort) %></th>
+      <th style="width: 105px;"><%= sortable_th(:footage, 'м2 / Цена', @numsort) %></th>
+      <th class="td_right" style="width: 77px;"><%= sortable_th(:sum_total, 'Стоимость', @numsort) %></th>
       <% if is_manager? %>
-        <th ></th>
+        <th></th>
       <% end %>
     </tr>
     </thead>
@@ -54,21 +51,21 @@
       <td rowspan="2"><%= project.admin_info.html_safe %></td>
       <td <%= project.sum_total_real ==0 ? '':'red' %>" rowspan="2" title="<%= project.sum_total.to_sum %>">
           <%= project.total.to_sum %></td>
-      <%= tool_icons(project,{icons:'edit,show', rowspan: 2}) %>
+      <%= tool_icons(project,{icons: 'edit, show', rowspan: 2}) %>
   
     <% else %>
 
       <td rowspan="2"><%= project.executor_info.html_safe %></td>
       <td rowspan="2" class="<%= project.sum_total_real ==0 ? '':'red' %>"><%= project.designer_sum_calc.to_sum %></td>
-      <%= tool_icons(project,{icons:'edit', rowspan: 2}) %>
+      <%= tool_icons(project, {icons: 'edit', rowspan: 2}) %>
     <% end %>
 
   </tr>
-  <tr tr_id="<%= project.id %>" class="tr_id<%= project.id %>"> <td colspan="2" class="prgrs"> 
+  <tr tr_id="<%= project.id %>" class="tr_id<%= project.id %>"><td colspan="2" class="prgrs"> 
 
     <div class="prgrs">
       <span class="percent"><%= project.progress_proc %></span>
-    <div class="bar" w="<%= project.progress %>" c="<%= project.pstatus.try(:color) %>"></div>
+      <div class="bar" w="<%= project.progress %>" c="<%= project.pstatus.try(:color) %>"></div>
     </div>
 
   </td></tr>

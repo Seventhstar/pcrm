@@ -33,7 +33,7 @@ ru:
   priority_id: Приоритет
   project_id: Проект 
   reason_id: Причина
-  reason_id: Новая причина
+  new_reason_id: Новая причина
   target_id: Цель
   executor_id: Исполнитель
   visualer_id: Визуализатор
@@ -56,6 +56,7 @@ ru:
   gsum: Сумма предложения
   sum_supply: Сумма заказа
   date_offer: Дата предложения
+  date_supply: Дата поставки
   order: Заказано
   delivery_time: Срок поставки
   delivery_time_id: Срок поставки

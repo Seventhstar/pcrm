@@ -17,10 +17,15 @@
   border-radius: 5px;
 }
 
+.chosen-container.nil_selected a span {color: #aeaeae;}
+
 .grid_table_new_item .chosen-container{min-height: 30px;}
 
 .items_box_head .chosen-container { min-height: 24px !important; min-width: 160px; }
+#due_filter_chosen {min-width: 124px;}
+
 #develops .items_box_head .chosen-container{min-width: 220px;}
+
 // .subnav #year_chosen, tr.editable .chosen {min-height: 22px !important;}
 .subnav .ychosen, .subnav .pchosen, tr.editable .chosen {min-height: 22px !important;}
 .subnav .ychosen span, .subnav .pchosen span, tr.editable .chosen span {line-height: 25px !important; height: 20px !important; font-size: 13px !important;}
@@ -159,7 +164,7 @@ tr.editable .chosen-container-single .chosen-single div b, span.cut b {margin-to
   position: relative;
   overflow: hidden;
   margin: 0;
-  padding: 6px 0px 0px 2px;
+  padding: 5px 0px 0px 2px;
   width: 100%;
   height: auto !important;
   height: 1%;

@@ -1,0 +1,28 @@
+.box_wrap.box_wrap_1.provider
+  .panel-left3
+    table.tbl_fc.tbl_fc
+      - a = [:name,:phone,:address,:url, :spec]
+      - a.each do |el|
+        tr
+          td.caption
+            = "#{t(el)}:"
+          td
+            .lbl= @provider[el]
+      tr
+        td.caption Виды товаров:
+        td
+          .lbl= @provider.goods_type_names
+      tr
+        td.caption Статус:
+        td
+          .lbl
+            = @provider.p_status_name
+      tr
+        td.caption Город:
+        td
+          .lbl
+            = @provider.city.try(:name)
+
+  .panel-right2
+    .comments_box
+      = render "shared/comments"

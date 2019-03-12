@@ -19,7 +19,7 @@ class ProviderManagersController < ApplicationController
     end
 
     def pm_params
-      params.require(:manager).permit(:name, :phone, :email,:provider_id)
+      params.require(:manager).permit(:name, :phone, :email, :provider_id, :position_id)
     end
 
 end

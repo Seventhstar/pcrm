@@ -3,4 +3,5 @@
 <% else %>
   $('#provider_managers tr.new_item_head').before("<%= j render @pm %>");
   $('#new_item input').val('');
+  $('#new_item .schosen, #new_item .chosen').val(0).trigger('chosen:updated');
 <% end %>

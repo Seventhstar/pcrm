@@ -88,13 +88,9 @@ module ProjectsHelper
   def init_totals()
     @grand_totals = {}
     @totals = {}
-
     currency = ['р. ','$','€']
-    currency.each do |c|
-      
+    currency.each do |c|      
     end
-
-
   end
 
   def get_project_goods_data()
@@ -142,6 +138,7 @@ module ProjectsHelper
     input = content_tag 'div', div_attrs do
         lbl.nil? ? txt : lbl+txt
     end
+
     if params[:no_td].present? 
       input
     else
@@ -178,7 +175,6 @@ module ProjectsHelper
     a.html_safe
   end
 
-
   def class_prj_td (prj)
     cls = ''
     cls = 'green '    if prj.pstatus_id == 4
@@ -186,7 +182,6 @@ module ProjectsHelper
     cls = 'hot '      if prj.pstatus_id == 2
     cls
   end
-
 
   def class_for_project (prj)
     cls = ''
@@ -229,6 +224,35 @@ module ProjectsHelper
 
   def good_state_src
     [['Предложенные', 1], ['Заказанные', 2], ['Закрытые', 3]]
+  end
+
+  def active_projects_before(date_end = nil)
+    
+    if date_end.nil?
+      date_end = Date.today 
+      # if date.nil?
+      date_start = Date.today - 1000
+    else
+      date_start = Date.today
+    end
+
+    # prj = Project.active.where("date_end_plan < ?", date).pluck(:id)
+    prj = Project.active.where("date_end_plan between ? and ?", date_start, date_end).pluck(:id)
+    # puts "prj #{prj} #{date_start} #{date}"
+    # end
+    
+    prj_ids = Project.active.pluck(:id)
+    all_pe = ProjectElongation.where(project_id: prj_ids).pluck(:project_id).uniq
+
+    pe = ProjectElongation.select(:id, :project_id, :new_date)
+                          .where('project_id in (?) and new_date > ?', prj_ids, date_start)                          
+                          .group(:project_id)
+                          .maximum(:new_date)
+                          
+    # puts "pe #{pe} #{date_start} #{date}"
+    
+    prj_wo_pe = prj - all_pe
+    prjs_ids = prj_wo_pe + pe.select {|k, v| v < date_end}.keys
   end
 
 end

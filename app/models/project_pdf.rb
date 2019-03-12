@@ -61,13 +61,14 @@ class ProjectPdf < Prawn::Document
 
       row(0).height = 28
       row(0).background_color = 'ff8411'
-      row(0).align = :center
+      # row(0).align = :center
       row(0).valign = :center
       row(0).padding_bottom = 10
 
       column(0).align = :center
-      column(2).align = :right
-      column(3).align = :center
+      # # column(2).align = :right
+      column(2).font_style = :bold
+      # column(3).align = :center
       
       rows_count.times do |i|        
         c = cells[i, 0]

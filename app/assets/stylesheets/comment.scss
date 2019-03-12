@@ -17,7 +17,7 @@
 .comments_list_a .btn_remove{margin:0 0 0 10px;}
 .comments_list_a .text{}
 
-.comments_list_a {width: 528px; padding: 0; -webkit-margin-after: 0; -webkit-margin-before: 0;}
+.comments_list_a {width: 608px; padding: 0; -webkit-margin-after: 0; -webkit-margin-before: 0;}
 .comments_list_a li{list-style: none;}
 
 
@@ -29,4 +29,23 @@
 .icon_img, .icon_doc {display: inline-block; background: asset-url('image.png') no-repeat; 
                       vertical-align: middle; position: relative; cursor: pointer; padding-left:20px;}
 .icon_doc {background: asset-url('doc.png') no-repeat;}
-li.locked {background-color: #fcc;}
+.locked {background-color: #fcc;}
+.locked:hover td {background-color: #fbb !important;}
+
+.comments_box { height: 100%}
+.comments_box .hl{margin: 0 0 15px 0; font-weight: 500;   border-bottom: 1px solid #e5e5e5; padding-bottom: 5px;}
+.comments_box .hl .icon{margin:0 0 0 10px;}
+
+.comments_box .box_i {border:1px solid #e5e5e5; padding: 16px; border-radius: 5px;}
+// .comments_box .box_msg {border:1px solid #6acc00; border-radius: 5px;}
+.comments_box .box_msg {border:1px solid #e5e5e5; border-radius: 5px;}
+
+.comments_box .add_form {margin: 12px 0 0 0; overflow:hidden;}
+.comments_box .add_form .txt,  {float:left; width: 506px; }
+.comments_box .add_form .sub {float:right;}
+
+.jspContainer{ position: relative;  width: 630px; overflow-y: scroll; }
+.jsph  { height: 347px; }
+.jsph2 { height: 390px; }
+.jsph21{ height: 444px; }
+.jsph1 { height: 400px; }

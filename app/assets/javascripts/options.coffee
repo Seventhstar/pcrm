@@ -37,7 +37,10 @@
       xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
       return
     success: (data, textStatus, jqXHR ) ->
-      show_ajax_message('new item' + data)
+      if data.includes('.js-notes')
+        show_ajax_message('Записан новый элемент' + data)
+      else
+        show_ajax_message('Успешно записан новый элемент')
   return
 
 @delete_item = (url) -> 

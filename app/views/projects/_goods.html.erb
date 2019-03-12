@@ -25,7 +25,7 @@
           <div>{{g.provider_name}}</div>
           <div :title="toolTip(g)">{{format_date(g.date_place)}}</div>
           <div>{{g.description}}</div>
-          <div v-html="allAmount(g)" class="td_right"></div>
+          <div v-html="allAmount(g)"></div>
           <div class="edit_delete td_right " style="">
             <a class="icon basket td_right" data-modal="true" :g_id='g.id' :href="goodsEditLink(g)"></a>
             <span class="icon icon_del" @click="deleteGoods(index, g)"></span> </div>
@@ -53,7 +53,7 @@
           <div>{{g.provider_name}}</div>
           <div :title="toolTip(g)">{{format_date(g.date_place)}}</div>
           <div>{{g.description}}</div>
-          <div v-html="allAmount(g)" class="td_right"></div>
+          <div v-html="allAmount(g)" ></div>
           <div class="edit_delete td_right " style="">
             <a class="icon basket td_right" data-modal="true" :g_id='g.id' :href="goodsEditLink(g)"></a>
             <span class="icon icon_del" @click="deleteGoods(index, g)"></span> </div>
@@ -69,11 +69,11 @@
 <div class="total-footer">Общий итог:<div id="grand_total">
 <ul class="right">
   <li>
-    <b>Итого предложено: </b> <span>{{calculateTotal()}}</span></li>
+    Итого предложено: <span><b>{{calculateTotal()}}</b></span></li>
   <li>
-    <b>Итого заказано: </b> <span>{{formatTotal(grandOrderTotal)}}</span></li>
+    Итого заказано: <span><b>{{formatTotal(grandOrderTotal)}}</b></span></li>
   <li>
-    <b>Итого закрыто: </b><span>{{formatTotal(grandClosedTotal)}}</span></li>
+    Итого закрыто: <span><b>{{formatTotal(grandClosedTotal)}}</b></span></li>
 </ul>
 </div>
 

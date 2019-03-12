@@ -167,6 +167,7 @@ module ApplicationHelper
 
     attrs = {class: cls}
     attrs[:value] = params[:date] if params.has_key?(:date)
+    attrs[:placeholder] = params[:placeholder] if params.has_key?(:placeholder)
 
     content_tag(:td) do
       content_tag :div, class: "inp_w" do
@@ -179,9 +180,9 @@ module ApplicationHelper
     end
   end
 
-  def tr_text(f, field, label)
+  def tr_text(f, field, label, placeholder = nil)
     content_tag :tr do
-      td_caption(label) + td_text(f, field)
+      td_caption(label) + td_text(f, field, {placeholder: placeholder})
     end
   end
 
@@ -339,6 +340,7 @@ module ApplicationHelper
 
     select_params = {class: cls, 'v-model' => v_model}
     select_params[:disabled] = options[:disabled] if options[:disabled].present?
+    select_params[:readonly] = options[:readonly] if options[:readonly].present?
     select_params[:tabindex] = options[:tabindex] if options[:tabindex].present?
 
     s = select_tag n, options_for_select(coll, selected: sel), select_params
@@ -404,21 +406,22 @@ module ApplicationHelper
    end
   end
 
-  def only_actual_btn()
-    txt = @only_actual == false ? 'Все' : "Актуальные"
-    cls = @only_actual ? ' on only_actual' : ''
-    active = @only_actual ?  'active' : ''
-    a = content_tag :a, txt,{ class: "link_a left"+cls, off: "Все", on: "Актуальные"}
+  def only_actual_btn(filter = "only_actual", actual = "Актуальные")
+    var = eval("@#{filter}")
+    txt = var == false ? 'Все' : actual
+    cls = var ? " on #{filter}" : ''
+    active = var ?  'active' : ''
+    a = content_tag :a, txt, {class: "link_a left" + cls, off: "Все", on: actual}
     b = content_tag :div, { class: 'scale'} do
-      content_tag :div, '',{class:"handle "+ active}
+      content_tag :div, '', {class: "handle "+ active}
     end
-    cls = @only_actual ? ' toggled' : ''
+    cls = var ? ' toggled' : ''
     content_tag :div, {class: 'switcher_a'+ cls} do
       a+b
     end
   end
 
-  def set_only_actual(actual,title = nil)
+  def set_only_actual(actual, title = nil)
     css_class = actual == "false" ? "passive" : "active"
     css_class.concat(" only_actual li-right")
     p_active = only_actual == "false"

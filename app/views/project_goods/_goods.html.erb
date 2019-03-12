@@ -30,7 +30,7 @@
       <div :class="rowClass(g)" :id="'item_'+item" :key="item">    
           <div>{{g.name}}</div>
           <div>{{nonGroupKey(g)}}</div>
-          <div>{{format_date(g.date_place)}}</div>
+          <div :title="toolTip(g)">{{format_date(g.date_place)}}</div>
           <div>{{g.description}}</div>
           <div v-html="allAmount(g)" class="td_right"></div>
           <div class="edit_delete td_right " style="">

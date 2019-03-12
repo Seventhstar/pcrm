@@ -5,9 +5,13 @@ class ProvidersController < ApplicationController
   before_action :logged_in_user
 
   include ProvidersHelper
+  include CommonHelper
+  
   # GET /providers
   # GET /providers.json
   def index
+
+    clean_params
 
     @styles = Style.all
     @budgets = Budget.order(:name)
@@ -27,41 +31,55 @@ class ProvidersController < ApplicationController
     # sp = all_ids
     sp,bp,gtp,ps,s_ids = all_ids,all_ids,all_ids,all_ids,all_ids
 
-    if params[:search].present?
-      srch = "%#{params[:search]}%"
-      s_ids = Provider.where('LOWER(name) like LOWER(?) 
-                              or LOWER(address) like LOWER(?)',
-                            srch,
-                            srch).ids
-      # puts "s_ids #{s_ids}"
-      # dqhgg
-    end
+    # if params[:search].present?
+    #   srch = "%#{params[:search]}%"
+    #   s_ids = Provider.where('LOWER(name) like LOWER(?) 
+    #                           or LOWER(address) like LOWER(?)',
+    #                         srch,
+    #                         srch).ids
+    #   # puts "s_ids #{s_ids}"
+    #   # dqhgg
+    # end
 
-    if params[:style] && params[:style]!="" && params[:style]!='0'
-         sp = Style.find(params[:style]).providers.ids
-    end
+    # if params[:style] && params[:style]!="" && params[:style]!='0'
+    #      sp = Style.find(params[:style]).providers.ids
+    # end
 
-    if params[:budget] && params[:budget]!="" && params[:budget]!='0'
-        bp = Budget.find(params[:budget]).providers.ids
-    end
+    # if params[:budget] && params[:budget]!="" && params[:budget]!='0'
+    #     bp = Budget.find(params[:budget]).providers.ids
+    # end
 
     if params[:goodstype] && params[:goodstype]!="" && params[:goodstype]!='0'
         gtp = Goodstype.find(params[:goodstype]).providers.ids
-        @goodstypes = [Goodstype.find(params[:goodstype])]
+
+    # puts "@param_goodstype.present? #{@param_goodstype.present?} = #{@param_goodstype}"
+    @goodstypes = [Goodstype.find(params[:goodstype])] if @param_goodstype.present?
+    # puts "@goodstypes #{@goodstypes.count}"
     end
 
-    if  @only_actual
-        ps = Provider.where('p_status_id > 2').ids
-    end
+    # if  @only_actual
+    #     ps = Provider.where('p_status_id > 2').ids
+    # end
 
-    @ids = sp & bp & gtp & ps & s_ids
-    # @ids = s_ids & sp
+    # @ids = sp & bp & gtp & ps & s_ids
 
     # puts "@main_city #{@main_city}"
+                          # .includes(:goodstypes)
+                         # .joins(:provider_goodstypes)
+                         # .by_budget(params[:budget])
+                         # .by_style(params[:style])
     @providers = Provider.by_city(@main_city)
-                         .where(id: @ids)
+                         .only_actual(@only_actual)
+                         .by_search(params[:search])
+                         .by_pstatus(params[:p_status])
+                         .by_goodstype(gtp)
                          .order(:name) # find(ids, :order => :name)
+    @ids = @providers.ids
+                         # .where(id: @ids)
+
+
     store_providers_path
+    puts "params #{params}", @providers.count
   end
 
   # GET /providers/1
@@ -78,6 +96,7 @@ class ProvidersController < ApplicationController
   # GET /providers/new
   def new
     @provider = Provider.new
+    @provider.p_status_id = 7 
     @managers = {}
     @manager  = ProviderManager.new
     @p_statuses = PStatus.order(:name)
@@ -88,7 +107,15 @@ class ProvidersController < ApplicationController
   # GET /providers/1/edit
   def edit
     @provider = Provider.find(params[:id])
-    @managers = @provider.provider_managers
+
+    if current_user.has_role?(:manager)
+      @positions = Position.order(:name)
+      @managers  = @provider.provider_managers
+    else
+      @positions = Position.where(secret: false).order(:name)
+      @managers  = @provider.provider_managers.where(position_id: @positions.ids)
+    end
+    
     @manager  = ProviderManager.new
     @p_statuses = PStatus.order(:name)
 
@@ -151,7 +178,7 @@ class ProvidersController < ApplicationController
       params.require(:provider).permit( :name, :manager, :phone, :komment, :address, 
                                         :email, :url, :spec, :p_status_id, :city_id,
         budget_ids: [], style_ids: [], goodstype_ids: [], 
-	special_infos_attributes: [:id, :content, :_destroy])
+  special_infos_attributes: [:id, :content, :_destroy])
     end
 
     def sort_column

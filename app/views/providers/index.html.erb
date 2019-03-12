@@ -1,19 +1,21 @@
 <div class="items_box_head">
-<div class="panel-left">
-<%= form_tag providers_path, method: 'get', id: "p_search", class: 'index_filter' do %>
+  <div class="panel-left">
+    <%= form_tag providers_path, method: 'get', id: "p_search", class: 'index_filter' do %>
+    <label class="combobox">
+      <%= chosen_src "goodstype", Goodstype.order(:name), @param_goodstype, {nil_value: 'Вид товара...',class: ''} %>
+    </label>
 
-<label class="combobox">
-<%= chosen_src "goodstype", Goodstype.order(:name), @param_goodstype, {nil_value: 'Вид товара...',class: ''} %>
-</label>
+    <div class="combobox short_search left items_box_head"> 
+      <%= chosen_src "p_status",  PStatus.order(:name), params[:p_status], {nil_value: 'Статус...', class: 'chosen left'} %>
+      <%#= chosen_src 'executor_id', @executors, params[:executor_id], {nil_value: 'Все исполнители'} %>
+    </div>
+    <% end %>
 
 
-<% end %>
+  </div>
 
-
-</div>
-
-<%= link_to 'Добавить', new_provider_path, class: "btn_a btn-add btn_slim right space20" %>
-<%= only_actual_btn %>
+  <%= link_to 'Добавить', new_provider_path, class: "btn_a btn-add btn_slim right space20" %>
+  <%= only_actual_btn %>
 
 </div>
 </div>

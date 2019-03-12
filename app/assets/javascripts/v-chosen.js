@@ -6,7 +6,7 @@ Vue.component('v-chosen', {
         localName: "",
         localValue: 0,
         options: [],
-        clearable: true
+        clearable: false
       }
     }, 
     props: ['name', 'placeholder', 'label', 'src', 'selected', 
@@ -35,7 +35,7 @@ Vue.component('v-chosen', {
        // console.log('this.clear', this.clear, typeof(this.clear))
       if (this.clear != undefined) this.clearable = (!this.clear)
       else 
-        this.clearable = true
+        this.clearable = false
 
       let model = '';
       if (this.owner !== undefined) { 

@@ -24,13 +24,29 @@ class ProjectsController < ApplicationController
     @projects = current_user.has_role?(:manager) ? Project : current_user.projects
     @projects = @projects.select(query_str)
 
+    @due_filters = [['Просроченные', 1], ['2 недели', 2], ['Этот месяц', 3]]
+
     includes = [:client, :elongations, :project_type, :pstatus]
+    prjs_ids = nil
+
+    if params[:due_filter].present?
+      case params[:due_filter]
+      when '1'
+        prjs_ids = active_projects_before
+      when '2'
+        prjs_ids = active_projects_before(Date.today+14)
+      when '3'
+        # prjs_ids = active_projects_before(Date.today+30)
+        prjs_ids = active_projects_before(Date.today.end_of_month+1)
+        # puts "prjs_ids #{prjs_ids}"
+      end 
+    end
 
     if params[:search].present?
       src = "%#{params[:search]}%".mb_chars.downcase
       cl_ids = Client.where('LOWER(name) like ? or LOWER(email) like ? or LOWER(phone) like ?',src, src, src).pluck(:id)
       cl_prj = Project.where(client_id: cl_ids) 
-      search_prj =  @projects.where('LOWER(address) like ? or number = ?', src, params[:search].try('to_i')).pluck(:id)
+      search_prj = @projects.where('LOWER(address) like ? or number = ?', src, params[:search].try('to_i')).pluck(:id)
       @projects = @projects.where(id: cl_prj + search_prj)
     end
 
@@ -45,6 +61,7 @@ class ProjectsController < ApplicationController
                 .by_city(@main_city)
                 .by_executor(params[:executor_id])
                 .by_year(params[:year])
+                .by_ids(prjs_ids)
                 .order("#{sort_1} #{sort_direction}, #{sort_2} #{dir_2}, projects.number desc")
 
     store_prj_path
@@ -80,7 +97,7 @@ class ProjectsController < ApplicationController
   def def_params
     @owner      = @project
     @styles     = Style.order(:name)
-    @gtypes     = Goodstype.where(id: [@pgt_ids]).order(:name)
+    @gtypes     = Goodstype.where(id: [@pgt_ids]).order(:priority)
     @clients    = Client.where(city: @main_city).order(:name)
     @holidays   = Holiday.pluck(:day).collect{|d| d.try('strftime',"%Y-%m-%d")}
     @currencies = Currency.order('id')
@@ -131,10 +148,11 @@ class ProjectsController < ApplicationController
             .select("project_goods.*, 
                       providers.name as provider_name, 
                       currencies.short as currency_short,
-                      goodstypes.name as goodstype_name")
-            .order('goodstypes.name', :created_at)
+                      goodstypes.name as goodstype_name,
+                      goodstypes.priority as goodstype_priority")
+            .order('goodstypes.priority', :created_at)
             .except(:created_at, :updated_at)
-            .group_by {|i| [i.goodstype_id, i.goodstype_name] }
+            .group_by {|i| [i.goodstype_id, i.goodstype_name, i.goodstype_priority] }
             .map{ |g| g }
             
     used_pgt = @goods.map{|g| g[0][0]}
@@ -153,11 +171,14 @@ class ProjectsController < ApplicationController
     gtypes.each do |gt|
       ind = used_pgt.index(gt.id)
       if ind.nil?
-        @goods << [[gt.id, gt.name],[]]
+        @goods << [[gt.id, gt.name, gt.priority], []]
       else
         @gtypes.insert( ind, @gtypes.delete_at(@gtypes.index(gt)) )
       end
     end
+
+    @goods.sort_by!{ |hsh| hsh[0][2]; }
+    @gtypes.sort_by!{|hsh| hsh.priority}
 
     @providers = []
     @gtypes.each do |gt|

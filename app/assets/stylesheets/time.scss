@@ -34,7 +34,7 @@
 .inp_w .float_mask { background: asset-url('m2.png') 98% 8px no-repeat; padding-right: 24px; }
 .inp_w .float_mask[disabled]  {background: asset-url('m2-dis.png') 98% 8px no-repeat; color: gray; padding-right: 24px;}
 
-.prj_footage .txt {border: 1px solid #f5f5f5;}
+// .prj_footage .txt {border: 1px solid #f5f5f5;}
 .footages_prices .txt:focus { border-color: rgba(255, 132, 17, 0.8); }
 
 .prj_footage .txt.sum_total { border-left: 5px solid #ff8411;}
