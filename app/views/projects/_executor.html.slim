@@ -1,30 +1,29 @@
 - if is_admin?
-  .hl.gr_caption.hl_tr Cтоимость для исполнителей
-  section.table_5col
-    .inp_w
-      m-number name="designer_price" label="Цена для дизайнера (за м2)"
-    section v-if="true"
+  .inner_field
+    .hl.gr_caption.hl_tr Cтоимость для исполнителей
+    section.table_9col
+      .inp_w
+        m-number name="designer_price" label="Цена дизайнера (за м2)"
+      transition name="slide-fade"
+        .sign.plus v-if="show_2"
+      transition name="slide-fade"
+        .d2 v-show="show_2"
+          m-number name="designer_price_2" label="Цена 2 для дизайнера"
+      transition name="slide-fade"
+        .sign.plus v-if="complexProjectType"
+      transition name="slide-fade"
+        .inp_w v-if="complexProjectType" 
+            m-number name="visualer_price" label="Цена визуал (за м2)"
+        .inp_w v-if="complexProjectType"
+        
       .inp_w 
-        transition name="slide-fade"
-          .d2 v-show="show_2"
-            m-number name="designer_price_2" label="Цена 2 для дизайнера"
-    .inp_w
-      m-number name="designer_sum" label="Cтоимость дизайнера" add_class="sum_cost" disabled="true" 
-    .inp_discount 
-
-    .inp_w
-      m-number name="sum_total_executor" label="Общая стоимость исполнителей" add_class="sum_cost" disabled="true"
-
-    .inp_w
-      transition name="slide-fade"
-        section v-if="complexProjectType"
-          m-number name="visualer_price" label="Цена для визуализатора (за м2)"
-    .inp_w
-    .inp_w
-      transition name="slide-fade"
-        section v-if="complexProjectType"
-          m-number name="visualer_sum" label="Cтоимость визуализатора" add_class="sum_cost" disabled="true"
-    .inp_w
+      .inp_w
       
-    .inp_w
-      m-number name="sum_rest" label="Остаток" add_class="sum_rest" disabled="true"
+        m-number name="designer_sum" label="Cтоимость дизайна" add_class="sum_cost" disabled="true" 
+      .sign.plus v-if="complexProjectType"
+      transition name="slide-fade"
+          .inp_w v-if="complexProjectType"
+            m-number name="visualer_sum" label="Cтоимость визуала" add_class="sum_cost" disabled="true"
+      .sign.equal 
+      .inp_w
+        m-number name="sum_total_executor" label="Итого исполнителям" add_class="sum_cost" disabled="true"

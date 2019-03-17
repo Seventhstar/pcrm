@@ -1,9 +1,10 @@
+@import "common.scss";
 // Place all the styles related to the Comment controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .comments_list_a {}
-.comments_list_a .item{padding: 0 6px; margin: 14px 0 0 64px; border-top:1px solid #e5e5e5; line-height:1.25;}
+.comments_list_a .item{padding: 0 6px; margin: 14px 0 0 64px; border-top:1px solid $border-color; line-height:1.25;}
 .comments_list_a .item:first-child{border: 0; padding-top: 0; margin-top: 0;}
 .comments_list_a .item:after {content: ' '; clear:both; display: block; width: 0; height: 0; overflow: hidden; font-size: 0;}
 .comments_list_a .item .pic{float:left; width: 50px; margin:0 0 0 -64px;}
@@ -21,7 +22,7 @@
 .comments_list_a li{list-style: none;}
 
 
-.comments_list_a .item.new { background-color: #fbfbfb; }
+.comments_list_a .item.new { background-color: $border-color; }
 .last .comments_list_a .item .info:after { color: gray; content: " ●"; line-height: 8px; font-size: 16px; cursor: pointer;}
 .last .comments_list_a .item.new .info:after {color: #ff8411; content: " ●"; line-height: 8px; font-size: 16px; }
 .first .comments_list_a .info {color: red}
@@ -40,7 +41,7 @@
 // .comments_box .box_msg {border:1px solid #6acc00; border-radius: 5px;}
 .comments_box .box_msg {border:1px solid #e5e5e5; border-radius: 5px;}
 
-.comments_box .add_form {margin: 12px 0 0 0; overflow:hidden;}
+.comments_box .add_form {margin: 12px 0 0 0; overflow:hidden; padding: 2px;}
 .comments_box .add_form .txt,  {float:left; width: 506px; }
 .comments_box .add_form .sub {float:right;}
 

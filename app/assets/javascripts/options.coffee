@@ -59,7 +59,8 @@
   items.children().each ->
     # console.log('$(this)', $(this)) 
     $(this).prop('readonly', checked)
-    if $(this).hasClass('chosen') || $(this).hasClass('datepicker')
+    v = $(this).val()
+    if $(this).hasClass('chosen') || $(this).hasClass('datepicker') || v=='true' || v=='false'
       $(this).prop('disabled', checked).trigger("chosen:updated")
     # if $(this)
     if checked then $(this).addClass('disabled') 
@@ -68,7 +69,13 @@
       enableControls($(this), checked, level-1)
 
 
-$(document).ready ->
+$(document).ready -> 
+ $(document).on 'dblclick', '.tleads td', ->
+  href = $(this).siblings('td.edit_delete').children('a.icon_edit').attr('href')
+  if href!=undefined
+    window.location.href = $(this).siblings('td.edit_delete').children('a.icon_edit').attr('href')
+
+
  $(document).on 'click', '.sw_enable', ->
   grp_id = $(this).attr('grp_id')
   ch = $(this).find('.checkbox').hasClass('active')

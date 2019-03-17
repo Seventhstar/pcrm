@@ -3,6 +3,7 @@
 .tbl_a .head, .panel-default .table-heading{ background: #f2f2f2; padding: 12px; font-size: 17px; position:relative; font-weight: 500;}
 .panel-default .table-heading.goods-list { background: #dadada; }
 .panel-default .table-heading.goods-list a{ text-decoration-line: underline; color: firebrick; text-decoration-color: brown;}
+.panel-default .table-heading.goods-list a.nonactual{ color: gray; text-decoration-color: gray;}
 
 .goods-list {display: grid; grid-template-columns: auto 1fr 30px 25px;}
 .goods-list span {cursor: pointer;}
@@ -84,9 +85,13 @@ table.tbl_fc_1 td.caption_sm {width: 70px;}
 
 
 .costing_head{display: grid; grid-template-columns: 120px 1fr 120px 1fr; column-gap: 20px;  }
-.prj_number { display: grid; grid-template-columns: 1fr 120px 3fr; column-gap: 20px;}
-.prj_new_client { display: grid; grid-template-columns: 2fr 1fr 2fr; column-gap: 20px; }
-.prj_executors { display: grid; grid-template-columns: 1fr 1fr 1fr; column-gap: 20px;}
+.prj_number { display: grid; grid-template-columns: 1fr 120px 1fr; column-gap: 20px;}
+.prj_new_client { display: grid; grid-template-columns: 100px 1fr; gap: 10px; }
+.prj_new_client label{    padding-top: 7px;
+    text-align: right;
+    font-weight: 500;}
+
+.prj_executors { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; column-gap: 20px;}
 
 .table_2col {display: grid; grid-template-columns: 1fr 1fr;}
 .table_3col {display: grid; grid-template-columns: 1fr 1fr 1fr;}
@@ -101,13 +106,20 @@ table.tbl_fc_1 td.caption_sm {width: 70px;}
 .table_7col {display: grid;
   grid-template-columns: 1fr 20px 1fr 20px 1fr 1.5fr 1fr;
   grid-template-rows: 60px;
-  column-gap: 20px;
+  column-gap: 12px;
+  row-gap: 10px;
+}
+
+.table_9col {display: grid;
+  grid-template-columns: 1fr 20px 1fr 20px 1fr 20px 1fr 20px 1fr 20px 1fr;
+  grid-template-rows: 60px;
+  column-gap: 12px;
   row-gap: 10px;
 }
 
 .table_period{
  display: grid;
-  grid-template-columns: 120px 120px 208px 1fr 1fr;
+  grid-template-columns: 120px 120px 120px 1fr;
   grid-template-rows: 60px;
   column-gap: 20px;
   row-gap: 10px; 

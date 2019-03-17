@@ -1,11 +1,12 @@
 - add = (order ||= false) ? "_2" : ""
 - add<<"_real" if (real ||= false)
+- m2 = order ? ' 2' : ''
 
 .inp_w
-  m-number name="footage#{add}" label="Метраж#{order ? ' 2' : ''}" :disabled="#{real ? 'false' : 'fact_filled'}"
+  m-number name="footage#{add}" label="Метраж#{m2}" :disabled="#{real ? 'false' : 'fact_filled'}"
 .sign.multiply
 .inp_w
-  m-number name="price#{add}" label="Цена за м2" :disabled="#{real ? 'false' : 'fact_filled'}"
+  m-number name="price#{add}" label="Цена#{m2} за м2" :disabled="#{real ? 'false' : 'fact_filled'}"
 .sign.equal
 .inp_w
-  m-number name="sum#{add}" label="Сумма" :disabled="#{real ? 'false' : 'fact_filled'}"
+  m-number name="sum#{add}" label="Сумма#{m2}" :disabled="#{real ? 'false' : 'fact_filled'}"

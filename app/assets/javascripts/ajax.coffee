@@ -130,11 +130,11 @@
     search: $('#search').val()
     year: $('#year').val()
     priority_id: $('#priority_id').val()
-    currency: $('#currency_id').val()
     good_state: $('#good_state').val()
     cut: cut
   }
   
+
   l = window.location.toString().split('?');
   p = q2ajx(l[1])
   ser = $('.index_filter').serialize()
@@ -152,6 +152,10 @@
     return
   each params, (i, a) ->
     url[i] = a
+    return 
+  each url, (i, a) ->
+    if (a == 0 || a == '0' || a == undefined)
+      delete url[i]  
     return 
 
   return url
@@ -215,6 +219,34 @@
     ri = $(this).attr('tr_id')
     $('.tr_id'+ri).removeClass('hover')
 
+@modal_apply = (th, newItem=false)->
+  prm = th.attr('prm')
+  action = th.attr('action')
+  item_id = th.attr('item_id')
+  model = th.attr('model')
+  params = $('[name^='+prm+']').serialize()    
+  # console.log()
+  if th.hasClass('new') || newItem 
+    type = 'POST' 
+    url  = action
+  else 
+    type = 'PATCH'
+    url  = action+item_id
+
+  # upd_param(params+'&model='+model+'&id='+item_id,true,true)
+  $.ajax
+    url: url
+    data: params
+    dataType: 'script'
+    type: type
+    success: (event, xhr, settings) ->
+      if event.includes('.js-notes')
+        eval(event)
+      else
+        show_ajax_message('Успешно обновлено','success')
+    error: (evt, xhr, status, error) ->  
+      show_ajax_message(status.message,'error')        
+
 $(document).ready ->
   apply_mask()
 
@@ -222,32 +254,8 @@ $(document).ready ->
       $(this).closest('.alert').removeClass("in").addClass('out');
 
   $(document).off('click', 'span.modal_apply').on 'click', 'span.modal_apply', ->
-    prm = $(this).attr('prm')
-    action = $(this).attr('action')
-    item_id = $(this).attr('item_id')
-    model = $(this).attr('model')
-    params = $('[name^='+prm+']').serialize()    
-    console.log()
-    if $(this).hasClass('new') 
-      type = 'POST' 
-      url  = action
-    else 
-      type = 'PATCH'
-      url  = action+item_id
-
-    # upd_param(params+'&model='+model+'&id='+item_id,true,true)
-    $.ajax
-      url: url
-      data: params
-      dataType: 'script'
-      type: type
-      success: (event, xhr, settings) ->
-        if event.includes('.js-notes')
-          eval(event)
-        else
-          show_ajax_message('Успешно обновлено','success')
-      error: (evt, xhr, status, error) ->  
-        show_ajax_message(status.message,'error')        
+    modal_apply($(this))
+    # console.log('modal apply')
 
 # поиск 
   $('#search').on 'keyup', (e)-> 

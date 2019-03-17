@@ -1,24 +1,34 @@
 - add = "#{real ? '_real' :''}"
-.hl.gr_caption.hl_tr #{title}
-section.table_7col.footages_prices
-  = render 'footage', order: false, real: real
-  .inp_w
-    - if !real
-      transition name="bounce" 
-        span.sub.btn_a.add_footage v-on:click="show_2 = !show_2" v-show="!show_2" Добавить 2й метраж
-      
-    - else 
-      span.sub.btn_a.btn_reset.add_footage v-on:click="delReal()" v-show="show_fact" Убрать пересчет площади
-  .inp_w
-    m-number name="sum_total#{add}" readonly="readonly" label="Сумма #{real ? 'факт' : 'план'}"  
-
-
-transition name="slide-fade"
-  section.table_7col.footages_prices v-show="show_2"
-    = render 'footage', order: true, real: real
+.inner_field
+  .hl.gr_caption.hl_tr #{title}
+  section.table_9col.footages_prices
+    = render 'footage', order: false, real: real
+    .inp_w
     .inp_w
       - if !real
-        span.sub.btn_a.btn_reset.add_footage v-on:click="delM2()" v-show="show_2" Убрать 2й метраж
+        transition name="bounce" 
+          span.sub.btn_a.add_footage v-on:click="show_2 = !show_2" v-show="!show_2" Добавить 2й метраж
+      - else 
+        span.sub.btn_a.btn_reset.add_footage v-on:click="delReal()" v-show="show_fact" Убрать пересчет площади
+    .inp_w
+    .inp_w
+      m-number name="sum_total#{add}" readonly="readonly" label="Общая стоимость #{real ? 'факт' : 'план'}"  
+    .inp_w
+    .inp_w
+      - if !real
+        section v-show="!show_fact"
+          m-number name="sum_rest" label="Остаток" add_class="sum_rest" disabled="true"
+      - else
+        m-number name="sum_rest" label="Остаток" add_class="sum_rest" disabled="true"
 
-- if controller.action_name == 'edit'
-  span.sub.btn_a.add_footage v-on:click="show_fact = !show_fact" v-show="!show_fact" Добавить пересчет площади
+
+  transition name="slide-fade"
+    section.table_9col.footages_prices v-show="show_2"
+      = render 'footage', order: true, real: real
+      .inp_w
+      .inp_w
+        - if !real
+          span.sub.btn_a.btn_reset.add_footage v-on:click="delM2()" v-show="show_2" Убрать 2й метраж
+
+  - if controller.action_name == 'edit'
+    span.sub.btn_a.add_footage v-on:click="show_fact = !show_fact" v-show="!show_fact" Добавить пересчет площади

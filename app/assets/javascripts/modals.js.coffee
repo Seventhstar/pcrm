@@ -17,35 +17,37 @@ $ ->
       $(modal_holder_selector).html(data).find(modal_selector).modal()
     false
 
-  $('body').on 'click', '.autoresize', ->
-    ael = document.activeElement
-    ael.height = 'auto';
-    ael.style.height = ael.scrollHeight+'px';
+  $('body').on 'keyup', 'textarea', (e) ->
+    if e.keyCode == 13
+      ael = document.activeElement
+      ael.height = 'auto'
+      curHeight = parseInt(ael.style.height)
+      if curHeight < ael.scrollHeight or isNaN(curHeight)
+        return ael.style.height = ael.scrollHeight + 'px'
+    return
 
-  $('body').off('keypress keyup','#mainModal').on 'keypress keyup','#mainModal', (e)->
+  $('body').on 'keyup', '#mainModal', (e) ->
     if e.keyCode == 13
       ael = document.activeElement
       if ael.type == 'textarea'
-        ael.height = 'auto';
-        ael.style.height = ael.scrollHeight+'px';
       else
-        #$('#btn-modal').click()
+        $('#btn-modal').click()
     else if e.keyCode == 27
       $('.close').click()
+    return
 
   $(document).on 'click','.update', ->
     $('.close').click()
-    delay('upd_ch_client({})',100)
+    delay('upd_ch_client({})', 100)
 
   $(modal_holder_selector).on 'show', ->
     cache = $('#upd_modal_file_cache').val()
     if cache != undefined
       $('#attach_list').each ->
-         $(this).attr 'owner_cache', cache
-    # console.log('modal', cache)
-        # $('#myModal').modal('show');
+        $(this).attr 'owner_cache', cache
+        return
+    return
     
-
   $(document).on 'ajax:success', 'form[data-modal]', (event, data, status, xhr)->
       url = xhr.getResponseHeader('Location')
       if url

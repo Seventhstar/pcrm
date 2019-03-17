@@ -6,6 +6,8 @@ class Project < ActiveRecord::Base
   
   belongs_to :executor, class_name: 'User', foreign_key: :executor_id
   belongs_to :visualer, class_name: 'User', foreign_key: :visualer_id, optional: true
+  belongs_to :lead, optional: true
+  has_one :condition, class_name: 'ProjectCondition', foreign_key: :project_id
 
   belongs_to :project_type
   belongs_to :pstatus, class_name: 'ProjectStatus', foreign_key: :pstatus_id

@@ -1,6 +1,8 @@
 <%= render 'shared/edit_head', item: @project, title: "Редактирование проекта #{@project.address}" %>
 
 <%= hidden_field_tag 'holidays', @holidays %> 
+<%= hidden_field_tag 'workdays', @holidays %> 
+
 <%= simple_form_for(@project) do |f| %>
 
 <div id="tabs">
@@ -104,7 +106,12 @@
 
 <%= render 'page_9_clients', f: f %>
 
-<%= submit_cancel project_page_url %>
+<% if is_manager? %>
+  <%= link_to("Закрыть", project_page_url, class: 'sub btn_a btn_reset') %>
+<% else %>
+  <%= submit_cancel project_page_url %>
+<% end %>
+
 <% end %>
 
 </div>

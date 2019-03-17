@@ -48,21 +48,16 @@ class AjaxController < ApplicationController
   def update_holidays
     # if params[:year]
     y = Date.today.year.to_s
-    url = "http://xmlcalendar.ru/data/ru/"+y+"/calendar.xml"
+    url = "http://xmlcalendar.ru/data/ru/#{y}/calendar.xml"
     xml = Nokogiri::XML(open(url))
 
     xml.xpath('//days/day').each do |d|
       dt = d.attr('d')
       h  = d.attr('h')
-      hn = xml.xpath('//holidays/holiday[@id='+h+']').attr('title').value if !h.nil?
-      p [dt,h,hn]
-      day = Date.parse(y+'.'+dt)
-      dd = Holiday.find_by_day(day)
-      if dd.nil? 
-        new_d = Holiday.new
-        new_d.day = day
-        new_d.name = hn 
-        new_d.save
+      if d.attr('t') == '1' # 1 - праздник, 2 - сокращенный день
+        holiday_name = xml.xpath("//holidays/holiday[@id=#{h}]").attr('title').value if !h.nil?
+        day = Date.parse(y+'.'+dt)
+        Holiday.create({day: day, name: holiday_name}) if !Holiday.find_by_day(day)
       end
     end
     head :ok
@@ -70,7 +65,7 @@ class AjaxController < ApplicationController
 
   def channels
     if params[:term]
-      like= "%".concat(params[:term].concat("%"))
+      like = "%".concat(params[:term].concat("%"))
       channels = Channel.where("name like ? ", like)
     else
       channels = Channel.all

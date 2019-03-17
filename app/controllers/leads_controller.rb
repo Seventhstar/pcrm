@@ -96,7 +96,7 @@ class LeadsController < ApplicationController
 
     def_params
 
-    @comm_height = 464 #488
+    @comm_height = 488 #488
     respond_modal_with @lead, location: root_path
   end
 

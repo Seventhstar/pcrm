@@ -36,9 +36,7 @@ class ProjectsController < ApplicationController
       when '2'
         prjs_ids = active_projects_before(Date.today+14)
       when '3'
-        # prjs_ids = active_projects_before(Date.today+30)
         prjs_ids = active_projects_before(Date.today.end_of_month+1)
-        # puts "prjs_ids #{prjs_ids}"
       end 
     end
 
@@ -99,7 +97,10 @@ class ProjectsController < ApplicationController
     @styles     = Style.order(:name)
     @gtypes     = Goodstype.where(id: [@pgt_ids]).order(:priority)
     @clients    = Client.where(city: @main_city).order(:name)
+    
     @holidays   = Holiday.pluck(:day).collect{|d| d.try('strftime',"%Y-%m-%d")}
+    @workdays   = WorkingDay.pluck(:day).collect{|d| d.try('strftime',"%Y-%m-%d")}
+
     @currencies = Currency.order('id')
     @new_gtypes = Goodstype.where.not(id: [@pgt_ids]).order(:name)
     @executors  = User.where(city: current_user.city).order(:name)
@@ -114,6 +115,24 @@ class ProjectsController < ApplicationController
   def new
     @project = Project.new
     @isNewProject = true
+
+    @lead = params[:lead]
+    if @lead.present?
+      @lead = Lead.find(@lead)
+      if @lead.present?
+        @project.lead = @lead
+        @address = @lead.address
+        @client  = Client.find_by(name: @lead.fio)
+        if @client.present? # puts "client #{@client}"
+          @toggled = true
+        else
+          @toggled = false
+        end
+        @client_name = @lead.fio
+        @phone = @lead.phone
+        @email = @lead.email
+      end
+    end
     
     get_debt
     def_params
@@ -339,7 +358,7 @@ class ProjectsController < ApplicationController
         :designer_price, :designer_price_2, :visualer_price, :days, 
         :designer_sum, :visualer_sum, :sum_total_executor, :sum_rest,
         :debt, :interest, :payd_q, :payd_full, :first_comment, :progress, :sum_discount, :discount,
-        :city_id,
+        :city_id, :lead_id,
         client_attributes: [:name, :address, :phone, :email], 
         contacts_attributes: [:id, :contact_kind_id, :contact_kind, :val, :who, :_destroy],
         elongations_attributes: [:new_date, :elongation_type_id, :_destroy],

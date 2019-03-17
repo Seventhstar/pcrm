@@ -1,2 +1,5 @@
-app.goods = JSON.parse('<%= j(fill_vue_data(@project, {goods: @goods})) %>').goods
+data = JSON.parse('<%= j(fill_vue_data(@project, {goods: @goods, projects: @projects})) %>')
+app.goods = data.goods
+app.projects = data.projects
+
 app.makeGroup('<%= @groupKey %>')

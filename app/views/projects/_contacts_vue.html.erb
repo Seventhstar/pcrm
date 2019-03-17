@@ -1,0 +1,20 @@
+<script>
+  Vue.component('v-select', VueSelect.VueSelect)
+  
+  let v_contact = new Vue({
+    el: '#contacts',
+    data: <%= fill_vue_data(@project,{
+      valid_contact: false,
+      model: 'project',
+      contacts: [],
+      lists: 'contacts'
+    })%>,
+
+    methods:{
+      add_contact(){
+
+      }
+    }
+  })
+
+</script>

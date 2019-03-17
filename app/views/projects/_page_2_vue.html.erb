@@ -5,11 +5,12 @@
     el: '.prj_footage',
     data: <%= fill_vue_data(@project,
      {
-      model: "project",
-      formValid: false,
       focus: '',
-      toggled: false,
+      formValid: false,
+      model: "project",
+
       m_sum_total: 0,
+
       show_2:       @project.footage_2_real>0 || @project.footage_2>0,
       show_fact:    @project.footage_real>0,
       fact_filled:  @project.footage_real>0,
@@ -17,17 +18,16 @@
       mFootage: 0,
       mFootage2: 0,
 
-      noteValid: "tooltip from Vue.js",
       complexProjectType: false,
       formFields: "footage price",
+      noteValid: "tooltip",
       
       required: ['project_type', 'executor', 'address'],
       fieldsTranslated: ['тип проекта', 'дизайнер', 'адрес'],
 
       lists: "clients cities executors visualers project_types+simple",
-      list_values: "",
-      client_name: '',
-      texts: "address comment project_type\
+      list_values: "client",
+      texts: "address comment project_type lead client_name phone email\
               footage price sum sum_total\
               footage_2 price_2 sum_2\
               footage_real price_real sum_real sum_total_real \
@@ -36,7 +36,7 @@
               visualer_price visualer_sum sum_total_executor\
               sum_rest",
 
-      booleans: 'isNewProject'
+      booleans: 'toggled isNewProject'
     },'page2') %>,
 
     created() {
@@ -120,7 +120,7 @@
         if (this.focus.includes('total')){
           if (this.complexProjectType)
             this.m_sum_total = parseInt(this["sum"]) + parseInt(this["sum_2"]);
-          else
+          else 
             this.m_sum_total = this.sum_total;
         }
         this.calcRest();
@@ -141,6 +141,8 @@
       
       project_type(){
         this.complexProjectType = this.project_type === undefined ? true : !this.project_type.simple;
+        this.footage = 0;
+        this.show_2  = false;
         setTimeout(()=>{apply_mask();}, 300);
       },
 

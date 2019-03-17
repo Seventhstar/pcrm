@@ -4,7 +4,7 @@
 
 @dateFromString = (str, add =0) ->
         str = str.split('.');
-        str = new Date(parseInt(str[2],10),parseInt(str[1], 10)-1,(parseInt(str[0]))+parseInt(add));
+        str = new Date(parseInt(str[2],10), parseInt(str[1], 10)-1, (parseInt(str[0]))+parseInt(add));
         return str
 
 @DDMMYYYY = (str) ->
@@ -17,7 +17,8 @@
     d1 = dateFromString($('#project_date_start').val())
     d2 = dateFromString($('#project_date_end_plan').val())
     v  = $('#holidays').val().split(" ")
-    $('#project_days').val( moment().isoWeekdayCalc(d1,d2,[1,2,3,4,5],v) )
+    w  = $('#workdays').val().split(" ")
+    $('#project_days').val( moment().isoWeekdayCalc(d1, d2, [1,2,3,4,5], v, w))
     return
 
 $(document).ready ->

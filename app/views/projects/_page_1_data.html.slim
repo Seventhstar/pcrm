@@ -11,9 +11,12 @@
             td
               .inp_w= f.input :number, label: 'Номер'
             td.va_pt15
-              = f.input :interest, as: :boolean, label: 'Интерес к стройке', class: 'inp_btn checkbox'
-              = f.input :attention, as: :boolean, label: 'Особое внимание', class: 'inp_btn checkbox'
-          tr
+              div style="width: 56%; float: left;"
+                = f.input :interest, as: :boolean, label: 'Интерес к стройке', class: 'inp_btn checkbox'
+                = f.input :attention, as: :boolean, label: 'Особое внимание', class: 'inp_btn checkbox'
+              - if @project.lead_id.present?
+                = link_to "Открыть лид", edit_lead_path(@project.lead_id), class: 'btn_a right', target: "_blank"
+          tr 
             td.gr_caption Статус:
             td
           tr

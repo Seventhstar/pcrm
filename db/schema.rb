@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190227053931) do
+ActiveRecord::Schema.define(version: 20190316205206) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -350,6 +350,14 @@ ActiveRecord::Schema.define(version: 20190227053931) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "project_conditions", force: :cascade do |t|
+    t.boolean "closed"
+    t.bigint "project_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_project_conditions_on_project_id"
+  end
+
   create_table "project_elongations", id: :serial, force: :cascade do |t|
     t.date "new_date"
     t.datetime "created_at", null: false
@@ -456,7 +464,9 @@ ActiveRecord::Schema.define(version: 20190227053931) do
     t.integer "progress"
     t.integer "sum_discount", default: 0
     t.bigint "city_id", default: 1
+    t.bigint "lead_id"
     t.index ["city_id"], name: "index_projects_on_city_id"
+    t.index ["lead_id"], name: "index_projects_on_lead_id"
   end
 
   create_table "provider_budgets", id: :serial, force: :cascade do |t|
@@ -716,6 +726,7 @@ ActiveRecord::Schema.define(version: 20190227053931) do
   add_foreign_key "project_goods", "goodstypes"
   add_foreign_key "project_goods", "projects"
   add_foreign_key "projects", "cities"
+  add_foreign_key "projects", "leads"
   add_foreign_key "provider_managers", "positions"
   add_foreign_key "providers", "cities"
   add_foreign_key "room_works", "rooms"

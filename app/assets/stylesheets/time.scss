@@ -19,9 +19,10 @@
 .inp_w .sum_mask { background: asset-url('rub.png') 98% 9px no-repeat; padding-right: 22px; }
 
 .multiply { background: asset-url('multiply.png') 98% 28px no-repeat; }
+.plus { background: asset-url('plus.png') 98% 28px no-repeat; }
 .equal { background: asset-url('equal.png') 98% 28px no-repeat; }
 
-.footages_prices .sum_mask:not(.sum_total)[disabled]  {background: asset-url('rub-dis.png') 98% 9px no-repeat; color: gray; padding-right: 22px;}
+.footages_prices .sum_mask:not(.sum_total):not(.sum_rest)[disabled]  {background: asset-url('rub-dis.png') 98% 9px no-repeat; color: gray; padding-right: 22px;}
 
 
 .inp_w .discount_mask {background: asset-url('perc.png') 88% 9px no-repeat; padding-right: 22px}

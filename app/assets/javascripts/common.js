@@ -87,7 +87,7 @@ $(document).ready(function(){
 			showOn: 'focus',
 			dateFormat: 'dd.mm.yy',
 			
-			onClose: function(sel,ev) {changeDTP(this,sel)},
+			onClose: function(sel, ev) {console.log(sel); changeDTP(this,sel)},
 			beforeShow: function(){
 				var offsetTop = $('#ui-datepicker-div').offset().top;
 				//if (!val && val!='') {

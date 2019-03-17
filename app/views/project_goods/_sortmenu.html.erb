@@ -2,13 +2,17 @@
   <%= sortable_pil "project_id", "По проектам", 'desc', 'sortBy("project_id")' %>
   <%= sortable_pil "provider_id", "По поставщикам", 'desc', 'sortBy("provider_id")' %>
 
-  <%= chosen_src 'year', @years, params[:year], {class: 'ychosen', nil_value: 'Год'} %>
-  <%= chosen_src "currency_id", currency_src, params[:currency], {nil_value: 'Валюта', class: 'ychosen'} %>
-  <%= chosen_src "good_state", good_state_src, params[:good_state],{nil_value: 'Все позиции', class: 'ychosen'} %>
-
   <%= form_tag receipts_path, method: 'get', id: "rcpt_search", class: 'index_filter left' do %>
-  
+  <%= chosen_src 'year', @years, params[:year], {class: 'ychosen', nil_value: 'Год...'} %>
+  <%= chosen_src "currency_id", currency_src, params[:currency_id], {nil_value: 'Валюта...', class: 'ychosen'} %>
+  <%= chosen_src "good_state", good_state_src, params[:good_state], {nil_value: 'Все позиции...', class: 'ychosen'} %>
+
+  <div class="combobox short_search left items_box_head"> 
+      <%= chosen_src 'executor_id', @executors, params[:executor_id], {nil_value: 'Все исполнители...'} %>
+  </div>
+
   <% end %>
+  <%= only_actual_btn %>
 </div>
 
   

@@ -2,7 +2,7 @@
 <template v-if="controls[index]!==undefined">
   <div class="panel panel-default good_group">
     <div class="panel-heading table-heading head month goods-list"> 
-      <a :href='projectLink(item)'>{{projectAddress(item, index)}} [{{goodsCount(item)}}]</a> 
+      <a :class="projectClass(item, index)" :href='projectLink(item)'>{{projectAddress(item, index)}} [{{goodsCount(item)}}]</a> 
       <span class="title" @click="switchOpened(index)"></span>
       <span :class="cutAllClass(index)" :cut_id="index" @click="switchAllOpened(index)"><b></b></span>
       <span :class="cutClass(index)" :cut_id="index" @click="switchOpened(index)"><b></b></span>

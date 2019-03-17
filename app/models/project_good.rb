@@ -18,7 +18,14 @@ class ProjectGood < ActiveRecord::Base
   validates :goods_priority_id, presence: true
 
   scope :currency, -> (c) {where(currency_id: c) if c.present?}
+  scope :only_actual, -> (ids, only_actual) {where(project_id: ids) if only_actual}
   scope :by_project_ids, -> (ids, force_year) {where(project_id: ids) if ids.present? || force_year}
+  
+  scope :by_executor, ->(executor_ids, force_executor){
+    where(project_id: executor_ids) if executor_ids.present? || force_executor
+  }
+
+  
   scope :good_state, -> (gs) {
     case gs
     when '1'

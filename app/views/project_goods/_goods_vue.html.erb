@@ -106,13 +106,22 @@
         return count
       },
 
+      projectClass(prj_id){
+        let key  = _.keys(this.grouped[prj_id])[0]
+        let rows = this.grouped[prj_id][key]
+        let prj  = this.projects.filter(w => w.id === parseInt(rows[0].project_id))
+        if (this.groupKey == 'project_id' && prj[0].closed) {
+          return 'nonactual'
+        }
+        return ''
+      },
+
       projectAddress(prj_id, index = null){
-        let name = this.grouped[prj_id]
         let key  = _.keys(this.grouped[prj_id])[0]
         let rows = this.grouped[prj_id][key]
 
         if (this.groupKey == 'project_id') {
-          name = rows[0].address  
+          name = rows[0].address
         } else {
           name = rows[0].provider_name  
         }

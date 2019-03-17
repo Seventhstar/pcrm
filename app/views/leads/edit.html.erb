@@ -9,6 +9,7 @@
     <div class="comments_box">
       <%= render partial: "shared/comments" %>
     </div>
+    <%= link_to("Перенести в договор", "/projects/new?lead=#{@lead.id}", class: 'btn btn_a before_30', id: 'to_project', target: :blank ) %>
   </div>
 
 </div>
@@ -21,7 +22,8 @@
     <%= render "shared/attach_list" %>
     </div>
     <div class="panel-right">
-      
+        
+      <div class="sep_3"></div>
         <div class="historyChange_box">
           <% if @history.count >0 %>
             <%= render "shared/history" %>    
