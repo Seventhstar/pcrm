@@ -1,4 +1,5 @@
 module CommonHelper
+  include DatesHelper
 
   def find_version_author_name(version)
     user = User.find_version_author(version).try(:name)
@@ -18,10 +19,6 @@ module CommonHelper
 
   def is_manager?
     current_user.has_role?(:manager)
-  end
-
-  def month_year(date)
-    "#{t date.try('strftime','%B')} #{date.try('strftime','%Y')}"
   end
 
   def check_new_table_head(obj, field = nil)
@@ -106,8 +103,8 @@ module CommonHelper
       to = "Помечен как <b>#{pref} #{status}</b>"
 
     when 'dt_to', 'dt_from'
-      from = changeset[0].try('strftime', "%Y.%m.%d %H:%M")
-      to   = changeset[1].try('strftime', "%Y.%m.%d %H:%M")
+      from = format_datetime(changeset[0])
+      to   = format_datetime(changeset[1])
 
     else 
       if event[-3,3] == '_id'
@@ -142,8 +139,10 @@ module CommonHelper
     # изменения в самом объекте
     version = obj.versions.last || @version
     author = find_version_author_name(version) 
-    at = version.created_at.localtime.strftime("%Y.%m.%d %H:%M:%S") 
-    at_hum = version.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 
+
+    at      = format_dateseconds(version.created_at.localtime).strftime("%Y.%m.%d %H:%M:%S") 
+    at_hum  = version.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 
+    
     changeset = version.changeset 
     ch = Hash.new
     desc = []

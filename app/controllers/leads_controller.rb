@@ -22,14 +22,16 @@ class LeadsController < ApplicationController
 
     @only_actual = params[:only_actual].present? ? params[:only_actual]=='true' : true
     
-    query_date  = @sort_column == "status_date" ? 'status_date' : 'start_date'
+    query_date  = @sort_column == "status_date" ? "status_date" : "start_date"
     sort_1      = @sort_column == query_date ? 'month' : @sort_column
     query_str   = "leads.*, date_trunc('month', #{query_date}) AS month"
+    # query_str   = "*"
     
     includes = [:status]
     
     if current_user.has_role?(:manager)
       @leads = Lead.select(query_str)
+      # puts "query_str #{query_str}, @only_actual #{@only_actual}"
     else
       if params[:sort] == 'users.name'
         @leads = current_user.leads.select(query_str)
@@ -37,6 +39,8 @@ class LeadsController < ApplicationController
         @leads = current_user.ic_leads.select(query_str)
       end
     end
+
+    # puts "@leads #{@leads.to_h}"
 
     if params[:search].present?
       info = params[:search].downcase

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190316205206) do
+ActiveRecord::Schema.define(version: 20190318192226) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -584,6 +584,27 @@ ActiveRecord::Schema.define(version: 20190316205206) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "tarif_calc_types", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tarifs", force: :cascade do |t|
+    t.bigint "project_type_id"
+    t.integer "sum"
+    t.integer "sum2"
+    t.bigint "tarif_calc_type_id"
+    t.integer "from"
+    t.float "dis_price"
+    t.integer "dis_price2"
+    t.integer "vis_price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_type_id"], name: "index_tarifs_on_project_type_id"
+    t.index ["tarif_calc_type_id"], name: "index_tarifs_on_tarif_calc_type_id"
+  end
+
   create_table "uoms", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -731,5 +752,7 @@ ActiveRecord::Schema.define(version: 20190316205206) do
   add_foreign_key "providers", "cities"
   add_foreign_key "room_works", "rooms"
   add_foreign_key "room_works", "works"
+  add_foreign_key "tarifs", "project_types"
+  add_foreign_key "tarifs", "tarif_calc_types"
   add_foreign_key "users", "cities"
 end

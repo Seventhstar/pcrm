@@ -1,0 +1,7 @@
+// Place all the styles related to the Tarifs controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.table-tarifs {display: grid; grid-template-columns: 1fr repeat(7, 132px) 60px}
+
+.vuesort {cursor: pointer; font-weight: 500; }

@@ -55,3 +55,7 @@ end
 if Position.count == 0
   Position.create([{name: 'Директор', secret: true}, {name: 'Менеджер', secret: false}])
 end
+
+if TarifCalcType.count == 0 
+  TarifCalcType.create([{name: 'За м2'}, {name: 'В мес'}, {name: 'Общая'}])
+end

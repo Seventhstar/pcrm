@@ -42,12 +42,12 @@ input::-webkit-inner-spin-button { padding-right:0}
 
 .striked {text-decoration: line-through gray; margin-top: 2px;}
 
-.btn_add:hover, .btn_a:hover {background: asset-url('xbg1_1.png'); box-shadow: 1px 1px 0 0 #e86b00 !important; }
+.btn_add:not(.disabled):hover, .btn_a:not(.disabled):hover {background: asset-url('xbg1_3.png'); box-shadow: 1px 1px 0 0 #e86b00 !important; }
 
 .attach_list .btn_add{ background-color: white; line-height: 37px;
   color: $main-orange; border: 1px solid $border-color; 
   transition: color .2s ease;}
-.attach_list .btn_add:hover { color: #fff; background: asset-url('xbg1_1.png'); border-color: $main-orange;}
+.attach_list .btn_add:hover { color: #fff; background: asset-url('xbg1_3.png'); border-color: $main-orange;}
 .attach_list .btn_add:hover .pict .icon_file{ background: asset-url('file_hover.png');}
 .attach_list .pict .icon_file{margin-top: -2px;}
 

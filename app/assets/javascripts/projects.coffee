@@ -12,14 +12,31 @@
         Months = 'Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec';
         return (parseInt(Months.indexOf(ndateArr[1])/4)+1)+'.'+ndateArr[2]+'.'+ndateArr[3];
 
-@changeDTP = (ptr,el) ->
-  if ptr.name == 'project[date_end_plan]' or ptr.name == 'project[date_start]'
+@changeProjectDays = () ->
+  # if ptr.name == 'project[date_end_plan]' or ptr.name == 'project[date_start]'
     d1 = dateFromString($('#project_date_start').val())
     d2 = dateFromString($('#project_date_end_plan').val())
+    console.log('d1', d1, 'd2', d2)
     v  = $('#holidays').val().split(" ")
     w  = $('#workdays').val().split(" ")
-    $('#project_days').val( moment().isoWeekdayCalc(d1, d2, [1,2,3,4,5], v, w))
+    days = moment().isoWeekdayCalc(d1, d2, [1,2,3,4,5], v, w)
+    console.log('days', days)
+    $('#project_days').val(days)
     return
+
+@setDateEnd = (addDays) ->
+    dateStart = dateFromString $('#project_date_start').val()
+    v = $('#holidays').val().split(" ")
+    w = $('#workdays').val().split(" ")
+    # console.log('calcalting...', dateStart, addDays)
+    d = moment(dateStart).isoAddWeekdaysFromSet
+      'workdays': addDays
+      'weekdays': [1,2,3,4,5]
+      'exclusions': v
+      'inclusions': w
+    dd = $.datepicker.formatDate('dd.mm.yy', new Date(d))
+    $('#project_date_end_plan').val dd
+    return dd
 
 $(document).ready ->
   $(document).on 'click', '.basket', ->
@@ -53,7 +70,7 @@ $(document).ready ->
     if v <0
       $(this).val(0)
 
-  $('#project_payd_full,#project_payd_q').click ->
+  $('#project_payd_full, #project_payd_q').click ->
     f = $('#project_payd_full')
     q = $('#project_payd_q')
 
@@ -70,16 +87,28 @@ $(document).ready ->
     $('#client_link').attr('href',new_href.join('/'))
     #$("#tabs").tabs { active: 3}
 
-  
+  # $('#project_days').on 'mousewheel', ->
+    # stop: ( event, ui ) ->
+
+      # console.log($(this).val())
+             # alert($(this).attr('value'));
+        
+
+  $(document).on 'change', '#project_date_start', ->
+    # console.log('project_date_start')
+    footages.dateStart = $('#project_date_start').val()
+    changeProjectDays()
+
+  $(document).on 'change', '#project_date_end_plan', ->
+    footages.dateEnd = $('#project_date_end_plan').val()
+    changeProjectDays()
+
+
   $(document).on 'change', '#project_days', ->
-    d_st = dateFromString $('#project_date_start').val()
-    add  = $(this).val()-1
-    v = $('#holidays').val().split(" ")
-    d = moment(d_st).isoAddWeekdaysFromSet
-      'workdays': add
-      'weekdays': [1,2,3,4,5]
-      'exclusions': v
-    dd = $.datepicker.formatDate('dd.mm.yy', new Date(d))
-    $('#project_date_end_plan').val dd
+    
+    addDays  = $(this).val() - 1
+    setDateEnd(addDays)
+    # console.log(add)
+
 
   return

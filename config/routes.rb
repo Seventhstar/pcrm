@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :tarifs
   get 'linked_works/create'
 
   get 'linked_works/destroy'
@@ -133,6 +134,7 @@ Rails.application.routes.draw do
   resources :linked_works
   resources :work_linkers
   resources :room_works
+  resources :tarif_calc_types
  
 
   get "ajax/channels"

@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Project type:</strong>
+  <%= @tarif.project_type %>
+</p>
+
+<p>
+  <strong>Sum:</strong>
+  <%= @tarif.sum %>
+</p>
+
+<p>
+  <strong>Sum2:</strong>
+  <%= @tarif.sum2 %>
+</p>
+
+<p>
+  <strong>Tarif calc type:</strong>
+  <%= @tarif.tarif_calc_type %>
+</p>
+
+<p>
+  <strong>From:</strong>
+  <%= @tarif.from %>
+</p>
+
+<p>
+  <strong>Dis price:</strong>
+  <%= @tarif.dis_price %>
+</p>
+
+<p>
+  <strong>Dis price2:</strong>
+  <%= @tarif.dis_price2 %>
+</p>
+
+<p>
+  <strong>Vis price:</strong>
+  <%= @tarif.vis_price %>
+</p>
+
+<%= link_to 'Edit', edit_tarif_path(@tarif) %> |
+<%= link_to 'Back', tarifs_path %>

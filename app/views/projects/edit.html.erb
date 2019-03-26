@@ -106,7 +106,7 @@
 
 <%= render 'page_9_clients', f: f %>
 
-<% if is_manager? %>
+<% if !is_manager? %>
   <%= link_to("Закрыть", project_page_url, class: 'sub btn_a btn_reset') %>
 <% else %>
   <%= submit_cancel project_page_url %>

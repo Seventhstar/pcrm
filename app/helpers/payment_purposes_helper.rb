@@ -1,2 +1,0 @@
-module PaymentPurposesHelper
-end

@@ -38,7 +38,7 @@ Vue.component('m-number', {
       classes: "txt ",
       name_id: ""}
   },
-  props: ['name', 'label', 'type', 'add_class', 'disabled', 'readonly'],
+  props: ['name', 'label', 'type', 'add_class', 'disabled', 'readonly', 'float'],
   template: `
     <div class="inp_w prj_not_simple">
       <label v-if="label">{{label}}</label>
@@ -58,9 +58,11 @@ Vue.component('m-number', {
       this.name_id =  this.$parent.model + "_" + this.name;
       this._name =  this.$parent.model + "[" + this.name+"]";
       
+      // console.log('this.float', this.float, this.$props)
+
       if (this._name.includes('[disc'))
         {this.classes = "txt discount_mask"}
-      else if (this.name.includes('footage'))
+      else if (this.name.includes('footage') || this.float)
           {this.classes = "txt float_mask"}
       else {this.classes = "txt sum_mask"}
 

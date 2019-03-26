@@ -43,21 +43,21 @@
                                                   'E-mail:' => project.client_email}), true ) %></td>
     <% if is_manager? && @sort!="users.name" %><td rowspan="2"><%= project.executor_name %></td> <% end %>
 
-    <td class="td_prgrs"><%= f_date(project.date_start) %></td>
-    <td class="<%= class_prj_td(project) %> td_prgrs"><%= f_date(project.date_end) %></td>
+    <td class="td_prgrs"><%= format_date(project.date_start) %></td>
+    <td class="<%= class_prj_td(project) %> td_prgrs"><%= format_date(project.date_end) %></td>
 
     <% if is_manager? %>
 
       <td rowspan="2"><%= project.admin_info.html_safe %></td>
       <td <%= project.sum_total_real ==0 ? '':'red' %>" rowspan="2" title="<%= project.sum_total.to_sum %>">
           <%= project.total.to_sum %></td>
-      <%= tool_icons(project,{icons: 'edit, show', rowspan: 2}) %>
+      <%= tool_icons(project, {icons: 'edit, show', rowspan: 2}) %>
   
     <% else %>
 
       <td rowspan="2"><%= project.executor_info.html_safe %></td>
       <td rowspan="2" class="<%= project.sum_total_real ==0 ? '':'red' %>"><%= project.designer_sum_calc.to_sum %></td>
-      <%= tool_icons(project, {icons: 'edit', rowspan: 2}) %>
+      <%= tool_icons(project, {icons: 'edit, show', rowspan: 2}) %>
     <% end %>
 
   </tr>

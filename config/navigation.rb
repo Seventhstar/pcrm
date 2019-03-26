@@ -59,7 +59,7 @@ SimpleNavigation::Configuration.run do |navigation|
 #    
     leads_class = request.url==root_url ? "selected active" : ""
     primary.item :leads, 'Лиды', leads_path, html: {class: leads_class}, link_html: {class: leads_class} 
-    primary.item :tarifs, 'Тарифы', '#', html: {class: 'disabled'}
+    primary.item :tarifs, 'Тарифы', tarifs_path, if: -> { current_user.has_role?(:manager) }
       
     primary.item :projects, 'Проекты', '/projects/', if: -> { current_user.has_role?(:designer) } do |sub_nav|
       sub_nav.item :projects, 'Проекты', projects_path

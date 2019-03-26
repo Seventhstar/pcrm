@@ -75,7 +75,10 @@ class ProjectsController < ApplicationController
       format.html do
         @title = 'Просмотр проекта'
         @owner = @project
-        @comm_height = 268
+
+        
+        @comm_height = is_manager? ? 312 : 268
+
         respond_modal_with @project, location: root_path
         data = params[:data]
         get_debt(data) 
@@ -100,6 +103,10 @@ class ProjectsController < ApplicationController
     
     @holidays   = Holiday.pluck(:day).collect{|d| d.try('strftime',"%Y-%m-%d")}
     @workdays   = WorkingDay.pluck(:day).collect{|d| d.try('strftime',"%Y-%m-%d")}
+    @tarifs     = Tarif.order(:project_type_id, :from)
+
+    @date_start = format_date(@project.date_start)
+    @date_end = format_date(@project.date_end)
 
     @currencies = Currency.order('id')
     @new_gtypes = Goodstype.where.not(id: [@pgt_ids]).order(:name)
@@ -136,6 +143,10 @@ class ProjectsController < ApplicationController
     
     get_debt
     def_params
+    
+    @date_start = format_date(Date.today)
+    @date_end = format_date(Date.today)
+
     @project.city = current_user.city
   end
 
@@ -306,25 +317,26 @@ class ProjectsController < ApplicationController
   end
 
   private
-  def get_debt(to_date = '')
-    if to_date == ''
-      @cl_payments = @project.receipts.where(provider_id: 0).order(:date)
-    else
-      @cl_payments = @project.receipts.where('provider_id = 0 and date < ?', to_date).order(:date)
+    def get_debt(to_date = '')
+      if to_date == ''
+        @cl_payments = @project.receipts.where(provider_id: 0).order(:date)
+      else
+        @cl_payments = @project.receipts.where('provider_id = 0 and date < ?', to_date).order(:date)
+      end
+
+      @cl_total = @cl_payments.sum(:sum)
+      @cl_debt  =  (@project.total - @cl_total).to_i
     end
 
-    @cl_total = @cl_payments.sum(:sum)
-    @cl_debt  =  (@project.total - @cl_total).to_i
-  end
+    def store_prj_path
+      session[:last_projects_page] = request.url || projects_url if request.get?
+    end
 
-  def store_prj_path
-    session[:last_projects_page] = request.url || projects_url if request.get?
-  end
-
-  def check_sum
-    prms = %w( price price_2 price_real price_2_real sum sum_2 sum_real sum_2_real
-      sum_total sum_total_real designer_price designer_price_2 visualer_price
-      visualer_sum designer_sum sum_total_executor)
+    def check_sum
+      prms = %w( price price_2 price_real price_2_real sum sum_2 sum_real sum_2_real
+        sum_total sum_total_real designer_price designer_price_2 visualer_price
+        visualer_sum designer_sum sum_total_executor)
+        
       prms.each do |p|
         project_params[p] = project_params[p].gsub!(' ','') if !project_params[p].nil?
       end

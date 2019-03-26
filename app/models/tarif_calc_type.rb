@@ -1,0 +1,2 @@
+class TarifCalcType < ApplicationRecord
+end

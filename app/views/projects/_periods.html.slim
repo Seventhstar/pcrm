@@ -1,10 +1,10 @@
 .table_period
   .inp_w
     label Начало
-    = f.text_field :date_start, value: Date.today.try('strftime',"%d.%m.%Y"), class: "txt datepicker"
+    = f.text_field :date_start, value: @date_start, class: "txt datepicker"
   .inp_w
     label Окончание
-    = f.text_field :date_end_plan, class: "txt datepicker"
+    = f.text_field :date_end_plan, value: @date_end, class: "txt datepicker"
   .inp_w
     label title='Рабочих дней без уч. праздников' Рабоч. дней*
-    = number_field_tag :project_days, 0, {class: 'form-control'}
+    = number_field_tag :project_days, 0, {class: 'form-control', 'v-model.number' => 'days'}

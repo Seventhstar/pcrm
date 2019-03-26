@@ -52,7 +52,7 @@ module ApplicationHelper
     date_time.try('strftime',"%H:%M")
   end
 
-  def f_date(date_time)
+  def format_date(date_time)
     date_time.try('strftime',"%d.%m.%Y")
   end
 
@@ -215,6 +215,16 @@ module ApplicationHelper
     h = val.present? ? {value: val, label: label} : []
     h = h.to_json.html_safe.to_s if safe
     h
+  end
+
+  def form_head(object, title)
+    head = "#{controller.action_name == 'edit' ? 'Редактирование' : 'Новый'} #{title}"
+    t = content_tag :span, head
+    lnk = link_to "", object, method: :delete, data: { confirm: 'Действительно удалить?' }, class: "icon icon_remove right"
+
+    content_tag :div, {class: 'hl hl_a bd'} do
+      is_manager? ? t + lnk : t 
+    end
   end
 
   def fill_vue_data(obj, data, where = nil)
@@ -394,8 +404,8 @@ module ApplicationHelper
     direction = column.to_s.include?(sort_2.to_s) && dir_2.include?("asc") ? "desc" : "asc"
     hdir = column == sort_2 && direction == "asc" ? "desc" : "asc"
 
-    a = content_tag :div, "",{class: "sortArrow"}
-    b = content_tag :span,title
+    a = content_tag :div, "", {class: "sortArrow"}
+    b = content_tag :span, title
 
     if not params.nil?
      params.delete("_")
@@ -417,7 +427,7 @@ module ApplicationHelper
     end
     cls = var ? ' toggled' : ''
     content_tag :div, {class: 'switcher_a'+ cls} do
-      a+b
+      a + b
     end
   end
 
@@ -512,8 +522,8 @@ module ApplicationHelper
 
     all_icons = {} #['edit','delete','show'] tag='span',subcount=nil
     params[:tag] ||= 'href'
-    params[:icons] ||= 'edit,delete'
-    icons = params[:icons].split(',').map { |e| e == 'edit' ? 'icon_edit' : e}
+    params[:icons] ||= 'edit, delete'
+    icons = params[:icons].split(',').map { |e| e == 'edit' ? 'icon_edit' : e.strip}
 
     params[:subcount] ||= 0
     params[:class] ||= ''
