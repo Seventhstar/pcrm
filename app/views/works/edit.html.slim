@@ -6,6 +6,7 @@
       table.tbl_fc.tbl_fc_1
         = tr_text f, :name, 'Наименование'
         = tr_chosen :work_type_id, WorkType.all, @work, 'Вид работы'
+        = tr_chosen :uom_id, Uom.all, @work, 'Ед. изм.'
         = tr_submit_cancel '/options/works'
   .panel-right
     = render 'linked_works'

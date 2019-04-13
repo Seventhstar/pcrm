@@ -2,57 +2,115 @@
 
   Vue.component('v-select', VueSelect.VueSelect)
   
-  let ptype = new Vue({
+  let app = new Vue({
   el: '#costing_app',
   data: <%= fill_vue_data(@costing,
     { 
+      modalForm: false,
       model: 'costing',
       room_works: @room_works,
-      texts: 'room work',
-      lists: 'rooms works costings_types',
-      works: [],
+      texts: 'room work qty price',
+      list_values: 'user costings_type',
+      lists: "rooms works costings_types costingsRooms:@costings_rooms+room_id \
+              tabs:@costings_rooms+room_id users modalRooms:@costings_rooms+room_id modalWorks:@works+uom",
+      costingsWorks: [],
       tabs: [],
 
     })%>,
+
+  mounted() {
+    this.$root.$on('onInput', this.onInput);
+    document.body.addEventListener('keyup', e => {
+      switch(e.keyCode){
+        case 27: this.onCancel(); break;
+        case 13: this.onConfirm(); break;
+        case 45: this.addWork(); break;
+      }             
+    })
+  },
+
+  computed: {
+    currentTab: function () {
+      return this.tabs.reduce((accum, curr) => {return curr.active ? curr : accum}, {});
+    },
+
+    uomName(){
+      // console.log('computed uomName')
+      if (v_nil(this.modalWork)) return ""
+      return this.modalWork.uom.name
+    },
+
+    amount(){
+      return this.qty * this.price;
+    } 
+
+  },
+
+  watch: {
+    modalWork(){
+      // console.log('watch modalWork')
+    },
+
+    footage(){
+      // this.calcAmount()
+      // console.log('watch footage')
+
+    },
+
+  },
+
 
   methods: {
     v_nil(v){
       return v_nil(v);
     },
+
     
     addRoom(){
-      if (v_nil(this.room)){
-        show_ajax_message('Выберите помещение', 'error');
-        return;
-      }
+      if (v_nil(this.room)) { show_ajax_message('Выберите помещение', 'error'); return; }
       this.tabs.push({label: this.room.label, active: this.tabs.length === 0 ? true : false})
+      this.costingsRooms.push({label: this.room.label, room_id: this.room.value})
       this.rooms.splice(this.rooms.indexOf(this.room), 1)
       this.room = null
     },
 
     addWork(){
-      if (v_nil(this.work)){
-        show_ajax_message('Выберите помещение', 'error');
-        return;
-      }
-      this.tabs.push({label: this.room.label, active: this.tabs.length === 0 ? true : false})
-      this.rooms.splice(this.rooms.indexOf(this.room), 1)
-      this.room = null
+      this.modalForm  = true
+      this.modalTitle = 'Новая работа'
+    },
+
+    onInput(e){
+      // console.log('onInput', e)
+      // if (e.name == 'modalWork') this.uomName = this.getUomName()
+    },
+
+    onCancel(){
+      this.modalForm = false
+    },
+
+    onConfirm(){
+      this.costingsWorks.push({room: this.modalRoom, work: this.modalWork, price: this.price, 
+                                qty: this.qty, amount: this.amount, _destroy: false })
+      this.modalForm = false
+    },
+
+    close(){
+      // console.log('close modal')
+      this.modalForm = false
     },
     
     setActive(tab) {
       this.tabs.forEach(el => {
         el.active = el === tab;
       })
-    }
+    },
+
+    _field(index, field, name = 'works') {
+      return "costing["+name+"_attributes]["+index+"]["+field+']'
+    },
+
   },
 
-  computed: {
-    currentTab: function () {
-      console.log();
-      return this.tabs.reduce((accum, curr) => {return curr.active ? curr : accum}, {});
-    }
-  }
 });
   
 

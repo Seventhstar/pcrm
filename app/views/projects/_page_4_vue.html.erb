@@ -147,46 +147,6 @@
         }
       },
 
-      saveGoods(key, index, g){
-        if (!this.controls[index].valid) return;
-        this.controls[index].valid = false
-        this.currentIndex = index
-        
-        // console.log("this.currentIndex", this.currentIndex)
-        let goods_priority_id = v_nil(app.goods_priority) ? 1 : app.goods_priority.value
-
-        let pref = 'goods_'+key+'_';        
-        let values = {currency_id: app['currency_'+key].value, 
-                      project_id: this.id, 
-                      goodstype_id: key, 
-                      goods_priority_id: goods_priority_id}
-
-        this.inputs.forEach(  c => values[c] = this.fields[index][c] );
-        this.selects.forEach( c => values[c+'_id'] = app[c+'_'+key].value );
-
-        $.ajax({
-          type: "POST",
-          url: "/project_goods/",
-          data: {gt: values},
-          dataType: "json",
-          encode: true
-        }).done(function(data) {
-          NProgress.done();
-          app.switchOpened(index);
-          values['id'] = data.id;
-          app.goods[index][1].push(values);
-          app.selects.forEach( c => values[c+'_name'] = app[c+'_'+key].label );
-          app.inputs.forEach( c => app.fields[index][c] = '' );
-          app.fields[index].date_place = format_date();
-          app.makeFilter()
-          app.calculateAmount(index);
-        });
-
-      },
-
-      clearFields(){
-        
-      },
 
       deleteGoods(index, goods){
         this.currentGoods = goods;

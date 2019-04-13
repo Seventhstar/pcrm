@@ -1,0 +1,39 @@
+.modal-dlg tabindex="0"
+#mainModal.modal.modal_1.container aria-hidden="false" style="display: block; margin-top: -136px;" tabindex="-1" 
+  .modal-dialog
+    .modal-content
+      .modal-header
+        .close_grp
+          button.close.text aria-hidden="true" @click="onCancel()" type="button" Закрыть
+          button.close aria-hidden="true" data-dismiss="modal" type="button" 
+            span.icon.icon_close
+          h4#mainModalLabel.hl.hl_a.bd
+            |{{modalTitle}}
+      .box_wrap.box_wrap_1
+        .grid_work_form
+          .label_col Работа:
+          v-chosen name="modalWork" placeholder="Работа"
+          .uom
+            |{{uomName}}
+          .inp_w
+            m-number name="qty"
+          .sign.multiply
+          .inp_w
+            m-number name="price" 
+          .sign.equal
+          .inp_w
+            m-number name="amount" 
+
+        .sep_12
+        .panel-left
+          .grid_label_name
+            .label_col Помещение:
+            v-chosen name="modalRoom" placeholder="Комната"
+            div
+            div
+            div
+            div
+            div
+            div
+              span.btn.sub.btn_a.btn_reset @click="onCancel" Отмена
+              span.btn.btn.btn-default.sub.btn_a @click="onConfirm" Сохранить

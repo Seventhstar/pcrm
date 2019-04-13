@@ -2,35 +2,36 @@ class Project < ActiveRecord::Base
   include Comments
   include ProjectsHelper
   attr_accessor :first_comment, :days, :sum_rest, :discount
+  
+  has_one :condition, class_name: 'ProjectCondition', foreign_key: :project_id
+
+  belongs_to :city
   belongs_to :client
+  belongs_to :project_type
+  belongs_to :lead, optional: true
+  belongs_to :style, optional: true
   
   belongs_to :executor, class_name: 'User', foreign_key: :executor_id
   belongs_to :visualer, class_name: 'User', foreign_key: :visualer_id, optional: true
-  belongs_to :lead, optional: true
-  has_one :condition, class_name: 'ProjectCondition', foreign_key: :project_id
+  belongs_to :pstatus,  class_name: 'ProjectStatus', foreign_key: :pstatus_id
 
-  belongs_to :project_type
-  belongs_to :pstatus, class_name: 'ProjectStatus', foreign_key: :pstatus_id
-  belongs_to :style, optional: true
-  belongs_to :city
-
-  has_many :attachments, as: :owner
-  has_many :receipts
-  has_many :project_g_types, dependent: :destroy
   has_many :absence
-  has_many :goods, class_name: "ProjectGood", dependent: :destroy
-  has_many :elongations, class_name: 'ProjectElongation', dependent: :destroy
-  has_many :special_infos, as: :specialable, dependent: :destroy
-  has_many :contacts, as: :contactable, dependent: :destroy
+  has_many :receipts
+  has_many :attachments,    as: :owner
+  has_many :goods,          class_name: "ProjectGood", dependent: :destroy
+  has_many :elongations,    class_name: 'ProjectElongation', dependent: :destroy
+  has_many :special_infos,  as: :specialable, dependent: :destroy
+  has_many :contacts,       as: :contactable, dependent: :destroy
+  has_many :project_g_types, dependent: :destroy
 
-  validates :address, length: { minimum: 3 }
+  validates :address,   length: { minimum: 3 }
   validates :client_id, presence: true
-  validates :footage, presence: true
+  validates :footage,   presence: true
 
   accepts_nested_attributes_for :client
-  accepts_nested_attributes_for :contacts
   accepts_nested_attributes_for :special_infos
   accepts_nested_attributes_for :project_g_types
+  accepts_nested_attributes_for :contacts, allow_destroy: true
 
   scope :by_executor, ->(executor){where(executor_id: executor) if executor.present? && executor&.to_i>0}
   scope :only_actual, ->(actual){where.not(pstatus_id: 3) if actual}

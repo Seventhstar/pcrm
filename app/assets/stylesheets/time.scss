@@ -25,15 +25,18 @@
 .footages_prices .sum_mask:not(.sum_total):not(.sum_rest)[disabled]  {background: asset-url('rub-dis.png') 98% 9px no-repeat; color: gray; padding-right: 22px;}
 
 
-.inp_w .discount_mask {background: asset-url('perc.png') 88% 9px no-repeat; padding-right: 22px}
+.inp_w .discount_mask {background: asset-url('perc.png') 98% 9px no-repeat; padding-right: 22px}
 
 .modal-content .inp_w .sum_mask { background: asset-url('rub.png') 99% 8px no-repeat; padding-right: 24px; }
 .modal-content .inp_w.w118 .sum_mask { background: asset-url('rub.png') 92% 8px no-repeat; padding-right: 28px; }
 
 .modal-content .inp_w .sum_mask[disabled]  {background: asset-url('rub-dis.png') 99% 8px no-repeat; color: gray;}
 
-.inp_w .float_mask { background: asset-url('m2.png') 98% 8px no-repeat; padding-right: 24px; }
-.inp_w .float_mask[disabled]  {background: asset-url('m2-dis.png') 98% 8px no-repeat; color: gray; padding-right: 24px;}
+.inp_w .float_mask { background: asset-url('rub.png') 98% 8px no-repeat; padding-right: 24px; }
+// .inp_w .float_mask[disabled]  {background: asset-url('m2-dis.png') 98% 8px no-repeat; color: gray; padding-right: 24px;}
+
+.inp_w .footage_mask { background: asset-url('m2.png') 98% 8px no-repeat; padding-right: 24px; }
+.inp_w .footage_mask[disabled]  {background: asset-url('m2-dis.png') 98% 8px no-repeat; color: gray; padding-right: 24px;}
 
 // .prj_footage .txt {border: 1px solid #f5f5f5;}
 .footages_prices .txt:focus { border-color: rgba(255, 132, 17, 0.8); }

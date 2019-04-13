@@ -138,12 +138,13 @@ var show_ajax_message = function(msg, type) {
   showNotifications();
 };
 
-var v_nil = function(v){ 
-  // console.log(typeof(v), v)
+var v_nil = function(v, zeroIsNil = false){ 
   if (typeof(v) == "object") 
     return v === null || v === undefined || v.value === undefined || v.value === 0;
-  else
-    return v === null || v === undefined || v === '';
+
+  if (zeroIsNil && v === 0) return true
+  
+  return v === null || v === undefined || v === '';
 }
 
 var e_nil = function(id){

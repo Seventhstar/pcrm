@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190318192226) do
+ActiveRecord::Schema.define(version: 20190412102756) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -126,7 +126,6 @@ ActiveRecord::Schema.define(version: 20190318192226) do
   end
 
   create_table "contacts", force: :cascade do |t|
-    t.integer "contact_kind_id"
     t.string "val"
     t.string "who"
     t.string "contactable_type"
@@ -163,6 +162,9 @@ ActiveRecord::Schema.define(version: 20190318192226) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "costings_type_id"
+    t.date "date_create"
+    t.index ["costings_type_id"], name: "index_costings_on_costings_type_id"
     t.index ["project_id"], name: "index_costings_on_project_id"
     t.index ["user_id"], name: "index_costings_on_user_id"
   end
@@ -596,8 +598,8 @@ ActiveRecord::Schema.define(version: 20190318192226) do
     t.integer "sum2"
     t.bigint "tarif_calc_type_id"
     t.integer "from"
-    t.float "dis_price"
-    t.integer "dis_price2"
+    t.float "designer_price"
+    t.integer "designer_price2"
     t.integer "vis_price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -731,6 +733,8 @@ ActiveRecord::Schema.define(version: 20190318192226) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "work_type_id"
+    t.bigint "uom_id"
+    t.index ["uom_id"], name: "index_works_on_uom_id"
   end
 
   add_foreign_key "clients", "cities"
@@ -738,6 +742,7 @@ ActiveRecord::Schema.define(version: 20190318192226) do
   add_foreign_key "costing_rooms", "rooms"
   add_foreign_key "costing_works", "costings"
   add_foreign_key "costing_works", "works"
+  add_foreign_key "costings", "costings_types"
   add_foreign_key "costings", "projects"
   add_foreign_key "costings", "users"
   add_foreign_key "leads", "cities"
@@ -755,4 +760,5 @@ ActiveRecord::Schema.define(version: 20190318192226) do
   add_foreign_key "tarifs", "project_types"
   add_foreign_key "tarifs", "tarif_calc_types"
   add_foreign_key "users", "cities"
+  add_foreign_key "works", "uoms"
 end

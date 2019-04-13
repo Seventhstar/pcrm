@@ -1,0 +1,23 @@
+<% @costings.each do |costing| %>
+<% if check_new_table_head(costing) %>
+<%= render partial: "shared/head", locals: {stripped: true} %>
+  <tr>
+    <th>Проект</th>
+    <th width="140px"><%= sortable_th(:costings_type_id, 'Вид сметы') %></th>
+    <th width="140px"><%= sortable_th(:user_id, 'Ответственный') %></th>
+    <th width="140px"><%= sortable_th(:date_create, 'Создана') %></th>
+    <th class="edit_delete"></th>
+  </tr>
+ </thead>
+<tbody>
+<% end %>
+    <tr>
+      <td><%= costing.project_address %></td>
+      <td><%= costing.costings_type_name %></td>
+      <td><%= costing.user_name %></td>
+      <td><%= costing.date_create %></td>
+      <%= tool_icons(costing, {icons:'edit, show'}) %>
+    </tr>
+  <% end %>
+</tbody></table></div></div>
+

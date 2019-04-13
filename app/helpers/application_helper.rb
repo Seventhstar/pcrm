@@ -207,6 +207,7 @@ module ApplicationHelper
       if !obj["#{name}_id"].nil? && obj["#{name}_id"]>0
         val = obj["#{name}_id"]
         label = obj.try("#{name}_#{attr_name}")
+        # puts "#{name}_#{attr_name}", obj.try("#{name}_#{attr_name}")
       end
     elsif default.present?
         val = default.id
@@ -217,18 +218,17 @@ module ApplicationHelper
     h
   end
 
-  def form_head(object, title)
-    head = "#{controller.action_name == 'edit' ? 'Редактирование' : 'Новый'} #{title}"
-    t = content_tag :span, head
-    lnk = link_to "", object, method: :delete, data: { confirm: 'Действительно удалить?' }, class: "icon icon_remove right"
-
-    content_tag :div, {class: 'hl hl_a bd'} do
-      is_manager? ? t + lnk : t 
-    end
-  end
-
   def fill_vue_data(obj, data, where = nil)
-    # puts 'obj', obj, 'data', data, 'where', where
+    if data[:required_list].present?
+        data[:required] = []
+        data[:requiredTranslated] = []
+
+        data[:required_list].split(' ').each do |r|
+          data[:required] << r
+          data[:requiredTranslated] << t(r)
+        end
+    end
+
     if data[:booleans].present?
       data[:booleans].split(' ').each do |b|
         # puts "booleans", b, obj[b].nil?
@@ -279,8 +279,9 @@ module ApplicationHelper
           if raw 
             data[l] = collection 
           else
+            # puts "1. data[:lists] #{data[:lists]}, l: #{l}", "collection: #{collection}"
             data[l] = select_src(collection, "name", false, fields) 
-            # puts "l #{l} collection: #{collection}"
+            # puts "2. l #{l} collection: #{collection}", "data[l] #{data[l]}"
           end
         end
       end
@@ -302,7 +303,9 @@ module ApplicationHelper
       fields = fields_str.split(',')
       collection = collection.collect{|u| 
         c = {label: u.try(attr_name), value: u.id}
-        fields.each {|f| c[f] = u.try(f)}
+        fields.each {
+          |f| c[f] = u.try(f)
+        }
         c
       }
     end
@@ -383,6 +386,7 @@ module ApplicationHelper
 
     title ||= column.titleize
     css_class = column.to_s().include?(sort_2) ? "subsort current #{dir_2}" : "subsort"
+    # puts "sortable_th sort_2 #{sort_2}"
 
     a = content_tag :div, "",{class: "sortArrow"}
     b = content_tag :span, title.html_safe
@@ -515,6 +519,16 @@ module ApplicationHelper
     c = link_to 'Отмена', back_url, class: "sub btn_a btn_reset", "data-dismiss": dd
     content_tag :div, class: "actns" do
       c+s
+    end
+  end
+
+  def form_head(object, title)
+    head = "#{controller.action_name == 'edit' ? 'Редактирование' : 'Новый'} #{title}"
+    t = content_tag :span, head
+    lnk = link_to "", object, method: :delete, data: { confirm: 'Действительно удалить?' }, class: "icon icon_remove right"
+
+    content_tag :div, {class: 'hl hl_a bd'} do
+      is_manager? ? t + lnk : t 
     end
   end
 

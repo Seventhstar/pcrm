@@ -31,12 +31,12 @@
             td
               .inp_w
                 label Метраж
-                .lbl.float_mask =@project.footage
+                .lbl.footage_mask =@project.footage
             td
               .inp_w
                 - if @project.footage_2.to_i>0
                   label + Метраж 2
-                  .lbl.float_mask =@project.footage_2
+                  .lbl.footage_mask =@project.footage_2
             td    
             td
               .inp_w
@@ -50,12 +50,12 @@
               td
                 .inp_w
                   label Метраж
-                  .lbl.float_mask =@project.footage_real
+                  .lbl.footage_mask =@project.footage_real
               td
                 .inp_w                  
                   - if @project.footage_2_real.to_i>0
                     label + Метраж 2
-                    .lbl.float_mask =@project.footage_2_real
+                    .lbl.footage_mask =@project.footage_2_real
               td
               td
                 .inp_w

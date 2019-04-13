@@ -7,25 +7,26 @@
       .box_wrap.box_wrap_1
         .panel-left
           .gray_field
-            .inner_field
               .hl.gr_caption.hl_tr Основные данные клиента
               .inp_w.fullwidth
-                label Адрес
-                = f.text_field :address, class: 'txt', "v-model"=>"address", "v-on:input"=>"onInput()"
+                / label Адрес
+                = f.text_field :address, class: 'txt', "v-model"=>"address", "v-on:input"=>"onInput()", placeholder: "Адрес"
           
+              .sep style="height: 6px"
               .fullwidth.prj_number
-                .inp_w =f.input :number, label: 'Номер'
+                .inp_w = f.input :number, label: false, placeholder: 'Номер'
                 .inp_w
-                  label Дата
+                  / label Дата
                   = f.text_field :date_sign, value: Date.today.try('strftime',"%d.%m.%Y"), class: "txt datepicker w120"
 
                 div class="switcher_a sw_b right #{@toggled ? 'toggled' : ''}"
-                  .sep style="height: 20px"
+                  .sep style="height: 5px"
                   a class="link_c left new_client #{@toggled ? 'on' : ''}" off="Новый клиент" on="Клиент из базы" = @toggled ?  'Клиент из базы' : 'Новый клиент' 
                   .scale v-on:click="toggled=!toggled"
                     .handle.active
               
-                .sep_15
+                .sep style="height: 12px"
+                / .sep_1
 
               transition name="slide-fade" mode="out-in"
                 .new_prj_client v-if="!toggled"
@@ -40,32 +41,35 @@
                     = text_field_tag 'client[email]', '', "v-model"=>"email", type: "text ", class: 'string optional form-control', placeholder: 'e-mail...'
                 .inp_w v-else=""
                   / .sep style="height: 17px"
-                  v-chosen name="client" placeholder="Клиент..."
+                  v-chosen name="client" placeholder="Клиент..." :input="true"
+                  .sep style="height: 12px"
 
         .panel-right
-          .white_field
-            .hl.gr_caption.hl_tr Дополнительные контакты
+          .gray_field
+            = render 'contacts', f: f 
+            / = render 'contacts_vue' 
+            .sep style="height: 12px"
       
       .sep_3
 
       .gray_field
-        .inner_field
+        
           .hl.gr_caption.hl_tr Вид работы и исполнители
           .prj_executors
             .inp_w
               label Вид работы
-              v-chosen name="project_type" placeholder="Вид работы..."
+              v-chosen name="project_type" placeholder="Вид работы..." :input="true"
 
             - if is_manager?
               .inp_w
                 label Дизайнер
-                v-chosen name="executor" placeholder='Дизайнер...'
+                v-chosen name="executor" placeholder='Дизайнер...' :input="true"
               transition name="slide-fade" mode="out-in" 
                 .inp_w.prj_not_simple v-if="complexProjectType"
                   label Визуализатор 
-                  v-chosen name="visualer" placeholder='Визуализатор...'
+                  v-chosen name="visualer" placeholder='Визуализатор...' :input="true"
                 .inp_w v-else=""
-                  m-number name="footage" label="Метраж" 
+                  m-number name="footage" label="Метраж"  
               .sums v-if="!complexProjectType"
                   .inp_w
                     .inp_sum_total
@@ -85,15 +89,13 @@
 
       .sep_3
       .gray_field
-        .inner_field
-          .hl.gr_caption.hl_tr Сроки
-          = render 'periods', f: f
+        .hl.gr_caption.hl_tr Сроки
+        = render 'periods', f: f
 
-        / .sep_15
-        .inner_field
-          .inp_w
-            label Примечание
-            = f.text_area :first_comment, class: :txt, label: false, rows: "2", "v-model"=>"comment"
+        .inp_w
+          label Примечание
+          = f.text_area :first_comment, class: :txt, label: false, rows: "2", "v-model"=>"comment"
+        .sep style="height: 12px"
 
       = f.hidden_field :owner_id, value: current_user.id
       = f.hidden_field :lead_id, value: @project.lead_id

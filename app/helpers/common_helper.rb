@@ -140,7 +140,7 @@ module CommonHelper
     version = obj.versions.last || @version
     author = find_version_author_name(version) 
 
-    at      = format_dateseconds(version.created_at.localtime).strftime("%Y.%m.%d %H:%M:%S") 
+    at      = format_dateseconds(version.created_at.localtime) 
     at_hum  = version.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") 
     
     changeset = version.changeset 

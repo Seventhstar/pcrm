@@ -3,5 +3,6 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .table-tarifs {display: grid; grid-template-columns: 1fr repeat(7, 132px) 60px}
+.table-tarifs {display: grid; grid-template-columns: 200px 2fr 1fr 0.7fr 60px; }
 
 .vuesort {cursor: pointer; font-weight: 500; }

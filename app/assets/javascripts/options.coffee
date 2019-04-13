@@ -134,12 +134,8 @@ $(document).ready ->
        success: ->
         setLoc url
 
-
-
  $(document).on 'click', '#btn-sub-send', (e) ->
   save_item($(this))
-
-
 
 # запись нового элемента простого справочника
 $(document).on 'click', '#get-holidays', (e) ->

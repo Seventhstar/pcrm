@@ -8,6 +8,7 @@
       focus: '',
       formValid: false,
       model: "project",
+      project_id: @project.id,
 
       mTarif: 0,
       tarifs: @tarifs,
@@ -30,42 +31,46 @@
       complexProjectType: false,
       formFields: "footage price",
       noteValid: "tooltip",
+
+      contacts: [],
+      f_contact: false,
       
       required: ['project_type', 'executor', 'address'],
       fieldsTranslated: ['тип проекта', 'дизайнер', 'адрес'],
 
-      lists: "clients cities executors visualers project_types+simple",
-      list_values: "client",
+      lists: "clients cities executors visualers project_types+simple contacts+id,val,who",
+      list_values: "client ",
 
-      texts: "address comment project_type lead client_name phone email\
+      texts: "address comment project_type executor lead client_name phone email\
               footage price sum sum_total\
               footage_2 price_2 sum_2\
               footage_real price_real sum_real sum_total_real \
               footage_2_real price_2_real sum_2_real\
               designer_price designer_price_2 designer_sum\
               visualer_price visualer_sum sum_total_executor\
-              sum_rest",
+              sum_rest \
+              new_val new_who",
 
       booleans: 'toggled isNewProject'
     },
     'page2') %>,
 
     created() {
-      if (!this.isNewProject && ptype.project_type !==undefined 
-                             && ptype.project_type.value!== undefined ){
-        currentPType = this.project_types.find(e => e.value == ptype.project_type.value)
-        if (currentPType !== undefined)
-          this.complexProjectType = !currentPType.simple
-      }
+      // if (!this.isNewProject && ptype.project_type !==undefined 
+                             // && ptype.project_type.value!== undefined ){
+        // currentPType = this.project_types.find(e => e.value == ptype.project_type.value)
+        // if (currentPType !== undefined)
+          // this.complexProjectType = !currentPType.simple
+      // }
 
-      if (this.complexProjectType){
-        if (this.sum_total_real > 0) 
-          this.m_sum_total = this.sum_total_real
-        else
-          this.m_sum_total = parseInt(this["sum"]) + parseInt(this["sum_2"])
-      }
-      else
-        this.m_sum_total = this.sum_total
+      // if (this.complexProjectType){
+        // if (this.sum_total_real > 0) 
+          // this.m_sum_total = this.sum_total_real
+        // else
+      this.m_sum_total = parseInt(this["sum"]) + parseInt(this["sum_2"])
+      // }
+      // else
+        // this.m_sum_total = this.sum_total
 
       this.calcSumExecutor();
       this.calcRest();
@@ -84,12 +89,12 @@
       footage(){
         this.calcSum("footage", "price")
         this.projectTypeSelect()
-        this.calcSumExecutor()
+        this.calcSumExecutor(true)
       },
 
       footage_2(){
         this.calcSum("footage_2", "price_2", "sum_2")
-        this.calcSumExecutor()
+        this.calcSumExecutor(true)
       },
 
       footage_real(){
@@ -117,6 +122,13 @@
         this.calcSum("footage_2_real", "price_2_real", "sum_2_real")
       },
 
+      new_who(){
+        this.onInput();
+      },
+
+      new_val(){
+        this.onInput();
+      },
 
       sum(){
         this.calcPrice();
@@ -130,10 +142,10 @@
 
       sum_total(){
         if (this.focus.includes('total')){
-          if (this.complexProjectType)
+          // if (this.complexProjectType)
             this.m_sum_total = parseInt(this["sum"]) + parseInt(this["sum_2"]);
-          else 
-            this.m_sum_total = this.sum_total;
+          // else 
+            // this.m_sum_total = this.sum_total;
         }
         this.calcRest();
       },
@@ -166,10 +178,9 @@
       },
 
       project_type(){
-        this.complexProjectType = this.project_type === undefined ? true : !this.project_type.simple;
         this.footage = 0;
         this.show_2  = false;
-        setTimeout( () => {apply_mask()}, 300);
+        setTimeout(() => {apply_mask()}, 300);
         this.projectTypeSelect();        
       },
 
@@ -177,7 +188,7 @@
     methods: {
 
       projectTypeSelect(){
-        
+
         this.designer_price  = 0
         this.designer_price_2 = 0
         this.visualer_price  = 0
@@ -187,7 +198,7 @@
         this.designer_sum = 0
         this.mByMonthAmount = 0
 
-        let tarif_search = this.tarifs.filter(t => t.project_type_id == this.project_type.value && toInt(t.from) <= this.footage);
+        let tarif_search = this.tarifs.filter(t => t.project_type_id == this.project_type.value && toInt(t.from) <= this.footage)
         // console.log('tarif_search', tarif_search, 'project_type_id', this.project_type.value);
         tarif_search = _.sortBy(tarif_search, 'from').reverse();
         if (tarif_search.length){
@@ -195,26 +206,32 @@
 
 
           if (this.mTarif.tarif_calc_type_id >1 ){ // в месяц
-            this.sum_total       = this.mTarif.sum;
+            this.sum_total       = this.mTarif.sum
+            this.m_sum_total     = this.sum_total
             if (this.mTarif.tarif_calc_type_id == 2) this.mByMonthAmount  = this.mTarif.sum
-            this.designer_price  = this.mTarif.dis_price * this.sum_total
+            this.designer_price  = this.mTarif.designer_price * this.sum_total
 
           } else { // за м2
             this.price            = this.mTarif.sum
-            this.designer_price   = this.mTarif.dis_price
-            this.designer_price_2 = this.mTarif.dis_price2
+            this.designer_price   = this.mTarif.designer_price
+            this.designer_price_2 = this.mTarif.designer_price2
             this.visualer_price   = this.mTarif.vis_price
-
+            if (this.mTarif.sum2>0) this.addFootage2()
           } 
 
           this.calcAmountByMonth()
-          this.calcSumExecutor()
+          this.calcSumExecutor(true)
         }
       },
 
       onInput(){
         // console.log('input')
         let valid = true;
+        let f_contact = true;
+
+        if (v_nil(this.new_who)) f_contact = false;
+        if (v_nil(this.new_val)) f_contact = false;
+
         let tooltip = "";
         this.required.forEach( (c, i) => {
           if (v_nil(this[c])) {
@@ -231,6 +248,8 @@
         this.formValid = valid;
         if (tooltip.trim().length > 0) tooltip = "Не заполнены поля: " + tooltip.slice(0, -2);
         this.noteValid = tooltip;
+
+        this.f_contact = f_contact;
       },
 
       calcDays(){
@@ -255,6 +274,7 @@
         if (this.mByMonthAmount === 0) return
         this.m_sum_total = this.mByMonthAmount * this.monthDiff()
         this.sum_total = this.m_sum_total;
+        // console.log('this.m_sum_total', this.m_sum_total, 'this.sum_total', this.sum_total)
       },
 
       onSubmit(event){
@@ -262,15 +282,12 @@
           event.preventDefault();
           show_ajax_message(this.noteValid, 'error');
         }
-        if (!this.complexProjectType){
-          // чистим поля          
-        }
       },
 
       addFootage2(){
         this.show_2 = true
         // console.log('this.mTarif', this.mTarif)
-        this.designer_price_2 = this.mTarif.dis_price2
+        this.designer_price_2 = this.mTarif.designer_price2
         this.price_2          = this.mTarif.sum2
       },
 
@@ -279,6 +296,22 @@
         this.footage_2 = 0 
         this.price_2 = 0
         this.sum_2 = 0
+      },
+
+      addContact(){
+        this.contacts.push({who: this.new_who, val: this.new_val, _destroy: false})
+        this.new_who = ''
+        this.new_val = ''
+        $('#contacts_val').focus()
+      },
+
+
+      delContact(index){
+        Vue.set(this.contacts[index], '_destroy', true)
+      },
+
+      nameField(index, field) {
+        return "project[contacts_attributes]["+index+"]["+field+']'
       },
 
       delReal(){
@@ -312,7 +345,7 @@
       },
 
       calcTotal(real = ""){
-        if (!this.focus.includes('sum_total') && this.complexProjectType){           
+        if (!this.focus.includes('sum_total')){           
           this["sum_total"+real] = toInt(this["sum"+real]) + toInt(this["sum_2"+real]);
 
           if (this.sum_total_real > 0)
@@ -340,20 +373,24 @@
         }
       },
 
-      calcSumExecutor(){
+      calcSumExecutor(byDefault = false){
         this.checkFootages();
 
-        if (this.mTarif.tarif_calc_type_id >1){
-          this.designer_price  = this.mTarif.dis_price * this.sum_total
+        if (this.mTarif.tarif_calc_type_id > 1) {
+          if (byDefault) this.designer_price = this.mTarif.designer_price * this.sum_total
           this.designer_sum = this.designer_price
           this.sum_total_executor = this.designer_sum
           // this.calcAmountByMonth();
         } else {
-        this.designer_sum = toInt(this.designer_price) * this.mFootage + 
-                             toInt(this.designer_price_2) * this.mFootage2;
-        this.visualer_sum = this.visualer_price * this.mFootage;
+          if (byDefault){
+            this.designer_sum = toInt(this.designer_price) * this.mFootage + 
+                                 toInt(this.designer_price_2) * this.mFootage2;
+            this.visualer_sum = this.visualer_price * this.mFootage;
+          }
+
         this.sum_total_executor = this.designer_sum + this.visualer_sum;
         }
+
         this.calcRest();
       },
 

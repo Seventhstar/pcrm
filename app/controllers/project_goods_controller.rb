@@ -1,9 +1,10 @@
 class ProjectGoodsController < ApplicationController
   include ProjectsHelper
   include FileHelper
-  
+  # require 'unicode'
+
   respond_to :html, :json
-  before_action :check_sum, only: [:create, :update]
+  before_action :check_params, only: [:create, :update]
   before_action :set_project_good, only: [:show, :edit, :update, :destroy]  
   before_action :logged_in_user
   helper_method :sort_column, :sort_direction
@@ -28,13 +29,13 @@ class ProjectGoodsController < ApplicationController
       e_ids = Project.by_executor(params[:executor_id]) 
       force_executor = true
     end
-    puts "e_ids #{e_ids}"
+    # puts "e_ids #{e_ids}"
 
     if @only_actual 
       act_ids = ProjectCondition.where(closed: false).pluck(:project_id)
-      puts "act_ids #{act_ids}"
+      # puts "act_ids #{act_ids}"
     end
-    puts "only_actual #{@only_actual}"
+    # puts "only_actual #{@only_actual}"
 
     @groupKey = sort_column
     @sort_column = sort_column
@@ -57,7 +58,7 @@ class ProjectGoodsController < ApplicationController
       prj_ids = u_ids if prj_ids.empty?
       force_year = true
     end
-    puts "prj_ids #{prj_ids} #{u_ids}"
+    # puts "prj_ids #{prj_ids} #{u_ids}"
 
     @goods = ProjectGood.left_joins([:provider, :project, :currency])
             .by_project_ids(prj_ids, force_year)
@@ -97,8 +98,6 @@ class ProjectGoodsController < ApplicationController
   end
 
   def create
-    check_sum
-
     # return if find_by_params
     pg_params.delete :group
     @prj_good = ProjectGood.new(pg_params)
@@ -120,17 +119,13 @@ class ProjectGoodsController < ApplicationController
   end
 
   def update
-    # if !find_by_params(true)
       @cur_id = pg_params[:owner_id]
       
       @group  = pg_params[:group]
       pg_params.delete :group
       @prj_good.update(pg_params)  
-      # update_project_condition
 
-      # puts "errors: #{@prj_good.errors.full_messages}"
       respond_with @prj_good
-    # end
   end
 
   def edit
@@ -147,33 +142,17 @@ class ProjectGoodsController < ApplicationController
 
   private
 
-    # def find_by_params(update = false)
-    #   list = [:project_id, :goodstype_id, :gsum, :name, :description, 
-    #           :currency_id, :date_place, :goods_priority_id, :delivery_time_id]
-    #   prms = pg_params
-    #   prms = prms.slice(list) if !update
-    #   already = ProjectGood.where(prms.except[:group])
-      
-    #   if already.count>0 || pg_params.nil? then
-    #     return true
-    #   end
-    #   false
-    # end
     def update_project_condition
       project = @prj_good.project
       count = project.goods.count 
       fixed = project.goods.where(fixed: true).count
 
-      # puts "count #{count} fixed: #{fixed}"
-
       pc = ProjectCondition.find_or_create_by(project_id: project.id)
       pc.closed = count == fixed
       pc.save
-
-
     end
 
-    def check_sum
+    def check_params
       prms = [:gsum, :sum_supply]
       prms.each do |p|
         pg_params[p] = pg_params[p].gsub!(' ','') if !pg_params[p].nil?

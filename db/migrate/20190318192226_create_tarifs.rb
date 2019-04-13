@@ -6,8 +6,8 @@ class CreateTarifs < ActiveRecord::Migration[5.1]
       t.integer :sum2
       t.references :tarif_calc_type, foreign_key: true
       t.integer :from
-      t.float :dis_price
-      t.integer :dis_price2
+      t.float :designer_price
+      t.integer :designer_price2
       t.integer :vis_price
 
       t.timestamps

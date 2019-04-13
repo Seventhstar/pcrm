@@ -49,6 +49,18 @@
     </div>
   </template>
 </div>
+
+<div class="total-footer">Общий итог:<div id="grand_total">
+<ul class="right">
+  <li>
+    Итого предложено: <span><b>{{calculateTotal()}}</b></span></li>
+  <li>
+    Итого заказано: <span><b>{{formatTotal(grandOrderTotal)}}</b></span></li>
+  <li>
+    Итого закрыто: <span><b>{{formatTotal(grandClosedTotal)}}</b></span></li>
+</ul>
+</div>
+
 </div>
 
 

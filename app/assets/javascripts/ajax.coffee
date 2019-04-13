@@ -178,6 +178,7 @@
     digitsOptional: !1
     clearMaskOnLostFocus: !1
   $('.float_mask').inputmask mask
+  $('.footage_mask').inputmask mask
   mask.digits = 0 
   $('.sum_mask').inputmask mask
   $('.discount_mask').inputmask mask

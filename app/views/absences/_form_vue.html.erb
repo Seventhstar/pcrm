@@ -37,10 +37,10 @@
 
     computed:{
       filteredProjects(){
-        let n = this.projects.filter(p => p.executor_id == this.user.value)
-        console.log('n', n);
-        return n
-        // return this.projects
+        // let n = this.projects.filter(p => p.executor_id == this.user.value)
+        // console.log('n', n);
+        // return n
+        return this.projects
       }
     },
 
@@ -80,6 +80,7 @@
           // this.filteredProjects = this.projects.filter(p => p.executor_id == e.value)
           // console.log('e', e, 'f', this.filteredProjects)
         }
+        console.log('reason', reason)
 
         switch(reason){
           case 0:
@@ -108,8 +109,12 @@
         }
 
         if (v_nil(this.user)) formValid = false;
-
         if (v_nil(this.new_shop_target)) f_shop = false;
+        if (f_shop) {
+          formValid = false; 
+          this.noteValid = 'Заполнены поля магазина, но магазин не добавлен в список.';
+        }
+
         this.formValid = formValid;
         this.f_shop = f_shop;
       },

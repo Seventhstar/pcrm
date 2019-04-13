@@ -8,7 +8,7 @@
   <div class="panel-left">
     <table class="tbl_fc tbl_fc_1">
     <tr><td class="caption">Дата создания:</td>
-      <td><div class="inp_w"><%= f.text_field :start_date, value: @lead.start_date.try('strftime',"%d.%m.%Y"), label: false, class: "txt datepicker" %></div></td></tr>
+      <td><div class="inp_w"><%= f.text_field :start_date, value: format_date(@lead.start_date), label: false, class: "txt datepicker" %></div></td></tr>
     <tr><td class="caption">Фио:</td>
         <td><div class="inp_w"><%= f.input :fio, label: false %></div></td></tr>
     <tr><td class="caption">Телефон:</td>
@@ -27,7 +27,7 @@
       <td><div class="inp_w"><%= chosen_src 'status_id', @statuses, @lead %>
       </div></td></tr>
     <tr><td class="caption">Дата для статуса:</td>
-      <td><div class="inp_w"><%= f.text_field :status_date, value: @lead.status_date.try('strftime',"%d.%m.%Y"), label: false, class: "txt datepicker" %>
+      <td><div class="inp_w"><%= f.text_field :status_date, value: format_date(@lead.status_date), label: false, class: "txt datepicker" %>
       </div></td></tr>
     <tr><td class="caption">Канал:</td>
       <td><div class="inp_w"><%= chosen_src 'channel_id', @channels ,@lead %>

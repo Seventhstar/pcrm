@@ -3,18 +3,33 @@
 .tarifs.panel.panel-default
   .panel-heading.table-heading.head.month Тарифы
   .table-tarifs.grid-head
-    div.th v-for="column in columns"
-      span :dir="column" :class="getClass(column)" v-on:click="sortBy(column)" 
-        div.sortArrow
-        span.hTitle 
-          |{{column[1]}}
+    div.th 
+      span class="vuesort"  
+        span.hTitle Вид работ
+    div.th 
+      span class="vuesort"  
+        span.hTitle Стоимость
+    div.th 
+      span class="vuesort"  
+        span.hTitle Цена дизайнера
+    div.th 
+      span class="vuesort"  
+        span.hTitle Цена визуализатора
+    
     div.th
   
   transition-group name="flip-list" tag="div"
     .tr v-bind:key="item.id" v-for="item in grouped"
       .table-tarifs.grid-body
-        .td v-for="column in columns"
-                | {{ formatValue(item[column[0]], column[0]) }}
+        .td 
+          |{{item.project_type}}
+        .td 
+          |{{description(item)}}
+        .td 
+          |{{designer_price(item)}}
+        .td 
+          |{{vis_price(item)}}
+
         .td.edit_delete.td_right style="" 
                 a.icon.icon_edit :href="editLink(item.id)"    
 

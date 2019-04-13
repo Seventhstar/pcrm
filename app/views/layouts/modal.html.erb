@@ -1,40 +1,35 @@
 <% if controller.controller_name=='files' %>
-
-
   <div id="modal_img_container" class="modal" tabindex="-1">
-     <div id="close_img_modal">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="icon icon_close"></span></button>
-     </div>
+   <div id="close_img_modal">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="icon icon_close"></span></button>
+  </div>
   <div class="modal-dialog">
-  
     <%= yield %>
-    </div>
+  </div>
   </div>
 
 <% else %>
 
-<div id="mainModal" class="modal modal_1 container <%= controller.action_name %>" tabindex="-1" style="display: block; margin-top: -135.5px;" aria-hidden="false">
-  <div class="modal-dialog">
-    
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="close_grp"> 
-        <button type="button" class="close text" data-dismiss="modal" aria-hidden="true">Закрыть</button>
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="icon icon_close"></span></button>
-        </div>        
+  <div id="mainModal" class="modal modal_1 container <%= controller.action_name %>" tabindex="-1" 
+        style="display: block; margin-top: -135.5px;" aria-hidden="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="close_grp"> 
+            <button type="button" class="close text" data-dismiss="modal" aria-hidden="true">Закрыть</button>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="icon icon_close"></span></button>
+          </div>        
 
-        <% if @title %>
-        <h4 class="hl hl_a bd" id="mainModalLabel">
-          <%= @title %>
-        </h4>
-        <% end -%>
-
-
+          <% if @title %>
+            <h4 class="hl hl_a bd" id="mainModalLabel">
+              <%= @title %>
+            </h4>
+          <% end -%>
+        </div>
+        <div class="ajax-loader"></div>
+        <%= yield %>
       </div>
-      <div class="ajax-loader"></div>
-      <%= yield %>
     </div>
   </div>
-</div>
 
 <% end -%>

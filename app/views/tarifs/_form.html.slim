@@ -1,33 +1,63 @@
 = semantic_form_for @tarif do |f|
   .vue_app
-    .panel-left
       .grid_table_tarif
+        
         .label_col Тип проекта:
         v-chosen name="project_type" placeholder="Выберите тип проекта..."
+        .label_description
+          |{{description()}}
+
+        .label_col Вид расчета:
+        v-chosen name="tarif_calc_type" placeholder="Выберите вид расчета..."
+        m-switcher on-text="Несколько площадей" name="show_2" 
+
         .label_col 
           |{{labelSum}}
         .inp_w
           .inp_sum_total
             m-number name="sum"
-        .label_col Вид расчета:
-        v-chosen name="tarif_calc_type" placeholder="Выберите вид расчета..."
-        .label_col Сумма 2:
-        .inp_w
-          .inp_sum_total
+        m-switcher on-text="Зависит от площади" name="show_from" 
+
+        transition name="slide-fade" 
+          .label_col v-show="show_2" {{labelSum2}}
+        transition name="slide-fade" 
+          .inp_sum_total v-show="show_2" 
             m-number name="sum2" 
-        .label_col При площади от:
-        .inp_w
-          m-number name="from" 
+        transition name="slide-fade" 
+          div v-show="show_2" 
+
+        transition name="slide-fade" 
+          .label_col v-show="show_from" При площади от:        
+        transition name="slide-fade" 
+          .inp_w v-show="show_from"
+            m-number name="from" type="footage"
+        transition name="slide-fade" 
+          div v-show="show_from" 
+
+
         .label_col Цена дизайнера:
-        .inp_w
-          m-number name="dis_price" :float="true"
-        .label_col Цена дизайнера 2:
-        .inp_w
-          m-number name="dis_price2" 
+        .inp_w v-show="!show_percent"          
+          m-number name="value_price" 
+        .inp_w v-show="show_percent"
+          m-number name="percent_price" type="percent" @change="updatePrice()" 
+          input type="hidden" name="tarif[designer_price]" :value="designer_price"
+
+        m-switcher on-text="Процент от стоимости" name="show_percent" 
+        
+
+        transition name="slide-fade" 
+          .label_col key="p1" v-show="show_2" Цена дизайнера 2:
+        transition name="slide-fade" 
+          .inp_w v-show="show_2" key="p2"
+            m-number name="designer_price2" 
+        transition name="slide-fade" 
+          div key="p3" v-show="show_2"
+
         .label_col Цена визуализатора:
         .inp_w
             m-number name="vis_price" 
+        div
   
-      = submit_cancel tarifs_path
+      = submit_cancel tarifs_path, {classValid: "!formValid", tip: 'noteValid', click: 'onSubmit'}
 
 = render 'form_vue'

@@ -2,17 +2,47 @@
   Vue.component('v-select', VueSelect.VueSelect)
   
   let v_contact = new Vue({
-    el: '#contacts',
+    el: '.contacts_list',
     data: <%= fill_vue_data(@project,{
       valid_contact: false,
       model: 'project',
-      contacts: [],
-      lists: 'contacts'
+      texts: 'new_val new_who',
+      lists: 'contacts+id,val,who',
+      f_contact: false,
+
     })%>,
 
-    methods:{
-      add_contact(){
+    watch: {
+      new_who(){
+        this.onInput();
+      },
 
+      new_val(){
+        this.onInput();
+      },
+    },
+
+    methods: {
+      addContact(){
+        this.contacts.push({who: this.new_who, val: this.new_val, _destroy: false})
+        this.new_who = ''
+        this.new_val = ''
+        $('#contacts_val').focus()
+      },
+
+      delContact(index){
+        Vue.set(this.contacts[index], '_destroy', true)
+      },
+
+      nameField(index, field) {
+        return "project[contacts_attributes]["+index+"]["+field+']'
+      },
+
+      onInput(){
+        let f_contact = true;
+        if (v_nil(this.new_who)) f_contact = false;
+        if (v_nil(this.new_val)) f_contact = false;
+        this.f_contact = f_contact;
       }
     }
   })

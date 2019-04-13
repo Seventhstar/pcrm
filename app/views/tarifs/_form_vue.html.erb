@@ -7,10 +7,22 @@
       model: 'tarif',
       noteValid: '',
       formValid: false,
-      texts: 'sum sum2 from dis_price dis_price2 vis_price',
+
+      texts: 'sum sum2 from designer_price designer_price2 vis_price',
+      required_list: 'project_type tarif_calc_type sum designer_price',
+      
+      show_2: false,
+      show_from: false,
+      show_percent: false,
+
+      percent_price: 0,
+      value_price: 0,
+
       labelSum: '',
+      labelSum2: '',
+      lists: "project_types tarif_calc_types",
       list_values: 'project_type tarif_calc_type',
-      lists: "project_types tarif_calc_types"
+      tarifs: @tarifs
     })%>,
     
     updated(){
@@ -19,39 +31,133 @@
 
     mounted(){
       this.$root.$on('onInput', this.onInput);
+      this.$root.$on('onUpdate', this.onInput);
     },
 
     created(){
       this.formatLabelSum();
+      if (this.designer_price>0 && this.designer_price<1)
+        this.show_percent = true
+      if (this.from>0) this.show_from = true
+
+      if (this.sum2>0) this.show_2 = true
+
+      this.percent_price = this.designer_price * 100;
+      this.value_price   = this.designer_price;
+    },
+
+    watch: {
+      show_percent(){
+        if (this.show_percent) 
+          {
+            this.designer_price = this.percent_price / 100
+            console.log('this.designer_price', this.designer_price)
+          }
+        else
+          this.percent_price = this.designer_price * 100;
+      },
+
+      value_price(){
+        this.designer_price = this.value_price
+      },
+
+      percent_price(){
+        this.designer_price = this.percent_price / 100
+        console.log('this.designer_price', this.designer_price)
+      },
+
+      designer_price(){
+
+      }
+
+
     },
 
     computed: {
+      step1(){
 
-
+      }
     },
 
     methods: {
+      description(){
+        let d = to_sum(this.sum) + 'р.'
+
+        // console.log('tarif_calc_type_id', this.tarif_calc_type_id)
+        if (!v_nil(this.tarif_calc_type) )
+          if (this.tarif_calc_type.value < 3)
+            d = d + ' ' + this.tarif_calc_type.label.toLowerCase()
+
+        let tarif_all     = this.tarifs.filter(t => t.project_type_id == this.project_type_id)
+        let tarif_search  = this.tarifs.filter(t => t.project_type_id == this.project_type_id && toInt(t.from) > this.from)
+
+        if (this.from >0 || this.show_from) {
+          d = d + ' при площади объекта'
+          if (tarif_search.length >0)
+           d = d + ' до ' + tarif_search[0].from
+          else 
+            d = d + ' от ' + this.from 
+          d = d + ' м2'
+        }
+
+        if (this.sum2 > 0)   d = d + '; ' + to_sum(this.sum2) + ' за 2й м2'
+
+        return d;
+      },
+
 
       formatLabelSum(){
-        console.log(this.tarif_calc_type)
-        if (this.tarif_calc_type.value == 1) {this.labelSum = "Цена за м2:"; return; }
-        this.labelSum = "Цена/Сумма:"
+        this.labelSum = 'Цена/Сумма:'
+        this.labelSum2 = 'Цена2/Сумма2:'
+        if (v_nil(this.tarif_calc_type)) return
+
+        switch (this.tarif_calc_type.value) {
+          case 1: 
+            this.labelSum = "Цена за м2:"; 
+            this.labelSum2 = "Цена 2 за м2:"; 
+            break;
+          case 2: 
+            this.labelSum = "Сумма в мес.:"; 
+            this.labelSum2 = "Сумма 2 в мес.:"; 
+            break;
+          case 3: 
+            this.labelSum = "Стоимость:"
+            this.labelSum2 = "Стоимость 2:"
+        }  
+
       },
 
       onInput(e){
-        let formValid = true;
-        // console.log(e)
+        let valid = true;
+
         if (e !==undefined && e.name == 'tarif_calc_type'){this.formatLabelSum()}
-        this.formValid = formValid;
-        // this.f_shop = f_shop;
+
+
+
+        let tooltip = "";
+        this.required.forEach( (c, i) => {
+          // console.log('c', c, 'i', i, v_nil(this[c]));
+          if (v_nil(this[c], true)) {
+            valid = false;
+            tooltip = tooltip + this.requiredTranslated[i] + ', ';
+          }
+        });
+        
+        if (!valid) tooltip = "Не заполнены поля: " + tooltip.slice(0, -2);
+        this.noteValid = tooltip;
+        this.formValid = valid;
       },
 
       onSubmit(event){
         if (event && !this.formValid) {
-          event.preventDefault();
-          show_ajax_message(this.noteValid, 'error');
+          event.preventDefault()
+          show_ajax_message(this.noteValid, 'error')
         }
 
+      },
+
+      updatePrice(){
+        this.designer_price = this.percent_price / 100
       },
 
       equals(obj, v){      

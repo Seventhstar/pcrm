@@ -2,6 +2,7 @@
   = f.hidden_field :user_id, value: current_user.id
   #costing_app
     .box_wrap.box_wrap_1
+      / .panel-left.costing_add
       .costing_head
         .label Проект:
         div
@@ -10,15 +11,22 @@
               class: 'txt autocomplete'
         .label Вид сметы:
         div
-          v-chosen name="costings_types" placeholder="Вид сметы"
+          v-chosen name="costings_type" placeholder="Вид сметы"
 
-      .panel-left.costing_add
+        .label Ответственный:
+        v-chosen name="user" placeholder="Дизайнер" :input="true"
+        .label Дата создания:
+
+        div
+          = f.text_field :date_create, value: format_date(@costing.date_create), label: false, class: "txt datepicker"
+
+      .sep_line
+      .costing_head
+        .label Помещение:
         .add_room   
           v-chosen name="room" placeholder="Помещение"
         span.btn_a.left @click="addRoom" :disabled="v_nil(this.room)" Добавить
-
-
-
+        span.vue_add.right @click="addWork()" Добавить работу
 
     .container
       .vtabs
@@ -27,13 +35,29 @@
             | <a @click="setActive(tab)">{{tab.label}} 
       tab-content.content :tab="currentTab" 
         | <span>{{currentTab}}
-      .works_lists v-for=("tab,index in tabs")
+      .works_lists v-for=("tab, index in tabs")
         .work_list v-if="currentTab==tab"
          | {{tab}}
-        .add_room  
-          v-chosen name="room_work" src="room_works" from_array="list" :k="tab.value" :index="index" placeholder="Вид работ"
-        span.btn_a.left @click="addWork" :disabled="v_nil(this.work)" Добавить
+        / .add_room  
+        /   v-chosen name="room_work" src="room_works" from_array="list" :k="tab.value" :index="index" placeholder="Вид работ"
+        / span.btn_a.left @click="addWork" :disabled="v_nil(this.work)" Добавить
 
-  = tr_submit_cancel costings_path        
+    = tr_submit_cancel costings_path   
 
-  = render 'form_vue'
+    .grid_works.grid_table 
+      div v-for="(item, index) in costingsWorks" v-show="!item._destroy"
+        div
+          |{{index}}
+        div 
+          |{{item.work.label}}
+          input :name="_field(index,'work_id')" :value="item.work.value" type="hidden" 
+
+    transition name="appear"
+      .modal_container v-if='modalForm'
+        = render 'work'
+
+    div v-for="(item, index) in costingsRooms"
+      input :name="_field(index,'id', 'costing_rooms')" :value="item.value" type="hidden" :input="true"
+      input :name="_field(index,'room_id', 'costing_rooms')" :value="item.room_id" type="hidden" :input="true"
+
+= render 'form_vue'

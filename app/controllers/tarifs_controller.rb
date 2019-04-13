@@ -2,28 +2,31 @@ class TarifsController < ApplicationController
   before_action :set_tarif, only: [:show, :edit, :update, :destroy]
   before_action :def_params, only: [:new, :edit]
   before_action :check_sum, only: [:create, :update]
-
+  before_action :logged_in_user
   respond_to :html
 
   def index
-    @tarifs = Tarif.order(:created_at)
+    @tarifs = Tarif.order(:project_type_id, :from)
                    .left_joins([:project_type, :tarif_calc_type])
 
     @tarifs = @tarifs.map{ |t| {
-      id: t.id,
-      project_type: t.project_type_name,
-      sum: t.sum,
-      sum2: t.sum2,
-      calc_type: t.tarif_calc_type_name,
-      from: t.from,
-      dis_price: t.dis_price,
-      dis_price2: t.dis_price2,
-      vis_price: t.vis_price
-    }}
+                        id: t.id,
+                        project_type:    t.project_type_name,
+                        project_type_id: t.project_type_id,
+                        sum:  t.sum,
+                        sum2: t.sum2,
+                        calc_type:    t.tarif_calc_type_name,
+                        calc_type_id: t.tarif_calc_type_id,
+                        from: t.from,
+                        designer_price:  t.designer_price,
+                        designer_price2: t.designer_price2,
+                        vis_price:  t.vis_price
+                      }}.sort_by{|hsh| [hsh[:project_type], hsh[:from].to_i] }
 
-    @columns = [['project_type', 'Вид работ'], ['sum', 'Сумма договора'], ['sum2', 'Сумма 2 договора'],
-                ['calc_type', 'Расчет за'], ['from', 'При площади от'], ['dis_price', 'Цена 2 дизайнера'], 
-                ['dis_price2', 'Цена 2 дизайнера'], ['vis_price', 'Цена визуализатора']]
+    @columns = [ ['project_type', 'Вид работ'], ['sum', 'Сумма договора'], ['sum2', 'Сумма 2 договора'],
+                 ['calc_type', 'Расчет за'], ['from', 'При площади от'], ['designer_price', 'Цена 2 дизайнера'], 
+                 ['designer_price2', 'Цена 2 дизайнера'], ['vis_price', 'Цена визуализатора']
+               ]
 
     respond_with(@tarifs)
   end
@@ -34,10 +37,12 @@ class TarifsController < ApplicationController
 
   def new
     @tarif = Tarif.new
+    @tarifs = Tarif.order(:project_type_id, :from)
     respond_with(@tarif)
   end
 
   def edit
+    @tarifs = Tarif.order(:project_type_id, :from)
   end
 
   def create
@@ -58,7 +63,7 @@ class TarifsController < ApplicationController
 
   private
     def check_sum
-      prms = %w(sum sum2)
+      prms = %w(sum sum2 designer_price designer_price2 vis_price)
         
       prms.each do |p|
         tarif_params[p] = tarif_params[p].gsub!(' ','') if !tarif_params[p].nil?
@@ -75,6 +80,6 @@ class TarifsController < ApplicationController
     end
 
     def tarif_params
-      params.require(:tarif).permit(:project_type_id, :sum, :sum2, :tarif_calc_type_id, :from, :dis_price, :dis_price2, :vis_price)
+      params.require(:tarif).permit(:project_type_id, :sum, :sum2, :tarif_calc_type_id, :from, :designer_price, :designer_price2, :vis_price)
     end
 end

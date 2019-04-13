@@ -3,7 +3,7 @@
     .box_wrap.box_wrap_1
       .panel-left
         .gr_caption.prj_not_simple.hl_tr colspan="5" Контакты клиента
-        table.fullwidth.tbl_fc.fw_form
+        table.fullwidth.tbl_fc.fw_form.contacts
           tr
             td.caption ФИО
             td
@@ -18,8 +18,7 @@
               .lbl =@project.client.try(:email)
 
         br/
-      .panel-right2
-        .gr_caption.prj_not_simple.hl_tr colspan="5"  Дополнительные контакты проекта
-        = render 'shared/contacts', f: f
+      .panel-right
+        = render 'contacts', f: f
         = render 'contacts_vue'
 

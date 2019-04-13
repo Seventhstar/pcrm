@@ -2,8 +2,6 @@
 <div class="panel-heading table-heading">Список магазинов: </div>
 <table class="tleads" id="absence_shops_" model="AbsenceShops" action="absence_shops">
   <tbody>
-
-    
     <tr v-for="(item, index) in shops" v-show="!item._destroy">
       <td>{{item.shop.label}}</td>
       <td>{{item.target.label}}</td>

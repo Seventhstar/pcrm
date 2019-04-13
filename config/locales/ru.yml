@@ -7,6 +7,8 @@ ru:
   Currency: Валюта
   currency_id: Валюта
 
+  tarif: "Тариф"
+  Tarif: "Тариф"
   Status: "статус"
   uom: "eд. изм."
   secret: Закрыт
@@ -37,6 +39,8 @@ ru:
   target_id: Цель
   executor_id: Исполнитель
   visualer_id: Визуализатор
+  project_type: Тид проекта
+  tarif_calc_type: Вид расчета
   project_type_id: Вид проекта
   payment_purpose_id: Вид выплаты
   payment_type_id: Вид платежа

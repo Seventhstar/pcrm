@@ -16,7 +16,7 @@
     <div>
        <% if is_manager? || is_new || (@absence.new_reason_id.nil? &&
              is_author && allow_days_to_edit(@absence.created_at, 1)) %>
-          <v-chosen name="reason" model="absence" placeholder="Укажите причину..."/>   
+          <v-chosen name="reason" model="absence" placeholder="Укажите причину..." :input="true"/>   
       <% else %>
         <div class="lbl">{{reason.label}}</div>
       <% end %>
@@ -25,7 +25,7 @@
     <% if !is_new %>
       <div class="label_col">=></div>
       <div>
-        <v-chosen name="new_reason" model="absence" placeholder="Новая причина..."/>
+        <v-chosen name="new_reason" model="absence" placeholder="Новая причина..." :input="true"/>
       </div>
     <% end %>
   </section>
@@ -34,14 +34,14 @@
     <section class="grid_table_absence" v-show="equals(reason,[2,3])">  
       <div class="label_col">Проект:</div> 
       <div>
-        <v-chosen name="project" placeholder="Укажите объект..." src="filteredProjects"/>
+        <v-chosen name="project" placeholder="Укажите объект..." src="filteredProjects" :input="true"/>
       </div>
       <transition name="slide-fade">
         <div class="label_col" v-show="equals(reason,2)">Цель:</div>
       </transition>
       <transition name="slide-fade">
         <div v-show="equals(reason,2)" >
-          <v-chosen name="target" placeholder="Укажите цель..."/> 
+          <v-chosen name="target" placeholder="Укажите цель..." :input="true"/> 
         </div>
       </transition>
     </section>
@@ -62,16 +62,17 @@
     </div>
   </section>
 
-  <section class="grid_lbl_name">
+  <section class="grid_label_name">
     <div class="label_col">Комментарий:</div> 
     <%= f.text_area :comment, class: 'txt alone', label: false, "v-model"=>"comment", ":placeholder"=>"placeholder()" %>
   </section>
 
   <% if is_manager? %>
+    <div class="sep_12"></div>
     <section class="grid_table_absence">
       <div class="label_col">Сотрудник:</div> 
       <div>
-        <v-chosen name="user" placeholder="Выберите сотрудника..."/>
+        <v-chosen name="user" placeholder="Выберите сотрудника..." :input="true"/>
       </div>
     </section>
     <div class="before160" v-if="equals(reason, 6) || equals(new_reason, 6)">

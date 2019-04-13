@@ -2,6 +2,7 @@ class AbsencesController < ApplicationController
   include CommonHelper
   respond_to :html, :json, :js
   before_action :set_absence, only: [:show, :edit, :update, :destroy]
+  before_action :logged_in_user
   helper_method :sort_2, :dir_2 
   
   helper_method :sort_column, :sort_direction

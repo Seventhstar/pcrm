@@ -25,6 +25,9 @@ class ProjectGood < ActiveRecord::Base
     where(project_id: executor_ids) if executor_ids.present? || force_executor
   }
 
+  # before_validation
+  before_validation :strip_whitespace, only: [:name, :description]
+
   
   scope :good_state, -> (gs) {
     case gs
@@ -36,6 +39,11 @@ class ProjectGood < ActiveRecord::Base
       where(fixed: true)
     end
   }
+
+  def strip_whitespace
+    self.name = self.name.strip.capitalize unless self.name.nil?
+    self.description = self.description.strip.capitalize unless self.description.nil?
+  end
 
   def provider_name
     provider.try(:name)

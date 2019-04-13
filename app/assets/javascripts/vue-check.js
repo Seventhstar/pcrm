@@ -32,6 +32,70 @@ Vue.component('m-label',{
 
 });
 
+Vue.component('m-switcher',{
+  data(){
+    return {
+      classes: '',
+      linkClass: '',
+      handleClass: '',
+      currentLabel: '',
+      offLabel: '',
+      on: false
+    }
+  },
+  props: ['toggled', 'on-text', 'off-text', 'name'],
+  template: `
+            <div :class="classes">
+              <div class="sep""></div>
+              <a :off="offLabel" 
+                 :on="onText" 
+                 :class="linkClass"
+                  v-on:click="onClick()">{{label}}</a>
+              <div class="scale" v-on:click="onClick()">
+                <div :class="handleClass"></div>
+              </div>
+            </div>
+            `,
+
+  created(){
+    this.on = this.$parent[this.name]
+    // console.log('this.$parent[name]', this.$parent[this.name], this.name)
+    this.offLabel = this.offText == undefined ? this.onText : this.offText
+    this.changeState()
+  },
+
+  computed: {
+    label(){
+      return this.currentLabel
+    }
+  },
+
+  methods: {
+      changeState(){
+        this.classes      = "switcher_a"
+        this.handleClass  = "handle"
+        this.linkClass    = "link_c left"
+        
+        this.currentLabel = this.on ? this.onText : this.offLabel
+
+        if (this.on) this.classes = this.classes + " toggled"
+        if (this.on) this.linkClass = this.linkClass + " on"
+        if (this.on) this.handleClass = this.handleClass + " active"
+      },
+
+      onClick(){
+        this.on=!this.on
+        this.$parent[this.name] = this.on;
+        this.changeState()
+
+      },
+  }
+
+
+
+});
+
+
 Vue.component('m-number', {
   data(){
     return {
@@ -53,24 +117,31 @@ Vue.component('m-number', {
         :readonly="readonly"
         @keyup="onUpdate($event)"
         @focus="onFocus($event)"
-        style="text-align: right;"></div>`,
+        style="text-align: right;"></div>
+        `,
+
     created(){
       this.name_id =  this.$parent.model + "_" + this.name;
       this._name =  this.$parent.model + "[" + this.name+"]";
       
-      // console.log('this.float', this.float, this.$props)
+      let type = this.type == undefined ? '' : this.type
 
-      if (this._name.includes('[disc'))
-        {this.classes = "txt discount_mask"}
-      else if (this.name.includes('footage') || this.float)
-          {this.classes = "txt float_mask"}
-      else {this.classes = "txt sum_mask"}
+      if (this.name.includes('footage') || type.includes('footage')) {
+        this.classes = "txt footage_mask"
+      } else if (type.includes('percent')) {
+        this.classes = "txt discount_mask"
+      } else if (type.includes('float')) {
+        this.classes = "txt float_mask"
+      } else {
+        this.classes = "txt sum_mask"
+      }
 
       if (this.add_class !== undefined)
         this.classes = this.classes + " " + this.add_class
       else if (this.name.includes('total'))
         this.classes = this.classes + " sum_total"
     },
+
     methods:{
       onFocus(el){
         let val = this.$parent[this.name]
@@ -78,8 +149,11 @@ Vue.component('m-number', {
         if (val == '0' || val=='0,0' || val=='0.0' )
             this.$parent[this.name] = '';
       },
+
       onUpdate(val) {
+        // console.log('onUpdate(val)')
         this.$parent[this.name] = val.target.value.toString().replace(/\s/g, '');
+        this.$root.$emit('onInput', {value: this.$parent[this.name], name: this.name });
       }
     }
 });

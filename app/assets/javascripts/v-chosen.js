@@ -6,11 +6,12 @@ Vue.component('v-chosen', {
         localName: "",
         localValue: 0,
         options: [],
+        h_input: false,
         clearable: false
       }
     }, 
     props: ['name', 'placeholder', 'label', 'src', 'selected', 
-            'owner', 'k', 'index', 'from_array', 'clear'],
+            'owner', 'k', 'index', 'from_array', 'clear', 'input'],
     template: `
         <div class="inp_w">
         <v-select 
@@ -26,11 +27,17 @@ Vue.component('v-chosen', {
             </template>
         </template>
         </v-select>
+        
         <input type="hidden" :name="localName" :value="localValue" 
-               v-if="model!=undefined" :id="idName">
+               v-if="model!=undefined && h_input" :id="idName">
+        
       </div>`,
 
     created() {
+
+      // console.log('input', this.input) reason
+      this.h_input = this.input == true
+      // this.h_input = true
 
        // console.log('this.clear', this.clear, typeof(this.clear))
       if (this.clear != undefined) this.clearable = (!this.clear)

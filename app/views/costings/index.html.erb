@@ -1,20 +1,4 @@
 <%= render "sortmenu" %>
-<% @costings.each do |costing| %>
-<% if check_new_table_head(costing) %>
-<%= render partial: "shared/head", locals: {stripped: true} %>
-  <tr>
-    <th>Проект</th>
-    <th width="140px"><%= sortable_th(:user_id, 'Владелец') %></th>
-    <th class="edit_delete"></th>
-  </tr>
- </thead>
-<tbody>
-<% end %>
-    <tr>
-      <td><%= costing.project_address %></td>
-      <td><%= costing.owner_name %></td>
-      <%= tool_icons(costing, {icons:'edit, show'}) %>
-    </tr>
-  <% end %>
-</tbody></table></div></div>
-
+<div id="div_costings">
+  <%= render "costings" %>
+</div>

@@ -1,13 +1,15 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy, :update_client]
   before_action :logged_in_user
-  before_action :check_sum, only: [:create, :update]
+  before_action :check_sum,   only: [:create, :update]
+  before_action :def_params,  only: [:new, :create, :edit, :update]
+  before_action :set_project, only: [:show, :edit, :update, :destroy, :update_client]
+
   include Sortable
+  include CommonHelper
+  include ProjectsHelper
   
   respond_to :html, :json, :js
 
-  include ProjectsHelper
-  include CommonHelper
 
   # GET /projects
   # GET /projects.json
@@ -97,52 +99,62 @@ class ProjectsController < ApplicationController
 
   def def_params
     @owner      = @project
+
     @styles     = Style.order(:name)
-    @gtypes     = Goodstype.where(id: [@pgt_ids]).order(:priority)
+    @currencies = Currency.order('id')
+    @pstatuses  = ProjectStatus.order(:name)
     @clients    = Client.where(city: @main_city).order(:name)
+    @gtypes     = Goodstype.where(id: [@pgt_ids]).order(:priority)
     
-    @holidays   = Holiday.pluck(:day).collect{|d| d.try('strftime',"%Y-%m-%d")}
-    @workdays   = WorkingDay.pluck(:day).collect{|d| d.try('strftime',"%Y-%m-%d")}
     @tarifs     = Tarif.order(:project_type_id, :from)
+    @holidays   = Holiday.pluck(:day).collect{|d| js_date(d)}
+    @workdays   = WorkingDay.pluck(:day).collect{|d| js_date(d)}
+
+    @project    = Project.new if @project.nil?
+
+
+    @contacts   = @project.contacts.order(:created_at) if action_name != 'create' && action_name != 'new'
 
     @date_start = format_date(@project.date_start)
-    @date_end = format_date(@project.date_end)
+    @date_end   = format_date(@project.date_end)
 
-    @currencies = Currency.order('id')
-    @new_gtypes = Goodstype.where.not(id: [@pgt_ids]).order(:name)
     @executors  = User.where(city: current_user.city).order(:name)
     @visualers  = User.where(city: current_user.city).order(:name)
-    @pstatuses  = ProjectStatus.order(:name)
+    @new_gtypes = Goodstype.where.not(id: [@pgt_ids]).order(:name)
+    
     @project_types = ProjectType.order(:name)
     @goods_priorities = GoodsPriority.order(:id)
+
     @goods_states = [{label: 'Предложенные', value: 1}, {label: 'Заказанные', value: 2}, {label: 'Закрытые', value: 3}]
   end
 
   # GET /projects/new
   def new
-    @project = Project.new
+   
     @isNewProject = true
 
     @lead = params[:lead]
     if @lead.present?
       @lead = Lead.find(@lead)
+      
       if @lead.present?
         @project.lead = @lead
         @address = @lead.address
         @client  = Client.find_by(name: @lead.fio)
-        if @client.present? # puts "client #{@client}"
+        
+        if @client.present?
           @toggled = true
         else
           @toggled = false
         end
-        @client_name = @lead.fio
-        @phone = @lead.phone
-        @email = @lead.email
+
+        @client_name  = @lead.fio
+        @phone        = @lead.phone
+        @email        = @lead.email
       end
     end
     
     get_debt
-    def_params
     
     @date_start = format_date(Date.today)
     @date_end = format_date(Date.today)
@@ -207,8 +219,8 @@ class ProjectsController < ApplicationController
       end
     end
 
-    @goods.sort_by!{ |hsh| hsh[0][2]; }
-    @gtypes.sort_by!{|hsh| hsh.priority}
+    @goods.sort_by!{ |hsh| hsh[0][2] }
+    @gtypes.sort_by!{ |hsh| hsh.priority }
 
     @providers = []
     @gtypes.each do |gt|
@@ -238,6 +250,7 @@ class ProjectsController < ApplicationController
     pp = project_params
     pp['pstatus_id'] ||= 1
     @project = Project.new(pp)
+    # ewkfjh
     cl_id = project_params[:client_id]
     if cl_id == "0" || cl_id.nil?
       @client = @project.create_client(client_params)
@@ -249,6 +262,7 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       if @project.save
+        # wkwjhek
         if params[:project][:first_comment] && !params[:project][:first_comment].empty?
           comm = @project.comments.new
           comm.comment = params[:project][:first_comment]

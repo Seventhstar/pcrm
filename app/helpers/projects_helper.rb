@@ -107,7 +107,7 @@ module ProjectsHelper
   def td_sum_field(f, val = 0, label='', params = {})
     
     obj_name = f.class == String ? f : f.object_name
-    mask_cls = params[:mask] ? 'float_mask' : 'sum_mask'
+    mask_cls = params[:mask] ? 'footage_mask' : 'sum_mask'
     mask_cls += " #{params[:inp_class]}" if params[:inp_class].present?
 
     lbl = content_tag 'label', params[:translate] ? t(label) : label if !label.nil?

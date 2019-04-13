@@ -2,16 +2,14 @@
 // Place all the styles related to the Projects controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-.gray_field {background-color: #fafafa; padding: 0 9px 15px 9px; border-radius: 5px; border: 1px solid #eee;}
+.gray_field {background-color: #fafafa; padding: 6px 15px; border-radius: 5px; border: 1px solid #eee;}
 .white_field {background-color: white; padding: 0 9px 15px 15px; border-radius: 5px; border: 1px solid #eee;}
-.inner_field {
-  // background-color: white; 
-  padding: 6px; border-radius: 5px;}
+.inner_field {padding: 6px; border-radius: 5px;}
 
 a.new_client    {padding-left: 48px;}
 #project_address{margin-bottom: 6px;}
 #to_project     {margin-top: 40px;}
-.new_prj_client div{margin-bottom:10px;}
+.new_prj_client div{margin-bottom:11px;}
 
 span.add_pay, span.calc_proc{ color: white; background-color: #c3c3c3; padding: 3px 6px; border-radius: 3px; }
 span.calc_proc.enabled{background-color: #ff8411; cursor: pointer;}
@@ -19,16 +17,19 @@ span.calc_proc.enabled:hover{opacity: 0.7;}
 // .gray_field .inp_w .inp_w {background: #fff;}
 // .gray_field .datepicker {background: #fff;}
 .gray_field input, .gray_field span:not(.btn_a), .gray_field .dropdown-toggle {background-color: #fff !important;}
+.gray_field .contact_row span {background-color: #fafafa !important;}
+.gray_field .contact_row span:not(.icon_del)  {border: 1px solid #e5e5e5;border-radius: 5px;}
 // .gray_field  {background-color: #fff !important;}
 
 .pg_files{margin-left: 40px;}
-.add_progress{
-  // display: block; 
-  height: 46px;
-  display: grid;
-  grid-template-columns: auto 1fr;
 
-}
+.add_progress{height: 46px; display: grid; grid-template-columns: auto 1fr; }
+.contacts_list #new_contact {display: grid; grid-template-columns: 2fr 1fr 96px; grid-gap: 10px; }
+.contact_row{display: grid; grid-template-columns: 2fr 1fr 96px; grid-gap: 10px; }
+.contact_row {height: 34px; margin-bottom: 12px;}
+.contact_row span:not(.icon_del) {padding: 8px 10px 0 10px; border: 1px solid #e5e5e5; border-radius: 5px;}
+.contact_row span.icon_del {margin-top: 8px;}
+
 .attach_list{float: left;}
 
 span.calc_proc{ padding: 8px 6px;  margin-left: 6px;  display: inline-block;  border-radius: 5px;}
@@ -42,7 +43,9 @@ input::-webkit-inner-spin-button { padding-right:0}
 
 .striked {text-decoration: line-through gray; margin-top: 2px;}
 
-.btn_add:not(.disabled):hover, .btn_a:not(.disabled):hover {background: asset-url('xbg1_3.png'); box-shadow: 1px 1px 0 0 #e86b00 !important; }
+.btn_add:not(.disabled):not([disabled]):hover, 
+.btn_a:not(.disabled):not([disabled]):hover
+ {background: asset-url('xbg1_3.png'); box-shadow: 1px 1px 0 0 #e86b00 !important; }
 
 .attach_list .btn_add{ background-color: white; line-height: 37px;
   color: $main-orange; border: 1px solid $border-color; 
@@ -85,7 +88,7 @@ input::-webkit-inner-spin-button { padding-right:0}
 
 // .tbl_a table tr.ordered:nth-child(even) td, table.tleads tr.ordered:nth-child(even) td { background: #84c8d6;}
 // #project_client_id_chosen {max-width: 300px !important;}
-span.add_footage {margin-top: 18px !important;}
+.footages_prices span.add_footage {margin-top: 18px !important;}
 .inp_w label {font-weight: 500; font-size: 13px;}
 // .txt:disabled{background: #fcfcfc !important; }
 
@@ -113,7 +116,6 @@ td.inf.comment {background-position-x: -17px !important; }
 .green { color: #0dd60d;}
 
 #pgoods .datepicker {width: 100px; font-size: 13px; padding: 6px;}
-.sw_b {width: 238px !important; font-weight: 500; font-size: 17px;}
 
 #pdf {float: right; margin-left: 15px;}
 

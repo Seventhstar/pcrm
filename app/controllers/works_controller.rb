@@ -1,6 +1,7 @@
 class WorksController < ApplicationController
   before_action :set_work, only: [:edit, :update, :destroy]
 
+
   respond_to :html, :json
 
   def create
@@ -29,6 +30,6 @@ class WorksController < ApplicationController
     end
 
     def work_params
-      params.require(:work).permit(:work_type_id, :name)
+      params.require(:work).permit(:work_type_id, :name, :uom_id)
     end
 end

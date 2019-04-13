@@ -211,6 +211,21 @@
         return !this.controls[index].opened;
       },
 
+      calculateTotal(){
+        this.currencies.forEach( c => {  
+          this.grandOrderTotal[c.value] = 0; 
+          this.grandOfferTotal[c.value] = 0; 
+          this.grandClosedTotal[c.value] = 0;
+
+          for (var gt in this.offerAmount) {      
+            this.grandOfferTotal[c.value] = this.grandOfferTotal[c.value] + this.offerAmount[gt][c.value]
+            this.grandOrderTotal[c.value] = this.grandOrderTotal[c.value] + this.orderAmount[gt][c.value]
+            this.grandClosedTotal[c.value] = this.grandClosedTotal[c.value] + this.closedAmount[gt][c.value]
+          }
+        })
+        return this.formatTotal(this.grandOfferTotal);
+      },
+
       calculateAmount(prj_id){
         this.offerAmount[prj_id] = {}
         this.orderAmount[prj_id] = {}
@@ -239,10 +254,6 @@
         return this.formatTotal(this.offerAmount[prj_id])
       },
 
-      makeFilter(){
-
-      },
-
       makeGroup(id){
         this.groupKey = id
         secondGroup = id == 'project_id' ? 'goodstype_id' : 'project_id'
@@ -260,7 +271,7 @@
         this.grouped = data;
 
         this.groupHeaders     = _.keys(this.grouped)
-        this.groupHeaders.forEach((gh, i) => {this.addControlAndField(); })
+        this.groupHeaders.forEach((gh, i) => {this.addControlAndField()})
 
         if (this.opened !== null){
           let opened = this.opened.split('.');

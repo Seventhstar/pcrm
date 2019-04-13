@@ -35,6 +35,7 @@ p {margin:0 0 14px 0; padding: 0 0 0 0; }
 
 .sep_1 {height: 10px; }
 .sep_05 {height: 2px; }
+.sep_12 {height: 12px; }
 .sep_15 {height: 15px; }
 .sep_2 {height: 20px; }
 .sep_3 {height: 30px; }
@@ -45,7 +46,7 @@ p {margin:0 0 14px 0; padding: 0 0 0 0; }
 .red {color: #cd1010; }
 .grey {color: #aeaeae; }
 
-.btn, .btn_a, .btn_add,.form-actions .btn-success, a.btn-success, 
+.btn, .btn_a, .btn_add,.form-actions .btn-success, a.btn-success, .vue_add, 
 .input-group .btn-warning {display: inline-block; height: 34px; line-height: 34px; padding: 0 16px; text-decoration:none; font-size: 14px; color: #fff; 
   border-radius: 5px; 
   position:relative;
@@ -56,6 +57,9 @@ p {margin:0 0 14px 0; padding: 0 0 0 0; }
     cursor: not-allowed;
   } 
 }
+
+.vue_add{width: fit-content; justify-self: end;}
+
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover, 
@@ -70,9 +74,12 @@ tr.editable .btn_a {line-height: 30px; height: 30px;}
 span.btn_add{ height: 24px; width: 12px; padding: 0px 60px 7px 8px; margin-top: -3px !important;}
 #pgoods span.btn_add{    padding: 0px 12px 7px 21px; width: 138px;}
 #pgoods a.btn_add{    padding: 0px 12px 7px 21px; width: 138px;     height: 24px; margin-top: -3px !important;}
+
 .btn_slim{ height: 26px; font-size: 13px; padding: 0 12px; line-height: 24px;} 
 //.btn_a:hover {opacity: 0.7; transition: All 0.5s ease;}
-.btn_a:hover::enabled { background: asset-url('xbg1_2.png'); box-shadow: 0 -2px 0 0 #cb4f00 inset;}
+
+.btn_a:hover::enabled, .vue_add:hover { background: asset-url('xbg1_2.png'); box-shadow: 0 -2px 0 0 #cb4f00 inset;}
+
 .icon:hover {opacity: 0.7;}
 // .btn:hover { transition: All 0.5s ease;}
 .only_actual:hover {opacity: 0.8;}
@@ -81,14 +88,17 @@ span.btn_add{ height: 24px; width: 12px; padding: 0px 60px 7px 8px; margin-top: 
 .btn_b{display: inline-block; border:1px solid $border-color; padding: 9px 19px 9px 19px; color: #000000; position:relative; text-decoration:none; 
   border-radius: 5px; 
   line-height: 1; }
+
 .btn_b:hover,
 .btn_b.active{background: #6acc00; border-color:#6acc00; padding-left: 20px; padding-right: 20px; color: #fff; border-left: 0; border-right: 0; text-decoration:none;}
 
 .btn_c{display: inline-block; border:1px solid $border-color; padding: 9px 19px 9px 19px; color: #ff8411; position:relative; text-decoration:none; 
   border-radius: 5px; 
   line-height: 1;  text-decoration:underline;}
+
 .btn_c:hover{text-decoration:none;}
-label a.btn_c:hover{cursor: pointer;}
+
+label a.btn_c:hover, .vue_add:hover {cursor: pointer; background: asset-url('xbg1_2.png');}
 
 .page_wrapper {min-height: 100%; position:relative;}
 
@@ -323,12 +333,9 @@ label.select_custom_ext:after { background-position: -18px -9px; }
 /*td.state,td.center{  text-align: center !important;}*/
 td.state{  text-align: center;}
 .sum_mask, .float_mask{ text-align: right; }
-input[type='number']{padding-right: 0;}
-input[type='number']::-webkit-inner-spin-button {
- /*   -webkit-appearance: none;*/
-    margin: 0 0 0 5px;
-    
-}
+input[type='number'] {padding-right: 0;}
+input[type="number"]::placeholder {text-align: left;}
+input[type='number']::-webkit-inner-spin-button {margin: 0 0 0 5px; }
 
 .menu_c {}
 .menu_c ul {margin:0 0 0 -10px; padding: 0 0 0 0; list-style:none; overflow:hidden;}
