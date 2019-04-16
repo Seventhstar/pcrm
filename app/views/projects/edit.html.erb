@@ -81,10 +81,17 @@
   <div class="box_wide">
     <div class="box_wrap box_wrap_1">
       <div class="panel-left lead_files">  
+        <div class="hl gr_caption hl_tr">Файлы проекта</div> 
         <div class="sep_15"></div>
           <% if !@owner.nil? %> 
             <%= render "shared/attach_list" %>
           <% end -%>
+      </div>
+      <div class="panel-right lead_files"> 
+        <div class="hl gr_caption hl_tr">Файлы заказов</div> 
+        <ul class="files_list_a files_list_<%= controller.action_name == 'new' ? 'NilClass' : @owner.class %>">
+          <%= render "files/files", files: @goods_files %>
+        </ul>
       </div>
     </div>
   </div>

@@ -44,7 +44,7 @@ input::-webkit-inner-spin-button { padding-right:0}
 .striked {text-decoration: line-through gray; margin-top: 2px;}
 
 .btn_add:not(.disabled):not([disabled]):hover, 
-.btn_a:not(.disabled):not([disabled]):hover
+.btn_a:not(.disabled):not([disabled]):not(.btn_reset):hover
  {background: asset-url('xbg1_3.png'); box-shadow: 1px 1px 0 0 #e86b00 !important; }
 
 .attach_list .btn_add{ background-color: white; line-height: 37px;

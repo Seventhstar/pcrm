@@ -1,6 +1,6 @@
 class CostingsController < ApplicationController
   before_action :set_costing, only: [:show, :edit, :update, :destroy]
-  before_action :default_params, only: [:edit, :create, :update]
+  before_action :default_params, only: [:new, :edit, :create, :update]
   include Sortable
   
   respond_to :html, :js
@@ -20,7 +20,6 @@ class CostingsController < ApplicationController
 
   def new
     @costing = Costing.new
-    default_params
     respond_with(@costing)
   end
 
@@ -60,6 +59,13 @@ class CostingsController < ApplicationController
 
       # puts  @costing.to_json
       @works = Work.order(:name)
+      @costing_works = @costing.costing_works.map{|w|
+        {work: w.work_name, 
+          uom: w.work_uom_name,
+          qty: w.qty,
+        price: w.price,
+       amount: w.amount}}
+      # цац
       # @works = RoomWork.joins([:work])
       #                 .select('room_works.*, works.name as work_name, user.name as user_name')
       #                 .map{ |e| { room: e.room_id,

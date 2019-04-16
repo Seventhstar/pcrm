@@ -55,25 +55,28 @@ tr.new_item_head td {padding: 8px 12px;}
 // vue-tab
 
 .vtabs {
-    -webkit-overflow-scrolling: touch;
-    align-items: stretch;
-    display: flex;
-    font-size: 1rem;
-    justify-content: space-between;
-    overflow: hidden;
-    overflow-x: auto;
-    white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  align-items: stretch;
+  display: flex;
+  font-size: 1rem;
+  justify-content: space-between;
+  overflow: hidden;
+  overflow-x: auto;
+  white-space: nowrap;
 }
 
 .vtabs ul {
-    align-items: center;
-    border-bottom-color: #dbdbdb;
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
-    display: flex;
-    flex-grow: 1;
-    flex-shrink: 0;
-    justify-content: flex-start;
+  align-items: center;
+  // border-bottom-color: #dbdbdb;
+  // border-bottom-style: solid;
+  // border-bottom-width: 1px;
+  display: flex;
+  flex-grow: 1;
+  flex-shrink: 0;
+  justify-content: flex-start;
+  padding-inline-start: 0;
+  margin-block-end: 0em;
+  border-bottom: 2px solid #6acc00;
 }
 
 ul {list-style: none;}
@@ -81,16 +84,9 @@ ul {list-style: none;}
 .vtabs li {display: block; }
 
 .vtabs a {
-    align-items: center;
-    border-bottom-color: #dbdbdb;
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
-    // color: #4a4a4a;
-    display: flex;
-    justify-content: center;
-    margin-bottom: -1px;
-    padding: 0.5em 1em;
-    vertical-align: top;
-    cursor: pointer;
-    text-decoration: none;
+  align-items: center;
+  display: flex;
+  padding: 0.5em 1em;
+  cursor: pointer;
+  text-decoration: none;
 }

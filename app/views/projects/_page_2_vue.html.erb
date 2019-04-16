@@ -15,7 +15,7 @@
       m_sum_total: 0,
       mByMonthAmount: 0,
 
-      show_2:       @project.footage_2_real>0 || @project.footage_2>0,
+      show_2:       @project.,
       show_fact:    @project.footage_real>0,
       fact_filled:  @project.footage_real>0,
 
@@ -28,7 +28,6 @@
       holidays: @holidays,
       workdays: @workdays,
 
-      complexProjectType: false,
       formFields: "footage price",
       noteValid: "tooltip",
 
@@ -56,6 +55,8 @@
     'page2') %>,
 
     created() {
+
+
       // if (!this.isNewProject && ptype.project_type !==undefined 
                              // && ptype.project_type.value!== undefined ){
         // currentPType = this.project_types.find(e => e.value == ptype.project_type.value)
@@ -83,6 +84,16 @@
 
     mounted(){
 
+    },
+
+    computed: {
+      complexProjectType(){
+        return this.visualer_price>0
+      },
+
+      showFootage2(){
+        return this.designer_price_2 > 0 || this.price_2 > 0
+      }
     },
 
     watch: {

@@ -43,6 +43,14 @@ class ProjectGood < ActiveRecord::Base
   def strip_whitespace
     self.name = self.name.strip.capitalize unless self.name.nil?
     self.description = self.description.strip.capitalize unless self.description.nil?
+    if self.description.include?('. ')
+       d = self.description.split('. ')
+       d.each do |dp|
+          # puts "dp #{dp}"
+          dp.capitalize!
+       end
+       self.description = d.join('. ')
+    end
   end
 
   def provider_name

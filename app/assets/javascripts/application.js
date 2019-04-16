@@ -21,7 +21,6 @@
 //= require chosen.jquery
 //= require jquery.timepicker
 //= require jquery.inputmask.bundle
-//= require plyr
 //= require jquery.mustache
 //= require tinymce-jquery
 //= require nprogress
@@ -29,6 +28,7 @@
 //= require moment
 //= require cocoon
 //= require contextMenu.min
+//= require plyr.min
 //= require vue
 //= require_tree .
 
@@ -196,7 +196,8 @@ $(function() {
   NProgress.configure({ showSpinner: false, ease: 'ease', speed: 300 });
   NProgress.start();
   NProgress.done();
-  plyr.setup();
+  // plyr.setup();
+  const player = new Plyr('#player');
 
   $( document ).ajaxStart(function() { NProgress.start(); });  
   $( document ).ajaxStop( function() {

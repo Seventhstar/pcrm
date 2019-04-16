@@ -70,7 +70,8 @@
                   v-chosen name="visualer" placeholder='Визуализатор...' :input="true"
                 .inp_w v-else=""
                   m-number name="footage" label="Метраж"  
-              .sums v-if="!complexProjectType"
+
+              .sums v-if="visualer_price==0"
                   .inp_w
                     .inp_sum_total
                       m-number name="sum_total" label="Сумма"

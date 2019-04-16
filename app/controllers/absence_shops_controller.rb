@@ -1,11 +1,11 @@
 class AbsenceShopsController < ApplicationController
-	before_action :set_shop, only: [:show, :edit, :update, :destroy]  
+  before_action :set_shop, only: [:show, :edit, :update, :destroy]  
   before_action :logged_in_user
 
   respond_to :js
 
   def create
-		respond_with(@shop = AbsenceShop.create(as_params))
+    respond_with(@shop = AbsenceShop.create(as_params))
   end
 
   def destroy

@@ -22,14 +22,14 @@
           tr
             td
               .inp_w
-                v-chosen name="pstatus" placeholder="Статус..." src="pstatuses"
+                v-chosen name="pstatus" placeholder="Статус..." src="pstatuses" :input="true"
             td= f.input :progress,label: '%'
             td.va_middle
           tr
             td.inp_97 colspan="2" 
               label Клиент:
               .w99_5
-                v-chosen name="client" placeholder="Клиент..." 
+                v-chosen name="client" placeholder="Клиент..."  :input="true"
               - if @project.client_id
                 #edit_icon
                   = link_to "", edit_client_path(@project.client_id, sub: true), data: {modal: true}, \
@@ -43,24 +43,24 @@
             td
               .inp_w
                 label Вид работы
-                v-chosen name="project_type" placeholder="Вид работы..."
+                v-chosen name="project_type" placeholder="Вид работы..." :input="true"
             td
                 label Стиль работы
-                v-chosen name="style" placeholder="Стиль..."
+                v-chosen name="style" placeholder="Стиль..." :input="true"
           tr
             td
               .inp_w
                 label Дизайнер
-                v-chosen name="executor" placeholder='Исполнитель...' 
+                v-chosen name="executor" placeholder='Исполнитель...'  :input="true"
           tr
             td
               .inp_w.prj_not_simple
                 label Визуализатор
-                v-chosen name="visualer" placeholder='Визуализатор...' 
+                v-chosen name="visualer" placeholder='Визуализатор...' :input="true"
             td
               .inp_w.prj_not_simple
                 label Город
-                v-chosen name="city" placeholder="Город..." src="cities"
+                v-chosen name="city" placeholder="Город..." src="cities" :input="true"
 
     .right
       

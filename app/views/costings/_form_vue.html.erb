@@ -1,19 +1,28 @@
 <script>
 
   Vue.component('v-select', VueSelect.VueSelect)
+  // Vue.use(require('vue-resource'));
   
   let app = new Vue({
   el: '#costing_app',
   data: <%= fill_vue_data(@costing,
     { 
+      room_works: @room_works,
+      costing_id: @costing.id,
+      costingsWorks: @costing_works,
       modalForm: false,
       model: 'costing',
-      room_works: @room_works,
       texts: 'room work qty price',
       list_values: 'user costings_type',
       lists: "rooms works costings_types costingsRooms:@costings_rooms+room_id \
               tabs:@costings_rooms+room_id users modalRooms:@costings_rooms+room_id modalWorks:@works+uom",
-      costingsWorks: [],
+      worksHeaders: ['№ этапа', 'Вид работы', 'Ед.изм', 'Кол-во', 'Цена', 'Ст-ть работ',
+                     'Материал (необходимый для выполнения работы)', 
+                     'Ед.изм', 'Кол-во', 'Цена', 'Ст-ть работ'],
+
+      worksColumns: ['step', 'work', 'uom', 'qty', 'price', 'amount'],
+      materialColumns: ['material', 'uom', 'qty', 'price', 'amount'],
+
       tabs: [],
 
     })%>,
@@ -27,6 +36,7 @@
         case 45: this.addWork(); break;
       }             
     })
+    this.setActive(this.tabs[0]);
   },
 
   computed: {
@@ -65,6 +75,9 @@
       return v_nil(v);
     },
 
+    showWork(item){
+      console.log('item', item);
+    },
     
     addRoom(){
       if (v_nil(this.room)) { show_ajax_message('Выберите помещение', 'error'); return; }
@@ -89,20 +102,38 @@
     },
 
     onConfirm(){
-      this.costingsWorks.push({room: this.modalRoom, work: this.modalWork, price: this.price, 
-                                qty: this.qty, amount: this.amount, _destroy: false })
+      let par = { costing_id: this.costing_id, room: this.modalRoom, 
+                        work: this.modalWork, price: this.price,
+                         qty: this.qty,      amount: this.amount, 
+                    _destroy: false }
+
+      this.costingsWorks.push(par)
       this.modalForm = false
+
+      this.$http.post('/ajax/add_work', par)
+          .then(response => {
+              // Turbolinks.visit(`/teams/${response.body.id}`)
+              console.log(response)
+          }, response => {
+            console.log(response)
+          })
+
     },
 
     close(){
       // console.log('close modal')
       this.modalForm = false
     },
-    
+
+    tabClass(tab){
+      // console.log('tabClass', tab)
+      if (tab.active) return 'ui-tabs-active'
+      return ''
+    // {'ui-tabs-active': tab.active}
+    },
+
     setActive(tab) {
-      this.tabs.forEach(el => {
-        el.active = el === tab;
-      })
+      this.tabs.forEach((el,ind) => {Vue.set(this.tabs[ind], 'active', el === tab)})
     },
 
     _field(index, field, name = 'works') {

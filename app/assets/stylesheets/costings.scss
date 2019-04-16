@@ -8,3 +8,15 @@ ul.costing_works {list-style: none; padding-left: 15px;}
 
 // .add_room { float:left; width: 400px; display: block; margin: 10px 5px;}
 .costing_add span {margin-top: 10px; height: 35px;}
+
+.grid_works, .grid_works_th {
+  display: grid; 
+  grid-template-columns: 64px 1fr 74px 74px 74px 120px 1fr 74px 74px 74px 120px;}
+
+.grid_works div{border-bottom: 1px solid #eee; }
+
+.grid_works_th {background-color: #fafafa;}
+.grid_works_th .th {align-self: center; padding: 8px;}
+.grid_works div {
+  // align-self: center; 
+  padding: 8px;}

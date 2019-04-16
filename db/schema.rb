@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190412102756) do
+ActiveRecord::Schema.define(version: 201904215002649) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -148,12 +148,15 @@ ActiveRecord::Schema.define(version: 20190412102756) do
   create_table "costing_works", force: :cascade do |t|
     t.bigint "costing_id"
     t.bigint "work_id"
+    t.bigint "room_id"
+    t.integer "step"
     t.integer "qty"
     t.float "price"
-    t.integer "amounth"
+    t.integer "amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["costing_id"], name: "index_costing_works_on_costing_id"
+    t.index ["room_id"], name: "index_costing_works_on_room_id"
     t.index ["work_id"], name: "index_costing_works_on_work_id"
   end
 
@@ -741,6 +744,7 @@ ActiveRecord::Schema.define(version: 20190412102756) do
   add_foreign_key "costing_rooms", "costings"
   add_foreign_key "costing_rooms", "rooms"
   add_foreign_key "costing_works", "costings"
+  add_foreign_key "costing_works", "rooms"
   add_foreign_key "costing_works", "works"
   add_foreign_key "costings", "costings_types"
   add_foreign_key "costings", "projects"

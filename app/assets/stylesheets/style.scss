@@ -436,7 +436,10 @@ input[type='number']::-webkit-inner-spin-button {margin: 0 0 0 5px; }
 .files_list_a .item{border-top:1px solid #e5e5e5; padding: 7px;  position:relative; }
 .files_list_a .item.odd {background: #fafafa;}
 .files_list_a .item:first-child {margin-top: 0; border: 0; }
-.files_list_a .item .fname {width: 93%;}
+
+// .files_list_a .item .fname {width: 93%;}
+.files_list_a .item {display: grid; grid-template-columns: 1fr 64px}
+
 .files_list_a .item .fname.audio {width: 80%;}
 .fname.audio span {padding: 5px; color: gray;}
 .show_audio .fname.audio span{float: right;padding: 7px;}

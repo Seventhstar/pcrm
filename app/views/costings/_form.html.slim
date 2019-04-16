@@ -31,26 +31,31 @@
     .container
       .vtabs
         ul
-          li :class=("{'ui-tabs-active': tab.active}") v-for=("tab in tabs") 
+          li :class="tabClass(tab)" v-for="tab in tabs"
             | <a @click="setActive(tab)">{{tab.label}} 
       tab-content.content :tab="currentTab" 
         | <span>{{currentTab}}
-      .works_lists v-for=("tab, index in tabs")
+      .works_lists v-for="tab, index in tabs"
         .work_list v-if="currentTab==tab"
-         | {{tab}}
+         / | {{tab}}
         / .add_room  
         /   v-chosen name="room_work" src="room_works" from_array="list" :k="tab.value" :index="index" placeholder="Вид работ"
         / span.btn_a.left @click="addWork" :disabled="v_nil(this.work)" Добавить
 
-    = tr_submit_cancel costings_path   
 
-    .grid_works.grid_table 
-      div v-for="(item, index) in costingsWorks" v-show="!item._destroy"
-        div
-          |{{index}}
-        div 
-          |{{item.work.label}}
-          input :name="_field(index,'work_id')" :value="item.work.value" type="hidden" 
+    .grid_works_th
+      template v-for="(column) in worksHeaders"
+        .th
+          span
+            |{{column}} 
+    .grid_works
+      template v-for="(item, index) in costingsWorks" v-show="!item._destroy"
+        div v-for="(column) in worksColumns"
+          |{{item[column]}}
+        div v-for="(column) in materialColumns"
+          
+
+    = tr_submit_cancel costings_path   
 
     transition name="appear"
       .modal_container v-if='modalForm'

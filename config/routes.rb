@@ -1,14 +1,12 @@
 Rails.application.routes.draw do
   resources :tarifs
-  get 'linked_works/create'
-
-  get 'linked_works/destroy'
-
-  get 'work/edit'
-
-  get 'work/index'
 
   resources :costings
+  get 'linked_works/create'
+  get 'linked_works/destroy'
+  get 'work/edit'
+  get 'work/index'
+
   get 'contacts/index'
   get 'contacts/new'
 
@@ -21,7 +19,7 @@ Rails.application.routes.draw do
   resources :absence_shops
   resources :absence_shop_targets
   resources :absences
-  get 'absences&:page', :to => 'absences#index'
+  get 'absences&:page', to: 'absences#index'
 
   resources :wiki_records do
     resources :wiki_records
@@ -137,10 +135,11 @@ Rails.application.routes.draw do
   resources :tarif_calc_types
  
 
-  get "ajax/channels"
   get "ajax/leads"
+  get "ajax/channels"
   get "ajax/autocomplete"
 
+  post "ajax/add_work"
   post "ajax/read_comment"
   post "ajax/dev_check" 
   post "ajax/status_check" 
@@ -162,5 +161,5 @@ Rails.application.routes.draw do
   get "/history/" => "history#show"
   get "/history/:period" => "history#show"
 
-  root :to => "leads#index"
+  root to: "leads#index"
 end

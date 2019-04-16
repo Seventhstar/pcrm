@@ -1,7 +1,40 @@
 class AjaxController < ApplicationController
   before_action :logged_in_user
-
   respond_to :js, :json 
+  skip_before_action :verify_authenticity_token, only: [:add_work]
+
+  def add_work
+    prm = wrk_params
+    puts "prm #{prm}"
+    wrk = CostingWork.new
+    wrk.costing_id = wrk_params[:costing_id]
+    wrk.work_id = wrk_params[:work][:value]
+    wrk.room_id = wrk_params[:room][:room_id]
+
+    # puts "wrk_params[:costing_id] #{wrk_params[:costing_id]}"
+
+    wrk.price   = wrk_params[:price]
+    wrk.qty     = wrk_params[:qty]
+    wrk.amount  = wrk_params[:amount]
+
+    if wrk.save 
+      head :ok
+    else
+      # body wrk.errors.full_messages
+      # head :unprocessable_entity
+      respond_to do |format|
+        format.json { render json: wrk.errors.full_messages, status: :unprocessable_entity }
+      end
+    end
+    puts "errors: #{wrk.errors.full_messages}"
+
+    # render json: params
+    # head :ok
+  end
+
+  def wrk_params
+    params.require(:ajax).permit!
+  end
 
   def autocomplete
 
@@ -41,12 +74,10 @@ class AjaxController < ApplicationController
 
   def set_city
     @main_city = City.find(params[:city]) if params[:city]
-    # puts "city", params[:city], @main_city
     current_user.update_attribute('city', @main_city) if @main_city.present?
   end
 
   def update_holidays
-    # if params[:year]
     y = Date.today.year.to_s
     url = "http://xmlcalendar.ru/data/ru/#{y}/calendar.xml"
     xml = Nokogiri::XML(open(url))
@@ -86,13 +117,14 @@ class AjaxController < ApplicationController
   end
 
   def add_comment
-   if params[:owner_id]
-    com = Comment.new
-    com.comment = params[:comment]
-    com.user_id = current_user.id
-    com.owner_id = params[:owner_id]
-    com.owner_type = params[:owner_type]
-    com.save
+    if params[:owner_id]
+      com = Comment.new
+      com.comment = params[:comment]
+      com.user_id = current_user.id
+      com.owner_id = params[:owner_id]
+      com.owner_type = params[:owner_type]
+      com.save
+
       admins = User.where(admin: true).ids # помечаем сообщения непрочитанными
       admins.delete(current_user.id) # кроме себя
       admins.each do |a|
@@ -107,30 +139,25 @@ class AjaxController < ApplicationController
   end
 
   def del_comment
-   if params[:comment_id] 
-    leadcomment = Comment.find(params[:comment_id]).destroy
-  end
-  head :ok
-end
-
-def store_cut
-  ls = session['last_'+params['cntr']+'_page']
-  ls = url_for(action: 'index', controller: params['cntr'])
-      # p params,ls
-      url = URI.parse(ls) 
-      url.query = params['cut'] #Rack::Utils.parse_nested_query(url.query).merge({cut: params['cut']}).to_query  
-      # p url.to_s
-      session["last_"+params['cntr']+"_page"] = url.to_s
-      # p session["last_"+params['cntr']+"_page"]
-
-      head :ok
+    if params[:comment_id] 
+      leadcomment = Comment.find(params[:comment_id]).destroy
     end
+    head :ok
+  end
 
+  def store_cut
+    ls = session['last_'+params['cntr']+'_page']
+    ls = url_for(action: 'index', controller: params['cntr'])
+    url = URI.parse(ls) 
+    url.query = params['cut']   
+    session["last_"+params['cntr']+"_page"] = url.to_s
 
-    def read_comment
-      if params[:comment_id]
-        c = CommentUnread.where(comment_id: params[:comment_id], user_id: current_user.id)
-      # p "c.count",c.count
+    head :ok
+  end
+
+  def read_comment
+    if params[:comment_id]
+      c = CommentUnread.where(comment_id: params[:comment_id], user_id: current_user.id)
       if c.count >0
         c.destroy_all
       else
@@ -144,55 +171,52 @@ def store_cut
   end
 
   def dev_check
-   if params[:develop_id]
-    develop = Develop.find(params[:develop_id])
-    if params[:field] == "boss"    
-      develop.dev_status_id = params[:checked]=='true' ? 3 : 4
-      develop.save  
-    else
-      if [1,2,4].include?(develop.dev_status_id)
-        develop.dev_status_id = params[:checked]=='true' ? 2 : 4
+    if params[:develop_id]
+      develop = Develop.find(params[:develop_id])
+      if params[:field] == "boss"    
+        develop.dev_status_id = params[:checked]=='true' ? 3 : 4
         develop.save  
+      else
+        if [1,2,4].include?(develop.dev_status_id)
+          develop.dev_status_id = params[:checked]=='true' ? 2 : 4
+          develop.save  
+        end
       end
     end
-
+    head :ok
   end
-  head :ok
-end
 
-def switch_check
-    # p "params[:model]",params[:model]
+  def switch_check
     if params[:model] == 'UserRole'
       item = UserRole.where(user_id: params[:item_id], role_id: params[:field])
       if params[:checked] == 'true'
-       item = UserRole.new
-       item.user_id = params[:item_id]
-       item.role_id = params[:field]
-       item.save
-     else
-      item.destroy_all
-    end
+        item = UserRole.new
+        item.user_id = params[:item_id]
+        item.role_id = params[:field]
+        item.save
+      else
+        item.destroy_all
+      end
 
-  elsif params[:model]
-    item = params[:model].classify.constantize.find(params[:item_id])
-    if !item.nil?
-      item[params[:field]] = params[:checked]
-      item.save
+    elsif params[:model]
+      item = params[:model].classify.constantize.find(params[:item_id])
+      if !item.nil?
+        item[params[:field]] = params[:checked]
+        item.save
+      end
     end
-  end
-  head :ok
-end
-
-def switch_locked
-  if current_user.has_role?(:manager)
-    puts "current_user #{current_user.name} #{current_user.has_role?(:manager)}" 
-    file = Attachment.find(params[:file])
-    file.update_attribute(:secret,!file.secret)
     head :ok
-  else
-    head :error
   end
-    # render nothing: true
+
+  def switch_locked
+    if current_user.has_role?(:manager)
+      puts "current_user #{current_user.name} #{current_user.has_role?(:manager)}" 
+      file = Attachment.find(params[:file])
+      file.update_attribute(:secret,!file.secret)
+      head :ok
+    else
+      head :error
+    end
   end
 
   def upd_param
@@ -214,23 +238,11 @@ def switch_locked
       if !obj.save
         render html: obj.errors.full_messages, status: :unprocessable_entity
       else
-        # p "obj.errors.full_messages #{obj.errors.full_messages}"
-        # respond_to do |format|
-        # # msg = "Успешно обновлено: "+ t(obj.class.name)
-        # end
         msg = "Успешно обновлено: "+ t(obj.class.name)
         render json: msg.to_json, status: :ok
-        #p "obj: #{obj}"
-        # respond_to do |format|
-        #   format.js { render location: params[:model].tableize+'#update' }
-        #   # respond_with(obj, location: )
-        # end
       end
     else
-      # render json: nil, status: :ok
     end
-     # render :nothing => true 
-     
-   end
+  end
 
- end
+end

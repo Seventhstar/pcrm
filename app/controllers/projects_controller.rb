@@ -235,6 +235,9 @@ class ProjectsController < ApplicationController
     #   # puts "@goods.count #{@goods.count}"
     # when 6
       @files    = @project.attachments
+      
+      @goods_files = Attachment.where(owner_type: 'ProjectGood', owner_id: @project.goods.ids)
+      
     # when 7
       @history  = get_history_with_files(@project)
     # else
