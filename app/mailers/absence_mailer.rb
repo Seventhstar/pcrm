@@ -16,7 +16,7 @@ class AbsenceMailer < ActionMailer::Base
       emails << @abs.user.email if !curr_user.nil? && curr_user.id != @abs.user_id && !@abs.user.nil?
       return if emails.nil? || emails.empty?
 
-      mail(:to => emails, :subject => subj) do |format|
+      mail(to: emails, subject: subj) do |format|
         format.html
       end
     end
@@ -36,7 +36,7 @@ class AbsenceMailer < ActionMailer::Base
     if @abs.reason_id == 3 && @abs.project_id == 0
       return
     end
-    p "@abs", @abs
+    # p "@abs", @abs
     @history = get_last_history_item(@abs)
     @version = @abs.versions.last
     send_mail_to("Создано отсутствие", curr_user, 20)

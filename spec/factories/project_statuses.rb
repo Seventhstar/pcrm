@@ -1,7 +1,7 @@
 FactoryBot.define do 
+  array = ['В работе', 'Приостановлен', 'Завершен']
 
   factory :project_status do
-    name
-  end
-  
+    sequence(:name) { |n| array[n-1] }
+  end  
 end

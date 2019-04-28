@@ -2,7 +2,7 @@ ru:
   options_menu: {
     options_users: ['users', 'roles', 'user_roles'],
     options_leads: ['statuses', 'channels', 'lead_sources', 'styles', 'cities'],
-    options_projects: ['project_statuses', 'project_types', 'elongation_types', 'contact_kinds', 'tarif_calc_types'],
+    options_projects: ['project_statuses', 'project_types', 'elongation_types', 'tarif_calc_types'],
     options_costings: ['costings_types', 'uoms', 'materials', "consumptions", "works", "work_types", "rooms"],
     options_payments: ['currencies', 'payment_types', 'payment_purposes'],
     options_providers: ['goodstypes', 'goods_priorities', 'delivery_times', 'positions', 'budgets', 'styles', 'p_statuses'],
