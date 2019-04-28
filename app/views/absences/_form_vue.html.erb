@@ -7,6 +7,7 @@
       model: 'absence',
       noteValid: '',
       formValid: false,
+      filteredProjects: [],
       booleans: 'canceled approved f_shop',
       texts: 'comment new_shop new_shop_target',
       list_values: 'reason new_reason project target',
@@ -31,20 +32,22 @@
     },
 
     created(){
-      // this.filteredProjects = this.projects
-      //.filter(p => p.executor_id == this.user)
+      this.makeFilter();
     },
 
-    computed:{
-      filteredProjects(){
-        // let n = this.projects.filter(p => p.executor_id == this.user.value)
-        // console.log('n', n);
-        // return n
-        return this.projects
+    watch: {
+      user(){
+        this.makeFilter()
       }
     },
 
     methods: {
+      makeFilter(){
+        let n = this.projects.filter(p => p.executor_id == this.user.value)
+        this.filteredProjects.length = 0
+        for (var prj in n) this.filteredProjects.push(n[prj])        
+      },
+
       shop_field(index, field) {
         return "absence[shops_attributes]["+index+"]["+field+']'
       },
@@ -80,7 +83,7 @@
           // this.filteredProjects = this.projects.filter(p => p.executor_id == e.value)
           // console.log('e', e, 'f', this.filteredProjects)
         }
-        console.log('reason', reason)
+        // console.log('reason', reason)
 
         switch(reason){
           case 0:

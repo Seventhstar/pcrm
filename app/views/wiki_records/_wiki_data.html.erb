@@ -8,7 +8,7 @@
 <% cat_name = " / " + cat_name if !cat_name.nil? %>
 
 <div class="hl hl_a bd"><%= [@wiki_record.name,cat_name].join %>  
-  <%= link_to "", [:edit,@wiki_record], :class=>"icon icon_edit right" if current_user.admin? %>
+  <%= link_to "", [:edit, @wiki_record], class: "icon icon_edit right" if is_manager? %>
 </div>
     
   <div class="tinymce">

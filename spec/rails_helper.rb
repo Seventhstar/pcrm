@@ -48,6 +48,8 @@ RSpec.configure do |config|
   config.include SessionsHelper
   config.include DevelopsHelper
   config.include AcceptanceHelper, type: :feature
+  config.include SelectFromChosen, type: :feature
+
   config.extend ControllerMacros, type: :controller
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and

@@ -3,9 +3,10 @@ class ProjectMailer < ActionMailer::Base
   
   def reminder_email(prj_id)
     @prj = Project.find(prj_id)
-    @subj = 'У проекта '+@prj.try(:address)+' подошел срок сдачи!'
+    @subj = "У проекта #{@prj&.address } подошел срок сдачи!"
     
-    emails = users_emails(30,@prj.executor_id)
+    # emails = users_emails(30, @prj.executor_id)
+    emails = "seventhstar@mail.ru"
     if Rails.env.production? && !emails.empty? && Rails.application.secrets.host.present?
       mail(to: emails, subject: @subj) do |format|
         format.html
@@ -18,7 +19,7 @@ class ProjectMailer < ActionMailer::Base
     @subj = 'У проекта '+@prj.try(:address)+' истек срок сдачи (не продлен)!'
 
     if Date.today.monday?
-      emails = users_emails(31,@prj.executor_id)
+      emails = users_emails(31, @prj.executor_id)
     else
       emails = @prj.executor.try(:email)
     end

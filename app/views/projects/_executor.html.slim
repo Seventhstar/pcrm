@@ -5,9 +5,9 @@
       .inp_w
         m-number name="designer_price" label="Цена дизайнера (за м2)"
       transition name="slide-fade"
-        .sign.plus v-if="show_2"
+        .sign.plus v-if="showFootage2"
       transition name="slide-fade"
-        .d2 v-show="show_2"
+        .d2 v-show="showFootage2"
           m-number name="designer_price_2" label="Цена 2 для дизайнера"
       transition name="slide-fade"
         .sign.plus v-if="visualer_price>0"

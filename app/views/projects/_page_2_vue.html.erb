@@ -9,13 +9,13 @@
       formValid: false,
       model: "project",
       project_id: @project.id,
+      project_type_id: @project.project_type&.id,
 
       mTarif: 0,
       tarifs: @tarifs,
       m_sum_total: 0,
       mByMonthAmount: 0,
 
-      show_2:       @project.,
       show_fact:    @project.footage_real>0,
       fact_filled:  @project.footage_real>0,
 
@@ -55,8 +55,8 @@
     'page2') %>,
 
     created() {
-
-
+      // console.log('this.mTarif', this.mTarif)
+      this.tarifSelect()
       // if (!this.isNewProject && ptype.project_type !==undefined 
                              // && ptype.project_type.value!== undefined ){
         // currentPType = this.project_types.find(e => e.value == ptype.project_type.value)
@@ -92,6 +92,7 @@
       },
 
       showFootage2(){
+        console.log('showFootage2', this.designer_price_2, this.price_2, this.designer_price_2 > 0 || this.price_2 > 0)
         return this.designer_price_2 > 0 || this.price_2 > 0
       }
     },
@@ -190,16 +191,24 @@
 
       project_type(){
         this.footage = 0;
-        this.show_2  = false;
         setTimeout(() => {apply_mask()}, 300);
         this.projectTypeSelect();        
       },
 
     },
     methods: {
+      tarifSelect(){
+        let find = this.project_type.value
+        if (find == undefined) find = this.project_type_id
+        let tarif_search = this.tarifs.filter(t => t.project_type_id == find && toInt(t.from) <= this.footage)
+        tarif_search = _.sortBy(tarif_search, 'from').reverse()
+        if (tarif_search.length)  this.mTarif = tarif_search[0]
+
+      },
 
       projectTypeSelect(){
 
+        this.price_2 = 0
         this.designer_price  = 0
         this.designer_price_2 = 0
         this.visualer_price  = 0
@@ -208,12 +217,9 @@
         this.m_sum_total = 0
         this.designer_sum = 0
         this.mByMonthAmount = 0
-
-        let tarif_search = this.tarifs.filter(t => t.project_type_id == this.project_type.value && toInt(t.from) <= this.footage)
-        // console.log('tarif_search', tarif_search, 'project_type_id', this.project_type.value);
-        tarif_search = _.sortBy(tarif_search, 'from').reverse();
-        if (tarif_search.length){
-          this.mTarif = tarif_search[0]
+        this.tarifSelect()
+        if (this.mTarif != 0){
+        console.log('mTarif', this.mTarif, 'project_type_id', v_nil(this.mTarif), this.project_type_id)
 
 
           if (this.mTarif.tarif_calc_type_id >1 ){ // в месяц
@@ -224,10 +230,12 @@
 
           } else { // за м2
             this.price            = this.mTarif.sum
+            this.price_2          = this.mTarif.sum2
+
             this.designer_price   = this.mTarif.designer_price
             this.designer_price_2 = this.mTarif.designer_price2
             this.visualer_price   = this.mTarif.vis_price
-            if (this.mTarif.sum2>0) this.addFootage2()
+            // if (this.mTarif.sum2>0) this.addFootage2()
           } 
 
           this.calcAmountByMonth()
@@ -293,20 +301,6 @@
           event.preventDefault();
           show_ajax_message(this.noteValid, 'error');
         }
-      },
-
-      addFootage2(){
-        this.show_2 = true
-        // console.log('this.mTarif', this.mTarif)
-        this.designer_price_2 = this.mTarif.designer_price2
-        this.price_2          = this.mTarif.sum2
-      },
-
-      delFootage2(){
-        this.show_2 = false
-        this.footage_2 = 0 
-        this.price_2 = 0
-        this.sum_2 = 0
       },
 
       addContact(){

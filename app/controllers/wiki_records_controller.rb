@@ -1,76 +1,60 @@
 class WikiRecordsController < ApplicationController
   before_action :set_wiki_record, only: [:show, :edit, :update, :destroy]
+  before_action :def_params, only: [:new, :create, :edit, :update, :show] 
   before_action :logged_in_user
+
+  include CommonHelper
+  
   # GET /wiki_records
   # GET /wiki_records.json
   def index
-    @wiki_cats    = WikiCat.order(:name)
-    @parent_id = params[:wiki_record_id]
-    @parent_id = 0 if @parent_id.nil?
-    params.delete_if{|k,v| v=='' || v=='0' }
-    @wiki_record = WikiRecord.find(@parent_id) if @parent_id != 0 
+    @wiki_cats = WikiCat.order(:name)
+    
+    clean_params
 
+    @parent_id = params[:wiki_record_id] 
+    @keyword   = params[:search]
 
-    if current_user.admin? 
-      @wiki_records = WikiRecord.where(:parent_id => @parent_id ).order(:name)
-    else
-      @wiki_records = WikiRecord.where(parent_id: @parent_id, admin: false).order(:name)
+    if @keyword.nil?
+      @parent_id ||= 0 
+      @wiki_record = WikiRecord.find(@parent_id) if @parent_id != 0 
     end
 
-
-    if !params[:wiki_cat_id].nil? && params[:wiki_cat_id]!=0
-      @wiki_records = @wiki_records.where(wiki_cat_id: params[:wiki_cat_id])
-    end
-
-
-    if !params[:search].nil? && params[:search]!=""
-      info =params[:search]
-      @wiki_records = @wiki_records.where('LOWER(description) like LOWER(?) or LOWER(name) like LOWER(?) ','%'+info+'%','%'+info+'%')
-    end
-
-  end
-
-  # GET /wiki_records/1
-  # GET /wiki_records/1.json
-  def show
-    def_params
+    @wiki_records = WikiRecord.by_user(is_manager?)
+                              .by_parent(@parent_id)
+                              .by_category(params[:wiki_cat_id])
+                              .search("%#{@keyword}%")
+                              .order(:name) 
   end
 
   def def_params
-    @wiki_folders = WikiRecord.where(:parent_id =>0)
+    @wiki_folders = WikiRecord.where(parent_id: 0)
     @wiki_cats    = WikiCat.order(:name)
   end
 
   # GET /wiki_records/new
   def new
     @wiki_record = WikiRecord.new
-    def_params
-    # @wiki_folders = WikiRecord.where(:parent_id =>0)
-    # p "@wiki_folders #{@wiki_folders}"
   end
 
   # GET /wiki_records/1/edit
-  def edit
-    if !current_user.admin? 
-      redirect_to wiki_records_url
-    end
-    def_params
+  def edit 
+    redirect_to wiki_records_url if !current_user.has_role?(:manager)
+
     @files = @wiki_record.attachments.order(:name)
     @owner = @wiki_record
-       
   end
 
   # POST /wiki_records
   # POST /wiki_records.json
   def create
     @wiki_record = WikiRecord.new(wiki_record_params)
-    def_params
     respond_to do |format|
       if @wiki_record.save
         format.html { redirect_to wiki_records_url, notice: 'Знание успешно создано.' }
         format.json { render :show, status: :created, location: @wiki_record }
       else
-        p "@wiki_record.errors #{@wiki_record.errors.full_messages}"
+        # p "@wiki_record.errors #{@wiki_record.errors.full_messages}"
         format.html { redirect_to new_wiki_record_url }
         format.json { render json: @wiki_record.errors, status: :unprocessable_entity }
       end

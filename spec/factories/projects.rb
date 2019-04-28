@@ -7,8 +7,8 @@ FactoryBot.define do
   factory :project do
     address
     client
-    pstatus ProjectStatus.first
-    association executor
+    pstatus {ProjectStatus.first}
+    association :executor
   end
   
 end

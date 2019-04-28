@@ -1,5 +1,5 @@
 FactoryBot.define do 
   factory :channel do 
-    name "first"
+    sequence(:name) { |n| "channel_#{n}" }
   end
 end
