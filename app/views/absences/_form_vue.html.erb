@@ -23,7 +23,6 @@
     })%>,
     
     updated(){
-      // console.log('updated');
       this.onInput();
     },
 
@@ -80,12 +79,6 @@
         let f_shop = true;
         let formValid = true;
         let reason = v_nil(this.reason) ? 0 : this.reason.value  
-
-        if (e !== undefined && e.name == 'user') {
-          // this.filteredProjects = this.projects.filter(p => p.executor_id == e.value)
-          // console.log('e', e, 'f', this.filteredProjects)
-        }
-        // console.log('reason', reason)
 
         switch(reason){
           case 0:
