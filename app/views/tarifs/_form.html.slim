@@ -3,12 +3,12 @@
       .grid_table_tarif
         
         .label_col Тип проекта:
-        v-chosen name="project_type" placeholder="Выберите тип проекта..."
+        v-chosen name="project_type" placeholder="Выберите тип проекта..." :input="true"
         .label_description
           |{{description()}}
 
         .label_col Вид расчета:
-        v-chosen name="tarif_calc_type" placeholder="Выберите вид расчета..."
+        v-chosen name="tarif_calc_type" placeholder="Выберите вид расчета..." :input="true"
         m-switcher on-text="Несколько площадей" name="show_2" 
 
         .label_col 
