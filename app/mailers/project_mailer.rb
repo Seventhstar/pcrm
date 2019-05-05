@@ -5,8 +5,8 @@ class ProjectMailer < ActionMailer::Base
     @prj = Project.find(prj_id)
     @subj = "У проекта #{@prj&.address } подошел срок сдачи!"
     
-    # emails = users_emails(30, @prj.executor_id)
-    emails = "seventhstar@mail.ru"
+    emails = users_emails(30, @prj.executor_id)
+    # emails = "seventhstar@mail.ru"
     if Rails.env.production? && !emails.empty? && Rails.application.secrets.host.present?
       mail(to: emails, subject: @subj) do |format|
         format.html
@@ -16,7 +16,7 @@ class ProjectMailer < ActionMailer::Base
 
   def overdue_email(prj_id)
     @prj = Project.find(prj_id)
-    @subj = 'У проекта '+@prj.try(:address)+' истек срок сдачи (не продлен)!'
+    @subj = "У проекта #{@prj.try(:address)} истек срок сдачи (не продлен)!"
 
     if Date.today.monday?
       emails = users_emails(31, @prj.executor_id)

@@ -79,7 +79,7 @@ class ProvidersController < ApplicationController
 
 
     store_providers_path
-    puts "params #{params}", @providers.count
+    # puts "params #{params}", @providers.count
   end
 
   # GET /providers/1
@@ -127,6 +127,7 @@ class ProvidersController < ApplicationController
   # POST /providers
   # POST /providers.json
   def create
+    puts "provider_params #{provider_params}"
     @provider = Provider.new(provider_params)
 
     respond_to do |format|
@@ -134,6 +135,8 @@ class ProvidersController < ApplicationController
         format.html { redirect_to providers_page_url, notice: 'Поставщик успешно создан.' }
         format.json { render :show, status: :created, location: @provider }
       else
+        puts "@provider.errors #{@provider.errors.full_messages}"
+        puts "@provider #{@provider.to_json}"
         format.html { render :new }
         format.json { render json: @provider.errors, status: :unprocessable_entity }
       end
@@ -178,7 +181,7 @@ class ProvidersController < ApplicationController
       params.require(:provider).permit( :name, :manager, :phone, :komment, :address, 
                                         :email, :url, :spec, :p_status_id, :city_id,
         budget_ids: [], style_ids: [], goodstype_ids: [], 
-  special_infos_attributes: [:id, :content, :_destroy])
+        special_infos_attributes: [:id, :content, :_destroy])
     end
 
     def sort_column

@@ -48,7 +48,6 @@ class TarifsController < ApplicationController
   def create
     @tarif = Tarif.new(tarif_params)
     @tarif.save
-    puts "@tarif.errors #{@tarif.errors.full_messages}"
     respond_with(@tarif, location: tarifs_path)
   end
 
