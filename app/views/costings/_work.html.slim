@@ -9,17 +9,34 @@
             span.icon.icon_close
           h4#mainModalLabel.hl.hl_a.bd
             |{{modalTitle}}
+
       .box_wrap.box_wrap_1
+        .panel-left
+          .grid_label_name
+            .label_col Помещение:
+            v-chosen name="modalRoom" placeholder="Комната"
+            
+            .label_col Работа:
+            v-chosen name="modalWork" placeholder="Работа"
+            
+
+        .panel-right2
+          .grid_label_name
+            .label_col Этап:
+            div
+              input.form-control.numeric.integer.optional type="number" step="1" value="1" name="step" id="work_step" v-model="step"
+
+        div style="height: 48px"
+
         .grid_work_form
-          .label_col Работа:
-          v-chosen name="modalWork" placeholder="Работа"
+          div
+          .inp_w
+            m-number name="qty" :footage="true"
           .uom
             |{{uomName}}
-          .inp_w
-            m-number name="qty"
           .sign.multiply
           .inp_w
-            m-number name="price" 
+            m-number name="price" :float="true"
           .sign.equal
           .inp_w
             m-number name="amount" 
@@ -27,12 +44,6 @@
         .sep_12
         .panel-left
           .grid_label_name
-            .label_col Помещение:
-            v-chosen name="modalRoom" placeholder="Комната"
-            div
-            div
-            div
-            div
             div
             div
               span.btn.sub.btn_a.btn_reset @click="onCancel" Отмена

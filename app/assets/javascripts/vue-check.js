@@ -102,7 +102,7 @@ Vue.component('m-number', {
       classes: "txt ",
       name_id: ""}
   },
-  props: ['name', 'label', 'type', 'add_class', 'disabled', 'readonly', 'float'],
+  props: ['name', 'label', 'type', 'add_class', 'disabled', 'readonly', 'float', 'footage'],
   template: `
     <div class="inp_w prj_not_simple">
       <label v-if="label">{{label}}</label>
@@ -125,12 +125,13 @@ Vue.component('m-number', {
       this._name =  this.$parent.model + "[" + this.name+"]";
       
       let type = this.type == undefined ? '' : this.type
+      // console.log('this.footage', this.footage)
 
-      if (this.name.includes('footage') || type.includes('footage')) {
+      if (this.name.includes('footage') || type.includes('footage') || this.footage) {
         this.classes = "txt footage_mask"
       } else if (type.includes('percent')) {
         this.classes = "txt discount_mask"
-      } else if (type.includes('float')) {
+      } else if (type.includes('float') || this.float) {
         this.classes = "txt float_mask"
       } else {
         this.classes = "txt sum_mask"

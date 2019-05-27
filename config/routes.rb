@@ -140,6 +140,7 @@ Rails.application.routes.draw do
   get "ajax/autocomplete"
 
   post "ajax/add_work"
+  post "ajax/upd_work"
   post "ajax/read_comment"
   post "ajax/dev_check" 
   post "ajax/status_check" 

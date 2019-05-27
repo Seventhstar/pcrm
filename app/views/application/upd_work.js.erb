@@ -1,0 +1,11 @@
+<% if @wrk.errors.present? %>
+  <%= render 'errors', item: @wrk %>
+<% else %>                                  
+  $('.modal').modal('hide');
+  updateRow("costingsWorks", 
+                  <%= @wrk.to_json(except: [:created_at, :updated_at], 
+                                        methods: []).html_safe %>, 
+                  <%= @wrk.id %>, false);
+
+  app.makeGroup();
+<% end %>

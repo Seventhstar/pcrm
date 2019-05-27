@@ -12,9 +12,9 @@
     .inp_w
       - if !real
         section v-show="!show_fact"
-          m-number name="sum_rest" label="Остаток" add_class="sum_rest" disabled="true"
+          m-number name="sum_rest" label="Остаток" add_class="sum_rest" readonly="readonly"
       - else
-        m-number name="sum_rest" label="Остаток" add_class="sum_rest" disabled="true"
+        m-number name="sum_rest" label="Остаток" add_class="sum_rest" readonly="readonly"
 
 
   transition name="slide-fade"

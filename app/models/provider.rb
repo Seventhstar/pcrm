@@ -25,7 +25,7 @@ class Provider < ActiveRecord::Base
   # scope :by_budget, -> (budget){where(budgets: budget)}
   scope :by_pstatus, -> (pstatus){where(p_status: pstatus) if pstatus}
   scope :by_goodstype, -> (gtp){where(id: gtp) if gtp}
-  scope :only_actual, -> (only_actual){where('p_status_id > 2') if only_actual}
+  scope :only_actual, -> (only_actual){where('p_status_id = 5') if only_actual}
 
   attr_reader :style_tokens
   attr_reader :budget_tokens

@@ -53,9 +53,29 @@ $.fn.capitalize = function () {
   return this;
 };
 
-function updateOptionRow(name, json, id, newItem = false, group = ''){
+function updateRow(name, json, id, newItem = false, group = ''){
+  let where = app[name]
+  replace = where.filter(i => i.id === id)[0]
+  for (var field in json) {
+    replace[field] = json[field] 
+  } 
+  // console.log('replace', replace)
+}
+
+function add_attachments(files) {
+  console.log(files)
+  var filea = (typeof files_2app == "undefined") ? filesapp : files_2app
+    console.log('filea', filea)
+    console.log(typeof files_2app == "undefined")
+  files.forEach((file, ind) => {
+    console.log('file:', file)
+    filea.goods_files.push(file);
+  });
+}
+
+function updateOptionRow(name, json, id, newItem = false, group = '') {
   let where = app[name];
-  console.log('gt', json.goodstype_id, 'group', group)
+  // console.log('gt', json.goodstype_id, 'group', group)
   if (group == 'project_id'){
     gt = where
     replace = where.filter(i => i.id === id)[0]
@@ -76,7 +96,7 @@ function updateOptionRow(name, json, id, newItem = false, group = ''){
     show_ajax_message("Ошибка обновления строки заказа", "error")
   } else {
     // json.forEach( f => replace[field] = json[field])
-    console.log('json', typeof(json))
+    // console.log('json', typeof(json))
     for (var field in json) {
       replace[field] = json[field] 
     } 

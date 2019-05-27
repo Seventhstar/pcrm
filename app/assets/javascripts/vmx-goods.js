@@ -40,6 +40,11 @@ var vmxGoods = {
       return offer + ' '+ order 
     },
 
+    hasFile(g_id){
+      has = this.goods_files.filter(w => w.owner_id === parseInt(g_id))
+      return has.length>0;
+    },
+
     format_date(date){
       return format_date(date);
     },

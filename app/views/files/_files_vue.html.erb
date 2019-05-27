@@ -1,0 +1,68 @@
+<% files ||= @owner.attachments %>
+<script>
+  filesapp = new Vue({
+    el: '.filesapp',
+    data: {
+      files: <%= data %>,
+      mainList: []
+    },
+
+    created() {
+      names = _.uniq(_.pluck(this.files, 'owner_type')); 
+      names.forEach( (n) => {
+        this[n] = this.files.filter(f => f.owner_type == n) 
+        this[n+'Grouped'] = _.groupBy(this[n], 'owner_name')
+      })
+
+      if (names.length) this.mainList = this[names[0]]
+    },
+
+    computed: {
+      // mainList() {
+        // return this.Project;
+      // }
+    },
+
+    methods: {  
+      getList(list, group) {
+        // console.log('name, ', name);
+        if (group!= null) {
+          return this[list+'Grouped'][group];
+        }
+        return list;
+      },
+
+      getKeys(name) {
+        keys = _.keys(this[name+'Grouped'])
+        // console.log('keys', keys, name, 'Grouped');
+        return keys
+      },
+
+      liClass(locked) {
+        return "item"+ (locked ? ' locked' : '')
+      },
+
+      iconClass(locked) {
+        return "icon icon_lock"+ (locked ? ' locked' : '')
+      },
+
+      iconType(name) {
+        var fileExt = name.split('.').pop()
+        switch(fileExt){
+          case 'pdf': return "icon_pdf"
+          case 'png':
+          case 'gif':
+          case 'jpg': return 'icon_img'
+          case 'doc':
+          case 'docx': return 'icon_word'
+          case 'xls':
+          case 'xlsx': return 'icon_xls'
+
+        }
+
+        return "icon_img"
+      }
+      
+    }
+  });
+</script>

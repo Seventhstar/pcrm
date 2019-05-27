@@ -1,6 +1,8 @@
 class ProjectGoodsController < ApplicationController
   include ProjectsHelper
   include FileHelper
+  include VueHelper
+  include CommonHelper
   # require 'unicode'
 
   respond_to :html, :json
@@ -71,6 +73,9 @@ class ProjectGoodsController < ApplicationController
                       currencies.short as currency_short,
                       projects.address as address")
 
+    # puts "is_manager?(current_user) #{is_manager?}"
+    @goods_files = Attachment.secret(is_manager?).where(owner_type: 'ProjectGood', owner_id: @goods.ids)
+
     prj_ids = @goods.pluck(:project_id).uniq         
 
     @projects   = Project.where(id: prj_ids)
@@ -106,6 +111,9 @@ class ProjectGoodsController < ApplicationController
     @cur_id = pg_params[:owner_id]
     if @prj_good.save
       update_cache_files(@prj_good, @file_cache)
+      @new_attachments = for_vue(@prj_good.attachments, 'owner_name')
+      puts "@new_attachments #{@new_attachments }"
+      puts "@prj_good.errors.full_messages #{@prj_good.errors.full_messages}"
       respond_with @prj_good
     else
       respond_to do |format|

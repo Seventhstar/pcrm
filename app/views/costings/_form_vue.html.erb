@@ -11,18 +11,20 @@
       costing_id: @costing.id,
       costingsWorks: @costing_works,
       modalForm: false,
+      editForm: false,
+      work_id: 0,
       model: 'costing',
-      texts: 'room work qty price',
+      texts: 'room work qty price step',
       list_values: 'user costings_type',
       lists: "rooms works costings_types costingsRooms:@costings_rooms+room_id \
               tabs:@costings_rooms+room_id users modalRooms:@costings_rooms+room_id modalWorks:@works+uom",
       worksHeaders: ['№ этапа', 'Вид работы', 'Ед.изм', 'Кол-во', 'Цена', 'Ст-ть работ',
                      'Материал (необходимый для выполнения работы)', 
-                     'Ед.изм', 'Кол-во', 'Цена', 'Ст-ть работ'],
+                     'Ед.изм', 'Кол-во', 'Цена', 'Ст-ть работ', ''],
 
       worksColumns: ['step', 'work', 'uom', 'qty', 'price', 'amount'],
-      materialColumns: ['material', 'uom', 'qty', 'price', 'amount'],
-
+      materialColumns: ['material',  'uom', 'qty', 'price', 'amount'],
+      grouped: [],
       tabs: [],
 
     })%>,
@@ -37,6 +39,9 @@
       }             
     })
     this.setActive(this.tabs[0]);
+    // console.log(v_nil(this.costingsRooms));
+    if (v_nil(this.costingsRooms)) this.costingsRooms = []
+    this.makeGroup()
   },
 
   computed: {
@@ -46,7 +51,7 @@
 
     uomName(){
       // console.log('computed uomName')
-      if (v_nil(this.modalWork)) return ""
+      if (v_nil(this.modalWork) || v_nil(this.modalWork.uom)) return ""
       return this.modalWork.uom.name
     },
 
@@ -71,6 +76,11 @@
 
 
   methods: {
+    makeGroup(){
+      this.grouped = _.groupBy(this.costingsWorks, 'room_id')
+      // Vue.set(this.grouped, i, grouped);
+    },
+
     v_nil(v){
       return v_nil(v);
     },
@@ -90,6 +100,23 @@
     addWork(){
       this.modalForm  = true
       this.modalTitle = 'Новая работа'
+      this.editForm   = false 
+      setTimeout(() => {apply_mask()}, 200);
+    },
+
+    workEditLink(work){
+      this.modalForm  = true
+      this.editForm   = true 
+      this.modalTitle = 'Редактирование работы'
+      setTimeout(() => {apply_mask()}, 200);
+
+      this.price = work.price
+      this.qty   = work.qty
+      this.step  = work.step
+
+      this.modalRoom = {label: work.room.name, value: work.room.id}
+      this.modalWork = {label: work.work, value: work.work_id}
+      this.work_id   = work.id
     },
 
     onInput(e){
@@ -101,23 +128,74 @@
       this.modalForm = false
     },
 
+    // currentWorks(tab) {
+    //   if (tab == undefined) return []
+    //   console.log('tab', tab)
+    //   let wrk = this.costingsWorks.filter(p => p.room.id == tab.room_id)
+    //   return wrk
+    // },
+
     onConfirm(){
       let par = { costing_id: this.costing_id, room: this.modalRoom, 
-                        work: this.modalWork, price: this.price,
+                        work: this.modalWork.label, price: this.price,
                          qty: this.qty,      amount: this.amount, 
+                     work_id: this.modalWork.value, step: this.step,
                     _destroy: false }
 
-      this.costingsWorks.push(par)
+      // par['work'] = this.modalWork
       this.modalForm = false
 
-      this.$http.post('/ajax/add_work', par)
-          .then(response => {
-              // Turbolinks.visit(`/teams/${response.body.id}`)
-              console.log(response)
-          }, response => {
-            console.log(response)
-          })
+      // if (this.editForm) par['id'] = this.work_id
 
+      if (this.editForm){
+        par['id'] = this.work_id
+        $.ajax({
+            url: '/ajax/upd_work',
+            data: {'ajax': par},
+            dataType: 'script',
+            type: 'POST',
+            success: function(event, xhr, settings) {
+              if (event.includes('.js-notes')) {
+                return eval(event);
+              } else {
+                return show_ajax_message('Успешно обновлено', 'success');
+              }
+            },
+            error: function(evt, xhr, status, error) {
+              return show_ajax_message(status.message, 'error');
+            }});
+
+      } else {
+
+        this.costingsWorks.push(par)
+        url = this.editForm ? '/ajax/upd_work' : '/ajax/add_work'
+
+      // Vue.http.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content')
+      // xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
+        let headers = {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+          'dataType': 'script',
+          // 'Content-Type': 'script'
+        }
+
+        this.$http.post(url, par, {headers})
+            .then(response => {
+                this.makeGroup()
+            }, response => {
+              console.log(response)
+          })
+      }
+
+    },
+
+    worksList(index = undefined) {
+      if (index == undefined) return
+        return this.grouped[this.tabs[index].room_id]
+      // let data = column
+       // return this.grouped[tab.room_id]
+      // if (column == 'work') data = 'label'
+      // console.log(item, 'data: ', data);
+      // return item[data];
     },
 
     close(){
@@ -125,15 +203,15 @@
       this.modalForm = false
     },
 
-    tabClass(tab){
+    tabClass(currentTab){
       // console.log('tabClass', tab)
-      if (tab.active) return 'ui-tabs-active'
+      if (currentTab.active) return 'ui-tabs-active'
       return ''
     // {'ui-tabs-active': tab.active}
     },
 
-    setActive(tab) {
-      this.tabs.forEach((el,ind) => {Vue.set(this.tabs[ind], 'active', el === tab)})
+    setActive(currentTab) {
+      this.tabs.forEach((el,ind) => {Vue.set(this.tabs[ind], 'active', el === currentTab)})
     },
 
     _field(index, field, name = 'works') {

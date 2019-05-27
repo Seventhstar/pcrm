@@ -27,7 +27,7 @@ feature 'create/edit wiki_record'  do
     click_on 'Новое знание'    
     fill_in 'wiki_record_name', with: 'Новое знание'
 
-    select_from_chosen('Новая папка', from: 'wiki_record_parent_id')
+    fill_chosen 'wiki_record_parent_id', with: 'Новая папка'
     page.execute_script('$(tinymce.editors[0].setContent("Новое описание знания"))')
 
     click_on 'Сохранить'

@@ -88,11 +88,11 @@
 
     computed: {
       complexProjectType(){
-        return this.visualer_price>0
+        return !(this.designer_price > 0 && this.designer_price < 1)
       },
 
       showFootage2(){
-        console.log('showFootage2', this.designer_price_2, this.price_2, this.designer_price_2 > 0 || this.price_2 > 0)
+        // console.log('showFootage2', this.designer_price_2, this.price_2, this.designer_price_2 > 0 || this.price_2 > 0)
         return this.designer_price_2 > 0 || this.price_2 > 0
       }
     },
@@ -163,16 +163,16 @@
       },
 
       designer_price(){
-         this.calcSumExecutor();
+        // console.log('designer_price()')
+        this.calcSumExecutor(true);
       },
 
       designer_price_2(){
-        this.calcSumExecutor();
+        this.calcSumExecutor(true);
       },
 
       visualer_price(){
-        
-        this.calcSumExecutor();
+        this.calcSumExecutor(true);
       },
       
       dateStart(){
@@ -297,6 +297,7 @@
       },
 
       onSubmit(event){
+        // console.log($('[name^=project]').serialize() )
         if (event && !this.formValid) {
           event.preventDefault();
           show_ajax_message(this.noteValid, 'error');
@@ -379,6 +380,7 @@
       },
 
       calcSumExecutor(byDefault = false){
+       // console.log('calcSumExecutor', this.mTarif.tarif_calc_type_id, byDefault)
         this.checkFootages();
 
         if (this.mTarif.tarif_calc_type_id > 1) {

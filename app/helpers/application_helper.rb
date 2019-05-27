@@ -283,6 +283,8 @@ module ApplicationHelper
             data[l] = select_src(collection, "name", false, fields) 
             # puts "2. l #{l} collection: #{collection}", "data[l] #{data[l]}"
           end
+        else
+          data[l] = []
         end
       end
       data.delete(:lists)

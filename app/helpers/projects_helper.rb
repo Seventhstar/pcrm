@@ -223,7 +223,7 @@ module ProjectsHelper
   end
 
   def good_state_src
-    [['Предложенные', 1], ['Заказанные', 2], ['Закрытые', 3]]
+    [['Предложенные', 1], ['Заказанные', 2], ['Закрытые', 3], ['Без файлов', 4]]
   end
 
   def active_projects_before(date_end = nil)

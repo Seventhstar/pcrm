@@ -32,11 +32,10 @@
       success: (event, xhr, settings) ->
         disable_input(false)
         # if reload then update_page()
-        show_ajax_message(event,'success')
+        show_ajax_message(event, 'success')
         if modal then $('.modal').modal('hide')
       error: (evt, xhr, status, error) ->      
-        errors = evt.responseText
-        show_ajax_message(errors,'error')
+        show_ajax_message("Ошибка обновления (ajax): " + evt.responseText, 'error')
         showNotifications();  
      return
 
@@ -246,8 +245,8 @@
       else
         show_ajax_message('Успешно обновлено','success')
     error: (evt, xhr, status, error) ->  
-      show_ajax_message(status.message,'error')        
-
+      show_ajax_message("Ошибка обновления: " + status.message,'error')        
+                                             
 $(document).ready ->
   apply_mask()
 

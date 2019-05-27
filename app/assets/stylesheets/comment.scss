@@ -22,15 +22,18 @@
 .comments_list_a li{list-style: none;}
 
 
-.comments_list_a .item.new { background-color: $border-color; }
+.comments_list_a .item.new { background-color: $light-gray; }
 .last .comments_list_a .item .info:after { color: gray; content: " ●"; line-height: 8px; font-size: 16px; cursor: pointer;}
 .last .comments_list_a .item.new .info:after {color: #ff8411; content: " ●"; line-height: 8px; font-size: 16px; }
 .first .comments_list_a .info {color: red}
 
-.icon_img, .icon_doc {display: inline-block; background: asset-url('image.png') no-repeat; 
+.icon_img, .icon_doc, .icon_pdf, .icon_word, .icon_xls {display: inline-block; background: asset-url('image.png') no-repeat; 
                       vertical-align: middle; position: relative; cursor: pointer; padding-left:20px;}
 .icon_doc {background: asset-url('doc.png') no-repeat;}
-.locked {background-color: #fcc;}
+.icon_pdf {background: asset-url('pdf16.png') no-repeat;}
+.icon_word {background: asset-url('icon-word.png') no-repeat;}
+.icon_xls {background: asset-url('icon-xls.png') no-repeat;}
+.locked {background-color: $secret-red;}
 .locked:hover td {background-color: #fbb !important;}
 
 .comments_box { height: 100%}

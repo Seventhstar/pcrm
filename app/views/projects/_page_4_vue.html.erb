@@ -32,7 +32,8 @@
       grouped: [],
       
       texts: "gtype new_gtype id",
-      lists: "gtypes+priority new_gtypes+priority currencies+short goods_priorities goods_states:raw@goods_states",
+      lists: "gtypes+priority new_gtypes+priority currencies+short goods_priorities \
+              goods_states:raw@goods_states goods_files+owner_id",
 
       providers: @providers,
       project_g_types: [],
@@ -65,6 +66,9 @@
 
         if (!v_nil(this.goods_state)) {
           switch(this.goods_state.value){
+            case 4:
+              this.filter.push({field: 'id', value: _.pluck(this.goods_files, 'owner_id')})
+              break;
             case 3: 
               this.filter.push({field: 'fixed', value: true})
               break;
@@ -81,7 +85,11 @@
            let filtered = this.goods[i][1].filter(function (item) {
             for (q in vm.filter) {
               let f = vm.filter[q]
-              if (item[f.field] !== f.value) return false
+              if (Array.isArray(f.value)) {
+                if (f.value.indexOf(item[f.field]) !== -1) return false
+              } else {
+                if (item[f.field] !== f.value) return false
+              }
             }
             return true
           })
@@ -91,6 +99,8 @@
         }
 
       },
+
+
 
       getProviderIndex(i, id){
         let ind = this.providers.filter(w => w.gt.id === toInt(i))

@@ -1,8 +1,9 @@
+// console.log("create.js.erb")
 <% if @prj_good.present? %>
   $('.modal').modal('hide');
   updateOptionRow("goods", 
-                  <%= @prj_good.to_json(except: [:created_at, :updated_at], 
-                                        methods: [:currency_short, :provider_name]).html_safe %>, 
+                  <%= for_vue(@prj_good, [:currency_short, :provider_name]) %>,
                   <%= @prj_good.goodstype_id %>, true);
   app.makeFilter();
+  add_attachments(<%= @new_attachments %>);
 <% end %>

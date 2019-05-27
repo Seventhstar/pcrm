@@ -7,8 +7,8 @@
       }
 
 $ ->
-  modal_holder_selector = '#modal-holder'
   modal_selector = '.modal'
+  modal_holder_selector = '#modal-holder'
 
   $(document).on 'click', 'a[data-modal]', ->
     location = $(this).attr('href')

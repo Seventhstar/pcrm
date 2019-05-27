@@ -46,14 +46,21 @@ class FilesController < ApplicationController
     @file.name       = filename
     @file.secret     = current_user.has_role?(:manager)
     @file.save
-    puts "errors #{@file.errors.full_messages}"
+    # puts "errors #{@file.errors.full_messages}"
     @file.id
 
   end
 
   def show
-    @img = "/download/#{params[:id]}"
-    respond_modal_with @img, location: root_path
+    file = Attachment.find(params[:id])
+    puts "File.extname(file.name) #{File.extname(file.name)}" 
+    if File.extname(file.name) == "pdf"
+      dir = Rails.root.join('public', 'uploads', file.owner_type, file.owner.id.to_s, file.id.to_s+File.extname(file.name))
+      send_file(dir, filename: file.name, type: 'application/pdf', disposition: :inline)
+    else
+      @img = "/download/#{params[:id]}"
+      respond_modal_with @img, location: root_path
+    end
   end
 
   def download

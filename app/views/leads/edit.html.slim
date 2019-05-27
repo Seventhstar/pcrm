@@ -1,0 +1,19 @@
+- if current_user.has_role?(:manager) or @lead.ic_user == current_user
+  = render 'shared/edit_head', item: @lead, title: "Редактирование лида"
+  .box_wrap.box_wrap_1
+    = render 'form'
+    .right
+      .comments_box
+        = render partial: "shared/comments"
+      = link_to("Перенести в договор", "/projects/new?lead=#{@lead.id}", class: 'btn btn_a before_30', id: 'to_project', target: :blank )
+  .box_wide
+    .box_wrap.box_wrap_1
+      .panel-left.lead_files
+        .sep_3
+        = render "shared/attach_vue"
+      .panel-right
+        .sep_3
+        .historyChange_box
+          - if @history.count >0
+            = render "shared/history"
+  .sep_3

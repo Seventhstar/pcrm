@@ -1,0 +1,11 @@
+<% if @prj_good.errors.present? %>
+  <%= render 'errors', item: @prj_good %>
+<% else %>                                  
+$('.modal').modal('hide');
+updateOptionRow("goods", 
+                <%= @prj_good.to_json(except: [:created_at, :updated_at], 
+                                      methods: [:currency_short, :provider_name]).html_safe %>, 
+                <%= @prj_good.id %>, false, '<%= @group %>');
+
+app.makeFilter();
+<% end %>

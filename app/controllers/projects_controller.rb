@@ -50,6 +50,7 @@ class ProjectsController < ApplicationController
       @projects = @projects.where(id: cl_prj + search_prj)
     end
 
+
     if params[:sort] == 'executor_id'
       sort_1 = "users.name"
       includes << :executor
@@ -63,6 +64,7 @@ class ProjectsController < ApplicationController
                 .by_year(params[:year])
                 .by_ids(prjs_ids)
                 .order("#{sort_1} #{sort_direction}, #{sort_2} #{dir_2}, projects.number desc")
+
 
     store_prj_path
     @sort = sort_1
@@ -125,7 +127,10 @@ class ProjectsController < ApplicationController
     @project_types = ProjectType.order(:name)
     @goods_priorities = GoodsPriority.order(:id)
 
-    @goods_states = [{label: 'Предложенные', value: 1}, {label: 'Заказанные', value: 2}, {label: 'Закрытые', value: 3}]
+    @goods_states = [ {label: 'Предложенные', value: 1}, 
+                      {label: 'Заказанные', value: 2}, 
+                      {label: 'Закрытые', value: 3},
+                      {label: 'Без файлов', value: 4} ]
   end
 
   # GET /projects/new
@@ -234,15 +239,15 @@ class ProjectsController < ApplicationController
     # when 4
     #   # puts "@goods.count #{@goods.count}"
     # when 6
-      @files    = @project.attachments
-      
-      @goods_files = Attachment.where(owner_type: 'ProjectGood', owner_id: @project.goods.ids)
+
+      @files    = @project.attachments.secret(is_manager?)
+      @goods_files = Attachment.secret(is_manager?).where(owner_type: 'ProjectGood', owner_id: @project.goods.ids)
       
     # when 7
       @history  = get_history_with_files(@project)
     # else
       # @history = []
-      @files    = @project.attachments
+      # @files    = @project.attachments
     # end
     
   end

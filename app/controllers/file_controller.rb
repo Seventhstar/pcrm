@@ -12,7 +12,7 @@ before_action :logged_in_user
         File.delete(filename) if File.exist?(filename)
         file.destroy
      end
-     render :nothing => true
+     render nothing: true
    end
 
   def show

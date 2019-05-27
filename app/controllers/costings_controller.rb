@@ -51,20 +51,28 @@ class CostingsController < ApplicationController
 
     def default_params
       @users = User.order(:name)
-      @costings_types = CostingsType.all
       @rooms = Room.all
+      @works = Work.order(:name)
+      @costings_types = CostingsType.all
 
-      @costing.costings_type_id = 1 if @costing.costings_type_id.nil?
-      @costing.date_create = Date.today if @costing.date_create.nil?
+      if @costing.present?
+        @costing.costings_type_id = 1 if @costing.costings_type_id.nil?
+        @costing.date_create = Date.today if @costing.date_create.nil?
 
       # puts  @costing.to_json
-      @works = Work.order(:name)
-      @costing_works = @costing.costing_works.map{|w|
-        {work: w.work_name, 
-          uom: w.work_uom_name,
-          qty: w.qty,
-        price: w.price,
-       amount: w.amount}}
+      @costing_works = @costing.costing_works.map{ |w|
+                                            {  id: w.id,
+                                             work: w.work_name, 
+                                          work_id: w.work&.id,
+                                             room: w.room,
+                                          room_id: w.room.id,
+
+                                              uom: w.work_uom_name,
+                                              qty: w.qty,
+                                             step: w.step,
+                                            price: w.price,
+                                           amount: w.amount}}
+      end
       # цац
       # @works = RoomWork.joins([:work])
       #                 .select('room_works.*, works.name as work_name, user.name as user_name')

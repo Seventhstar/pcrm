@@ -8,7 +8,7 @@
         .sign.plus v-if="showFootage2"
       transition name="slide-fade"
         .d2 v-show="showFootage2"
-          m-number name="designer_price_2" label="Цена 2 для дизайнера"
+          m-number name="designer_price_2" label="Цена дизайнера (без 3D)"
       transition name="slide-fade"
         .sign.plus v-if="visualer_price>0"
       transition name="slide-fade"
@@ -18,11 +18,11 @@
       .inp_w 
       .inp_w
       
-        m-number name="designer_sum" label="Cтоимость дизайна" add_class="sum_cost" disabled="true" 
+        m-number name="designer_sum" label="Cтоимость дизайна" add_class="sum_cost" readonly="readonly" 
       .sign.plus v-if="visualer_price>0"
       transition name="slide-fade"
           .inp_w v-if="visualer_price>0"
-            m-number name="visualer_sum" label="Cтоимость визуала" add_class="sum_cost" disabled="true"
+            m-number name="visualer_sum" label="Cтоимость визуала" add_class="sum_cost" readonly="readonly"
       .sign.equal 
       .inp_w
-        m-number name="sum_total_executor" label="Итого исполнителям" add_class="sum_cost" disabled="true"
+        m-number name="sum_total_executor" label="Итого исполнителям" add_class="sum_cost" readonly="readonly"

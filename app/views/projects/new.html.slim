@@ -71,13 +71,12 @@
                 .inp_w v-else=""
                   m-number name="footage" label="Метраж"  
 
-              .sums v-if="visualer_price==0"
-                  .inp_w
-                    .inp_sum_total
-                      m-number name="sum_total" label="Сумма"
               .sums v-if="!complexProjectType"
                 .inp_w
-                  m-number name="sum_rest" label="Остаток" add_class="sum_rest" disabled="true"
+                  .inp_sum_total
+                    m-number name="sum_total" label="Сумма"
+                .inp_w
+                  m-number name="sum_rest" label="Остаток" add_class="sum_rest" readonly="readonly"
         
       transition name="slide-fade" mode="out-in" 
         .sums v-if="complexProjectType"

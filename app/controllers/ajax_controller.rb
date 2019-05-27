@@ -3,13 +3,13 @@ class AjaxController < ApplicationController
   respond_to :js, :json 
   skip_before_action :verify_authenticity_token, only: [:add_work]
 
-  def add_work
-    prm = wrk_params
-    puts "prm #{prm}"
-    wrk = CostingWork.new
-    wrk.costing_id = wrk_params[:costing_id]
-    wrk.work_id = wrk_params[:work][:value]
-    wrk.room_id = wrk_params[:room][:room_id]
+  def set_work_params(wrk, wrk_params)
+    wrk.step        = wrk_params[:step]
+    wrk.costing_id  = wrk_params[:costing_id]
+    wrk.work_id     = wrk_params[:work_id]
+    wrk.room_id     = wrk_params[:room][:room_id]
+
+    wrk.room_id     = wrk_params[:room][:value] if wrk.room_id.nil?
 
     # puts "wrk_params[:costing_id] #{wrk_params[:costing_id]}"
 
@@ -17,6 +17,29 @@ class AjaxController < ApplicationController
     wrk.qty     = wrk_params[:qty]
     wrk.amount  = wrk_params[:amount]
 
+  end
+
+  def upd_work
+    wrk = CostingWork.find(wrk_params[:id])
+    set_work_params(wrk, wrk_params)
+    if wrk.save 
+      @wrk = wrk
+      # head :ok
+      respond_with @wrk
+    else
+      # body wrk.errors.full_messages
+      # head :unprocessable_entity
+      respond_to do |format|
+        format.json { render json: wrk.errors.full_messages, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def add_work
+    prm = wrk_params
+    # puts "prm #{prm}"
+    wrk = CostingWork.new
+    set_work_params(wrk, wrk_params)
     if wrk.save 
       head :ok
     else
@@ -26,8 +49,7 @@ class AjaxController < ApplicationController
         format.json { render json: wrk.errors.full_messages, status: :unprocessable_entity }
       end
     end
-    puts "errors: #{wrk.errors.full_messages}"
-
+    # puts "errors: #{wrk.errors.full_messages}"
     # render json: params
     # head :ok
   end

@@ -1,0 +1,4 @@
+- if !@owner.nil?
+  .filesapp
+    = render "shared/attach_list"
+  = render 'files/files_vue', data: for_vue(@files, [:owner_name])

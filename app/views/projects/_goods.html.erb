@@ -28,7 +28,9 @@
           <div v-html="allAmount(g)"></div>
           <div class="edit_delete td_right " style="">
             <a class="icon basket td_right" data-modal="true" :g_id='g.id' :href="goodsEditLink(g)" title="Редактирование заказа"></a>
-            <span class="icon icon_del" @click="deleteGoods(index, g)"></span> </div>
+            <span class="icon icon_del" @click="deleteGoods(index, g)"></span> 
+            <div class="icons-attach" v-if="hasFile(g.id)"><%= image_tag('clip.png', title: 'Есть вложение') %></div>
+          </div>
       </div>
     </template>
     </transition-group>

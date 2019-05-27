@@ -173,7 +173,7 @@ $(document).on 'click', '#btn-send', (e) ->
         show_ajax_message 'Успешно записано'
         return
       error: (evt, xhr, status, error) ->
-        show_ajax_message(evt.responseText,'error')
+        show_ajax_message('Ошибка записи: '+ evt.responseText,'error')
     return
   return
 
