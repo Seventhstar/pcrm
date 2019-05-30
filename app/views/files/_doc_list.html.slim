@@ -1,0 +1,10 @@
+ul class="files_list_a files#{list_name}"
+  - if grouped
+    template v-for="(k, ind) in keyNames" 
+      li.li-head
+        | {{k}}
+      template v-for="(item, index) in #{list_name}Grouped[k]" 
+        = render 'files/file'
+  - else
+      template v-for="(item, index) in docList" 
+        = render 'files/file'

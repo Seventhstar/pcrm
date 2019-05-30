@@ -1,2 +1,2 @@
-$(".files_list_a").html("<%= escape_javascript(render("files/files")) %>");
-$(".historyChange_box").html("<%= escape_javascript(render("shared/history")) %>");
+$(".files_list_a").html("<%= j render("files/files") %>");
+$(".historyChange_box").html("<%= j render("shared/history") %>");

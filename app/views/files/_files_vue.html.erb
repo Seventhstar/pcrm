@@ -1,31 +1,88 @@
 <% files ||= @owner.attachments %>
+<% modal ||= false %>
+<% el_selector = modal ? '.filesapp_modal' : '.filesapp' %>
+
 <script>
-  filesapp = new Vue({
-    el: '.filesapp',
+  vue_data = {
+    el: '<%= el_selector %>',
     data: {
+      tabs: [{value: 1, label: 'Документы'}, {value: 2, label: 'Аудио'}],
       files: <%= data %>,
-      mainList: []
+      keyNames: [],
+      listNames: [],
+      audioList: [],
+      docList: []
     },
 
     created() {
-      names = _.uniq(_.pluck(this.files, 'owner_type')); 
-      names.forEach( (n) => {
+      this.listNames = _.uniq(_.pluck(this.files, 'owner_type')); 
+      this.listNames.forEach( (n) => {
         this[n] = this.files.filter(f => f.owner_type == n) 
         this[n+'Grouped'] = _.groupBy(this[n], 'owner_name')
       })
 
-      if (names.length) this.mainList = this[names[0]]
+      this.updateLists()
+      this.setActive(this.tabs[0])
     },
 
     computed: {
-      // mainList() {
-        // return this.Project;
-      // }
+      currentTab: function () {
+        return this.tabs.reduce((accum, curr) => {return curr.active ? curr : accum}, {});
+      },      
+
+      docCount() {return this.docList.length;},
+      audioCount() {return this.audioList.length;}
+
     },
 
     methods: {  
+      tabClass(currentTab){
+        if (currentTab.active) return 'ui-tabs-active'
+        return ''
+      },
+      setActive(currentTab) {
+        this.tabs.forEach((el,ind) => {Vue.set(this.tabs[ind], 'active', el === currentTab)})
+      },
+
+      setData(name, data) {
+        if (!this.listNames.length) this.listNames = [name]
+        if (this[name] == undefined) this[name] = []
+
+        this[name].push(data);
+        this.updateLists()
+      },
+
+      deleteFile(name, id) {
+        this[name] = this[name].filter(el => el.id !== id);
+        this.updateLists();
+      },
+
+      updateLists() {
+        if (this.listNames.length) {
+          // console.log('here updateLists')
+          if (this.listNames[0] == 'ProjectGood'){
+            this.docList = this[this.listNames[0]]
+          } else {
+            this.docList = this[this.listNames[0]].filter( f => 
+              f.name.split('.').pop() != 'mp3' && f.name.split('.').pop() != 'ogg'
+            )
+            this.audioList = this[this.listNames[0]].filter( f => 
+              f.name.split('.').pop() == 'mp3' || f.name.split('.').pop() == 'ogg'
+            )
+          }
+
+          // console.log('here updateLists')
+          this.ProjectGoodGrouped = _.groupBy(this.ProjectGood, 'owner_name')
+          this.keyNames = _.keys(this.ProjectGoodGrouped)
+        }
+      },
+
+      listCount(id) {
+        if (id == 1) return this.docCount
+        return this.audioCount
+      },
+
       getList(list, group) {
-        // console.log('name, ', name);
         if (group!= null) {
           return this[list+'Grouped'][group];
         }
@@ -33,36 +90,47 @@
       },
 
       getKeys(name) {
-        keys = _.keys(this[name+'Grouped'])
         // console.log('keys', keys, name, 'Grouped');
         return keys
       },
 
-      liClass(locked) {
-        return "item"+ (locked ? ' locked' : '')
+      liClass(locked, audio = false) {
+        return "item" + (locked ? ' locked' : '') + (audio ? ' audio files_list_a' : '')
       },
 
       iconClass(locked) {
-        return "icon icon_lock"+ (locked ? ' locked' : '')
+        return "icon icon_lock" + (locked ? ' locked' : '')
+      },
+
+      isModal(name){
+        let fileExt = name.split('.').pop()
+        return fileExt != 'pdf'
       },
 
       iconType(name) {
-        var fileExt = name.split('.').pop()
+        let fileExt = name.split('.').pop()
         switch(fileExt){
           case 'pdf': return "icon_pdf"
+          
           case 'png':
           case 'gif':
           case 'jpg': return 'icon_img'
+
           case 'doc':
           case 'docx': return 'icon_word'
+          
           case 'xls':
           case 'xlsx': return 'icon_xls'
-
         }
-
         return "icon_img"
       }
-      
     }
-  });
+  };
+
+  <% if modal %>
+    filesappModal = new Vue(vue_data);
+  <% else %>
+    filesapp = new Vue(vue_data);
+  <% end %>
+
 </script>

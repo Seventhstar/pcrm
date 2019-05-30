@@ -62,15 +62,26 @@ function updateRow(name, json, id, newItem = false, group = ''){
   // console.log('replace', replace)
 }
 
-function add_attachments(files) {
-  console.log(files)
-  var filea = (typeof files_2app == "undefined") ? filesapp : files_2app
-    console.log('filea', filea)
-    console.log(typeof files_2app == "undefined")
+function updAttachments(files, owner_id) {
+  let old_files = app.goods_files.filter(f => f.owner_id == owner_id)
+
+  old_files.forEach((file) => {
+    let idx     = app.goods_files.indexOf(file)
+    let file_id = file.value
+    let pg_file = filesapp.ProjectGood.filter(f => f.id == file_id)
+    if (pg_file.length >0) {
+      let idx2    = filesapp.ProjectGood.indexOf(pg_file[0])
+      Vue.delete(filesapp.ProjectGood, idx2)
+    }
+    Vue.delete(app.goods_files, idx)
+  })
+  filesapp.updateLists()
+
   files.forEach((file, ind) => {
-    console.log('file:', file)
-    filea.goods_files.push(file);
-  });
+    app.goods_files.push(file);
+    filesapp.ProjectGood.push(file);
+  })
+  filesapp.updateLists()
 }
 
 function updateOptionRow(name, json, id, newItem = false, group = '') {
@@ -237,7 +248,7 @@ $(function() {
         l = $('form').attr('action');
         url = l+"/edit"+p.replace('#','?').replace('-','=')
       } else if (p=='#tabs-6' ) {
-        console.log('fu')
+        // console.log('fu')
         $('#attach_list').attr('owner_id', $('#upd_modal_project_id').val())
         $('#attach_list').attr('owner_type', 'Project')
       }

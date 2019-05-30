@@ -433,15 +433,21 @@ input[type='number']::-webkit-inner-spin-button {margin: 0 0 0 5px; }
 .historyChange_list_a .item .cont{padding: 0 0 0 12px; margin:0 0 0 20px; background: asset-url('month1.png') no-repeat 0 6px; }
 
 .files_list_a {}
+.files_list li {list-style: none;}
+.files_list span.head{padding: 2px 6px 6px 10px; display: block;}
+.files_list li.audio{ margin-bottom: 20px; border: 1px solid $border-color;  padding: 8px 4px;}
 .files_list_a .item{border-top:1px solid #e5e5e5; padding: 7px;  position:relative; }
 .files_list_a .item.odd {background: #fafafa;}
 .files_list_a .item:first-child {margin-top: 0; border: 0; }
 
 // .files_list_a .item .fname {width: 93%;}
 .files_list_a .item {display: grid; grid-template-columns: 1fr 64px}
+// li.item  .files_list_a {display: grid; grid-template-columns: 1fr 64px}
+li.audio.files_list_a {display: grid; grid-template-columns: 1fr 24px}
+.files_list_a.audio .tools {display: grid; grid-template-rows: 1fr 1fr 1fr}
 
-.files_list_a .item .fname.audio {width: 80%;}
-.fname.audio span {padding: 5px; color: gray;}
+// .files_list_a .item .fname.audio {width: 80%;}
+.audio span { color: gray;} //padding: 5px;
 .show_audio .fname.audio span{float: right;padding: 7px;}
 .show_audio { height: 46px; margin-top: 10px;}
 

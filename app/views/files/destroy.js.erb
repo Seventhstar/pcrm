@@ -1,1 +1,5 @@
-$('#file_<%= @file.id  %>').remove();
+<% if @file.owner.class == 'ProjectGood' %> 
+  filesappModal.deleteFile('<%= @file.owner.class %>', <%= @file.id %>);
+<% else %>
+  filesapp.deleteFile('<%= @file.owner.class %>', <%= @file.id %>);
+<% end %>

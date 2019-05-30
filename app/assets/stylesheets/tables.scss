@@ -6,6 +6,7 @@
 .panel-default .table-heading.goods-list a{ text-decoration-line: underline; color: firebrick; text-decoration-color: brown;}
 .panel-default .table-heading.goods-list a.nonactual{ color: gray; text-decoration-color: gray;}
 
+.modal-grid {display: grid; grid-template-columns: auto 64px;}
 .goods-list {display: grid; grid-template-columns: auto 1fr 30px 25px;}
 .goods-list span {cursor: pointer;}
 span.title {margin-top: 3px}

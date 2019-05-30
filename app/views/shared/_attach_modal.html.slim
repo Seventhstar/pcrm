@@ -1,0 +1,4 @@
+- if !@owner.nil?
+  .filesapp_modal
+    = render "shared/attach_list", modal: true
+  = render 'files/files_vue', data: for_vue(@owner.attachments, [:owner_name]), modal: true

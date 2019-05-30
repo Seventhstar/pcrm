@@ -240,7 +240,7 @@ class ProjectsController < ApplicationController
     #   # puts "@goods.count #{@goods.count}"
     # when 6
 
-      @files    = @project.attachments.secret(is_manager?)
+      @files    = @project.attachments.secret(is_manager?).order(:created_at)
       @goods_files = Attachment.secret(is_manager?).where(owner_type: 'ProjectGood', owner_id: @project.goods.ids)
       
     # when 7

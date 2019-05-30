@@ -1,0 +1,13 @@
+- show = controller.action_name == 'show'
+template v-for="(item, index) in audioList"
+  li :class="liClass(item.secret, true)" :id="'file_'+item.id"
+    span.head
+      |{{item.name}}
+      .fname.audio
+        audio controls="controls"
+          source :src="'/download/'+item.id" type="audio/mp3"
+    - if !show 
+      .tools
+        span :class="iconClass(item.secret)" :file-id="item.id"
+        a class="icon icon_download24" :href="'/download/'+item.id" target="_blank"
+        a data-confirm="Удалить файл?" class="icon icon_remove24" data-remote="true" rel="nofollow" data-method="delete" :href="'/files/'+item.id"

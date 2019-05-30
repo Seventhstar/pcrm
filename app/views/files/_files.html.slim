@@ -1,0 +1,14 @@
+- if !grouped 
+  - if !modal
+    .vtabs 
+      ul
+        li :class="tabClass(tab)" v-for="tab in tabs"
+          a @click="setActive(tab)" {{tab.label}} ({{listCount(tab.value)}})
+
+  .files_list v-if="currentTab.value == 1"
+    = render 'files/doc_list', list_name: list_name, grouped: grouped
+  .files_list v-if="currentTab.value == 2"
+    = render 'files/audio_list', list_name: list_name, grouped: grouped
+- else
+  = render 'files/doc_list', list_name: list_name, grouped: grouped
+  

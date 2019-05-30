@@ -5,7 +5,7 @@ button.close { -webkit-appearance: none; padding: 0; cursor: pointer; background
 .close_grp:hover .icon_close {background-position:-52px 1px; }
 
 
-
+.modal-dialog.img-dialog { border: 1px solid #ccc; padding: 4px; max-width: 1300px; overflow: overlay; max-height: 880px;}
 .modal-header { min-height: 16px;}
 .modal-content{ padding: 40px; }
 .modal-content.file{padding: 10px;}
@@ -25,17 +25,21 @@ button.close { -webkit-appearance: none; padding: 0; cursor: pointer; background
 }
 
 #close_img_modal {
-  right: 50px;
-  top: 50px;
-  position: absolute;
-  background-color: gray;
-  padding: 10px;
-  border-radius: 5px;
+  // right: 50px;
+  // top: 50px;
+  // position: absolute;
+  // background-color: gray;
+  // padding: 10px;
+  // border-radius: 5px;
+    background-color: gray;
+    width: 16px;
+    padding: 13px;
+    border-radius: 9px;
+    height: 16px;
+    margin-left: 5px;
 }
 
-[v-cloak] {
- display: none;
-}
+[v-cloak] {display: none; }
 
 #app {
  max-width: 1080px;

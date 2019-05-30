@@ -1,1 +1,5 @@
-filesapp['<%=@file.owner.class %>'].push(<%= for_vue(@file, [:owner_name]) %>)
+<% if @cls == 'ProjectGood' %> 
+  filesappModal.setData('ProjectGood', <%= for_vue(@file, [:owner_name]) %>);
+<% else %>
+  filesapp.setData('<%= @cls %>', <%= for_vue(@file, [:owner_name]) %>);
+<% end %>

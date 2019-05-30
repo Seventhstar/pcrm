@@ -1,6 +1,7 @@
 <% if !@owner.nil? %>
   <% list_name ||= @owner.class %>
   <% grouped ||= false %>
+  <% modal ||= false %>
   <% is_pg_class = @owner.class.name == 'ProjectGood' %>
   <% btn_title = is_pg_class ? 'Добавить счет или КП' : 'Добавить файл' %>
 
@@ -31,9 +32,9 @@
         owner_cache = ""
         data-url = "/files" 
         owner_id = "<%= @owner.id %>" 
-        owner_type = "<%= self.controller_name %>" 
+        owner_type = "<%= @owner.class %>" 
         multiple = "" 
         style = "display: none;">
 
- <%= render "files/files", list_name: list_name, grouped: grouped %>
+ <%= render "files/files", list_name: list_name, grouped: grouped, modal: modal %>
 <% end %>

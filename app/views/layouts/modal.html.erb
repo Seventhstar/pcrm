@@ -1,11 +1,19 @@
-<% if controller.controller_name=='files' %>
+<% if controller.controller_name == 'files' %>
   <div id="modal_img_container" class="modal" tabindex="-1">
-   <div id="close_img_modal">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="icon icon_close"></span></button>
-  </div>
-  <div class="modal-dialog">
-    <%= yield %>
-  </div>
+    <div class="modal-grid">
+      <div class="modal-dialog img-dialog">
+        <% if @ext == '.pdf' %>
+          <%= render "pdf_viewer" %>
+        <% else %>
+          <%= yield %>
+        <% end %>
+      </div>
+      <div id="close_img_modal">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          <span class="icon icon_close"></span>
+        </button>
+      </div>
+    </div>  
   </div>
 
 <% else %>

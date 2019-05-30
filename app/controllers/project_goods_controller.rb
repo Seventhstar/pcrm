@@ -103,17 +103,13 @@ class ProjectGoodsController < ApplicationController
   end
 
   def create
-    # return if find_by_params
     pg_params.delete :group
     @prj_good = ProjectGood.new(pg_params)
     @file_cache = pg_params[:file_cache]
-    # puts "@file_cache", @file_cache
     @cur_id = pg_params[:owner_id]
     if @prj_good.save
       update_cache_files(@prj_good, @file_cache)
       @new_attachments = for_vue(@prj_good.attachments, 'owner_name')
-      puts "@new_attachments #{@new_attachments }"
-      puts "@prj_good.errors.full_messages #{@prj_good.errors.full_messages}"
       respond_with @prj_good
     else
       respond_to do |format|
@@ -132,7 +128,7 @@ class ProjectGoodsController < ApplicationController
       @group  = pg_params[:group]
       pg_params.delete :group
       @prj_good.update(pg_params)  
-
+      puts "@prj_good.attachments #{@prj_good.attachments}"
       respond_with @prj_good
   end
 

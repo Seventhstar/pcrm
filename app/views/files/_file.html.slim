@@ -1,7 +1,11 @@
-li class="item #{odd ? 'odd' : '' }" id="file_#{file.id}"
-  = file_default_action(file)
-  .tools
-    a.icon.icon_download href=file.download_path target="_blank"
-    = link_to '', file_path(file), method: :delete, remote: true, data: {confirm: 'Удалить файл?' }, class: 'icon icon_remove_file'
-
-
+- show = controller.action_name == 'show'
+li :class="liClass(item.secret)" :id="'file_'+item.id" 
+  .fname
+    a :class="iconType(item.name)" :href="'/files/'+item.id" data-modal="true" {{item.name}}  
+  - if !show 
+    .tools 
+      - if is_manager?
+        span :class="iconClass(item.secret)" :file-id="item.id" 
+      a.icon.icon_download :href="'/download/'+item.id" target="_blank" 
+      - if is_manager?
+        a.icon.icon_remove_file :href="'/files/'+item.id" data-confirm="Удалить файл?" data-method="delete" data-remote="true" rel="nofollow" 

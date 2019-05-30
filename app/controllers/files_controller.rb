@@ -28,13 +28,16 @@ class FilesController < ApplicationController
 
       name = uploaded_io.original_filename
       dir = Rails.root.join('public', 'uploads', folder, subfolder)
-      puts "dir #{dir}"
+      # puts "dir #{dir}"
       FileUtils.mkdir_p(dir) unless File.exists?(dir)
       id = append_file(name)
       open(dir+(id.to_s+File.extname(name)), 'wb') do |file|
-       file.write(uploaded_io.read)
-     end
-   end
+        file.write(uploaded_io.read)
+      end
+
+      @cls = params[:owner_type].to_s
+      # puts "cls = #{@cls} #{params[:owner_type]}"
+    end
    # render layout: false, content_type: "text/html"
  end
 
@@ -53,18 +56,22 @@ class FilesController < ApplicationController
 
   def show
     file = Attachment.find(params[:id])
-    puts "File.extname(file.name) #{File.extname(file.name)}" 
-    if File.extname(file.name) == "pdf"
-      dir = Rails.root.join('public', 'uploads', file.owner_type, file.owner.id.to_s, file.id.to_s+File.extname(file.name))
-      send_file(dir, filename: file.name, type: 'application/pdf', disposition: :inline)
-    else
+    @file_id = params[:id]
+    @ext = File.extname(file.name)
+    # puts "File.extname(file.name) #{File.extname(file.name)}" 
+    @dir = Rails.root.join('public', 'uploads', file.owner_type, file.owner.id.to_s, file.id.to_s+File.extname(file.name))
+    # if File.extname(file.name) == "pdf"
+    #   dir = Rails.root.join('public', 'uploads', file.owner_type, file.owner.id.to_s, file.id.to_s+File.extname(file.name))
+    #   send_file(dir, filename: file.name, type: 'application/pdf', disposition: :inline)
+    # else
       @img = "/download/#{params[:id]}"
       respond_modal_with @img, location: root_path
-    end
+    # end
   end
 
   def download
     file = Attachment.find(params[:id])
+    @ext = File.extname(file.name)
     dir = Rails.root.join('public', 'uploads', file.owner_type, file.owner.id.to_s, file.id.to_s+File.extname(file.name))
     send_file(dir, filename: file.name, disposition: 'attachment')
   end

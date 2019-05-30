@@ -14,7 +14,14 @@ class ApplicationController < ActionController::Base
   before_action :set_paper_trail_whodunnit
   before_action :gon_user
 
-    
+
+  def default_url_options 
+    if Rails.env.production?
+      {:host => "crmpp.com"}
+    else  
+      {}
+    end
+  end    
 
   def logged_in_user
       unless logged_in?

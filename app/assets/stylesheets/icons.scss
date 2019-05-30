@@ -30,17 +30,21 @@ a:hover .icon_user, .active .icon_user {background-position:-18px -18px; }
 .hl .icon_remove {margin-top: 4px !important;}
 
 .icon_remove_1, .icon_remove_file {background-position:-119px -9px; width: 9px; height: 9px;}
+.icon_remove24 {background: asset-url('del24.png') no-repeat;  width: 24px; height: 24px; }
 .icon_remove_1:hover {background-position:-119px 0; cursor: pointer;}
 
 .icon_download {background-position:-130px 0; width: 12px; height: 12px;}
+.icon_download24 {background: asset-url('icon_save.png') no-repeat;  width: 24px; height: 24px; margin-left: 3px;}
 .icon_chat {background-position:-144px 0; margin: 0 10px 0 0 !important; }
 .icon_important {background-position:-144px -16px; margin: 0 10px 0 0 !important; }
 
 .icon_birthday {background-position:-163px 0; width: 15px; height: 20px;}
 .icon_file {background-position:-180px 0; width: 12px; height: 16px;}
+
 .icon_lock{background-position:-230px -16px; width: 16px; height: 16px;}
 .icon_lock.locked{background-position:-230px 0; width: 16px; height: 16px;}
-
+.audio .icon_lock{background: asset-url('lock-open24.png') no-repeat; width: 24px; height: 24px;}
+.audio .icon_lock.locked{background: asset-url('lock24.png') no-repeat; width: 24px; height: 24px;}
 
 .tbl_a table td.tools, td.edit_delete{width: 41px; padding-right: 10px; margin:0 0 0 0; font-size: 0; white-space:nowrap;}
 .tbl_a table td.tools .icon, table .icon {margin:0 10px 0 0;}
