@@ -1,18 +1,16 @@
 class ProjectsController < ApplicationController
+  include Sortable
+  include Commentable
+  include CommonHelper
+  include ProjectsHelper
+
   before_action :logged_in_user
   before_action :check_sum,   only: [:create, :update]
   before_action :def_params,  only: [:new, :create, :edit, :update]
   before_action :set_project, only: [:show, :edit, :update, :destroy, :update_client]
-
-  include Sortable
-  include CommonHelper
-  include ProjectsHelper
   
   respond_to :html, :json, :js
 
-
-  # GET /projects
-  # GET /projects.json
   def index
     @years = (2016..Date.today.year).step(1).to_a.reverse
     @executors = User.where(activated: true).order(:name)
@@ -64,7 +62,6 @@ class ProjectsController < ApplicationController
                 .by_year(params[:year])
                 .by_ids(prjs_ids)
                 .order("#{sort_1} #{sort_direction}, #{sort_2} #{dir_2}, projects.number desc")
-
 
     store_prj_path
     @sort = sort_1
@@ -270,13 +267,7 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       if @project.save
-        # wkwjhek
-        if params[:project][:first_comment] && !params[:project][:first_comment].empty?
-          comm = @project.comments.new
-          comm.comment = params[:project][:first_comment]
-          comm.user_id = params[:project][:owner_id]
-          comm.save
-        end
+        create_first_comment(@project)
         format.html { redirect_to project_page_url, notice: 'Проект успешно создан' }
         format.json { render :show, status: :created, location: @project }
       else

@@ -135,6 +135,7 @@ module CommonHelper
   end
 
   def get_last_history_item(obj)
+    return if obj.nil?
     history = Hash.new
     # изменения в самом объекте
     version = obj.versions.last || @version
@@ -264,6 +265,7 @@ module CommonHelper
   end
 
   def get_history_with_files(obj)
+    return if obj.nil?
     history = Hash.new
     # изменения в самом объекте
     obj.versions.reverse.each do |version|

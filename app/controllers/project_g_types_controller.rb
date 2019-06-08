@@ -10,7 +10,7 @@ class ProjectGTypesController < ApplicationController
           format.html { redirect_to absences_url, notice: 'Менеджер успешно создан.' }
           format.json { render json: @pe.errors, status: :ok, location: @pe }
         else
-          format.html { render :nothing => true }
+          format.html { render nothing: true }
           format.json { render json: @pe.errors, status: :unprocessable_entity }
         end
       end 
@@ -31,6 +31,6 @@ class ProjectGTypesController < ApplicationController
     end
 
     def pe_params
-      params.require(:g_type).permit(:project_id,:g_type_id)
+      params.require(:g_type).permit(:project_id, :g_type_id)
     end
 end

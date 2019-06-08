@@ -1,11 +1,13 @@
 class LeadsController < ApplicationController
   include LeadsHelper
   include CommonHelper
-  before_action :logged_in_user
-
-  before_action :set_lead, only: [:show, :edit, :update, :destroy]
-  before_action :logged_in_user
   include Sortable
+  include Commentable
+
+  before_action :logged_in_user
+  before_action :set_lead, only: [:show, :edit, :update, :destroy]
+  before_action :def_params, only: [:show, :edit, :new, :update]
+  before_action :logged_in_user
 
   respond_to :html, :json
 
@@ -97,22 +99,11 @@ class LeadsController < ApplicationController
       return
     end
     @title = 'Просмотр лида'
-
-    def_params
-
     @comm_height = 488 #488
     respond_modal_with @lead, location: root_path
   end
 
-  def def_params
-    @channels = Channel.all
-    @statuses = Status.all
-    @owner    = @lead
-    @files    = @lead.attachments
-    @history  = get_history_with_files(@lead)
-    @priorities = Priority.all
-    @lead.priority_id = 1 if @lead.priority_id.nil?
-  end
+
 
   # GET /leads/new
   def new
@@ -123,8 +114,6 @@ class LeadsController < ApplicationController
     @lead.channel_id = 1
     @lead.priority_id = 1
     @lead.city_id = current_user.city_id
-
-    def_params
   end
 
   # GET /leads/1/edit
@@ -133,10 +122,7 @@ class LeadsController < ApplicationController
       redirect_to leads_url
       return
     end
-    def_params
-    @comm_height = 486
-    
-    
+    @comm_height = 482
   end
 
   # POST /leads
@@ -145,23 +131,13 @@ class LeadsController < ApplicationController
     @lead = Lead.new(lead_params)
     @channels = Channel.all
 
-    # respond_to do |format|
-      if @lead.save
-       if !params[:lead][:first_comment]&.empty?
-        comm = @lead.comments.new
-        comm.comment = params[:lead][:first_comment]
-        comm.user_id = params[:lead][:user_id]
-        comm.save
-       end
-       # format.html { redirect_to leads_page_url}
-       # format.json { render :show, status: :created, location: @lead }
-       respond_with @lead, location: -> { leads_page_url }
-      else
-       def_params
-       respond_with @lead
-       # format.json { render json: @lead.errors, status: :unprocessable_entity }
-      end
-     # end
+    if @lead.save
+      create_first_comment(@lead)
+      respond_with @lead, location: -> { leads_page_url }
+    else
+      def_params
+      respond_with @lead
+    end
   end
 
   # PATCH/PUT /leads/1
@@ -170,14 +146,10 @@ class LeadsController < ApplicationController
     respond_to do |format|
       if @lead.update(lead_params)
         format.html { redirect_to leads_page_url, notice: 'Лид успешно обновлен.' }
-#        format.html { redirect_back_or leads_url }
-        # format.json { render :show, status: :ok, location: @lead }
       else
         def_params
         flash.now[:danger] = @lead.errors.full_messages
         format.html { render :edit }
-        # redirect_to [:edit,@lead]
-        # format.json { render json: @lead.errors.full_messages, status: :unprocessable_entity }
       end
     end
 
@@ -211,19 +183,31 @@ class LeadsController < ApplicationController
         {resource_name: t("Lead")}
     end
 
-  def sort_column
-    default_column = "status_date"
-    srt = params[:sort]
-    (Lead.column_names.include?(srt) || srt == 'ic_users.name' || srt == 'users.name' ) ? srt : default_column
-  end
+    def def_params
+      @channels = Channel.all
+      @statuses = Status.all
+      @owner    = @lead
+      @history  = get_history_with_files(@lead)
+      @priorities = Priority.all
+      if @lead.present?
+        @files    = @lead.attachments 
+        @lead.priority_id = 1 if @lead.priority_id.nil?
+      end
+    end
 
-  def sort_2
-    Lead.column_names.include?(params[:sort2]) ? params[:sort2] : "status_date"
-  end
+    def sort_column
+      default_column = "status_date"
+      srt = params[:sort]
+      (Lead.column_names.include?(srt) || srt == 'ic_users.name' || srt == 'users.name' ) ? srt : default_column
+    end
 
-  def sort_direction
-    defaul_dir = sort_column == 'status_date' ? "asc": "desc"
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : defaul_dir
-  end
+    def sort_2
+      Lead.column_names.include?(params[:sort2]) ? params[:sort2] : "status_date"
+    end
+
+    def sort_direction
+      defaul_dir = sort_column == 'status_date' ? "asc": "desc"
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : defaul_dir
+    end
 
 end

@@ -38,9 +38,9 @@
       return
     success: (data, textStatus, jqXHR ) ->
       if data.includes('.js-notes')
-        show_ajax_message('Записан новый элемент' + data)
+        eval(data)
       else
-        show_ajax_message('Успешно записан новый элемент')
+        show_ajax_message('Записан новый элемент' + data)
   return
 
 @delete_item = (url) -> 

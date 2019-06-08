@@ -2,18 +2,18 @@ require_relative '../acceptance_helper'
 
 feature 'create/edit lead & add comment'  do
 
-  given!(:city)    { create(:city) }
-  given!(:user)    { create(:user) }
-  given!(:channel) { create(:channel)}
-  given!(:channel2) { create(:channel)}
-  given!(:status)  { create(:status)  }
-  given!(:priority){ create(:priority) }
+  given!(:city)     { create(:city) }
+  given!(:user)     { create(:user) }
+  given!(:status)   { create(:status) }
+  given!(:channel)  { create(:channel) }
+  given!(:channel2) { create(:channel) }
+  given!(:priority) { create(:priority) }
 
   let(:user) {create(:user)}
   let(:lead) {create(:lead, channel: channel, 
-                             status: status, user: user, info: status.name,
-                            ic_user: user, start_date: Date.today, 
-                            status_date: Date.today, city: city) }
+                            ic_user: user, status: status, user: user, 
+                            start_date: Date.today, info: status.name,
+                            status_date: Date.today, city: city)}
 
   scenario 'Authenticated user creates a valid lead', js: true do
     sign_in(user)
@@ -44,6 +44,8 @@ feature 'create/edit lead & add comment'  do
     wait_for_ajax
     expect(page).to have_selector('.comments_list_a li', count: 3)
     
+    # click_on 'ui-id-2'
+    click_on 'Файлы'
     attach_file 'attach_list', "#{Rails.root}/spec/spec_helper.rb", make_visible: true
   end
 

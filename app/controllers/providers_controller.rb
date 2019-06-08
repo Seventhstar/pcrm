@@ -73,7 +73,7 @@ class ProvidersController < ApplicationController
                          .by_search(params[:search])
                          .by_pstatus(params[:p_status])
                          .by_goodstype(gtp)
-                         .order(:name) # find(ids, :order => :name)
+                         .order(:name) # find(ids, order: :name)
     @ids = @providers.ids
                          # .where(id: @ids)
 

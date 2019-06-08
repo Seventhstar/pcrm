@@ -247,7 +247,7 @@ $(function() {
       if ($(p).html() == undefined || ($('.good_group').size()==0 && p=='#tabs-4' )) {
         l = $('form').attr('action');
         url = l+"/edit"+p.replace('#','?').replace('-','=')
-      } else if (p=='#tabs-6' ) {
+      } else if (p == '#tabs-6' ) {
         // console.log('fu')
         $('#attach_list').attr('owner_id', $('#upd_modal_project_id').val())
         $('#attach_list').attr('owner_type', 'Project')

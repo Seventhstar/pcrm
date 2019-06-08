@@ -25,7 +25,7 @@ class PaymentsController < ApplicationController
 
     ids = pt_ids & s_ids & pp_ids & prj_ids & a_ids
       
-    @payments = @payments.where(:id => ids).order(:date)
+    @payments = @payments.where(id: ids).order(:date)
   end
 
 

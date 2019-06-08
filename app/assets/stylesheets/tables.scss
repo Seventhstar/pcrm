@@ -70,7 +70,8 @@ table.tbl_fc td.last_td{padding: 0 !important; }
 table.tbl_fc td.caption{ padding-right: 15px; padding-top: 7px; text-align:right; font-weight: 500; }
 table.tbl_fc td.caption2{width: 235px; padding-right: 15px; padding-top: 0px; text-align:right; font-weight: 500; }
 
-.provider table.tbl_fc td.caption{ width: 120px; }
+.provider table.tbl_fc td.caption,
+#new_lead .panel-right table.tbl_fc td.caption{ width: 120px; }
 // .tbl_w_links .head a {text-decoration-style: dotted; text-decoration-color: #999;}
 .table-body-scroll{overflow-x: auto;}
 

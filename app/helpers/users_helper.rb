@@ -1,6 +1,6 @@
 module UsersHelper
   def user_option(id)
-    f = @user.options.find_by_option_id(id) #where(:option_id => id)
+    f = @user.options.find_by_option_id(id) #where(option_id: id)
     f.nil? ? false : f.value
   end
 
@@ -32,8 +32,8 @@ module UsersHelper
 
       if diff <8 && diff >=-1 
         d = content_tag :span,txt
-        e = content_tag("span","",{:class=>'icon icon_birthday'})
-        c = content_tag :span, {:class => 'red message'} do
+        e = content_tag("span","",{class: 'icon icon_birthday'})
+        c = content_tag :span, {class: 'red message'} do
           d + e
         end
         a  + c

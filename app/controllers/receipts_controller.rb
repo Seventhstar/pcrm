@@ -45,7 +45,7 @@ class ReceiptsController < ApplicationController
 
     ids = p_ids & s_ids & pt_ids & prj_ids & u_ids & a_ids
       
-    @receipts = @receipts.where(:id => ids).order(:date)
+    @receipts = @receipts.where(id: ids).order(:date)
     #@sum = @receipts.sum(:sum)
   end
 

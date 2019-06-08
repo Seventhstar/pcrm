@@ -6,10 +6,10 @@
     <table class="tbl_fc tbl_fc">
       <tr><td class="caption">Проект:</td>
         <td colspan="3"><div class="inp_w">
-         <%= chosen_src "project_id", @projects, @payment,{nil_value: 'Проект...', p_name: 'address'} %>  
+         <%= chosen_src "project_id", @projects, @payment, {nil_value: 'Проект...', p_name: 'address'} %>  
         </div></td></tr>
     <tr><td class="caption">Дата:</td>
-        <td width="140px;"><div class="inp_w"><%= f.text_field :date, :value => @date, label: false, class: "txt datepicker" %></div></td>
+        <td width="140px;"><div class="inp_w"><%= f.text_field :date, value: @date, label: false, class: "txt datepicker" %></div></td>
         <td></td>
         <td ><label class="inp_btn_label">
               <div class="inp_btn checkbox <%= @payment.verified ? 'active' :'' %>"><%= f.check_box :verified %></div>Проверен</label></td>
@@ -22,7 +22,7 @@
         </td>
         <td class="caption">Вид платежа:</td>
         <td><div class="inp_w">
-        <%= chosen_src "payment_type_id", PaymentType.all, @payment,{nil_value: 'Вид платежа...',order: 'id'} %> 
+        <%= chosen_src "payment_type_id", PaymentType.all, @payment, {nil_value: 'Вид платежа...', order: 'id'} %> 
       </div></td>
         </tr>
 
@@ -37,7 +37,7 @@
         <%= chosen_src 'payment_purpose_id', PaymentPurpose.all, @payment,{order: 'id'} %>  
         </div></td></tr>
       <td class="caption">Комментарий:</td>
-      <td><div class="inp_w"><%= f.text_area :description, class: 'txt alone',label: false %></div></td></tr>
+      <td><div class="inp_w"><%= f.text_area :description, class: 'txt alone', label: false %></div></td></tr>
     </table>
     </div>
 

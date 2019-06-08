@@ -10,7 +10,7 @@ class DevelopsController < ApplicationController
     params.delete_if{|k,v| (v=='' || v=='0') && k!='develops_status_id'}
     page = params[:page].nil? ? 1 : params[:page]
     search = params[:search]
-    @develops = Develop.search(search).order('project_id desc')#.paginate(:page => page, :per_page => 5)
+    @develops = Develop.search(search).order('project_id desc')#.paginate(page: page, per_page: 5)
     @project_id = params['develops_project_id']
 
     @dev_statuses = DevStatus.order(:id)
@@ -29,7 +29,7 @@ class DevelopsController < ApplicationController
     @develops = @develops.where(dev_status_id: @dev_status_id).where.not(priority_id: 4) if @dev_status_id!="0"
     @develops = @develops.where(ic_user_id: @ic_user_id) 
     @develops = @develops.where(project_id: params['develops_project_id'] ) if !params['develops_project_id'].nil?
-    @develops = @develops.paginate(:page => page, :per_page => 20)
+    @develops = @develops.paginate(page: page, per_page: 20)
     
     @ic_users = Develop.group(:ic_user_id)
                    .select(:ic_user_id, "count(id) as count" )

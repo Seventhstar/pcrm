@@ -1,9 +1,8 @@
 <div class="page-wrapper">
   <div class="js-notes has-note">
     <% flash.each do |name, msg| %>
-      <%= content_tag :div, msg, :id => "flash_#{name}", :class => "alert fade-in in flash_#{name}" %>
+      <%= content_tag :div, msg, id: "flash_#{name}", class: "alert fade-in in flash_#{name}" %>
     <% end %>
-
     <a class="close note-close" href="#"></a>
   </div>
 
@@ -14,8 +13,7 @@
     <%= form_for(:password_reset, url: password_resets_path) do |f| %>      
       <%= f.label 'E-mail:' %>
       <%= f.email_field :email, class: 'form-control' %>
-      
-      <%= f.submit 'Отправить', :class => 'sub btn_a password_resets right' %></td></tr>
+      <%= f.submit 'Отправить', class: 'sub btn_a password_resets right' %></td></tr>
     <% end %>
   </div>
 </div>

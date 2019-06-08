@@ -1,8 +1,8 @@
 module AbsencesHelper
 
   def day_abs(day)
-    #Absence.where(:dt_from  => day.beginning_of_day..day.end_of_day)
-    Absence.where(' dt_from <= ? and dt_to >= ?',day.end_of_day, day.beginning_of_day)
+    #Absence.where(dt_from: day.beginning_of_day..day.end_of_day)
+    Absence.where(' dt_from <= ? and dt_to >= ?', day.end_of_day, day.beginning_of_day)
   end
 
   def day_class(day, month)
@@ -32,16 +32,16 @@ module AbsencesHelper
   def abs_description(a)
       tooltip_str_from_hash({ a.user_name => ' ', 
         'причина:' => a.reason_name, 
-        'объект:' => a.project_name, 
+        'объект:'  => a.project_name, 
         'c  ' => a.dt_from.try('strftime',"%d.%m.%Y %H:%M"),
-        'по'=>a.dt_to.try('strftime',"%d.%m.%Y %H:%M")
+        'по'  => a.dt_to.try('strftime',"%d.%m.%Y %H:%M")
         })
   end
 
   def date_birth_li(day_births, day)
     dm = day.try('strftime','%d.%m')
     if day_births.keys.include? dm 
-       content_tag :li, ['<b>',day_births[dm],'</b><br>','День рождения'].join.html_safe, {class: 'birthday ', 'data-toggle' =>"tooltip", 'data-placement' => "top", :title => 'День рождения'}
+       content_tag :li, ['<b>',day_births[dm],'</b><br>','День рождения'].join.html_safe, {class: 'birthday ', 'data-toggle' => "tooltip", 'data-placement' => "top", title: 'День рождения'}
     end
 
   end

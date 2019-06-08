@@ -10,7 +10,7 @@ class DevelopMailer < ActionMailer::Base
       admins = User.where(admin: true).ids
       admins = admins & UserOption.where(option_id: option_id).pluck(:user_id) if !option_id.nil?
       emails = User.where(id: admins).pluck(:email)
-      mail(:to => emails, :subject => subj) do |format|
+      mail(to: emails, subject: subj) do |format|
         format.html
       end
     end

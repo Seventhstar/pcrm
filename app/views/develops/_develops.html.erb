@@ -9,7 +9,7 @@
   <% prj_name = project_name(develop.id) %>
   <% if cur_prj != prj_name %>
     <% cur_prj = prj_name %>
-    <%= render "head", {:first_table => first_table, :heading => prj_name } %>
+    <%= render "head", {first_table: first_table, heading: prj_name} %>
     <% first_table = false %>
   <% end %>        
 
