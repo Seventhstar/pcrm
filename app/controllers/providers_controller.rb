@@ -22,10 +22,11 @@ class ProvidersController < ApplicationController
     @param_budget = params[:budget]
     @param_goodstype = params[:goodstype]
     @param_p_status = params[:p_status]
-    @param_p_status = 5 if @param_p_status.nil?
+    @p_status = PStatus.find(5) if @param_p_status.nil?
+    # @param_p_status = 5 if @param_p_status.nil?
 
     @param_search = params[:search]
-    @only_actual = !params[:only_actual] || params[:only_actual] == "true"
+    # @only_actual = !params[:only_actual] || params[:only_actual] == "true"
 
     all_ids = Provider.order(:name).ids
     # sp = all_ids
@@ -68,12 +69,26 @@ class ProvidersController < ApplicationController
                          # .joins(:provider_goodstypes)
                          # .by_budget(params[:budget])
                          # .by_style(params[:style])
+                         # erkj
+    @provider_goodstypes = ProviderGoodstype.all
     @providers = Provider.by_city(@main_city)
                          .only_actual(@only_actual)
                          .by_search(params[:search])
                          .by_pstatus(params[:p_status])
                          .by_goodstype(gtp)
                          .order(:name) # find(ids, order: :name)
+
+    @json_providers = @providers.map{|p| {
+      id: p.id,
+      name: p.name,
+      phone: p.phone.split(',').join('<br/>').html_safe,
+      url: p.url,
+      address: p.address,
+      p_status: p.p_status_id,
+      spec: '',
+      group: p.providers_group&.name
+    }}
+
     @ids = @providers.ids
                          # .where(id: @ids)
 
@@ -127,7 +142,7 @@ class ProvidersController < ApplicationController
   # POST /providers
   # POST /providers.json
   def create
-    puts "provider_params #{provider_params}"
+    # puts "provider_params #{provider_params}"
     @provider = Provider.new(provider_params)
 
     respond_to do |format|
@@ -135,8 +150,8 @@ class ProvidersController < ApplicationController
         format.html { redirect_to providers_page_url, notice: 'Поставщик успешно создан.' }
         format.json { render :show, status: :created, location: @provider }
       else
-        puts "@provider.errors #{@provider.errors.full_messages}"
-        puts "@provider #{@provider.to_json}"
+        # puts "@provider.errors #{@provider.errors.full_messages}"
+        # puts "@provider #{@provider.to_json}"
         format.html { render :new }
         format.json { render json: @provider.errors, status: :unprocessable_entity }
       end
@@ -147,7 +162,9 @@ class ProvidersController < ApplicationController
   # PATCH/PUT /providers/1.json
   def update
     respond_to do |format|
-      if @provider.update(provider_params)
+      pp = provider_params[:providers_group_id]=="0" ? provider_params.except(:providers_group_id) : provider_params
+
+      if @provider.update(pp)
       #@provider = Provider.find(params[:id])
       #if @provider.update_attributes(params[:provider])
         format.html { redirect_to providers_page_url, notice: 'Поставщик успешно обновлен.' }
@@ -180,8 +197,9 @@ class ProvidersController < ApplicationController
     def provider_params
       params.require(:provider).permit( :name, :manager, :phone, :komment, :address, 
                                         :email, :url, :spec, :p_status_id, :city_id,
-        budget_ids: [], style_ids: [], goodstype_ids: [], 
-        special_infos_attributes: [:id, :content, :_destroy])
+                                        :providers_group_id,
+                                        budget_ids: [], style_ids: [], goodstype_ids: [], 
+                                        special_infos_attributes: [:id, :content, :_destroy])
     end
 
     def sort_column

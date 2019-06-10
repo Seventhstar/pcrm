@@ -1,8 +1,17 @@
 GIT
-  remote: https://github.com/codahale/bcrypt-ruby.git
-  revision: 7644e3684d96fb49f5aa20cb5f547cb1b56b3f38
+  remote: https://github.com/Seventhstar/pdfjs_viewer-rails2.git
+  revision: 5b84ad284d657987f590142ef672a52d6ce2debb
   specs:
-    bcrypt (3.1.12)
+    pdfjs_viewer-rails (0.3.1)
+      json (> 1.8.4)
+      rails (> 4.2.0)
+      sass-rails (~> 5.0)
+
+GIT
+  remote: https://github.com/codahale/bcrypt-ruby.git
+  revision: 011b67ba550457dab5d6084128888f08476f278a
+  specs:
+    bcrypt (3.1.13)
 
 GEM
   remote: https://rubygems.org/
@@ -59,13 +68,13 @@ GEM
     bootstrap_tokenfield_rails (0.12.1)
     builder (3.2.3)
     byebug (11.0.1)
-    capybara (3.17.0)
+    capybara (3.22.0)
       addressable
       mini_mime (>= 0.1.3)
       nokogiri (~> 1.8)
       rack (>= 1.6.0)
       rack-test (>= 0.6.3)
-      regexp_parser (~> 1.2)
+      regexp_parser (~> 1.5)
       xpath (~> 3.2)
     carrierwave (1.3.1)
       activemodel (>= 4.0.0)
@@ -94,12 +103,10 @@ GEM
     factory_bot_rails (5.0.2)
       factory_bot (~> 5.0.2)
       railties (>= 4.2.0)
-    ffi (1.10.0)
-    ffi (1.10.0-x64-mingw32)
+    ffi (1.11.1)
+    ffi (1.11.1-x64-mingw32)
     font-kit-rails (1.2.0)
       rails
-    formtastic (3.1.5)
-      actionpack (>= 3.2.13)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     gon (6.2.1)
@@ -109,9 +116,8 @@ GEM
     httpclient (2.8.3)
     i18n (1.6.0)
       concurrent-ruby (~> 1.0)
-    jbuilder (2.8.0)
+    jbuilder (2.9.1)
       activesupport (>= 4.2.0)
-      multi_json (>= 1.2)
     jquery-rails (4.3.3)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
@@ -138,7 +144,7 @@ GEM
     mime-types-data (3.2019.0331)
     mini_magick (4.9.3)
     mini_mime (1.0.1)
-    mini_portile2 (2.3.0)
+    mini_portile2 (2.4.0)
     minitest (5.11.3)
     momentjs-rails (2.20.1)
       railties (>= 3.1)
@@ -146,10 +152,10 @@ GEM
     mustache-js-rails (3.0.1)
       railties (>= 3.1, < 6)
     nio4r (2.3.1)
-    nokogiri (1.8.2)
-      mini_portile2 (~> 2.3.0)
-    nokogiri (1.8.2-x64-mingw32)
-      mini_portile2 (~> 2.3.0)
+    nokogiri (1.10.2)
+      mini_portile2 (~> 2.4.0)
+    nokogiri (1.10.2-x64-mingw32)
+      mini_portile2 (~> 2.4.0)
     nprogress-rails (0.2.0.2)
     paper_trail (8.1.2)
       activerecord (>= 4.2, < 5.2)
@@ -163,10 +169,8 @@ GEM
       ttfunk (~> 1.5)
     prawn-table (0.2.2)
       prawn (>= 1.3.0, < 3.0.0)
-    public_suffix (3.0.3)
+    public_suffix (3.1.0)
     puma (3.12.1)
-    pundit (2.0.1)
-      activesupport (>= 3.0.0)
     rack (2.0.7)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
@@ -207,8 +211,8 @@ GEM
     rb-inotify (0.10.0)
       ffi (~> 1.0)
     rdoc (4.3.0)
-    regexp_parser (1.4.0)
-    remotipart (1.4.2)
+    regexp_parser (1.5.1)
+    remotipart (1.4.3)
     request_store (1.4.1)
       rack (>= 1.4)
     responders (2.4.1)
@@ -235,7 +239,7 @@ GEM
       rspec-mocks (~> 3.8.0)
       rspec-support (~> 3.8.0)
     rspec-support (3.8.0)
-    rubyzip (1.2.2)
+    rubyzip (1.2.3)
     sass (3.7.4)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -250,10 +254,10 @@ GEM
     sdoc (0.4.2)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
-    selenium-webdriver (3.141.5926)
+    selenium-webdriver (3.142.3)
       childprocess (>= 0.5, < 2.0)
       rubyzip (~> 1.2, >= 1.2.2)
-    shoulda-matchers (4.0.1)
+    shoulda-matchers (4.1.0)
       activesupport (>= 4.2.0)
     simple-navigation (4.0.3)
       activesupport (>= 2.3.2)
@@ -278,7 +282,7 @@ GEM
     thor (0.20.3)
     thread_safe (0.3.6)
     tilt (2.0.9)
-    tinymce-rails (5.0.3)
+    tinymce-rails (5.0.5)
       railties (>= 3.1.1)
     ttfunk (1.5.1)
     tzinfo (1.2.5)
@@ -317,7 +321,6 @@ DEPENDENCIES
   database_cleaner
   factory_bot_rails
   font-kit-rails
-  formtastic (~> 3.0)
   gon
   jbuilder (~> 2.0)
   jquery-rails
@@ -329,15 +332,15 @@ DEPENDENCIES
   mini_magick
   momentjs-rails
   mustache-js-rails
-  nokogiri (= 1.8.2)
+  nokogiri (= 1.10.2)
   nprogress-rails
   paper_trail (= 8.1.2)
+  pdfjs_viewer-rails!
   pg
   plyr-rails
   prawn
   prawn-table
   puma (~> 3.7)
-  pundit
   rails (~> 5.1.3)
   rails-controller-testing
   rails_12factor (= 0.0.2)

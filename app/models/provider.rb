@@ -13,19 +13,19 @@ class Provider < ActiveRecord::Base
   accepts_nested_attributes_for :special_infos
 
   belongs_to :p_status
+  belongs_to :providers_group, optional: true
   belongs_to :city
+
   has_paper_trail
 
-  # scope :by_params, (param)
-  scope :by_search, ->(word){
-    where('LOWER(name) like LOWER(?) or LOWER(address) like LOWER(?)',"%#{word}%","%#{word}%") if word.present?
+  scope :by_city, -> (city) {where(city_id: city.id)}
+  scope :by_style, -> (style) {where(styles: style)}
+  scope :by_pstatus, -> (pstatus) {where(p_status: pstatus) if pstatus}
+  scope :by_goodstype, -> (gtp) {where(id: gtp) if gtp}
+  scope :only_actual, -> (only_actual) {where('p_status_id = 5') if only_actual}
+  scope :by_search, -> (word) {
+    where('LOWER(name) like LOWER(?) or LOWER(address) like LOWER(?)', "%#{word.strip}%", "%#{word.strip}%") if word.present?
   }
-  scope :by_city, -> (city){where(city_id: city.id)}
-  scope :by_style, -> (style){where(styles: style)}
-  # scope :by_budget, -> (budget){where(budgets: budget)}
-  scope :by_pstatus, -> (pstatus){where(p_status: pstatus) if pstatus}
-  scope :by_goodstype, -> (gtp){where(id: gtp) if gtp}
-  scope :only_actual, -> (only_actual){where('p_status_id = 5') if only_actual}
 
   attr_reader :style_tokens
   attr_reader :budget_tokens
@@ -67,7 +67,7 @@ class Provider < ActiveRecord::Base
   end
 
   def goods_type_names
-    self.goodstypes.pluck(:name).join("<br>")
+    self.goodstypes.pluck(:name).join(", ")
   end
 
   def p_status_name

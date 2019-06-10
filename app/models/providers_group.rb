@@ -1,0 +1,2 @@
+class ProvidersGroup < ApplicationRecord
+end

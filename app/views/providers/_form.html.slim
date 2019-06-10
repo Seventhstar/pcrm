@@ -12,6 +12,8 @@
         - else
           = f.hidden_field :p_status_id, value: @provider.p_status_id
         
+        = tr_chosen 'providers_group_id', ProvidersGroup.order(:name), @provider, 'Группа', nil_value: 'Группа...' 
+
         = tr_text f, :komment, 'Примечание'
 
         - if is_manager?

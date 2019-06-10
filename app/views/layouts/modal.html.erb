@@ -1,9 +1,10 @@
 <% if controller.controller_name == 'files' %>
-  <div id="modal_img_container" class="modal" tabindex="-1">
+  <div id="modal_img_container" class="modal <%= @ext == '.pdf' ? 'modal-pdf' : '' %>" tabindex="-1">
     <div class="modal-grid">
       <div class="modal-dialog img-dialog">
         <% if @ext == '.pdf' %>
-          <%= render "pdf_viewer" %>
+          <!-- render "pdf_viewer" -->
+          <%= pdfjs_viewer pdf_url: "/download/#{@file_id}", style: :minimal %>
         <% else %>
           <%= yield %>
         <% end %>

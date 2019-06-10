@@ -85,6 +85,7 @@ Rails.application.routes.draw do
  
   resources :develops
   resources :providers
+  resources :providers_groups
 
   get    'options'  => 'options#edit'
   get    'options/:options_page'  => 'options#edit', constraints: {format: /(json|html)/}
@@ -161,6 +162,8 @@ Rails.application.routes.draw do
 
   get "/history/" => "history#show"
   get "/history/:period" => "history#show"
+
+  mount PdfjsViewer::Rails::Engine => "/pdfjs", as: 'pdfjs'
 
   root to: "leads#index"
 end

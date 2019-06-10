@@ -186,9 +186,9 @@ module ApplicationHelper
     end
   end
 
-  def tr_chosen(id, collection, obj = nil, options = {})
-    label = options.class == String ? options : options[:caption]
-    options = {} if options.class == String
+  def tr_chosen(id, collection, obj = nil, *options)
+    label = options[0].class == String ? options[0] : options[:caption]
+    options = {} if options[0].class == String
     content_tag :tr do
       content_tag(:td, class: "caption") do
         "#{label}:"
@@ -322,6 +322,7 @@ module ApplicationHelper
   end
 
   def chosen_src(id, collection, obj = nil, options = {})
+
     p_name    = options[:p_name].nil? ? 'name' : options[:p_name]
     order     = options[:order].nil? ? p_name : options[:order]
     nil_value = options[:nil_value].nil? ? 'Выберите...' : options[:nil_value]

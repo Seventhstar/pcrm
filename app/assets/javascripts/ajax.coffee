@@ -258,10 +258,11 @@ $(document).ready ->
     # console.log('modal apply')
 
 # поиск 
-  $('#search').on 'keyup', (e)-> 
+  $('#search').on 'keyup clear', (e)-> 
+    console.log(e, event.keyCode)
     c= String.fromCharCode(event.keyCode);
     isWordCharacter = c.match(/\w/);
-    isBackspaceOrDelete = (event.keyCode == 8 || event.keyCode == 46 || event.keyCode == 13);
+    isBackspaceOrDelete = (event.keyCode == 8 || event.keyCode == 46 || event.keyCode == 13 || e.type == 'clear');
     if (isWordCharacter || isBackspaceOrDelete)
        delay('sortable_query({})',700)
     return
@@ -315,17 +316,25 @@ $(document).ready ->
     disable_input_row()
     return
 
+  $('body').on 'keyup', (e) ->
+    if $('.auth_form').length > 0 && e.ctrlKey && e.keyCode == 13
+      $('#login_submit').click()
+    return
+    
   # отправка новых данных
   $('.container').on 'click', 'span.icon_apply', -> 
     apply_opt_change($(this))
+    return
 
   $('body').on 'keyup', '.search-field input', (e) ->
     if e.keyCode == 13
       $('.chcreate').trigger('mousedown')
+    return
 
   $('body').on 'keyup', '#new_item input', (e)->
     if e.keyCode == 13
       $('#btn-sub-send').trigger('click')
+    return
  
   $('body').on 'keyup', '.editable input', (e) ->
     if e.keyCode == 13
@@ -347,12 +356,12 @@ $(document).ready ->
       disable_input()
     return
 
-  $('body').on 'keyup keypress','.edit_project input', (e)->
+  $('body').on 'keyup','.edit_project input', (e)->
     if e.keyCode == 13 || e.keyCode == 8
       e.preventDefault()
     return 
   
-  $('body').on 'keyup keypress', '.simple_options_form',(e) ->
+  $('body').on 'keyup', '.simple_options_form',(e) ->
     code = e.keyCode or e.which
     if code == 13
       e.preventDefault()

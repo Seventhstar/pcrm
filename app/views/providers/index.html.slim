@@ -1,0 +1,46 @@
+.container.providers_index
+  .provider_table_filter
+    div
+      v-chosen name="p_status" placeholder="Статус..." clear=true
+    div
+      v-chosen name="goodstype" placeholder="Вид товара..." clear=true
+    div
+    = link_to 'Добавить', new_provider_path, class: "btn_a btn-add right"
+
+  .container
+    #div_tproviders
+      .panel.panel-default v-for="gt, ind in filteredGoodstypes" v-if="groupKeys[ind].length"
+        .panel-heading.table-heading.head.month
+          |{{gt.label}} 
+
+        div :class="tableClass('providers_index_head grid-head')"
+          template v-for="column in columns"
+            div :class="columnClass(column[0])"
+              a href="#" @click="sortBy(column[0], gt)" {{column[1]}} 
+              .sortArrow
+          .th
+        
+        div :key="'grp'+ind" v-for="grp, i in groupKeys[ind]" 
+          div :key="-2" class='alt_goods_head goods_head' v-if="grp != 'null'"
+              span.title @click="switchOpenedRow(ind, i)" {{grp}} ({{grouped[ind][grp].length}})
+              span cut_id="0" :class="cutRowClass(ind, i)" @click="switchOpenedRow(ind, i)"
+                b
+          transition-group name="slide-fade-y" tag="div" class="fullwidth"
+            div :key="'grp'+ind+'_'+i" :class="rowClass(item, idx)" v-for="item, idx in grouped[ind][grp]" v-show="opened[ind][i]"
+              .td 
+                .icons-indicate v-if="item.p_status == 5"
+                  = image_tag('pri_prov.png', title: 'Приоритетный поставщик')
+                |{{item.name}}
+              .td
+                div v-html="item.spec"
+              .td
+                div v-html="item.phone"
+              .td
+                a v-if="item.url.length>0" target="_blank" :href="siteUrl(item.url)" {{item.url}} 
+              .td
+                |{{item.address}}
+              .td.edit_delete.td_right
+                a.icon.icon_edit :href="editLink(item.id)"
+                a.icon.icon_show data-modal="true" :href="showLink(item.id)"
+      
+= render 'index_vue'

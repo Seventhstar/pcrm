@@ -267,6 +267,10 @@ $(function() {
     toolbar: 'bold italic underline | forecolor backcolor fontsizeselect | bullist numlist '
   });
 
+  $('.navsearch .clear').click(function(){
+    $('#search').val('');
+    $('#search').trigger('clear');
+  });
 
   $('.timepicker').timepicker({ 'timeFormat': 'H:i' });
   

@@ -6,6 +6,8 @@ button.close { -webkit-appearance: none; padding: 0; cursor: pointer; background
 
 
 .modal-dialog.img-dialog { border: 1px solid #ccc; padding: 4px; max-width: 1300px; overflow: overlay; max-height: 880px;}
+.modal-pdf .modal-dialog.img-dialog {width: 1250px; height: 800px;}
+
 .modal-header { min-height: 16px;}
 .modal-content{ padding: 40px; }
 .modal-content.file{padding: 10px;}

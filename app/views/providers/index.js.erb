@@ -1,1 +1,3 @@
-$("#div_tproviders").html("<%= escape_javascript(render("providers")) %>");
+app.mainList = <%= for_vue(@json_providers) %>
+app.makeSpec()
+app.makeFilter()
