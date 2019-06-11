@@ -10,7 +10,6 @@ class ProvidersController < ApplicationController
   # GET /providers
   # GET /providers.json
   def index
-
     clean_params
 
     @styles = Style.all
@@ -18,64 +17,36 @@ class ProvidersController < ApplicationController
     @goodstypes = Goodstype.order(:priority, :name)
     @p_statuses = PStatus.order(:name)
 
-    @param_style = params[:style]
-    @param_budget = params[:budget]
-    @param_goodstype = params[:goodstype]
-    @param_p_status = params[:p_status]
-    @p_status = PStatus.find(5) if @param_p_status.nil?
+    # @param_style = params[:style]
+    # @param_budget = params[:budget]
+    # @param_goodstype = params[:goodstype]
+    # @param_p_status = params[:p_status]
+    p_status_id = params[:p_status].nil? ? 5 : params[:p_status]
+    @p_status = PStatus.find(p_status_id) if p_status_id != 'all'
+    puts "@p_status #{@p_status}"
+    puts "params[:p_status] #{params[:p_status]}"
     # @param_p_status = 5 if @param_p_status.nil?
 
     @param_search = params[:search]
     # @only_actual = !params[:only_actual] || params[:only_actual] == "true"
 
-    all_ids = Provider.order(:name).ids
+    # all_ids = Provider.order(:name).ids
     # sp = all_ids
-    sp,bp,gtp,ps,s_ids = all_ids,all_ids,all_ids,all_ids,all_ids
+    # sp,bp,gtp,ps,s_ids = all_ids,all_ids,all_ids,all_ids,all_ids
 
-    # if params[:search].present?
-    #   srch = "%#{params[:search]}%"
-    #   s_ids = Provider.where('LOWER(name) like LOWER(?) 
-    #                           or LOWER(address) like LOWER(?)',
-    #                         srch,
-    #                         srch).ids
-    #   # puts "s_ids #{s_ids}"
-    #   # dqhgg
+    @goodstype = Goodstype.find(params[:goodstype]) if params[:goodstype].present?
+
+    # if params[:goodstype] && params[:goodstype]!="" && params[:goodstype]!='0'
+    #     gtp = Goodstype.find(params[:goodstype]).providers.ids
+
+    # # puts "@param_goodstype.present? #{@param_goodstype.present?} = #{@param_goodstype}"
+    #   @goodstypes = [Goodstype.find(params[:goodstype])] if @param_goodstype.present?
+    # # puts "@goodstypes #{@goodstypes.count}"
     # end
 
-    # if params[:style] && params[:style]!="" && params[:style]!='0'
-    #      sp = Style.find(params[:style]).providers.ids
-    # end
-
-    # if params[:budget] && params[:budget]!="" && params[:budget]!='0'
-    #     bp = Budget.find(params[:budget]).providers.ids
-    # end
-
-    if params[:goodstype] && params[:goodstype]!="" && params[:goodstype]!='0'
-        gtp = Goodstype.find(params[:goodstype]).providers.ids
-
-    # puts "@param_goodstype.present? #{@param_goodstype.present?} = #{@param_goodstype}"
-    @goodstypes = [Goodstype.find(params[:goodstype])] if @param_goodstype.present?
-    # puts "@goodstypes #{@goodstypes.count}"
-    end
-
-    # if  @only_actual
-    #     ps = Provider.where('p_status_id > 2').ids
-    # end
-
-    # @ids = sp & bp & gtp & ps & s_ids
-
-    # puts "@main_city #{@main_city}"
-                          # .includes(:goodstypes)
-                         # .joins(:provider_goodstypes)
-                         # .by_budget(params[:budget])
-                         # .by_style(params[:style])
-                         # erkj
     @provider_goodstypes = ProviderGoodstype.all
     @providers = Provider.by_city(@main_city)
-                         .only_actual(@only_actual)
                          .by_search(params[:search])
-                         .by_pstatus(params[:p_status])
-                         .by_goodstype(gtp)
                          .order(:name) # find(ids, order: :name)
 
     @json_providers = @providers.map{|p| {
@@ -90,11 +61,7 @@ class ProvidersController < ApplicationController
     }}
 
     @ids = @providers.ids
-                         # .where(id: @ids)
-
-
     store_providers_path
-    # puts "params #{params}", @providers.count
   end
 
   # GET /providers/1

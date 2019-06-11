@@ -3,7 +3,7 @@
 
   let app = new Vue({
     el: '.providers_index', 
-    mixins: [m_created, m_index],
+    mixins: [m_created, m_index, mCheck],
     data: <%= fill_vue_data(nil, { 
       sortKey: 'name',
       controller: 'providers',
@@ -113,10 +113,11 @@
           } else {
             this.filteredGoodstypes = this.goodstypes
           }
-          this.makeFilter()
+          this.makeFilter()          
+          filterToHistory({goodstype: this.vValue(this.goodstype)})
         } else if (e.name == 'p_status'){
-          // console.log(e.value)
           this.makeFilter()
+          filterToHistory({p_status: this.vValue(this.p_status, 'all')})
         }
       }
     }

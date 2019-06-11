@@ -108,20 +108,19 @@
   controller =  $('#search').attr('cname')
   return controller+method
 
-@sortable_prepare = (params)->
-  actual = if $('.only_actual').length==0 then null else $('.only_actual').hasClass('on')
+@sortable_prepare = (params, getFromUrl = false) ->
+  actual = if $('.only_actual').length == 0 then null else $('.only_actual').hasClass('on')
 
   cut = ''
-  cut_selecter = '.cutted'
+  cut_selecter = '.cut.cutted'
   if $('.goods_list').length>0
     cut_selecter = '.cut:not(".cutted")'
   
   $(cut_selecter).each ->
-    cut = cut+$(this).attr('cut_id')+'.'
-
+    cut = cut + $(this).attr('cut_id') + '.'
 
   url = {    
-    only_actual: $('.only_actual').hasClass('on')
+    only_actual: actual
     sort: $('span.active').attr('sort')
     direction: $('span.active').attr('direction')
     sort2: $('span.subsort.current').attr('sort2')
@@ -133,31 +132,40 @@
     cut: cut
   }
   
-
-  l = window.location.toString().split('?');
+  l = window.location.toString().split('?')
   p = q2ajx(l[1])
   ser = $('.index_filter').serialize()
   if ser == ""
     ser = $('.index_filter select').serialize()
-  p_params = q2ajx(ser)
+  if_params = q2ajx(ser)
   
-
-  each p, (i, a) ->
-    if ['search','page','_'].include? i 
+  console.log('p', p)
+  each p, (i, a) -> # restore params from url
+    if url[i] == undefined || ['search','page','_'].include? i 
       url[i] = a
     return
-  each p_params, (i, a) ->
+
+  each if_params, (i, a) -> # add params from .index_filter
     url[i] = a
     return
-  each params, (i, a) ->
+
+  console.log('params', params)
+  each params, (i, a) -> # add params from args hash
     url[i] = a
     return 
+ 
   each url, (i, a) ->
     if (a == 0 || a == '0' || a == undefined)
       delete url[i]  
     return 
-
   return url
+
+@filterToHistory= (params)->
+  url = sortable_prepare(params, true)
+  base_url = sort_base_url()
+  setLoc("" + base_url + "?" + ajx2q(url));
+  return
+
 
 @sortable_query = (params)->
   url = sortable_prepare(params)
@@ -259,8 +267,7 @@ $(document).ready ->
 
 # поиск 
   $('#search').on 'keyup clear', (e)-> 
-    console.log(e, event.keyCode)
-    c= String.fromCharCode(event.keyCode);
+    c = String.fromCharCode(event.keyCode);
     isWordCharacter = c.match(/\w/);
     isBackspaceOrDelete = (event.keyCode == 8 || event.keyCode == 46 || event.keyCode == 13 || e.type == 'clear');
     if (isWordCharacter || isBackspaceOrDelete)
@@ -356,12 +363,12 @@ $(document).ready ->
       disable_input()
     return
 
-  $('body').on 'keyup','.edit_project input', (e)->
+  $('body').on 'keyup keypress', '.edit_project input', (e)->
     if e.keyCode == 13 || e.keyCode == 8
       e.preventDefault()
     return 
   
-  $('body').on 'keyup', '.simple_options_form',(e) ->
+  $('body').on 'keyup keydown', '.simple_options_form', (e) ->
     code = e.keyCode or e.which
     if code == 13
       e.preventDefault()
