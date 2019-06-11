@@ -6,6 +6,7 @@
   vue_data = {
     el: '<%= el_selector %>',
     data: {
+      model: '<%= @owner.class %>',
       tabs: [{value: 1, label: 'Документы'}, {value: 2, label: 'Аудио'}],
       files: <%= data %>,
       keyNames: [],
@@ -16,6 +17,10 @@
 
     created() {
       this.listNames = _.uniq(_.pluck(this.files, 'owner_type')); 
+      if (this.listNames.indexOf(this.model) == -1) {
+        this.listNames.push(this.model)
+      }
+
       this.listNames.forEach( (n) => {
         this[n] = this.files.filter(f => f.owner_type == n) 
         this[n+'Grouped'] = _.groupBy(this[n], 'owner_name')
@@ -59,16 +64,20 @@
 
       updateLists() {
         if (this.listNames.length) {
-          // console.log('here updateLists')
-          if (this.listNames[0] == 'ProjectGood'){
+          if (this.listNames[0] == 'ProjectGood' && this.model == 'ProjectGood'){
             this.docList = this[this.listNames[0]]
           } else {
-            this.docList = this[this.listNames[0]].filter( f => 
-              f.name.split('.').pop() != 'mp3' && f.name.split('.').pop() != 'ogg'
-            )
-            this.audioList = this[this.listNames[0]].filter( f => 
-              f.name.split('.').pop() == 'mp3' || f.name.split('.').pop() == 'ogg'
-            )
+
+            idx = this.listNames.indexOf(this.model)
+            lst = this.listNames[idx]
+            if (lst != undefined){
+              this.docList = this[lst].filter( f => 
+                f.name.split('.').pop() != 'mp3' && f.name.split('.').pop() != 'ogg'
+              )
+              this.audioList = this[lst].filter( f => 
+                f.name.split('.').pop() == 'mp3' || f.name.split('.').pop() == 'ogg'
+              )
+            }
           }
 
           // console.log('here updateLists')
