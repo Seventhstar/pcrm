@@ -18,7 +18,7 @@ span.calc_proc.enabled:hover{opacity: 0.7;}
 // .gray_field .datepicker {background: #fff;}
 .gray_field input, .gray_field span:not(.btn_a), .gray_field .dropdown-toggle {background-color: #fff !important;}
 .gray_field .contact_row span {background-color: #fafafa !important;}
-.gray_field .contact_row span:not(.icon_del)  {border: 1px solid #e5e5e5;border-radius: 5px;}
+.gray_field .contact_row span:not(.icon_del)  {border: 1px solid $border-color; border-radius: 5px;}
 // .gray_field  {background-color: #fff !important;}
 
 .pg_files{margin-left: 40px;}
@@ -27,7 +27,7 @@ span.calc_proc.enabled:hover{opacity: 0.7;}
 .contacts_list #new_contact {display: grid; grid-template-columns: 2fr 1fr 96px; grid-gap: 10px; }
 .contact_row{display: grid; grid-template-columns: 2fr 1fr 96px; grid-gap: 10px; }
 .contact_row {height: 34px; margin-bottom: 12px;}
-.contact_row span:not(.icon_del) {padding: 8px 10px 0 10px; border: 1px solid #e5e5e5; border-radius: 5px;}
+.contact_row span:not(.icon_del) {padding: 8px 10px 0 10px; border: 1px solid $border-color; border-radius: 5px;}
 .contact_row span.icon_del {margin-top: 8px;}
 
 .attach_list{float: left;}
@@ -141,7 +141,7 @@ tr.fullwidth>td>#project_client_id_chosen {width: 100% !important;}
 table.tbl_fc_1 td.caption.goods_closed {font-size: 17px; font-weight: 500; padding-top: 4px; color: red;}
 .goods_order_td label.inp_btn_label .inp_btn  {top: 4px; left: 174px;}
 
-.total-footer{ margin-bottom: 20px; border-top: 2px solid #e5e5e5; padding: 10px; font-size: 20px;}
+.total-footer{ margin-bottom: 20px; border-top: 2px solid $border-color; padding: 10px; font-size: 20px;}
 #client_projects {  margin-bottom: 20px; display: inline-block; width: 100%;}
 #client_projects li{ list-style-type: none; display: inline-block; width: 100%;}
 #client_projects .lbl{ float: left; width: 45%; }

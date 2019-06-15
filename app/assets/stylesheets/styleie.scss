@@ -1,4 +1,5 @@
-﻿//.txt {line-height: 34px;}
+﻿@import "common.scss";
+//.txt {line-height: 34px;}
 
 .select_custom .down_list .dl_i,
-.txt_tags .down_list .dl_i {border:1px solid #e5e5e5; }
+.txt_tags .down_list .dl_i {border:1px solid $border-color; }

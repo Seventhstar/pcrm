@@ -70,6 +70,10 @@ class Provider < ActiveRecord::Base
     self.goodstypes.pluck(:name).join(", ")
   end
 
+  def goods_type_names_array
+    self.goodstypes.pluck(:name)
+  end
+
   def p_status_name
     p_status.try(:name)
   end

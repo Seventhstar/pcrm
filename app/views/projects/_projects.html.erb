@@ -64,8 +64,9 @@
   <tr tr_id="<%= project.id %>" class="tr_id<%= project.id %>"><td colspan="2" class="prgrs"> 
 
     <div class="prgrs">
-      <span class="percent"><%= project.progress_proc %></span>
-      <div class="bar" w="<%= project.progress %>" c="<%= project.pstatus.try(:color) %>"></div>
+      <div class="bar" w="<%= project.progress %>" c="<%= project.pstatus.try(:color) %>">
+        <%= project.progress_proc %>
+      </div>
     </div>
 
   </td></tr>

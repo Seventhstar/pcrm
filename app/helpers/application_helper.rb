@@ -186,9 +186,9 @@ module ApplicationHelper
     end
   end
 
-  def tr_chosen(id, collection, obj = nil, *options)
-    label = options[0].class == String ? options[0] : options[:caption]
-    options = {} if options[0].class == String
+  def tr_chosen(id, collection, obj = nil, options)
+    label = options.class == String ? options : options[:caption]
+    options = {} if options.class == String
     content_tag :tr do
       content_tag(:td, class: "caption") do
         "#{label}:"
@@ -335,8 +335,8 @@ module ApplicationHelper
     end
 
     coll = coll.collect{ |u| [u[p_name], u.id] } if coll.class.name != 'Array'
-    coll.insert(0,[nil_value, 0, {class: 'def_value'}]) if nil_value != ''
-    coll.insert(1,[options[:special_value],-1]) if !options[:special_value].nil?
+    coll.insert(0, [nil_value, 0, {class: 'def_value'}]) if nil_value != ''
+    coll.insert(1, [options[:special_value], -1]) if !options[:special_value].nil?
 
     if !options[:selected].nil?
       sel = options[:selected]

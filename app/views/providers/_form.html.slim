@@ -11,8 +11,8 @@
           = tr_chosen 'p_status_id', PStatus.order(:name), @provider, 'Статус' 
         - else
           = f.hidden_field :p_status_id, value: @provider.p_status_id
-        
-        = tr_chosen 'providers_group_id', ProvidersGroup.order(:name), @provider, 'Группа', nil_value: 'Группа...' 
+
+        = tr_chosen 'providers_group_id', ProvidersGroup.order(:name), @provider, {caption: 'Группа', nil_value: 'Группа...', force_nil: true} 
 
         = tr_text f, :komment, 'Примечание'
 

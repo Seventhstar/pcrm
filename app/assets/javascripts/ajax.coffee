@@ -139,7 +139,6 @@
     ser = $('.index_filter select').serialize()
   if_params = q2ajx(ser)
   
-  console.log('p', p)
   each p, (i, a) -> # restore params from url
     if url[i] == undefined || ['search','page','_'].include? i 
       url[i] = a
@@ -149,7 +148,6 @@
     url[i] = a
     return
 
-  console.log('params', params)
   each params, (i, a) -> # add params from args hash
     url[i] = a
     return 

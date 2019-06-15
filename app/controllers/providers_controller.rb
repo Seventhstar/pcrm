@@ -23,8 +23,8 @@ class ProvidersController < ApplicationController
     # @param_p_status = params[:p_status]
     p_status_id = params[:p_status].nil? ? 5 : params[:p_status]
     @p_status = PStatus.find(p_status_id) if p_status_id != 'all'
-    puts "@p_status #{@p_status}"
-    puts "params[:p_status] #{params[:p_status]}"
+    # puts "@p_status #{@p_status}"
+    # puts "params[:p_status] #{params[:p_status]}"
     # @param_p_status = 5 if @param_p_status.nil?
 
     @param_search = params[:search]
@@ -59,6 +59,13 @@ class ProvidersController < ApplicationController
       spec: '',
       group: p.providers_group&.name
     }}
+
+    @providers_groups = ProvidersGroup.order(:name).map{|g| {
+      id: g.id, 
+      name: g.name,
+      spec: g.providers&.first&.spec,
+      gt: g.providers&.first&.goods_type_names_array
+    }}.group_by{ |g| g[:name]}
 
     @ids = @providers.ids
     store_providers_path
@@ -110,7 +117,7 @@ class ProvidersController < ApplicationController
   # POST /providers.json
   def create
     # puts "provider_params #{provider_params}"
-    @provider = Provider.new(provider_params)
+    @provider = Provider.new(check_params)
 
     respond_to do |format|
       if @provider.save
@@ -129,9 +136,7 @@ class ProvidersController < ApplicationController
   # PATCH/PUT /providers/1.json
   def update
     respond_to do |format|
-      pp = provider_params[:providers_group_id]=="0" ? provider_params.except(:providers_group_id) : provider_params
-
-      if @provider.update(pp)
+      if @provider.update(check_params)
       #@provider = Provider.find(params[:id])
       #if @provider.update_attributes(params[:provider])
         format.html { redirect_to providers_page_url, notice: 'Поставщик успешно обновлен.' }
@@ -154,11 +159,16 @@ class ProvidersController < ApplicationController
   end
 
   private
+    def check_params
+      provider_params[:providers_group_id]=="0" ? provider_params.except(:providers_group_id) : provider_params
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_provider
       @provider = Provider.find(params[:id]) if params[:id].present?
       @providers = Goodstype.find(params[:goodstype_id]).providers if params[:goodstype_id].present?
     end
+
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def provider_params

@@ -15,6 +15,8 @@
  *= require_self
   */
 
+// #fileInput{display: none;}
+[v-cloak] {display: none; }
 .nav_city{width: 180px; float: left; margin-right: 18px; margin-top: -11px;}
 .navsearch #search {height: 36px; margin-top: -11px;}
 

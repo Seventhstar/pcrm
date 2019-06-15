@@ -19,7 +19,10 @@
       filteredData: [],
       filteredGoodstypes: [],
       list_values: 'goodstype p_status',
-      lists: 'goodstypes p_statuss:@p_statuses provider_goodstypes+provider_id,goodstype_id mainList:raw@json_providers',
+      lists: "goodstypes p_statuss:@p_statuses \
+              provider_goodstypes+provider_id,goodstype_id \
+              providers_groups:raw@providers_groups+spec+gt \
+              mainList:raw@json_providers",
       columns: [['name', 'Название'], 
       ['shop', 'Специализация'], 
       ['phone', 'Телефон'],
@@ -30,6 +33,7 @@
 
     created(){
       this.filteredGoodstypes = this.goodstypes
+      this.groupSpecs = {}
       this.makeSpec()
       this.makeFilter()
     },
@@ -37,10 +41,11 @@
     methods: {
       makeSpec(){
         this.mainList.forEach((l) => {
-          let gtIds = _.pluck(this.provider_goodstypes.filter( f => f.provider_id == l.id), "goodstype_id")
-          // console.log('gtIds', gtIds, l)?
-          let gtNames = _.pluck(this.goodstypes.filter( f => gtIds.indexOf(f.value)>=0), "label")
-          l.spec = gtNames.join('<br/>')
+          if (v_nil(l.group)){
+            let gtIds = _.pluck(this.provider_goodstypes.filter( f => f.provider_id == l.id), "goodstype_id")
+            let gtNames = _.pluck(this.goodstypes.filter( f => gtIds.indexOf(f.value) > -1), "label")
+            l.spec = gtNames.join('<br/>')
+          }
         })
 
       },
@@ -63,11 +68,29 @@
           Vue.set(this.opened, ind, [])
           keys.forEach( (el, i) =>{
             Vue.set(this.opened[ind], i, el == 'null')
+            // if (el != 'null'){
+            //   if (this.groupSpecs[el] == undefined)
+            //   {
+            //     let fId = listGrouped[el][0]
+            //     let gtIds = _.pluck(this.provider_goodstypes.filter( f => f.provider_id == fId.id), "goodstype_id")
+            //     let gtNames = _.pluck(this.goodstypes.filter( f => gtIds.indexOf(f.value) > -1), "label")
+            //     this.groupSpecs[el] = gtNames.join('<br/>')
+            //     // console.log('el', el, this.groupSpecs[el], listGrouped[el][0], fId, 'gtIds', gtIds, gtNames)
+            //   }
+            // }
           })
 
 
           Vue.set(this.grouped, ind, listGrouped)
           Vue.set(this.groupKeys, ind, keys)
+
+          // this.groupedGt.forEach((fg, i) => {
+          //   let keys    = _.keys(this.grouped[i])
+          //   console.log('i', i, keys);
+          //   // keys.forEach(grp =>{
+          //     // console.log('this.grouped[i][grp]', this.grouped[i][grp]);
+          //   // })
+          // })
         })
       },
       
@@ -81,8 +104,9 @@
           return cls
       },
 
-      rowClass(item, index) {
+      rowClass(item, index, name= 'head', add = '') {
         addClass = ''
+        // console.log(item)
         switch(item.p_status){
           case 5:
           addClass = " info"
@@ -91,9 +115,9 @@
           addClass = " nonactual"
           break;
         }
-        if (index % 2 == 0) addClass = addClass + " even"
+        // if (index % 2 == 0) addClass = addClass + " even"
 
-          return "providers_index_head table_row" + addClass
+        return "providers_index_"+name+" table_row" + addClass + " " + add
       },
 
       siteUrl(url){
