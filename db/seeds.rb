@@ -59,3 +59,5 @@ end
 if TarifCalcType.count == 0 
   TarifCalcType.create([{name: 'За м2'}, {name: 'В мес'}, {name: 'Общая'}])
 end
+
+ProviderGoodstype.where(owner_type: '').update_all(owner_type: 'Provider')

@@ -16,6 +16,7 @@ class ClientsController < ApplicationController
     @clients = Client.by_city(@main_city)
                     .by_search(params[:search])
                     .by_owner(current_user)
+                    .order(:name)
 
     # if !current_user.has_role?(:manager)
     #   @clients = @clients.where('id in (?)', current_user.projects.pluck(:client_id))

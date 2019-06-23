@@ -11,9 +11,7 @@
             = render 'footage_sum', real: true, footage_2_nil: footage_2_nil, title: 'Фактическая площадь и стоимость' 
         .sep_3
         = render 'executor'
-            
-          
-          
+                      
       table.fullwidth.tbl_fc.fw_form.vue_cmp
         thead
           tr
@@ -43,6 +41,7 @@
                 - if is_manager?
                   label Общая стоимость план
                   .lbl.sum_mask.sum_total =@project.sum_total.to_sum  
+                  
           - if @project.footage_real.to_i>0
             tr
               td.gr_caption colspan="5" Фактическая площадь

@@ -6,6 +6,7 @@ class TarifsController < ApplicationController
   respond_to :html
 
   def index
+    @cities = City.order(:id)
     @tarifs = Tarif.order(:project_type_id, :from)
                    .left_joins([:project_type, :tarif_calc_type])
 
@@ -20,13 +21,13 @@ class TarifsController < ApplicationController
                         from: t.from,
                         designer_price:  t.designer_price,
                         designer_price2: t.designer_price2,
-                        vis_price:  t.vis_price
+                        vis_price:  t.vis_price,
+                        city_id: t.city_id
                       }}.sort_by{|hsh| [hsh[:project_type], hsh[:from].to_i] }
 
     @columns = [ ['project_type', 'Вид работ'], ['sum', 'Сумма договора'], ['sum2', 'Сумма 2 договора'],
                  ['calc_type', 'Расчет за'], ['from', 'При площади от'], ['designer_price', 'Цена 2 дизайнера'], 
-                 ['designer_price2', 'Цена 2 дизайнера'], ['vis_price', 'Цена визуализатора']
-               ]
+                 ['designer_price2', 'Цена 2 дизайнера'], ['vis_price', 'Цена визуализатора'] ]
 
     respond_with(@tarifs)
   end
@@ -37,6 +38,7 @@ class TarifsController < ApplicationController
 
   def new
     @tarif = Tarif.new
+    @tarif.from = -1
     @tarifs = Tarif.order(:project_type_id, :from)
     respond_with(@tarif)
   end
@@ -80,6 +82,6 @@ class TarifsController < ApplicationController
     end
 
     def tarif_params
-      params.require(:tarif).permit(:project_type_id, :sum, :sum2, :tarif_calc_type_id, :from, :designer_price, :designer_price2, :vis_price)
+      params.require(:tarif).permit(:project_type_id, :sum, :sum2, :tarif_calc_type_id, :from, :designer_price, :designer_price2, :vis_price, :city_id)
     end
 end

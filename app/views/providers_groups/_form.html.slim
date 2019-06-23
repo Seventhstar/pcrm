@@ -1,0 +1,10 @@
+= simple_form_for(@providers_group, remote: request.xhr?, html: {data: {modal: true}}) do |f|
+  = render 'shared/error_messages', object: f.object
+  .box_wrap.box_wrap_1
+    .panel-left
+      table.tbl_fc.tbl_fc
+        = simple_inputs f, [:name]
+        = tr_text f, :spec, 'Специализация', 'Напишите особенности поставщика'
+        = tr_multi_select f, :goodstype_ids, Goodstype.all, 'Виды товаров'
+        
+        = tr_submit_cancel providers_page_url, {modal: true}

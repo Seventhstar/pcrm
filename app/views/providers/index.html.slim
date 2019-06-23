@@ -11,27 +11,29 @@
     .container
       #div_tproviders
         .panel.panel-default v-for="gt, ind in filteredGoodstypes" v-if="groupKeys[ind].length"
-          .panel-heading.table-heading.head.month
+          .panel-heading.table-heading.head.month 
               |{{gt.label}} 
 
-          div :class="tableClass('providers_index_head grid-head')"
+          div :class="tableClass('providers_index_head grid-head')" 
             template v-for="column in columns"
-              div :class="columnClass(column[0])"
+              div :class="columnClass(column[0])" 
                 a href="#" @click="sortBy(column[0], gt)" {{column[1]}} 
                 .sortArrow
             .th
           
           div :key="'grp'+ind" v-for="grp, i in groupKeys[ind]" 
-            div :key="-2" :class="rowClass(grouped[ind][grp][0], 0, 'group', 'grp_row')" v-if="grp != 'null'"
+            div :key="-2" :class="rowClass(grouped[ind][grp][0], 0, 'group', 'grp_row')" v-if="grp != 'null'" 
                 .td @click="switchOpenedRow(ind, i)" 
                   |{{grp}} (магазины: {{grouped[ind][grp].length}}шт.)
                   .icons-indicate v-if="grouped[ind][grp][0].p_status == 5"
                     = image_tag('pri_prov.png', title: 'Приоритетный поставщик')
-                .td v-html="providers_groups[grp][0].gt.join('</br>')"
-                .td v-html="providers_groups[grp][0].spec"
+                .td v-html="providers_groups[grp][0].goods_type_names_array.join('</br>')" @click="switchOpenedRow(ind, i)"
+                .td v-html="providers_groups[grp][0].spec" @click="switchOpenedRow(ind, i)"
                 .td
                   span cut_id="0" :class="cutRowClass(ind, i)" @click="switchOpenedRow(ind, i)"
                     b
+                .td
+                  a.icon.icon_edit :href="editGroup(providers_groups[grp][0])" data-modal="true" class=""
             transition-group name="slide-fade-y" tag="div" class="fullwidth"
               div :key="'grp'+ind+'_'+i" :class="rowClass(item, idx)" v-for="item, idx in grouped[ind][grp]" v-show="opened[ind][i]"
                 .td 

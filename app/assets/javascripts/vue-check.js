@@ -99,6 +99,7 @@ Vue.component('m-switcher',{
 Vue.component('m-number', {
   data(){
     return {
+      _parent: '',
       classes: "txt ",
       name_id: ""}
   },
@@ -110,7 +111,7 @@ Vue.component('m-number', {
         value="0.0" 
         type="text"  
         :class="classes"  
-        :value="$parent[name]"
+        :value="_parent[name]"
         :id="name_id" 
         :name="_name"
         :disabled="disabled"
@@ -121,11 +122,19 @@ Vue.component('m-number', {
         `,
 
     created(){
-      this.name_id =  this.$parent.model + "_" + this.name;
-      this._name =  this.$parent.model + "[" + this.name+"]";
+
+      if (this.$parent.model == undefined){
+        this._parent = this.$parent.$parent 
+      } else this._parent = this.$parent
+
+      modelName = this._parent.model 
+      // if (modelName == undefined) modelName = this.$parent.$parent.model
+      this.name_id = modelName + "_" + this.name;
+      this._name = modelName + "[" + this.name+"]";
       
       let type = this.type == undefined ? '' : this.type
       // console.log('this.footage', this.footage)
+      // console.log('this.$parent', this.$parent, this.name, )
 
       if (this.name.includes('footage') || type.includes('footage') || this.footage) {
         this.classes = "txt footage_mask"
@@ -145,16 +154,16 @@ Vue.component('m-number', {
 
     methods:{
       onFocus(el){
-        let val = this.$parent[this.name]
-        this.$parent.focus = this.name;
+        let val = this._parent[this.name]
+        this._parent.focus = this.name;
         if (val == '0' || val=='0,0' || val=='0.0' )
-            this.$parent[this.name] = '';
+            this._parent[this.name] = '';
       },
 
       onUpdate(val) {
-        // console.log('onUpdate(val)')
-        this.$parent[this.name] = val.target.value.toString().replace(/\s/g, '');
-        this.$root.$emit('onInput', {value: this.$parent[this.name], name: this.name });
+        let v = val.target.value.toString().replace(/\s/g, '')
+        this._parent[this.name] = v
+        this.$root.$emit('onInput', {value: v, name: this.name });
       }
     }
 });

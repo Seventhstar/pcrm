@@ -28,7 +28,7 @@
                 .sep style="height: 12px"
                 / .sep_1
 
-              transition name="slide-fade" mode="out-in"
+              / transition name="slide-fade" mode="out-in"
                 .new_prj_client v-if="!toggled"
                   / label ФИО
                   .inp_w
@@ -65,27 +65,31 @@
                 label Дизайнер
                 v-chosen name="executor" placeholder='Дизайнер...' :input="true"
               transition name="slide-fade" mode="out-in" 
-                .inp_w.prj_not_simple v-if="complexProjectType"
+                .inp_w.prj_not_simple v-if="mHasVisualer" 
                   label Визуализатор 
                   v-chosen name="visualer" placeholder='Визуализатор...' :input="true"
-                .inp_w v-else=""
-                  m-number name="footage" label="Метраж"  
+              transition name="slide-fade" mode="out-in" 
+                .inp_w 
+                  m-number name="footage" label="Метраж"  v-if="mDependsFromFootage"
 
-              .sums v-if="!complexProjectType"
-                .inp_w
-                  .inp_sum_total
-                    m-number name="sum_total" label="Сумма"
-                .inp_w
-                  m-number name="sum_rest" label="Остаток" add_class="sum_rest" readonly="readonly"
+              template v-if="mDependsFromFootage || mPriceIsTotal"
+                .inp_w :title="tarifTooltips.sum"
+                  m-number name="sum_total" label="Сумма"
+                .inp_w 
+                  m-number name="designer_sum" label="Cтоимость дизайна" add_class="sum_cost" readonly="readonly"
+              .inp_w 
+                m-number name="sum_rest" label="Остаток" add_class="sum_rest" readonly="readonly" v-if="mDependsFromFootage || mPriceIsTotal"
         
-      transition name="slide-fade" mode="out-in" 
-        .sums v-if="complexProjectType"
+      transition-group name="slide-fade" mode="out-in" 
+        .sums v-if="mPriceForFootage" key="sum"
           .sep_3 
           .gray_field
-            = render 'footage_sum', real: false, footage_2_nil: true, title: 'Заявленная площадь и стоимость'
-      .sep_3
-      .gray_field
-        =render 'executor', f: f 
+            = render 'footage_sum', f: f, real: false, footage_2_nil: true, title: 'Заявленная площадь и стоимость'
+
+      transition-group name="slide-fade" mode="out-in"  v-if="mPriceForFootage" key="sum" 
+        .sep_3 key="s1"
+        .gray_field key="s2"
+          = render 'executor', f: f 
 
       .sep_3
       .gray_field

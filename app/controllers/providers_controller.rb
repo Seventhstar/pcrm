@@ -63,8 +63,8 @@ class ProvidersController < ApplicationController
     @providers_groups = ProvidersGroup.order(:name).map{|g| {
       id: g.id, 
       name: g.name,
-      spec: g.providers&.first&.spec,
-      gt: g.providers&.first&.goods_type_names_array
+      spec: g.spec,
+      goods_type_names_array: g.goods_type_names_array
     }}.group_by{ |g| g[:name]}
 
     @ids = @providers.ids
@@ -160,6 +160,7 @@ class ProvidersController < ApplicationController
 
   private
     def check_params
+      provider_params[:goodstype_ids] = provider_params[:goodstype_ids].reject(&:empty?)
       provider_params[:providers_group_id]=="0" ? provider_params.except(:providers_group_id) : provider_params
     end
 

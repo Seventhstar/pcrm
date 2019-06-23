@@ -14,7 +14,12 @@
       mTarif: 0,
       tarifs: @tarifs,
       m_sum_total: 0,
-      mByMonthAmount: 0,
+
+      mPriceIsTotal: false,
+      mPriceForFootage: false,
+      mHasVisualer: false,
+      mDependsFromFootage: false,
+      mPriceByPercent: false,
 
       show_fact:    @project.footage_real>0,
       fact_filled:  @project.footage_real>0,
@@ -33,12 +38,13 @@
 
       contacts: [],
       f_contact: false,
+      tarifTooltips: {sum: 'fhwge sum', designer_price: 'ntshjhfg designer_price'},
       
       required: ['project_type', 'executor', 'address'],
       fieldsTranslated: ['тип проекта', 'дизайнер', 'адрес'],
 
       lists: "clients cities executors visualers project_types+simple contacts+id,val,who",
-      list_values: "client ",
+      list_values: "client city",
 
       texts: "address comment project_type executor lead client_name phone email\
               footage price sum sum_total\
@@ -55,52 +61,28 @@
     'page2') %>,
 
     created() {
-      // console.log('this.mTarif', this.mTarif)
+      this.clearAllFlags()
       this.tarifSelect()
-      // if (!this.isNewProject && ptype.project_type !==undefined 
-                             // && ptype.project_type.value!== undefined ){
-        // currentPType = this.project_types.find(e => e.value == ptype.project_type.value)
-        // if (currentPType !== undefined)
-          // this.complexProjectType = !currentPType.simple
-      // }
-
-      // if (this.complexProjectType){
-        // if (this.sum_total_real > 0) 
-          // this.m_sum_total = this.sum_total_real
-        // else
-      this.m_sum_total = parseInt(this["sum"]) + parseInt(this["sum_2"])
-      // }
-      // else
-        // this.m_sum_total = this.sum_total
-
-      this.calcSumExecutor();
-      this.calcRest();
+      this.projectTypeSelect()
+      // this.m_sum_total = parseInt(this["sum"]) + parseInt(this["sum_2"])
+      // this.calcSumExecutor();
+      // this.calcRest();
       this.$root.$on('onInput', this.onInput);
     },
 
-    updated(){
-      //console.log("updated");
-    },
-
-    mounted(){
-
-    },
-
     computed: {
-      complexProjectType(){
-        return !(this.designer_price > 0 && this.designer_price < 1)
-      },
-
       showFootage2(){
-        // console.log('showFootage2', this.designer_price_2, this.price_2, this.designer_price_2 > 0 || this.price_2 > 0)
         return this.designer_price_2 > 0 || this.price_2 > 0
       }
     },
 
+
     watch: {
-      footage(){
+      footage() {
+        console.log('footage()')
         this.calcSum("footage", "price")
         this.projectTypeSelect()
+        // this.tarifSelect()
         this.calcSumExecutor(true)
       },
 
@@ -154,11 +136,16 @@
 
       sum_total(){
         if (this.focus.includes('total')){
-          // if (this.complexProjectType)
-            this.m_sum_total = parseInt(this["sum"]) + parseInt(this["sum_2"]);
-          // else 
-            // this.m_sum_total = this.sum_total;
+          if (this.mPriceIsTotal)
+            this.m_sum_total = this.sum_total;
+          else 
+            this.m_sum_total = parseInt(this["sum"]) + parseInt(this["sum_2"])
+
+          if(this.mPriceByPercent)
+            this.calcSumExecutor()
         }
+
+
         this.calcRest();
       },
 
@@ -190,24 +177,16 @@
       },
 
       project_type(){
-        this.footage = 0;
-        setTimeout(() => {apply_mask()}, 300);
-        this.projectTypeSelect();        
+        this.clearAllCalculation()        
+        setTimeout(() => {apply_mask()}, 300)
+        this.projectTypeSelect()
       },
 
     },
+
     methods: {
-      tarifSelect(){
-        let find = this.project_type.value
-        if (find == undefined) find = this.project_type_id
-        let tarif_search = this.tarifs.filter(t => t.project_type_id == find && toInt(t.from) <= this.footage)
-        tarif_search = _.sortBy(tarif_search, 'from').reverse()
-        if (tarif_search.length)  this.mTarif = tarif_search[0]
-
-      },
-
-      projectTypeSelect(){
-
+      clearAllCalculation() {
+        
         this.price_2 = 0
         this.designer_price  = 0
         this.designer_price_2 = 0
@@ -216,35 +195,86 @@
         this.sum_total = 0
         this.m_sum_total = 0
         this.designer_sum = 0
-        this.mByMonthAmount = 0
+
+        this.mHasVisualer = false
+        this.mDependsFromFootage = false
+        this.mPriceIsTotal = false
+        this.mPriceByPercent = false
+        this.mPriceForFootage = false
+
+        this.tarifTooltips.sum = ''
+      },
+
+      clearAllFlags() {
+
+        this.mTarif = 0
+        this.footage = 0
+        console.log('clearAllFlags')
+      },
+
+      tarifSelect() {
+        this.clearAllCalculation()
+
+        let find = v_nil(this.project_type) ? undefined : this.project_type.value
+        if (find == undefined) find = this.project_type_id
+
+        let tarif_search = this.tarifs.filter(t => t.city_id == this.city.value && t.project_type_id == find)
+        tarif_search = _.sortBy(tarif_search, 'from')
+
+        this.tarifTooltips.sum = ''
+        if (tarif_search.length >0) {
+          tarif_search.forEach( (c, i) => { 
+            this.tarifTooltips.sum = this.tarifTooltips.sum + 'от ' + c.from + ' м2 = ' + to_sum(c.sum) + 'р.\n'
+          })
+        }
+
+        tarif_search = tarif_search.filter(t => toInt(t.from) <= this.footage).reverse()
+        if (tarif_search.length)  this.mTarif = tarif_search[0]
+      },
+
+      tarifTooltip() {
+
+      },
+
+      projectTypeSelect() {
+        console.log('mTarif0')
+        // this.clearAllFlags()
         this.tarifSelect()
         if (this.mTarif != 0){
         console.log('mTarif', this.mTarif, 'project_type_id', v_nil(this.mTarif), this.project_type_id)
 
-
-          if (this.mTarif.tarif_calc_type_id >1 ){ // в месяц
-            this.sum_total       = this.mTarif.sum
-            this.m_sum_total     = this.sum_total
-            if (this.mTarif.tarif_calc_type_id == 2) this.mByMonthAmount  = this.mTarif.sum
-            this.designer_price  = this.mTarif.designer_price * this.sum_total
+          if (this.mTarif.tarif_calc_type_id > 1) { // в месяц
+            this.sum_total        = this.mTarif.sum
+            this.m_sum_total      = this.sum_total
+        
+            if (this.mTarif.designer_price > 0 && this.mTarif.designer_price < 1) this.mPriceByPercent = true    
+            this.mPriceIsTotal = true
+            if (this.mTarif.from > -1) this.mDependsFromFootage = true
+            
+            // this.designer_price   = this.mTarif.designer_price * this.sum_total
 
           } else { // за м2
+            console.log('за м2')
+            this.mPriceForFootage = true
             this.price            = this.mTarif.sum
             this.price_2          = this.mTarif.sum2
+            console.log('this.price', this.price)
 
             this.designer_price   = this.mTarif.designer_price
             this.designer_price_2 = this.mTarif.designer_price2
             this.visualer_price   = this.mTarif.vis_price
+            this.mHasVisualer     = (this.visualer_price > 0)
             // if (this.mTarif.sum2>0) this.addFootage2()
-          } 
 
+          } 
+          console.log('mHasVisualer', this.mHasVisualer)
           this.calcAmountByMonth()
           this.calcSumExecutor(true)
         }
       },
 
-      onInput(){
-        // console.log('input')
+      onInput(e){
+        // console.log('input', e)
         let valid = true;
         let f_contact = true;
 
@@ -277,23 +307,9 @@
         this.days = moment().isoWeekdayCalc(d1, d2, [1,2,3,4,5], holidays, workdays)
       },
 
-      monthDiff() {
-        let months;
-        let d1 = dateFromString($('#project_date_start').val())
-        let d2 = dateFromString($('#project_date_end_plan').val())
-        let dd = d2.getDate() - d1.getDate()
-        months = (d2.getFullYear() - d1.getFullYear()) * 12;
-        months += d2.getMonth() - d1.getMonth();
-        if (dd > 1) months +=1;
-        return months <= 0 ? 1 : months;
-      },
-
       calcAmountByMonth(){
-        // console.log('mByMonthAmount', this.mByMonthAmount, this.monthDiff())
-        if (this.mByMonthAmount === 0) return
-        this.m_sum_total = this.mByMonthAmount * this.monthDiff()
-        this.sum_total = this.m_sum_total;
-        // console.log('this.m_sum_total', this.m_sum_total, 'this.sum_total', this.sum_total)
+        // this.m_sum_total = this.price;
+        // this.sum_total = this.m_sum_total;
       },
 
       onSubmit(event){
@@ -351,7 +367,9 @@
       },
 
       calcTotal(real = ""){
-        if (!this.focus.includes('sum_total')){           
+        console.log('calcTotal');
+        if (!this.focus.includes('sum_total') && this.calc_type_id == 1) {           
+          
           this["sum_total"+real] = toInt(this["sum"+real]) + toInt(this["sum_2"+real]);
 
           if (this.sum_total_real > 0)
@@ -364,6 +382,8 @@
       },
 
       calcPrice(num = ""){
+        console.log('calc_type_id', this.calc_type_id)
+        if (this.calc_type_id > 1) return
         if (this.focus.includes('sum')){
           this["price"+num] = this.mFloat("sum"+num) / toInt(this["footage"+num]);
         }
@@ -380,15 +400,21 @@
       },
 
       calcSumExecutor(byDefault = false){
-       // console.log('calcSumExecutor', this.mTarif.tarif_calc_type_id, byDefault)
+        console.log('calcSumExecutor', this.mTarif.tarif_calc_type_id, byDefault)
         this.checkFootages();
 
         if (this.mTarif.tarif_calc_type_id > 1) {
-          if (byDefault) this.designer_price = this.mTarif.designer_price * this.sum_total
+          this.designer_price = this.mTarif.designer_price
+          console.log('f1', this.mTarif.designer_price, this.designer_price);
+          if (this.mPriceByPercent)
+            this.designer_price *= this.sum_total
+          
+
           this.designer_sum = this.designer_price
           this.sum_total_executor = this.designer_sum
           // this.calcAmountByMonth();
         } else {
+          console.log('f2');
           if (byDefault){
             this.designer_sum = toInt(this.designer_price) * this.mFootage + 
                                  toInt(this.designer_price_2) * this.mFootage2;

@@ -148,18 +148,6 @@ module ApplicationHelper
     end
   end
 
-  def tr_multi_select(f, field, source, label, params = {})
-    attrs = {multiple: true,  class: "chosen-select", include_blank: 'None'}.merge(params)
-    content_tag :tr do
-      td_caption(label) + 
-      content_tag(:td) do
-        content_tag :div, class: "select_custom select" do
-          f.collection_select field, source ,:id, :name, {}, attrs
-        end
-      end
-    end
-  end
-
   def td_text(f, field, params = {})
     cls = 'txt'
     cls += ' fullwidth' if f.class == String
@@ -186,6 +174,19 @@ module ApplicationHelper
     end
   end
 
+  def tr_multi_select(f, field, source, label, params = {})
+    attrs = {multiple: true,  class: "chosen-select multi-select", include_blank: 'None'}.merge(params)
+    content_tag :tr do
+      td_caption(label) + 
+      content_tag(:td) do
+        content_tag :div, class: "select_custom select" do
+          f.collection_select field, source, :id, :name, {}, attrs
+          # f.grouped_collection_select field, source, :id, :name, {}, attrs
+        end
+      end
+    end
+  end
+
   def tr_chosen(id, collection, obj = nil, options)
     label = options.class == String ? options : options[:caption]
     options = {} if options.class == String
@@ -207,7 +208,7 @@ module ApplicationHelper
       if !obj["#{name}_id"].nil? && obj["#{name}_id"]>0
         val = obj["#{name}_id"]
         label = obj.try("#{name}_#{attr_name}")
-        # puts "#{name}_#{attr_name}", obj.try("#{name}_#{attr_name}")
+        label = obj&.try(name)&.try(attr_name) if label.nil?
       end
     elsif default.present?
         val = default.id

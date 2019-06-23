@@ -1,12 +1,14 @@
 class Provider < ActiveRecord::Base
   has_many :provider_styles
   has_many :provider_budgets
-  has_many :provider_goodstypes
   has_many :provider_managers
   has_many :comments, as: :owner
   has_many :styles, through: :provider_styles
   has_many :budgets, through: :provider_budgets
-  has_many :goodstypes, through: :provider_goodstypes
+  
+  has_many :provider_goodstypes, as: :owner
+  has_many :goodstypes, through: :provider_goodstypes, as: :owner
+
   has_many :receipts
 
   has_many :special_infos, as: :specialable, dependent: :destroy

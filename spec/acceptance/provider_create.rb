@@ -30,6 +30,7 @@ feature 'create/edit provider'  do
 
       expect(page).not_to have_selector('#provider_p_status_id_chosen')
       click_on 'Сохранить'
+      sleep 1
 
       expect(current_path).to eql(providers_path)
       expect(page).to have_selector('#div_tproviders .panel-heading', count: 2)

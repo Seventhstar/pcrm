@@ -157,6 +157,7 @@ class ProjectsController < ApplicationController
     end
     
     get_debt
+    @city = current_user.city
     
     @date_start = format_date(Date.today)
     @date_end = format_date(Date.today)
@@ -232,20 +233,20 @@ class ProjectsController < ApplicationController
 
     # where(id: [pgt]).order(:name)
 
-    # case @tab
-    # when 4
+    case @tab
+    when 4
     #   # puts "@goods.count #{@goods.count}"
-    # when 6
+    when 6
 
+      
+    when 7
+      @history  = get_history_with_files(@project)
+    else
+      @history = []
+      # @files    = @project.attachments
       @files    = @project.attachments.secret(is_manager?).order(:created_at)
       @goods_files = Attachment.secret(is_manager?).where(owner_type: 'ProjectGood', owner_id: @project.goods.ids)
-      
-    # when 7
-      @history  = get_history_with_files(@project)
-    # else
-      # @history = []
-      # @files    = @project.attachments
-    # end
+    end
     
   end
 

@@ -198,6 +198,7 @@
     return
 
   $('.chosen').chosen(width: '99.5%', disable_search: 'true')
+  $('.multi-select').chosen(width: '99.5%', disable_search: 'true')
   $('.schosen').chosen(width: '99.5%')
 
   $('.tab-chosen').chosen(width: '150px').on 'change', ->
@@ -278,6 +279,8 @@ $(document).ready ->
 
   $('.schosen').chosen(width: '99.5%')
   $('.chosen').chosen(width: '99.5%', disable_search: 'true')
+  # $('select').chosen(width: '99.5%', disable_search: 'true')
+
 
   $('.ychosen').chosen(width:' 78px', disable_search: 'true', inherit_select_classes: 'true').on 'change', ->
     sortable_query({})

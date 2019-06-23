@@ -13,12 +13,12 @@ feature 'create/edit project'  do
     visit projects_path
 
     click_on 'Добавить'
-    sleep(5)
+#    sleep(5)
 
 
     click_on 'Сохранить'
     expect(current_path).to eql(new_project_path)
-    sleep(15)
+ #   sleep(15)
 
     # expect(page).to redirect_to(projects_path)
     # sleep(3)

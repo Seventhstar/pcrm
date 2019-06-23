@@ -9,54 +9,57 @@
 
       .label_col Вид расчета:
       v-chosen name="tarif_calc_type" placeholder="Выберите вид расчета..." :input="true"
-      m-switcher on-text="Несколько площадей" name="show_2" 
+      m-switcher on-text="Несколько площадей" name="showPrice2" 
 
       .label_col 
         |{{labelSum}}
       .inp_w
         .inp_sum_total
           m-number name="sum"
-      m-switcher on-text="Зависит от площади" name="show_from" 
+      m-switcher on-text="Зависит от площади" name="showFrom" 
 
       transition name="slide-fade" 
-        .label_col v-show="show_2" {{labelSum2}}
+        .label_col v-show="showPrice2" {{labelSum2}}
       transition name="slide-fade" 
-        .inp_sum_total v-show="show_2" 
+        .inp_sum_total v-show="showPrice2" 
           m-number name="sum2" 
       transition name="slide-fade" 
-        div v-show="show_2" 
+        div v-show="showPrice2" 
 
       transition name="slide-fade" 
-        .label_col v-show="show_from" При площади от:        
+        .label_col v-show="showFrom" При площади от:        
       transition name="slide-fade" 
-        .inp_w v-show="show_from"
+        .inp_w v-show="showFrom"
           m-number name="from" type="footage"
       transition name="slide-fade" 
-        div v-show="show_from" 
+        div v-show="showFrom" 
 
 
       .label_col Цена дизайнера:
-      .inp_w v-show="!show_percent"          
+      .inp_w v-show="!showPercent"          
         m-number name="value_price" 
-      .inp_w v-show="show_percent"
+      .inp_w v-show="showPercent"
         m-number name="percent_price" type="percent" @change="updatePrice()" 
         input type="hidden" name="tarif[designer_price]" :value="designer_price"
 
-      m-switcher on-text="Процент от стоимости" name="show_percent" 
+      m-switcher on-text="Процент от стоимости" name="showPercent" 
       
 
       transition name="slide-fade" 
-        .label_col key="p1" v-show="show_2" Цена дизайнера 2:
+        .label_col key="p1" v-show="showPrice2" Цена дизайнера 2:
       transition name="slide-fade" 
-        .inp_w v-show="show_2" key="p2"
+        .inp_w v-show="showPrice2" key="p2"
           m-number name="designer_price2" 
       transition name="slide-fade" 
-        div key="p3" v-show="show_2"
+        div key="p3" v-show="showPrice2"
 
       .label_col Цена визуализатора:
       .inp_w
           m-number name="vis_price" 
       div
+
+      .label_col Город:
+      v-chosen name="city" placeholder="Город..." src="cities" :input="true"
 
     = submit_cancel tarifs_path, {classValid: "!formValid", tip: 'noteValid', click: 'onSubmit'}
 

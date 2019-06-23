@@ -1,7 +1,7 @@
 - add = "#{real ? '_real' :''}"
 .inner_field
   .hl.gr_caption.hl_tr #{title}
-  section.table_9col.footages_prices
+  section.table_9col
     = render 'footage', order: false, real: real
     .inp_w
     .inp_w
@@ -25,4 +25,5 @@
 
 
   - if controller.action_name == 'edit'
+    .sep_15 v-show="!show_fact"
     span.sub.btn_a.add_footage v-on:click="show_fact = !show_fact" v-show="!show_fact" Добавить пересчет площади

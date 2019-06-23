@@ -13,8 +13,8 @@
       filter: [],
       grouped: [],
       filteredData: [],
-      list_values: '',
-      lists: '',
+      list_values: 'city',
+      lists: 'cities',
       columns: @columns,
       tarifs: @tarifs
     }) %>,
@@ -35,16 +35,16 @@
 
     methods: {
 
-      description(item){
+      description(item, city){
         let d = to_sum(item.sum) + 'р.'
 
         if (item.calc_type_id < 3)
           d = d + ' ' + item.calc_type.toLowerCase()
 
-        let tarif_all     = this.tarifs.filter(t => t.project_type_id == item.project_type_id)
-        let tarif_search  = this.tarifs.filter(t => t.project_type_id == item.project_type_id && toInt(t.from) > item.from)
+        let tarif_all     = this.grouped[city].filter(t => t.project_type_id == item.project_type_id)
+        let tarif_search  = this.grouped[city].filter(t => t.project_type_id == item.project_type_id && toInt(t.from) > item.from)
 
-        if (item.from >0 || tarif_all.length > 1){
+        if (item.from > -1 || tarif_all.length > 1){
           d = d + ' при площади объекта'
           if (tarif_search.length >0)
            d = d + ' до ' + tarif_search[0].from
@@ -62,9 +62,9 @@
         let d = '';
         if (item.designer_price>0){ 
           if (item.designer_price<1)
-            d = d +   Math.round(item.designer_price*100) + '% от стоимости';
+            d = d + Math.round(item.designer_price*100) + '% от стоимости';
           else
-            d = d + item.designer_price + ' за м2';
+            d = d + to_sum(item.designer_price) + ' за м2';
         } 
         
         designer_price2 = v_nil(item.designer_price2) ? 0 : item.designer_price2
@@ -107,7 +107,7 @@
       },
       
       fGroup(){
-        this.grouped = this.tarifs
+        this.grouped = _.groupBy(this.tarifs, 'city_id')
       },
 
       formatValue(value, column){

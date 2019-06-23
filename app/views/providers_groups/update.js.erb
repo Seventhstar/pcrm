@@ -1,0 +1,4 @@
+<% if @providers_group.present? %>
+  $('.modal').modal('hide');
+  Vue.set(app.providers_groups['<%= @providers_group.name %>'], 0, <%= for_vue(@providers_group, [:goods_type_names_array]) %>)
+<% end %>

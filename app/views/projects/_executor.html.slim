@@ -5,19 +5,24 @@
       .inp_w
         m-number name="designer_price" label="Цена дизайнера (за м2)"
       transition name="slide-fade"
-        .sign.plus v-if="showFootage2"
+        .sign.plus v-show="showFootage2"
       transition name="slide-fade"
         .d2 v-show="showFootage2"
           m-number name="designer_price_2" label="Цена дизайнера (без 3D)"
       transition name="slide-fade"
         .sign.plus v-if="visualer_price>0"
       transition name="slide-fade"
-        .inp_w v-if="visualer_price>0" 
+        .inp_w v-if="mHasVisualer" 
             m-number name="visualer_price" label="Цена визуал (за м2)"
+      transition name="slide-fade"
+        .inp_w v-if="!showFootage2" 
+      transition name="slide-fade"
+        .inp_w v-if="!showFootage2" 
+
+
         
       .inp_w 
       .inp_w
-      
         m-number name="designer_sum" label="Cтоимость дизайна" add_class="sum_cost" readonly="readonly" 
       .sign.plus v-if="visualer_price>0"
       transition name="slide-fade"

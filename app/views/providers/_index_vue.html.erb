@@ -20,7 +20,7 @@
       filteredGoodstypes: [],
       list_values: 'goodstype p_status',
       lists: "goodstypes p_statuss:@p_statuses \
-              provider_goodstypes+provider_id,goodstype_id \
+              provider_goodstypes+owner_id,owner_type,goodstype_id \
               providers_groups:raw@providers_groups+spec+gt \
               mainList:raw@json_providers",
       columns: [['name', 'Название'], 
@@ -41,8 +41,11 @@
     methods: {
       makeSpec(){
         this.mainList.forEach((l) => {
-          if (v_nil(l.group)){
-            let gtIds = _.pluck(this.provider_goodstypes.filter( f => f.provider_id == l.id), "goodstype_id")
+          if (v_nil(l.group)){    
+            let gtIds = _.pluck(this.provider_goodstypes.filter( f => {
+              f.owner_id == l.id && f.owner_type == 'Provider' 
+            }), "goodstype_id")
+
             let gtNames = _.pluck(this.goodstypes.filter( f => gtIds.indexOf(f.value) > -1), "label")
             l.spec = gtNames.join('<br/>')
           }
@@ -54,43 +57,23 @@
         this.grouped = new Array
         this.groupedGt = _.groupBy(this.provider_goodstypes, 'goodstype_id')
         this.filteredGoodstypes.forEach((el, ind) => {
-          let ids = _.pluck(this.groupedGt[el.value], 'provider_id')
+          let ids = _.pluck(this.groupedGt[el.value], 'owner_id')
           let list = []
+
           if (v_nil(this.p_status)) {
             list = this.mainList.filter( f => ids.indexOf(f.id) > 0 ) 
           } else {
             list = this.mainList.filter( f => ids.indexOf(f.id) > 0 && f.p_status == this.p_status.value )
           }
 
-          listGrouped = _.groupBy(list, 'group')
-          
+          let listGrouped = _.groupBy(list, 'group')          
           let keys    = _.keys(listGrouped)
-          Vue.set(this.opened, ind, [])
-          keys.forEach( (el, i) =>{
-            Vue.set(this.opened[ind], i, el == 'null')
-            // if (el != 'null'){
-            //   if (this.groupSpecs[el] == undefined)
-            //   {
-            //     let fId = listGrouped[el][0]
-            //     let gtIds = _.pluck(this.provider_goodstypes.filter( f => f.provider_id == fId.id), "goodstype_id")
-            //     let gtNames = _.pluck(this.goodstypes.filter( f => gtIds.indexOf(f.value) > -1), "label")
-            //     this.groupSpecs[el] = gtNames.join('<br/>')
-            //     // console.log('el', el, this.groupSpecs[el], listGrouped[el][0], fId, 'gtIds', gtIds, gtNames)
-            //   }
-            // }
-          })
 
+          Vue.set(this.opened, ind, [])
+          keys.forEach( (el, i) => Vue.set(this.opened[ind], i, el == 'null') )
 
           Vue.set(this.grouped, ind, listGrouped)
           Vue.set(this.groupKeys, ind, keys)
-
-          // this.groupedGt.forEach((fg, i) => {
-          //   let keys    = _.keys(this.grouped[i])
-          //   console.log('i', i, keys);
-          //   // keys.forEach(grp =>{
-          //     // console.log('this.grouped[i][grp]', this.grouped[i][grp]);
-          //   // })
-          // })
         })
       },
       
@@ -101,12 +84,11 @@
       cutRowClass(index, idx){
         let cls = 'altcut'
         if (!this.opened[index][idx]) cls = cls + ' cutted'
-          return cls
+        return cls
       },
 
       rowClass(item, index, name= 'head', add = '') {
         addClass = ''
-        // console.log(item)
         switch(item.p_status){
           case 5:
           addClass = " info"
@@ -115,8 +97,6 @@
           addClass = " nonactual"
           break;
         }
-        // if (index % 2 == 0) addClass = addClass + " even"
-
         return "providers_index_"+name+" table_row" + addClass + " " + add
       },
 
@@ -143,7 +123,13 @@
           this.makeFilter()
           filterToHistory({p_status: this.vValue(this.p_status, 'all')})
         }
+      },
+
+      editGroup(grp){
+        return '/providers_groups/'+grp.id+'/edit'
       }
+
+
     }
 
   })

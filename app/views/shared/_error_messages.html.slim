@@ -2,7 +2,7 @@
   #error_explanation
     span
       | Форма содержит #{t('error', count: object.errors.count)}:
-    ul
+    ul title="#{object.errors.messages}"
       - object.errors.full_messages.each do |msg|
         li.f_danger
           = msg

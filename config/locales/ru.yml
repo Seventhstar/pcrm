@@ -7,8 +7,9 @@ ru:
   Currency: Валюта
   currency_id: Валюта
 
-  tarif: "Тариф"
-  Tarif: "Тариф"
+  tarif: Тариф
+  tarif_id: Тариф
+  Tarif: Тариф
   Status: "статус"
   uom: "eд. изм."
   secret: Закрыт
