@@ -216,12 +216,17 @@ $(function() {
     {name: 'Адрес', fun: function () {$('#lead_address').val(getInputSelection($('#lead_info')));}}
   ];
 
+  $('.chosen_for_vue').on('change', function (e) {
+    // console.log('e', e.target.id);
+    if (app != undefined) app.onInput({name: e.target.id, value: $(this).val()});
+  });
+
   $( document ).ajaxError(function( event, jqxhr, settings, thrownError ) {
     if (jqxhr.status != 200) show_ajax_message('error:' + jqxhr.responseText,'error')
   });
 
   //Calling context menu
-  $('#lead_info').contextMenu(menu,{triggerOn:'contextmenu'});
+  $('#lead_info').contextMenu(menu, {triggerOn:'contextmenu'});
 
   startTime();
   NProgress.configure({ showSpinner: false, ease: 'ease', speed: 300 });

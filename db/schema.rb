@@ -488,7 +488,7 @@ ActiveRecord::Schema.define(version: 201904215002649) do
     t.integer "goodstype_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "owner_type"
+    t.string "owner_type", default: "Provider"
     t.index ["goodstype_id"], name: "index_provider_goodstypes_on_goodstype_id"
     t.index ["owner_id"], name: "index_provider_goodstypes_on_owner_id"
   end
@@ -752,7 +752,6 @@ ActiveRecord::Schema.define(version: 201904215002649) do
     t.index ["uom_id"], name: "index_works_on_uom_id"
   end
 
-  add_foreign_key "clients", "cities"
   add_foreign_key "costing_rooms", "costings"
   add_foreign_key "costing_rooms", "rooms"
   add_foreign_key "costing_works", "costings"
@@ -761,22 +760,15 @@ ActiveRecord::Schema.define(version: 201904215002649) do
   add_foreign_key "costings", "costings_types"
   add_foreign_key "costings", "projects"
   add_foreign_key "costings", "users"
-  add_foreign_key "leads", "cities"
   add_foreign_key "leads", "priorities"
-  add_foreign_key "project_goods", "delivery_times"
-  add_foreign_key "project_goods", "goods_priorities"
   add_foreign_key "project_goods", "goodstypes"
   add_foreign_key "project_goods", "projects"
-  add_foreign_key "projects", "cities"
   add_foreign_key "projects", "leads"
-  add_foreign_key "provider_managers", "positions"
-  add_foreign_key "providers", "cities"
   add_foreign_key "providers", "providers_groups"
   add_foreign_key "room_works", "rooms"
   add_foreign_key "room_works", "works"
   add_foreign_key "tarifs", "cities"
   add_foreign_key "tarifs", "project_types"
   add_foreign_key "tarifs", "tarif_calc_types"
-  add_foreign_key "users", "cities"
   add_foreign_key "works", "uoms"
 end

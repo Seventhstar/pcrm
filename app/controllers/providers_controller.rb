@@ -118,7 +118,6 @@ class ProvidersController < ApplicationController
   def create
     # puts "provider_params #{provider_params}"
     @provider = Provider.new(check_params)
-
     respond_to do |format|
       if @provider.save
         format.html { redirect_to providers_page_url, notice: 'Поставщик успешно создан.' }
@@ -160,7 +159,7 @@ class ProvidersController < ApplicationController
 
   private
     def check_params
-      provider_params[:goodstype_ids] = provider_params[:goodstype_ids].reject(&:empty?)
+      # provider_params[:goodstype_ids] = provider_params[:goodstype_ids].reject(&:empty?)
       provider_params[:providers_group_id]=="0" ? provider_params.except(:providers_group_id) : provider_params
     end
 
@@ -176,8 +175,10 @@ class ProvidersController < ApplicationController
       params.require(:provider).permit( :name, :manager, :phone, :komment, :address, 
                                         :email, :url, :spec, :p_status_id, :city_id,
                                         :providers_group_id,
-                                        budget_ids: [], style_ids: [], goodstype_ids: [], 
+                                        budget_ids: [], style_ids: [], 
+                                        goodstype_attributes: [],
                                         special_infos_attributes: [:id, :content, :_destroy])
+                                        # goodstype_ids: [], 
     end
 
     def sort_column

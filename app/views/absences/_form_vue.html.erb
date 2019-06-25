@@ -31,18 +31,18 @@
     },
 
     created(){
-      this.makeFilter();
+      this.makeFilter()
     },
 
     watch: {
       user(){
+        this.project = null
         this.makeFilter()
       }
     },
 
     methods: {
       makeFilter(){
-        this.project = null
         let n = this.projects.filter(p => p.executor_id == this.user.value)
         this.filteredProjects.length = 0
         for (var prj in n) this.filteredProjects.push(n[prj])        

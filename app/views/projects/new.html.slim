@@ -28,19 +28,15 @@
                 .sep style="height: 12px"
                 / .sep_1
 
-              / transition name="slide-fade" mode="out-in"
+              transition name="slide-fade" mode="out-in"
                 .new_prj_client v-if="!toggled"
-                  / label ФИО
                   .inp_w
                     = text_field_tag 'client[name]', '', "v-model"=>"client_name", "v-on:input"=>"onInput()", type: "text ", class: 'string optional form-control', placeholder: 'ФИО...'
-                  / label Телефон
                   .inp_w
                     = text_field_tag 'client[phone]', '', "v-model"=>"phone", type: "text ", class: 'string optional form-control', placeholder: 'Телефон...'
-                  / label E-mail
                   .inp_w
                     = text_field_tag 'client[email]', '', "v-model"=>"email", type: "text ", class: 'string optional form-control', placeholder: 'e-mail...'
                 .inp_w v-else=""
-                  / .sep style="height: 17px"
                   v-chosen name="client" placeholder="Клиент..." :input="true"
                   .sep style="height: 12px"
 
@@ -88,8 +84,7 @@
 
       transition-group name="slide-fade" mode="out-in"  v-if="mPriceForFootage" key="sum" 
         .sep_3 key="s1"
-        .gray_field key="s2"
-          = render 'executor', f: f 
+        = render 'executor', f: f 
 
       .sep_3
       .gray_field

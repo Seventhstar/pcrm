@@ -3,12 +3,17 @@ class ProvidersGroupsController < ApplicationController
   before_action :set_group, only: [:show, :edit, :update, :destroy]
   before_action :logged_in_user
 
+  def index
+    @providers_groups = ProvidersGroup.order(:name)
+  end
+
   def new
     @providers_group = ProvidersGroup.new
   end
 
   # GET /providers_groups/1/edit
   def edit
+    @goodstypes = Goodstype.order(:name)
     respond_modal_with @providers_group, location: root_path
   end
 
@@ -30,6 +35,7 @@ class ProvidersGroupsController < ApplicationController
 
   def update
     @providers_group.update(providers_group_params)
+    redirect_to providers_groups_url
   end
 
   def destroy
@@ -48,6 +54,7 @@ class ProvidersGroupsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def providers_group_params
-      params.require(:providers_group).permit(:name, :spec, goodstype_ids: [])
+      params.require(:providers_group).permit(:name, :spec, 
+        provider_goodstypes_attributes: [:goodstype_id, :owner_id, :owner_type, :id, :_destroy])
     end
 end

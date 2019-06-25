@@ -2,7 +2,7 @@
 // Place all the styles related to the Projects controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-.gray_field {background-color: #fafafa; padding: 6px 15px; border-radius: 5px; border: 1px solid #eee;}
+.gray_field {background-color: $light-gray; padding: 6px 15px; border-radius: 5px; border: 1px solid #eee;}
 .white_field {background-color: white; padding: 0 9px 15px 15px; border-radius: 5px; border: 1px solid #eee;}
 .inner_field {padding: 6px; border-radius: 5px;}
 
@@ -12,12 +12,15 @@ a.new_client    {padding-left: 48px;}
 .new_prj_client div{margin-bottom:11px;}
 
 span.add_pay, span.calc_proc{ color: white; background-color: #c3c3c3; padding: 3px 6px; border-radius: 3px; }
-span.calc_proc.enabled{background-color: #ff8411; cursor: pointer;}
+span.calc_proc.enabled{background-color: $main-orange; cursor: pointer;}
 span.calc_proc.enabled:hover{opacity: 0.7;}
 // .gray_field .inp_w .inp_w {background: #fff;}
 // .gray_field .datepicker {background: #fff;}
 .gray_field input, .gray_field span:not(.btn_a), .gray_field .dropdown-toggle {background-color: #fff !important;}
-.gray_field .contact_row span {background-color: #fafafa !important;}
+.gray_field input[disabled] {background-color: $light-gray !important;}
+
+
+.gray_field .contact_row span {background-color: $light-gray !important;}
 .gray_field .contact_row span:not(.icon_del)  {border: 1px solid $border-color; border-radius: 5px;}
 // .gray_field  {background-color: #fff !important;}
 

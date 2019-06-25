@@ -1,0 +1,67 @@
+<script>
+  Vue.component('v-select', VueSelect.VueSelect)
+
+  let app = new Vue({
+    el: '.vue_app',
+    data: <%= fill_vue_data(@absence, {
+      model: 'providers_group',
+      goodstype_ids: [],
+      list_values: 'goodstype',
+      lists: 'goodstypes',
+      gts:  @providers_group.provider_goodstypes.map{|s| { id: s.id,
+                  goodstype_id: s.goodstype_id, 
+                  owner_type: s.owner_type,
+                  owner_id: s.owner_id,
+                  _destroy: false}} 
+
+    })%>,
+    
+    updated(){
+      this.onInput();
+    },
+
+    mounted(){
+      this.$root.$on('onInput', this.onInput);
+    },
+
+    created(){
+      // this.makeFilter();
+    },
+
+    watch: {
+    },
+
+    methods: {
+      shop_field(index, field) {
+        return "providers_group[provider_goodstypes_attributes]["+index+"]["+field+']'
+      },
+
+      onInput(e){
+        console.log('from vue', e);
+        if (e == undefined) return
+        if (e.name == 'providers_group_goodstype_ids'){
+          // this.gts.length = 0
+          this.gts.forEach( s => {s._destroy = true})
+
+          e.value.forEach(gt => {
+            // console.log('gt', gt)
+            let search = this.gts.filter( f => f.goodstype_id == gt)
+            if (search.length == 0){
+              this.gts.push({ goodstype_id: gt, owner_type: 'ProvidersGroup'})
+            } else {
+              search[0]._destroy = false
+            }
+          })
+        }
+
+      },
+
+      onSubmit(event){
+
+      },
+        
+
+    }
+  });
+
+</script>

@@ -7,7 +7,7 @@ class Provider < ActiveRecord::Base
   has_many :budgets, through: :provider_budgets
   
   has_many :provider_goodstypes, as: :owner
-  has_many :goodstypes, through: :provider_goodstypes, as: :owner
+  has_many :goodstypes, through: :provider_goodstypes
 
   has_many :receipts
 

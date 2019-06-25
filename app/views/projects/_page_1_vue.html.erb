@@ -6,6 +6,8 @@
     data: <%= fill_vue_data(@project,
      {
       model: 'project',
+      project_type_id: @project.project_type&.id,
+      projectTypeOutChange: false,  
       
       list_values: 'project_type city client executor visualer project_type style pstatus client',
       lists: "project_types+simple cities executors visualers styles pstatuses clients"      
@@ -17,19 +19,27 @@
 
     watch: {
       project_type(){
-        if (footages.project_type_id>0 && this.project_type != undefined){
-
-          footages.project_type_id = this.project_type.value
-          footages.tarifSelect()
-          footages.projectTypeSelect()
+        if (footages.project_type_id > 0 && this.project_type != undefined){
+          if (!this.projectTypeOutChange)
+            footages.setProjectType(this.project_type)
         }
-        // console.log("this.project_type", this.project_type)
-        // if (this.project_type === undefined){
-        //   this.complexProjectType = false
-        // } else {
-        //   this.complexProjectType = !this.project_type.simple;
-        // }
+        this.projectTypeOutChange = false
+      },
+
+      city() {
+        // console.log('this.city.value', this.city.value, footages.city_id)
+        if (footages.city_id > 0 && this.city != undefined){
+          footages.setCity(this.city)
+        }
       }
+    },
+
+    methods: {
+
+      setProjectType(pt) {
+        this.projectTypeOutChange = true
+        this.project_type = pt
+      },
     }
 
   });

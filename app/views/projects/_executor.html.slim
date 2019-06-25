@@ -1,33 +1,34 @@
 - if is_admin?
-  .inner_field
-    .hl.gr_caption.hl_tr Cтоимость для исполнителей
-    section.table_9col
-      .inp_w
-        m-number name="designer_price" label="Цена дизайнера (за м2)"
-      transition name="slide-fade"
-        .sign.plus v-show="showFootage2"
-      transition name="slide-fade"
-        .d2 v-show="showFootage2"
-          m-number name="designer_price_2" label="Цена дизайнера (без 3D)"
-      transition name="slide-fade"
-        .sign.plus v-if="visualer_price>0"
-      transition name="slide-fade"
-        .inp_w v-if="mHasVisualer" 
-            m-number name="visualer_price" label="Цена визуал (за м2)"
-      transition name="slide-fade"
-        .inp_w v-if="!showFootage2" 
-      transition name="slide-fade"
-        .inp_w v-if="!showFootage2" 
+  .table_2col_gap :key="s2"
+    .gray_field
+      .inner_field
+        .hl.gr_caption.hl_tr Цена для исполнителей
+        section.table_5col_plus
+          .inp_w
+            m-number name="designer_price" label="Цена дизайнера (за м2)"
+          .sign.plus 
+          transition name="slide-fade"
+            .d2 
+              m-number name="designer_price_2" label="Цена дизайнера (без 3D)" :disabled="!showFootage2"
+          .sign.plus 
+          transition name="slide-fade"
+            .inp_w  
+                m-number name="visualer_price" label="Цена визуал (за м2)" :disabled="!mHasVisualer"
+          transition name="slide-fade"
+            .inp_w v-if="!showFootage2" 
+          transition name="slide-fade"
+            .inp_w v-if="!showFootage2" 
 
-
-        
-      .inp_w 
-      .inp_w
-        m-number name="designer_sum" label="Cтоимость дизайна" add_class="sum_cost" readonly="readonly" 
-      .sign.plus v-if="visualer_price>0"
-      transition name="slide-fade"
-          .inp_w v-if="visualer_price>0"
-            m-number name="visualer_sum" label="Cтоимость визуала" add_class="sum_cost" readonly="readonly"
-      .sign.equal 
-      .inp_w
-        m-number name="sum_total_executor" label="Итого исполнителям" add_class="sum_cost" readonly="readonly"
+    .gray_field
+      .inner_field  
+        .hl.gr_caption.hl_tr Cтоимость для исполнителей
+        section.table_5col_plus       
+          .inp_w
+            m-number name="designer_sum" label="Cтоимость дизайна" add_class="sum_cost" readonly="readonly" 
+          .sign.plus 
+          transition name="slide-fade"
+            .inp_w 
+              m-number name="visualer_sum" label="Cтоимость визуала" add_class="sum_cost" readonly="readonly" :disabled="visualer_price == 0"
+          .sign.equal 
+          .inp_w
+            m-number name="sum_total_executor" label="Итого исполнителям" add_class="sum_cost" readonly="readonly"

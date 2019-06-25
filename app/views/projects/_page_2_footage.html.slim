@@ -1,14 +1,37 @@
 #tabs-2.ptab
   .box_wrap.box_wrap_1
     .fullwidth.prj_footage
+      .gray_field
+        .inner_field
+          .hl.gr_caption.hl_tr Вид работы 
+          .prj_executors
+            .inp_w
+              label Вид работы
+              v-chosen name="project_type" placeholder="Вид работы..." :input="true"
+            .inp_w 
+            - if is_manager?
+              transition name="slide-fade" mode="out-in" 
+                .inp_w 
+                  m-number name="footage" label="Метраж"  v-if="mDependsFromFootage"
+              template v-if="mDependsFromFootage || mPriceIsTotal"
+                .inp_w :title="tarifTooltips.sum"
+                  m-number name="sum_total" label="Сумма"
+                .inp_w 
+                  m-number name="designer_sum" label="Cтоимость дизайна" add_class="sum_cost" readonly="readonly"
+              .inp_w 
+                m-number name="sum_rest" label="Остаток" add_class="sum_rest" readonly="readonly" v-if="mDependsFromFootage || mPriceIsTotal"
 
       - footage_2_nil = @project.footage_2.try('to_i') == 0
       - if is_manager?
-        = render 'footage_sum', real: false, footage_2_nil: footage_2_nil, title: 'Заявленная площадь и стоимость'
+        .sums v-if="mPriceForFootage" key="sum"
+          .sep_3 
+          .gray_field
+            = render 'footage_sum', real: false, footage_2_nil: footage_2_nil, title: 'Заявленная площадь и стоимость'
         transition name="slide-fade"
           section v-show="show_fact"
             .sep_3
-            = render 'footage_sum', real: true, footage_2_nil: footage_2_nil, title: 'Фактическая площадь и стоимость' 
+            .gray_field
+              = render 'footage_sum', real: true, footage_2_nil: footage_2_nil, title: 'Фактическая площадь и стоимость' 
         .sep_3
         = render 'executor'
                       
@@ -21,8 +44,7 @@
             th width="20%" 
             th width="20%" 
         tbody
-        - if is_manager?
-        - else
+        - if !is_manager?
           tr
             td.gr_caption colspan="5" Заявленная площадь
           tr 
