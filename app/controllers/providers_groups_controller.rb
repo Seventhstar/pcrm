@@ -9,6 +9,7 @@ class ProvidersGroupsController < ApplicationController
 
   def new
     @providers_group = ProvidersGroup.new
+    @providers_group.provider_goodstypes.build
   end
 
   # GET /providers_groups/1/edit
@@ -55,6 +56,7 @@ class ProvidersGroupsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def providers_group_params
       params.require(:providers_group).permit(:name, :spec, 
+        goodstypes: [],
         provider_goodstypes_attributes: [:goodstype_id, :owner_id, :owner_type, :id, :_destroy])
     end
 end

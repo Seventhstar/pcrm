@@ -5,7 +5,11 @@
       table.tbl_fc.tbl_fc
         = simple_inputs f, [:name]
         = tr_text f, :spec, 'Специализация', 'Напишите особенности поставщика'
-        div v-for="(item, index) in gts"
+        = f.simple_fields_for :goodstypes, @providers_group do |pg|
+
+          = tr_multi_select pg, :goodstype_ids, Goodstype.all, 'Виды товаров', class: "chosen-select multi-select chosen_for_vue"             
+
+        / div v-for="(item, index) in gts"
           input type="hidden" :name="shop_field(index,'goodstype_id')" :value="item.goodstype_id"
           input type="hidden" :name="shop_field(index,'owner_id')" :value="item.owner_id"
           input type="hidden" :name="shop_field(index,'owner_type')" :value="item.owner_type"
@@ -13,7 +17,6 @@
           input type="hidden" :name="shop_field(index,'_destroy')" :value="item._destroy"
 
 
-        = tr_multi_select f, :goodstype_ids, Goodstype.all, 'Виды товаров', class: "chosen-select multi-select chosen_for_vue"             
 
         = tr_submit_cancel providers_page_url, {modal: true}
 
