@@ -1,4 +1,4 @@
-<%= render 'shared/edit_head', item: @project, title: "Редактирование проекта #{@project.address}" %>
+<%= render 'shared/edit_head', item: @project, title: "Редактирование проекта ##{@project.number}, адрес: #{@project.address}" %>
 
 <%= hidden_field_tag 'holidays', @holidays %> 
 <%= hidden_field_tag 'workdays', @holidays %> 
