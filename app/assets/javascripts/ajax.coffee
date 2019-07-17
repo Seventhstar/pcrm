@@ -266,9 +266,9 @@ $(document).ready ->
 
 # поиск 
   $('#search').on 'keyup clear', (e)-> 
-    c = String.fromCharCode(event.keyCode);
+    c = String.fromCharCode(e.keyCode);
     isWordCharacter = c.match(/\w/);
-    isBackspaceOrDelete = (event.keyCode == 8 || event.keyCode == 46 || event.keyCode == 13 || e.type == 'clear');
+    isBackspaceOrDelete = (e.keyCode == 8 || e.keyCode == 46 || e.keyCode == 13 || e.type == 'clear');
     if (isWordCharacter || isBackspaceOrDelete)
        delay('sortable_query({})',700)
     return

@@ -160,8 +160,7 @@ Rails.application.routes.draw do
   get "/statistics/" => "statistics#show"
   get "/statistics/:page" => "statistics#show"
 
-  get "/history/" => "history#show"
-  get "/history/:period" => "history#show"
+  resources :history
 
   mount PdfjsViewer::Rails::Engine => "/pdfjs", as: 'pdfjs'
 

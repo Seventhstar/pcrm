@@ -120,10 +120,12 @@ class Project < ActiveRecord::Base
   end
 
   def price_info
+    puts "price #{price} price_real #{price_real}"
     nil_footage(footage_real) ? price.to_sum : price_real.to_sum
   end
 
   def price_2_info
+    puts "price_2 #{price_2} price_2_real #{price_2_real}"
     nil_footage(footage_real) ? price_2.to_sum : price_2_real.to_sum
   end
 
@@ -172,7 +174,7 @@ class Project < ActiveRecord::Base
     p
   end
 
-  def prices()
+  def prices
     p = price.to_s
     p = p +' / '+ price_2.to_s if price_2.to_i>0
     p
@@ -186,7 +188,8 @@ class Project < ActiveRecord::Base
     self.elongations.length==0 ? date_end_plan : last_elongation 
   end
 
-  def admin_info()
+  def admin_info
+    puts "admin_info"
      i = "#{f1_info}м. - #{price_info}р."
      i += "</br>#{f2_info}м. - #{price_2_info}р." if !nil_footage(f2_info)
      i

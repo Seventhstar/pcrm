@@ -106,7 +106,7 @@ Vue.component('m-number', {
   props: ['name', 'label', 'type', 'add_class', 'disabled', 'readonly', 'float', 'footage'],
   template: `
     <div class="inp_w prj_not_simple">
-      <label v-if="label">{{label}}</label>
+      <label v-if="label" :readonly="readonly">{{label}}</label>
       <input 
         value="0.0" 
         type="text"  

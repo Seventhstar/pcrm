@@ -16,8 +16,12 @@ class User < ActiveRecord::Base
 
   belongs_to :city
 
-  scope :actual, -> {where(activated: true)}
-  scope :works, -> {where(fired: false)}
+  scope :actual,  -> {where(activated: true).order(:name)}
+  scope :by_city, -> (city){where(city: city)}
+  scope :works,   -> {where(fired: false)}
+  scope :not_test,-> {where('id NOT IN (?)',[1,3,19])}
+  scope :not_anna,-> {where('id <> 10')}
+  scope :admins,  -> {where(admin: true, activated: true)}
 
 
   attr_accessor :remember_token, :activation_token, :reset_token

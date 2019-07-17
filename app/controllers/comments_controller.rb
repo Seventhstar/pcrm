@@ -34,7 +34,7 @@ class CommentsController < ApplicationController
     @comment = Comment.new(comment_params)
     @comment.user = current_user
     if @comment.save
-      admins = User.where(admin: true).ids # помечаем сообщения непрочитанными
+      admins = User.admins.ids # помечаем сообщения непрочитанными
       admins.delete(current_user.id) # кроме себя
       admins.each do |a|
         cu = CommentUnread.new

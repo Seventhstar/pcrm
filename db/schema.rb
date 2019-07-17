@@ -63,7 +63,7 @@ ActiveRecord::Schema.define(version: 201904215002649) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "secret"
+    t.boolean "secret", default: false
     t.index ["owner_id"], name: "index_attachments_on_owner_id"
   end
 
@@ -251,8 +251,8 @@ ActiveRecord::Schema.define(version: 201904215002649) do
   end
 
   create_table "holidays", id: :serial, force: :cascade do |t|
-    t.string "name"
     t.date "day"
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -365,9 +365,9 @@ ActiveRecord::Schema.define(version: 201904215002649) do
 
   create_table "project_elongations", id: :serial, force: :cascade do |t|
     t.date "new_date"
+    t.integer "project_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "project_id"
     t.integer "elongation_type_id"
     t.index ["project_id"], name: "index_project_elongations_on_project_id"
   end
@@ -395,9 +395,8 @@ ActiveRecord::Schema.define(version: 201904215002649) do
     t.date "date_place"
     t.integer "sum_supply"
     t.boolean "fixed", default: false
-    t.integer "project_id"
-    t.integer "goodstype_id"
-    t.integer "project_g_type_id"
+    t.bigint "project_id"
+    t.bigint "goodstype_id"
     t.bigint "goods_priority_id", default: 1
     t.bigint "delivery_time_id", default: 1
     t.index ["delivery_time_id"], name: "index_project_goods_on_delivery_time_id"
@@ -488,7 +487,7 @@ ActiveRecord::Schema.define(version: 201904215002649) do
     t.integer "goodstype_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "owner_type", default: "Provider"
+    t.string "owner_type"
     t.index ["goodstype_id"], name: "index_provider_goodstypes_on_goodstype_id"
     t.index ["owner_id"], name: "index_provider_goodstypes_on_owner_id"
   end
@@ -528,6 +527,7 @@ ActiveRecord::Schema.define(version: 201904215002649) do
     t.integer "p_status_id"
     t.bigint "city_id", default: 1
     t.bigint "providers_group_id"
+    t.boolean "is_group"
     t.index ["city_id"], name: "index_providers_on_city_id"
     t.index ["providers_group_id"], name: "index_providers_on_providers_group_id"
   end
@@ -699,15 +699,6 @@ ActiveRecord::Schema.define(version: 201904215002649) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "wiki_files", id: :serial, force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "wiki_record_id"
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["wiki_record_id"], name: "index_wiki_files_on_wiki_record_id"
-  end
-
   create_table "wiki_records", id: :serial, force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -745,13 +736,15 @@ ActiveRecord::Schema.define(version: 201904215002649) do
 
   create_table "works", force: :cascade do |t|
     t.string "name"
+    t.bigint "work_type_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "work_type_id"
     t.bigint "uom_id"
     t.index ["uom_id"], name: "index_works_on_uom_id"
+    t.index ["work_type_id"], name: "index_works_on_work_type_id"
   end
 
+  add_foreign_key "clients", "cities"
   add_foreign_key "costing_rooms", "costings"
   add_foreign_key "costing_rooms", "rooms"
   add_foreign_key "costing_works", "costings"
@@ -760,15 +753,23 @@ ActiveRecord::Schema.define(version: 201904215002649) do
   add_foreign_key "costings", "costings_types"
   add_foreign_key "costings", "projects"
   add_foreign_key "costings", "users"
+  add_foreign_key "leads", "cities"
   add_foreign_key "leads", "priorities"
+  add_foreign_key "project_goods", "delivery_times"
+  add_foreign_key "project_goods", "goods_priorities"
   add_foreign_key "project_goods", "goodstypes"
   add_foreign_key "project_goods", "projects"
+  add_foreign_key "projects", "cities"
   add_foreign_key "projects", "leads"
+  add_foreign_key "provider_managers", "positions"
+  add_foreign_key "providers", "cities"
   add_foreign_key "providers", "providers_groups"
   add_foreign_key "room_works", "rooms"
   add_foreign_key "room_works", "works"
   add_foreign_key "tarifs", "cities"
   add_foreign_key "tarifs", "project_types"
   add_foreign_key "tarifs", "tarif_calc_types"
+  add_foreign_key "users", "cities"
   add_foreign_key "works", "uoms"
+  add_foreign_key "works", "work_types"
 end

@@ -35,7 +35,7 @@ class ProjectMailer < ActionMailer::Base
     def users_emails(option_id, executor_id)
       users_ids = UserOption.users_ids(option_id)
       users_ids << executor_id
-      emails = User.where(id: users_ids).pluck(:email)
+      emails = User.actual.where(id: users_ids).pluck(:email)
     end
 
 end

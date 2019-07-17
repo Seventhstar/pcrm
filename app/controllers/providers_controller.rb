@@ -174,7 +174,7 @@ class ProvidersController < ApplicationController
     def provider_params
       params.require(:provider).permit( :name, :manager, :phone, :komment, :address, 
                                         :email, :url, :spec, :p_status_id, :city_id,
-                                        :providers_group_id,
+                                        :providers_group_id, :is_group,
                                         budget_ids: [], style_ids: [], 
                                         goodstype_attributes: [],
                                         special_infos_attributes: [:id, :content, :_destroy])

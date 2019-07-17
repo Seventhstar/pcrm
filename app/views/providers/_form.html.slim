@@ -1,33 +1,41 @@
 = simple_form_for(@provider) do |f|
   = render 'shared/error_messages', object: f.object
   .box_wrap.box_wrap_1
-    .panel-left
-      table.tbl_fc.tbl_fc
-        = simple_inputs f, [:name, :phone, :address, :url ]
-        = tr_text f, :spec, 'Специализация', 'Напишите особенности поставщика'
-        = tr_multi_select f, :goodstype_ids, Goodstype.all, 'Виды товаров'
-        
-        - if is_manager?
-          = tr_chosen 'p_status_id', PStatus.order(:name), @provider, 'Статус' 
-        - else
-          = f.hidden_field :p_status_id, value: @provider.p_status_id
+    .panel-left.vue_app
+      .grid_label_name
+        .div
+        m-checkbox v-model="is_group" name="is_group" model="provider" label="Это группа"
+        = simple_inputs f, [:name]
+      .sep_1
+      transition name="slide-fade"
+        .grid_label_name v-show="!is_group" 
+          = simple_inputs f, [:phone, :address, :url]
+      .sep_1 v-show="!is_group"
+      .grid_label_name
+        = vue_table_text f, :spec, 'Специализация', 'Напишите особенности поставщика'
+        = vue_multi_select f, :goodstype_ids, Goodstype.all, 'Виды товаров'
+      .sep_1
+      transition name="slide-fade"
+        .grid_label_name v-show="!is_group"
+          - if is_manager?
+            = vue_table_chosen 'p_status_id', PStatus.order(:name), @provider, 'Статус' 
+          - else
+            = f.hidden_field :p_status_id, value: @provider.p_status_id
+          = vue_table_chosen 'providers_group_id', ProvidersGroup.order(:name), @provider, {caption: 'Группа', nil_value: 'Группа...', force_nil: true} 
+          = vue_table_text f, :komment, 'Примечание'
+          - if is_manager?
+            = vue_table_chosen 'city_id', @cities, @provider, 'Город'
+          - else
+            = f.hidden_field :city_id, value: @provider.city_id
+      = vue_submit_cancel providers_page_url 
 
-        = tr_chosen 'providers_group_id', ProvidersGroup.order(:name), @provider, {caption: 'Группа', nil_value: 'Группа...', force_nil: true} 
-
-        = tr_text f, :komment, 'Примечание'
-
-        - if is_manager?
-          = tr_chosen 'city_id', @cities, @provider, 'Город'
-        - else
-          = f.hidden_field :city_id, value: @provider.city_id
-
-        = tr_submit_cancel providers_page_url 
     .right
       - if controller.action_name == 'edit'
         .comments_box
-          = render "shared/comments"
+          - render "shared/comments"
 .sep_3
 .managers
   - if !@provider.id.nil?
     = render "managers"
 .sep_3
+= render "form_vue"

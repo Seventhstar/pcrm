@@ -1,12 +1,43 @@
 <% if is_manager? %>
   <div class="hl hl_a bd">История изменений <span class="grey"></span></div>
+  
+  <pre id="history_content"></pre>
+  <script type="text/javascript">
+    // )
 
-  <div class="items_box_head panel-left short_search">
-    <label class="left"> <%= select "obj", "type", options_for_select(@types, @item_type), class: 'chosen' %> </label>
-    <label class="left"> <%= chosen_src 'obj[user_id]', User.order(:name), @user_id, {nil_value: 'Пользователи...'} %> </label>
+    function syntaxHighlight(json) {
+    json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return json.replace(/("(\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, 
+      function (match) {
+        var cls = 'number';
+        if (/^"/.test(match)) {
+            if (/:$/.test(match)) {
+                cls = 'key';
+            } else {
+                cls = 'string';
+            }
+        } else if (match.includes('_')) {
+          cls = 'string';
+        } else if (/true|false/.test(match)) {
+            cls = 'boolean';
+        } else if (/null/.test(match)) {
+            cls = 'null';
+        }
 
-  </div>
+        if (match.startsWith('"---')){
+          let r = syntaxHighlight(JSON.parse(match.replace('---', '')))
+          console.log('match', r.replace("\n", ''))
+          return '<span class="' + cls + '"><span class=inner-pre>' + r + '</span></span>'
+          // match = r
+        } 
 
-  <%= render 'shared/pagination' %>
-  <%= render 'history_content' %>
+        return '<span class="' + cls + '">' + match + '</span>';
+    });
+    }
+    var someObject = <%= @history.to_json.html_safe %>;
+    $('#history_content').html(syntaxHighlight(JSON.stringify(someObject, undefined, 2)))
+  </script>
+  
+  
 <% end %>
+ 

@@ -87,7 +87,7 @@ SimpleNavigation::Configuration.run do |navigation|
       primary.item :options,  content_tag(:span,' '), options_path, html: {class: 'li-right options', title: 'Настройки'}
       primary.item :develops, content_tag(:span), develops_path, html: {class: 'li-right develops',title: 'Разработка', } 
       primary.item :charts1,  content_tag(:span), statistics_path, html: {class: 'li-right', title: 'Статистика'} 
-      primary.item :history,  content_tag(:span), history_path, html: {class: 'li-right', title: 'История'} 
+      primary.item :history,  content_tag(:span), history_index_path, html: {class: 'li-right', title: 'История'} 
     end
 
     # Add an item which has a sub navigation (same params, but with block)

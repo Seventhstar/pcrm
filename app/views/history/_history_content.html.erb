@@ -8,7 +8,8 @@
   <div class="historyChange_list_a">
 
     <% @history.each do |version| %>
-    <% if version['event'] != 'update' && version["item_type"]!= 'Attachment' %>
+    <% puts 'version', version.id  %>
+    <% if !(version['event'] == 'update' && version["item_type"]== 'Attachment') %>
     <% day = (version['created_at'].localtime).beginning_of_day %>
     
     <% if cur_day != day %>
@@ -23,8 +24,10 @@
         <% author = find_version_author_name(version) %>    
         <% _obj = get_version_details(version) %> 
 
-        <li><span><%= (version['created_at'].localtime).try('strftime',"%H:%M:%S") %></span> 
-          <%# puts "version['event'] #{version['event']}" %>
+        <li><span>
+          <%= link_to((version['created_at'].localtime).try('strftime',"%H:%M:%S"), history_path(version)) %>  
+          <%=  %></span> 
+          <% puts "version['event'] #{version['event']}" %>
           <% if version['event'] == 'update' %>
 
           <% v = _obj['inf'][:ch][0] %>

@@ -1,9 +1,8 @@
-$('#page_num').val(<%= @page+1 %>)
-<% if params['sort']=='calendar' %>
+$('#page_num').val(<%= @page + 1 %>)
+<% if params['sort'] == 'calendar' %>
   $("#div_tabsences").html("<%= j render("calendar") %>");
-<% elsif @page>1 %>
-  $("#page_<%= @page %>").html("<%= j render("absences") %>");
 <% else %>
-  $("#div_tabsences").html("<%= j render("absences") %>");
+  $("#page_<%= @page %>").html("<%= j render("absences") %>");
+  $("#div_tabsences").append("<div id='page_<%= @page + 1 %>'/>");
 <% end %>  
 

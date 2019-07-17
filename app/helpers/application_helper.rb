@@ -387,10 +387,8 @@ module ApplicationHelper
   end
 
   def sortable_th(column, title = nil, nosort = false)
-
     title ||= column.titleize
     css_class = column.to_s().include?(sort_2) ? "subsort current #{dir_2}" : "subsort"
-    # puts "sortable_th sort_2 #{sort_2}"
 
     a = content_tag :div, "",{class: "sortArrow"}
     b = content_tag :span, title.html_safe
@@ -625,12 +623,47 @@ module ApplicationHelper
     end
   end
 
-  def simple_inputs(f, inputs)
+  def vue_multi_select(f, field, source, label, params = {})
+    attrs = {multiple: true,  class: "chosen-select multi-select", include_blank: 'None'}.merge(params)
+    content_tag(:div, "#{label}:", class: "caption") + 
+    content_tag(:div, class: "select_custom select") do
+      f.collection_select field, source, :id, :name, {}, attrs
+    end    
+  end
+
+  def vue_table_text(f, field, label, placeholder = '')
+    content_tag(:div, "#{label}:", class: "caption") + 
+    content_tag(:div, class: "inp_w") do
+        f.input(field, label: false, placeholder: placeholder)
+    end 
+  end
+
+  def vue_table_chosen(id, collection, obj = nil, options)
+    label = options.class == String ? options : options[:caption]
+    options = {} if options.class == String
+    content_tag(:div, "#{label}:", class: "caption") +
+    content_tag(:div, class: "inp_w") do
+      chosen_src(id, collection, obj, options)
+    end
+  end
+
+  def vue_submit_cancel(back_url, options = {})
+
+      content_tag(:div, '', class: "caption") + 
+      content_tag(:div) do
+        submit_cancel(back_url, options) 
+      end
+    
+  end
+
+
+
+  def simple_inputs(f, inputs, tag = :div)
     html = ''
     inputs.each do |el|
       html += content_tag :tr do 
-        content_tag(:td, "#{t el}:", class: "caption") +
-        content_tag(:td) do
+        content_tag(tag, "#{t el}:", class: "caption") +
+        content_tag(tag) do
           content_tag :div, class: "inp_w" do
             f.input(el, label: false)
           end

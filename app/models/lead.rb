@@ -114,7 +114,7 @@ class Lead < ActiveRecord::Base
       headers = ['Всего','Заключили договор','Процент']
       el = 'Area'
     when 'users_created_at'
-      usr = User.where('id NOT IN (?)',[1,3,19]).order(:name)
+      usr = User.actual.not_test
       data = period.each.collect{ |p|  usr.collect{ 
               |u| {month: I18n.t(p.try('strftime',"%B")),  
               u.name =>  u.leads.where("date_trunc('month', start_date) = ?", p).count } }

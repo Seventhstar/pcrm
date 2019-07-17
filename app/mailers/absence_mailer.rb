@@ -8,9 +8,9 @@ class AbsenceMailer < ActionMailer::Base
     if Rails.env.production? && Rails.application.secrets.host.present?
 
       if user_option.nil?
-        emails = User.where('admin = true and id <> 10').pluck(:email)
+        emails = User.admins.not_anna.pluck(:email)
       else
-        emails = User.joins(:options).where('admin = true and option_id = ?', user_option).pluck(:email)
+        emails = User.joins(:options).actual.where('admin = true and option_id = ?', user_option).pluck(:email)
       end
 
       emails << @abs.user.email if !curr_user.nil? && curr_user.id != @abs.user_id && !@abs.user.nil?

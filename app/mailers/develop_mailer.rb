@@ -7,9 +7,9 @@ class DevelopMailer < ActionMailer::Base
 
   def send_mail_to_admins(subj, option_id)
     if Rails.env.production? && Rails.application.secrets.host.present?
-      admins = User.where(admin: true).ids
+      admins = User.admins.ids
       admins = admins & UserOption.where(option_id: option_id).pluck(:user_id) if !option_id.nil?
-      emails = User.where(id: admins).pluck(:email)
+      emails = User.actual.where(id: admins).pluck(:email)
       mail(to: emails, subject: subj) do |format|
         format.html
       end

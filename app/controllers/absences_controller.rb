@@ -13,43 +13,57 @@ class AbsencesController < ApplicationController
   # GET /absences.json
   def index
     @wdays = %w(пн вт ср чт пт сб вс)
-    @sort_column = sort_column
-    @only_actual = params[:only_actual].nil? ? true : params[:only_actual] == 'true'
-    params['m'] = nil if  params[:sort]!='calendar'
-    @current_month = Date.parse(params['m']) if !params['m'].nil?
-    @current_month = Date.today.beginning_of_month if @current_month.nil?
-    @curr_day = @current_month.beginning_of_month.beginning_of_week
-    query_str = "absences.*, date_trunc('month', dt_from) AS month"
+    @user_ids = User.actual.by_city(@main_city).ids
+    @page = 0
 
-    @page = params[:page].try(:to_i)
-    @page = 1 if @page ==0 || @page.nil?
 
-    abs = is_manager? ? Absence.all : current_user.absences
-    @absences = abs.select(query_str).joins(:reason)
+    if params[:sort] == 'calendar'
+      # params['m'] = nil if  params[:sort]!='calendar'
+      # @current_month = Date.parse(params['m']) if !params['m'].nil?
+      @current_month = Date.today.beginning_of_month 
+      @curr_day = @current_month.beginning_of_month.beginning_of_week
 
-    user_ids = User.where(city: @main_city).ids
-    # puts "user_ids #{user_ids}"
-    # wee
-    @absences = @absences.where(user_id: user_ids)
+      # puts "params[:sort] #{params[:sort]}"
+      # @absences = Absence.where("dt_from >= ?", @curr_day)
+                           # .left_joins(:user)
+                           # .select('absences.*, user.name as user_name')
+                           # .group_by {|i| [i.user_name]}
+                           # .group_by(1)
+                           # wee
 
-    if params[:sort]!='calendar'
-      if @only_actual
-        @absences = @absences.where("dt_from >= ?", (Date.today-2.week))
-      end
-      @absences = @absences.paginate(page: @page, per_page: 50)
+      @birthdays = User.actual.by_city(current_user.city_id)
+                       .where('date_birth is NOT NULL').pluck(:name, :date_birth)
+                       .map{|a, b| [b.try('strftime', '%d.%m'), a] }.to_h
     else
-      @absences = @absences.where("dt_from >= ?", @curr_day)
+      @sort_column = sort_column
+      @only_actual = params[:only_actual].nil? ? true : params[:only_actual] == 'true'
+      query_str = "absences.*, date_trunc('month', dt_from) AS month"
+
+      @page = params[:page].try(:to_i)
+      @page = 1 if @page ==0 || @page.nil?
+
+      abs = is_manager? ? Absence.all : current_user.absences
+      @absences = abs.select(query_str).joins(:reason)
+
+      # puts "user_ids #{@user_ids}"
+      # wee
+      @absences = @absences.where(user_id: @user_ids)
+
+
+      if params[:sort] == 'users.name'
+        sort_1 = "users.name"
+        @absences = @absences.joins(:user)
+      end
+      @absences = @absences.where("dt_from >= ?", (Date.today-2.week)) if @only_actual
+      @absences = @absences.paginate(page: @page, per_page: 50)
+      sort_1 = @sort_column == 'dt_from' ? 'month' : @sort_column
+      order = "#{sort_1} #{sort_direction}, #{sort_2} #{dir_2}, absences.created_at desc"
+      @absences = @absences.order(order)
     end
 
-    if params[:sort] == 'users.name'
-      sort_1 = "users.name"
-      @absences = @absences.joins(:user)
-    end
 
-    sort_1 = @sort_column == 'dt_from' ? 'month' : @sort_column
-    order = "#{sort_1} #{sort_direction}, #{sort_2} #{dir_2}, absences.created_at desc"
-    #puts "order #{order}"
-    @absences = @absences.order(order)
+    
+    # puts "@absences #{@absences}"
   end
 
   # GET /absences/1
@@ -73,9 +87,8 @@ class AbsencesController < ApplicationController
     @shop  = AbsenceShop.new
     @reasons = AbsenceReason.order(:id)
     @targets = AbsenceTarget.order(:name)
-    @users    = User.where(city: current_user.city).order(:name)
-    # puts "current_user.city #{current_user.city}", @users.to_a 
-    @projects = Project.order(:address).where.not(pstatus_id: 3)
+    @users    = User.actual.by_city(current_user.city)
+    @projects = Project.only_actual(true).order(:address)
     @shop_targets = AbsenceShopTarget.all
 
     if !@absence.nil?
@@ -179,7 +192,7 @@ class AbsencesController < ApplicationController
     end
 
     def sort_column
-      col_names = Absence.column_names + ['users.name','calendar']
+      col_names = Absence.column_names + ['users.name', 'calendar']
       col_names.include?(params[:sort]) ? params[:sort] : "dt_from"
     end
 

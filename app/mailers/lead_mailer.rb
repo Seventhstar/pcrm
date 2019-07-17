@@ -21,7 +21,7 @@ class LeadMailer < ActionMailer::Base
   def send_lead_mail(subj, to = nil, user_exclude = nil, only_admins = false, id = nil)
 
     if Rails.env.production? && Rails.application.secrets.host.present?
-      admins = User.where(admin: true).ids
+      admins = User.admins.ids
       admins = admins & UserOption.users_ids(id) if !id.nil?
 
       if !only_admins
@@ -30,7 +30,7 @@ class LeadMailer < ActionMailer::Base
       end
 
       if to.nil?
-        emails = User.where(id: admins).pluck(:email)
+        emails = User.actual.where(id: admins).pluck(:email)
         emails.delete(user_exclude)
       else
         emails = to

@@ -52,7 +52,7 @@ class Absence < ActiveRecord::Base
 
   def self.counts_by_types(page_type, start_date, end_date)
 
-    usr = User.where('id NOT IN (?)',[1,3,19]).order(:name)
+    usr = User.actual.not_test
     reasons = AbsenceReason.all.collect{ |u| {name: u.name, id: u.id} }
     reasons.insert(0, {name: 'Всего', id: 0})
     el = 'Bar'

@@ -5,8 +5,6 @@
     <span class='cal-next' cur-period='<%= @current_month+1.month %>'>>></span>
   </div>
   
-  <% day_births = User.where('date_birth is NOT NULL').pluck(:name,:date_birth).map{|a,b| [b.try('strftime','%d.%m'),a] }.to_h %>
-
   <table class="tcalendar">
     <thead><tr> 
     <% @wdays.each do |day| %>
@@ -25,7 +23,7 @@
               <%= span_tooltip( "<b>#{a.user_name}</b><br> #{a.reason_name}", 
                   abs_description(a), abs_class(a), a, is_manager? || a.user == current_user) %>
           <% end %>
-              <%= date_birth_li(day_births, @curr_day) %>
+              <%= date_birth_li(@birthdays, @curr_day) %>
           </div></td>
           <% @curr_day=@curr_day+1 %>
         <% end %>

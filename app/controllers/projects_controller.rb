@@ -13,7 +13,7 @@ class ProjectsController < ApplicationController
 
   def index
     @years = (2016..Date.today.year).step(1).to_a.reverse
-    @executors = User.where(activated: true).order(:name)
+    @executors = User.actual.by_city(current_user.city)
 
     @sort_column = sort_column
     sort_1 = @sort_column
@@ -117,8 +117,8 @@ class ProjectsController < ApplicationController
     @date_start = format_date(@project.date_start)
     @date_end   = format_date(@project.date_end)
 
-    @executors  = User.where(city: current_user.city).order(:name)
-    @visualers  = User.where(city: current_user.city).order(:name)
+    @executors  = User.actual.by_city(current_user.city)
+    @visualers  = User.actual.by_city(current_user.city)
     @new_gtypes = Goodstype.where.not(id: [@pgt_ids]).order(:name)
     
     @project_types = ProjectType.order(:name)
@@ -233,6 +233,7 @@ class ProjectsController < ApplicationController
 
     # where(id: [pgt]).order(:name)
 
+      @history  = get_history_with_files(@project)
     case @tab
     when 4
     #   # puts "@goods.count #{@goods.count}"
@@ -240,9 +241,8 @@ class ProjectsController < ApplicationController
 
       
     when 7
-      @history  = get_history_with_files(@project)
     else
-      @history = []
+      # @history = []
       # @files    = @project.attachments
       @files    = @project.attachments.secret(is_manager?).order(:created_at)
       @goods_files = Attachment.secret(is_manager?).where(owner_type: 'ProjectGood', owner_id: @project.goods.ids)
@@ -350,7 +350,7 @@ class ProjectsController < ApplicationController
       prms = %w( price price_2 price_real price_2_real sum sum_2 sum_real sum_2_real
         sum_total sum_total_real designer_price designer_price_2 visualer_price
         visualer_sum designer_sum sum_total_executor)
-        
+      
       prms.each do |p|
         project_params[p] = project_params[p].gsub!(' ','') if !project_params[p].nil?
       end
@@ -376,6 +376,7 @@ class ProjectsController < ApplicationController
     end
 
     def project_params      
+      # puts "params #{params}"
       params.require(:project).permit(:client_id, :address, :owner_id, :executor_id, :designer_id, :visualer_id, :project_type_id,
         :date_start, :date_end_plan, :date_end_real, :number, :date_sign,
         :footage, :footage_2, :footage_real, :footage_2_real, :style_id,

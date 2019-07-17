@@ -15,7 +15,7 @@ span.title {margin-top: 3px}
 
 .provider_table_filter{display: grid; grid-template-columns: 180px 370px 1fr 96px; column-gap:20px; margin-bottom: 20px;}
 .providers_index_head{display: grid; grid-template-columns: 270px 1fr 180px 205px 295px 60px; }
-.providers_index_group{display: grid; grid-template-columns: 270px 1fr 636px 44px 60px; font-weight: 500;}
+.providers_index_group{display: grid; grid-template-columns: 270px 1fr 636px 44px 60px; }
 .providers_index_head .td, .providers_index_group .td { display: flex; align-items: center; }
 
 .vuesort .hTitle {float: left;}
@@ -156,7 +156,7 @@ div.edit_delete{ text-align: center; }
 .table_footer {overflow: auto; padding: 8px; font-size: 16px}
 .table_footer span {font-weight: 500;}
 
-.label_col{ margin-top: 8px; text-align: right; font-weight: 500; font-size: 13px;}
+.label_col, .grid_label_name .caption { margin-top: 8px; text-align: right; font-weight: 500; font-size: 13px;}
 .label_description, .label_num{ margin-top: 8px; font-size: 14px;}
 .label_num { text-align: right;}
 

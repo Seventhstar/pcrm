@@ -66,8 +66,13 @@
     'page2') %>,
 
     created() {
+      console.log('price', this.price, this.price_2)
+      console.log('sum_total', this.sum_total)
+      console.log('designer_price', this.designer_price, this.designer_price_2)
+      console.log('visualer_price', this.visualer_price)
+
       this.tarifSelect()
-      this.projectTypeSelect()
+      this.projectTypeSelect(false)
       this.calcTotal()
       this.$root.$on('onInput', this.onInput)
     },
@@ -134,27 +139,28 @@
       },
 
       sum_total(force = false) {
+        console.log('this.mPriceByPercent', this.mPriceByPercent)
         if (this.focus.includes('total') || force) {
           if (this.mPriceIsTotal)
             this.m_sum_total = this.sum_total;
           else 
             this.m_sum_total = parseInt(this["sum"]) + parseInt(this["sum_2"])
 
-          if (this.mPriceByPercent) this.calcSumExecutor()
+          if (this.mPriceByPercent) this.calcSumExecutor(true)
         }
       this.calcRest()
     },
 
     designer_price() {
-      this.calcSumExecutor(true)
+      this.calcSumExecutor()
     },
 
     designer_price_2() {
-      this.calcSumExecutor(true)
+      this.calcSumExecutor()
     },
 
     visualer_price() {
-      this.calcSumExecutor(true)
+      this.calcSumExecutor()
     },
 
     dateStart() {
@@ -230,14 +236,30 @@
       },
 
       tarifSelect() {
-        console.log('this.city.value', this.city.value)
+        // console.log('this.city.value', this.city.value)
+        let locPrice = 0
+        let locPrice2 = 0
+        let locDesignerPrice = 0
+        let locDesignerPrice2 = 0
+        let locVisualerPrice = 0
+        let locSumTotal = 0
+
+        if (this.price > 0) locPrice = this.price
+        if (this.price_2 > 0) locPrice2 = this.price_2
+        if (this.sum_total > 0) locSumTotal = this.sum_total
+        if (this.designer_price > 0) locDesignerPrice = this.designer_price
+        if (this.designer_price_2 > 0) locDesignerPrice2 = this.designer_price_2
+        if (this.visualer_price > 0) locVisualerPrice = this.visualer_price
+
+
         this.clearAllCalculation()
 
         let find = v_nil(this.project_type) ? undefined : this.project_type.value
         if (find == undefined) find = this.project_type_id
 
-          let tarif_search = this.tarifs.filter(t => t.city_id == this.city.value && t.project_type_id == find)
+        let tarif_search = this.tarifs.filter(t => t.city_id == this.city.value && t.project_type_id == find)
         tarif_search = _.sortBy(tarif_search, 'from')
+        console.log('tarif_search', tarif_search)
 
         this.tarifTooltips.sum = ''
         if (tarif_search.length > 0) {
@@ -247,14 +269,27 @@
         }
 
         tarif_search = tarif_search.filter(t => toInt(t.from) <= this.footage).reverse()
+
         if (tarif_search.length) this.mTarif = tarif_search[0]
+        if(this.project_type.value == this.project_type_id){
+          if (this.mTarif.tarif_calc_type_id > 1) {
+            if (locSumTotal > 0) this.mTarif.sum = locSumTotal
+          } else {
+            if (locPrice > 0) this.mTarif.sum = locPrice
+            if (locPrice2 > 0) this.mTarif.sum2 = locPrice2
+          }
+
+          if (locDesignerPrice > 0) this.designer_price = locDesignerPrice
+          if (locDesignerPrice2 > 0) this.designer_price2 = locDesignerPrice2
+          if (locVisualerPrice > 0) this.mTarif.vis_price = locVisualerPrice
+        }
       },
 
     tarifTooltip() {
 
     },
 
-    projectTypeSelect() {
+    projectTypeSelect(force = true) {
       this.tarifSelect()
       if (this.mTarif != 0){
         this.calcType = this.mTarif.tarif_calc_type_id
@@ -264,7 +299,9 @@
             this.m_sum_total      = this.sum_total
 
             if (this.mTarif.designer_price > 0 && this.mTarif.designer_price < 1) this.mPriceByPercent = true    
-              this.mPriceIsTotal = true
+            // console.log('here!', this.mPriceByPercent, this.mTarif.designer_price)
+            this.mPriceIsTotal = true
+            
             if (this.mTarif.from > -1) this.mDependsFromFootage = true
 
           } else { // за м2
@@ -281,7 +318,7 @@
           // console.log('mHasVisualer', this.mHasVisualer)
           this.calcTotal()
           this.calcAmountByMonth()
-          this.calcSumExecutor(true)
+          this.calcSumExecutor(force)
         }
       },
 
@@ -379,7 +416,7 @@
       },
 
       calcTotal(real = ""){
-        console.log('calcTotal');
+        // console.log('calcTotal');
         if (!this.focus.includes('sum_total') && this.calcType == 1) {           
 
           this["sum_total"+real] = toInt(this["sum"+real]) + toInt(this["sum_2"+real]);
@@ -394,7 +431,7 @@
       },
 
       calcPrice(num = ""){
-        console.log('calc_type_id', this.calcType)
+        // console.log('calc_type_id', this.calcType)
         if (this.calcType > 1) return
           if (this.focus.includes('sum')){
             this["price"+num] = this.mFloat("sum"+num) / toInt(this["footage"+num]);
@@ -412,24 +449,25 @@
         },
 
         calcSumExecutor(byDefault = false){
-          console.log('calcSumExecutor', this.mTarif.tarif_calc_type_id, byDefault)
+          // console.log('calcSumExecutor', this.mTarif.tarif_calc_type_id, byDefault)
           this.checkFootages();
 
         // this.calc_type_id = this.mTarif.tarif_calc_type_id
         // console.log('calcSumExecutor', this.mTarif.tarif_calc_type_id, byDefault, this.calc_type_id)
 
         if (this.calcType > 1) {
-          this.designer_price = this.mTarif.designer_price
-          console.log('f1', this.mTarif.designer_price, this.designer_price);
-          if (this.mPriceByPercent)
-            this.designer_price *= this.sum_total
+          // console.log('f1', this.mTarif.designer_price, this.designer_price);
+          if (byDefault){
+            this.designer_price = this.mTarif.designer_price
+            if (this.mPriceByPercent) this.designer_price *= this.sum_total
+          }
           
 
           this.designer_sum = this.designer_price
           this.sum_total_executor = this.designer_sum
           // this.calcAmountByMonth();
         } else {
-          console.log('f2');
+          // console.log('f2');
           if (byDefault){
             this.designer_sum = toInt(this.designer_price) * this.mFootage + 
             toInt(this.designer_price_2) * this.mFootage2;

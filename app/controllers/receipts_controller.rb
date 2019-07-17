@@ -9,7 +9,7 @@ class ReceiptsController < ApplicationController
     params.delete_if{|k,v| v=='' || v=='0' } 
     @providers = Provider.order(:name)
     @projects  = Project.order(:address)
-    @executors = User.where(id: Project.pluck(:executor_id)) #undefined method `uniq' for #<Class
+    @executors = User.actual.where(id: Project.pluck(:executor_id)) #undefined method `uniq' for #<Class
     @param_provider = params[:receipts_provider]
     @param_provider = @param_provider.to_i if !@param_provider.nil?
     @only_actual = params[:only_actual].nil? ? true : params[:only_actual]=='true'
