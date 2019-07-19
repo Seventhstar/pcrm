@@ -147,7 +147,7 @@ class AjaxController < ApplicationController
       com.owner_type = params[:owner_type]
       com.save
 
-      admins = User.active.where(admin: true).ids # помечаем сообщения непрочитанными
+      admins = User.admins.ids # помечаем сообщения непрочитанными
       admins.delete(current_user.id) # кроме себя
       admins.each do |a|
         cu = CommentUnread.new

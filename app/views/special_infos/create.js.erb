@@ -3,5 +3,5 @@
 <% else %>
   $('.comments_list_a.specialinfo').append("<%= j render "special_info", special_info: @special_info %>");
   $('#special_info_content').val('');
-  $('.jspContainer').animate({scrollTop: $('.comments_list_a').prop("scrollHeight")}, 500);
+  $('.jspContainer.specialinfo').animate({scrollTop: $('.comments_list_a.specialinfo').prop("scrollHeight")}, 500);
 <% end %>

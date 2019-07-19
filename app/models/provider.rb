@@ -6,7 +6,7 @@ class Provider < ActiveRecord::Base
   has_many :styles, through: :provider_styles
   has_many :budgets, through: :provider_budgets
   
-  has_many :provider_goodstypes, as: :owner
+  has_many :provider_goodstypes
   has_many :goodstypes, through: :provider_goodstypes
 
   has_many :receipts
@@ -16,6 +16,8 @@ class Provider < ActiveRecord::Base
 
   belongs_to :p_status
   belongs_to :providers_group, optional: true
+  belongs_to :group, class_name: 'Provider', foreign_key: "group_id", optional: true
+  has_many :providers, class_name: 'Provider', foreign_key: "group_id"
   belongs_to :city
 
   has_paper_trail

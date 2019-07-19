@@ -35,6 +35,7 @@ span.title {margin-top: 3px}
 
 tr.nonactual td, tr.nonactual td a, td.nonactual a, .nonactual .td, .nonactual .td a{ color: #ccc; }
 .hotlead, .hot, td.hot_date{ color: red; }
+.goodlead{ color: $green; }
 .info, .info a {color: #009DDD;}
 
 .alt_goods_head {background: #EFEFEF; padding: 8px 13px 8px 30px; font-size: 15px; border-top: 2px solid $border-color; border-bottom: 1px solid #eee;

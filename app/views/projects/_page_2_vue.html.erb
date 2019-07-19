@@ -148,6 +148,12 @@
         this.calcSumExecutor()
       },
 
+      designer_sum() {
+        if (this.focus.includes('sum')) this.designer_price = this.designer_sum
+        this.sum_total_executor = this.designer_sum
+        this.calcRest()
+      },
+
       designer_price_2() {
         this.calcSumExecutor()
       },
@@ -170,14 +176,16 @@
       },
 
       project_type() {
-        console.log('43')
         this.clearAllCalculation()        
         setTimeout(() => {apply_mask()}, 300)
         this.projectTypeSelect()
 
-        if (!this.projectTypeOutChange && ptype.project_type_id > 0) {
+        <% if (controller.action_name != 'new') %>
+        if (!this.projectTypeOutChange && ptype!=undefined && ptype.project_type_id > 0) {
           ptype.setProjectType(this.project_type)
         }
+        <% end %>
+
         this.projectTypeOutChange = false
         
       },

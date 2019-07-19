@@ -21,7 +21,6 @@
 //= require chosen.jquery
 //= require jquery.timepicker
 //= require jquery.inputmask.bundle
-//= require jquery.mustache
 //= require tinymce-jquery
 //= require nprogress
 //= require bootstrap-tokenfield

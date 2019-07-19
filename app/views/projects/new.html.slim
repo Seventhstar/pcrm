@@ -72,7 +72,8 @@
                 .inp_w :title="tarifTooltips.sum"
                   m-number name="sum_total" label="Сумма"
                 .inp_w 
-                  m-number name="designer_sum" label="Cтоимость дизайна" add_class="sum_cost" readonly="readonly"
+                  m-number name="designer_sum" label="Cтоимость дизайна" add_class="sum_cost"
+                  = f.hidden_field :designer_price, "v-model"=>"designer_price"
               .inp_w 
                 m-number name="sum_rest" label="Остаток" add_class="sum_rest" readonly="readonly" v-if="mDependsFromFootage || mPriceIsTotal"
         

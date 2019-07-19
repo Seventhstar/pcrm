@@ -120,23 +120,16 @@ class Project < ActiveRecord::Base
   end
 
   def price_info
-    puts "price #{price} price_real #{price_real}"
     nil_footage(footage_real) ? price.to_sum : price_real.to_sum
   end
 
   def price_2_info
-    puts "price_2 #{price_2} price_2_real #{price_2_real}"
     nil_footage(footage_real) ? price_2.to_sum : price_2_real.to_sum
   end
 
   def designer_sum_calc
-    # if !designer_sum.nil? && designer_sum > 0
-    #   s = designer_sum 
-    # else
-    # puts "designer_sum_calc", f1
-      s = designer_price.to_i * f1
-      s += designer_price_2.to_i * f2 if footage_2>0
-    # end
+    s = designer_price.to_i * f1
+    s += designer_price_2.to_i * f2 if footage_2>0
     s.to_i
   end
 
@@ -189,10 +182,9 @@ class Project < ActiveRecord::Base
   end
 
   def admin_info
-    puts "admin_info"
-     i = "#{f1_info}м. - #{price_info}р."
-     i += "</br>#{f2_info}м. - #{price_2_info}р." if !nil_footage(f2_info)
-     i
+    i = "#{f1_info}м. - #{price_info}р."
+    i += "</br>#{f2_info}м. - #{price_2_info}р." if !nil_footage(f2_info)
+    i
   end
 
   def format_zero(f)

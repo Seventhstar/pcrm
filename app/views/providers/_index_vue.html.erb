@@ -20,8 +20,9 @@
       filteredGoodstypes: [],
       list_values: 'goodstype p_status',
       lists: "goodstypes p_statuss:@p_statuses \
-              provider_goodstypes+owner_id,owner_type,goodstype_id \
+              provider_goodstypes+provider_id,goodstype_id \
               providers_groups:raw@providers_groups+spec+gt \
+              groups:raw@groups+spec+goods_type_names_array \
               mainList:raw@json_providers",
       columns: [['name', 'Название'], 
       ['shop', 'Специализация'], 
@@ -43,7 +44,7 @@
         this.mainList.forEach((l) => {
           if (v_nil(l.group)){    
             let gtIds = _.pluck(this.provider_goodstypes.filter( f => {
-              f.owner_id == l.id && f.owner_type == 'Provider' 
+              f.provider_id == l.id
             }), "goodstype_id")
 
             let gtNames = _.pluck(this.goodstypes.filter( f => gtIds.indexOf(f.value) > -1), "label")
@@ -57,7 +58,7 @@
         this.grouped = new Array
         this.groupedGt = _.groupBy(this.provider_goodstypes, 'goodstype_id')
         this.filteredGoodstypes.forEach((el, ind) => {
-          let ids = _.pluck(this.groupedGt[el.value], 'owner_id')
+          let ids = _.pluck(this.groupedGt[el.value], 'provider_id')
           let list = []
 
           if (v_nil(this.p_status)) {
@@ -66,7 +67,7 @@
             list = this.mainList.filter( f => ids.indexOf(f.id) > 0 && f.p_status == this.p_status.value )
           }
 
-          let listGrouped = _.groupBy(list, 'group')          
+          let listGrouped = _.groupBy(list, 'group')  
           let keys    = _.keys(listGrouped)
 
           Vue.set(this.opened, ind, [])
@@ -97,7 +98,7 @@
           addClass = " nonactual"
           break;
         }
-        return "providers_index_"+name+" table_row" + addClass + " " + add
+        return "providers_index_" + name + " table_row" + addClass + " " + add
       },
 
       siteUrl(url){
@@ -110,8 +111,7 @@
       },
 
       onInput(e){
-        // console.log(e);
-        if (e.name == 'goodstype'){
+        if (e.name == 'goodstype') {
           if (e.value != undefined && e.value != 0){
             Vue.set(this, 'filteredGoodstypes', this.goodstypes.filter( f => f.value == e.value ))
           } else {
@@ -126,7 +126,7 @@
       },
 
       editGroup(grp){
-        return '/providers_groups/'+grp.id+'/edit'
+        return '/providers/'+grp.id+'/edit'
       }
 
 

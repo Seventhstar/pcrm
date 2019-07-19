@@ -22,7 +22,7 @@ class ProjectGoodsController < ApplicationController
     params.delete_if{|k,v| v=='' || v=='0' }
 
     @only_actual = params[:only_actual].present? ? params[:only_actual]=='true' : true
-    @executors = User.active.by_city(current_user.city)
+    @executors = User.actual.by_city(current_user.city)
     
     force_year = false
     force_executor = false

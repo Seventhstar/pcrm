@@ -1,30 +1,28 @@
-script#comments_template type="text/html" 
-  =render "comments/comment.html.mustache"
-
-- @comments = @owner.comments.order('created_at asc')
-- if is_manager? && (@owner.class == Project || @owner.class == Provider)
-  .box_msg
-    #tabs_msg
-      ul
-        li.first
-          a#tab_special_info href="#tab-msg-1" 
-            span.icon.icon_important
-            | Важные детали
-        li.right.last 
-          a href="#tab-msg-2" 
-            span.icon.icon_chat
-            | Общие комментарии
-      #tab-msg-1.first
-        = render 'shared/comments_list', items: @owner.special_infos
-        = render 'special_infos/form'
-      #tab-msg-2.last
-        = render 'shared/comments_list'
-        = render 'comments/form'
-- else
-  .box_i
-    .hl
-      span.icon.icon_chat
-      | Общие комментарии:
-    = render partial: 'shared/comments_list'
-    = render 'comments/form'
+.comment_app
+  - @comments = @owner.comments.order('created_at asc')
+  - if is_manager? && (@owner.class == Project || @owner.class == Provider)
+    .box_msg
+      #tabs_msg
+        ul
+          li.first
+            a#tab_special_info href="#tab-msg-1" 
+              span.icon.icon_important
+              | Важные детали
+          li.right.last 
+            a href="#tab-msg-2" 
+              span.icon.icon_chat
+              | Общие комментарии
+        #tab-msg-1.first
+          = render 'shared/comments_list', items: @owner.special_infos
+          = render 'special_infos/form'
+        #tab-msg-2.last
+          = render 'shared/comments_list'
+          = render 'comments/form'
+  - else
+    .box_i
+      .hl
+        span.icon.icon_chat
+        | Общие комментарии:
+      = render partial: 'shared/comments_list'
+      = render 'comments/form'
 

@@ -49,22 +49,23 @@ class ProvidersController < ApplicationController
                          .by_search(params[:search])
                          .order(:name) # find(ids, order: :name)
 
-    @json_providers = @providers.map{|p| {
+    @json_providers = @providers.by_city(@main_city).order(:id).map{|p| {
       id: p.id,
       name: p.name,
       phone: p.phone.split(',').join('<br/>').html_safe,
       url: p.url,
       address: p.address,
       p_status: p.p_status_id,
-      spec: '',
-      group: p.providers_group&.name
+      spec: p.spec,
+      goods_types_array: p.group.nil? ? p.goods_type_names_array.join('</br>') : '',
+      group: p.group&.name
     }}
 
-    @providers_groups = ProvidersGroup.order(:name).map{|g| {
+    @groups = Provider.where(is_group: true).order(:name).map{|g| {
       id: g.id, 
       name: g.name,
       spec: g.spec,
-      goods_type_names_array: g.goods_type_names_array
+      goods_types_array: g.goods_type_names_array.join('</br>')
     }}.group_by{ |g| g[:name]}
 
     @ids = @providers.ids
@@ -174,11 +175,11 @@ class ProvidersController < ApplicationController
     def provider_params
       params.require(:provider).permit( :name, :manager, :phone, :komment, :address, 
                                         :email, :url, :spec, :p_status_id, :city_id,
-                                        :providers_group_id, :is_group,
+                                        :providers_group_id, :is_group, :group_id,
                                         budget_ids: [], style_ids: [], 
-                                        goodstype_attributes: [],
+                                        goodstype_ids: [], 
                                         special_infos_attributes: [:id, :content, :_destroy])
-                                        # goodstype_ids: [], 
+                                        # goodstype_attributes: [],
     end
 
     def sort_column

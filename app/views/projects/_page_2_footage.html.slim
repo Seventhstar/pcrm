@@ -17,7 +17,8 @@
                 .inp_w :title="tarifTooltips.sum"
                   m-number name="sum_total" label="Сумма"
                 .inp_w 
-                  m-number name="designer_sum" label="Cтоимость дизайна" add_class="sum_cost" readonly="readonly"
+                  m-number name="designer_sum" label="Cтоимость дизайна" add_class="sum_cost" 
+                  = hidden_field 'project', :designer_price, "v-model"=>"designer_price"
               .inp_w 
                 m-number name="sum_rest" label="Остаток" add_class="sum_rest" readonly="readonly" v-if="mDependsFromFootage || mPriceIsTotal"
 
@@ -33,7 +34,8 @@
             .gray_field
               = render 'footage_sum', real: true, footage_2_nil: footage_2_nil, title: 'Фактическая площадь и стоимость' 
         .sep_3
-        = render 'executor'
+        section v-if="!mDependsFromFootage && !mPriceIsTotal"
+          = render 'executor'
                       
       table.fullwidth.tbl_fc.fw_form.vue_cmp
         thead

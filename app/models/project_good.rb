@@ -6,7 +6,7 @@ class ProjectGood < ActiveRecord::Base
   belongs_to :currency
   belongs_to :delivery_time
   belongs_to :goods_priority
-  attr_accessor :owner_id, :group
+  attr_accessor :group_id, :group
   attr_accessor :file_cache
 
   has_paper_trail

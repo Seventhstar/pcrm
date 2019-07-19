@@ -1,5 +1,5 @@
 - items ||= @comments
-.jspContainer style="height:#{@comm_height}px;" 
+div class="jspContainer #{items.klass.name.downcase}"  style="height:#{@comm_height}px;" 
   .jspPane
     ul class="comments_list_a #{items.klass.name.downcase}" 
       = render items if items.present?

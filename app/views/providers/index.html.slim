@@ -27,13 +27,13 @@
                   |{{grp}} (магазины: {{grouped[ind][grp].length}}шт.)
                   .icons-indicate v-if="grouped[ind][grp][0].p_status == 5"
                     = image_tag('pri_prov.png', title: 'Приоритетный поставщик')
-                .td v-html="providers_groups[grp][0].goods_type_names_array.join('</br>')" @click="switchOpenedRow(ind, i)"
-                .td v-html="providers_groups[grp][0].spec" @click="switchOpenedRow(ind, i)"
+                .td v-html="groups[grp][0].goods_types_array" @click="switchOpenedRow(ind, i)"
+                .td v-html="groups[grp][0].spec" @click="switchOpenedRow(ind, i)"
                 .td
                   span cut_id="0" :class="cutRowClass(ind, i)" @click="switchOpenedRow(ind, i)"
                     b
                 .td
-                  a.icon.icon_edit :href="editGroup(providers_groups[grp][0])" data-modal="true" class=""
+                  a.icon.icon_edit :href="editGroup(groups[grp][0])" class=""
             transition-group name="slide-fade-y" tag="div" class="fullwidth"
               div :key="'grp'+ind+'_'+i" :class="rowClass(item, idx)" v-for="item, idx in grouped[ind][grp]" v-show="opened[ind][i]"
                 .td 
@@ -41,7 +41,7 @@
                     = image_tag('pri_prov.png', title: 'Приоритетный поставщик')
                   |{{item.name}}
                 .td
-                  div v-html="item.spec"
+                  div v-html="item.goods_types_array"
                 .td
                   div v-html="item.phone"
                 .td

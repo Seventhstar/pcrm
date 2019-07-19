@@ -449,10 +449,13 @@ module ApplicationHelper
 
     st_date  = lead.status_date? ? lead.status_date : DateTime.now
     actual = lead.status.actual if !lead.status.nil?
-    if (!actual)
-      "nonactual"
-    elsif (st_date <= Date.today+1 )
+    
+    if (st_date < Date.today.beginning_of_day )
       "hotlead"
+    elsif st_date < (Date.today.beginning_of_day+1.day)
+      "goodlead"
+    elsif (!actual)
+      "nonactual"
     end
 
   end

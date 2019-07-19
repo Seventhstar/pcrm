@@ -151,8 +151,6 @@ GEM
     momentjs-rails (2.20.1)
       railties (>= 3.1)
     multi_json (1.13.1)
-    mustache-js-rails (3.0.1)
-      railties (>= 3.1, < 6)
     nio4r (2.4.0)
     nokogiri (1.10.2)
       mini_portile2 (~> 2.4.0)
@@ -334,7 +332,6 @@ DEPENDENCIES
   launchy
   mini_magick
   momentjs-rails
-  mustache-js-rails
   nokogiri (= 1.10.2)
   nprogress-rails
   paper_trail (= 8.1.2)
