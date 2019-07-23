@@ -87,13 +87,14 @@ class ClientsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_client
-      @client = Client.find(params[:id])
+      @client   = Client.find(params[:id])
+      @contacts = @client.contacts.order(:created_at) if action_name != 'create' && action_name != 'new'
+      @owner    = @client
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def client_params
       params.require(:client).permit(:name, :address, :phone, :email, :city_id,
-                                      contacts_attributes: 
-                                        [:id, :contact_kind_id, :contact_kind, :val, :who, :_destroy])
+                                    contacts_attributes: [:id, :contact_kind_id, :contact_kind, :val, :who, :_destroy])
     end
 end

@@ -3,9 +3,9 @@
   
   let v_contact = new Vue({
     el: '.contacts_list',
-    data: <%= fill_vue_data(@project,{
+    data: <%= fill_vue_data(@owner,{
       valid_contact: false,
-      model: 'project',
+      model: @owner.class.name.downcase,
       texts: 'new_val new_who',
       lists: 'contacts+id,val,who',
       f_contact: false,
@@ -35,7 +35,7 @@
       },
 
       nameField(index, field) {
-        return "project[contacts_attributes]["+index+"]["+field+']'
+        return this.model + "[contacts_attributes]["+index+"]["+field+']'
       },
 
       onInput(){

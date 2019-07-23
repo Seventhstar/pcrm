@@ -242,7 +242,7 @@ module ApplicationHelper
       data[:texts].split(' ').each do |t|
         data[t] = eval("@#{t}")
         # puts data[t], t
-        data[t] = obj[t].nil? ? '' : obj[t] if data[t].nil?
+        data[t] = obj.nil? || obj[t].nil? ? '' : obj[t] if data[t].nil?
       end
       data.delete(:texts)
     end

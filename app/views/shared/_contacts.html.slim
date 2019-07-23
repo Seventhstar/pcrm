@@ -1,12 +1,24 @@
-#contacts
-  table.fullwidth.tbl_fc.fw_form
-  tr v-for="(contact, index) in contacts" v-show="!item._destroy"      
-    td.caption
-      / |{{contact}}
-    td
-      .lbl 
-        / |{{contact.val}}
-    td
-      .lbl
-    td
-      span class="btn_a" @click="add_contact" :disabled="!valid_contact" Добавить контакт
+.contacts_list
+  .hl.gr_caption.hl_tr Дополнительные контакты
+  template v-for="(item, index) in contacts"
+        input type="hidden" :name="nameField(index,'id')" v-if="item.id!==undefined" :value="item.id"
+        input type="hidden" :name="nameField(index,'val')" :value="item.val"
+        input type="hidden" :name="nameField(index,'who')" :value="item.who"
+        input type="hidden" :name="nameField(index,'_destroy')" :value="item._destroy"
+
+  div v-for="(item, index) in contacts" v-show="!item._destroy"
+    .contact_row
+      span
+        |{{item.val}}
+      span
+        |{{item.who}}
+      span.icon.icon_del @click="delContact(index)"
+    
+  #new_contact
+    / = hidden_field 'project_contact', 'project_id', value: @project.id
+    .inp_l.inp_w
+      = text_field_tag '', '', "v-model"=>"new_val", type: "text ", class: 'string optional form-control', placeholder: 'Телефон / e-mail'
+    .inp_w 
+      = text_field_tag '', '', "v-model"=>"new_who", type: "text ", class: 'string optional form-control', placeholder: 'Кто',  "v-on:keyup.enter.prevent"=>"addContact"
+    span.btn_a @click="addContact" :disabled="!f_contact" Добавить
+= render 'shared/contacts_vue'

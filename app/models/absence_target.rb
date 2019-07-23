@@ -1,7 +1,7 @@
 class AbsenceTarget < ActiveRecord::Base
-	has_many :absences, foreign_key: :target_id
+  has_many :absences, foreign_key: :target_id
 
-	def parents_count
+  def parents_count
     self.try(:absences).count
   end
   

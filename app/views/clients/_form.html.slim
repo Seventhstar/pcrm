@@ -11,11 +11,11 @@
             = chosen_src :city_id, City.order(:id), @client 
         = tr_submit_cancel clients_url, {modal: params[:sub]}
     .panel-right2
-      .gr_caption.hl_tr Дополнительные контакты
       = render 'shared/contacts', f: f
-.hl.hl_a.bd Проекты
-#client_projects
-  li
-    span Адрес
-    span Исполнитель
-  = render @client.projects
+- if controller.action_name != 'new'
+  .hl.hl_a.bd Проекты
+  #client_projects
+    li
+      span Адрес
+      span Исполнитель
+    = render @client.projects

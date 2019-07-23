@@ -1,5 +1,6 @@
 class Project < ActiveRecord::Base
   include Comments
+  include Contacts
   include ProjectsHelper
   attr_accessor :first_comment, :days, :sum_rest, :discount
   
@@ -21,7 +22,6 @@ class Project < ActiveRecord::Base
   has_many :goods,          class_name: "ProjectGood", dependent: :destroy
   has_many :elongations,    class_name: 'ProjectElongation', dependent: :destroy
   has_many :special_infos,  as: :specialable, dependent: :destroy
-  has_many :contacts,       as: :contactable, dependent: :destroy
   has_many :project_g_types, dependent: :destroy
 
   validates :address,   length: { minimum: 3 }
@@ -31,7 +31,7 @@ class Project < ActiveRecord::Base
   accepts_nested_attributes_for :client
   accepts_nested_attributes_for :special_infos
   accepts_nested_attributes_for :project_g_types
-  accepts_nested_attributes_for :contacts, allow_destroy: true
+  
 
   scope :by_executor, ->(executor){where(executor_id: executor) if executor.present? && executor&.to_i>0}
   scope :only_actual, ->(actual){where.not(pstatus_id: 3) if actual}
