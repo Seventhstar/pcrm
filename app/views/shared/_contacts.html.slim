@@ -21,4 +21,4 @@
     .inp_w 
       = text_field_tag '', '', "v-model"=>"new_who", type: "text ", class: 'string optional form-control', placeholder: 'Кто',  "v-on:keyup.enter.prevent"=>"addContact"
     span.btn_a @click="addContact" :disabled="!f_contact" Добавить
-= render 'shared/contacts_vue'
+/= render 'shared/contacts_vue'

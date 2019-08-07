@@ -4,8 +4,6 @@
     .box_wrap.box_wrap_1
       .panel-left
         .grid_label_name
-          .div
-          m-checkbox v-model="is_group" name="is_group" model="provider" label="Это группа"
           = simple_inputs f, [:name]
         .sep_1
         transition name="slide-fade"
@@ -28,6 +26,7 @@
               = vue_table_chosen 'city_id', @cities, @provider, 'Город'
             - else
               = f.hidden_field :city_id, value: @provider.city_id
+            = f.hidden_field :is_group, value: @provider.is_group
         = vue_submit_cancel providers_page_url 
         
       transition name="slide-fade"
@@ -41,4 +40,4 @@
       - if !@provider.id.nil?
         = render "managers"
   .sep_3
-= render "form_vue"
+= render "providers/form_vue"

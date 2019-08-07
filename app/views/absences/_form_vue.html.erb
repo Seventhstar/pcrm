@@ -11,7 +11,7 @@
       booleans: 'canceled approved f_shop',
       texts: 'comment new_shop new_shop_target',
       list_values: 'reason new_reason project target',
-      lists: "reasons projects+executor_id targets users \
+      lists: "reasons projects:raw@projects targets users \
               new_reasons:@reasons \
               new_shops:Provider.all new_shop_targets:@shop_targets",
       checked: @checked,

@@ -66,8 +66,11 @@
     'page2') %>,
 
     created() {
-      this.tarifSelect()
+      // this.tarifSelect()
+      // this.
+      
       this.projectTypeSelect(false)
+      this.calcSumExecutor()
       this.calcTotal()
       this.$root.$on('onInput', this.onInput)
     },
@@ -96,11 +99,11 @@
         this.calcSum("footage_real", "price_real", "sum_real")
 
       }, 
+
       footage_2_real() {
         if (toInt(this.price_2_real) === 0 ) this.price_2_real = this.price_2;
         this.calcSum("footage_2_real", "price_2_real", "sum_2_real")
       },
-
 
       price() {
         this.calcSum("footage", "price")
@@ -149,7 +152,8 @@
       },
 
       designer_sum() {
-        if (this.focus.includes('sum')) this.designer_price = this.designer_sum
+        if (this.focus.includes('sum') && this.calcType > 1) this.designer_price = this.designer_sum
+
         this.sum_total_executor = this.designer_sum
         this.calcRest()
       },
@@ -256,6 +260,8 @@
         tarif_search = tarif_search.filter(t => toInt(t.from) <= this.footage).reverse()
 
         if (tarif_search.length) this.mTarif = tarif_search[0]
+        if (this.mTarif != 0) this.calcType = this.mTarif.tarif_calc_type_id
+
         if(this.project_type.value == this.project_type_id){
           if (this.mTarif.tarif_calc_type_id > 1) {
             if (locSumTotal > 0) this.mTarif.sum = locSumTotal
@@ -266,7 +272,8 @@
 
           if (locDesignerPrice > 0) this.designer_price = locDesignerPrice
           if (locDesignerPrice2 > 0) this.designer_price2 = locDesignerPrice2
-          if (locVisualerPrice > 0) this.vis_price = locVisualerPrice
+          if (locVisualerPrice > 0) this.visualer_price = locVisualerPrice
+         // console.log('designer_sum', this.designer_sum, 'visualer_price', this.visualer_price, locVisualerPrice)
         }
       },
 
@@ -277,8 +284,7 @@
     projectTypeSelect(force = true) {
       this.tarifSelect()
       if (this.mTarif != 0){
-        this.calcType = this.mTarif.tarif_calc_type_id
-
+        
           if (this.calcType > 1) { // в месяц
             this.sum_total        = this.mTarif.sum
             this.m_sum_total      = this.sum_total
@@ -287,18 +293,18 @@
             this.mPriceIsTotal = true
             
             if (this.mTarif.from > -1) this.mDependsFromFootage = true
-
           } else { // за м2
             this.mPriceForFootage = true
-            this.price            = this.mTarif.sum
-            this.price_2          = this.mTarif.sum2
+            if (force) {
+              this.price            = this.mTarif.sum
+              this.price_2          = this.mTarif.sum2
 
-            this.designer_price   = this.mTarif.designer_price
-            this.designer_price_2 = this.mTarif.designer_price2
-            this.visualer_price   = this.mTarif.vis_price
+              this.designer_price   = this.mTarif.designer_price
+              this.designer_price_2 = this.mTarif.designer_price2
+              this.visualer_price   = this.mTarif.vis_price
+            } 
             this.mHasVisualer     = (this.visualer_price > 0)
           } 
-
           this.calcTotal()
           this.calcSumExecutor(force)
         }
@@ -421,7 +427,8 @@
       },
 
       calcSumExecutor(byDefault = false){
-        this.checkFootages();
+        this.checkFootages()
+        // console.log('this.calcType', this.calcType, 'this.focus', this.focus, byDefault)
 
         if (this.calcType > 1) {
           if (byDefault){
@@ -431,14 +438,16 @@
           this.designer_sum = this.designer_price
           this.sum_total_executor = this.designer_sum
         } else {
-          if (byDefault){
+          // if (byDefault){
+          if (this.focus.includes('price') || this.designer_sum == 0) {
             this.designer_sum = toInt(this.designer_price) * this.mFootage + 
             toInt(this.designer_price_2) * this.mFootage2;
             this.visualer_sum = this.visualer_price * this.mFootage;
           }
+          // }
           this.sum_total_executor = this.designer_sum + this.visualer_sum;
         }
-        this.calcRest();
+        this.calcRest()
       },
 
       calcRest(){

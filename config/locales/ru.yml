@@ -24,6 +24,8 @@ ru:
   p_status_id: Статус
   p_status: Статус
   PStatus: Статус
+
+  group_id: Группа 
   
   goods_priority: Вариант предложения
   goods_priority_id: Вариант предложения
@@ -60,6 +62,7 @@ ru:
   date_start: Дата начала
   gsum: Сумма предложения
   sum_supply: Сумма заказа
+  date_place: Дата заказа
   date_offer: Дата предложения
   date_supply: Дата поставки
   order: Заказано

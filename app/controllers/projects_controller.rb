@@ -163,6 +163,7 @@ class ProjectsController < ApplicationController
     @date_end = format_date(Date.today)
 
     @project.city = current_user.city
+    @owner  = @project
   end
 
   # GET /projects/1/edit

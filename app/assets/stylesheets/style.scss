@@ -14,10 +14,6 @@ body {background: #fff; font: normal 14px 'Pragmatica', sans-serif; color: #0000
 .container {  width: $body-size;    margin: 0 auto;}
 .h_container{  width: $body-over;    margin: 0 auto;}
 
-.subnav{ display: block; max-width: $body-size; padding: 0; margin-bottom: 10px; height: 28px; }
-.subnav .active { background: #6acc00; color: #fff; border-color: #6acc00; }
-
-
 a {outline: none; color: #000000; }
 a:hover {text-decoration:none;}
 
@@ -90,7 +86,7 @@ span.btn_add{ height: 24px; width: 12px; padding: 0px 60px 7px 8px; margin-top: 
   line-height: 1; }
 
 .btn_b:hover,
-.btn_b.active{background: #6acc00; border-color:#6acc00; padding-left: 20px; padding-right: 20px; color: #fff; border-left: 0; border-right: 0; text-decoration:none;}
+.btn_b.active{background: $green; border-color:$green; padding-left: 20px; padding-right: 20px; color: #fff; border-left: 0; border-right: 0; text-decoration:none;}
 
 .btn_c{display: inline-block; border:1px solid $border-color; padding: 9px 19px 9px 19px; color: #ff8411; position:relative; text-decoration:none; 
   border-radius: 5px; 
@@ -179,7 +175,7 @@ background-position:-34px 0 !important; width: 16px; height: 16px;}
 .menu_sb ul li a .pict, h3 a .pict .icon {display: inline-block; height: 14px; margin:0 7px 0 0; text-decoration: none;}
 .menu_sb ul li a .pict .icon{top:-1px;}
 .menu_sb ul li a:hover,
-.menu_sb ul li.active a{background: #6acc00; background: linear-gradient(to top, #6acc00, #6acc00); padding-left: 20px; padding-right: 20px; color: #fff; border-left: 0; border-right: 0;}
+.menu_sb ul li.active a{background: $green; background: linear-gradient(to top, $green, $green); padding-left: 20px; padding-right: 20px; color: #fff; border-left: 0; border-right: 0;}
 
 .menu_sb_a ul li {margin:-1px 0 0 0;}
 .menu_sb_a ul li a {border-radius: 0;}
@@ -211,7 +207,6 @@ background-position:-34px 0 !important; width: 16px; height: 16px;}
 .itemAdd_form table td{vertical-align: middle; padding-right: 15px; white-space:nowrap;}
 .itemAdd_form table td.caption, td label{font-weight: 500;}
 .itemAdd_form .inp {width: 354px; }
-.itemAdd_form .inp .txt, .search_area {width: 239px; float:left;}
 .itemAdd_form .inp .sub {float:right;}
 /*----Таблица списка_end----*/
 
@@ -338,24 +333,31 @@ input[type="number"]::placeholder {text-align: left;}
 input[type='number']::-webkit-inner-spin-button {margin: 0 0 0 5px; }
 
 .menu_c {}
-.menu_c ul {margin:0 0 0 -10px; padding: 0 0 0 0; list-style:none; overflow:hidden;}
-.menu_c ul li{margin:0 0 0 10px; padding: 0 0 0 0; background:none; float:left;}
-.menu_c ul li a, .subnav>span, .submenu ul.ul_pill li, .items_box_head ul li a{display: inline-block; 
-  border:1px solid $border-color; font-size: 13px; padding: 5px 12px; color: #000000; position:relative; text-decoration:none; 
-  border-radius: 5px;
-  line-height: 1;}
+.menu_c ul {margin:0 0 0 -10px; padding: 0 0 0 0; list-style: none; overflow: hidden;}
+.menu_c ul li{margin:0 0 0 10px; padding: 0 0 0 0; background: none; float: left;}
+.menu_c ul li a, .subnav>span, .submenu ul.ul_pill li, .items_box_head ul li a, .subnav a.link,
+.filter_nav li a {
+  display: inline-block; position:relative; border: 1px solid $border-color; 
+  font-size: 13px; padding: 5px 12px; color: #000000;  text-decoration:none;
+  border-radius: 5px; line-height: 1;}
+.filter_nav ul li a { padding: 9px 14px; font-size: 14px;}
+
 
 .menu_c ul li a:hover,
 .menu_c ul li.active a,
 .subnav>span.active, .submenu ul li.active, .submenu ul.ul_pill li:hover, .items_box_head ul li a:hover, .items_box_head ul li.active a,
-.subnav>span:hover{background: #6acc00; border: 1px solid #6acc00; color: #fff !important; }
+.subnav>span:hover, .subnav a.link:hover {background: $green; border: 1px solid $green; color: #fff !important; }
 .subnav>span:not(.li-right), .submenu ul li, .items_box_head ul li{margin:0 10px 0 0; float: left;}
+
+.subnav{ display: block; max-width: $body-size; padding: 0; margin-bottom: 10px; height: 28px; }
+.subnav .active, .filter_nav .active { background: $green; color: #fff; border-color: $green; border-radius: 5px;}
+
 
 .submenu ul li:hover a, .submenu ul li.active a, .items_box_head ul li.active a, .items_box_head ul li:hover a{color: #fff !important; cursor: pointer;}
 
 .splink{ margin-right: 10px;}
 .splink{ display: inline-block; border:1px solid $border-color; padding: 7px 10px 7px 10px; color: #000000; position:relative; text-decoration:none; border-radius: 5px; line-height: 1;}
-.splink:hover{background: #6acc00; border-color:#6acc00;}
+.splink:hover{background: $green; border-color:$green;}
 
 /*.only_actual.active,.only_actual:hover{ background:#428bca !important;   border-color: #428bca !important;}*/
 

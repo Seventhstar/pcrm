@@ -1,0 +1,28 @@
+/ .modal-dlg tabindex="0"
+/ #mainModal.modal.goods.modal_1.container
+.modal_container.modal.goods v-if='modalGoodsForm'
+  .modal-dlg @keyup.enter="onConfirm" @keyup.esc="$emit('close')" tabindex="0"
+  .modal-message
+    .hl.hl_a.bd "jhgj"
+    .actions
+      span.btn.sub.btn_a.btn_reset @click="onCancel"
+
+
+    .modal-dialog
+      .modal-content
+        .modal-header
+          .close_grp
+            button.close.text @click="onCancel()" type="button" Закрыть
+            button.close data-dismiss="modal" type="button" 
+              span.icon.icon_close
+            h4#mainModalLabel.hl.hl_a.bd
+              |{{modalTitle}}
+
+        .box_wrap.box_wrap_1
+          .panel-left
+            .grid_label_name
+              .label_col Помещение:
+              v-chosen name="modalRoom" placeholder="Комната"
+              
+              .label_col Работа:
+            v-chosen name="modalWork" placeholder="Работа"

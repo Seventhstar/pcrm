@@ -1,0 +1,36 @@
+.container.providers_groups
+  div v-cloak=""
+    .nav_filter
+      .filter_nav
+        = render_navigation level: 2 
+      .provider_table_filter
+        div
+        div
+        div
+        = link_to 'Добавить группу', new_providers_group_path, class: "btn_a btn-add right"
+
+    .container
+      #div_tproviders
+        .panel.panel-default
+          / .panel-heading.table-heading.head.month 
+          div :class="tableClass('providers_groups_index grid-head')" 
+            template v-for="column in columns"
+              div :class="columnClass(column[0])" 
+                a href="#" @click="sortBy(column[0], gt)" {{column[1]}} 
+                .sortArrow
+            .th
+          div :class="rowClass(item, idx)" v-for="item, idx in mainList" 
+            .td 
+              .icons-indicate v-if="item.p_status == 5"
+                = image_tag('pri_prov.png', title: 'Приоритетный поставщик')
+              |{{item.name}}
+            .td
+              |{{item.spec}}
+            .td
+              div v-html="item.goods_types_array"
+            .td
+              a.icon.icon_edit :href="editLink(item.id)"
+              span.icon.icon_del @click="deleteRow(item)" v-if="item.allow_delete"
+              span.icon.icon_remove_disabled v-if="!item.allow_delete"
+    = render 'shared/modal_delete'      
+= render 'index_vue'

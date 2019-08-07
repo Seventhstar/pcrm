@@ -34,11 +34,14 @@ class ClientsController < ApplicationController
 
   # GET /clients/new
   def new
+    @title = 'Создание клиента'
     @client = Client.new
+    @owner  = @client
   end
 
   # GET /clients/1/edit
   def edit
+    @title = 'Редактирование клиента'
     respond_modal_with @client, location: root_path
   end
 

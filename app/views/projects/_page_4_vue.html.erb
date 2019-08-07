@@ -25,6 +25,7 @@
       closedAmount: {},
 
       filter: [],
+      modalGoodsForm: false,
       
       grandOfferTotal: [],
       grandOrderTotal: [],
@@ -60,7 +61,7 @@
 
     methods: {
 
-      makeFilter(){
+      makeFilter() {
         var vm = this
         this.filter = []
 
@@ -288,7 +289,17 @@
       },
 
       goodsEditLink(g){
-        return "/project_goods/" + g.id + "/edit"
+        // this.modalGoodsForm = true
+        // return "/project_goods/" + g.id + "/edit"
+      },
+
+      openModalGoods(g) {
+        // this.modalGoodsForm = true
+      },
+
+      onCancel() {
+        console.log('onCancel')
+        this.modalGoodsForm = false
       },
 
       goodsCreateLink(index){

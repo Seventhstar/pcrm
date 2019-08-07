@@ -21,7 +21,8 @@ Vue.component('v-chosen', {
           :placeholder="placeholder"
           @input="onUpdate($event)">
           <template slot="option" slot-scope="option">
-            <span v-if="option.mark" class='info'>{{ option.label }}!</span>
+            <span v-if="option.mark" class='info'>{{ option.label }}</span>
+            <span v-else-if="option.non_actual" class='nonactual'>{{ option.label }}</span>
             <template v-else>
               {{ option.label }}
             </template>

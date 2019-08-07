@@ -220,6 +220,7 @@ module ApplicationHelper
   end
 
   def fill_vue_data(obj, data, where = nil)
+     # kjl k
     if data[:required_list].present?
         data[:required] = []
         data[:requiredTranslated] = []
@@ -503,27 +504,32 @@ module ApplicationHelper
   end
 
   def submit_cancel(back_url, options = {})
-    add_cls = options['modal'] ? ' update' : ''
-    dd      = options['modal'] ? "modal" : ''
-
+    is_modal = options['modal'] || options[:modal]
+    add_cls = is_modal ? ' update' : ''
+    dd      = is_modal ? "modal" : ''
+    
     submit_options = {}
     cls = "btn sub btn_a #{add_cls}"
 
     if options[:classValid] 
-      submit_options[':class'] = "[{disabled: "+options[:classValid]+"}, '#{cls}']"
+      submit_options[':class'] = "[{disabled: #{options[:classValid]}}, '#{cls}']" # ':class' for vue
     else
       submit_options['class'] = cls
     end
 
     submit_options[':data-original-title'] = options[:tip] if options[:tip]
     # вернуть если нужен tooltip 
-    # submit_options["data-toggle"] = 'tooltip' if options[:tip]
     submit_options["v-on:click"] = options[:click] if options[:click]
     
     s = submit_tag 'Сохранить', submit_options
-    c = link_to 'Отмена', back_url, class: "sub btn_a btn_reset", "data-dismiss": dd
+    if is_modal 
+      c = button_tag "Отмена", type: "button", class: "text btn_a btn_reset", "data-dismiss": "modal"         
+    else
+      c = link_to 'Отмена', back_url, class: "sub btn_a btn_reset"
+    end
+
     content_tag :div, class: "actns" do
-      c+s
+      c + s
     end
   end
 

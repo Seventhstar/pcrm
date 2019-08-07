@@ -145,8 +145,7 @@ var m_index = {
       return "/" + this.controller + "/" + id 
     },
 
-    deleteRow(month, index){
-        this.currentMonth = month;
+    deleteRow(index){
         this.currentIndex = index;
         this.confirmModal = true;
     },

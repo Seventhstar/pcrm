@@ -2,12 +2,12 @@ namespace :check_prj do
 
   task reminder_mail: :environment do
     # выбираем проекты со сроком окончания не раньше завтрашнего дня
-    prj = Project.where(" pstatus_id =  1 and date_end_plan < ?", Date.today).pluck(:id)
-    prj_todtom = Project.where('date_end_plan between ? and ?', Date.today, Date.today+2).pluck(:id)
+    prj = Project.active.where(" pstatus_id =  1 and date_end_plan < ?", Date.today).pluck(:id)
+    prj_todtom = Project.active.where('date_end_plan between ? and ?', Date.today, Date.today+2).pluck(:id)
     # puts "prj #{prj} #{prj_todtom}" 
 
     # смотрим все продления со статусом 1 = в работе
-    prj_ids = Project.where(pstatus_id: 1).pluck(:id)
+    prj_ids = Project.active.pluck(:id)
     all_pe = ProjectElongation.where(project_id: prj_ids).pluck(:project_id).uniq
     # puts "prj_ids #{prj_ids} #{all_pe}" 
 

@@ -1,6 +1,6 @@
 - iname = 'upd_modal'
 
-.box_wrap.box_wrap_1
+.box_wrap.box_wrap_1.edit_vue
   .panel-left
     table.tbl_fc.tbl_fc_1
       tr
@@ -81,10 +81,10 @@
         td
       - if is_manager?
         tr.grp1
-          td class=("caption grp1 goods_closed #{row_cls}") Выплачен
+          td class="caption grp1 goods_closed #{row_cls}" Выплачен
           td
             label.inp_btn_label
-              div class=("inp_btn checkbox #{@prj_good.fixed ? 'active':''} td_v_center") 
+              div class="inp_btn checkbox #{@prj_good.fixed ? 'active':''} td_v_center" 
                 = check_box iname, :fixed, {value: @prj_good.fixed,  checked: @prj_good.fixed, disabled: !@prj_good.order}, "true", "false"
     .pg_files
       .sep_15

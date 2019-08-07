@@ -12,7 +12,7 @@
 
 <% header = local_assigns[:link] ? link_to( @cur_head, [:edit, link], target: "_blank") : @cur_head  %>
 
-<div class="panel panel-default">
+<div class="panel panel-default gray">
 <% if @cur_head %>
   <div class="panel-heading table-heading head month"><%= header %><span class="cut <%= hide ? 'cutted' : '' %>" cut_id="<%= cur_id %>"><b></b></span></div>  
 <% end %>

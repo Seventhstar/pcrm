@@ -18,9 +18,9 @@ class AbsencesController < ApplicationController
 
 
     if params[:sort] == 'calendar'
-      # params['m'] = nil if  params[:sort]!='calendar'
-      # @current_month = Date.parse(params['m']) if !params['m'].nil?
       @current_month = Date.today.beginning_of_month 
+      params['m'] = nil if  params[:sort]!='calendar'
+      @current_month = Date.parse(params['m']) if !params['m'].nil?
       @curr_day = @current_month.beginning_of_month.beginning_of_week
 
       # puts "params[:sort] #{params[:sort]}"
@@ -88,16 +88,15 @@ class AbsencesController < ApplicationController
     @reasons = AbsenceReason.order(:id)
     @targets = AbsenceTarget.order(:name)
     @users    = User.actual.by_city(current_user.city)
-    @projects = Project.only_actual(true).order(:address)
+
+    @projects = Project.only_actual(true).order(:address).map{|p| {label: p.name, 
+                  value: p.id, executor_id: p.executor_id, non_actual: false}} + 
+                Project.non_actual.order(:address).map{|p| {label: p.name, 
+                  value: p.id, executor_id: p.executor_id, non_actual: true}}
+
     @shop_targets = AbsenceShopTarget.all
 
     if !@absence.nil?
-
-      # @shops = @absence.shops.map{|s| { id: s.id,
-      #             shop: {label: s.shop_name, value: s.shop_id}, 
-      #             target: {label: s.target_name, value: s.target_id},
-      #             _destroy: false}}
-
       @shops    = @absence.shops
       @dt_from  = @absence.dt_from.try('strftime',"%d.%m.%Y")
       @t_from   = @absence.dt_from.try('strftime',"%H:%M")

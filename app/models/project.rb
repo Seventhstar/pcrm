@@ -35,6 +35,7 @@ class Project < ActiveRecord::Base
 
   scope :by_executor, ->(executor){where(executor_id: executor) if executor.present? && executor&.to_i>0}
   scope :only_actual, ->(actual){where.not(pstatus_id: 3) if actual}
+  scope :non_actual, -> {where(pstatus_id: 3)}
   scope :active,      ->{where(pstatus_id: 1)}
   scope :by_city,     ->(city){where(city: city)}
   scope :by_ids,      ->(ids){where(id: ids) if !ids.nil?}

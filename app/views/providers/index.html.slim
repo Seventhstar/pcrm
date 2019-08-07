@@ -1,12 +1,16 @@
 .container.providers_index 
   div v-cloak=""
-    .provider_table_filter
-      div
-        v-chosen name="p_status" placeholder="Статус..." clear=true
-      div
-        v-chosen name="goodstype" placeholder="Вид товара..." clear=true
-      div
-      = link_to 'Добавить', new_provider_path, class: "btn_a btn-add right"
+    .nav_filter
+      .filter_nav
+        = render_navigation level: 2 
+
+      .provider_table_filter.subnav
+        div
+          v-chosen name="p_status" placeholder="Статус..." clear=true
+        div
+          v-chosen name="goodstype" placeholder="Вид товара..." clear=true
+        div
+        = link_to 'Добавить поставщика', new_provider_path, class: "btn_a btn-add right"
 
     .container
       #div_tproviders

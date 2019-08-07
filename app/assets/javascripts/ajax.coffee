@@ -119,13 +119,23 @@
   $(cut_selecter).each ->
     cut = cut + $(this).attr('cut_id') + '.'
 
+  search = $('#search').val()
+
+  $('.search_save a').each (i) ->
+    href = new URL(this.href)
+    if search == '' 
+      href.searchParams.delete('search')
+    else 
+      href.searchParams.set('search', search)
+    this.href = href
+
   url = {    
     only_actual: actual
     sort: $('span.active').attr('sort')
     direction: $('span.active').attr('direction')
     sort2: $('span.subsort.current').attr('sort2')
     dir2: $('span.subsort.current').attr('dir2')
-    search: $('#search').val()
+    search: search
     year: $('#year').val()
     priority_id: $('#priority_id').val()
     good_state: $('#good_state').val()

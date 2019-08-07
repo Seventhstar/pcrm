@@ -3,7 +3,7 @@
   .box_wrap.box_wrap_1
     .panel-left2.left
       .gr_caption.hl_tr Основные данные
-      table.tbl_fc.tbl_fc
+      table.tbl_fc.tbl_fc.contacts
         = simple_inputs f, [:name, :address, :phone, :email], :td
         tr
           td.caption Город:
@@ -12,10 +12,13 @@
         = tr_submit_cancel clients_url, {modal: params[:sub]}
     .panel-right2
       = render 'shared/contacts', f: f
+      = render 'shared/contacts_vue'
 - if controller.action_name != 'new'
-  .hl.hl_a.bd Проекты
-  #client_projects
-    li
-      span Адрес
-      span Исполнитель
-    = render @client.projects
+  .hl.hl_a.bd 
+  .items_box_cont.tbl_a 
+    .head Проекты
+    .client_projects.grid-head
+      .th Адрес
+      .th Исполнитель
+    .client_projects.grid-body
+      = render @client.projects

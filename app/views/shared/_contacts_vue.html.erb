@@ -3,7 +3,7 @@
   
   let v_contact = new Vue({
     el: '.contacts_list',
-    data: <%= fill_vue_data(@owner,{
+    data: <%= fill_vue_data(@owner, {
       valid_contact: false,
       model: @owner.class.name.downcase,
       texts: 'new_val new_who',

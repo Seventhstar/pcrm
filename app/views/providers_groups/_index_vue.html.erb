@@ -1,0 +1,53 @@
+<script>
+  Vue.component('v-select', VueSelect.VueSelect)
+
+  let app = new Vue({
+    el: '.providers_groups', 
+    mixins: [m_created, m_index, mCheck],
+    data: <%= fill_vue_data(nil, { 
+      sortKey: 'name',
+      controller: 'providers',
+      reverse: true,
+      currentIndex: -1,
+      currentMonth: -1,
+      confirmModal: false,
+      nameToDelete: '',
+      groupHeaders: [],
+      filter: [],
+      grouped: [],
+      opened: [],
+      groupKeys: [],
+      filteredData: [],
+      filteredGoodstypes: [],
+      list_values: 'goodstype p_status',
+      lists: "mainList:raw@groups",
+      columns: [['name', 'Название'], 
+      ['shop', 'Специализация'], 
+      ['goods', 'Виды товаров']]
+      
+    }) %>,
+
+    methods: {
+      rowClass(item, index, name= 'head', add = '') {
+        addClass = ''
+        switch(item.p_status){
+          case 5:
+          addClass = " info"
+          break;
+          case 2:
+          addClass = " nonactual"
+          break;
+        }
+        return "providers_groups_index " + name + " table_row" + addClass + " " + add
+      },
+
+      onInput(e){},
+
+      editGroup(grp){
+        return '/providers/'+grp.id+'/edit'
+      },
+
+    }
+
+  })
+</script>
