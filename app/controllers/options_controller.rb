@@ -5,11 +5,16 @@ class OptionsController < ApplicationController
   def _sort
     case option_model.name
     when "Holiday"
-      sort = 'day desc'
+      @items = option_model.order('day desc')
+    when "User"
+      @only_actual = params[:only_actual].present? ? params[:only_actual]=='true' : true
+      @items = option_model.only_actual(@only_actual)
+                           .search(params[:search])
+                           .order(:name)
     else
-      sort = :name 
+      @items = option_model.order(:name)
     end
-    @items = option_model.order(sort)
+    # @items = option_model.order(sort)
     @item = option_model.new
 
     @menu_items = []

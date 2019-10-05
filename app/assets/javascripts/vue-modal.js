@@ -19,7 +19,9 @@
       },
 
       created() {
-        if (typeof(this.$parent.currentIndex) == 'object')
+        if (typeof(this.$parent.currentTitle) == 'string')
+          this.objName = '"' + this.$parent.currentTitle + '"'
+        else if (typeof(this.$parent.currentIndex) == 'object')
           this.objName = '"' + this.$parent.currentIndex.name + '"'
       },
 

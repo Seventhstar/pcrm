@@ -13,7 +13,10 @@ class ProjectsController < ApplicationController
 
   def index
     @years = (2016..Date.today.year).step(1).to_a.reverse
-    @executors = User.actual.by_city(current_user.city)
+    
+    project_executors_ids  = Project.by_city(current_user.city).pluck(:executor_id).uniq
+    @executors = User.where(id: project_executors_ids).actual
+    executor_id = @executors.pluck(:id).index(params[:executor_id].try('to_i')) ? params[:executor_id] : nil
 
     @sort_column = sort_column
     sort_1 = @sort_column
@@ -58,7 +61,7 @@ class ProjectsController < ApplicationController
                 .includes(includes)
                 .only_actual(@only_actual)
                 .by_city(@main_city)
-                .by_executor(params[:executor_id])
+                .by_executor(executor_id)
                 .by_year(params[:year])
                 .by_ids(prjs_ids)
                 .order("#{sort_1} #{sort_direction}, #{sort_2} #{dir_2}, projects.number desc")
@@ -102,6 +105,7 @@ class ProjectsController < ApplicationController
     @styles     = Style.order(:name)
     @currencies = Currency.order('id')
     @pstatuses  = ProjectStatus.order(:name)
+    # puts "@main_city #{@main_city.name}"
     @clients    = Client.where(city: @main_city).order(:name)
     @gtypes     = Goodstype.where(id: [@pgt_ids]).order(:priority)
     
@@ -207,7 +211,7 @@ class ProjectsController < ApplicationController
     @pgt_ids = @pgt.map{|p| p[0]}
     @pgt_ids = @pgt_ids | used_pgt
     # puts "@pgt_ids", @pgt_ids
-
+    @delivery_times = DeliveryTime.all
     
     def_params
 
@@ -261,6 +265,7 @@ class ProjectsController < ApplicationController
     cl_id = project_params[:client_id]
     if cl_id == "0" || cl_id.nil?
       @client = @project.create_client(client_params)
+      @client.city = @project.city
       @client.save
       @project.client_id = @client.id
     else

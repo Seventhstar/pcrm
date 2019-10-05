@@ -17,6 +17,8 @@ class User < ActiveRecord::Base
   belongs_to :city
 
   scope :actual,  -> {where(activated: true).order(:name)}
+  scope :only_actual, ->(actual){where(activated: true) if actual}
+  scope :search, -> (word){where('LOWER(name) like LOWER(?) or LOWER(email) like LOWER(?)', "%#{word}%", "%#{word}%") if word.present?}
   scope :by_city, -> (city){where(city: city)}
   scope :works,   -> {where(fired: false)}
   scope :not_test,-> {where('id NOT IN (?)',[1,3,19])}

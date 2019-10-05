@@ -128,23 +128,30 @@ function showNotifications(){
 }
 
 function checkTime(i){
-  if (i<10){i="0" + i;}
+  if (i < 10) { i = "0" + i;}
   return i;
 }
 
-function startTime(){
-  var tm=new Date();
-  var h=tm.getHours();
-  var m=tm.getMinutes();
-  var s=tm.getSeconds();
-  
-  m=checkTime(m);
-  s=checkTime(s);
-  $(".time_h").html(h+":"+m+":"+s);
-  t=setTimeout('startTime()',500);
+function ItemByID(id, list){
+  found = list.filter(f => f.value == toInt(id))
+  if (found.length > 0) return found[0]
+    // return {label: found[0].label, value: id}
+  return {}
 }
 
-var delay = (function(){
+function startTime(){
+  var tm= new Date();
+  var h = tm.getHours();
+  var m = tm.getMinutes();
+  var s = tm.getSeconds();
+  
+  m = checkTime(m);
+  s = checkTime(s);
+  $(".time_h").html(h+":"+m+":"+s);
+  t = setTimeout('startTime()', 500);
+}
+
+var delay = ( function() {
   var timer = 0;
   return function(callback, ms){
     clearTimeout (timer);
@@ -177,33 +184,69 @@ var v_nil = function(v, zeroIsNil = false){
   return v === null || v === undefined || v === '';
 }
 
-var e_nil = function(id){
+var e_nil = function(id) {
   return e_val(id) === "";
 }
 
-var e_val = function(id){
+var e_val = function(id) {
   let v = document.getElementById(id);
   if (v === null) return "";
   return v.value;
 }
 
-var format_date = function(date){
-  if (v_nil(date)) {
-    date = new Date().toJSON().slice(0,10).replace(/-/g,'-'); 
-  }
-  if (date.includes('-')){
-    return date.split('-').reverse().join('.');
-  }
+var format_date = function(date) {
+  if (v_nil(date)) date = new Date().toJSON().slice(0,10).replace(/-/g,'-');
+  if (date.includes('-')) return date.split('-').reverse().join('.');
   return date;
 }
 
 
-function getInputSelection(elem){
-   if(typeof elem != "undefined"){
-    s=elem[0].selectionStart;
-    e=elem[0].selectionEnd;
+function getInputSelection(elem) {
+  if (typeof elem != "undefined") {
+    s = elem[0].selectionStart;
+    e = elem[0].selectionEnd;
     return elem.val().substring(s, e);
-  }else{return '';}
+  } else { return '' }
+}
+
+function enableSwitcher(){
+  $('.switcher_a').each(function(){    
+    var link = $(this).find('.link_a,.link_c');
+    var scale = $(this).find('.scale');
+    var handle = $(this).find('.handle');
+    var switcher = $(this);
+    var details = switcher.parent().find('.details');
+
+    $('.switcher_a .scale').click(function(event){
+      switcher.toggleClass('toggled');
+      link.toggleClass('on');
+      link[0].innerHTML = link.attr(link.hasClass('on') ? 'on' : 'off');
+
+      handle.toggleClass('active');
+
+      if (switcher.hasClass('toggled')){
+        details.slideDown(300);
+      } else {
+        details.slideUp(300);
+      }
+
+      if (link.hasClass('link_a'))
+        sortable_query({only_actual:link.hasClass('on')});
+      else{
+        if (link.hasClass('on')){
+          $('tr.new_client').hide();
+          $('tr.ex_client').show();
+        }else{
+          $('tr.new_client').show();
+          $('tr.ex_client').hide();
+          $('#project_client_id').val(0);
+          $('#project_client_id').trigger("chosen:updated")
+        }
+      }
+      return false;
+    });
+  });
+
 }
 
 $(function() {
@@ -283,42 +326,7 @@ $(function() {
     $('.ui-datepicker').css('z-index', 99999999999999);
   });
 
-  $('.switcher_a').each(function(){    
-    var link = $(this).find('.link_a,.link_c');
-    var scale = $(this).find('.scale');
-    var handle = $(this).find('.handle');
-    var switcher = $(this);
-    var details = switcher.parent().find('.details');
-
-    $(scale).click(function(event){
-      switcher.toggleClass('toggled');
-      link.toggleClass('on');
-      link[0].innerHTML = link.attr(link.hasClass('on') ? 'on' : 'off');
-
-      handle.toggleClass('active');
-
-      if (switcher.hasClass('toggled')){
-        details.slideDown(300);
-      } else {
-        details.slideUp(300);
-      }
-
-      if (link.hasClass('link_a'))
-        sortable_query({only_actual:link.hasClass('on')});
-      else{
-        if (link.hasClass('on')){
-          $('tr.new_client').hide();
-          $('tr.ex_client').show();
-        }else{
-          $('tr.new_client').show();
-          $('tr.ex_client').hide();
-          $('#project_client_id').val(0);
-          $('#project_client_id').trigger("chosen:updated")
-        }
-      }
-      return false;
-    });
-  });
+  enableSwitcher();
 
   $('.nav #develops').addClass('li-right develops');
   $('.nav #options').addClass('li-right options');

@@ -9,7 +9,9 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
+    puts "@only_actual #{@only_actual}"
     @users = User.order(:name)
+    @items = @users
   end
 
   # GET /users/1

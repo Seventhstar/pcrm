@@ -424,6 +424,9 @@ module ApplicationHelper
   end
 
   def only_actual_btn(filter = "only_actual", actual = "Актуальные")
+    @only_actual = params[:only_actual].nil? ? true : params[:only_actual] == 'true'
+    # puts "@only_actual #{@only_actual}, #{params[only_actual]}"
+
     var = eval("@#{filter}")
     txt = var == false ? 'Все' : actual
     cls = var ? " on #{filter}" : ''

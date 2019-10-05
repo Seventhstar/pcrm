@@ -73,7 +73,6 @@ class ProjectGoodsController < ApplicationController
                       currencies.short as currency_short,
                       projects.address as address")
 
-    # puts "is_manager?(current_user) #{is_manager?}"
     @goods_files = Attachment.secret(is_manager?).where(owner_type: 'ProjectGood', owner_id: @goods.ids)
 
     prj_ids = @goods.pluck(:project_id).uniq         

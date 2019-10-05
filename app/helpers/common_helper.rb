@@ -101,7 +101,7 @@ module CommonHelper
 
     case event 
     when "updated_at"
-    when "verified", "payd_q", "attention", "debt", "interest", "payd_full", "secret", 'order', 'fixed'
+    when "verified", "payd_q", "attention", "debt", "interest", "payd_full", "secret", 'order', 'fixed', 'canceled'
       from  = changeset[0] ? 'Да' : 'Нет'
       to    = changeset[1] ? 'Да' : 'Нет'
 

@@ -5,7 +5,7 @@
 .inp_w
   m-number name="footage#{add}" label="Метраж#{m2}" :readonly="#{real ? 'false' : 'fact_filled'}"
 .sign.multiply
-.inp_w
+.inp_w :class="priceChanged(#{real}, #{order})" :title="priceTitle(#{order})"
   m-number name="price#{add}" label="Цена за м2#{m2}" :readonly="#{real ? 'false' : 'fact_filled'}"
 .sign.equal
 .inp_w

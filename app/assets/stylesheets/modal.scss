@@ -4,6 +4,27 @@ button.close { -webkit-appearance: none; padding: 0; cursor: pointer; background
 .close_grp:hover .close{ color: red; }
 .close_grp:hover .icon_close {background-position:-52px 1px; }
 
+.modal-edit {     position: absolute;
+    top: 50%;
+    left: 50%;
+    transition: .5s;
+    width: 100%;
+    max-width: 1230px;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    transform: translate(-50%, -50%);
+    padding: 40px;
+    border-radius: 5px;
+    color: black;
+    text-align: center;}
+
+.modal-edit .txt { height: 30px;
+  box-sizing: unset;
+}
+
+.modal-goods .txt[readonly="readonly"], .label_col[readonly="readonly"] {color: gray;}
+
+.modal-edit .gsum .txt {width: 87px;}
 
 .modal-dialog.img-dialog { border: 1px solid #ccc; padding: 4px; max-width: 1300px; overflow: overlay; max-height: 880px;}
 .modal-pdf .modal-dialog.img-dialog {width: 1250px; height: 800px;}

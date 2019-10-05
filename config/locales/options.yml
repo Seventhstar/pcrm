@@ -5,7 +5,7 @@ ru:
     options_projects: ['project_statuses', 'project_types', 'elongation_types', 'tarif_calc_types'],
     options_costings: ['costings_types', 'uoms', 'materials', "consumptions", "works", "work_types", "rooms"],
     options_payments: ['currencies', 'payment_types', 'payment_purposes'],
-    options_providers: ['providers_groups', 'goodstypes', 'goods_priorities', 'delivery_times', 'positions', 'budgets', 'styles', 'p_statuses'],
+    options_providers: ['goodstypes', 'goods_priorities', 'delivery_times', 'positions', 'budgets', 'styles', 'p_statuses'],
     options_absences: ['holidays', 'working_days' ,'absence_reasons', 'absence_targets', 'absence_shop_targets'],
     options_wiki: ['wiki_cats']
   }

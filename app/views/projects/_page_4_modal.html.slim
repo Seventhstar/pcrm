@@ -1,28 +1,62 @@
-/ .modal-dlg tabindex="0"
-/ #mainModal.modal.goods.modal_1.container
-.modal_container.modal.goods v-if='modalGoodsForm'
-  .modal-dlg @keyup.enter="onConfirm" @keyup.esc="$emit('close')" tabindex="0"
-  .modal-message
-    .hl.hl_a.bd "jhgj"
-    .actions
-      span.btn.sub.btn_a.btn_reset @click="onCancel"
+
+/ .modal_container.modal.goodsmodal.modal_1.container.in.modal-overflow  
+.modal-dlg @keyup.enter="onConfirm" @keyup.esc="$emit('modalCancel')" tabindex="0" v-if='modalGoodsForm'
+  .modal-edit.modal-goods
+    .hl.hl_a.bd 
+      |{{modalTitle}}
+    .box_wrap_1
+      .panel-group-button.menu_main.menu_h
+        ul.nav
+          li :class="modalTabClass(1, 'li-left')" @click="modalTabClick(1)"
+            span Предложено
+          li :class="modalTabClass(2)" @click="modalTabClick(2)"
+            span.arrow
+            span Заказано 
+          li :class="modalTabClass(3,'li-right')" @click="modalTabClick(3)"
+            span.arrow
+            span Закрыто
+
+      .panel-left :readonly="true"
+        .grid_middle_label_name
+          .label_col :readonly="modalTab!=1" Товар:
+          input.txt type="text" v-model="currentGoods.name" :readonly="modalTab!=1"
+          
+          .label_col :readonly="modalTab!=1" Поставщик:
+          v-chosen name="modalProvider" src="providers" from_array="list" :index="currentIndex" placeholder="Выберите поставщика..." :disabled="modalTab!=1" 
+
+          .label_col :readonly="modalTab!=1" Вариант предложения:
+          v-chosen name="modalGoodsPriority" src="goods_priorities" placeholder="Выберите вариант..." :disabled="modalTab!=1" 
+
+          .label_col :readonly="modalTab!=1" Дата предложения:
+          .grid_sub_goods
+            input class="txt datepicker" type="text" name="upd_modal[date_place]" id="upd_modal_date_place" v-model="modalDatePlace" :readonly="modalTab!=1"
+            .label_col :readonly="modalTab!=1" Срок поставки:
+            v-chosen name="modalDeliveryTime" src="delivery_times" placeholder="Выберите срок..." :disabled="modalTab!=1" 
+
+          .label_col :readonly="modalTab!=1" Сумма предложения:
+          .grid_sub_goods.gsum 
+            div#curr :class="tstClass()"
+              m-number name="modalGsum" :class="modalCurrency" :disabled="disabled" 
+            / input type="text" id="modalGsum" name="modalGsum" :class="tstClass()" v-model="modalGsum" 
+            / .curr.
+            .label_col :readonly="modalTab!=1" Валюта: 
+            
+            input type="hidden" id="modalCurrencyId" v-model="modalCurrencyId" 
+            / |{{modalCurrency.value}} - {{modalCurrencyId}}
+
+            v-chosen name="modalCurrency" src="currencies" placeholder="Валюта..."  :readonly="modalTab!=1" 
+            / :selected='modalCurrencyId'
+
+          .label_col :readonly="modalTab!=1" Примечание:
+          textarea class="txt autoresize" style="resize: vertical; min-height:71px;" placeholder="Дополнительная информация (пояснение) для заказчика по КП" name="modal_description" v-model="modalDecription" :readonly="modalTab!=1" 
 
 
-    .modal-dialog
-      .modal-content
-        .modal-header
-          .close_grp
-            button.close.text @click="onCancel()" type="button" Закрыть
-            button.close data-dismiss="modal" type="button" 
-              span.icon.icon_close
-            h4#mainModalLabel.hl.hl_a.bd
-              |{{modalTitle}}
+        .sep_3
+        .grid_middle_label_name
+          div
+          .actions
+            span.sub.btn_a.right @click="onConfirm" Сохранить
+            span.btn.sub.btn_a.btn_reset.right @click="onCancel" Отмена
 
-        .box_wrap.box_wrap_1
-          .panel-left
-            .grid_label_name
-              .label_col Помещение:
-              v-chosen name="modalRoom" placeholder="Комната"
+
               
-              .label_col Работа:
-            v-chosen name="modalWork" placeholder="Работа"

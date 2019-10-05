@@ -14,8 +14,9 @@
   .sep_15
   #pgoods
     = render 'goods'
+  transition name="appear"
+    = render 'page_4_modal'
         
 = render 'page_4_vue'
-transition name="appear"
-  / = render 'page_4_modal'
+  / div v-if="confirmModal"
 

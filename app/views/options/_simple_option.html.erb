@@ -1,17 +1,16 @@
 <div class="sep_05"></div>
 
 <div class="option_list">
-<% fn = class_name %>
-<% if ['users','user_roles'].include? fn %>
-<% elsif lookup_context.find_all("#{fn}/_new_item.html.erb").any? %>
-  <%= render "#{fn}/new_item" %>
+<% if ['users','user_roles'].include? class_name %>
+<% elsif has_view(class_name, 'new_item') %>
+  <%= render "#{class_name}/new_item" %>
 <% else %>
   <%= render 'shared/new_item' %>
 <% end %>
 </div>
 
-<% if lookup_context.find_all("#{fn}/_index.html.erb").any? %>
-  <%= render "#{fn}/index.html" %>
+<% if has_view(class_name, 'index') %>
+  <%= render "#{class_name}/index.html" %>
 <% else %>
 
 <div class="sep_15"></div>

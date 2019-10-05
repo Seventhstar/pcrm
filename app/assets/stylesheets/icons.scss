@@ -10,7 +10,9 @@ a:hover .icon_user, .active .icon_user {background-position:-18px -18px; }
 .icon_edit, .inline_edit, .modal_edit {background-position:-69px -16px; }
 .chosen_edit {margin: 9px 0 0 5px !important;} 
 .td .icon_edit{margin-right: 8px;}
+.grid_table_goods .icon_edit{margin-right: 4px;}
 
+.changed-by-hand label::after{content: '*'; color: red; font-weight: bold; font-size: 14px;}
 
 .icon_show {background-position:-212px -16px; margin: 0 4px 0 0 !important;}
 .icon_apply {background-position:-69px -32px; }

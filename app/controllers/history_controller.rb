@@ -14,8 +14,10 @@ class HistoryController < ApplicationController
 
   def index
     if current_user.has_role?(:manager)
-      @types = [['Все', nil], ['Лиды', "Lead"], ['Проекты','Project'], ['Поступления','Receipt'],
-      ['Поставщики', "Provider"], ['База знаний','WikiRecord'], ['Задачи на разработку','Develop']]
+      @types = [['Все', nil], ['Лиды', "Lead"], ['Проекты', 'Project'], ['Поступления', 'Receipt'],
+                ['Поставщики', "Provider"], ['База знаний', 'WikiRecord'], ['Отсуствия', 'Absence'],
+                ['Задачи на разработку', 'Develop']]
+                
       @item_type = @types.detect{ |srch,_| srch == params['type'] }
       if !@item_type.nil? && !@item_type[1].nil? 
         @history = PaperTrail::Version.where(item_type: @item_type[1].classify ) 

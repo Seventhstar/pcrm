@@ -20,6 +20,17 @@
         xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
         return
 
+@update_chosen = (id, list, nil_value)->
+  need_update = ($(id + " option").toArray().length != (list.length+1))
+  if need_update
+    $(id).empty()
+    newOption = $('<option value="0">'+nil_value+'</option>')
+    $(id).append(newOption)
+    list.forEach (e) ->
+      newOption = $('<option value="'+e.id+'">'+e.name+'</option>')
+      $(id).append(newOption)
+    $(id).trigger("chosen:updated")
+
 @upd_param = (param, reload = false, modal = false)->
   $.ajax
       url: '/ajax/upd_param'
@@ -54,25 +65,25 @@
   $('#pgt_item'+item_id).show()
 
 @disable_input = (cancel=true) -> 
- item_id = $('.icon_apply').attr('item_id')
- item_rm_id = $('.icon_cancel').attr('item_id')
- $cells = $('.editable')
- $cells.each ->
-  _cell = $(this)
-  _cell.removeClass('editable')
-  if cancel
-    _cell.html _cell.attr('last_val')
-  else
-    _cell.html _cell.find('input').val()    
-  return
+  item_id = $('.icon_apply').attr('item_id')
+  item_rm_id = $('.icon_cancel').attr('item_id')
+  $cells = $('.editable')
+  $cells.each ->
+    _cell = $(this)
+    _cell.removeClass('editable')
+    if cancel
+      _cell.html _cell.attr('last_val')
+    else
+      _cell.html _cell.find('input').val()    
+    return
 
- $cell = $('td.app_cancel')  
- $cell.removeClass('app_cancel')
- if item_rm_id == 'undefined' || item_rm_id == ''  
-  del_span = '<span class="icon icon_remove_disabled"></span>' 
- else 
-  del_span = '<span class="icon icon_remove" item_id="'+item_id+'"></span>'
- $cell.html ('<span class="icon icon_edit" item_id="'+item_id+'"></span>'+del_span)
+  $cell = $('td.app_cancel')  
+  $cell.removeClass('app_cancel')
+  if item_rm_id == 'undefined' || item_rm_id == ''  
+    del_span = '<span class="icon icon_remove_disabled"></span>' 
+  else 
+    del_span = '<span class="icon icon_remove" item_id="'+item_id+'"></span>'
+  $cell.html ('<span class="icon icon_edit" item_id="'+item_id+'"></span>'+del_span)
 
 @apply_opt_change = (item)->
   model = item.closest('table').attr('model')
@@ -106,10 +117,11 @@
 @sort_base_url = ->
   method = if $('#cur_method').val() == 'edit_multiple' then '/edit_multiple' else ''
   controller =  $('#search').attr('cname')
+  controller = controller + "/" + $('#search').attr('mname') if controller == 'options'
   return controller+method
 
 @sortable_prepare = (params, getFromUrl = false) ->
-  actual = if $('.only_actual').length == 0 then null else $('.only_actual').hasClass('on')
+  actual = if $('.switcher_a .link_a').length == 0 then null else $('.switcher_a .link_a').hasClass('on')
 
   cut = ''
   cut_selecter = '.cut.cutted'
@@ -174,6 +186,9 @@
   setLoc("" + base_url + "?" + ajx2q(url));
   return
 
+@sortable_vue = ()->
+  console.log('here') 
+  console.log("app", app)
 
 @sortable_query = (params)->
   url = sortable_prepare(params)
@@ -280,7 +295,8 @@ $(document).ready ->
     isWordCharacter = c.match(/\w/);
     isBackspaceOrDelete = (e.keyCode == 8 || e.keyCode == 46 || e.keyCode == 13 || e.type == 'clear');
     if (isWordCharacter || isBackspaceOrDelete)
-       delay('sortable_query({})',700)
+      delay('sortable_vue()', 700)
+      delay('sortable_query({})',700)
     return
 # обновление данных в таблицах страниц index
   $('.index_filter select,.index_filter input[type="radio"]').on 'change', ->

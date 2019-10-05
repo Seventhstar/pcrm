@@ -122,10 +122,11 @@ Vue.component('m-number', {
         `,
 
     created(){
-
       if (this.$parent.model == undefined){
         this._parent = this.$parent.$parent 
       } else this._parent = this.$parent
+      if (this._parent == undefined) this._parent = this.$parent
+      // console.log('this.$parent', this.$parent, this.name )
 
       modelName = this._parent.model 
       // if (modelName == undefined) modelName = this.$parent.$parent.model
@@ -134,7 +135,6 @@ Vue.component('m-number', {
       
       let type = this.type == undefined ? '' : this.type
       // console.log('this.footage', this.footage)
-      // console.log('this.$parent', this.$parent, this.name, )
 
       if (this.name.includes('footage') || type.includes('footage') || this.footage) {
         this.classes = "txt footage_mask"
@@ -152,11 +152,11 @@ Vue.component('m-number', {
         this.classes = this.classes + " sum_total"
     },
 
-    methods:{
+    methods: {
       onFocus(el){
         let val = this._parent[this.name]
         this._parent.focus = this.name;
-        if (val == '0' || val=='0,0' || val=='0.0' )
+        if (val == '0' || val == '0,0' || val == '0.0' )
             this._parent[this.name] = '';
       },
 

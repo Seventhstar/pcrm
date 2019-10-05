@@ -108,12 +108,15 @@
       price() {
         this.calcSum("footage", "price")
       },
+
       price_2() {
         this.calcSum("footage_2", "price_2", "sum_2")
       },
+
       price_real() {
         this.calcSum("footage_real", "price_real", "sum_real")
       },
+
       price_2_real() {
         this.calcSum("footage_2_real", "price_2_real", "sum_2_real")
       },
@@ -230,13 +233,21 @@
       tarifSelect() {
         let locPrice = 0
         let locPrice2 = 0
+        let locPriceReal = 0
+        let locPrice2Real = 0 
         let locDesignerPrice = 0
         let locDesignerPrice2 = 0
         let locVisualerPrice = 0
         let locSumTotal = 0
 
+
+
         if (this.price > 0) locPrice = this.price
         if (this.price_2 > 0) locPrice2 = this.price_2
+        if (this.price_real > 0) locPriceReal = this.price_real
+        if (this.price_2_real > 0) locPrice2Real = this.price_2_real
+
+
         if (this.sum_total > 0) locSumTotal = this.sum_total
         if (this.designer_price > 0) locDesignerPrice = this.designer_price
         if (this.designer_price_2 > 0) locDesignerPrice2 = this.designer_price_2
@@ -258,24 +269,49 @@
         }
 
         tarif_search = tarif_search.filter(t => toInt(t.from) <= this.footage).reverse()
-
         if (tarif_search.length) this.mTarif = tarif_search[0]
         if (this.mTarif != 0) this.calcType = this.mTarif.tarif_calc_type_id
+        // console.log('this.project_type.value', this.project_type.value, this.project_type_id)
 
         if(this.project_type.value == this.project_type_id){
+          // console.log('this.price', this.price, 'this.mTarif.tarif_calc_type_id', this.mTarif.tarif_calc_type_id);
           if (this.mTarif.tarif_calc_type_id > 1) {
             if (locSumTotal > 0) this.mTarif.sum = locSumTotal
           } else {
-            if (locPrice > 0) this.mTarif.sum = locPrice
-            if (locPrice2 > 0) this.mTarif.sum2 = locPrice2
+            if (locPrice > 0) this.price = locPrice
+            if (locPriceReal > 0) this.price_real = locPriceReal
+            if (locPrice2 > 0) this.price_2      = locPrice2
+            if (locPrice2Real > 0) this.price_2_real = locPrice2Real
           }
 
           if (locDesignerPrice > 0) this.designer_price = locDesignerPrice
           if (locDesignerPrice2 > 0) this.designer_price2 = locDesignerPrice2
           if (locVisualerPrice > 0) this.visualer_price = locVisualerPrice
          // console.log('designer_sum', this.designer_sum, 'visualer_price', this.visualer_price, locVisualerPrice)
+        } else {
+          this.project_type_id = this.project_type.value
         }
+
       },
+    priceTitle(m2) {
+      priceM2 = m2 ? "2" : ""
+      return 'Цена по умолчанию: ' + this.mTarif['sum'+priceM2]
+    },
+
+    priceChanged(real, m2) {
+
+      priceReal = real ? "_real" : ""
+      priceM2 = m2 ? "_2" : ""
+      sumM2 = m2 ? "2" : ""
+      priceAdd = "price" + priceM2 + priceReal
+
+      // console.log(m2, 'm2', typeof(m2), 'real', real,  this.price, toInt(this.price), this.mTarif.sum)
+      // console.log("priceAdd", "price"+priceAdd, "sum+sumM2+priceReal", "sum"+sumM2+priceReal)
+      if (toInt(this[priceAdd]) != toInt(this.mTarif["sum"+sumM2])) return "changed-by-hand "
+
+      return priceReal
+
+    },
 
     tarifTooltip() {
 
@@ -298,6 +334,8 @@
             if (force) {
               this.price            = this.mTarif.sum
               this.price_2          = this.mTarif.sum2
+              this.price_real       = this.mTarif.sum
+              this.price_2_real     = this.mTarif.sum2
 
               this.designer_price   = this.mTarif.designer_price
               this.designer_price_2 = this.mTarif.designer_price2

@@ -5,12 +5,13 @@ Vue.component('v-chosen', {
         idName: "",
         localName: "",
         localValue: 0,
+        nameParts: '',
         options: [],
         h_input: false,
         clearable: false
       }
     }, 
-    props: ['name', 'placeholder', 'label', 'src', 'selected', 
+    props: ['name', 'placeholder', 'label', 'src', 'selected', 'readonly',
             'owner', 'k', 'index', 'from_array', 'clear', 'input'],
     template: `
         <div class="inp_w">
@@ -19,6 +20,7 @@ Vue.component('v-chosen', {
           :options="options"
           :clearable=clearable 
           :placeholder="placeholder"
+          :readonly=readonly
           @input="onUpdate($event)">
           <template slot="option" slot-scope="option">
             <span v-if="option.mark" class='info'>{{ option.label }}</span>
@@ -33,11 +35,16 @@ Vue.component('v-chosen', {
                v-if="model!=undefined && h_input" :id="idName">
         
       </div>`,
+    beforeCreate() {
+      console.log('this.modalCurrency', this.modalCurrency)
+
+    },
 
     created() {
       // console.log('input', this.input) reason
       this.h_input = this.input == true
       // this.h_input = true
+      console.log('this.$parent[this.name]', this.name, this.$parent[this.name])
 
        // console.log('this.clear', this.clear, typeof(this.clear))
       if (this.clear != undefined) this.clearable = (!this.clear)
@@ -65,24 +72,52 @@ Vue.component('v-chosen', {
       } else {
         this.options = this.$parent[this.name + "s"];
       }
-
+      console.log(this.name, 'this.options', this.options)
+      console.log(this.name, 'this.selected', this.selected)
+      // console.log('this.$parent[this.name]', this.$parent[this.name], 'this.name', this.name)
+      // this.hostCell = this.$parent[this.name]
 
       if (this.options !== undefined){
         if (this.selected !== undefined) {
+          // console.log('selected type', typeof(this.selected), )
+          // if (typeof(this.selected) == 'string')
+              // this.options.indexOf(this.selected)
           this.onUpdate(this.options[this.selected])
         } else if (this.options.length === 1) {
           this.onUpdate(this.options[0])
+        } else {
+          // let ind = this.options.indexOf(this.$parent[this.name])
+          let ind = this.options.filter(x => x.name == this.$parent[this.name])
+
+        // if (this.name.includes('.')){
+          // this.nameParts = this.name.split('.')
+          // let current = this.$parent[this.nameParts[0]]
+          // this.hostCell = this.$parent[this.nameParts[0]][this.nameParts[1]+'_id']
+          // selected = {value: current[this.nameParts[1]+'_id'], label: current[this.nameParts[1]+'_name']}
+          // console.log('selected', this.$parent[this.name], 'ind', ind)
+          // if (ind != -1) this.onUpdate(this.$parent[this.name])
+        }  
+
+        if (this.options.indexOf(this.$parent[this.name]) === -1 && this.from_array !== undefined) {
+          // this.onUpdate()
         }
-        if (this.options.indexOf(this.$parent[this.name]) === -1 && this.from_array !== undefined) this.onUpdate()
       }
     },
 
     methods: {
       onUpdate(val) {
+        console.log('onUpdate val', this.name, val)
         if (val === undefined) {this.$parent[this.name] = []; return;}
         let label = (v_nil(val)) ? undefined : val.label;
         this.localValue = (v_nil(val)) ? 0 : val.value;
+
+        // if (this.nameParts != ''){
+          // this.$parent[this.nameParts[0]][this.nameParts[1]] = val
+          // this.$parent[this.nameParts[0]][this.nameParts[1]+'_name'] = val.label
+        // }
+        // else 
         this.$parent[this.name] = val
+        // this.hostCell = val
                                      
         this.$root.$emit('onInput', {value: this.localValue, key: this.k, index: this.index, name: this.name, label: label});
       },

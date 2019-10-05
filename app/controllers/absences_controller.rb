@@ -40,7 +40,7 @@ class AbsencesController < ApplicationController
       query_str = "absences.*, date_trunc('month', dt_from) AS month"
 
       @page = params[:page].try(:to_i)
-      @page = 1 if @page ==0 || @page.nil?
+      @page = 1 if @page == 0 || @page.nil?
 
       abs = is_manager? ? Absence.all : current_user.absences
       @absences = abs.select(query_str).joins(:reason)
@@ -144,8 +144,11 @@ class AbsencesController < ApplicationController
   # PATCH/PUT /absences/1.json
   def update
     ap = absence_params
-    ap[:project_id]=0 if ![2,3].include?(ap[:reason_id].to_i)
-    ap[:target_id]=0 if ap[:reason_id].to_i!=2
+    reason_id = ap[:reason_id].try('to_i')
+    if reason_id.present?
+      ap[:project_id]=0 if ![2, 3].include?(reason_id)
+      ap[:target_id]=0 if reason_id != 2
+    end
 
     abs_params
     respond_to do |format|

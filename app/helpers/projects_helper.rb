@@ -52,9 +52,7 @@ module ProjectsHelper
     year_from = years.first.year
     year_to = years.last.year
     @years = (year_from.year..year_to.year).step(1).to_a.reverse
-    if params[:currency_id]
-      @goods = @goods.where(currency_id: params[:currency_id])
-    end
+
   end
 
   def get_goods(id, pgt)

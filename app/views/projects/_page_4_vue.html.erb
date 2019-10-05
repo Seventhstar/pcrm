@@ -25,7 +25,16 @@
       closedAmount: {},
 
       filter: [],
+      modalTab: 0,
       modalGoodsForm: false,
+      modalСurrency: nil,
+      modalProvider: nil,
+      modalDeliveryTime: nil,
+      modalGsum: 0,
+      modalFixed: false,
+      modalOrdered: false,
+      test_1: 120,
+      modalCurrencyId: 0,
       
       grandOfferTotal: [],
       grandOrderTotal: [],
@@ -34,7 +43,8 @@
       
       texts: "gtype new_gtype id",
       lists: "gtypes+priority new_gtypes+priority currencies+short goods_priorities \
-              goods_states:raw@goods_states goods_files+owner_id",
+              goods_states:raw@goods_states goods_files+owner_id\
+              delivery_times",
 
       providers: @providers,
       project_g_types: [],
@@ -53,13 +63,43 @@
       this.$root.$on('onInput', this.onInput);
       this.filter.push({field: 'goods_priority_id', value: 1})
       this.makeFilter()
+
+      document.body.addEventListener('keyup', e => {
+          if (e.keyCode === 27) this.onCancel(); 
+          else if (e.keyCode === 13) this.onConfirm();
+        }) 
     },
 
     computed: {
+      currencyClass() {
+        console.log('this.modalCurrencyId(computed)', this.modalCurrency.value)
+        return "txt sum_mask rub_"+ this.modalCurrency.value
+      },
+
+      
 
     },
 
     methods: {
+      modalTabClass(index, addClass = "") {
+        cls = addClass
+        if (this.modalTab == index) cls = cls + " selected"
+        return cls
+      },
+
+      modalTabClick(index){
+        this.modalTab = index
+      },
+
+      currencyClass1() {
+        console.log('this.modalCurrencyId(methods)', this.modalCurrency.value)
+        return "txt sum_mask rub_"+ this.modalCurrency.value
+      },
+
+      tstClass(){
+        console.log('tstClass');
+        return "currency_" + this.modalCurrency.value;
+      },
 
       makeFilter() {
         var vm = this
@@ -161,6 +201,7 @@
 
       deleteGoods(index, goods){
         this.currentGoods = goods;
+        this.currentTitle = goods.name;
         this.currentIndex = index;
         this.confirmModal = true;
       },
@@ -175,7 +216,7 @@
       },
 
 
-      onChange(key, index){
+      onChange(key, index) {
         let valid = true;
         if (key === undefined) return;
 
@@ -185,8 +226,13 @@
         // console.log("onChange");
       },
 
-      onInput(e){
+      onInput(e) {
+        console.log("onInput", e)
         if (e === undefined) return;
+        if (e.name == 'modalCurrency') {
+          console.log('modalCurrency e.value', e.value)
+          Vue.set(this, 'modalCurrencyId', e.value )
+        }
 
         if (e.name === 'goods_priority' || e.name === 'goods_state') {
           this.makeFilter();
@@ -293,14 +339,45 @@
         // return "/project_goods/" + g.id + "/edit"
       },
 
-      openModalGoods(g) {
-        // this.modalGoodsForm = true
+      openModalGoods(index, goods) {
+        this.modalTitle = 'Редактирование: ' + goods.name
+        this.modalGoodsForm = true
+        this.currentGoods = goods;
+
+        this.modalProvider = {value: goods.provider_id, label: goods.provider_name}
+        // this.modalProvider = ItemByID(goods.provider_id, this.providers)
+
+        this.modalGoodsPriority = ItemByID(goods.goods_priority_id, this.goods_priorities) 
+        this.modalCurrency      = ItemByID(goods.currency_id, this.currencies)
+        // this.modalCurrencyId    = this.currencies.indexOf(ItemByID(goods.currency_id, this.currencies))
+        this.modalDecription    = goods.description
+        this.modalDatePlace     = format_date(goods.date_place)
+        this.modalDeliveryTime  = ItemByID(goods.delivery_time_id, this.delivery_times)
+
+        this.modalGsum = goods.gsum;
+
+        this.currentIndex = index;
+        // console.log('this.modalСurrency', this.modalСurrency)
+        this.modalTab = 1
+        if (goods.modalFixed) this.modalTab = 3
+        else if (goods.order) this.modalTab = 2
+
+
+        setTimeout(() => apply_mask(), 100);
       },
 
       onCancel() {
         console.log('onCancel')
         this.modalGoodsForm = false
+        setTimeout("$('#ui-datepicker-div').hide()", 200)
+        
       },
+
+      onConfirm() {
+        console.log('onConfirm')
+        this.modalGoodsForm = false
+      },
+
 
       goodsCreateLink(index){
         // console.log('this.goods[index]', this.goods[index])
