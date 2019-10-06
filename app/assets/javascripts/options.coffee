@@ -124,15 +124,20 @@ $(document).ready ->
    $('.menu_sb li.active').removeClass 'active', 1000
    $(this).parent().addClass 'active' , {duration:500}
    url = $(this).attr('controller')
+   $('#search').attr('mname', url)
    if url.indexOf('options')<1
     url = 'options/' + url
    url= url.replace('#','')
    if url != '/undefined'
-     $.ajax
-       url: '/'+url
-       dataType: 'script'
-       success: ->
-        setLoc url
+      $.ajax
+        url: '/' + url
+        dataType: 'script'
+        success: ->
+          # console.log(url)
+          # setTimeout('setLoc('+url+')', 200)
+          
+          return
+        setLoc(url)
 
  $(document).on 'click', '#btn-sub-send', (e) ->
   save_item($(this))

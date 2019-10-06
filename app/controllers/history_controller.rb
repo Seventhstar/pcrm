@@ -27,6 +27,11 @@ class HistoryController < ApplicationController
       if !params['user_id'].nil? && params['user_id'].to_i>0 
         @history = @history.where(whodunnit: params['user_id'] ) 
       end
+
+      if params[:search].present?
+        @history.where('object_changes like ?', "%#{params[:search]}%" )
+      end
+
       @history = @history.paginate(page: params[:page], per_page: 30).order('created_at DESC')
       @user_id = params['user_id']
     end

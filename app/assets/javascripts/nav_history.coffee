@@ -27,7 +27,7 @@
 
     window.chHashFlag = true
     location.hash = navPrefix + curLoc
-
+    console.log('withFrame', withFrame)
     if withFrame and getLoc() != curLoc
       setFrameContent curLoc
   return

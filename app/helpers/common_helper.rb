@@ -107,13 +107,14 @@ module CommonHelper
 
     when "coder", "boss"
       from = nil
-      pref = changeset[1]? '': ' не '
+      pref = changeset[1] ? '': ' не '
       status = event == "coder" ? "выполнено" : "проверено"  
       to = "Помечен как <b>#{pref} #{status}</b>"
 
     when 'dt_to', 'dt_from'
       from = format_datetime(changeset[0])
       to   = format_datetime(changeset[1])
+      
     else 
       if event[-3,3] == '_id'
         attrib = event.gsub('_id','').gsub('new_','')
@@ -185,7 +186,7 @@ module CommonHelper
     _obj = obj.nil? ? '' : obj.tableize
     obj_name = name
     obj_name = obj.present? ? t(obj) : '' if name.nil?
-    "<a href=#{[_obj, id, 'edit'].join('/')}>#{obj_name} ##{id}</a>"
+    "<a href=#{['',_obj, id, 'edit'].join('/')}>#{obj_name} ##{id}</a>"
   end
 
   def link_to_file(obj)
@@ -240,10 +241,21 @@ module CommonHelper
       when 'Develop'
         desc = "Создана #{lnk}"
       when 'Absence'
+        # wefkjwek
         desc = "Создано #{lnk}"
       else
         desc = "Создан #{lnk}"
       end
+
+      desc = desc + " (" + 
+              version.changeset.map{
+                |fld| "#{t fld[0]}: #{ from_to_from_changeset(version, version.changeset[fld[0]], fld[0])[:to] }" if !['id', 'created_at', 'updated_at'].include? fld[0] }
+              .compact.join(', ') + ")"
+      # version.changeset.as_json.each do |fld|
+        # puts "fld #{fld}"
+      # end
+      # from_to = from_to_from_changeset(version,changeset[k],k)
+      # wejhfkjw
     when "destroy"    
       ch.store(0,'Удален')
       file = YAML.load(version['object'])
@@ -275,18 +287,22 @@ module CommonHelper
     history = Hash.new
     # изменения в самом объекте
     obj.versions.reverse.each do |version|
-      if version[:event]!="create" && version != obj.versions.first 
+      # if version[:event]!="create" && version != obj.versions.first 
         created = version.created_at.localtime
         at = created.strftime("%Y.%m.%d %H:%M:%S")         
+        # info = changeset_detail(version)['inf']
         info = changeset_detail(version)['inf']
+        # puts "info #{info}"
+        # wekjfhk
         history.store( at.to_s, { at: created.strftime("%d.%m.%Y %H:%M:%S"), 
                                   type: 'ch', 
                                   author: find_version_author_name(version), 
                                   changeset: info[:ch], 
                                   description: info[:desc]}) if info[:desc].present? 
-      end
+      # end
     end
    
+    # wfkjej
     obj_id = obj.id
 
     updated_pg = PaperTrail::Version.where_object(project_id: obj.id, goods_priority_id: 1)
@@ -310,6 +326,7 @@ module CommonHelper
     created = PaperTrail::Version.where_object_changes(project_id: obj.id)
     created.each_with_index do |data, index|
       changes = YAML.load(data['object_changes'])
+      next if !changes['project_id'].include? obj.id
       case data.item_type
       when 'Absence', 'ProjectGood'
         info = changeset_detail(data, true)
