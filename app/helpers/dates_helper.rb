@@ -15,7 +15,10 @@ module DatesHelper
     mformat = year_first ? "%Y.%m.%d %H:%M:%S" : "%d.%m.%Y %H:%M:%S"
     datetime.try('strftime', mformat)
   end
-   
+
+  def f_time(date_time)
+    date_time.try('strftime',"%H:%M")
+  end   
   def month_year(date)
     "#{t date.try('strftime','%B')} #{date.try('strftime','%Y')}"
   end

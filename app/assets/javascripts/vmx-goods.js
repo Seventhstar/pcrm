@@ -12,7 +12,7 @@ var vmxGoods = {
       if (amountArray === undefined) return ""
       this.currencies.forEach( c => {
         amount = amountArray[c.value];
-        if (amount > 0) {string = string + to_sum(amount) + c.short + ", "}
+        if (amount > 0) {string = string + toSum(amount) + c.short + ", "}
       })
       return string.slice(0, -2)
     },
@@ -27,7 +27,7 @@ var vmxGoods = {
     },
 
     toCurrencyAmount(amount, currency_short){
-      return ' ' + to_sum(amount) + ' ' + currency_short
+      return ' ' + toSum(amount) + ' ' + currency_short
     },
 
     allAmount(g){

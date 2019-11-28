@@ -63,15 +63,16 @@ class ProjectGoodsController < ApplicationController
     # puts "prj_ids #{prj_ids} #{u_ids}"
 
     @goods = ProjectGood.left_joins([:provider, :project, :currency])
-            .by_project_ids(prj_ids, force_year)
-            .by_executor(e_ids, force_executor)
             .only_actual(act_ids, @only_actual)
+            .by_executor(e_ids, force_executor)
+            .by_project_ids(prj_ids, force_year)
             .currency(params[:currency_id])
             .good_state(params[:good_state])
             .select("project_goods.*, 
                       providers.name as provider_name, 
                       currencies.short as currency_short,
                       projects.address as address")
+    puts "goods #{@goods.length}, prj_ids #{prj_ids}"
 
     @goods_files = Attachment.secret(is_manager?).where(owner_type: 'ProjectGood', owner_id: @goods.ids)
 

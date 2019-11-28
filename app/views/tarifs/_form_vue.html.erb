@@ -81,7 +81,7 @@
 
     methods: {
       description(){
-        let d = to_sum(this.sum) + 'р.'
+        let d = toSum(this.sum) + 'р.'
 
         if (!v_nil(this.tarif_calc_type) )
           if (this.tarif_calc_type.value < 3)
@@ -101,7 +101,7 @@
           d = d + ' м2'
         }
 
-        if (this.sum2 > 0)   d = d + '; ' + to_sum(this.sum2) + ' за 2й м2'
+        if (this.sum2 > 0)   d = d + '; ' + toSum(this.sum2) + ' за 2й м2'
 
         return d;
       },

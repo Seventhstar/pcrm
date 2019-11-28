@@ -48,10 +48,6 @@ module ApplicationHelper
     "#{t date.try('strftime','%B')} #{date.try('strftime','%Y')}"
   end
 
-  def f_time(date_time)
-    date_time.try('strftime',"%H:%M")
-  end
-
   def format_date(date_time)
     date_time.try('strftime',"%d.%m.%Y")
   end
@@ -211,8 +207,13 @@ module ApplicationHelper
         label = obj&.try(name)&.try(attr_name) if label.nil?
       end
     elsif default.present?
-        val = default.id
+      if default.class == Hash then
+        val   = default[:id]
+        label = default[:name]
+      else
+        val   = default.id
         label = default.name
+      end
     end
     h = val.present? ? {value: val, label: label} : []
     h = h.to_json.html_safe.to_s if safe
@@ -299,8 +300,13 @@ module ApplicationHelper
     # puts collection.class
     if fields_str.nil? 
       collection = collection.collect{|u| 
-        {label: u.try(attr_name), value: u.id} if u.try(attr_name).present? 
-        {label: u[attr_name.to_sym], value: u[:id]} if u[attr_name.to_sym].present? 
+        case u.class.to_s
+          when "Hash"
+            {label: u[attr_name.to_sym], value: u[:id]} if u[attr_name.to_sym].present? 
+          when "Array"
+          else
+            {label: u.try(attr_name), value: u.id} if u.try(attr_name).present? 
+        end
       }.compact
       # puts "collection2: #{collection}"
     else

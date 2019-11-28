@@ -4,12 +4,17 @@
   let nav = new Vue({
     el: '.nav_city',
     data: <%= fill_vue_data(nil, {
-      list_values: 'main_city',
-      lists: 'cities'
+      list_values: 'year main_city',
+      lists: 'years cities'
     }, 'app') %>,
 
     watch: {
-      main_city(){
+      year() {
+        console.log(this.year)
+        if (app != undefined) app.onInput({name: 'year', value: this.year});
+      },
+
+      main_city() {
         $.ajax({
           type: "POST",
           url: "/ajax/set_city",
@@ -19,6 +24,13 @@
         })
         delay('sortable_query({})',700)
       }
+    },
+    
+    methods: {
+      onInput(e){
+        console.log('onInput', e);
+      }
     }
+
    })
 </script>

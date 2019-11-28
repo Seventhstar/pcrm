@@ -6,7 +6,7 @@ var m_created = {
 
   methods: {
     formatValue(value, column){
-      return column == 'amount' ? to_sum(value) : value
+      return column == 'amount' ? toSum(value) : value
     },
 
     onSubmit(event){
@@ -31,6 +31,7 @@ var m_created = {
 var m_index = {
 
   created(){
+    this.filter.push({field: 'actual', value: true})
     this.fGroup();
   },
     
@@ -78,12 +79,14 @@ var m_index = {
 
     fGroup(){
       this.grouped      = _.groupBy(this.mainList, 'month')
+
       this.groupHeaders = Object.keys(this.grouped)
       for (i = 0; i < this.groupHeaders.length; ++i) { 
         let arr = this.grouped[this.groupHeaders[i]]
         if (arr != undefined)
           this.grouped[this.groupHeaders[i]] = this.fSort(arr);
       }
+      console.log('fGroup', this.mainList.length, this.grouped)
     },
 
     columnClass(column){
@@ -111,7 +114,11 @@ var m_index = {
           for (q in vm.filter) {
             let f = vm.filter[q]
             let v = item[f.field]
-            if (v == null || v.toLowerCase().indexOf(vm.filter[q].value.toLowerCase()) === -1) return false
+            if (typeof(v) == 'string') {
+              if (v == null || v.toLowerCase().indexOf(vm.filter[q].value.toLowerCase()) === -1) return false
+            } else {
+              if (v == null || v != vm.filter[q].value) return false
+            }
           }
           return true
         })
@@ -120,7 +127,7 @@ var m_index = {
     },
 
     tdClass(column){
-      return column[0] == 'amount' ? 'td_right' : '' 
+      return 'td ' + (column[0] == 'amount' ? 'td_right' : '')
     },
 
     tableClass(addClass){
@@ -128,8 +135,9 @@ var m_index = {
     },
 
     fCalcTotal(m){
+      if (this.grouped[m] == undefined) return ''
       let total = this.grouped[m].reduce((sum, current) => sum + current['amount'], 0);
-      return to_sum(total);
+      return toSum(total);
     },
 
 

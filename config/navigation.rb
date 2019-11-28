@@ -19,8 +19,8 @@ SimpleNavigation::Configuration.run do |navigation|
       sub_nav.item :clients, 'Клиенты', clients_path  
     end
      
-    primary.item :providers, 'Поставщики', providers_path do |sub_nav|
-      sub_nav.item :projects, 'Поставщики', providers_path(s_params), html: {class: search_class}
+    primary.item :providers_all, 'Поставщики', providers_path do |sub_nav|
+      sub_nav.item :providers, 'Поставщики', providers_path(s_params), html: {class: search_class}
       sub_nav.item :providers_groups, 'Группы поставщиков', providers_groups_path  
     end
 

@@ -22,23 +22,21 @@
           input.txt type="text" v-model="currentGoods.name" :readonly="modalTab!=1"
           
           .label_col :readonly="modalTab!=1" Поставщик:
-          v-chosen name="modalProvider" src="providers" from_array="list" :index="currentIndex" placeholder="Выберите поставщика..." :disabled="modalTab!=1" 
+          v-chosen name="modalProvider" src="providers" from_array="list" :index="currentIndex" placeholder="Выберите поставщика..." disabled="modalTab!=1" 
 
           .label_col :readonly="modalTab!=1" Вариант предложения:
           v-chosen name="modalGoodsPriority" src="goods_priorities" placeholder="Выберите вариант..." :disabled="modalTab!=1" 
 
           .label_col :readonly="modalTab!=1" Дата предложения:
           .grid_sub_goods
-            input class="txt datepicker" type="text" name="upd_modal[date_place]" id="upd_modal_date_place" v-model="modalDatePlace" :readonly="modalTab!=1"
+            input class="txt datepicker" type="text" name="upd_modal[date_place]" id="upd_modal_date_place" v-model="modalDatePlace" :disabled="modalTab!=1"
             .label_col :readonly="modalTab!=1" Срок поставки:
             v-chosen name="modalDeliveryTime" src="delivery_times" placeholder="Выберите срок..." :disabled="modalTab!=1" 
 
           .label_col :readonly="modalTab!=1" Сумма предложения:
           .grid_sub_goods.gsum 
             div#curr :class="tstClass()"
-              m-number name="modalGsum" :class="modalCurrency" :disabled="disabled" 
-            / input type="text" id="modalGsum" name="modalGsum" :class="tstClass()" v-model="modalGsum" 
-            / .curr.
+              m-number name="modalGsum" :class="modalCurrency" :disabled="modalTab!=1" 
             .label_col :readonly="modalTab!=1" Валюта: 
             
             input type="hidden" id="modalCurrencyId" v-model="modalCurrencyId" 

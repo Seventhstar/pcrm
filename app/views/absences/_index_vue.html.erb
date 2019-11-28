@@ -1,0 +1,119 @@
+<script>
+  Vue.component('v-select', VueSelect.VueSelect)
+
+  let app = new Vue({
+    el: '.absences_index', 
+    mixins: [m_created, m_index, mCheck],
+    data: <%= fill_vue_data(nil, { 
+      sortKey: 'name',
+      controller: 'absences',
+      reverse: true,
+      currentIndex: -1,
+      currentMonth: -1,
+      confirmModal: false,
+      groupHeaders: [],
+      filter: [],
+      grouped: [],
+      opened: [],
+      groupKeys: [],
+      showTotal: false,    
+      filteredData: [],
+      filteredGoodstypes: [],
+      list_values: 'user reason',
+      lists: "mainList:raw@json_absences users reasons",
+      columns: [['dt_from', 'Дата с'], 
+      ['dt_to', 'Дата по'], 
+      ['user', 'Сотрудник'],
+      ['reason', 'Причина'], 
+      ['project_name', 'Адрес проекта/объекта'],
+      ['time_from', 'С'], ['time_to', 'По'] ]
+      
+    }) %>,
+
+    created(){
+      this.filteredGoodstypes = this.goodstypes
+      this.groupSpecs = {}
+      this.makeSpec()
+      this.makeFilter()
+    },
+
+    methods: {
+      makeSpec(){
+        this.mainList.forEach((l) => {
+          if (v_nil(l.group)){    
+            let gtIds = _.pluck(this.absence_goodstypes.filter( f => {
+              f.absence_id == l.id
+            }), "goodstype_id")
+
+            let gtNames = _.pluck(this.goodstypes.filter( f => gtIds.indexOf(f.value) > -1), "label")
+            l.spec = gtNames.join('<br/>')
+          }
+        })
+
+      },
+
+      makeFilter(){
+        // this.grouped = new Array
+        this.filteredData = []
+        // this.
+      },
+      
+      switchOpenedRow(ind, i) {
+        Vue.set(this.opened[ind], i, !this.opened[ind][i])
+      },
+
+      cutRowClass(index, idx){
+        let cls = 'altcut'
+        if (!this.opened[index][idx]) cls = cls + ' cutted'
+        return cls
+      },
+
+      rowClass(item, index, name= 'head', add = '') {
+        addClass = ''
+        switch(item.p_status){
+          case 5:
+          addClass = " info"
+          break;
+          case 2:
+          addClass = " nonactual"
+          break;
+        }
+        return "absences_index_" + name + " table_row" + addClass + " " + add
+      },
+
+      siteUrl(url){
+        var prefix = 'http://';
+        var pref2  = 'https://';
+        if (url.substr(0, prefix.length) !== prefix && url.substr(0, pref2.length) !== pref2) { 
+          url = prefix + url;
+        }
+        return url;
+      },
+
+      // onInput(e){
+      //   console.log('e', e, this.filteredData.length)
+      //   if (e.name == 'user') {
+      //     if (e.value != undefined && e.value != 0){
+      //       Vue.set(this, 'filteredData', this.mainList.filter( f => f.user_id == e.value ))
+      //     } else {
+      //       // this.filteredGoodstypes = this.goodstypes
+      //       console.log('this.filteredData.length', this.filteredData.length)
+      //       this.filteredData.length
+      //     }
+      //     this.makeFilter()          
+      //     // filterToHistory({goodstype: this.vValue(this.goodstype)})
+      //   } else if (e.name == 'p_status'){
+      //     // this.makeFilter()
+      //     // filterToHistory({p_status: this.vValue(this.p_status, 'all')})
+      //   }
+      // },
+
+      editGroup(grp){
+        return '/absences/'+grp.id+'/edit'
+      }
+
+
+    }
+
+  })
+</script>

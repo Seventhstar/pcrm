@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  include VueHelper
+  
   before_action :logged_in_user
 #, only: [:index, :edit, :update, :destroy, :following, :followers]
   before_action :correct_user,   only: [:edit, :update]
@@ -18,6 +20,12 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @user = User.find(params[:id])
+    cur_year = Date.today.year
+    years = [[@user.projects.order(:date_start).first[:date_start].year, 
+              @user.leads.order(:start_date).first[:start_date].year].min, cur_year]
+    @years = (years[0]..years[1]).map{|y| {id: y, name: y }}
+    @year = {id: cur_year, name: cur_year}
+    @leads = @user.leads
   end
 
   

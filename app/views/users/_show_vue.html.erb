@@ -1,0 +1,147 @@
+<script>
+    let app = new Vue({
+    el: '#user_card',
+    data: {
+      model: 'User',
+      year: 0,
+      tabs: [{value: 1, label: 'Лиды'}, {value: 2, label: 'Проекты'}, {value: 3, label: 'Отсутствия'}],
+      keyNames: [],
+      listNames: [],
+      filteredLeads: [],
+      filteredProjects: [],
+      yearBeforeLeads: [],
+      filteredAbsences: [],
+      yearBeforeProjects: [],
+      leads: <%= for_vue(@user.leads, "status_name") %>,
+      absences: <%= for_vue(@user.absences, [:reason_name, :project_name]) %>,
+      projects: <%= for_vue(@user.projects, [:status_name, :project_type_name]) %> 
+    },
+
+    created() {
+      this.year = new Date().getFullYear()
+      this.listNames = _.uniq(_.pluck(this.files, 'owner_type')); 
+      if (this.listNames.indexOf(this.model) == -1) {
+        this.listNames.push(this.model)
+      }
+
+      this.listNames.forEach( (n) => {
+        // this[n] = this.files.filter(f => f.owner_type == n) 
+        // this[n+'Grouped'] = _.groupBy(this[n], 'owner_name')
+      })
+
+
+      this.updateLists()
+      this.setActive(this.tabs[0])
+    },
+
+    mounted(){
+      this.$root.$on('onInput', function (id) {console.log(id)});
+    },
+
+    computed: {
+      currentTab: function () {
+        return this.tabs.reduce((accum, curr) => {return curr.active ? curr : accum}, {});
+      },      
+
+      docCount() {return this.docList.length;},
+      audioCount() {return this.audioList.length;}
+
+    },
+
+    methods: {  
+      
+      formatDate(date) {
+        return format_date(date)
+      },
+
+      tabClass(currentTab){
+        if (currentTab.active) return 'ui-tabs-active'
+        return ''
+      },
+
+      setActive(currentTab) {
+        this.tabs.forEach((el,ind) => {Vue.set(this.tabs[ind], 'active', el === currentTab)})
+      },
+
+      timeDuration(row) {
+        t1 = moment(row.dt_from).format()
+        t2 = moment(row.dt_to).format()
+
+        duration = moment.duration(moment(t2).diff(t1)); 
+        return duration.asHours();
+      },
+
+      describeDelta(current, before) {
+        delta  = before > 0 ? ((current - before) / before * 100) : ''
+        delta = toInt(delta)
+
+        delta = delta > 0 ? ("+" + delta) : (delta < 0 ? delta : '')  
+        delta = delta!='' ? " " + delta + "%" : ''
+        return " (" + before + delta + ")"
+      },
+
+      projectsSummary() {
+        current = this.filteredProjects.length
+        before = this.yearBeforeProjects.length
+        return "" + current + this.describeDelta(current, before)
+      },
+
+      leadsSummary() {
+        current = this.filteredLeads.length
+        before = this.yearBeforeLeads.length
+        return "" + current + this.describeDelta(current, before)
+      },
+
+      updateLists() {
+        // console.log('updateLists')
+        this.filteredLeads = []
+        this.filteredProjects = []
+        this.yearBeforeLeads = []
+        this.yearBeforeProjects = []
+
+        // this.filteredLeads.length = 0
+
+        var ly = this.leads.filter( l => this.getYear(l.start_date) == this.year )
+        var py = this.projects.filter( p => this.getYear(p.date_start) == this.year )
+        var ay = this.absences.filter( a => this.getYear(a.dt_from) == this.year )
+
+        for (var l in ly) this.filteredLeads.push(ly[l])
+        for (var p in py) this.filteredProjects.push(py[p])
+        for (var a in ay) this.filteredAbsences.push(ay[a])
+
+
+        var ly = this.leads.filter( l => this.getYear(l.start_date) == (this.year-1) )
+        var py = this.projects.filter( p => this.getYear(p.date_start) == (this.year-1) )
+        for (var l in ly) this.yearBeforeLeads.push(ly[l])
+        for (var p in py) this.yearBeforeProjects.push(py[p])
+      },
+
+      getYear(date) {
+        // console.log('date', date, date.substr(0,4))
+        if (date != null) return date.substr(0, 4)
+        return ''
+      },
+
+      setData(name, data) {
+        if (!this.listNames.length) this.listNames = [name]
+        if (this[name] == undefined) this[name] = []
+
+        this[name].push(data);
+        this.updateLists()
+      },
+
+      editLink(model, id){
+        url = "/" + model + "/" + id + "/edit"
+        // this.$router.resolve({name: 'routeName', query: {data: "someData"}});
+        window.open(url, '_blank');
+      },
+
+      onInput(e){
+        if (e.name == 'year') this.year = e.value.value
+        console.log('onInput2', this.year);
+        this.updateLists()
+      }
+    }
+  });
+
+</script>

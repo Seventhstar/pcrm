@@ -36,7 +36,7 @@
     methods: {
 
       description(item, city){
-        let d = to_sum(item.sum) + 'р.'
+        let d = toSum(item.sum) + 'р.'
 
         if (item.calc_type_id < 3)
           d = d + ' ' + item.calc_type.toLowerCase()
@@ -53,7 +53,7 @@
           d = d + ' м2'
         }
 
-        if (item.sum2 > 0)   d = d + '; ' + to_sum(item.sum2) + ' за 2й м2'
+        if (item.sum2 > 0)   d = d + '; ' + toSum(item.sum2) + ' за 2й м2'
 
         return d;
       },
@@ -64,7 +64,7 @@
           if (item.designer_price<1)
             d = d + Math.round(item.designer_price*100) + '% от стоимости';
           else
-            d = d + to_sum(item.designer_price) + ' за м2';
+            d = d + toSum(item.designer_price) + ' за м2';
         } 
         
         designer_price2 = v_nil(item.designer_price2) ? 0 : item.designer_price2
@@ -111,7 +111,7 @@
       },
 
       formatValue(value, column){
-        if (parseInt(value)>0) {return to_sum(value) } 
+        if (parseInt(value)>0) {return toSum(value) } 
         return value
       }, 
 

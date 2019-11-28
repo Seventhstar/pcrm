@@ -1,0 +1,94 @@
+.grig_1_3#user_card
+  div style="width: 80%"
+    .panel.panel-default
+      .panel-heading.table-heading.head.month
+        / # - provide(:title, @user.name)
+        = @user.name
+      .table_row
+        .td
+          = avatar_for @user
+      .table_row.grig_2_1
+        .td Лидов:
+        .td
+          | {{leadsSummary()}} 
+        .td Проектов:
+        .td
+          | {{projectsSummary()}} 
+
+    .row
+      aside.col-md-4
+        section.user_info
+          h1
+  div
+      .vtabs
+        ul
+          li :class="tabClass(tab)" v-for="tab, index in tabs"
+            a @click="setActive(tab)" {{tab.label}} 
+      tab-content.content :tab="currentTab" 
+        | <span>{{currentTab}}
+
+      .files_list v-if="currentTab.value == 1"
+        .sep_15
+        .panel.panel-default 
+          .index_table.grid-head.user_leads
+            .th Статус
+            .th ФИО
+            .th Информация о запросе
+            .th Метраж
+            .th Дата
+          .table_row.user_leads @dblclick="editLink('leads', row.id)" v-for="row, index in filteredLeads"
+            .td 
+              |{{row.status_name}}
+            .td 
+              |{{row.fio}}
+            .td 
+              |{{row.info}}
+            .td 
+              |{{row.footage}}
+            .td 
+              |{{formatDate(row.start_date)}}
+
+      .files_list v-if="currentTab.value == 2"
+        .sep_15
+        .panel.panel-default 
+          .index_table.grid-head.user_leads
+            .th Статус
+            .th Вид проекта
+            .th Адрес
+            .th Метраж
+            .th Дата
+          .table_row.user_leads @dblclick="editLink('projects', row.id)" v-for="row, index in filteredProjects"
+            .td 
+              |{{row.status_name}}
+            .td 
+              |{{row.project_type_name}}
+            .td 
+              |{{row.address}}
+            .td 
+              |{{row.footage}}
+            .td 
+              |{{formatDate(row.date_start)}}
+
+      .files_list v-if="currentTab.value == 3"
+        .sep_15
+        .panel.panel-default 
+          .index_table.grid-head.user_leads
+            .th Причина
+            .th 
+            .th Адрес проекта/объекта
+            .th Время
+            .th Дата
+          .table_row.user_leads @dblclick="editLink('absences', row.id)" v-for="row, index in filteredAbsences" 
+            .td 
+              |{{row.reason_name}}
+            .td 
+              |{{row.project_type_name}}
+            .td 
+              |{{row.project_name}}
+            .td 
+              |{{timeDuration(row)}}
+            .td 
+              |{{formatDate(row.date_start)}}
+        
+
+= render 'show_vue'

@@ -24,15 +24,15 @@
         td
           .inp_w.w118.left
             = text_field iname, :date_place, {class: 'txt datepicker', value: @prj_good.date_place.try('strftime',"%d.%m.%Y")}
-          .label.space20 Срок поставки:
-          .inp_w.w170.left
+          .label.lbl-goods.space20.left Срок поставки:
+          .inp_w.w170.right
             = chosen_src "delivery_time_id", DeliveryTime.order(:priority), @prj_good.delivery_time_id, 
               {nil_value: '', add_name: iname}
       tr
         td.caption Сумма предложения:
         td
           = td_sum_field(iname, :gsum, nil, {value: @prj_good.gsum, no_td: true, class: 'left w118'})
-          .label.space66 Валюта:
+          .label.space66.lbl-goods.left Валюта:
           .inp_w.w80.left
             = chosen_src "currency_id", currency_src, @prj_good.currency_id, {nil_value: '',add_name: iname, add_class: 'currency_src'}
       tr style="height: 20px;" 
@@ -67,7 +67,7 @@
         td style="width: 250px"
           .inp_w.w118.left
             = text_field iname, :date_offer, {class: 'txt datepicker grp1', value: @prj_good.date_offer.try('strftime',"%d.%m.%Y"), disabled: !@prj_good.order}
-          div class="label space20 #{row_cls}" Сумма заказа:
+          div class="label space20 #{row_cls} lbl-goods left" Сумма заказа:
           = td_sum_field(iname, :sum_supply ,nil, {value: @prj_good.sum_supply, disabled: !@prj_good.order, inp_class: 'grp1 w118'})
       tr.grp1
         td class="caption grp1 #{row_cls}" Дата поставки:

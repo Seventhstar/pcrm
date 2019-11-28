@@ -11,7 +11,7 @@ Vue.component('v-chosen', {
         clearable: false
       }
     }, 
-    props: ['name', 'placeholder', 'label', 'src', 'selected', 'readonly',
+    props: ['name', 'placeholder', 'label', 'src', 'selected', 'readonly', 'disabled',
             'owner', 'k', 'index', 'from_array', 'clear', 'input'],
     template: `
         <div class="inp_w">
@@ -21,6 +21,7 @@ Vue.component('v-chosen', {
           :clearable=clearable 
           :placeholder="placeholder"
           :readonly=readonly
+          :disabled=disabled
           @input="onUpdate($event)">
           <template slot="option" slot-scope="option">
             <span v-if="option.mark" class='info'>{{ option.label }}</span>
@@ -36,7 +37,7 @@ Vue.component('v-chosen', {
         
       </div>`,
     beforeCreate() {
-      console.log('this.modalCurrency', this.modalCurrency)
+      // console.log('this.modalCurrency', this.modalCurrency)
 
     },
 
@@ -44,7 +45,7 @@ Vue.component('v-chosen', {
       // console.log('input', this.input) reason
       this.h_input = this.input == true
       // this.h_input = true
-      console.log('this.$parent[this.name]', this.name, this.$parent[this.name])
+      // console.log('this.$parent[this.name]', this.name, this.$parent[this.name])
 
        // console.log('this.clear', this.clear, typeof(this.clear))
       if (this.clear != undefined) this.clearable = (!this.clear)
@@ -72,8 +73,8 @@ Vue.component('v-chosen', {
       } else {
         this.options = this.$parent[this.name + "s"];
       }
-      console.log(this.name, 'this.options', this.options)
-      console.log(this.name, 'this.selected', this.selected)
+      // console.log(this.name, 'this.options', this.options)
+      // console.log(this.name, 'this.selected', this.selected)
       // console.log('this.$parent[this.name]', this.$parent[this.name], 'this.name', this.name)
       // this.hostCell = this.$parent[this.name]
 
@@ -106,7 +107,7 @@ Vue.component('v-chosen', {
 
     methods: {
       onUpdate(val) {
-        console.log('onUpdate val', this.name, val)
+        // console.log('onUpdate val', this.name, val)
         if (val === undefined) {this.$parent[this.name] = []; return;}
         let label = (v_nil(val)) ? undefined : val.label;
         this.localValue = (v_nil(val)) ? 0 : val.value;
@@ -118,7 +119,7 @@ Vue.component('v-chosen', {
         // else 
         this.$parent[this.name] = val
         // this.hostCell = val
-                                     
+        // console.log(val)                             
         this.$root.$emit('onInput', {value: this.localValue, key: this.k, index: this.index, name: this.name, label: label});
       },
     } 
