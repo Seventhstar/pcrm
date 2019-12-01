@@ -44,28 +44,33 @@ var m_index = {
       this.filter.length = 0;
     },
 
-    onInput(e){
-      if (e !== undefined){
+    fillFilter(name, value) {
+      let field = name == 'search' ? this.searchFileds : name
+      
         let s = -1;
-        for (var i=0; i < this.filter.length; i++){
-          if (this.filter[i].field === e.name) {s = i;}
+        for (var i = 0; i < this.filter.length; i++){
+          if (this.filter[i].field === field) {s = i;}
         }
-
         if (s > -1){
-          if (e.label === undefined)
-            this.filter.splice(s, 1)
-          else
-            this.filter[s].value = e.label
+          if (value === undefined) this.filter.splice(s, 1)
+          else this.filter[s].value = value
         } 
-        else if (e.label !== undefined)
-          this.filter.push({field: e.name, value: e.label});
+        else if (value != undefined)
+          this.filter.push({field: field, value: value});
+        
       this.fGroup();
+      
+    },
+
+    onInput(e){
+      if (e !== undefined) {
+        this.fillFilter(e.name, e.label)
       }
     },
   
 
     sortBy(sortKey, month) {
-      console.log('sortKey', sortKey)
+      // console.log('sortKey', sortKey)
       if (sortKey == 'date') sortKey = 'sortdate'
       this.reverse = (this.sortKey == sortKey) ? !this.reverse : false;
       this.sortKey = sortKey;
@@ -86,7 +91,7 @@ var m_index = {
         if (arr != undefined)
           this.grouped[this.groupHeaders[i]] = this.fSort(arr);
       }
-      console.log('fGroup', this.mainList.length, this.grouped)
+      // console.log('fGroup', this.mainList.length, this.grouped)
     },
 
     columnClass(column){
@@ -113,8 +118,14 @@ var m_index = {
         this.filteredData = this.filteredData.filter((item) => {
           for (q in vm.filter) {
             let f = vm.filter[q]
+            // console.log('filter f', f, vm.filter)
             let v = item[f.field]
-            if (typeof(v) == 'string') {
+            // console.log('typeof(v)', typeof(v), v, f.value, f.field)
+            if (typeof(f.field) == 'object') {
+              fl = false
+              f.field.forEach((fld) => {if (v != null && item[fld].toLowerCase().indexOf(f.value) > -1) fl = true })
+              if (!fl) return false
+            } else if (typeof(v) == 'string') {
               if (v == null || v.toLowerCase().indexOf(vm.filter[q].value.toLowerCase()) === -1) return false
             } else {
               if (v == null || v != vm.filter[q].value) return false

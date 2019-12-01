@@ -2,16 +2,19 @@
   Vue.component('v-select', VueSelect.VueSelect)
 
   let nav = new Vue({
-    el: '.nav_city',
+    el: '.nav_select',
     data: <%= fill_vue_data(nil, {
       list_values: 'year main_city',
       lists: 'years cities'
     }, 'app') %>,
 
     watch: {
-      year() {
-        console.log(this.year)
-        if (app != undefined) app.onInput({name: 'year', value: this.year});
+      year() {  
+        // console.log('app', window.app)
+        if (app != undefined) {
+          app.onInput({name: 'year', label: this.year.label, value: this.year.value}); 
+          sortable_prepare({});
+        }
       },
 
       main_city() {
@@ -22,15 +25,9 @@
           dataType: "json",
           encode: true
         })
-        delay('sortable_query({})',700)
+        delay('sortable_query({})', 700)
       }
     },
     
-    methods: {
-      onInput(e){
-        console.log('onInput', e);
-      }
-    }
-
    })
 </script>

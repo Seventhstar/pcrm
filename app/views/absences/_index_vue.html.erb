@@ -13,13 +13,17 @@
       confirmModal: false,
       groupHeaders: [],
       filter: [],
+      filtersAvailable: ['year', 'search'],
       grouped: [],
       opened: [],
       groupKeys: [],
       showTotal: false,    
       filteredData: [],
       filteredGoodstypes: [],
-      list_values: 'user reason',
+      useSearchVue: true,
+      texts: 'search',
+      searchFileds: ['project_name'],
+      list_values: 'user reason year',
       lists: "mainList:raw@json_absences users reasons",
       columns: [['dt_from', 'Дата с'], 
       ['dt_to', 'Дата по'], 
@@ -35,6 +39,11 @@
       this.groupSpecs = {}
       this.makeSpec()
       this.makeFilter()
+      this.filtersAvailable.forEach( (f) => {
+        if (this[f] != undefined) this.fillFilter(f, typeof(this[f])=='object' ? this[f].value : this[f] )
+      })
+      // if (this.year!=undefined) nav.year = {value: this.year, label: this.year}
+
     },
 
     methods: {
@@ -89,24 +98,6 @@
         }
         return url;
       },
-
-      // onInput(e){
-      //   console.log('e', e, this.filteredData.length)
-      //   if (e.name == 'user') {
-      //     if (e.value != undefined && e.value != 0){
-      //       Vue.set(this, 'filteredData', this.mainList.filter( f => f.user_id == e.value ))
-      //     } else {
-      //       // this.filteredGoodstypes = this.goodstypes
-      //       console.log('this.filteredData.length', this.filteredData.length)
-      //       this.filteredData.length
-      //     }
-      //     this.makeFilter()          
-      //     // filterToHistory({goodstype: this.vValue(this.goodstype)})
-      //   } else if (e.name == 'p_status'){
-      //     // this.makeFilter()
-      //     // filterToHistory({p_status: this.vValue(this.p_status, 'all')})
-      //   }
-      // },
 
       editGroup(grp){
         return '/absences/'+grp.id+'/edit'

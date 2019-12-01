@@ -56,27 +56,33 @@ class AbsencesController < ApplicationController
         sort_1 = "users.name"
         # @absences = @absences.joins(:user)
       end
-
+      abs = abs.where("dt_from >= ?", (Date.today-52.week))
       # @absences = @absences.where("dt_from >= ?", (Date.today-2.week)) if @only_actual
       # @absences = @absences.paginate(page: @page, per_page: 50)
       # sort_1 = @sort_column == 'dt_from' ? 'month' : @sort_column
       # order = "#{sort_1} #{sort_direction}, #{sort_2} #{dir_2}, absences.created_at desc"
       # @absences = @absences.order(order)
     end
-
+    @search = params[:search]
     @json_absences = abs.map{ |a| { id: a.id, 
                      # address: a.project_name,
                       actual: a.dt_from > (Date.today-52.week),
                      dt_from: format_date(a.dt_from),
                        dt_to: format_date(a.dt_to),
-                        # user: a.user_name,
-                      # reason: a.reason_name,
-                # project_name: a.project_name,
+                        user: a.user_name,
+                      reason: a.reason_name,
+                project_name: a.project_name,
                        month: month_year(a.dt_from),
+                        year: a.dt_from.year,
                    time_from: f_time(a.dt_from),
                      time_to: f_time(a.dt_to),
                        group: a.dt_from }}
     # puts "@json_absences #{@json_absences}"
+    cur_year = Date.today.year
+    @years = (abs.first[:dt_from].year..cur_year).map{|y| {id: y, name: y }}
+    cur_year = params[:year].nil? ? cur_year : params[:year].try(:to_i)
+    @year = {id: cur_year, name: cur_year}
+
 
     @reasons = AbsenceReason.order(:id)
     @users    = User.actual.by_city(current_user.city)

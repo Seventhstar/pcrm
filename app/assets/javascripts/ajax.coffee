@@ -132,6 +132,8 @@
     cut = cut + $(this).attr('cut_id') + '.'
 
   search = $('#search').val()
+  year = if (nav? && nav.year?) then nav.year.value else $('#year').val()
+  console.log('nav', nav, 'nav.year', nav.year, year)
 
   $('.search_save a').each (i) ->
     href = new URL(this.href)
@@ -148,7 +150,7 @@
     sort2: $('span.subsort.current').attr('sort2')
     dir2: $('span.subsort.current').attr('dir2')
     search: search
-    year: $('#year').val()
+    year: year
     priority_id: $('#priority_id').val()
     good_state: $('#good_state').val()
     cut: cut
@@ -178,24 +180,33 @@
     if (a == 0 || a == '0' || a == undefined)
       delete url[i]  
     return 
+    
+  base_url = sort_base_url()  
+  setLoc(""+base_url+"?"+ajx2q(url));
   return url
 
-@filterToHistory= (params)->
+@filterToHistory = (params)->
   url = sortable_prepare(params, true)
   base_url = sort_base_url()
   setLoc("" + base_url + "?" + ajx2q(url));
   return
 
-@sortable_vue = ()->
-  console.log('here') 
-  console.log("app", app)
+@sortable_vue = (params) ->
+  s = $('#search').val()
+  app.onInput({name: 'search', label: s, value: s}); 
 
-@sortable_query = (params)->
+@sortable_query = (params) ->
   url = sortable_prepare(params)
   base_url = sort_base_url()
 
-  $.get '/'+base_url, url, null, 'script'
-  setLoc(""+base_url+"?"+ajx2q(url));
+  if (!app?)
+    $.get '/'+base_url, url, null, 'script'
+  else if (app.useSearchVue == undefined)
+    $.get '/'+base_url, url, null, 'script'
+  else
+    sortable_vue()
+
+  # setLoc(""+base_url+"?"+ajx2q(url));
   return
 
 @apply_mask = ->
@@ -295,7 +306,6 @@ $(document).ready ->
     isWordCharacter = c.match(/\w/);
     isBackspaceOrDelete = (e.keyCode == 8 || e.keyCode == 46 || e.keyCode == 13 || e.type == 'clear');
     if (isWordCharacter || isBackspaceOrDelete)
-      delay('sortable_vue()', 700)
       delay('sortable_query({})',700)
     return
 # обновление данных в таблицах страниц index
