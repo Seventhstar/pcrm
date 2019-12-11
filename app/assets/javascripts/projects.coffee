@@ -16,11 +16,11 @@
   # if ptr.name == 'project[date_end_plan]' or ptr.name == 'project[date_start]'
     d1 = dateFromString($('#project_date_start').val())
     d2 = dateFromString($('#project_date_end_plan').val())
-    console.log('d1', d1, 'd2', d2)
+    # console.log('d1', d1, 'd2', d2)
     v  = $('#holidays').val().split(" ")
     w  = $('#workdays').val().split(" ")
     days = moment().isoWeekdayCalc(d1, d2, [1,2,3,4,5], v, w)
-    console.log('days', days)
+    # console.log('days', days)
     $('#project_days').val(days)
     return
 

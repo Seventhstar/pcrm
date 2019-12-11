@@ -1,19 +1,98 @@
+.nav_filter
+  .filter_nav
+    ul
+      li.selected.active 
+        a href="#" Статистика
+      li
+        = link_to 'Настройки', edit_user_path(@user)
+      li
+        a href="/options/users"  Список пользователей
+
 .grig_1_3#user_card
-  div style="width: 80%"
+  div style="width: 420px"
     .panel.panel-default
       .panel-heading.table-heading.head.month
-        / # - provide(:title, @user.name)
         = @user.name
       .table_row
         .td
           = avatar_for @user
-      .table_row.grig_2_1
-        .td Лидов:
-        .td
+      .grid-sub-head.grig-user-summary
+        .th
+        .th.td_center.label
+          | {{year}}
+        .th.td_center.label
+          | {{year-1}}
+        .th.td_center.label Δ
+
+      .grid-sub-head.grig-user-summary
+        .label.th Лидов:
+        .th.td_center 
+          | {{dataLength(filteredLeads)}}
+        .th.td_center 
+          | {{dataLength(yearBeforeLeads)}}
+        .th.td_right
           | {{leadsSummary()}} 
-        .td Проектов:
-        .td
+
+      .table_row.grig-user-summary v-for="row in leadsStatuses"
+        .td.sub_label
+          | {{row}}
+        .td.td_center
+          | {{dataLength(groupedLeads, row)}}
+        .td.td_center
+          | {{dataLength(groupedLeadsBefore, row)}}
+        .td.td_right
+          | {{describeDelta(dataLength(groupedLeads, row), dataLength(groupedLeadsBefore, row))}}
+
+
+      .grid-sub-head.grig-user-summary
+        .th.label Проектов:
+        .th.td_center 
+          | {{dataLength(filteredProjects)}}
+        .th.td_center 
+          | {{dataLength(yearBeforeProjects)}}
+        .th.td_right
           | {{projectsSummary()}} 
+
+      .table_row.grig-user-summary v-for="row in projectStatuses"
+        .td.sub_label
+          | {{row}}
+        .td.td_center
+          | {{dataLength(groupedProjects, row)}}
+        .td.td_center
+          | {{dataLength(groupedProjectsBefore, row)}}
+        .td.td_right
+          | {{describeDelta(dataLength(groupedProjects, row), dataLength(groupedProjectsBefore, row))}}
+
+      .table_row.grig-user-summary
+        .td.bold.sub_label Из них завершено:
+        .td.td_center
+          | {{closedProjects}}
+        .td.td_center
+          | {{yearBeforeclosedProjects}}
+        .td.td_center
+        
+
+
+      .grid-sub-head.grig-user-summary
+        .th.label Отсутствия:
+        .th.td_right дн./час.
+          
+        .th 
+          |(кол-во)
+          
+        .th.td_right
+           
+
+      .table_row.grig-user-summary v-for="row in absenceReasons"
+        .td.sub_label
+          | {{row}}
+        .td.td_right
+          | {{absencesSummary(groupedAbsences, row)}}
+        .td.td_right
+          | {{absencesSummary(groupedAbsencesBefore, row)}}
+        .td.td_right
+          | {{describeDelta(dataLength(groupedAbsences, row), dataLength(groupedAbsencesBefore, row))}}
+
 
     .row
       aside.col-md-4
@@ -43,7 +122,7 @@
               |{{row.fio}}
             .td 
               |{{row.info}}
-            .td 
+            .td.td_center
               |{{row.footage}}
             .td 
               |{{formatDate(row.start_date)}}
@@ -51,6 +130,8 @@
       .files_list v-if="currentTab.value == 2"
         .sep_15
         .panel.panel-default 
+          .panel-heading.table-heading.head.month 
+            | {{year}}
           .index_table.grid-head.user_leads
             .th Статус
             .th Вид проекта
@@ -64,31 +145,40 @@
               |{{row.project_type_name}}
             .td 
               |{{row.address}}
-            .td 
+            .td.td_center 
               |{{row.footage}}
             .td 
               |{{formatDate(row.date_start)}}
 
-      .files_list v-if="currentTab.value == 3"
         .sep_15
         .panel.panel-default 
-          .index_table.grid-head.user_leads
-            .th Причина
-            .th 
-            .th Адрес проекта/объекта
-            .th Время
-            .th Дата
-          .table_row.user_leads @dblclick="editLink('absences', row.id)" v-for="row, index in filteredAbsences" 
+          .panel-heading.table-heading.head.month 
+            | {{year-1}}
+          .index_table.grid-head.user_projects
+            .th Статус
+            .th Вид проекта
+            .th Адрес
+            .th Метраж
+            .th Дата с
+            .th По
+          .table_row.user_projects @dblclick="editLink('projects', row.id)" v-for="row, index in yearBeforeProjects"
             .td 
-              |{{row.reason_name}}
+              |{{row.status_name}}
             .td 
               |{{row.project_type_name}}
             .td 
-              |{{row.project_name}}
-            .td 
-              |{{timeDuration(row)}}
+              |{{row.address}}
+            .td.td_center 
+              |{{row.footage}}
             .td 
               |{{formatDate(row.date_start)}}
+            .td 
+              |{{formatDate(row.date_end)}}
+
+      .files_list v-if="currentTab.value == 3"
+        = render 'absences_list'
         
 
 = render 'show_vue'
+= hidden_field_tag 'holidays', @holidays 
+= hidden_field_tag 'workdays', @workdays 

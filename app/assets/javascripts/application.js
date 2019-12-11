@@ -151,6 +151,33 @@ function startTime(){
   t = setTimeout('startTime()', 500);
 }
 
+function diff_hours(dt2, dt1) {
+  var diff = (new Date(dt2).getTime() - new Date(dt1).getTime()) / 1000;
+  diff /= (360);
+  diff = Math.abs(Math.ceil(diff)/10);
+  if (diff > 6) diff = diff - 1;
+  // console.log('diff', diff);
+  return diff;
+}
+
+function diff_days(dt2, dt1) {
+  d1 = new Date(dt1)
+  d2 = new Date(dt2)
+  v  = $('#holidays').val()
+
+  if (v != undefined && v != "") {
+    v = v.split(" ")
+    w  = $('#workdays').val().split(" ")
+    days = moment().isoWeekdayCalc(d1, d2, [1,2,3,4,5,6,7], v, w)
+    if (days>0) days+=1
+  } else {
+    const diffTime = Math.abs(d2 - d1);
+    days = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  }
+
+  return days; 
+}
+
 var delay = ( function() {
   var timer = 0;
   return function(callback, ms){
@@ -196,7 +223,7 @@ var e_val = function(id) {
 
 var format_date = function(date) {
   if (v_nil(date)) date = new Date().toJSON().slice(0,10).replace(/-/g,'-');
-  if (date.includes('-')) return date.split('-').reverse().join('.');
+  if (date.includes('-')) return date.slice(0,10).split('-').reverse().join('.');
   return date;
 }
 

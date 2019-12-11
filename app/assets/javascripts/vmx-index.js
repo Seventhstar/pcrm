@@ -31,11 +31,20 @@ var m_created = {
 var m_index = {
 
   created(){
-    this.filter.push({field: 'actual', value: true})
+    if (this.filter != undefined) this.filter.push({field: 'actual', value: true})
     this.fGroup();
+    // console.log('params', @params)
   },
     
   methods: {
+
+    getFiltersList() {
+      if (this.filtersAvailable == undefined) return {}
+      let filter = []
+      this.filtersAvailable.forEach((f) => {
+        if (this[f] != undefined) filter.push({name: f, label: this[f].label, value: this[f].value}) })
+      return filter
+    },
 
     clearAll() {
       this.sortBy("sortdate")
@@ -65,6 +74,7 @@ var m_index = {
     onInput(e){
       if (e !== undefined) {
         this.fillFilter(e.name, e.label)
+        sortable_prepare({});
       }
     },
   

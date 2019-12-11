@@ -18,7 +18,8 @@
   <% if current_user %>
     <div class="header">
       <div class="bw_i">
-        <% if controller.action_name == 'show' && controller_name == 'users' %>
+        <% if controller.action_name == 'show' && controller_name == 'users' || 
+              controller_name == 'statistics' %>
           <div class="nav_select">
             <div class="nav_year" v-if="years.length>0"> 
               <v-chosen name="year" placeholder='Год...' src='years' clear=false>

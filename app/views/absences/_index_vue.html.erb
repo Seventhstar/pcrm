@@ -13,7 +13,7 @@
       confirmModal: false,
       groupHeaders: [],
       filter: [],
-      filtersAvailable: ['year', 'search'],
+      filtersAvailable: ['year', 'search', 'reason', 'user'],
       grouped: [],
       opened: [],
       groupKeys: [],
@@ -40,6 +40,7 @@
       this.makeSpec()
       this.makeFilter()
       this.filtersAvailable.forEach( (f) => {
+        console.log(f, this[f])
         if (this[f] != undefined) this.fillFilter(f, typeof(this[f])=='object' ? this[f].value : this[f] )
       })
       // if (this.year!=undefined) nav.year = {value: this.year, label: this.year}

@@ -16,12 +16,15 @@
 .goods-list {display: grid; grid-template-columns: auto 1fr 30px 25px;}
 .goods-list span {cursor: pointer;}
 span.title {margin-top: 3px}
+.bold {font-weight: 500;}
+
 .goods-list span.title {margin-top: 4px}
 
 .client_projects {display: grid; grid-template-columns: 1fr 1fr}
 
 .grig_1_3 {display: grid; grid-template-columns: 1fr 2fr;}
-.grig_2_1 {display: grid; grid-template-columns: 2fr 1fr;}
+.grig-user-summary {display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;}
+.grig-user-summary .td.sub_label {padding-left: 24px;}
 
 .provider_table_filter {display: grid; grid-template-columns: 190px 370px 1fr auto; column-gap: 16px; margin-bottom: 20px;}
 .providers_index_head  {display: grid; grid-template-columns: 270px 1fr 180px 205px 295px 60px; }
@@ -33,6 +36,11 @@ span.title {margin-top: 3px}
 .table_absences {display: grid; grid-template-columns: 90px 90px 190px 150px 1fr 45px 45px 60px}
 
 .user_leads {display: grid; grid-template-columns: 178px 150px 1fr 90px 90px}
+.user_projects {display: grid; grid-template-columns: 178px 150px 1fr 90px 90px 90px}
+.user_absences_target {display: grid; grid-template-columns: 30px 170px 1fr 70px 90px}
+.user_absences_shop {display: grid; grid-template-columns: 30px 1fr 70px 90px}
+.user_absences {display: grid; grid-template-columns: 1fr 70px 90px 90px}
+
 .user_leads .td {cursor: pointer;}
 
 .vuesort .hTitle {float: left;}
@@ -202,6 +210,8 @@ table.txfixed td { overflow: hidden; }
 
 
 .tleads th, .grid-head .th{ padding: 8px; border-bottom: 1px solid #ddd; font-weight: 500; background: $light-gray;}
+.grid-sub-head .th {padding: 8px; border-top: 2px solid #ddd; font-weight: 500; background: $light-gray;}
+
 .grid-head .th a{text-decoration: none;}
 
 .tleads td, .grid-body .td{ border-top: 1px solid $border-color; padding: 8px;

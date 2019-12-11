@@ -1,20 +1,39 @@
 <script>
     let app = new Vue({
     el: '#user_card',
+    mixins: [m_index],
     data: {
       model: 'User',
       year: 0,
       tabs: [{value: 1, label: 'Лиды'}, {value: 2, label: 'Проекты'}, {value: 3, label: 'Отсутствия'}],
       keyNames: [],
       listNames: [],
+      
       filteredLeads: [],
       filteredProjects: [],
-      yearBeforeLeads: [],
       filteredAbsences: [],
+
+      closedProjects: 0,
+      yearBeforeclosedProjects: 0,
+
+      yearBeforeLeads: [],
       yearBeforeProjects: [],
-      leads: <%= for_vue(@user.leads, "status_name") %>,
-      absences: <%= for_vue(@user.absences, [:reason_name, :project_name]) %>,
-      projects: <%= for_vue(@user.projects, [:status_name, :project_type_name]) %> 
+      yearBeforeAbsences: [],
+
+      groupedLeads: [],
+      groupedProjects: [],
+      groupedAbsences: [],
+
+      absenceColumnTitles: [ ['#', 'Цель', 'Адрес проекта/объекта', 'Время', 'Дата'],
+                             ['#', 'Адрес проекта/объекта', 'Время', 'Дата'],
+                             ['Комментарий', 'Время', 'C', 'По'],
+                             ['Комментарий', 'Время', 'C', 'По'],
+                             ['Комментарий', 'Время', 'C', 'По']
+                            ],
+
+      leads: <%= for_vue(@user.leads.order(:status_id, :start_date), "status_name") %>,
+      absences: <%= for_vue(@user.absences.order(:reason_id, :project_id, :dt_from), [:reason_name, :project_name, :target_name]) %>,
+      projects: <%= for_vue(@user.projects.order(:pstatus_id, :date_start), [:status_name, :project_type_name, :date_end]) %> 
     },
 
     created() {
@@ -35,7 +54,7 @@
     },
 
     mounted(){
-      this.$root.$on('onInput', function (id) {console.log(id)});
+      // this.$root.$on('onInput', function (id) {console.log(id)});
     },
 
     computed: {
@@ -77,43 +96,129 @@
 
         delta = delta > 0 ? ("+" + delta) : (delta < 0 ? delta : '')  
         delta = delta!='' ? " " + delta + "%" : ''
-        return " (" + before + delta + ")"
+        return delta
       },
 
       projectsSummary() {
         current = this.filteredProjects.length
         before = this.yearBeforeProjects.length
-        return "" + current + this.describeDelta(current, before)
+        return this.describeDelta(current, before)
       },
 
       leadsSummary() {
         current = this.filteredLeads.length
         before = this.yearBeforeLeads.length
-        return "" + current + this.describeDelta(current, before)
+        return this.describeDelta(current, before)
+      },
+
+      absenceDiff(row) {
+        let diffHours = diff_hours(row.dt_from, row.dt_to)
+        if (row.reason_id == 4 || diffHours > 12) return diff_days(row.dt_from, row.dt_to) + " дн."
+        return diffHours + " ч"
+      },
+
+      absencesSummary(grouped, row) {
+        let a = grouped[row]
+        total = 0
+        if (a != undefined){
+          if (a[0].reason_id == 4 || a[0].reason_id == 5) {
+            a.forEach((f) => {total = total + diff_days(f.dt_from, f.dt_to)})
+            return  Math.ceil(total) + "д (" + a.length + ")"
+          } else { 
+            a.forEach((f) => {total = total + diff_hours(f.dt_from, f.dt_to)})
+          }
+        return Math.ceil(total) + "ч (" + a.length +")"
+        }
+        return ''
+      },
+
+      dataLength(array, key = undefined) {
+        let o  = key == undefined ? array : array[key]
+        length = o == undefined ? 0 : o.length 
+        return length
       },
 
       updateLists() {
         // console.log('updateLists')
         this.filteredLeads = []
         this.filteredProjects = []
+        this.filteredAbsences = []
+
         this.yearBeforeLeads = []
         this.yearBeforeProjects = []
-
+        this.yearBeforeAbsences = []
         // this.filteredLeads.length = 0
 
-        var ly = this.leads.filter( l => this.getYear(l.start_date) == this.year )
         var py = this.projects.filter( p => this.getYear(p.date_start) == this.year )
+
+        var ly = this.leads.filter(    l => this.getYear(l.start_date) == this.year )
         var ay = this.absences.filter( a => this.getYear(a.dt_from) == this.year )
 
-        for (var l in ly) this.filteredLeads.push(ly[l])
-        for (var p in py) this.filteredProjects.push(py[p])
-        for (var a in ay) this.filteredAbsences.push(ay[a])
+        this.groupedLeads    = _.groupBy(ly, 'status_name') 
+        this.groupedProjects = _.groupBy(py, 'project_type_name') 
+        this.groupedAbsences = _.groupBy(ay, 'reason_name') 
 
+        this.leadsStatuses   = _.keys(this.groupedLeads)
+        this.projectStatuses = _.keys(this.groupedProjects)
+        this.absenceReasons  = _.keys(this.groupedAbsences)
+
+        for (var l in ly) this.filteredLeads.push(ly[l])
+        last_prj = 0
+        last_date = 0
+        prj_count = 0
+        for (var a in ay) {
+          if (last_prj != ay[a].project_id) {
+            last_prj = ay[a].project_id
+            prj_count = 0
+          }
+          if (last_date != format_date(ay[a].dt_from) ){
+            prj_count += 1
+            last_date = format_date(ay[a].dt_from)
+            ay[a]['in_id'] = prj_count
+          }
+
+          this.filteredAbsences.push(ay[a])
+        }
+
+        this.closedProjects = 0
+        this.yearBeforeclosedProjects = 0
+        for (var p in py) {
+          this.filteredProjects.push(py[p])
+          if (py[p].pstatus_id == 3) this.closedProjects+=1
+        }
 
         var ly = this.leads.filter( l => this.getYear(l.start_date) == (this.year-1) )
         var py = this.projects.filter( p => this.getYear(p.date_start) == (this.year-1) )
+        var ay = this.absences.filter( a => this.getYear(a.dt_from) == (this.year-1) )
+
         for (var l in ly) this.yearBeforeLeads.push(ly[l])
-        for (var p in py) this.yearBeforeProjects.push(py[p])
+        for (var a in ay) this.yearBeforeAbsences.push(ay[a])
+        for (var p in py) {
+          this.yearBeforeProjects.push(py[p])
+          if (py[p].pstatus_id == 3) this.yearBeforeclosedProjects+=1
+        }
+
+        this.groupedLeadsBefore    = _.groupBy(ly, 'status_name') 
+        this.groupedProjectsBefore = _.groupBy(py, 'project_type_name') 
+        this.groupedAbsencesBefore = _.groupBy(ay, 'reason_name') 
+
+        this.leadsStatuses   = _.uniq(this.leadsStatuses.concat(_.keys(this.groupedLeadsBefore)))
+        this.projectStatuses = _.uniq(this.projectStatuses.concat(_.keys(this.groupedProjectsBefore)))
+        this.absenceReasons  = _.uniq(this.absenceReasons.concat(_.keys(this.groupedAbsencesBefore)))
+
+        this.filteredAbsences = _.groupBy(this.filteredAbsences, 'reason_name') 
+        this.fkeysAbsences   = _.keys(this.filteredAbsences)
+      },
+
+      absenceDetailClass(pref, idx){
+        switch(idx){
+          case 0:
+            return pref + ' user_absences_target'
+          case 1: 
+            return pref + ' user_absences_shop'
+          default: 
+            return pref + ' user_absences'
+        }
       },
 
       getYear(date) {

@@ -16,8 +16,9 @@
 .nav_filter {display: block; height: 34px; margin-bottom: 16px;}
 .filter_nav ul {margin: 0; padding-inline-start: 0;}
 .filter_nav li {float: left; margin-right: 16px;}
-.filter_nav li.active { background: $green; color: white; border-radius: 5px; }
-.filter_nav li.active a { color: white; border-color: $green; }
+
+.filter_nav li.active, .filter_nav li:hover { background: $green; color: white; border-radius: 5px; }
+.filter_nav li.active a, .filter_nav li:hover a { color: white; border-color: $green; }
 
 .navsearch .clear {
     font-weight: bolder;

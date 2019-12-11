@@ -85,10 +85,12 @@ class Lead < ActiveRecord::Base
     range  = start_date.to_date..end_date.to_date
     period = range.map {|d| Date.new(d.year, d.month, 1) }.uniq
 
+    months = I18n.t('date.month_names_full').compact
+
 
     case type
     when 'statuses'
-      total = Lead.where('start_date between ? and ?',start_date,end_date).count
+      total = Lead.where('start_date between ? and ?', start_date, end_date).count
       data = Lead.group(:status_id)
                    .select(:status_id, "count(id) as count", '(Count(id)* 100 / '+total.to_s+') as percent' )
                    .where('start_date between ? and ?',start_date,end_date)
@@ -98,11 +100,43 @@ class Lead < ActiveRecord::Base
       
       headers = ['Статус','Количество','%']
       el = 'Donut'
+    
+    when 'channels_donut'
+
+      total = Lead.where('start_date between ? and ?', start_date, end_date).count
+      data = Lead.group(:channel_id)
+                   .select(:channel_id, "count(id) as count", '(Count(id)* 100 / ' + total.to_s + ') as percent' )
+                   .where('start_date between ? and ?', start_date, end_date)
+                   .order(:channel_id)
+                   .collect{ |lead| {label: lead.channel_name.nil? ? 'Не заполнено' : lead.channel_name, value: lead.count, present: lead.percent}}
+                   .sort_by { |hsh| hsh[:value] }.reverse!
+      
+      headers = ['Канал', 'Количество', '%']
+      el = 'Donut'
+
     when 'created_at'
 
       data = period.each.collect{ |p|  {month:I18n.t(p.try('strftime',"%B")),  'Количество' => Lead.where("date_trunc('month', start_date) = ?",p).count } }
       headers = ['Количество']
       el = 'Bar'
+
+    when 'channels'
+      
+      data = period.each.collect{ |p|  {month: I18n.t(p.try('strftime',"%B")),  
+        'Количество' => Lead.where("date_trunc('month', start_date) = ?", p).count } }
+
+
+
+      data = period.each.collect{ |p| Channel.order(:name).each.collect{ 
+              |c| {month: I18n.t(p.try('strftime',"%B")),
+              c.name => c.leads.where("date_trunc('month', start_date) = ?", p).count } }
+              .reduce(:merge) }
+
+      headers = Channel.order(:name).pluck(:name)
+      el = 'Bar'
+
+
+
     when 'footage'
       st = Status.find(10)
       data = period.each.collect{ |p| {month:I18n.t(p.try('strftime',"%B")), 
@@ -111,15 +145,23 @@ class Lead < ActiveRecord::Base
 
       data.map {|t| t["Заключили договор"].nil? || t["Заключили договор"]==0 ? 0 : t["Процент"] = t["Заключили договор"] * 100 / t["Всего"] }
 
-      headers = ['Всего','Заключили договор','Процент']
+      headers = ['Всего', 'Заключили договор', 'Процент']
       el = 'Area'
     when 'users_created_at'
       usr = User.actual.not_test
-      data = period.each.collect{ |p|  usr.collect{ 
-              |u| {month: I18n.t(p.try('strftime',"%B")),  
-              u.name =>  u.leads.where("date_trunc('month', start_date) = ?", p).count } }
+
+      # data = period.each.collect{ |p| usr.collect{ 
+      #         |u| {month: I18n.t(p.try('strftime',"%B")),
+      #         u.name => u.leads.where("date_trunc('month', start_date) = ?", p).count } }
+      #         .reduce(:merge) }
+
+      data = usr.collect{ |u| period.each.collect{ 
+              |p| {month: u.name,
+              I18n.t(p.try('strftime',"%B")) => u.leads.where("date_trunc('month', start_date) = ?", p).count } }
               .reduce(:merge) }
-      headers = usr.map {|u| u.name }
+
+      # headers = usr.map {|u| u.name }
+      headers = months
       el = 'Bar'
     end
 

@@ -118,6 +118,8 @@
   method = if $('#cur_method').val() == 'edit_multiple' then '/edit_multiple' else ''
   controller =  $('#search').attr('cname')
   controller = controller + "/" + $('#search').attr('mname') if controller == 'options'
+  if controller == undefined 
+    controller = window.location.toString().split('?')[0].split('/').splice(3).join('/')
   return controller+method
 
 @sortable_prepare = (params, getFromUrl = false) ->
@@ -133,7 +135,7 @@
 
   search = $('#search').val()
   year = if (nav? && nav.year?) then nav.year.value else $('#year').val()
-  console.log('nav', nav, 'nav.year', nav.year, year)
+  # console.log('nav', nav, 'nav.year', nav.year, year)
 
   $('.search_save a').each (i) ->
     href = new URL(this.href)
@@ -155,7 +157,7 @@
     good_state: $('#good_state').val()
     cut: cut
   }
-  
+
   l = window.location.toString().split('?')
   p = q2ajx(l[1])
   ser = $('.index_filter').serialize()
@@ -167,6 +169,14 @@
     if url[i] == undefined || ['search','page','_'].include? i 
       url[i] = a
     return
+
+  # if (app?)
+  #   filtersList = app.getFiltersList()
+  #   if filtersList != undefined
+  #     app.getFiltersList().forEach (e) ->
+  #       console.log('e', e)
+  #       if e.value != undefined
+  #         url[e.name] = e.value
 
   each if_params, (i, a) -> # add params from .index_filter
     url[i] = a

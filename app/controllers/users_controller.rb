@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   include VueHelper
+  include DatesHelper
   
   before_action :logged_in_user
 #, only: [:index, :edit, :update, :destroy, :following, :followers]
@@ -21,8 +22,19 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     cur_year = Date.today.year
-    years = [[@user.projects.order(:date_start).first[:date_start].year, 
-              @user.leads.order(:start_date).first[:start_date].year].min, cur_year]
+
+    @holidays   = Holiday.pluck(:day).collect{|d| js_date(d)}
+    @workdays   = WorkingDay.pluck(:day).collect{|d| js_date(d)}
+
+    
+    first_project = @user.projects.order(:date_start).first
+    first_project = first_project.nil? ? cur_year : first_project[:date_start].year
+
+    first_lead    = @user.leads.order(:start_date).first
+    first_lead    = first_lead.nil? ? cur_year : first_lead[:start_date].year
+
+
+    years = [[first_project, first_lead].min, cur_year]
     @years = (years[0]..years[1]).map{|y| {id: y, name: y }}
     @year = {id: cur_year, name: cur_year}
     @leads = @user.leads
