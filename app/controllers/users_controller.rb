@@ -33,11 +33,23 @@ class UsersController < ApplicationController
     first_lead    = @user.leads.order(:start_date).first
     first_lead    = first_lead.nil? ? cur_year : first_lead[:start_date].year
 
+    @reasons = AbsenceReason.order(:id)
 
     years = [[first_project, first_lead].min, cur_year]
     @years = (years[0]..years[1]).map{|y| {id: y, name: y }}
     @year = {id: cur_year, name: cur_year}
     @leads = @user.leads
+
+
+    @user_leads = for_vue(@user.leads
+                                .select("leads.*, date_trunc('year', start_date) AS year")
+                                .order(:status_id, :start_date), 
+                  "status_name")
+
+    @user_projects = for_vue(@user.projects
+                                  .select("projects.*, extract(year from date_start) AS year")
+                                  .order(:pstatus_id, :date_start), 
+                            [:status_name, :project_type_name, :date_end])
   end
 
   

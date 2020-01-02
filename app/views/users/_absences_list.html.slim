@@ -1,25 +1,25 @@
-.div v-for="k, idx in absenceReasons"
+.div v-for="k, idx in reasons" v-if="filteredAbsences[k.name]!=undefined && filteredAbsences[k.name].length>0"
   .sep_15
   .panel.panel-default
     .panel-heading.table-heading.head.month
-      | {{k}}
+      | {{k.name}}
 
-    div :class="absenceDetailClass('index_table grid-head', idx)" 
-      .th v-for="col in absenceColumnTitles[idx]" 
+    div :class="absenceDetailClass('index_table grid-head', k.id)" 
+      .th v-for="col in absenceColumnTitles[getColumnsIndex(k.id)]" 
         |{{col}}
 
-    div :class="absenceDetailClass('table_row', idx)" @dblclick="editLink('absences', row.id)" v-for="row, index in filteredAbsences[k]" 
-      .td v-if="idx<2"
+    div :class="absenceDetailClass('table_row', k.id)" @dblclick="editLink('absences', row.id)" v-for="row, index in filteredAbsences[k.name]" 
+      .td v-if="k.id == 2 || k.id == 3"
         |{{row.in_id}}
-      .td v-if="idx==0"
+      .td v-if="k.id == 2"
         |{{row.target_name}}
-      .td v-if="idx<2"
+      .td v-if="k.id == 2 || k.id == 3"
         |{{row.project_name}}
-      .td v-if="idx>1"
+      .td v-if="k.id != 2 && k.id != 3"
         |{{row.comment}}
       .td.td_center
         |{{absenceDiff(row)}}
       .td 
         |{{formatDate(row.dt_from)}}
-      .td v-if="idx>1"
+      .td v-if="k.id != 2 && k.id != 3"
         |{{formatDate(row.dt_to)}}

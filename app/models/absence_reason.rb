@@ -6,4 +6,14 @@ class AbsenceReason < ActiveRecord::Base
     self.try(:absences).count | predef
   end
 
+  def diff_hours()
+    diff = (self.date_from - self.date_to) / 1000
+    diff /= (3600)
+    diff = abs(diff)
+    if (diff > 6) 
+      diff = diff - 1
+    end
+    diff
+  end
+
 end

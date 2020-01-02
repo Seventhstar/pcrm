@@ -1,0 +1,49 @@
+.panel.panel-default
+  .panel-heading.table-heading.head.month= @page_header
+  .table-body-scroll
+    table.tleads
+      thead
+        - if @chart_data[:xs].class == Hash
+          - if @column_header.present?
+            th
+          - @chart_data[:xs].each do |head, subhead|
+            th.td_center colspan="#{subhead.size}" =head               
+          tr
+            - if @column_header.present?
+              th =@column_header
+            - @chart_data[:xs].each do |head, subhead|
+              - subhead.each do |sh|
+                th.td_center =sh 
+        - else
+          - if @column_header.present?
+            th =@column_header
+          - @chart_data[:xs].each do |head|
+              th.td_center =head
+      tbody
+        - @chart_data[:hash].each do |row|
+          tr
+            - if row.key?(:id) 
+              - row.each do |k, v| 
+                - if row.first[0] == k
+                  td =link_to v, user_path(row[:id])
+                - elsif k == :id
+                - elsif v.class == Integer
+                  td.td_center =v.to_sum
+                - else
+                  td =v
+            - else
+              - row.each do |k, v| 
+                - if v.class == Integer
+                  td.td_center =v.to_sum
+                - else
+                  td =v
+        - if @chart_data.key?(:totals)
+          tr class="tr_bottom"
+            th Итого:
+            - @chart_data[:totals].each do |k, v|
+              - if !k.strip.empty?
+                th.td_center =v.to_sum
+              - else
+                th
+
+                

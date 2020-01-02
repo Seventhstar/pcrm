@@ -1,0 +1,40 @@
+- if @two_columns
+  .panel-left
+    = render 'table'
+  .panel-right
+    = content_tag :div, "", id: "data_chart",  \
+      data: @chart_data[:json].to_json,        \
+      xkey: @chart_data[:xkey],
+      headers: @chart_data[:gxs].to_s,          \
+      element: @diagram_type,                   \
+      class: "graph",                           \
+      style: "position: relative; width:580px;" 
+- else
+  = render 'table'
+  
+  - if @chart_type.key?(:graph_header)
+    .sep_3
+    .hl.hl_a.bd =@chart_type[:graph_header]
+
+  div
+    = content_tag :div, "", id: "data_chart",    \
+      data: @chart_data[:json].to_json,          \
+      headers: @chart_data[:gxs].to_s,       \
+      xkey: @chart_data[:xkey],
+      element: @diagram_type,                     \
+      class: "graph",                             \
+      style: "position: relative; width:1326px;" 
+
+  - if @chart_type.key?(:graph_header_2)
+    .sep_3
+    .hl.hl_a.bd =@chart_type[:graph_header_2]
+
+  - if !@chart_data[:gxs2].nil?
+    div
+      = content_tag :div, "", id: "data_chart2",   \
+        data: @chart_data[:json].to_json,          \
+        headers: @chart_data[:gxs2].to_s,      \
+        xkey: @chart_data[:xkey],
+        element: @diagram_type,                     \
+        class: "graph",                             \
+        style: "position: relative; width:1326px;"

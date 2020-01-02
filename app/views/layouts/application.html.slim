@@ -1,0 +1,71 @@
+doctype html
+html lang="en" 
+  head
+    meta content=("text/html; charset=UTF-8") http-equiv="Content-Type" 
+    meta charset="utf-8" 
+    meta content="IE=Edge,chrome=1" http-equiv="X-UA-Compatible" 
+    meta content="width=device-width, initial-scale=1.0" name="viewport" 
+    title= content_for?(:title) ? yield(:title) : "Pcrm"
+    = Gon::Base.render_data
+    = favicon_link_tag 'favicon.png'
+    = csrf_meta_tags
+    = stylesheet_link_tag "application", media: "all"
+    = javascript_include_tag "application"
+  body
+    .page-wrapper
+      .h_container
+        - if current_user
+          .header
+            .bw_i
+              - if controller.action_name == 'show' && controller_name == 'users' || controller_name == 'statistics'
+                .nav_select
+                  .nav_year v-if="years.length > 0" 
+                    v-chosen clear="false" name="year" placeholder="Год..." src="years" 
+                = render 'main_app_vue'
+              - elsif controller.action_name == 'index' || controller_name == 'options'
+                .nav_select
+                  .nav_city
+                    v-chosen clear="false" name="main_city" placeholder="Город..." src="cities" 
+                  .nav_year v-if="years.length > 0" 
+                    v-chosen clear="false" name="year" placeholder="Год..." src="years" 
+                  .navsearch
+                    = text_field_tag :search, params[:search], \
+                      class: "search_area txt",                \
+                      placeholder: "Поиск...",                 \
+                      aname: controller.action_name,           \
+                      cname: controller.controller_name,       \
+                      mname: class_name                        
+                    .vs__actions
+                      button.clear style="" title=("Clear selection") type="button" 
+                        span aria-hidden="true"  ×
+                = render 'main_app_vue'
+              .user_h
+                .time_h 20:06:28
+                span.name
+                  = link_to current_user.name, user_path(current_user)
+                = link_to logout_path, method: :delete, class: "orange logout" do
+                  span.icon.icon_logout
+                  | выйти
+            .pic.avatar= avatar_for(current_user)
+            .menu_main.menu_h
+              #dev_info
+                = develops_info
+              = render_navigation level: 1
+        .js-notes.has-note
+          - flash.each do |name, msg|
+            = render 'error_msg', name: name, msg: msg
+          - flash.clear
+        .container
+          p#to_bottom
+            a href="#bottom" 
+              span
+              | Вниз
+          #modal-holder.slide
+          = yield
+        p#back-top
+          a href="#top" 
+            span
+            | Вверх
+        .page-buffer
+        .page-footer
+          footer.footer

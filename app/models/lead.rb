@@ -79,7 +79,7 @@ class Lead < ActiveRecord::Base
     self.users = User.find_or_create_by_name(name) if name.present?
   end
 
-  def self.leads_users_count(type,start_date,end_date)
+  def self.leads_users_count(type, start_date, end_date, diagram_type)
 
     data = {}
     range  = start_date.to_date..end_date.to_date
@@ -87,85 +87,143 @@ class Lead < ActiveRecord::Base
 
     months = I18n.t('date.month_names_full').compact
 
+    current_year = period[0].year
+
+    donut_headers = ['label', 'value']
+    xkey = 'month'
+    gxs2 = nil
 
     case type
+
+    when 'created_at' #
+
+      st = Status.find(10)
+      headers = diagram_type == 'Donut' ? donut_headers : ['month', 'Количество']
+      data = period.each.collect{ |p|  {
+        headers[0] => I18n.t(p.try('strftime',"%B")),  
+        headers[1] => Lead.where("date_trunc('month', start_date) = ?", p).count,
+        to_project: st.leads.where("date_trunc('month', start_date) = ?", p).count,
+        'Прошлый год' => Lead.where("date_trunc('month', start_date) = ?", p - 1.year).count,
+        to_project_1: st.leads.where("date_trunc('month', start_date) = ?", p - 1.year).count
+      }}
+            
+      gxs = ['Количество', 'Прошлый год']
+      xs = ['Количество', 'Заключили договор', 'Прошлый год', 'Заключили договор']
+      el = 'Area'
+
+    when 'users_created_at' # 
+      usr = User.actual.not_test
+
+      data = usr.collect{ |u| period.each.collect{|p|{ 
+              month: u.name, 
+              id: u.id,
+              I18n.t(p.try('strftime',"%B")) => u.leads.where("date_trunc('month', start_date) = ?", p).count } }
+              .reduce(:merge) }
+
+      xs = months
+      xs = months
+      el = 'Bar'
+
     when 'statuses'
+
+      headers = diagram_type == 'Donut' ? donut_headers : ["Статус", "Количество"]
       total = Lead.where('start_date between ? and ?', start_date, end_date).count
       data = Lead.group(:status_id)
                    .select(:status_id, "count(id) as count", '(Count(id)* 100 / '+total.to_s+') as percent' )
-                   .where('start_date between ? and ?',start_date,end_date)
+                   .where('start_date between ? and ?', start_date, end_date)
                    .order(:status_id)
-                   .collect{ |lead| {label: lead.status_name, value: lead.count, present: lead.percent}}
-                   .sort_by { |hsh| hsh[:value] }.reverse!
+                   .collect{ |lead| {headers[0] => lead.status_name, headers[1] => lead.count, present: lead.percent}}
+                   .sort_by { |hsh| hsh[headers[1]] }.reverse!
       
-      headers = ['Статус','Количество','%']
+      # puts "data #{data}"
+      xs = ['Статус', 'Количество', '%']
+      xkey = 'Статус'
+      gxs = ['Количество']
       el = 'Donut'
     
     when 'channels_donut'
 
+      st = Status.find(10)
       total = Lead.where('start_date between ? and ?', start_date, end_date).count
-      data = Lead.group(:channel_id)
-                   .select(:channel_id, "count(id) as count", '(Count(id)* 100 / ' + total.to_s + ') as percent' )
-                   .where('start_date between ? and ?', start_date, end_date)
-                   .order(:channel_id)
-                   .collect{ |lead| {label: lead.channel_name.nil? ? 'Не заполнено' : lead.channel_name, value: lead.count, present: lead.percent}}
-                   .sort_by { |hsh| hsh[:value] }.reverse!
-      
-      headers = ['Канал', 'Количество', '%']
+
+      gxs = ['Канал', 'Количество']
+      headers = diagram_type == 'Donut' ? donut_headers : gxs
+      data = Channel.all.each.collect{|c| {
+        headers[0] => c.name,
+        headers[1] => c.leads.where('extract(year from start_date) = ?', current_year).count,
+        'Прошлый год' => c.leads.where('extract(year from start_date) = ?', current_year-1).count,
+        'Заключили договор' => c.leads.where('status_id = 10 AND extract(year from start_date) = ?', current_year).count,
+        'Процент' => (c.leads.where('extract(year from start_date) = ?', current_year).count * 100 / total)}}
+        .sort_by { |h| h['Процент'] }.reverse!
+
+      xs = ['Канал', 'Количество', 'Прошлый год', 'Заключили договор', '%']
+      gxs = ['Количество']
       el = 'Donut'
-
-    when 'created_at'
-
-      data = period.each.collect{ |p|  {month:I18n.t(p.try('strftime',"%B")),  'Количество' => Lead.where("date_trunc('month', start_date) = ?",p).count } }
-      headers = ['Количество']
-      el = 'Bar'
+      xkey = 'Канал'
 
     when 'channels'
       
-      data = period.each.collect{ |p|  {month: I18n.t(p.try('strftime',"%B")),  
-        'Количество' => Lead.where("date_trunc('month', start_date) = ?", p).count } }
+      # gxs = ['month', 'Количество']
+      headers = diagram_type == 'Donut' ? donut_headers : ['month', 'Количество']
 
+      st = Status.find(10)
+      data = period.each.collect{ |p| 
+              Channel.order(:name).each.collect{ |c| {
+                headers[0] => I18n.t(p.try('strftime',"%B")),
+                c.name => c.leads.where("date_trunc('month', start_date) = ?", p).count
+            }}.reduce(:merge) }
 
-
-      data = period.each.collect{ |p| Channel.order(:name).each.collect{ 
-              |c| {month: I18n.t(p.try('strftime',"%B")),
-              c.name => c.leads.where("date_trunc('month', start_date) = ?", p).count } }
-              .reduce(:merge) }
-
-      headers = Channel.order(:name).pluck(:name)
+      xs = Channel.order(:name).pluck(:name)
       el = 'Bar'
-
-
 
     when 'footage'
+
       st = Status.find(10)
-      data = period.each.collect{ |p| {month:I18n.t(p.try('strftime',"%B")), 
-                          'Всего' => Lead.where("date_trunc('month', start_date) = ?",p).sum(:footage),
-                          'Заключили договор' => st.leads.where("date_trunc('month', start_date) = ?",p).sum(:footage) } }
+      current_year = period[0].year.to_s
+      last_year = (period[0].year - 1).to_s
+      to_project = 'Заключили договор ' + current_year
+      to_project_year = 'Заключили договор ' + last_year
+      # last_year       = last_year + "й"
 
-      data.map {|t| t["Заключили договор"].nil? || t["Заключили договор"]==0 ? 0 : t["Процент"] = t["Заключили договор"] * 100 / t["Всего"] }
+      data = period.each.collect{ |p| {
+              month: I18n.t(p.try('strftime',"%B")), 
+              current_year => Lead.where("date_trunc('month', start_date) = ?",p).sum(:footage),
+              to_project => st.leads.where("date_trunc('month', start_date) = ?", p).sum(:footage),
+              'Процент' => 0,
+              last_year => Lead.where("date_trunc('month', start_date) = ?", p - 1.year).sum(:footage),
+              to_project_year => st.leads.where("date_trunc('month', start_date) = ?", p - 1.year).sum(:footage),
+              'Процент_1' => 0 } }
 
-      headers = ['Всего', 'Заключили договор', 'Процент']
+      data.map {|t| 
+        t["Процент"] = t["Заключили договор"].nil? || t["Заключили договор"] == 0 ? 0 : t["Заключили договор"] * 100 / t[current_year] 
+        t["Процент_1"] = t[to_project_year].nil? || t[to_project_year] == 0 ? 0 : t[to_project_year] * 100 / t[last_year] 
+      }
+      
+
+      gxs  = [current_year, last_year]
+      gxs2 = [to_project, to_project_year]
+      xs   = { period[0].year => [ 'Всего', 'Заключили договор', 'Процент'],
+               (period[0].year-1) => [ 'Всего', 'Заключили договор', 'Процент']}
+
+      totals = [current_year, to_project, '', last_year, to_project_year, ' '] 
+
       el = 'Area'
-    when 'users_created_at'
-      usr = User.actual.not_test
 
-      # data = period.each.collect{ |p| usr.collect{ 
-      #         |u| {month: I18n.t(p.try('strftime',"%B")),
-      #         u.name => u.leads.where("date_trunc('month', start_date) = ?", p).count } }
-      #         .reduce(:merge) }
-
-      data = usr.collect{ |u| period.each.collect{ 
-              |p| {month: u.name,
-              I18n.t(p.try('strftime',"%B")) => u.leads.where("date_trunc('month', start_date) = ?", p).count } }
-              .reduce(:merge) }
-
-      # headers = usr.map {|u| u.name }
-      headers = months
-      el = 'Bar'
     end
 
-    { hash: data, json: data, headers: headers, element: el}
+    result = {hash: data, json: data, xs: xs, element: el, xkey: xkey, gxs: gxs.nil? ? xs : gxs, gxs2: gxs2} 
+    if !totals.nil?
+      totals = totals.map{|t| {t => 0}}.reduce(:merge)
+      # puts "t #{totals}" 
+      data.each do |d|
+        totals.each do |k, v|
+          totals[k] += d[k] if !k.strip.empty?
+        end
+      end
+      result[:totals] = totals           # puts "totals #{totals}"
+    end
+    
+    result
   end
 
 end

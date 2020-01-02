@@ -3,14 +3,15 @@
   $.get 'statistics', p_params, null, 'script'
   setLoc("statistics?"+p_params)
 
-@create_chart =->
-  data_container = $('#leads_chart')
-  if data_container.attr('leads') == undefined then return
+@create_chart = (add = '')->
+  data_container = $('#data_chart' + add)
+  if data_container.attr('data') == undefined then return
   headers = jQuery.parseJSON(data_container.attr('headers'))
+
   config = 
-    element: 'leads_chart'
-    data: jQuery.parseJSON(data_container.attr('leads')),
-    xkey: 'month'
+    element: "data_chart"+add
+    data: jQuery.parseJSON(data_container.attr('data')),
+    xkey: data_container.attr('xkey')
     ykeys: headers
     labels: headers
     resize: true
@@ -30,5 +31,5 @@ jQuery ->
   $('#page_type').chosen(chosen_params).on 'change', ->
     stats_query()
   create_chart()
-  
+  create_chart(2)
   

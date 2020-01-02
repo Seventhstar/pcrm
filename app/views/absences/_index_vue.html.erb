@@ -11,9 +11,10 @@
       currentIndex: -1,
       currentMonth: -1,
       confirmModal: false,
+      readyToChange: false,
       groupHeaders: [],
       filter: [],
-      filtersAvailable: ['year', 'search', 'reason', 'user'],
+      filtersAvailable: ['year', 'search', 'reason', 'user', 'city'],
       grouped: [],
       opened: [],
       groupKeys: [],
@@ -23,8 +24,8 @@
       useSearchVue: true,
       texts: 'search',
       searchFileds: ['project_name'],
-      list_values: 'user reason year',
-      lists: "mainList:raw@json_absences users reasons",
+      list_values: 'user reason year main_city',
+      lists: "mainList:raw@json_absences all_users+city_id reasons params",
       columns: [['dt_from', 'Дата с'], 
       ['dt_to', 'Дата по'], 
       ['user', 'Сотрудник'],
@@ -35,37 +36,70 @@
     }) %>,
 
     created(){
-      this.filteredGoodstypes = this.goodstypes
-      this.groupSpecs = {}
-      this.makeSpec()
-      this.makeFilter()
-      this.filtersAvailable.forEach( (f) => {
-        console.log(f, this[f])
-        if (this[f] != undefined) this.fillFilter(f, typeof(this[f])=='object' ? this[f].value : this[f] )
+      this.city = this.main_city
+      // this.filtersAvailable.forEach( (f) => {
+      //   console.log(f, this[f])
+      //   if (this[f] != undefined) this.fillFilter(f, typeof(this[f])=='object' ? this[f].value : this[f] )
+      // })
+      this.onCityChange()  
+
+      console.log('this.params', this.params)
+      this.params.forEach( (p) => {
+        if (this[p.label] != undefined) {
+          // console.log('this[p.label]', p.label, this[p.label], this[p.label].length)
+            // console.log('p.label', p.label, 'this[p.label]', this[p.label])
+          // let v = this[p.label]
+          // let label = this[p.label]
+
+
+          // if ((typeof(this[p.label]) == "object") && (this[p.label].length > 0)){
+          //   v = this[p.label][0].value
+          //   label = this[p.label][0].label
+          // }
+
+          if (this[p.label + 's'] != undefined){
+            this[p.label] = this[p.label + 's'].filter(f => f.value == p.value) // fill v-chosen
+            this.fillFilter(p.label, this[p.label][0].label) // add filter like select from chosen
+          }
+        }
       })
-      // if (this.year!=undefined) nav.year = {value: this.year, label: this.year}
+      
+      // this.filtersAvailable.forEach( (f) => {
+      //   // console.log(f, this[f])
+      //   if (this[f] != undefined) this.fillFilter(f, typeof(this[f])=='object' ? this[f].value : this[f] )
+      // })
+      // sortable_prepare({}, false, this);
+      // this.fGroup();
+      delay("app.readyToChange = true", 800)
 
     },
 
     methods: {
-      makeSpec(){
-        this.mainList.forEach((l) => {
-          if (v_nil(l.group)){    
-            let gtIds = _.pluck(this.absence_goodstypes.filter( f => {
-              f.absence_id == l.id
-            }), "goodstype_id")
+      // makeSpec(){
+      //   this.mainList.forEach((l) => {
+      //     if (v_nil(l.group)){    
+      //       let gtIds = _.pluck(this.absence_goodstypes.filter( f => {
+      //         f.absence_id == l.id
+      //       }), "goodstype_id")
 
-            let gtNames = _.pluck(this.goodstypes.filter( f => gtIds.indexOf(f.value) > -1), "label")
-            l.spec = gtNames.join('<br/>')
-          }
-        })
+      //       let gtNames = _.pluck(this.goodstypes.filter( f => gtIds.indexOf(f.value) > -1), "label")
+      //       l.spec = gtNames.join('<br/>')
+      //     }
+      //   })
 
-      },
+      // },
 
       makeFilter(){
-        // this.grouped = new Array
-        this.filteredData = []
-        // this.
+        // this.grouped = new Arra
+        // this.filteredData = []
+        // this.fGroup()
+      },
+
+      onCityChange() {
+        // console.log('this.main_city.value', this.main_city.value)
+        this.users = this.all_users.filter( f => f.city_id == this.main_city.value)
+        this.fillFilter(':user', _.pluck(this.users, 'label'))
+        // this.filter ['user'] = 
       },
       
       switchOpenedRow(ind, i) {
@@ -78,9 +112,9 @@
         return cls
       },
 
-      rowClass(item, index, name= 'head', add = '') {
+      rowClass(item, index, name = 'head', add = '') {
         addClass = ''
-        switch(item.p_status){
+        switch(item.p_status) {
           case 5:
           addClass = " info"
           break;

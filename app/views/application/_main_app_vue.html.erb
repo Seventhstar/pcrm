@@ -11,23 +11,29 @@
     watch: {
       year() {  
         // console.log('app', window.app)
-        if (app != undefined) {
+        if (typeof(app) != "undefined" && app !== null) {
           app.onInput({name: 'year', label: this.year.label, value: this.year.value}); 
           sortable_prepare({});
+        } else {
+          delay('document.location.reload(true)', 400)
         }
       },
 
       main_city() {
+        if (typeof(app) != "undefined" && app !== null) {
+          app.onInput({name: 'main_city', label: this.main_city.label, value: this.main_city.value}); 
+        } else { 
+          delay('sortable_query({})', 700)
+        }
         $.ajax({
-          type: "POST",
-          url: "/ajax/set_city",
-          data: {city: this.main_city.value},
-          dataType: "json",
-          encode: true
-        })
-        delay('sortable_query({})', 700)
+            type: "POST",
+            url: "/ajax/set_city",
+            data: {city: this.main_city.value},
+            dataType: "json",
+            encode: true
+          })
       }
     },
     
-   })
+  })
 </script>

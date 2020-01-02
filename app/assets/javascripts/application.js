@@ -169,9 +169,9 @@ function diff_days(dt2, dt1) {
     v = v.split(" ")
     w  = $('#workdays').val().split(" ")
     days = moment().isoWeekdayCalc(d1, d2, [1,2,3,4,5,6,7], v, w)
-    if (days>0) days+=1
+    if (days>0) days += 1
   } else {
-    const diffTime = Math.abs(d2 - d1);
+    const diffTime = Math.abs(d2.setHours(0,0,0,0) - d1.setHours(0,0,0,0));
     days = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   }
 

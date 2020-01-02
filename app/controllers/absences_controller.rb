@@ -21,7 +21,7 @@ class AbsencesController < ApplicationController
 
     if params[:sort] == 'calendar'
       @current_month = Date.today.beginning_of_month 
-      params['m'] = nil if  params[:sort]!='calendar'
+      params['m'] = nil if params[:sort]!='calendar'
       @current_month = Date.parse(params['m']) if !params['m'].nil?
       @curr_day = @current_month.beginning_of_month.beginning_of_week
 
@@ -44,7 +44,8 @@ class AbsencesController < ApplicationController
       @page = params[:page].try(:to_i)
       @page = 1 if @page == 0 || @page.nil?
 
-      abs = is_manager? ? Absence.all : current_user.absences
+      # abs = is_manager? ? Absence.all : current_user.absences
+      abs = Absence.all
       # @absences = abs.select(query_str).joins(:reason)
 
       # puts "user_ids #{@user_ids}"
@@ -56,15 +57,16 @@ class AbsencesController < ApplicationController
         sort_1 = "users.name"
         # @absences = @absences.joins(:user)
       end
-      abs = abs.where("dt_from >= ?", (Date.today-52.week))
+      abs = abs.where("dt_from >= ?", (Date.today - 52.week))
       # @absences = @absences.where("dt_from >= ?", (Date.today-2.week)) if @only_actual
       # @absences = @absences.paginate(page: @page, per_page: 50)
       # sort_1 = @sort_column == 'dt_from' ? 'month' : @sort_column
       # order = "#{sort_1} #{sort_direction}, #{sort_2} #{dir_2}, absences.created_at desc"
       # @absences = @absences.order(order)
     end
+
     @search = params[:search]
-    @json_absences = abs.map{ |a| { id: a.id, 
+    @json_absences = Absence.all.map{ |a| { id: a.id, 
                      # address: a.project_name,
                       actual: a.dt_from > (Date.today-52.week),
                      dt_from: format_date(a.dt_from),
@@ -84,8 +86,11 @@ class AbsencesController < ApplicationController
     @year = {id: cur_year, name: cur_year}
 
 
-    @reasons = AbsenceReason.order(:id)
-    @users    = User.actual.by_city(current_user.city)
+    @reasons = AbsenceReason.order(:id).map{ |e| {name: e.name.strip, id: e.id } }
+    prm = params.permit(params.keys).to_h
+    @params = prm.map{|p| {id: p[1], name: p[0]}}
+    # wfkw
+    @all_users = User.actual #.by_city(current_user.city)
 
     
     # puts "@absences #{@absences}"

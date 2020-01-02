@@ -4,10 +4,9 @@
     mixins: [m_index],
     data: {
       model: 'User',
+      
       year: 0,
-      tabs: [{value: 1, label: 'Лиды'}, {value: 2, label: 'Проекты'}, {value: 3, label: 'Отсутствия'}],
-      keyNames: [],
-      listNames: [],
+      tabs: [{value: 1, label: 'Проекты'}, {value: 2, label: 'Отсутствия'}, {value: 3, label: 'Лиды'}],
       
       filteredLeads: [],
       filteredProjects: [],
@@ -24,6 +23,7 @@
       groupedProjects: [],
       groupedAbsences: [],
 
+
       absenceColumnTitles: [ ['#', 'Цель', 'Адрес проекта/объекта', 'Время', 'Дата'],
                              ['#', 'Адрес проекта/объекта', 'Время', 'Дата'],
                              ['Комментарий', 'Время', 'C', 'По'],
@@ -31,24 +31,14 @@
                              ['Комментарий', 'Время', 'C', 'По']
                             ],
 
-      leads: <%= for_vue(@user.leads.order(:status_id, :start_date), "status_name") %>,
+      leads:    <%= @user_leads %>,
+      reasons:  <%= for_vue(@reasons) %>,
       absences: <%= for_vue(@user.absences.order(:reason_id, :project_id, :dt_from), [:reason_name, :project_name, :target_name]) %>,
-      projects: <%= for_vue(@user.projects.order(:pstatus_id, :date_start), [:status_name, :project_type_name, :date_end]) %> 
+      projects: <%= @user_projects %> 
     },
 
     created() {
       this.year = new Date().getFullYear()
-      this.listNames = _.uniq(_.pluck(this.files, 'owner_type')); 
-      if (this.listNames.indexOf(this.model) == -1) {
-        this.listNames.push(this.model)
-      }
-
-      this.listNames.forEach( (n) => {
-        // this[n] = this.files.filter(f => f.owner_type == n) 
-        // this[n+'Grouped'] = _.groupBy(this[n], 'owner_name')
-      })
-
-
       this.updateLists()
       this.setActive(this.tabs[0])
     },
@@ -68,6 +58,14 @@
     },
 
     methods: {  
+
+      getColumnsIndex(id) {
+        switch (id) {
+          case 2: return 0
+          case 3: return 1
+        }
+        return 2
+      },
       
       formatDate(date) {
         return format_date(date)
@@ -122,8 +120,8 @@
         total = 0
         if (a != undefined){
           if (a[0].reason_id == 4 || a[0].reason_id == 5) {
-            a.forEach((f) => {total = total + diff_days(f.dt_from, f.dt_to)})
-            return  Math.ceil(total) + "д (" + a.length + ")"
+            a.forEach((f) => {total = total + diff_days(f.dt_from, f.dt_to) })
+            return Math.ceil(total) + "д (" + a.length + ")"
           } else { 
             a.forEach((f) => {total = total + diff_hours(f.dt_from, f.dt_to)})
           }
@@ -139,7 +137,6 @@
       },
 
       updateLists() {
-        // console.log('updateLists')
         this.filteredLeads = []
         this.filteredProjects = []
         this.filteredAbsences = []
@@ -147,12 +144,15 @@
         this.yearBeforeLeads = []
         this.yearBeforeProjects = []
         this.yearBeforeAbsences = []
-        // this.filteredLeads.length = 0
-
-        var py = this.projects.filter( p => this.getYear(p.date_start) == this.year )
 
         var ly = this.leads.filter(    l => this.getYear(l.start_date) == this.year )
         var ay = this.absences.filter( a => this.getYear(a.dt_from) == this.year )
+
+        this.projectsByYears = _.groupBy(this.projects, 'year')
+        this.projectsYears   = _.keys(this.projectsByYears).sort().reverse()
+        var py = this.projectsByYears[this.year]
+        
+        // console.log(this.projectsYears, py)
 
         this.groupedLeads    = _.groupBy(ly, 'status_name') 
         this.groupedProjects = _.groupBy(py, 'project_type_name') 
@@ -184,18 +184,19 @@
         this.yearBeforeclosedProjects = 0
         for (var p in py) {
           this.filteredProjects.push(py[p])
-          if (py[p].pstatus_id == 3) this.closedProjects+=1
+          if (py[p].pstatus_id == 3) this.closedProjects += 1
         }
 
         var ly = this.leads.filter( l => this.getYear(l.start_date) == (this.year-1) )
-        var py = this.projects.filter( p => this.getYear(p.date_start) == (this.year-1) )
         var ay = this.absences.filter( a => this.getYear(a.dt_from) == (this.year-1) )
+
+        var py = this.projectsByYears[this.year-1]
 
         for (var l in ly) this.yearBeforeLeads.push(ly[l])
         for (var a in ay) this.yearBeforeAbsences.push(ay[a])
         for (var p in py) {
           this.yearBeforeProjects.push(py[p])
-          if (py[p].pstatus_id == 3) this.yearBeforeclosedProjects+=1
+          if (py[p].pstatus_id == 3) this.yearBeforeclosedProjects += 1
         }
 
         this.groupedLeadsBefore    = _.groupBy(ly, 'status_name') 
@@ -206,15 +207,59 @@
         this.projectStatuses = _.uniq(this.projectStatuses.concat(_.keys(this.groupedProjectsBefore)))
         this.absenceReasons  = _.uniq(this.absenceReasons.concat(_.keys(this.groupedAbsencesBefore)))
 
+        this.absenceReasons.forEach( r => {
+          if (!this.reasons.filter( f => f.name == r).length) this.reasons.push({label: r, value: r}) 
+        })  
+
         this.filteredAbsences = _.groupBy(this.filteredAbsences, 'reason_name') 
         this.fkeysAbsences   = _.keys(this.filteredAbsences)
+
+        // add projects
+        var prj = this.projects.forEach( p => {
+          if (this.getYear(p.date_end) != p.year) {
+            if (this.getYear(p.date_end) == this.year) {
+              if (this.groupedProjects[p.project_type_name] == undefined) {
+                Vue.set(this.groupedProjects, p.project_type_name, [])
+              } 
+              this.filteredProjects.push(p)
+              this.groupedProjects[p.project_type_name].push(p)
+              if (p.pstatus_id == 3) {
+                // console.log('2019', p)
+                this.closedProjects += 1
+                this.yearBeforeclosedProjects -= 1
+              }
+            }
+            if ((this.getYear(p.date_end) == this.year-1) || 
+                (this.getYear(p.date_end) == this.year && p.year < this.year-1 )){
+              if (this.groupedProjectsBefore[p.project_type_name] == undefined) {
+                Vue.set(this.groupedProjectsBefore, p.project_type_name, [])
+              }
+              this.yearBeforeProjects.push(p)
+              this.groupedProjectsBefore[p.project_type_name].push(p)
+              if (p.pstatus_id == 3) this.yearBeforeclosedProjects += 1
+            }
+
+          }
+        })
       },
 
-      absenceDetailClass(pref, idx){
-        switch(idx){
-          case 0:
+      projectClass(prj) {
+        add = ""
+        console.log('prj', prj)
+        if (prj.status_id == 3) {
+          console.log('prj', prj)
+          add = " nonactual"
+        }
+
+
+        return "table_row user_projects" + add
+      },
+
+      absenceDetailClass(pref, id){
+        switch(id){
+          case 2:
             return pref + ' user_absences_target'
-          case 1: 
+          case 3: 
             return pref + ' user_absences_shop'
           default: 
             return pref + ' user_absences'
@@ -237,13 +282,14 @@
 
       editLink(model, id){
         url = "/" + model + "/" + id + "/edit"
-        // this.$router.resolve({name: 'routeName', query: {data: "someData"}});
         window.open(url, '_blank');
       },
 
       onInput(e){
         if (e.name == 'year') this.year = e.value
-        // console.log('onInput2', this.year);
+        if (e.name == 'main_city') {
+          this.city = e.value 
+        }
         this.updateLists()
       }
     }

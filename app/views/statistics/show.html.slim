@@ -1,0 +1,9 @@
+.box_wrap.box_wrap_1
+  .items_box_head.items_box_param.index_filter
+    = form_tag statistics_path, method: 'get', id: "stats_page" do
+      = hidden_field_tag 'year', @cur_year 
+      = select_tag "page_type", options_for_select(@chart_collection, @page_type)
+      div style="width: 120px;" class="left space20"
+        = select_tag "diagram_type", options_for_select(@diagram_types, @diagram_type), class: 'chosen'
+  #charts_data
+    = render "charts_table"

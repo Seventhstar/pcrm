@@ -122,7 +122,9 @@
     controller = window.location.toString().split('?')[0].split('/').splice(3).join('/')
   return controller+method
 
-@sortable_prepare = (params, getFromUrl = false) ->
+@sortable_prepare = (params, getFromUrl = false, applink = undefined) ->
+  app = applink
+
   actual = if $('.switcher_a .link_a').length == 0 then null else $('.switcher_a .link_a').hasClass('on')
 
   cut = ''
@@ -139,7 +141,7 @@
 
   $('.search_save a').each (i) ->
     href = new URL(this.href)
-    if search == '' 
+    if search == '' || search == undefined
       href.searchParams.delete('search')
     else 
       href.searchParams.set('search', search)
@@ -170,13 +172,8 @@
       url[i] = a
     return
 
-  # if (app?)
-  #   filtersList = app.getFiltersList()
-  #   if filtersList != undefined
-  #     app.getFiltersList().forEach (e) ->
-  #       console.log('e', e)
-  #       if e.value != undefined
-  #         url[e.name] = e.value
+          # url.remove(e.name)
+        # else
 
   each if_params, (i, a) -> # add params from .index_filter
     url[i] = a
@@ -185,7 +182,19 @@
   each params, (i, a) -> # add params from args hash
     url[i] = a
     return 
+
+  if (app?)
+    filtersList = app.getFiltersList()
+    if filtersList != undefined
+      filtersList.forEach (e) ->
+        if e.value != undefined
+          url[e.name] = app[e.name].value
+        return
  
+  # console.log('app', app, 'filtersList', filtersList)
+  # console.log('app', app, 'filtersList', filtersList)
+  # console.log('i', i, 'a', a, 'empty', a == undefined)
+    # console.log('i', i, 'a', a, 'url[i]', url[i])
   each url, (i, a) ->
     if (a == 0 || a == '0' || a == undefined)
       delete url[i]  

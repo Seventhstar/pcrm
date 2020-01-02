@@ -24,7 +24,7 @@ span.title {margin-top: 3px}
 
 .grig_1_3 {display: grid; grid-template-columns: 1fr 2fr;}
 .grig-user-summary {display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;}
-.grig-user-summary .td.sub_label {padding-left: 24px;}
+// .grig-user-summary .td.sub_label {padding-left: 24px;}
 
 .provider_table_filter {display: grid; grid-template-columns: 190px 370px 1fr auto; column-gap: 16px; margin-bottom: 20px;}
 .providers_index_head  {display: grid; grid-template-columns: 270px 1fr 180px 205px 295px 60px; }
@@ -53,7 +53,7 @@ span.title {margin-top: 3px}
 
 .th.current a {color: #50aa00;}
 
-.table_row .td, .grid-row .td {border-top: 1px solid $border-color; padding: 8px;font-size: 13px;}
+.table_row .td, .grid-row .td, .tr_bottom .th {border-top: 1px solid $border-color; padding: 8px; font-size: 13px;}
 
 .th.current .sortArrow{ background: asset-url("arrow_asc.png") no-repeat 0 0; }
 .th.current.desc .sortArrow{ background: asset-url("arrow_desc.png") no-repeat 0 0; }
@@ -209,7 +209,10 @@ table.txfixed td { overflow: hidden; }
 .tleads thead{ border-radius: 0 3px 3px 0; }
 
 
-.tleads th, .grid-head .th{ padding: 8px; border-bottom: 1px solid #ddd; font-weight: 500; background: $light-gray;}
+.tleads tr th, .grid-head .th{ padding: 8px; font-weight: 500; background: $light-gray;}
+.tleads tr:not(.tr_bottom) th {border-bottom: 1px solid #ddd;}
+.tleads tr.tr_bottom th {border-top: 1px solid $border-color;}
+
 .grid-sub-head .th {padding: 8px; border-top: 2px solid #ddd; font-weight: 500; background: $light-gray;}
 
 .grid-head .th a{text-decoration: none;}

@@ -50,11 +50,25 @@ class Absence < ActiveRecord::Base
     target.try(:name)
   end
 
+  def diff_hours()
+    diff = self.dt_from - self.dt_to
+    if (self.reason_id == 4 || self.reason_id == 5)
+      diff = (diff / 1.days) + 1
+    else
+      diff = (diff / 1.hours)
+      diff -=1 if (diff.abs > 6)
+    end
+    diff.abs
+  end
+
   def self.counts_by_types(page_type, start_date, end_date)
+
+    xkey = 'month'
+    gxs = nil
 
     usr = User.actual.not_test
     reasons = AbsenceReason.all.collect{ |u| {name: u.name, id: u.id} }
-    reasons.insert(0, {name: 'Всего', id: 0})
+    # reasons.insert(0, {name: 'Всего', id: 0})
     el = 'Bar'
     data_source = Absence.group(:user_id, :reason_id )
              .select(:user_id, :reason_id, "count(id) as count" )
@@ -62,24 +76,37 @@ class Absence < ActiveRecord::Base
              .order(:user_id, :reason_id)
              .collect{ |abs| {reason_id: abs.reason_id, user_id: abs.user_id, count: abs.count}}
 
+    # data = usr.collect{ |u|  
+    #         reasons.collect{ |r| {
+    #           month: u.name, 
+    #           id: u.id,
+    #           r[:name] => data_source.select{ |s| s[:user_id] == u.id && s[:reason_id] == r[:id] }
+    #                                  .first.to_h[:count]
+    #           }
+    #         }
+    #         .reduce(:merge) 
+          # }
     data = usr.collect{ |u|  
             reasons.collect{ |r| {
               month: u.name, 
-              r[:name] => data_source.select{ |s| s[:user_id] == u.id && s[:reason_id] == r[:id] }
-                                     .first.to_h[:count]
-              }
-            }
+              id: u.id,
+              r[:name] => (u.absences.where('reason_id = ? AND dt_from between ? and ?', 
+                                            r[:id], start_date, end_date)
+                                     .collect{|r| r.diff_hours()}.sum()+0.5).to_i
+              }}
             .reduce(:merge) 
           }
 
+          # fafafa
     # p "data #{data.class} #{data[2]} #{data[2].keys} #{data[2].values[2..-1]} #{data[2].values.inject(0) { |sum, x| sum + x.to_i }}"
-    data.map{|a| a['Всего'] = a.values[2..-1].inject(0) { |sum, x| sum + x.to_i } }      
+    # data.map{|a| a['Всего'] = a.values[2..-1].inject(0) { |sum, x| sum + x.to_i } }      
     # p data_source
     # p data
 
-    headers = reasons.map {|u| u[:name] }
+    xs = reasons.map {|u| u[:name] }
     # p headers
-    { hash: data, json: data, headers: headers, element: el}
+    {hash: data, json: data, xs: xs, gxs: gxs.nil? ? xs : gxs, element: el, xkey: xkey}
+     # {hash: data, json: data, xs: xs, gxs: gxs.nil? ? xs : gxs, element: el, xkey: xkey}
 
   end
 
