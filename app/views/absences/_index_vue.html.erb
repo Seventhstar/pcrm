@@ -20,6 +20,7 @@
       groupKeys: [],
       showTotal: false,    
       filteredData: [],
+      users: [],
       filteredGoodstypes: [],
       useSearchVue: true,
       texts: 'search',
@@ -35,71 +36,52 @@
       
     }) %>,
 
-    created(){
+    mounted() {
+      // if (localStorage.user){
+        // this.user = localStorage.user
+      // }
+    },
+
+    created() {
       this.city = this.main_city
-      // this.filtersAvailable.forEach( (f) => {
-      //   console.log(f, this[f])
-      //   if (this[f] != undefined) this.fillFilter(f, typeof(this[f])=='object' ? this[f].value : this[f] )
-      // })
       this.onCityChange()  
-
-      console.log('this.params', this.params)
-      this.params.forEach( (p) => {
-        if (this[p.label] != undefined) {
-          // console.log('this[p.label]', p.label, this[p.label], this[p.label].length)
-            // console.log('p.label', p.label, 'this[p.label]', this[p.label])
-          // let v = this[p.label]
-          // let label = this[p.label]
-
-
-          // if ((typeof(this[p.label]) == "object") && (this[p.label].length > 0)){
-          //   v = this[p.label][0].value
-          //   label = this[p.label][0].label
-          // }
-
-          if (this[p.label + 's'] != undefined){
-            this[p.label] = this[p.label + 's'].filter(f => f.value == p.value) // fill v-chosen
-            this.fillFilter(p.label, this[p.label][0].label) // add filter like select from chosen
+      this.filtersAvailable.forEach( f => {
+        if (localStorage[f]) {
+          let v = localStorage[f]
+          if (this[f] != undefined && this[f + 's'] != undefined) {
+            this[f] = this[f + 's'].filter(f => f.value == v) // fill v-chosen
+            if (this[f][0] != undefined)
+              this.fillFilter(f, this[f][0].label) // add filter like select from chosen
           }
         }
       })
-      
-      // this.filtersAvailable.forEach( (f) => {
-      //   // console.log(f, this[f])
-      //   if (this[f] != undefined) this.fillFilter(f, typeof(this[f])=='object' ? this[f].value : this[f] )
-      // })
-      // sortable_prepare({}, false, this);
-      // this.fGroup();
-      delay("app.readyToChange = true", 800)
 
+      this.params.forEach( p => {
+        if (this[p.label] != undefined && this[p.label + 's'] != undefined) {
+            this[p.label] = this[p.label + 's'].filter(f => f.value == p.value) // fill v-chosen
+            this.fillFilter(p.label, this[p.label][0].label) // add filter like select from chosen
+        }
+      })
+      delay("app.readyToChange = true", 800)
+    },
+
+    watch: {
+      user(newValue) {
+        // console.log('newValue', newValue)
+        if (newValue != undefined) localStorage.user = newValue.value
+        else delete localStorage['user']
+      }
     },
 
     methods: {
-      // makeSpec(){
-      //   this.mainList.forEach((l) => {
-      //     if (v_nil(l.group)){    
-      //       let gtIds = _.pluck(this.absence_goodstypes.filter( f => {
-      //         f.absence_id == l.id
-      //       }), "goodstype_id")
-
-      //       let gtNames = _.pluck(this.goodstypes.filter( f => gtIds.indexOf(f.value) > -1), "label")
-      //       l.spec = gtNames.join('<br/>')
-      //     }
-      //   })
-
-      // },
-
-      makeFilter(){
-        // this.grouped = new Arra
-        // this.filteredData = []
-        // this.fGroup()
-      },
-
       onCityChange() {
-        // console.log('this.main_city.value', this.main_city.value)
-        this.users = this.all_users.filter( f => f.city_id == this.main_city.value)
+        this.users.length = 0
+
+        let users = this.all_users.filter(f => f.city_id == this.main_city.value)
+        users.forEach(u => this.users.push(u))
+        // console.log('onCityChange()', this.users)
+
         this.fillFilter(':user', _.pluck(this.users, 'label'))
-        // this.filter ['user'] = 
       },
       
       switchOpenedRow(ind, i) {

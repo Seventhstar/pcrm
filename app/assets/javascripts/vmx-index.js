@@ -44,11 +44,12 @@ var m_index = {
       let filter = []
       this.filtersAvailable.forEach(f => {
         // console.log('f', f, 'this[f]', this[f])
+
         if (this[f] == undefined) {
-          // filter.push({name: f, label: undefined, value: undefined}) 
-        }
-        else
-          filter.push({name: f, label: this[f].label, value: this[f].value}) 
+          filter.push({name: f, label: undefined, value: undefined}) 
+        } else if (typeof(this[f]) == "object" && this[f].length>0) {
+          filter.push({name: f, label: this[f][0].label, value: this[f][0].value})
+        } else filter.push({name: f, label: this[f].label, value: this[f].value})
       })
       return filter
     },
@@ -64,25 +65,21 @@ var m_index = {
       let field = name == 'search' ? this.searchFileds : name
       let s = -1;
       for (var i = 0; i < this.filter.length; i++) {
-        if (this.filter[i].field === field) {s = i;}
+        if (this.filter[i].field === field) {s = i}
       }
-      console.log('name', name, 'value', value )
-      if (s > -1){
+
+      // console.log('s', s, 'value', value)
+      if (s > -1) {
         if (value === undefined) {
-          if (this.readyToChange == undefined || this.readyToChange) 
-            {
-              console.log('this.readyToChange', this.readyToChange)
-              this.filter.splice(s, 1)
-            }
-        }
-        else this.filter[s].value = value
-      } 
-      else if (value != undefined && value != "") {
-        // console.log('field', field, 'value', value);
+          if (this.readyToChange == undefined || this.readyToChange) {
+            // console.log('splice fired') 
+            this.filter.splice(s, 1)
+          }
+        } else this.filter[s].value = value
+      } else if (value != undefined && value != "") {
         this.filter.push({field: field, value: value});
-      }
-      // console.log('name 2:', name, 'value', value )
-        
+      }        
+
       this.fGroup();
     },
 
@@ -91,14 +88,11 @@ var m_index = {
         if (e.name == 'main_city'){
           this.main_city = {label: e.label, value: e.value}
           this.onCityChange()
-        } else {
-        }
-        
+        } 
 
-        // console.log('this.readyToChange', this.readyToChange)
-          this.fillFilter(e.name, e.label)
-        if (this.readyToChange == undefined || this.readyToChange){
+        if (this.readyToChange == undefined || this.readyToChange) {
           sortable_prepare({}, false, this);
+          this.fillFilter(e.name, e.label)
         }
       }
     },
@@ -108,7 +102,6 @@ var m_index = {
     },
 
     sortBy(sortKey, month) {
-      // console.log('sortKey', sortKey)
       if (sortKey == 'date') sortKey = 'sortdate'
       this.reverse = (this.sortKey == sortKey) ? !this.reverse : false;
       this.sortKey = sortKey;
@@ -116,7 +109,6 @@ var m_index = {
         let arr = this.grouped[this.groupHeaders[i]]
         if (arr != undefined)
           this.grouped[this.groupHeaders[i]] = this.fSort(arr);
-        // this.fSort(this.grouped[this.groupHeaders[i]]);
       }
     },
 
@@ -129,7 +121,6 @@ var m_index = {
         if (arr != undefined)
           this.grouped[this.groupHeaders[i]] = this.fSort(arr);
       }
-      // console.log('fGroup', this.mainList.length, this.grouped)
     },
 
     columnClass(column){

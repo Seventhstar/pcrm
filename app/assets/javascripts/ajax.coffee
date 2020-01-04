@@ -187,14 +187,16 @@
     filtersList = app.getFiltersList()
     if filtersList != undefined
       filtersList.forEach (e) ->
-        if e.value != undefined
-          url[e.name] = app[e.name].value
+        if e.value != undefined 
+          # url[e.name] = app[e.name].value
+          url[e.name] = e.value
+          console.log('sortable_prepare', e.name, e.value, app[e.name].value )
+        else if app.readyToChange == undefined || app.readyToChange
+          console.log('sortable_prepare', e.name, e.value )
+          delete url[e.name]
         return
  
-  # console.log('app', app, 'filtersList', filtersList)
-  # console.log('app', app, 'filtersList', filtersList)
-  # console.log('i', i, 'a', a, 'empty', a == undefined)
-    # console.log('i', i, 'a', a, 'url[i]', url[i])
+
   each url, (i, a) ->
     if (a == 0 || a == '0' || a == undefined)
       delete url[i]  
