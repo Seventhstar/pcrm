@@ -57,7 +57,7 @@ class AbsencesController < ApplicationController
         sort_1 = "users.name"
         # @absences = @absences.joins(:user)
       end
-      abs = abs.where("dt_from >= ?", (Date.today - 52.week))
+      # abs = abs.where("dt_from >= ?", (Date.today - 52.week))
       # @absences = @absences.where("dt_from >= ?", (Date.today-2.week)) if @only_actual
       # @absences = @absences.paginate(page: @page, per_page: 50)
       # sort_1 = @sort_column == 'dt_from' ? 'month' : @sort_column
@@ -68,7 +68,7 @@ class AbsencesController < ApplicationController
     @search = params[:search]
     @json_absences = Absence.all.map{ |a| { id: a.id, 
                      # address: a.project_name,
-                      actual: a.dt_from > (Date.today-52.week),
+                      # actual: a.dt_from > (Date.today-52.week),
                      dt_from: format_date(a.dt_from),
                        dt_to: format_date(a.dt_to),
                         user: a.user_name,
@@ -85,10 +85,12 @@ class AbsencesController < ApplicationController
     cur_year = params[:year].nil? ? cur_year : params[:year].try(:to_i)
     @year = {id: cur_year, name: cur_year}
 
+    @cities = City.order(:id) if @cities.nil?
 
     @reasons = AbsenceReason.order(:id).map{ |e| {name: e.name.strip, id: e.id } }
-    prm = params.permit(params.keys).to_h
-    @params = prm.map{|p| {id: p[1], name: p[0]}}
+    @params = params.permit(params.except(:controller, :action).keys).to_h
+    # @params = prm.map{|p| {id: p[1], name: p[0]}}.to_h
+    # @params = prm.map{|p| if (p[0] != 'controller' && p[0] != 'action' ) {p[0] => p[1]}}.inject(:merge)
     # wfkw
     @all_users = User.actual #.by_city(current_user.city)
 

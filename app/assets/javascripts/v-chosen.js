@@ -11,7 +11,8 @@ Vue.component('v-chosen', {
         clearable: false
       }
     }, 
-    props: ['name', 'placeholder', 'label', 'src', 'selected', 'readonly', 'disabled',
+    props: ['name', 'placeholder', 'label', 'src', 'selected', 
+            'readonly', 'disabled', 'storable',
             'owner', 'k', 'index', 'from_array', 'clear', 'input'],
     template: `
         <div class="inp_w">
@@ -106,21 +107,25 @@ Vue.component('v-chosen', {
     },
 
     methods: {
-      onUpdate(val) {
-        // console.log('onUpdate val', this.name, val)
+      onUpdate(value) {
+        val = value
         if (val === undefined) {this.$parent[this.name] = []; return;}
+
+        if (typeof(val) != "object"){
+          let find = this.options.filter(f => f.value == value)
+          if (find.length > 0) {
+            val = find[0]
+          } else {
+            this.$parent[this.name] = []; 
+            return;
+          }
+        } 
+
         let label = (v_nil(val)) ? undefined : val.label;
         this.localValue = (v_nil(val)) ? 0 : val.value;
-
-        // if (this.nameParts != ''){
-          // this.$parent[this.nameParts[0]][this.nameParts[1]] = val
-          // this.$parent[this.nameParts[0]][this.nameParts[1]+'_name'] = val.label
-        // }
-        // else 
         this.$parent[this.name] = val
-        // this.hostCell = val
-        // console.log(val)                             
         this.$root.$emit('onInput', {value: this.localValue, key: this.k, index: this.index, name: this.name, label: label});
+        if (this.storable) localStorage[this.name] = this.localValue
       },
     } 
   })

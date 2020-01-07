@@ -25,20 +25,22 @@ html lang="en"
               - elsif controller.action_name == 'index' || controller_name == 'options'
                 .nav_select
                   .nav_city
-                    v-chosen clear="false" name="main_city" placeholder="Город..." src="cities" 
+                    v-chosen clear="false" name="city" placeholder="Город..." src="cities" storable="true"
                   .nav_year v-if="years.length > 0" 
                     v-chosen clear="false" name="year" placeholder="Год..." src="years" 
                   .navsearch
                     = text_field_tag :search, params[:search], \
                       class: "search_area txt",                \
                       placeholder: "Поиск...",                 \
+                      "v-model": "search",                         \
                       aname: controller.action_name,           \
                       cname: controller.controller_name,       \
                       mname: class_name                        
                     .vs__actions
                       button.clear style="" title=("Clear selection") type="button" 
                         span aria-hidden="true"  ×
-                = render 'main_app_vue'
+                - if controller_name =! 'absences'
+                  = render 'main_app_vue'
               .user_h
                 .time_h 20:06:28
                 span.name
@@ -69,3 +71,7 @@ html lang="en"
         .page-buffer
         .page-footer
           footer.footer
+  - if controller.action_name == 'index'
+    b jehrkjhe
+    = controller_name
+    = render 'absences/index_vue'

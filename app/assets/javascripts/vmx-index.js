@@ -31,7 +31,7 @@ var m_created = {
 var m_index = {
 
   created(){
-    if (this.filter != undefined) this.filter.push({field: 'actual', value: true})
+    // if (this.filter != undefined) this.filter.push({field: 'actual', value: true})
     this.fGroup();
     // console.log('params', @params)
     // this.city = 
@@ -40,18 +40,36 @@ var m_index = {
   methods: {
 
     getFiltersList() {
-      if (this.filtersAvailable == undefined) return {}
+      const filters = this.mainFilters.concat(this.filtersAvailable)
+      if (filters == undefined) return {}
       let filter = []
-      this.filtersAvailable.forEach(f => {
-        // console.log('f', f, 'this[f]', this[f])
-
+      filters.forEach(f => {
         if (this[f] == undefined) {
           filter.push({name: f, label: undefined, value: undefined}) 
-        } else if (typeof(this[f]) == "object" && this[f].length>0) {
+        } else if (typeof(this[f]) == "object" && this[f].length > 0) {
           filter.push({name: f, label: this[f][0].label, value: this[f][0].value})
         } else filter.push({name: f, label: this[f].label, value: this[f].value})
       })
       return filter
+    },
+
+    setFilterValue(name, value) {
+      //&& this[name + 's'] != undefined
+      if (this[name] != undefined ) {
+        //let find = this[name + 's'].filter(f => f.value == value)
+        //if (find.length > 0) {
+          console.log('name', name, this[name], value)
+          if (typeof(this[name]) == "string"){
+            if (this[name] != value) this[name] = value // find[0] // fill v-chosen
+            this.fillFilter(name, value) // add filter like select from chosen
+          } else {
+            if (this[name].length == 0 || this[name].value != value) this[name] = value // find[0] // fill v-chosen
+            this.fillFilter(name, this[name].label) // add filter like select from chosen
+          }
+          // if (this[name] != undefined) 
+          this.$storage.set(name, value)
+        //}
+      }
     },
 
     clearAll() {
@@ -62,22 +80,28 @@ var m_index = {
     },
 
     fillFilter(name, value) {
+      // console.log('fillFilter', name, value)
       let field = name == 'search' ? this.searchFileds : name
       let s = -1;
       for (var i = 0; i < this.filter.length; i++) {
         if (this.filter[i].field === field) {s = i}
       }
-
       // console.log('s', s, 'value', value)
+
       if (s > -1) {
         if (value === undefined) {
-          if (this.readyToChange == undefined || this.readyToChange) {
-            // console.log('splice fired') 
+          // if (this.readyToChange == undefined || this.readyToChange) {
+            console.log('splice fired') 
+            this.$storage.remove(name)
             this.filter.splice(s, 1)
-          }
-        } else this.filter[s].value = value
+          // }
+        } else {
+          this.filter[s].value = value
+          // this.$storage.set(name, value)
+        }
       } else if (value != undefined && value != "") {
         this.filter.push({field: field, value: value});
+        // this.$storage.set(name, value)
       }        
 
       this.fGroup();
@@ -85,10 +109,19 @@ var m_index = {
 
     onInput(e){
       if (e !== undefined) {
-        if (e.name == 'main_city'){
-          this.main_city = {label: e.label, value: e.value}
-          this.onCityChange()
-        } 
+        // if (e.name == 'main_city'){
+        //   if (this.city.value != e.value)
+        //     this.city = {label: e.label, value: e.value}
+        //   this.onCityChange()
+          console.log('onInput vmx main_city', e.name, e.label)
+        // }
+
+        // if (e.name == 'city'){
+        //   // if (nav.city.value != e.value)
+        //     // nav.city = {label: e.label, value: e.value}
+        //   // this.onCityChange()
+          console.log('onInput vmx city', e.name, e.label)
+        // }
 
         if (this.readyToChange == undefined || this.readyToChange) {
           sortable_prepare({}, false, this);
@@ -97,9 +130,9 @@ var m_index = {
       }
     },
   
-    onCityChange() {
+    // onCityChange() {
 
-    },
+    // },
 
     sortBy(sortKey, month) {
       if (sortKey == 'date') sortKey = 'sortdate'

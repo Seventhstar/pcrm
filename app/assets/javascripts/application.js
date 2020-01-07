@@ -227,7 +227,6 @@ var format_date = function(date) {
   return date;
 }
 
-
 function getInputSelection(elem) {
   if (typeof elem != "undefined") {
     s = elem[0].selectionStart;
