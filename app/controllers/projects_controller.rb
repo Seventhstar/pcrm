@@ -12,7 +12,8 @@ class ProjectsController < ApplicationController
   respond_to :html, :json, :js
 
   def index
-    @years = (2016..Date.today.year).step(1).to_a.reverse
+    # @years = (2016..Date.today.year).step(1).to_a.reverse
+    puts "prj years:#{@years}, @year = #{@year}"
     
     project_executors_ids  = Project.by_city(current_user.city).pluck(:executor_id).uniq
     @executors = User.where(id: project_executors_ids).actual
@@ -62,7 +63,7 @@ class ProjectsController < ApplicationController
                 .only_actual(@only_actual)
                 .by_city(@main_city)
                 .by_executor(executor_id)
-                .by_year(params[:year])
+                .by_year(@year[:id])
                 .by_ids(prjs_ids)
                 .order("#{sort_1} #{sort_direction}, #{sort_2} #{dir_2}, projects.number desc")
 

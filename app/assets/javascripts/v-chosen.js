@@ -103,6 +103,7 @@ Vue.component('v-chosen', {
         if (this.options.indexOf(this.$parent[this.name]) === -1 && this.from_array !== undefined) {
           // this.onUpdate()
         }
+        // this.$root.$emit('filledChosen', {value: this.localValue, key: this.k, index: this.index, name: this.name, label: label});
       }
     },
 
@@ -124,6 +125,7 @@ Vue.component('v-chosen', {
         let label = (v_nil(val)) ? undefined : val.label;
         this.localValue = (v_nil(val)) ? 0 : val.value;
         this.$parent[this.name] = val
+        // console.log('v-chosen onUpdate', this.localValue, this.name)
         this.$root.$emit('onInput', {value: this.localValue, key: this.k, index: this.index, name: this.name, label: label});
         if (this.storable) localStorage[this.name] = this.localValue
       },

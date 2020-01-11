@@ -149,7 +149,6 @@
         var ay = this.absences.filter( a => this.getYear(a.dt_from) == this.year )
 
         this.projectsByYears = _.groupBy(this.projects, 'year')
-        this.projectsYears   = _.keys(this.projectsByYears).sort().reverse()
         var py = this.projectsByYears[this.year]
         
         // console.log(this.projectsYears, py)
@@ -159,7 +158,7 @@
         this.groupedAbsences = _.groupBy(ay, 'reason_name') 
 
         this.leadsStatuses   = _.keys(this.groupedLeads)
-        this.projectStatuses = _.keys(this.groupedProjects)
+        // this.projectStatuses = _.keys(this.groupedProjects)
         this.absenceReasons  = _.keys(this.groupedAbsences)
 
         for (var l in ly) this.filteredLeads.push(ly[l])
@@ -204,7 +203,6 @@
         this.groupedAbsencesBefore = _.groupBy(ay, 'reason_name') 
 
         this.leadsStatuses   = _.uniq(this.leadsStatuses.concat(_.keys(this.groupedLeadsBefore)))
-        this.projectStatuses = _.uniq(this.projectStatuses.concat(_.keys(this.groupedProjectsBefore)))
         this.absenceReasons  = _.uniq(this.absenceReasons.concat(_.keys(this.groupedAbsencesBefore)))
 
         this.absenceReasons.forEach( r => {
@@ -221,6 +219,10 @@
               if (this.groupedProjects[p.project_type_name] == undefined) {
                 Vue.set(this.groupedProjects, p.project_type_name, [])
               } 
+            
+              if (this.projectsByYears[this.year] == undefined) this.projectsByYears[this.year] = []
+              this.projectsByYears[this.year].push(p)
+
               this.filteredProjects.push(p)
               this.groupedProjects[p.project_type_name].push(p)
               if (p.pstatus_id == 3) {
@@ -229,11 +231,17 @@
                 this.yearBeforeclosedProjects -= 1
               }
             }
+
             if ((this.getYear(p.date_end) == this.year-1) || 
                 (this.getYear(p.date_end) == this.year && p.year < this.year-1 )){
+              
               if (this.groupedProjectsBefore[p.project_type_name] == undefined) {
                 Vue.set(this.groupedProjectsBefore, p.project_type_name, [])
               }
+
+              if (this.projectsByYears[this.year-1] == undefined) this.projectsByYears[this.year-1] = []
+              this.projectsByYears[this.year-1].push(p)
+
               this.yearBeforeProjects.push(p)
               this.groupedProjectsBefore[p.project_type_name].push(p)
               if (p.pstatus_id == 3) this.yearBeforeclosedProjects += 1
@@ -241,13 +249,22 @@
 
           }
         })
+        this.projectsYears   = _.keys(this.projectsByYears).sort().reverse()
+        this.projectsYears.length = 2
+        this.projectStatuses = _.uniq(_.keys(this.groupedProjects).concat(_.keys(this.groupedProjectsBefore)))
+      },
+
+      checkYearClass(row) {
+        cls = "td"
+        if (this.getYear(row.date_start) != this.getYear(row.date_end)) cls += ' hot'
+        return cls
       },
 
       projectClass(prj) {
         add = ""
-        console.log('prj', prj)
+        // console.log('prj', prj)
         if (prj.status_id == 3) {
-          console.log('prj', prj)
+          // console.log('prj', prj)
           add = " nonactual"
         }
 

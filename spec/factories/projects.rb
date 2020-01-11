@@ -1,7 +1,7 @@
 FactoryBot.define do 
   
   sequence :address do |n|
-     "ул. Такая-то дом.#{n}"
+     "ул. Такая-то дом #{n}"
   end
 
   factory :project do

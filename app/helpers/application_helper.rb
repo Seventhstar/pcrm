@@ -210,12 +210,19 @@ module ApplicationHelper
       if default.class == Hash then
         val   = default[:id]
         label = default[:name]
+      elsif default.class == String || default.class == Integer
+        val   = default
+        return val
       else
         val   = default.id
         label = default.name
       end
     end
-    h = val.present? ? {value: val, label: label} : []
+    # h = val.present? ? {value: val, label: label} : []
+    h = {}
+    h[:value] = val if val.present? 
+    h[:label] = label if label.present? 
+    puts "#{name} - #{h}"
     h = h.to_json.html_safe.to_s if safe
     h
   end
@@ -249,16 +256,8 @@ module ApplicationHelper
       data.delete(:texts)
     end
 
-    if data[:list_values].present? 
-      data[:list_values].split(' ').each do |li| 
-        v = v_value(nil, nil, nil, eval("@#{li}"))        
-        v = v_value(obj, li) if !v.present?
-        data[li] = v
-      end
-      data.delete(:list_values)
-    end
-
     if data[:lists].present? # collection_name[:source_name][+field1,field2...]
+      # ewjnek
       data[:lists].split(' ').each do |l|
         fields = nil
         raw = false
@@ -291,6 +290,22 @@ module ApplicationHelper
         end
       end
       data.delete(:lists)
+    end
+
+    if data[:list_values].present? 
+      data[:list_values].split(' ').each do |li| 
+        v = v_value(nil, nil, nil, eval("@#{li}"))        
+        v = v_value(obj, li) if !v.present?
+        if v.class == Integer
+          v = data[li.pluralize].select {|a| a[:value] == v }
+          v = v[0] if v.length
+          # wkfhjek
+        end
+        # puts "li #{li} - v #{v}"
+        data[li] = v
+        # puts "data #{data}"
+      end
+      data.delete(:list_values)
     end
 
     return data.to_json.html_safe.to_s
@@ -600,11 +615,11 @@ module ApplicationHelper
     content_tag(:span, s_info, params)
   end
 
-  def tooltip_if_big( info, length = 50 )
-    if info.length >length
-     tooltip( '   '+info[0..length] + ' ...', info)
+  def tooltip_if_big( info, length = 50)
+    if info.length > length
+      tooltip( '   ' + info[0..length] + ' ...', info)
     else
-     info
+      info
     end
   end
 

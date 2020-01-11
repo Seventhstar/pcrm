@@ -44,7 +44,9 @@ var m_index = {
       if (filters == undefined) return {}
       let filter = []
       filters.forEach(f => {
-        if (this[f] == undefined) {
+        if (f == 'search'){
+          filter.push({name: f, label: this.search, value: this.search})
+        } else if (this[f] == undefined) {
           filter.push({name: f, label: undefined, value: undefined}) 
         } else if (typeof(this[f]) == "object" && this[f].length > 0) {
           filter.push({name: f, label: this[f][0].label, value: this[f][0].value})
@@ -54,21 +56,16 @@ var m_index = {
     },
 
     setFilterValue(name, value) {
-      //&& this[name + 's'] != undefined
       if (this[name] != undefined ) {
-        //let find = this[name + 's'].filter(f => f.value == value)
-        //if (find.length > 0) {
-          console.log('name', name, this[name], value)
-          if (typeof(this[name]) == "string"){
-            if (this[name] != value) this[name] = value // find[0] // fill v-chosen
-            this.fillFilter(name, value) // add filter like select from chosen
-          } else {
-            if (this[name].length == 0 || this[name].value != value) this[name] = value // find[0] // fill v-chosen
-            this.fillFilter(name, this[name].label) // add filter like select from chosen
-          }
-          // if (this[name] != undefined) 
-          this.$storage.set(name, value)
-        //}
+        // console.log('setFilterValue name', name, 'value', value)
+        if (typeof(this[name]) == "string"){
+          if (this[name] != value) this[name] = value // find[0] // fill v-chosen
+          this.fillFilter(name, value) // add filter like select from chosen
+        } else {
+          if (this[name].length == 0 || this[name].value != value) this[name] = value // find[0] // fill v-chosen
+          this.fillFilter(name, this[name].label) // add filter like select from chosen
+        }
+        this.$storage.set(name, value)
       }
     },
 
@@ -79,61 +76,46 @@ var m_index = {
       this.filter.length = 0;
     },
 
-    fillFilter(name, value) {
+    fillFilter(name, value, startUpdate = true) {
       // console.log('fillFilter', name, value)
-      let field = name == 'search' ? this.searchFileds : name
+      // let field = name == 'search' ? this.searchFileds : name
+      let field = name
       let s = -1;
+      
       for (var i = 0; i < this.filter.length; i++) {
         if (this.filter[i].field === field) {s = i}
       }
-      // console.log('s', s, 'value', value)
 
       if (s > -1) {
         if (value === undefined) {
-          // if (this.readyToChange == undefined || this.readyToChange) {
-            console.log('splice fired') 
-            this.$storage.remove(name)
+            // this.$storage.remove(name)
             this.filter.splice(s, 1)
-          // }
-        } else {
-          this.filter[s].value = value
-          // this.$storage.set(name, value)
-        }
+        } else {this.filter[s].value = value}
       } else if (value != undefined && value != "") {
         this.filter.push({field: field, value: value});
-        // this.$storage.set(name, value)
       }        
 
-      this.fGroup();
+      if (startUpdate) this.fGroup()
+    },
+
+    clearSearch() {
+      this.search = ''
+      this.fillFilter('search', '')
     },
 
     onInput(e){
       if (e !== undefined) {
-        // if (e.name == 'main_city'){
-        //   if (this.city.value != e.value)
-        //     this.city = {label: e.label, value: e.value}
-        //   this.onCityChange()
-          console.log('onInput vmx main_city', e.name, e.label)
-        // }
-
-        // if (e.name == 'city'){
-        //   // if (nav.city.value != e.value)
-        //     // nav.city = {label: e.label, value: e.value}
-        //   // this.onCityChange()
-          console.log('onInput vmx city', e.name, e.label)
-        // }
-
+        console.log('vmx-index onUpdate')
         if (this.readyToChange == undefined || this.readyToChange) {
           sortable_prepare({}, false, this);
           this.fillFilter(e.name, e.label)
+        } else {
+          this.fillFilter(e.name, e.label, false)
+
         }
       }
     },
   
-    // onCityChange() {
-
-    // },
-
     sortBy(sortKey, month) {
       if (sortKey == 'date') sortKey = 'sortdate'
       this.reverse = (this.sortKey == sortKey) ? !this.reverse : false;
@@ -147,7 +129,6 @@ var m_index = {
 
     fGroup(){
       this.grouped      = _.groupBy(this.mainList, 'month')
-
       this.groupHeaders = Object.keys(this.grouped)
       for (i = 0; i < this.groupHeaders.length; ++i) { 
         let arr = this.grouped[this.groupHeaders[i]]
@@ -180,20 +161,28 @@ var m_index = {
         this.filteredData = this.filteredData.filter((item) => {
           for (q in vm.filter) {
             let f = vm.filter[q]
-            // console.log('filter f', f, vm.filter)
             let field = f.field.includes(':') ? f.field.split(':')[1] : f.field
             let v = item[field]
-            if (v == undefined) continue
-            // console.log('typeof(v)', typeof(v), v, f.value, f.field)
-            if (typeof(field) == 'object') {
+            // if (v == undefined) break 
+            // if (typeof(f.field) != 'object' && v == undefined) continue
+            // console.log('filter f', f, vm.filter[q], f.field == 'search')
+            if (v == undefined && (f.field != 'search' || f.value == '')) continue
+            // console.log('typeof(v)', typeof(v), v, f.value, 'f.field', f.field, f.field == 'search')
+            
+
+            if (f.field == 'search') {
+              // console.log('here f.field', f.field)
               fl = false
-              field.forEach(fld => {if (v != null && item[fld].toLowerCase().indexOf(f.value) > -1) fl = true })
+              this.searchFileds.forEach(fld => {
+                // console.log('f.value', f.value, 'item[fld]:', item[fld], 'item[fld].toLowerCase().indexOf(f.value)')
+                if (!v_nil(item[fld]) && item[fld].toLowerCase().indexOf(f.value) > -1) fl = true 
+              })
               if (!fl) return false
             } else if (typeof(f.value) == 'object') {
-              if (!f.value.includes(v)) return false
               // console.log('v', v, 'f', f, f.value, f.value.includes(v))
-
+              if (!f.value.includes(v)) return false
             } else if (typeof(v) == 'string') {
+              // return false
               // console.log('v', v, 'vm.filter[q]', vm.filter[q], f.value)
               if (v == null || v.toLowerCase().indexOf(f.value.toLowerCase()) === -1) return false
             } else {

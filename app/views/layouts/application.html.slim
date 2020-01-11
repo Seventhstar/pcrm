@@ -1,7 +1,7 @@
 doctype html
 html lang="en" 
   head
-    meta content=("text/html; charset=UTF-8") http-equiv="Content-Type" 
+    meta content="text/html; charset=UTF-8" http-equiv="Content-Type" 
     meta charset="utf-8" 
     meta content="IE=Edge,chrome=1" http-equiv="X-UA-Compatible" 
     meta content="width=device-width, initial-scale=1.0" name="viewport" 
@@ -17,30 +17,34 @@ html lang="en"
         - if current_user
           .header
             .bw_i
-              - if controller.action_name == 'show' && controller_name == 'users' || controller_name == 'statistics'
+              - if controller.action_name == 'show' && controller.controller_name == 'users' || controller.controller_name == 'statistics'
                 .nav_select
                   .nav_year v-if="years.length > 0" 
                     v-chosen clear="false" name="year" placeholder="Год..." src="years" 
                 = render 'main_app_vue'
-              - elsif controller.action_name == 'index' || controller_name == 'options'
+              - elsif controller.action_name == 'index' || controller.controller_name == 'options'
                 .nav_select
                   .nav_city
                     v-chosen clear="false" name="city" placeholder="Город..." src="cities" storable="true"
-                  .nav_year v-if="years.length > 0" 
+                  - puts "years #{@years}"
+                  - puts "year #{@year}"
+
+                  .nav_year  
                     v-chosen clear="false" name="year" placeholder="Год..." src="years" 
                   .navsearch
                     = text_field_tag :search, params[:search], \
                       class: "search_area txt",                \
                       placeholder: "Поиск...",                 \
-                      "v-model": "search",                         \
+                      "v-model": "search",                     \
                       aname: controller.action_name,           \
                       cname: controller.controller_name,       \
-                      mname: class_name                        
+                      mname: class_name   
                     .vs__actions
-                      button.clear style="" title=("Clear selection") type="button" 
-                        span aria-hidden="true"  ×
-                - if controller_name =! 'absences'
-                  = render 'main_app_vue'
+                      button.clear style="" title="Очистить" type="button" 
+                        span @click="clearSearch()" × 
+
+                
+                = render 'main_app_vue'
               .user_h
                 .time_h 20:06:28
                 span.name
@@ -71,7 +75,5 @@ html lang="en"
         .page-buffer
         .page-footer
           footer.footer
-  - if controller.action_name == 'index'
-    b jehrkjhe
-    = controller_name
+  - if controller.action_name == 'index' && ['absences'].include?(controller.controller_name)
     = render 'absences/index_vue'

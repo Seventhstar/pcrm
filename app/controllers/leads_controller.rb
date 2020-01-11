@@ -18,7 +18,7 @@ class LeadsController < ApplicationController
   # GET /leads
   # GET /leads.json
   def index
-    @years = (2016..Date.today.year).step(1).to_a.reverse
+    # @years = (2016..Date.today.year).step(1).to_a.reverse
     @priorities = Priority.all
     @sort_column = sort_column
 

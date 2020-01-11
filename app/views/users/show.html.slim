@@ -137,7 +137,7 @@
                       |{{row.footage}}
                     .td 
                       |{{formatDate(row.date_start)}}
-                    .td 
+                    div :class='checkYearClass(row)'
                       |{{formatDate(row.date_end)}}
 
             .files_list v-if="currentTab.value == 2"

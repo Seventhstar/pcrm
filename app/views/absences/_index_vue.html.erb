@@ -45,53 +45,31 @@
       
     }) %>,
 
-      // filtersAvailable: ['year', 'search', 'reason', 'user', 'city'],
-    mounted() {
-      // if (localStorage.user){
-        // this.user = localStorage.user
-      // }
-    },
-
     created() {
-      // this.city = this.main_city
-
-      // this.$on('yearChanged', function(e) {
-        // console.log('yearChanged', e);
-      // });
-      
-      // console.log('this.$storage.keys()', this.$storage.keys())
-      // console.log('this.filtersAvailable', this.filtersAvailable)
-      // console.log('this.params', _.reject(_.keys(this.toHash(this.params)), 'year'))
-      // console.log('this.years', this.years) 
-      // console.log('this.cities', this.cities) 
-        // console.log('f', f)
-      this.mainFilters.forEach( f => {this.filtersFromParamsOrStoarge(f)})
-
-      // delay("app.readyToChange = true", 300)
-      setTimeout(() => {app.applyFilters()}, 50 )
-
-
-      // this.onCityChange()  
-
-      // this.filtersAvailable.forEach( f => {
-      //   this.setFilterValue(f, this.$storage.get(f)) 
-      // })
-      // this.params.forEach( p => {
-      //   console.log('params', p.label, p.value)
-      //   this.setFilterValue(p.label, p.value)
-      // })
-      // this.readyToChange = true
+      this.mainFilters.forEach( f => {
+        this.filtersFromParamsOrStoarge(f)
+      })
+      // console.log('this.city', this.city)
+      // console.log('this.year', this.year)
+      this.onCityChange(this.city)
+      setTimeout(() => {app.applyFilters()}, 250 )
     },
 
     watch: {
-      city(newValue){
-        this.onCityChange(newValue)
-      },
+      // city(newValue){
+      //   console.log('watch city')
+      //   this.onCityChange(newValue)
+      // },
+
+      // year(newValue){
+      //   console.log('watch year')
+      //   this.setFilterValue('year', this.year)
+      // },
 
       search(newValue){
         localStorage.search = this.search
+        this.$storage.set("search", newValue)
       },
-
 
     },
 
@@ -104,13 +82,15 @@
       filtersFromParamsOrStoarge(filterName) {
         let value = undefined
         if (this.params[filterName] != undefined) value = this.params[filterName]
-        else if (this.$storage.get(filterName)) value = this.$storage.get(filterName)
-        else if (localStorage[filterName]) value = localStorage[filterName]
+        // else if (localStorage[filterName]) value = localStorage[filterName]
+        // else if (this.$storage.get(filterName)) value = this.$storage.get(filterName)
 
+        // console.log('filterName', filterName, 'value', value)
         if (value) {
           this.setFilterValue(filterName, value)          
         }
 
+        this.fGroup()
       },
 
       toHash(array){
@@ -156,20 +136,18 @@
         return "absences_index_" + name + " table_row" + addClass + " " + add
       },
 
-      siteUrl(url){
-        var prefix = 'http://';
-        var pref2  = 'https://';
-        if (url.substr(0, prefix.length) !== prefix && url.substr(0, pref2.length) !== pref2) { 
-          url = prefix + url;
-        }
-        return url;
-      },
+      // siteUrl(url){
+      //   var prefix = 'http://';
+      //   var pref2  = 'https://';
+      //   if (url.substr(0, prefix.length) !== prefix && url.substr(0, pref2.length) !== pref2) { 
+      //     url = prefix + url;
+      //   }
+      //   return url;
+      // },
 
-      editGroup(grp){
-        return '/absences/'+grp.id+'/edit'
-      }
-
-
+      // editGroup(grp){
+      //   return '/absences/'+grp.id+'/edit'
+      // }
     }
 
   })

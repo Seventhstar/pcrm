@@ -4,7 +4,8 @@
   let nav = new Vue({
     el: '.nav_select',
     data: <%= fill_vue_data(nil, {
-      list_values: 'year main_city',
+      texts: 'search',
+      list_values: 'year city',
       lists: 'years cities'
     }, 'app') %>,
 
@@ -15,9 +16,11 @@
     },
     
     created() {
+      // import { bus } from 'bus.js'
       console.log('main_app_vue year', this.year.value, 'this.isAppAvailable()', this.isAppAvailable())
       this.sendValueToApp('year')
       this.$emit('yearChanged', this.year);
+      eventBus.$emit("yearChanged", 'main_app_vue');
     },
 
     watch: {
@@ -27,27 +30,32 @@
           // console.log('main_app_vue year', this.year.value)
           sortable_prepare({});
         } else {
+          sortable_prepare({});
+          $(".main_data_table").html()
           delay('document.location.reload(true)', 400)
         }
         this.$emit('yearChanged', newValue);
       },
 
-      main_city(newValue) {
+      city(newValue) {
 
         if (newValue == undefined) return
         if (this.isAppAvailable()) {
-          app.onInput({name: 'main_city', label: this.main_city.label, value: this.main_city.value}); 
+          app.onInput({name: 'main_city', label: this.city.label, value: this.city.value}); 
           // localStorage.main_city = newValue.value
           sortable_prepare({});
         } else { 
-          delay('sortable_query({})', 700)
+          sortable_prepare({});
+          // delay('sortable_query({})', 700)
+
           $.ajax({
             type: "POST",
             url: "/ajax/set_city",
-            data: {city: this.main_city.value},
+            data: {city: this.city.value},
             dataType: "json",
             encode: true
           })
+          delay('document.location.reload(true)', 400)
         }
       }
     },
@@ -59,7 +67,8 @@
 
       sendValueToApp(name, delay = false) {
         if (this.isAppAvailable() || delay) {
-          app.onInput({name: name, label: this[name].label, value: this[name].value}); 
+          // app.onInput({name: name, label: this[name].label, value: this[name].value}); 
+          // Vue.
           console.log('sendValueToApp', name, this[name].value)
           sortable_prepare({});
         } else if (!delay) {
