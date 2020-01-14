@@ -18,6 +18,21 @@
 span.title {margin-top: 3px}
 .bold {font-weight: 500;}
 
+.stage-span {display: block; height: 20px; float: left; text-align: center; color: white; padding-top: 4px;}
+.va_middle.after-graph td {border-top: none;}
+.va_middle.before-graph td {border-top: 1px solid $border-color;}
+
+.tleads .line-graph td {padding: 18px 4px 0 4px; }
+// .tleads .line-graph td {padding-top: 24px;}
+.line-graph td span:first-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;}
+
+.line-graph td span:last-child{
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+   }
+
 .goods-list span.title {margin-top: 4px}
 
 .client_projects {display: grid; grid-template-columns: 1fr 1fr}
@@ -314,15 +329,17 @@ table thead.center th { vertical-align:middle; text-align: center; }
  td.td_prgrs {padding: 6px 0 0 0;  text-align: center;}
  td.prgrs {padding:  0 16px 6px 12px; background: none !important; border: none !important; color: white; text-align: center;}
  td.prgrs:hover, tr:hover td.td_prgrs{background-color: #f5f5f5 !important;}
-.bar { height: 16px;  background-color: #545a92;  width: 0%; border-radius: 3px;
+.bar { height: 16px;  background-color: #545a92;  width: 0%; border-radius: 3px; margin-bottom: 10px;
 .prgrs { position: relative;  padding: 0px;  background-color: #c7c7c7; }
 .percent { position: absolute;  text-align: center;  color: white;  width: 100%; }
 }
 
 #project_progress {width: 55px;}
-.project_progress label {display: inline-flex;
+.project_progress label {
+    display: inline-flex;
     font-size: 14px;
     margin-bottom: 7px;
+    margin-left: 45px;
     padding-top: 7px;
     padding-right: 6px;
     vertical-align: bottom;

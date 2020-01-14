@@ -26,10 +26,7 @@ html lang="en"
                 .nav_select
                   .nav_city
                     v-chosen clear="false" name="city" placeholder="Город..." src="cities" storable="true"
-                  - puts "years #{@years}"
-                  - puts "year #{@year}"
-
-                  .nav_year  
+                  .nav_year  v-if="years.length>0"
                     v-chosen clear="false" name="year" placeholder="Год..." src="years" 
                   .navsearch
                     = text_field_tag :search, params[:search], \

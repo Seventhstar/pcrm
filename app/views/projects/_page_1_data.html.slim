@@ -16,14 +16,17 @@
                 = f.input :attention, as: :boolean, label: 'Особое внимание', class: 'inp_btn checkbox'
               - if @project.lead_id.present?
                 = link_to "Открыть лид", edit_lead_path(@project.lead_id), class: 'btn_a right', target: "_blank"
+              = f.input :progress, label: '%'
           tr 
             td.gr_caption Статус:
-            td
+            td.gr_caption Этап:
           tr
             td
               .inp_w
                 v-chosen name="pstatus" placeholder="Статус..." src="pstatuses" :input="true"
-            td= f.input :progress,label: '%'
+            td
+              .inp_w
+                v-chosen name="project_stage" placeholder="Этап..." src="stages" :input="true"
             td.va_middle
           tr
             td.inp_97 colspan="2" 

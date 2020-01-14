@@ -1,0 +1,18 @@
+tr
+  th width="25px" = sortable_th(:number, '№', @numsort)
+  th= sortable_th(:address, 'Адрес', @numsort)
+  - if is_manager?
+    th width="110px" = sortable_th(:project_type_id, 'Вид проекта', @numsort)
+    th width="150px" = sortable_th(:client_id, 'Заказчик', @numsort)
+    - if @sort!="users.name"
+      th width="120px" = sortable_th(:executor_id, 'Исполнитель', @numsort)
+  - else
+    th width="200px" = sortable_th(:project_type_id, 'Вид проекта', @numsort)
+    th width="220px" = sortable_th(:client_id, 'Заказчик', @numsort)
+  th style=("width: 75px;") = sortable_th(:date_start, 'Начало', @numsort)
+  th width="85px" 
+    = sortable_th(:date_end_plan, 'Оконч.', @numsort)
+  th style=("width: 105px;") = sortable_th(:footage, 'м2 / Цена', @numsort)
+  th.td_right style=("width: 77px;") = sortable_th(:sum_total, 'Стоимость', @numsort)
+  - if is_manager?
+    th

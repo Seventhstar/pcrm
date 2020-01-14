@@ -250,6 +250,7 @@ class AjaxController < ApplicationController
       prms = params['upd_modal'] if prms.nil?
 
       prms = prms.permit!.to_h
+      puts "prms #{prms}"
       prms.each do |p|
         new_value = p[1]
         new_value.gsub!(' ','') if !p[0].index('sum').nil?

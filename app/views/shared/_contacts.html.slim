@@ -17,7 +17,9 @@
   #new_contact
     / = hidden_field 'project_contact', 'project_id', value: @project.id
     .inp_l.inp_w
-      = text_field_tag '', '', "v-model"=>"new_val", type: "text ", class: 'string optional form-control', placeholder: 'Телефон / e-mail'
+      / = text_field_tag nil, nil, "v-model"=>"new_val", type: "text ", class: 'string optional form-control', placeholder: 'Телефон / e-mail'
+      input.string.optional.form-control placeholder="Телефон / e-mail" type="text" v-model="new_val" 
+
     .inp_w 
       = text_field_tag '', '', "v-model"=>"new_who", type: "text ", class: 'string optional form-control', placeholder: 'Кто',  "v-on:keyup.enter.prevent"=>"addContact"
     span.btn_a @click="addContact" :disabled="!f_contact" Добавить

@@ -2,7 +2,7 @@ ru:
   options_menu: {
     options_users: ['users', 'roles', 'user_roles'],
     options_leads: ['statuses', 'channels', 'lead_sources', 'styles', 'cities'],
-    options_projects: ['project_statuses', 'project_types', 'elongation_types', 'tarif_calc_types'],
+    options_projects: ['project_statuses', 'project_stages', 'project_types', 'elongation_types', 'tarif_calc_types'],
     options_costings: ['costings_types', 'uoms', 'materials', "consumptions", "works", "work_types", "rooms"],
     options_payments: ['currencies', 'payment_types', 'payment_purposes'],
     options_providers: ['goodstypes', 'goods_priorities', 'delivery_times', 'positions', 'budgets', 'styles', 'p_statuses'],
@@ -37,6 +37,7 @@ ru:
   cities: ['Города', "город", "городов"]
 
   project_statuses: ["Статусы", "статус", "статусов"]
+  project_stages: ["Этапы", "этап", "этапов"]
   project_types: ["Виды проектов", "вид проекта", "видов проектов"]
   goods_priorities: ['Приоритет товаров' ,'приоритет товара' ,'приоритетов товаров']
   delivery_times: ['Сроки поставки', 'срок поставки', 'сроков поставки']
@@ -72,3 +73,7 @@ ru:
   devstatus: ["статус","статусов"]
   
   wiki_cats: ["Категории", "-Новая категория", "категорий"]
+
+  ProjectStage: Этап
+  part: Часть
+  stage_order: Порядок

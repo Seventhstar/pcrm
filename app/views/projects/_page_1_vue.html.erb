@@ -8,26 +8,29 @@
       model: 'project',
       project_type_id: @project.project_type&.id,
       projectTypeOutChange: false,  
-      
-      list_values: 'project_type city client executor visualer project_type style pstatus client',
-      lists: "project_types+simple cities executors visualers styles pstatuses clients"      
+      stages: [],
+      list_values: 'project_type city client executor visualer project_type style pstatus client project_stage stage',
+      lists: "project_types+simple cities executors visualers styles pstatuses clients project_stages+project_type_id"      
     }, 'page1') %>,
 
     created() {
       // console.log('created', 'project_type', this.project_type);
+      this.fillStages()
+      this.stage = this.project_stage
     },
 
     watch: {
-      project_type(){
+      project_type(newValue){
         if (footages.project_type_id > 0 && this.project_type != undefined){
           if (!this.projectTypeOutChange)
             footages.setProjectType(this.project_type)
         }
+        console.log('project_type(newValue)', newValue)
         this.projectTypeOutChange = false
+        this.fillStages(newValue)
       },
 
       city() {
-        // console.log('this.city.value', this.city.value, footages.city_id)
         if (footages.city_id > 0 && this.city != undefined){
           footages.setCity(this.city)
         }
@@ -35,6 +38,16 @@
     },
 
     methods: {
+      fillStages(project_type = undefined){
+        if (project_type == undefined) project_type = this.project_type
+        if (typeof(project_type) == "object") project_type = project_type.value
+        console.log('fillStages project_type', project_type)
+
+        this.stages.length = 0
+        st = this.project_stages.filter( ps => ps.project_type_id == project_type)
+        console.log('fillStages st', st)
+        for (var s in st) {this.stages.push(st[s])}
+      },
 
       setProjectType(pt) {
         this.projectTypeOutChange = true

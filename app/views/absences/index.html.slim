@@ -1,18 +1,25 @@
-.container.absences_index 
-  div v-cloak=""
-    .nav_filter
-      .filter_nav
-        = render_navigation level: 2 
+= render "sortmenu"
+- if params['sort']=='calendar'
+  = hidden_field_tag :sort, params[:sort]
+  = hidden_field_tag :page_num, @page+1
+  #div_tabsences
+    = render "calendar"
+- else
+    .container.absences_index 
+      div v-cloak=""
+        .nav_filter
+          .filter_nav
+            = render_navigation level: 2 
 
-      .provider_table_filter.subnav
-        div
-          v-chosen name="reason" placeholder="Причина..." clear=true
-        div
-          v-chosen name="user" placeholder="Сотрудник..." clear=true
-        div
-        = link_to 'Добавить', new_absence_path, class: "btn_a btn-add right"
+          .provider_table_filter.subnav
+            div
+              v-chosen name="reason" placeholder="Причина..." clear=true
+            div
+              v-chosen name="user" placeholder="Сотрудник..." clear=true
+            div
+            = link_to 'Добавить', new_absence_path, class: "btn_a btn-add right"
 
-    .container
-      = render 'shared/index'
+        .container
+          = render 'shared/index'
 / = render 'index_vue'
 

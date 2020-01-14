@@ -102,7 +102,7 @@
 @cell_to_edit = (cl)->
   cl.addClass('editable')
   table = cl.closest('table')
-  val = cl.html()      
+  val = if cl.attr('item_id') == undefined then cl.html() else cl.attr('item_id')
   cl.data('text', val).html ''
   cl.attr('last_val',val)  
   fld = table.find('th:eq('+cl.index()+')').attr('fld')

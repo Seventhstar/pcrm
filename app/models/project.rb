@@ -15,6 +15,7 @@ class Project < ActiveRecord::Base
   belongs_to :executor, class_name: 'User', foreign_key: :executor_id
   belongs_to :visualer, class_name: 'User', foreign_key: :visualer_id, optional: true
   belongs_to :pstatus,  class_name: 'ProjectStatus', foreign_key: :pstatus_id
+  belongs_to :stage,    class_name: 'ProjectStage', foreign_key: :project_stage_id, optional: true
 
   has_many :absence
   has_many :receipts
@@ -42,6 +43,23 @@ class Project < ActiveRecord::Base
   scope :by_year,     ->(year){where(date_start: Date.new(year.to_i,1,1)..Date.new(year.to_i,12,31)) if year.present? && year&.to_i>0}
 
   has_paper_trail
+
+  def stages_line_data
+    current_stage = self.project_stage_id.nil? ? 0 : self.project_stage_id 
+    sum_parts = self.project_type.project_stages.sum(:part)
+    current_stages = self.project_type.project_stages.where('id <= ? ', current_stage)
+    current_parts = current_stages.sum(:part)
+
+    list = self.project_type.project_stages.order(:id).map{ |s| {
+      name:  s.name,
+      width: (1316 / sum_parts).to_i * s.part,
+      color: (s.id <= current_stage ? s.color : 'lightgray'),
+      id: s.id
+      }
+    }
+    list.last[:width] = 1316 + list.last[:width] - list.pluck(:width).sum if list.length>0 && list.last[:id] == ProjectStage.last.id
+    list
+  end
 
   def name
     address

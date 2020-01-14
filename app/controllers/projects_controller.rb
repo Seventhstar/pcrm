@@ -12,8 +12,8 @@ class ProjectsController < ApplicationController
   respond_to :html, :json, :js
 
   def index
-    # @years = (2016..Date.today.year).step(1).to_a.reverse
-    puts "prj years:#{@years}, @year = #{@year}"
+   #@years = (2016..Date.today.year).step(1).to_a.reverse
+    #puts "prj years:#{@years}, @year = #{@year}"
     
     project_executors_ids  = Project.by_city(current_user.city).pluck(:executor_id).uniq
     @executors = User.where(id: project_executors_ids).actual
@@ -69,6 +69,9 @@ class ProjectsController < ApplicationController
 
     store_prj_path
     @sort = sort_1
+
+    # @sum_parts = ProjectStage.sum(:part)
+    # wkefk
   end
 
   # GET /projects/1
@@ -106,10 +109,13 @@ class ProjectsController < ApplicationController
     @styles     = Style.order(:name)
     @currencies = Currency.order('id')
     @pstatuses  = ProjectStatus.order(:name)
+    @project_stages     = ProjectStage.order(:stage_order)
     # puts "@main_city #{@main_city.name}"
     @clients    = Client.where(city: @main_city).order(:name)
     @gtypes     = Goodstype.where(id: [@pgt_ids]).order(:priority)
     
+
+
     @tarifs     = Tarif.order(:project_type_id, :from)
     @holidays   = Holiday.pluck(:day).collect{|d| js_date(d)}
     @workdays   = WorkingDay.pluck(:day).collect{|d| js_date(d)}
@@ -176,7 +182,7 @@ class ProjectsController < ApplicationController
     # puts "params #{params}"
     @isNewProject = false
     @tab = params[:tabs].try(:to_i)
-    @gs = params[:good_state]
+    @gs  = params[:good_state]
 
     if !@gs.nil? && @gs.to_i>0
       @gs = @gs.to_i
@@ -190,7 +196,8 @@ class ProjectsController < ApplicationController
     @elongation_types = ElongationType.all
     @new_et  = ProjectElongation.new
     @new_gt  = Goodstype.new
-
+    @stage      = @project.stage #if @project.present?
+    @project_stage = @project.stage
     # @goods_sum = ProjectGood.where(project_id: @project.id)
     @goods = ProjectGood.where(project_id: @project.id)
             .left_joins(:provider)
@@ -391,7 +398,7 @@ class ProjectsController < ApplicationController
         :designer_price, :designer_price_2, :visualer_price, :days, 
         :designer_sum, :visualer_sum, :sum_total_executor, :sum_rest,
         :debt, :interest, :payd_q, :payd_full, :first_comment, :progress, :sum_discount, :discount,
-        :city_id, :lead_id,
+        :city_id, :lead_id, :project_stage_id,
         client_attributes: [:name, :address, :phone, :email], 
         contacts_attributes: [:id, :contact_kind_id, :contact_kind, :val, :who, :_destroy],
         elongations_attributes: [:new_date, :elongation_type_id, :_destroy],

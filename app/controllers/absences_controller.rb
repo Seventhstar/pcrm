@@ -68,7 +68,7 @@ class AbsencesController < ApplicationController
     @search = params[:search]
     @json_absences = Absence.all.map{ |a| { id: a.id,  #.where("dt_from >= ?", (Date.today - 1.week))
                      # address: a.project_name,
-                      # actual: a.dt_from > (Date.today-52.week),
+                      actual: a.dt_from > (Date.today-52.week) && a.dt_from < (Date.today + 1.month).end_of_month,
                      dt_from: format_date(a.dt_from),
                        dt_to: format_date(a.dt_to),
                         user: a.user_name,

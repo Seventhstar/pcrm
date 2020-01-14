@@ -40,7 +40,6 @@
       <tr id="item_<%= item.id %>">
         <% attrs.each do |attr| %>
           <% a0 = attr[0] %>
-          
           <% if attr_boolean?(@item, a0) %>
             <td class="state">
               <span class="check_img sw_check <%= item[a0] ? 'checked' : '' %>" item_id="<%= item.id %>" chk="<%= a0 %>"></span>
@@ -50,7 +49,7 @@
             <td class="option_day"><%= item[a0].try('strftime',"%d.%m.%Y") %></td>
 
           <% elsif a0.last(3) == '_id' %>
-            <td title='<%= item.id %>'><%= item.try(a0[0..-4]).try(:name) %></td>
+            <td title='<%= item.id %>' item_id="<%= item.try(a0) %>"><%= item.try(a0[0..-4]).try(:name) %></td>
 
           <% else %>
             <td title='<%= item.id %>'><%= item[a0].to_s %></td>

@@ -58,6 +58,7 @@ Rails.application.routes.draw do
   resources :project_goods
   resources :project_types
   resources :project_statuses
+  resources :project_stages
   resources :elongation_types
   resources :project_g_types
   resources :contact_kinds
