@@ -1,8 +1,11 @@
 // Place all the styles related to the Absences controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@import "common.scss";
 
 #absence_shops .edit_delete {width: 175px;}
+
+.panel-default .panel-heading.calendar-head {padding: 4px 12px; height: 37px;}
 
 .tcalendar .day {
     width: 14%; 
@@ -12,7 +15,7 @@
 
 th.day{text-align: center; }
 td.day{font-size: 13px;}
-.nday {color: #ccc;}
+.nday {color: #dcdcdc;}
 .inday {min-height: 100px;}
 
 
@@ -54,6 +57,10 @@ td.day{font-size: 13px;}
 
 
 .numday {display: block; }
+.numday.date{ background-color: #dcdcdc; padding: 0px 9px; border-radius: 2px;}
+.numday.date.curday {background-color: $green; color: white;}
+.before li a {color: #888}
+.nday .numday.date{ background-color: #f5f5f5}
 // .abs1{background-color: red;}
 
 .day .tooltip-inner {
@@ -63,12 +70,31 @@ td.day{font-size: 13px;}
     //max-width:none;
 }
 
-.cal-next{
-		border: 1px solid #f2f2f2;
-		padding: 5px;
-		cursor: pointer;
+.cal-month {padding: 6px 16px; float: left;}
+
+.arrow-left, .arrow-right {background: asset-url('arrscroll.png') no-repeat;     display: inline-block;
+    width: 32px;
+    // margin-top: -14px;
+    height: 32px;
+    -webkit-transform: rotate(-90deg);
+    // -webkit-user-modify: read-write;
+  transform: rotate(-90deg);
+}
+.arrow-right { -webkit-transform: rotate(90deg); transform: rotate(90deg); }
+
+.cal-next, .cal-prev {
+    height: 34px;
+    float: left;
+    display: inline-block;
+    border: 1px solid #f2f2f2;
+    padding: 0 16px;
+    line-height: 1;
+    cursor: pointer;
+    // background-color: #f5f5f5;
+    border-radius: 5px;
+
     &:hover{background: #6acc00;
     border: 1px solid #6acc00;
-    border-radius: 4px;
+    border-radius: 5px;
     color: #fff !important; }
 }

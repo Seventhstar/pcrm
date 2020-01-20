@@ -9,7 +9,13 @@ module AbsencesHelper
     cls = "day"
     cls = cls + ' nday' if day.beginning_of_month != month.beginning_of_month
     cls = cls + ' curday' if day.beginning_of_day == Date.today
-    cls = cls + ' nonactual' if day.beginning_of_day < Date.today
+    cls = cls + ' before' if day.beginning_of_day < Date.today
+    cls
+  end
+
+  def date_class(day)
+    cls = "numday date"
+    cls = cls + ' curday' if day.beginning_of_day == Date.today
     cls
   end
 
@@ -41,7 +47,8 @@ module AbsencesHelper
   def date_birth_li(day_births, day)
     dm = day.try('strftime','%d.%m')
     if day_births.keys.include? dm 
-       content_tag :li, ['<b>',day_births[dm],'</b><br>','День рождения'].join.html_safe, {class: 'birthday ', 'data-toggle' => "tooltip", 'data-placement' => "top", title: 'День рождения'}
+       content_tag :li, ['День рождения', '<br/>','<b>', day_births[dm], '</b>'].join.html_safe, 
+        {class: 'birthday ', 'data-toggle' => "tooltip", 'data-placement' => "top", title: 'День рождения'}
     end
 
   end

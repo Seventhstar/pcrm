@@ -8,6 +8,58 @@
 
 .lbl-goods{padding-top: 7px; margin-right: 15px; }
   
+.prj_panel {
+    font-size: 13px;
+    &:hover {background: $light-gray;}
+    display: block;
+    // width: 100%;
+    // padding: 8px 0px 4px 4px; 
+    // padding: 8px; 
+    padding: 8px; 
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid $border-color;
+    border-radius: 4px;}
+
+.tool_icons {padding: 8px;}
+.tool_icons .icon {margin: 0 10px 0 0; width: 16px; height: 16px;}
+
+.prj_body {display: grid; grid-template-columns: 54px 374px ;}
+
+.prj_top {display: grid; grid-template-columns: 40px 164px 374px 1fr; margin-bottom: 4px;}
+
+.prj_top div, .prj_bottom div {vertical-align: middle; padding: 2px 8px;}
+.prj_bottom {display: grid; grid-template-columns: 102px 102px 374px 350px 130px 1fr 62px; margin-top: 4px;}
+.prj_old {display: grid; grid-template-columns: 54px 350px 88px 234px 136px 1fr 122px 94px 62px;}
+.prj_old div {padding: 8px; align-self: center;}
+
+.date_progress {display: grid; grid-template-areas: "a b" 
+                                                    "c c"; grid-template-columns: repeat(2, 1fr);}
+
+.prj_old .date_progress, .date_progress div {padding: 2px; }                                      
+.date_progress .area_a {grid-area: a;}
+.date_progress .area_b {grid-area: b; text-align: right;}
+.date_progress .new_bar {grid-area: c;}
+
+.ta_right {text-align: right;}
+.ta_center {text-align: center;}
+
+.new_bar {height: 16px; padding: 4px;}
+.new_bar .bar {width: 100%; padding: 0; height: auto; text-align: center; font-size: 12px;}
+.number {text-align: center; vertical-align: center;}
+
+.prj_panel .line-graph {height: 24px;}
+.date_last {text-align: right;}
+
+.stage-span {display: block; height: 20px; float: left; text-align: center; color: white; padding-top: 2px;}
+.va_middle.after-graph td {border-top: none;}
+.va_middle.before-graph td {border-top: 1px solid $border-color;}
+
+
+.tleads .line-graph td {padding: 18px 4px 0 4px; }
+// .tleads .line-graph td {padding-top: 24px;}
+.line-graph td span:first-child, .line-graph span:first-child{border-top-left-radius: 4px; border-bottom-left-radius: 4px;}
+.line-graph td span:last-child,  .line-graph span:last-child{border-top-right-radius: 3px; border-bottom-right-radius: 3px;}
 
 a.new_client    {padding-left: 48px;}
 #project_address{margin-bottom: 6px;}

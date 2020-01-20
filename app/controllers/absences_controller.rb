@@ -1,6 +1,5 @@
 class AbsencesController < ApplicationController
   include CommonHelper
-  include VueHelper
   respond_to :html, :json, :js
   before_action :set_absence, only: [:show, :edit, :update, :destroy]
   before_action :logged_in_user
@@ -8,7 +7,6 @@ class AbsencesController < ApplicationController
   
   helper_method :sort_column, :sort_direction
   before_action :logged_in_user
-  before_action :abs_params, only: [:new, :edit, :update]
   after_action  :send_changeset_email, only: [:update,:create]
 
   # GET /absences
@@ -21,7 +19,7 @@ class AbsencesController < ApplicationController
 
     if params[:sort] == 'calendar'
       @current_month = Date.today.beginning_of_month 
-      params['m'] = nil if params[:sort]!='calendar'
+      params['m'] = nil if  params[:sort]!='calendar'
       @current_month = Date.parse(params['m']) if !params['m'].nil?
       @curr_day = @current_month.beginning_of_month.beginning_of_week
 
@@ -42,59 +40,28 @@ class AbsencesController < ApplicationController
       query_str = "absences.*, date_trunc('month', dt_from) AS month"
 
       @page = params[:page].try(:to_i)
-      @page = 1 if @page == 0 || @page.nil?
+      @page = 1 if @page ==0 || @page.nil?
 
-      # abs = is_manager? ? Absence.all : current_user.absences
-      abs = Absence.all
-      # @absences = abs.select(query_str).joins(:reason)
+      abs = is_manager? ? Absence.all : current_user.absences
+      @absences = abs.select(query_str).joins(:reason)
 
       # puts "user_ids #{@user_ids}"
       # wee
-      # @absences = @absences.where(user_id: @user_ids)
+      @absences = @absences.where(user_id: @user_ids)
 
 
       if params[:sort] == 'users.name'
         sort_1 = "users.name"
-        # @absences = @absences.joins(:user)
+        @absences = @absences.joins(:user)
       end
-      # abs = abs.where("dt_from >= ?", (Date.today - 1.week))
-      # @absences = @absences.where("dt_from >= ?", (Date.today-2.week)) if @only_actual
-      # @absences = @absences.paginate(page: @page, per_page: 50)
-      # sort_1 = @sort_column == 'dt_from' ? 'month' : @sort_column
-      # order = "#{sort_1} #{sort_direction}, #{sort_2} #{dir_2}, absences.created_at desc"
-      # @absences = @absences.order(order)
+      @absences = @absences.where("dt_from >= ? AND dt_from <= ?", (Date.today-2.week), (Date.today+1.month).end_of_month ) if @only_actual
+      @absences = @absences.where('extract(year from dt_from) = ?', @params[:year]) if @params[:year].present?
+      @absences = @absences.paginate(page: @page, per_page: 50)
+      sort_1 = @sort_column == 'dt_from' ? 'month' : @sort_column
+      order = "#{sort_1} #{sort_direction}, #{sort_2} #{dir_2}, absences.created_at desc"
+      @absences = @absences.order(order)
     end
 
-    @search = params[:search]
-    @json_absences = Absence.all.map{ |a| { id: a.id,  #.where("dt_from >= ?", (Date.today - 1.week))
-                     # address: a.project_name,
-                      actual: a.dt_from > (Date.today-52.week) && a.dt_from < (Date.today + 1.month).end_of_month,
-                     dt_from: format_date(a.dt_from),
-                       dt_to: format_date(a.dt_to),
-                        user: a.user_name,
-                      reason: a.reason_name,
-                project_name: a.project_name,
-                       month: month_year(a.dt_from),
-                        year: a.dt_from.year,
-                   time_from: f_time(a.dt_from),
-                     time_to: f_time(a.dt_to),
-                       group: a.dt_from }}
-    # puts "@json_absences #{@json_absences}"
-    cur_year = Date.today.year
-    @years = (abs.first[:dt_from].year..cur_year).map{|y| {id: y, name: y }}
-    cur_year = params[:year].nil? ? cur_year : params[:year].try(:to_i)
-    @year = {id: cur_year, name: cur_year}
-
-    @cities = City.order(:id) if @cities.nil?
-    # @city   = params[:city].present? ? params[:city] : 1
-    @city = @main_city 
-
-    @reasons = AbsenceReason.order(:id).map{ |e| {name: e.name.strip, id: e.id } }
-    @params = params.permit(params.except(:controller, :action).keys).to_h
-    # @params = prm.map{|p| {id: p[1], name: p[0]}}.to_h
-    # @params = prm.map{|p| if (p[0] != 'controller' && p[0] != 'action' ) {p[0] => p[1]}}.inject(:merge)
-    # wfkw
-    @all_users = User.actual #.by_city(current_user.city)
 
     
     # puts "@absences #{@absences}"
@@ -104,24 +71,22 @@ class AbsencesController < ApplicationController
   # GET /absences/1.json
   def show
     @title = 'Просмотр данных об отсутствии'
-    @shop     = AbsenceShop.new
-    @shops    = @absence.shops
-    @dt_from  = @absence.dt_from.try('strftime',"%d.%m.%Y")
-    @dt_to    = @absence.dt_to.try('strftime',"%d.%m.%Y")
-    @t_to     = @absence.dt_to.try('strftime',"%H:%M")
-    @t_from   = @absence.dt_from.try('strftime',"%H:%M")
-    @checked  = @absence.dt_from.beginning_of_day != @absence.dt_to.beginning_of_day
+    @shops  = @absence.shops
+
+    @shop  = AbsenceShop.new
     @shop_targets = AbsenceShopTarget.all
+    @dt_from = @absence.dt_from.try('strftime',"%d.%m.%Y")
+    @dt_to = @absence.dt_to.try('strftime',"%d.%m.%Y")
+    @t_to = @absence.dt_to.try('strftime',"%H:%M")
+    @t_from = @absence.dt_from.try('strftime',"%H:%M")
+    @checked = @absence.dt_from.beginning_of_day != @absence.dt_to.beginning_of_day
     
     respond_modal_with @absence, location: root_path
   end
 
-  def def_lists
-  end
-
   def abs_params(ap = nil)
-    @reasons = AbsenceReason.order(:id)
     @shop  = AbsenceShop.new
+    @reasons = AbsenceReason.order(:id)
     @targets = AbsenceTarget.order(:name)
     @users    = User.actual.by_city(current_user.city)
 
@@ -143,7 +108,7 @@ class AbsencesController < ApplicationController
   end
   # GET /absences/new
   def new
-    # abs_params
+    abs_params
     @absence = Absence.new
     @dt_from = DateTime.now.try('strftime',"%d.%m.%Y")
     @dt_to = @dt_from
@@ -160,7 +125,7 @@ class AbsencesController < ApplicationController
     if !is_manager? && @absence.user != current_user
       redirect_to absences_path
     end
-    # abs_params
+    abs_params
   end
 
   # POST /absences
@@ -182,11 +147,11 @@ class AbsencesController < ApplicationController
     ap = absence_params
     reason_id = ap[:reason_id].try('to_i')
     if reason_id.present?
-      ap[:project_id] = 0 if ![2, 3].include?(reason_id)
-      ap[:target_id] = 0 if reason_id != 2
+      ap[:project_id]=0 if ![2, 3].include?(reason_id)
+      ap[:target_id]=0 if reason_id != 2
     end
 
-    # abs_params
+    abs_params
     respond_to do |format|
       if @absence.update(ap)
         format.html { redirect_to absences_url, notice: 'Отсутствие успешно обновлено.' }

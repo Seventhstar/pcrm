@@ -7,7 +7,6 @@
       model: 'absence',
       noteValid: '',
       formValid: false,
-      readyToChange: false,
       filteredProjects: [],
       booleans: 'canceled approved f_shop',
       texts: 'comment new_shop new_shop_target',
@@ -32,12 +31,11 @@
     },
 
     created(){
-      this.readyToChange = true
       this.makeFilter()
     },
 
     watch: {
-      user() {
+      user(){
         this.project = null
         this.makeFilter()
       }
@@ -81,9 +79,6 @@
         let f_shop = true;
         let formValid = true;
         let reason = v_nil(this.reason) ? 0 : this.reason.value  
-
-        console.log('onInput', e)
-        if (!this.readyToChange) return
 
         switch(reason){
           case 0:

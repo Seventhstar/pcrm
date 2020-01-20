@@ -52,12 +52,18 @@ class Project < ActiveRecord::Base
 
     list = self.project_type.project_stages.order(:id).map{ |s| {
       name:  s.name,
-      width: (1316 / sum_parts).to_i * s.part,
+      width: (1308 / sum_parts).to_i * s.part,
       color: (s.id <= current_stage ? s.color : 'lightgray'),
       id: s.id
       }
     }
-    list.last[:width] = 1316 + list.last[:width] - list.pluck(:width).sum if list.length>0 && list.last[:id] == ProjectStage.last.id
+    # puts "list.last[:width] #{list.last[:width]}"
+    # list.last[:width] = (1312 + list.last[:width] - list.pluck(:width).sum) if list.length > 0 && list.last[:id] == ProjectStage.last.id
+    list.last[:width] = (1308 + list.last[:width] - list.pluck(:width).sum) if list.length > 0 
+    # puts "w #{list.last[:id] == ProjectStage.last.id} = #{list.last[:id]} = #{ProjectStage.last.id}"
+    # puts "list.last[:width] #{list.last[:width]}"
+    # wekjkj
+
     list
   end
 

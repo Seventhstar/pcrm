@@ -1,6 +1,7 @@
 <% @cur_head = "" %>
 <% @first_table = true %>
 <% @no = 1 %>
+
 <% @projects.each do |project| %>
   <% if check_new_table_head(project) %>
     <%= render "shared/head" %>
@@ -8,9 +9,7 @@
     </thead>
     <tbody>
   <% end %>
-<!--   <tr class="va_middle before-graph">
-    <td colspan="10" ></td>
-  </tr> -->
+
   <tr class="line-graph">
     <td colspan="10">
       <% project.stages_line_data.each do |stage| %>
