@@ -2,21 +2,27 @@
 // Place all the styles related to the Projects controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.main_data_table .hl_a.bd {padding-bottom: 8px;}
+
 .gray_field {background-color: $light-gray; padding: 6px 15px; border-radius: 5px; border: 1px solid #eee;}
 .white_field {background-color: white; padding: 0 9px 15px 15px; border-radius: 5px; border: 1px solid #eee;}
 .inner_field {padding: 6px; border-radius: 5px;}
+.grid-heading{ padding: 12px; font-size: 17px; background-color: $border-color; }
 
 .lbl-goods{padding-top: 7px; margin-right: 15px; }
   
+.dark-gray.prj_panel, .dark-gray.prj_panel:hover {background-color: $border-color;}
+
+#grid_tprojects .panel {margin-bottom: 12px;}
+
 .prj_panel {
     font-size: 13px;
     &:hover {background: $light-gray;}
     display: block;
-    // width: 100%;
-    // padding: 8px 0px 4px 4px; 
-    // padding: 8px; 
-    padding: 8px; 
-    margin-bottom: 20px;
+    // margin-bottom: 20px;
+    margin-bottom: 12px;
+
+    
     background-color: #fff;
     border: 1px solid $border-color;
     border-radius: 4px;}
@@ -30,13 +36,18 @@
 
 .prj_top div, .prj_bottom div {vertical-align: middle; padding: 2px 8px;}
 .prj_bottom {display: grid; grid-template-columns: 102px 102px 374px 350px 130px 1fr 62px; margin-top: 4px;}
-.prj_old {display: grid; grid-template-columns: 54px 350px 88px 234px 136px 1fr 122px 94px 62px;}
-.prj_old div {padding: 8px; align-self: center;}
+
+.prj_grid {display: grid; grid-template-columns: 42px 350px 118px 1fr 136px 166px 122px 94px 62px; width: 100%;margin-bottom: 2px;}
+.prj_grid2 {display: grid; grid-template-columns: 42px 350px 118px 1fr 166px 122px 94px 62px; width: 100%;margin-bottom: 2px;}
+
+.prj_old>div {padding: 8px; align-self: center; }
+// .prj_old .left, .prj_old .right {padding: 0;}
+.prj_old .th {font: normal 14px 'Pragmatica', sans-serif; font-weight: 500;}
 
 .date_progress {display: grid; grid-template-areas: "a b" 
                                                     "c c"; grid-template-columns: repeat(2, 1fr);}
 
-.prj_old .date_progress, .date_progress div {padding: 2px; }                                      
+.prj_old .date_progress, .date_progress div {padding: 0 2px 2px 2px; }                                      
 .date_progress .area_a {grid-area: a;}
 .date_progress .area_b {grid-area: b; text-align: right;}
 .date_progress .new_bar {grid-area: c;}
@@ -48,7 +59,7 @@
 .new_bar .bar {width: 100%; padding: 0; height: auto; text-align: center; font-size: 12px;}
 .number {text-align: center; vertical-align: center;}
 
-.prj_panel .line-graph {height: 24px;}
+.prj_panel .line-graph {height: 24px; margin: 8px;}
 .date_last {text-align: right;}
 
 .stage-span {display: block; height: 20px; float: left; text-align: center; color: white; padding-top: 2px;}

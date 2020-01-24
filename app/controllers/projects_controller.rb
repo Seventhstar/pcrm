@@ -372,6 +372,7 @@ class ProjectsController < ApplicationController
       if !project_params[:progress].nil? && project_params["progress"].to_i>100
         project_params["progress"] = 100
       end
+
     end
 
     # Use callbacks to share common setup or constraints between actions.

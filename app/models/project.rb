@@ -50,7 +50,7 @@ class Project < ActiveRecord::Base
     current_stages = self.project_type.project_stages.where('id <= ? ', current_stage)
     current_parts = current_stages.sum(:part)
 
-    list = self.project_type.project_stages.order(:id).map{ |s| {
+    list = self.project_type.project_stages.order(:stage_order).map{ |s| {
       name:  s.name,
       width: (1308 / sum_parts).to_i * s.part,
       color: (s.id <= current_stage ? s.color : 'lightgray'),

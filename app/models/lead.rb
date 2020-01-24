@@ -88,6 +88,10 @@ class Lead < ActiveRecord::Base
     months = I18n.t('date.month_names_full').compact
 
     current_year = period[0].year
+    current_year = period[0].year.to_s
+    last_year = (period[0].year - 1).to_s
+    to_project = 'Заключили договор ' + current_year.to_s
+    to_project_year = 'Заключили договор ' + last_year
 
     donut_headers = ['label', 'value']
     xkey = 'month'
@@ -97,18 +101,35 @@ class Lead < ActiveRecord::Base
 
     when 'created_at' #
 
+      to_project_year = 'Заключили договор ' + last_year
+
       st = Status.find(10)
-      headers = diagram_type == 'Donut' ? donut_headers : ['month', 'Количество']
+      headers = diagram_type == 'Donut' ? donut_headers : ['month', current_year]
       data = period.each.collect{ |p|  {
         headers[0] => I18n.t(p.try('strftime',"%B")),  
         headers[1] => Lead.where("date_trunc('month', start_date) = ?", p).count,
-        to_project: st.leads.where("date_trunc('month', start_date) = ?", p).count,
-        'Прошлый год' => Lead.where("date_trunc('month', start_date) = ?", p - 1.year).count,
-        to_project_1: st.leads.where("date_trunc('month', start_date) = ?", p - 1.year).count
+        to_project => st.leads.where("date_trunc('month', start_date) = ?", p).count,
+        'Процент' => 0,
+        last_year => Lead.where("date_trunc('month', start_date) = ?", p - 1.year).count,
+        to_project_year => st.leads.where("date_trunc('month', start_date) = ?", p - 1.year).count,
+        'Процент_1' => 0
       }}
             
-      gxs = ['Количество', 'Прошлый год']
-      xs = ['Количество', 'Заключили договор', 'Прошлый год', 'Заключили договор']
+      gxs  = [current_year, last_year]
+
+      data.map {|t| 
+        t["Процент"] = (t[to_project].nil? || t[headers[1]].nil? || 
+                       t[to_project] == 0 || t[headers[1]] == 0) ? 0 : t[to_project] * 100 / t[headers[1]] 
+        # puts "t['Процент'] #{t['Процент']}"
+        t["Процент_1"] = t[to_project_year].nil? || t[to_project_year] == 0 ? 0 : t[to_project_year] * 100 / t[last_year] 
+      }
+
+      xs   = { period[0].year    => [ 'Количество (шт)', 'Заключили договор', '% заключивших'],
+              (period[0].year-1) => [ 'Количество (шт)', 'Заключили договор', '% заключивших']}
+
+      totals = [headers[1], to_project, '=totals[to_project]*100/totals[headers[1]]', 
+                last_year, to_project_year, '=totals[to_project_year]*100/totals[last_year]'] 
+
       el = 'Area'
 
     when 'users_created_at' # 
@@ -151,7 +172,7 @@ class Lead < ActiveRecord::Base
       data = Channel.all.each.collect{|c| {
         headers[0] => c.name,
         headers[1] => c.leads.where('extract(year from start_date) = ?', current_year).count,
-        'Прошлый год' => c.leads.where('extract(year from start_date) = ?', current_year-1).count,
+        'Прошлый год' => c.leads.where('extract(year from start_date) = ?', last_year).count,
         'Заключили договор' => c.leads.where('status_id = 10 AND extract(year from start_date) = ?', current_year).count,
         'Процент' => (c.leads.where('extract(year from start_date) = ?', current_year).count * 100 / total)}}
         .sort_by { |h| h['Процент'] }.reverse!
@@ -179,10 +200,7 @@ class Lead < ActiveRecord::Base
     when 'footage'
 
       st = Status.find(10)
-      current_year = period[0].year.to_s
-      last_year = (period[0].year - 1).to_s
-      to_project = 'Заключили договор ' + current_year
-      to_project_year = 'Заключили договор ' + last_year
+
       # last_year       = last_year + "й"
 
       data = period.each.collect{ |p| {
@@ -195,7 +213,7 @@ class Lead < ActiveRecord::Base
               'Процент_1' => 0 } }
 
       data.map {|t| 
-        t["Процент"] = t["Заключили договор"].nil? || t["Заключили договор"] == 0 ? 0 : t["Заключили договор"] * 100 / t[current_year] 
+        t["Процент"] = t[to_project].nil? || t[to_project] == 0 ? 0 : t[to_project] * 100 / t[current_year] 
         t["Процент_1"] = t[to_project_year].nil? || t[to_project_year] == 0 ? 0 : t[to_project_year] * 100 / t[last_year] 
       }
       
@@ -203,9 +221,10 @@ class Lead < ActiveRecord::Base
       gxs  = [current_year, last_year]
       gxs2 = [to_project, to_project_year]
       xs   = { period[0].year => [ 'Всего', 'Заключили договор', 'Процент'],
-               (period[0].year-1) => [ 'Всего', 'Заключили договор', 'Процент']}
+              (period[0].year-1) => [ 'Всего', 'Заключили договор', 'Процент']}
 
-      totals = [current_year, to_project, '', last_year, to_project_year, ' '] 
+      totals = [current_year, to_project, '=totals[to_project]*100/totals[current_year]', 
+                last_year, to_project_year, '=totals[to_project_year]*100/totals[last_year]'] 
 
       el = 'Area'
 
@@ -214,10 +233,13 @@ class Lead < ActiveRecord::Base
     result = {hash: data, json: data, xs: xs, element: el, xkey: xkey, gxs: gxs.nil? ? xs : gxs, gxs2: gxs2} 
     if !totals.nil?
       totals = totals.map{|t| {t => 0}}.reduce(:merge)
-      # puts "t #{totals}" 
-      data.each do |d|
-        totals.each do |k, v|
-          totals[k] += d[k] if !k.strip.empty?
+      totals.each do |k, v|
+        if k.include?('=') 
+          totals[k] = (eval k[1..-1])
+        else
+          data.each do |d|
+            totals[k] += (k.strip.empty? || d[k].nil? ? 0 : d[k] )
+          end
         end
       end
       result[:totals] = totals           # puts "totals #{totals}"

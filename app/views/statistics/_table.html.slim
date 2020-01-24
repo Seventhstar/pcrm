@@ -4,16 +4,16 @@
     table.tleads
       thead
         - if @chart_data[:xs].class == Hash
-          - if @column_header.present?
-            th
+          / # - if @column_header.present?
+          th
           - @chart_data[:xs].each do |head, subhead|
             th.td_center colspan="#{subhead.size}" =head               
           tr
-            - if @column_header.present?
-              th =@column_header
+            / - if @column_header.present?
+            th =@column_header
             - @chart_data[:xs].each do |head, subhead|
               - subhead.each do |sh|
-                th.td_center =sh 
+                th class="td_center " =sh 
         - else
           - if @column_header.present?
             th =@column_header
@@ -25,25 +25,28 @@
             - if row.key?(:id) 
               - row.each do |k, v| 
                 - if row.first[0] == k
-                  td =link_to v, user_path(row[:id])
+                  td.vline =link_to v, user_path(row[:id])
                 - elsif k == :id
                 - elsif v.class == Integer
                   td.td_center =v.to_sum
                 - else
-                  td =v
+                  td cls="#{v.class}" =v
             - else
               - row.each do |k, v| 
                 - if v.class == Integer
-                  td.td_center =v.to_sum
+                  td class="td_center #{td_class(row, k, @chart_data[:xs])}" k="#{k}" =v.to_sum
+                  / # - if k.index('Процент')
+                    td class="td_center #{td_class(row, k, @chart_data[:xs])}" =v.to_f/100
+                  / - else
                 - else
-                  td =v
+                  td.vline  =v
         - if @chart_data.key?(:totals)
           tr class="tr_bottom"
             th Итого:
             - @chart_data[:totals].each do |k, v|
               - if !k.strip.empty?
-                th.td_center =v.to_sum
+                th.td_center k="#{k}" =v.to_sum
               - else
-                th
+                th 
 
                 

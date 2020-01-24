@@ -6,76 +6,41 @@
     data: <%= fill_vue_data(nil, {
       texts: 'search',
       list_values: 'year city',
-      lists: 'years cities'
+      mainFilters: ['search'],
+      lists: 'years cities',
+      params: @params
     }, 'app') %>,
-
-    mounted() {
-      if (localStorage.user && localStorage.main_city != undefined){
-        this.main_city = localStorage.main_city
-      }
-    },
     
     created() {
-      // import { bus } from 'bus.js'
-      // console.log('main_app_vue year', this.year.value, 'this.isAppAvailable()', this.isAppAvailable())
-      this.sendValueToApp('year')
-      // this.$emit('yearChanged', this.year);
-      // eventBus.$emit("yearChanged", 'main_app_vue');
+      this.mainFilters.forEach( f => {this[f] = this.params[f]})
     },
 
     watch: {
       year(newValue) {  
-        // if (this.isAppAvailable()) {
-        //   // app.onInput({name: 'year', label: this.year.label, value: this.year.value}); 
-        //   // console.log('main_app_vue year', this.year.value)
-        //   sortable_prepare({});
-        // } else {
-          sortable_prepare({});
-          $(".main_data_table").html()
-          delay('document.location.reload(true)', 400)
-        // }
-        // this.$emit('yearChanged', newValue);
+        sortable_prepare({});
+        $(".main_data_table").html()
+        delay('document.location.reload(true)', 400)
       },
 
       city(newValue) {
-
-        // if (newValue == undefined) return
-        // if (this.isAppAvailable()) {
-        //   app.onInput({name: 'main_city', label: this.city.label, value: this.city.value}); 
-        //   // localStorage.main_city = newValue.value
-        //   sortable_prepare({});
-        // } else { 
-          sortable_prepare({});
-          // delay('sortable_query({})', 700)
-
-          $.ajax({
-            type: "POST",
-            url: "/ajax/set_city",
-            data: {city: this.city.value},
-            dataType: "json",
-            encode: true
-          })
-          delay('document.location.reload(true)', 400)
-        // }
+        sortable_prepare({});
+        $.ajax({
+          type: "POST",
+          url: "/ajax/set_city",
+          data: {city: this.city.value},
+          dataType: "json",
+          encode: true
+        })
+        delay('document.location.reload(true)', 400)
       }
     },
 
-    methods:{ 
-      isAppAvailable() {
-        return typeof(app) != "undefined" && app !== null
-      },
-
-      sendValueToApp(name, delay = false) {
-        if (this.isAppAvailable() || delay) {
-          // app.onInput({name: name, label: this[name].label, value: this[name].value}); 
-          // Vue.
-          console.log('sendValueToApp', name, this[name].value)
-          sortable_prepare({});
-        } else if (!delay) {
-          setTimeout('nav.sendValueToApp("'+name+'", true)', 800)
-        }
+    methods: {
+      clearSearch() {
+        this.search = ''
+        delay('sortable_query({})', 700)
       }
-    }
+     }
     
   })
 </script>

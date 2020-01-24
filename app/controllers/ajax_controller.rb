@@ -64,13 +64,10 @@ class AjaxController < ApplicationController
       # menu = get_menu()
       list = []
       menu = t('options_menu')
-      # puts "menu: #{menu}"
       menu.each do |m0|
-        # puts "m0: #{m0}"
         m0[1].each do |m1|
           m2_name = t(m1)[0]
           if m2_name.downcase.include?(params[:term].downcase)
-            # puts "m1: #{m1}, m2_name: #{m2_name}"
             list << {id: m1, label: m2_name, name: 'options'}
           end
 
@@ -232,7 +229,6 @@ class AjaxController < ApplicationController
 
   def switch_locked
     if current_user.has_role?(:manager)
-      puts "current_user #{current_user.name} #{current_user.has_role?(:manager)}" 
       file = Attachment.find(params[:file])
       file.update_attribute(:secret,!file.secret)
       head :ok
@@ -250,7 +246,6 @@ class AjaxController < ApplicationController
       prms = params['upd_modal'] if prms.nil?
 
       prms = prms.permit!.to_h
-      puts "prms #{prms}"
       prms.each do |p|
         new_value = p[1]
         new_value.gsub!(' ','') if !p[0].index('sum').nil?

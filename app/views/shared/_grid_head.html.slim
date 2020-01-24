@@ -1,0 +1,20 @@
+- @no ||= 0
+- if !@first_table
+  - @no = @no + 1 
+- else 
+  - @no = 1 
+
+- cur_id = @cur_id.nil? ? @no : @cur_id
+- hide = params['cut'].split('.').include? @no.to_s if !params['cut'].nil? 
+- header = local_assigns[:link] ? link_to( @cur_head, [:edit, link], target: "_blank") : @cur_head 
+- @first_table = false
+
+- if @cur_head
+  .panel.panel-default
+    .panel-heading.grid-heading.head
+      |#{header}
+      span class="cut #{hide ? 'cutted' : ''}" cut_id="#{cur_id}"
+        b
+
+  / hl.hl_a.bd.blk 
+/ div id="grid_#{cur_id}" style="display: #{hide ? 'none' : ''};"

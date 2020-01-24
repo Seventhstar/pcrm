@@ -1,74 +1,63 @@
+- @cur_head = "" 
+- @first_table = true 
+- @no = 1 
+
+
+.prj_panel.panel-default.dark-gray
+  div class="prj_old prj_grid#{is_manager? ? '' : '2'}"
+    .th №
+    .th Адрес 
+    .th Вид проекта 
+    .th Заказчик  
+    - if is_manager?
+      .th Исполнитель  
+    .th 
+      .left Начало    
+      .right Оконч.  
+    .th м2 / Цена 
+    .th Стоимость 
+
 - @projects.each do |project|
   - if check_new_table_head(project)
+    - if !@first_table 
+      .sep_3
     = render "shared/grid_head"
 
-  div class="prj_panel #{class_for_project(project)}"
-    .prj_top
-      .number
-        = icon_for_project(project).html_safe 
-        = project.number 
-      .new_bar
-        .bar.fullwidth c="#{project.pstatus.try(:color)}"
-          = project.progress_proc 
-      div
-        = tooltip(project.address, project.pstatus.try(:name))
-      div 
-        = tooltip(project.client_name, \
-                          tooltip_str_from_hash({'Телефон:' => phone_format(project.client_phone), \
-                                                  'E-mail:' => project.client_email}), true ) 
-
+  - hide = params['cut'].split('.').include? @no.to_s if !params['cut'].nil? && params[:sort] != 'number'
+  div class="prj_panel #{class_for_project(project)} grid_#{@no}" style="display: #{hide ? 'none' : ''};"
     
+    .prj_table      
+      div class="prj_old prj_grid#{is_manager? ? '' : '2'}"
+        .number.ta_center.cell-inner
+          = icon_for_project(project).html_safe 
+          = project.number 
+        div
+          = project.address
+        .ta_center
+          = project.project_type_name
+        div 
+          = tooltip(project.client_name, \
+                            tooltip_str_from_hash({'Телефон:' => phone_format(project.client_phone), \
+                                                    'E-mail:' => project.client_email}), true ) 
+        - if is_manager?
+          div
+            = project.executor_name
+        .date_progress
+          .area_a 
+            = format_date(project.date_start)
+          div class="area_b #{class_prj_td(project)}"
+            = format_date(project.date_end) 
+          .new_bar
+            .bar.fullwidth c="#{project.pstatus.try(:color)}"
+              = project.progress_proc 
+        .ta_center
+          = is_manager? ? project.admin_info.html_safe : project.executor_info.html_safe
+        div class="ta_center #{ project.sum_total_real == 0 ? '':'red'}" title="#{project.sum_total.to_sum}"
+          = is_manager? ? project.total.to_sum : project.designer_sum_calc.to_sum
+        .tool_icons   
+          = tool_icons(project, {icons: 'edit, show'})
+
     .line-graph
       - project.stages_line_data.each do |stage| 
           span.stage-span style="width:#{stage[:width]}px; background-color: #{stage[:color]};"
             = stage[:name] 
-    
-    .prj_bottom
-      .date
-        = format_date(project.date_start)
-      .date_last
-        = format_date(project.date_end)   
-      div
-        = project.project_type_name
-      div
-        = project.executor_name
-      .ta_center
-        = project.admin_info.html_safe
-      .ta_center
-        = project.total.to_sum
-      .tool_icons   
-        = tool_icons(project, {icons: 'edit, show', rowspan: 2})
-
-  div class="prj_panel #{class_for_project(project)}"
-    .line-graph
-      - project.stages_line_data.each do |stage| 
-          span.stage-span style="width:#{stage[:width]}px; background-color: #{stage[:color]};"
-            = stage[:name] 
-    .prj_old
-      .number.ta_center
-        = icon_for_project(project).html_safe 
-        = project.number 
-      div
-        = project.address
-      .ta_center
-        = project.project_type_name
-      div 
-        = tooltip(project.client_name, \
-                          tooltip_str_from_hash({'Телефон:' => phone_format(project.client_phone), \
-                                                  'E-mail:' => project.client_email}), true ) 
-      div
-        = project.executor_name
-      .date_progress
-        .area_a 
-          = format_date(project.date_start)
-        .area_b 
-          = format_date(project.date_end) 
-        .new_bar
-          .bar.fullwidth c="#{project.pstatus.try(:color)}"
-            = project.progress_proc 
-      .ta_center
-        = project.admin_info.html_safe
-      div class="ta_center #{ project.sum_total_real == 0 ? '':'red'}" title="#{project.sum_total.to_sum}"
-        = project.total.to_sum 
-      .tool_icons   
-        = tool_icons(project, {icons: 'edit, show'})

@@ -1,5 +1,10 @@
 @import "common.scss";
 
+.blk {display: block;}
+
+ td.vline, th.vline {border-right: 1px solid $border-color;}
+ .prj_table { display: grid; align-items: end; min-height: 50px;}
+
 .panel-default.gray { border-color: #ddd; background-color: $light-gray; }
 .tleads tr {background-color: white;}
 
@@ -59,7 +64,7 @@ span.title {margin-top: 3px}
 .th.current.desc .sortArrow{ background: asset-url("arrow_desc.png") no-repeat 0 0; }
 
 tr.nonactual td, tr.nonactual td a, td.nonactual a, .nonactual .td, .nonactual .td a{ color: #ccc; }
-.hotlead, .hot, td.hot_date{ color: red; }
+.hotlead, .hot, .hot_date{ color: red; }
 .goodlead{ color: $green-text; }
 .info, .info a {color: #009DDD;}
 
