@@ -22,16 +22,19 @@
 
 .navsearch .clear {
     font-weight: bolder;
+    position: absolute;
     cursor: pointer;
-    font-size: 26px;
+    font-size: 28px;
+    font-family: fantasy;
     line-height: 1;
     color: #ca0000;
     border: 0;
     padding: 0;
-    margin-top: -6px;
-    margin-left: -24px;
-    margin-right: 6px;
+    margin-top: 3px;
+    margin-left: -22px;
+    /* margin-right: 6px; */
     background-color: transparent;
+    float: left;
 }
 
 /*.fade-enter-active, .fade-leave-active {

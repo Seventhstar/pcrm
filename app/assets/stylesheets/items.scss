@@ -1,4 +1,6 @@
 /* custom checkbox */
+@import "common.scss";
+
 .checkcontainer {
   margin: 8px 0;
   display: block; 
@@ -75,3 +77,62 @@ span.check_img{ text-align: center; }
 .inp.radio {width: 18px; height: 18px; background-position: -193px 0; }
 label.active .inp.radio {background-position:-193px -20px;}
 .inp.radio input{position:absolute; top: 0; left: -50px;}
+
+.nav_year .v-select .dropdown-menu {min-width: 90px;}
+
+
+.v-autocomplete .dropdown-menu {display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    min-width: 160px;
+    padding: 5px 0;
+    margin: 0;
+    width: 100%;
+    overflow-y: scroll;
+    border: 1px solid rgba(0,0,0,.26);
+    box-shadow: 0 3px 6px 0 rgba(0,0,0,.15);
+    border-top: none;
+    border-radius: 0 0 5px 5px;
+    text-align: left;
+    list-style: none;
+    background: #fff;}
+
+
+
+.v-autocomplete{ 
+  position: relative;
+  min-width: 360px;
+  width: 360px;
+  .search_area {width: 100%;}
+  li {
+    a{    display: block;
+    padding: 3px 20px;}
+    line-height: 1.42857143;
+    &:hover{
+      cursor: pointer;
+      a{color: white;}
+      background-color: $main-orange;
+    }
+  }
+  
+
+  .v-autocomplete-input-group{
+    .v-autocomplete-input{ 
+      height: 34px;
+      margin-top: -8px;
+      padding: 3px 10px 0 10px;
+    background: #fff;
+    border: 1px solid #D6D6D6;
+    border-radius: 5px;
+    }
+    // &.v-autocomplete-selected{
+    //   .v-autocomplete-input{
+    //     color: green;
+    //     background-color: #f2fff2;
+    //   }
+    // }
+
+  }
+}

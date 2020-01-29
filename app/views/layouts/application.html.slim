@@ -29,17 +29,18 @@ html lang="en"
                   .nav_year  v-if="years.length>0"
                     v-chosen clear="false" name="year" placeholder="Год..." src="years" 
                   .navsearch
-                    = text_field_tag :search, params[:search], \
+                    /= text_field_tag :search, params[:search], \
                       class: "search_area txt",                \
                       placeholder: "Поиск...",                 \
                       "v-model": "search",                     \
+                      "v-on:change": 'searchChange', \
                       aname: controller.action_name,           \
                       cname: controller.controller_name,       \
                       mname: class_name   
-                    .vs__actions
+                    / .vs__actions
                       button.clear style="" title="Очистить" type="button" 
                         span @click="clearSearch()" × 
-
+                    v-search v-model:"search"
                 
                 = render 'main_app_vue'
               .user_h

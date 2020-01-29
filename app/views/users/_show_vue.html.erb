@@ -5,7 +5,7 @@
     data: {
       model: 'User',
       
-      year: 0,
+      year: <%= @year[:id] %>,
       tabs: [{value: 1, label: 'Проекты'}, {value: 2, label: 'Отсутствия'}, {value: 3, label: 'Лиды'}],
       
       filteredLeads: [],
@@ -38,7 +38,7 @@
     },
 
     created() {
-      this.year = new Date().getFullYear()
+      // this.year = new Date().getFullYear()
       this.updateLists()
       this.setActive(this.tabs[0])
     },

@@ -1,18 +1,19 @@
 class UsersController < ApplicationController
   include VueHelper
   include DatesHelper
+  include Navigable
   
   before_action :logged_in_user
 #, only: [:index, :edit, :update, :destroy, :following, :followers]
   before_action :correct_user,   only: [:edit, :update]
   before_action :admin_user,     only: :destroy
   respond_to :html, :json
-
+  before_action :main_params, only: [:show]
 
   # GET /users
   # GET /users.json
   def index
-    puts "@only_actual #{@only_actual}"
+    # puts "@only_actual #{@only_actual}"
     @users = User.order(:name)
     @items = @users
   end
@@ -37,7 +38,7 @@ class UsersController < ApplicationController
 
     years = [[first_project, first_lead].min, cur_year]
     @years = (years[0]..years[1]).map{|y| {id: y, name: y }}
-    @year = {id: cur_year, name: cur_year}
+    # @year = {id: cur_year, name: cur_year}
     @leads = @user.leads
 
 

@@ -7,7 +7,7 @@ module Navigable
     cur_year = {id: 0, name: 'Все...'}
     @years.push(cur_year)
 
-    puts "main_params @years #{@years}"
+    # puts "main_params @years #{@years}"
     @cities = City.order(:id) if @cities.nil?
     @main_city = current_user.city if @main_city.nil? && !current_user.nil?
     

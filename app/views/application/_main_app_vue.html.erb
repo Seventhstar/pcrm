@@ -1,5 +1,7 @@
 <script>
   Vue.component('v-select', VueSelect.VueSelect)
+  // Vue.component('vue2-storage', Vue2Storage.Vue2Storage)
+  // import {} from ''
 
   let nav = new Vue({
     el: '.nav_select',
@@ -11,15 +13,23 @@
       params: @params
     }, 'app') %>,
     
+    mounted() {
+      console.log('mounted params', this.params)
+
+    },
+
     created() {
-      this.mainFilters.forEach( f => {this[f] = this.params[f]})
+      console.log('params', this.params)
+      this.search = this.params.search
+      // this.mainFilters.forEach( f => {this[f] = this.params[f]})
     },
 
     watch: {
       year(newValue) {  
-        sortable_prepare({});
+        // sortable_prepare({});
         $(".main_data_table").html()
-        delay('document.location.reload(true)', 400)
+        // delay('document.location.reload(true)', 400)
+        delay('sortable_query({})', 700)
       },
 
       city(newValue) {
@@ -31,11 +41,15 @@
           dataType: "json",
           encode: true
         })
-        delay('document.location.reload(true)', 400)
+        // delay('document.location.reload(true)', 400)
       }
     },
 
     methods: {
+      searchChange(newValue) {
+        // delay('sortable_query({})', 700)
+      },
+
       clearSearch() {
         this.search = ''
         delay('sortable_query({})', 700)
