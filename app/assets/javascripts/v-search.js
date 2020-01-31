@@ -1,15 +1,19 @@
 // Vue.component('v-select', VueSelect.VueSelect)
 // Vue.component('vue2-storage')
+// Vue.component('vuex', Vuex.Vuex)
+// import ''
+
 
 Vue.component('v-search', {
     data() {
       return {
         model: "",
+        store,
         searchText: '',
         showList: false,
         cursor: -1,
         items: [],
-        internalItems: this.items || []
+        internalItems: []
       }
     },
     name: 'v-search',
@@ -21,16 +25,19 @@ Vue.component('v-search', {
     <div class="v-autocomplete">
       <div class="" >
         <input v-model="searchText"  
-              id="searchText"
               class="search_area txt"
               placeholder="Поиск..."
               @click="showList = true"
-              @blur="blur" @focus="focus" @input="inputChange"
-              @keyup.enter="keyEnter" @keydown.tab="keyEnter" 
-              @keydown.up="keyUp" @keydown.down="keyDown">
+              @blur="blur" 
+              @focus="focus" 
+              @input="inputChange"
+              @keyup.enter="keyEnter" 
+              @keydown.tab="keyEnter" 
+              @keydown.up="keyUp" 
+              @keydown.down="keyDown">
         <button title="Очистить" type="button" class="clear" @click="clearSearch" ><span>× </span></button>
       </div>
-    <ul role="listbox" class="dropdown-menu" style="max-height: 400px;" v-show="showList">
+    <ul role="listbox" class="dropdown-menu" style="max-height: 400px;" v-show="show">
       <li role="option" v-for="item, i in internalItems" @click="onClickItem(item)" 
       :class="{'v-autocomplete-item-active': i === cursor}" @mouseover="cursor = i"><a>{{item}}</a></li> 
     </ul>
@@ -43,7 +50,7 @@ Vue.component('v-search', {
     },
     show () {
       // console.log('this.showList', this.showList, 'this.hasItems', this.hasItems)
-      return (this.showList)
+      return (this.showList && this.internalItems.length)
     }
   },
 
@@ -67,12 +74,14 @@ Vue.component('v-search', {
     },
 
     inputChange () {
-      console.log('selected this.searchText', this.searchText)
+      // console.log('selected this.searchText', this.searchText)
       // this.showList = true
       this.cursor = -1
       this.onSelectItem(null, 'inputChange')
       this.callUpdateItems(this.searchText, this.updateItems)
       this.$emit('change', this.searchText)
+      store.commit('increment')
+      store.commit('setSearchTexts', this.searchText)
     },
 
     updateItems () {
@@ -102,7 +111,7 @@ Vue.component('v-search', {
         // this.setItems(this.items)
       }
       this.$emit('input', item)
-      delay('sortable_query({})', 700)
+      // delay('sortable_query({})', 700)
     },
     // setItems (items) {
     //   // this.internalItems = items || []
@@ -121,6 +130,10 @@ Vue.component('v-search', {
     //     this.cursor++
     //     this.itemView(this.$el.getElementsByClassName('v-autocomplete-list-item')[this.cursor])
     //   }
+    // console.log('')
+    // store.commit('increment')
+    store.commit('increment')
+
     this.showList = false
     },
     itemView (item) {
@@ -131,8 +144,10 @@ Vue.component('v-search', {
     keyEnter (e) {
       if (e.key == 'Enter'){
         console.log('e', e, 'this.internalItems', this.internalItems)
+        if (this.internalItems == undefined) this.internalItems = []
         this.internalItems.unshift(this.searchText)
-        this.internalItems.length = 8
+        if (this.internalItems.length>8) this.internalItems.length = 8
+
         let s = Vue.$storage.set('search', this.internalItems)
 
       }
@@ -158,11 +173,17 @@ Vue.component('v-search', {
     console.log('this.parent', this.$parent.search )
     // this.value =
 
-
+// Vue.use(Vue2Storage, {
+  //   prefix: 'absence_',
     window.Vue.use(window.Vue2Storage)
     let searchTexts = Vue.$storage.get('search')
+    console.log('searchTexts', searchTexts, typeof(searchTexts) )
+
     // this.items = s
-    this.internalItems = searchTexts
+    if (searchTexts.constructor == Array)
+      this.internalItems = searchTexts 
+    else if (searchTexts.constructor == String) 
+      this.internalItems = [searchTexts]
     // for (var s in searchTexts){
     //   this.items.push(searchTexts[s])
 
@@ -183,12 +204,12 @@ Vue.component('v-search', {
         this.showList = false
       }
     },
-    value (newValue) {
-      console.log('value', value)
-      if (!this.isSelectedValue(newValue) ) {
-        this.onSelectItem(newValue)
-        this.searchText = this.getLabel(newValue)
-      }
-    }
+    // value (newValue) {
+    //   console.log('value', this.value, newValue)
+    //   if (!this.isSelectedValue(newValue) ) {
+    //     this.onSelectItem(newValue)
+    //     this.searchText = this.getLabel(newValue)
+    //   }
+    // }
   }
 })

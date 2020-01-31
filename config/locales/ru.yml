@@ -19,6 +19,7 @@ ru:
   Source: источник
   Channel: Канал
   Status: Статус
+  status: Статус
   status_id: Статус
   client_id: Клиент
   city_id: Город
@@ -101,7 +102,7 @@ ru:
   boss: Проверено
   coder: Выполнено
   info: Информация о запросе
-  status_date: Дата для статуса
+  status_date: Дата статуса
   start_date: Дата создания
   fio: ФИО
   phone: Телефон

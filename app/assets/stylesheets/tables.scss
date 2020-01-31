@@ -32,6 +32,11 @@ span.title {margin-top: 3px}
 // .grig-user-summary .td.sub_label {padding-left: 24px;}
 
 .provider_table_filter {display: grid; grid-template-columns: 190px 370px 1fr auto; column-gap: 16px; margin-bottom: 20px;}
+
+.filter_row {display: grid; grid-template-columns: 190px 1fr 86px; column-gap: 16px;}
+.filter_row.filter_items {margin-bottom: 20px;}
+.filter_item {float: left; margin-right: 10px;}
+
 .providers_index_head  {display: grid; grid-template-columns: 270px 1fr 180px 205px 295px 60px; }
 .providers_index_group {display: grid; grid-template-columns: 270px 1fr 636px 44px 60px; }
 .providers_index_head .td, .providers_index_group .td { display: flex; align-items: center; }
@@ -45,6 +50,8 @@ span.title {margin-top: 3px}
 .user_absences_target {display: grid; grid-template-columns: 30px 170px 1fr 70px 90px}
 .user_absences_shop {display: grid; grid-template-columns: 30px 1fr 70px 90px}
 .user_absences {display: grid; grid-template-columns: 1fr 70px 90px 90px}
+
+.table_leads {display: grid; grid-template-columns: 126px 124px 156px 136px 1fr 92px 120px 60px}
 
 .user_leads .td {cursor: pointer;}
 

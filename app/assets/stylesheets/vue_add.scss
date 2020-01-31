@@ -9,11 +9,18 @@
 .subnav .v-select .dropdown-menu .active a:hover {color: white; background: $main-orange;}
 
 .inp_w .v-select .dropdown-toggle {border: 1px solid $border-color;}
+
 .inp_w .v-select .selected-tag {margin: 2px 6px; border: 1px solid $border-color; height: 30px;}
+.nav_filter .inp_w .v-select .selected-tag {margin: 2px 6px; height: 20px;}
+.nav_filter .v-select .dropdown-toggle .clear {height: 20px; font-size: 20px;}
 
 .v-select input[type=search], .v-select input[type=search]:focus {height: 32px;}
+.nav_filter .v-select input[type=search], .nav_filter .v-select input[type=search]:focus {height: 24px;}
 
-.nav_filter {display: block; height: 34px; margin-bottom: 16px;}
+.nav_filter {display: block; 
+  // height: 34px;
+  height: 46px; 
+  margin-bottom: 16px;}
 .filter_nav ul {margin: 0; padding-inline-start: 0;}
 .filter_nav li {float: left; margin-right: 16px;}
 

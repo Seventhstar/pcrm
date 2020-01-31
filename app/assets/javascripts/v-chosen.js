@@ -72,7 +72,11 @@ Vue.component('v-chosen', {
           src = this.$parent[this.src];
           this.options = (this.from_array === undefined || src[this.index] === undefined) ? src : src[this.index][this.from_array];
       } else {
+        console.log('try add s on end', this.name, this.$parent[this.name + "s"])
         this.options = this.$parent[this.name + "s"];
+        if (this.options == undefined && this.name.slice(-1) == 'y')
+          this.options = this.$parent[this.name.slice(0, -1) + "ies"];
+
       }
       // console.log(this.name, 'this.options', this.options)
       // console.log(this.name, 'this.selected', this.selected)

@@ -32,15 +32,26 @@ var m_index = {
 
   created(){
     // if (this.filter != undefined) this.filter.push({field: 'actual', value: true})
-    this.fGroup();
+    this.fGroup()
     // console.log('params', @params)
     // this.city = 
   },
     
   methods: {
+    getPlaceholder(name){
+      let val = name
+      if (this.translated != undefined) val = this.translated[name]
+
+      return val
+    },
 
     getFiltersList() {
-      const filters = this.mainFilters.concat(this.filtersAvailable)
+      const filters = []
+      if (this.mainFilters != undefined) filters = this.mainFilters
+      if (this.filtersAvailable != undefined) filters.concat(this.filtersAvailable)
+
+        
+
       if (filters == undefined) return {}
       let filter = []
       filters.forEach(f => {
@@ -78,6 +89,7 @@ var m_index = {
 
     fillFilter(name, value, startUpdate = true) {
       // console.log('fillFilter', name, value)
+      if (this.filter == undefined) return
       // let field = name == 'search' ? this.searchFileds : name
       let field = name
       let s = -1;
@@ -105,7 +117,7 @@ var m_index = {
 
     onInput(e){
       if (e !== undefined) {
-        console.log('vmx-index onUpdate')
+        // console.log('vmx-index onUpdate')
         if (this.readyToChange == undefined || this.readyToChange) {
           sortable_prepare({}, false, this);
           this.fillFilter(e.name, e.label)
@@ -129,6 +141,7 @@ var m_index = {
 
     fGroup(){
       this.grouped      = _.groupBy(this.mainList, 'month')
+      
       this.groupHeaders = Object.keys(this.grouped)
       for (i = 0; i < this.groupHeaders.length; ++i) { 
         let arr = this.grouped[this.groupHeaders[i]]

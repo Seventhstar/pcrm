@@ -73,6 +73,33 @@ class LeadsController < ApplicationController
               .by_year(params[:year])
               .order("#{sort_1} #{sort_direction}, #{sort_2} #{dir_2}, leads.created_at desc")
 
+    # puts "leads #{@leads.length}"
+
+    columns = %w"status_name status_date fio phone info footage start_date"
+    @json_leads = []
+      # map{ |l| columns.hash{ |c| l => l[c]
+
+    @leads.each do |l| 
+      h = {id: l.id, month: month_year(l.start_date)}
+      columns.each do |c|
+        h[c] = l[c]
+      end
+      @json_leads.push(h)
+    end
+    # wwekl
+      # id: l.id,
+      # status_id: l.status_id,
+      # status: l.status_name,
+      # status_date: format_date(l.status_date),
+      # fio: l.fio,
+      # phone: l.phone,
+      # footage: l.footage,
+      # address: l.address,
+      # start_date: format_date(l.start_date),
+      # info: l.info,
+      # month: month_year(l.start_date)
+
+    @users = User.actual.by_city(@main_city).order(:name)
     store_leads_path
   end
 

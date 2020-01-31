@@ -29,6 +29,8 @@
 //= require contextMenu.min
 //= require plyr.min
 //= require vue
+//= require vuex
+//= require v-store
 //= require_tree .
 
 function toInt(d){

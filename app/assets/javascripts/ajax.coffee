@@ -135,7 +135,7 @@
   $(cut_selecter).each ->
     cut = cut + $(this).attr('cut_id') + '.'
 
-  search = $('#searchText').val()
+  search = $('.search_area').val()
   year = if (nav? && nav.year?) then nav.year.value else $('#year').val()
   # console.log('nav', nav, 'nav.year', nav.year, year)
 

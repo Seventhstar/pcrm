@@ -227,20 +227,63 @@ module ApplicationHelper
     h
   end
 
-  def fill_vue_data(obj, data, where = nil)
-     # kjl k
-    if data[:required_list].present?
-        data[:required] = []
-        data[:requiredTranslated] = []
+  def string_to_array(string)
+    if string.class == Array 
+      return string
+    elsif string.include?(',')
+      return string.split(',').map(&:strip)
+    end
+    string.split(' ')
+  end
 
-        data[:required_list].split(' ').each do |r|
-          data[:required] << r
-          data[:requiredTranslated] << t(r)
-        end
+  def fill_vue_data(obj, data, where = nil)
+    
+    # wef?jwh
+    if controller.action_name == "index" 
+      data[:controller] = controller.controller_name if !data[:controller].present? 
+    end
+
+    if data[:columns].present? && data[:columns].class == String
+      new_array = []
+      string_to_array(data[:columns]).each do |c| 
+        new_array.push([c, t(c)])
+      end
+      data[:columns] = new_array
+    end
+
+    if data[:groupBys].present?
+      string_to_array(data[:filterItems]).each do |fi|
+      end      
+    end
+
+    if data[:filterItems].present?
+      data[:lists] = !data[:lists].present? ? [] : string_to_array(data[:lists])
+      data[:translated] = {} if !data[:translated].present? 
+      data[:list_values] = [] if !data[:list_values].present?
+
+      string_to_array(data[:filterItems]).each do |fi|
+        data[:list_values] << fi
+        data[:lists].push(fi.classify.pluralize.downcase)
+        data[:translated][fi] = t(fi+'_id')
+      end
+      puts "data[:lists] #{data[:lists]}"
+      # puts "yeah! #{data} - filterItems: #{data[:filterItems]}"
+    else
+      # puts "not found #{data}"
+    end
+
+    if data[:required_list].present?
+      data[:required] = []
+      data[:requiredTranslated] = []
+
+      string_to_array(data[:required_list]).each do |r|
+        data[:required] << r
+        data[:requiredTranslated] << t(r)
+      end
     end
 
     if data[:booleans].present?
-      data[:booleans].split(' ').each do |b|
+      string_to_array(data[:booleans]).each do |b|
         # puts "booleans", b, obj[b].nil?
         data[b] = obj[b].nil? ? eval("@#{b}") : obj[b]
       end
@@ -248,17 +291,15 @@ module ApplicationHelper
     end
 
     if data[:texts].present? 
-      data[:texts].split(' ').each do |t|
+      string_to_array(data[:texts]).each do |t|
         data[t] = eval("@#{t}")
-        # puts data[t], t
         data[t] = obj.nil? || obj[t].nil? ? '' : obj[t] if data[t].nil?
       end
       data.delete(:texts)
     end
 
     if data[:lists].present? # collection_name[:source_name][+field1,field2...]
-      # ewjnek
-      data[:lists].split(' ').each do |l|
+      string_to_array(data[:lists]).each do |l|
         fields = nil
         raw = false
         if l.index('+').present? 
@@ -267,6 +308,7 @@ module ApplicationHelper
           l = lf[0]
         end
         if l.index(':').nil?
+
           collection = eval("@#{l}")
         else
           la = l.split(':')
@@ -275,6 +317,7 @@ module ApplicationHelper
             la[1].sub! 'raw', ''
           end
           collection = eval("#{la[1]}")
+          # wefkjw
           l = la[0]
         end
         if collection.present? 
@@ -293,7 +336,7 @@ module ApplicationHelper
     end
 
     if data[:list_values].present? 
-      data[:list_values].split(' ').each do |li| 
+      string_to_array(data[:list_values]).each do |li| 
         v = v_value(nil, nil, nil, eval("@#{li}"))        
         v = v_value(obj, li) if !v.present?
         if v.class == Integer

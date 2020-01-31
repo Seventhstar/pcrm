@@ -165,6 +165,7 @@ class AjaxController < ApplicationController
   end
 
   def store_cut
+    return
     ls = session['last_'+params['cntr']+'_page']
     ls = url_for(action: 'index', controller: params['cntr'])
     url = URI.parse(ls) 

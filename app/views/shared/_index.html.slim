@@ -8,6 +8,7 @@ div v-for="month in groupHeaders"
     div :class="tableClass('grid-head')" v-if="grouped[month].length >0"
       div :class="columnClass(column[0])" v-for="column in columns"
         a href="#" @click="sortBy(column[0], month)" {{ column[1] }}
+        .sortArrow
       .th
 
     transition-group name="flip-list" tag="div" 

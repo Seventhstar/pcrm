@@ -15,6 +15,7 @@ html lang="en"
     .page-wrapper
       .h_container
         - if current_user
+          = render 'shared/vuex_store'
           .header
             .bw_i
               - if controller.action_name == 'show' && controller.controller_name == 'users' || controller.controller_name == 'statistics'
@@ -29,19 +30,9 @@ html lang="en"
                   .nav_year  v-if="years.length>0"
                     v-chosen clear="false" name="year" placeholder="Год..." src="years" 
                   .navsearch
-                    /= text_field_tag :search, params[:search], \
-                      class: "search_area txt",                \
-                      placeholder: "Поиск...",                 \
-                      "v-model": "search",                     \
-                      "v-on:change": 'searchChange', \
-                      aname: controller.action_name,           \
-                      cname: controller.controller_name,       \
-                      mname: class_name   
-                    / .vs__actions
-                      button.clear style="" title="Очистить" type="button" 
-                        span @click="clearSearch()" × 
-                    v-search v-model:"search"
+                    v-search v-model="search"
                 
+                / - if controller.action_name == 'index' && !['absences'].include?(controller.controller_name)
                 = render 'main_app_vue'
               .user_h
                 .time_h 20:06:28
@@ -73,5 +64,5 @@ html lang="en"
         .page-buffer
         .page-footer
           footer.footer
-  - if controller.action_name == 'index' && ['absences'].include?(controller.controller_name)
+  / - if controller.action_name == 'index' && ['absences'].include?(controller.controller_name)
     = render 'absences/index_vue'
