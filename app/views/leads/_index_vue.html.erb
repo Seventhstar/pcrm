@@ -5,13 +5,14 @@
     mixins: [m_created, m_index, mCheck],
     data: <%= fill_vue_data(nil, {
       filterItems: ['priority', 'user'],
-      groupBys: ['start_date', 'status_date', 'ic_users.name', 'users.name', 'status_id'],
-
+      groupBys: 'start_date status_date ic_user user status_id',
+      searchFileds: ['info'],
       sortKey: 'start_date',
       reverse: true,
       currentIndex: -1,
       currentMonth: -1,
       confirmModal: false,
+      groupName: '',
       groupHeaders: [],
       showTotal: false,
       filter: [],
@@ -19,32 +20,10 @@
       filteredData: [],
       list_values: '',
       lists: 'mainList:raw@json_leads',
-      columns: 'status status_date fio phone info footage start_date'
+      columns: @columns
       
 
     }) %>,
-
-    created(){
-      // import {store} from "v-store"
-      this.fGroup()
-      console.log('created', store.state.searchText);
-    },
-    
-    computed: {
-      count() {
-        return store.state.count;
-      },
-
-      search () {
-        return store.state.searchText;
-      }
-    },
-
-    methods: {
-      methodName () {
-        
-      }
-    }
 
   })
 </script>

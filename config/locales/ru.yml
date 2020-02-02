@@ -7,6 +7,7 @@ ru:
   Currency: Валюта
   currency_id: Валюта
 
+  ic_user: Ответственный
   owner_id: Ответственный
   canceled: Отменено
   tarif: Тариф
@@ -37,6 +38,7 @@ ru:
   channel_id: Канал
   source_id: Источник
   user_id: Создатель
+  user: Создатель
   ic_user_id: Ответственный
   priority_id: Приоритет
   project_id: Проект 

@@ -1,48 +1,42 @@
-var m_created = {
-  created: function () {
-    this.$root.$on('onInput', this.onInput);
-    this.$root.$on('modalYes', this.modalYes);
+var m_index = {
+  created(){
+    this.fGroup()
   },
 
-  methods: {
-    formatValue(value, column){
-      return column == 'amount' ? toSum(value) : value
-    },
+  // watch: {
+  //   search: (val, oldVal) => {
+      
+  //   }
+  // },
 
-    onSubmit(event){
-      if (event && !this.formValid) {
-        event.preventDefault();
-        show_ajax_message(this.noteValid, 'error');
+  computed: {
+      searchI () {
+        // console.log('searchI fired')
+        this.fillFilter('search', store.state.searchText)
+        return store.state.searchText;
       }
-    },
-
-    modalYes(){
-      if (this.currentIndex === '' || !this.confirmModal ) return;
-      let index = this.mainList.indexOf(this.currentIndex);
-
-      if (index<0) return;
-      this.mainList.splice(index, 1);
-      delete_item("/" + this.controller + "/" + this.currentIndex.id);
-      this.fGroup();
-    },
-  }
-}
-
-var m_index = {
-
-  created(){
-    // if (this.filter != undefined) this.filter.push({field: 'actual', value: true})
-    this.fGroup()
-    // console.log('params', @params)
-    // this.city = 
   },
     
   methods: {
     getPlaceholder(name){
       let val = name
-      if (this.translated != undefined) val = this.translated[name]
-
+      if (this.translated != undefined) val = this.translated[name] + '...'
+      // console.log('name', name, 'this.translated[name]', this.translated[name])
       return val
+    },
+
+    groupLabel(month, gIdx) {
+      // if (this.grouped[month][0] )
+      // console.log(this.grouped[month][0].month_label)
+      if (this.groupName.length == 0 || this.groupName == 'month')
+        return this.grouped[month][0].month_label  
+      return month
+    },
+
+    filterItemStyle(){
+      let count = this.filterItems.length
+      w = (count >3) ? 'calc('+100/this.filterItems.length+'% - 10px)' : '180px'
+      return 'width: ' + w 
     },
 
     getFiltersList() {
@@ -68,7 +62,7 @@ var m_index = {
 
     setFilterValue(name, value) {
       if (this[name] != undefined ) {
-        // console.log('setFilterValue name', name, 'value', value)
+        console.log('setFilterValue name', name, 'value', value)
         if (typeof(this[name]) == "string"){
           if (this[name] != value) this[name] = value // find[0] // fill v-chosen
           this.fillFilter(name, value) // add filter like select from chosen
@@ -88,10 +82,10 @@ var m_index = {
     },
 
     fillFilter(name, value, startUpdate = true) {
-      // console.log('fillFilter', name, value)
+      console.log('fillFilter', name, value)
       if (this.filter == undefined) return
-      // let field = name == 'search' ? this.searchFileds : name
-      let field = name
+      let field = name == 'search' ? this.searchFileds : name
+      // let field = name
       let s = -1;
       
       for (var i = 0; i < this.filter.length; i++) {
@@ -107,7 +101,7 @@ var m_index = {
         this.filter.push({field: field, value: value});
       }        
 
-      if (startUpdate) this.fGroup()
+      if (startUpdate) this.fGroup(this.groupBy)
     },
 
     clearSearch() {
@@ -116,11 +110,15 @@ var m_index = {
     },
 
     onInput(e){
+      console.log('e.name', e.name, e.label, e)
       if (e !== undefined) {
-        // console.log('vmx-index onUpdate')
         if (this.readyToChange == undefined || this.readyToChange) {
-          sortable_prepare({}, false, this);
-          this.fillFilter(e.name, e.label)
+          if (e.name == 'groupBy') {
+            this.fGroup(e.value)
+          } else {
+            sortable_prepare({}, false, this)
+            this.fillFilter(e.name, e.label)
+          }
         } else {
           this.fillFilter(e.name, e.label, false)
 
@@ -130,19 +128,27 @@ var m_index = {
   
     sortBy(sortKey, month) {
       if (sortKey == 'date') sortKey = 'sortdate'
-      this.reverse = (this.sortKey == sortKey) ? !this.reverse : false;
+      this.reverse = (this.sortKey == sortKey) ? !this.reverse : false
       this.sortKey = sortKey;
       for (i = 0; i < this.groupHeaders.length; ++i) { 
         let arr = this.grouped[this.groupHeaders[i]]
         if (arr != undefined)
-          this.grouped[this.groupHeaders[i]] = this.fSort(arr);
+          this.grouped[this.groupHeaders[i]] = this.fSort(arr)
       }
     },
 
-    fGroup(){
-      this.grouped      = _.groupBy(this.mainList, 'month')
+    fGroup(groupName = ''){
+      if (groupName == undefined || groupName.length == 0) this.groupName = 'month'
+      else {
+        if (typeof(groupName) == 'object') this.groupName = groupName.value
+        if (this.groupName.slice(-3) == "_id") this.groupName = this.groupName.slice(0, -3) 
+      }
+      // this.grouped.length = 0
+      this.grouped = _.groupBy(this.mainList, this.groupName)
+      this.groupHeaders = Object.keys(this.grouped) 
+      console.log('fGroup fired', this.groupName, this.grouped)
       
-      this.groupHeaders = Object.keys(this.grouped)
+
       for (i = 0; i < this.groupHeaders.length; ++i) { 
         let arr = this.grouped[this.groupHeaders[i]]
         if (arr != undefined)
@@ -212,8 +218,10 @@ var m_index = {
       return 'td ' + (column[0] == 'amount' ? 'td_right' : '')
     },
 
-    tableClass(addClass){
-      return "index_table table_" + this.controller + " " + addClass
+    tableClass(addClass, objClass){
+      return "index_table table_" + this.controller + 
+              (objClass != undefined ? " " + objClass : '' )+ 
+              " " + addClass
     },
 
     fCalcTotal(m){

@@ -5,6 +5,7 @@
   <% is_pg_class = @owner.class.name == 'ProjectGood' %>
   <% btn_title = is_pg_class ? 'Добавить счет или КП' : 'Добавить файл' %>
 
+  <% if controller.action_name != 'show' %>
   <div class="add_progress"> 
   <label for="attach_list" class="attach_list"> 
     <a class="btn_add">
@@ -25,6 +26,7 @@
     </div>
   </div>
   </div>
+  <% end %>
 
   <input id = "attach_list<%= is_pg_class ? '_pg' : '' %>" 
         type = "file" 

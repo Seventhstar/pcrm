@@ -237,23 +237,35 @@ module ApplicationHelper
   end
 
   def fill_vue_data(obj, data, where = nil)
-    
-    # wef?jwh
     if controller.action_name == "index" 
       data[:controller] = controller.controller_name if !data[:controller].present? 
     end
 
-    if data[:columns].present? && data[:columns].class == String
+
+    if data[:columns].present? && [String, Array].include?(data[:columns].class)
       new_array = []
-      string_to_array(data[:columns]).each do |c| 
-        new_array.push([c, t(c)])
+      string_to_array(data[:columns]).each do |col| 
+        c     = col.include?(':') ? col.split(':')[0] : col
+        label = col.include?(':') ? col.split(':')[1] : t(c)
+        c = c[0..-4] if c.end_with?("_id") 
+        new_array.push([c, label])
       end
       data[:columns] = new_array
     end
 
     if data[:groupBys].present?
-      string_to_array(data[:filterItems]).each do |fi|
+      data[:lists] = !data[:lists].present? ? [] : string_to_array(data[:lists])
+      data[:translated] = {} if !data[:translated].present? 
+      data[:list_values] = [] if !data[:list_values].present?
+      new_array = []
+      string_to_array(data[:groupBys]).each do |fi|
+        # data[:list_values] << fi
+        data[:lists].push(fi.classify.pluralize.downcase)
+        label = t(fi)
+        data[:translated][fi] = label 
+        new_array.push({label: label, value: fi})
       end      
+      data[:groupBys] = new_array
     end
 
     if data[:filterItems].present?
@@ -266,7 +278,7 @@ module ApplicationHelper
         data[:lists].push(fi.classify.pluralize.downcase)
         data[:translated][fi] = t(fi+'_id')
       end
-      puts "data[:lists] #{data[:lists]}"
+      # puts "data[:lists] #{data[:lists]}"
       # puts "yeah! #{data} - filterItems: #{data[:filterItems]}"
     else
       # puts "not found #{data}"
@@ -513,20 +525,7 @@ module ApplicationHelper
     content_tag :span, p_title, {class: css_class}
   end
 
-  def class_for_lead( lead )
 
-    st_date  = lead.status_date? ? lead.status_date : DateTime.now
-    actual = lead.status.actual if !lead.status.nil?
-    
-    if (st_date < Date.today.beginning_of_day )
-      "hotlead"
-    elsif st_date < (Date.today.beginning_of_day+1.day)
-      "goodlead"
-    elsif (!actual)
-      "nonactual"
-    end
-
-  end
 
   def total_info(t_array)
     s = ''

@@ -1,0 +1,72 @@
+- if current_user.has_role?(:manager) or @lead.ic_user == current_user
+  .box_wrap.box_wrap_1
+    .panel-left2
+      table.tbl_fc.tbl_fc_1
+        tr
+          td.caption Дата создания:
+          td
+            .lbl= @lead.start_date.try('strftime',"%d.%m.%Y")
+        tr
+          td.caption Фио:
+          td
+            .lbl= @lead.fio
+        tr
+          td.caption Телефон:
+          td
+            .lbl= @lead.phone
+        tr
+          td.caption E-Mail:
+          td
+            .lbl= @lead.email
+        tr
+          td.caption Информация о запросе:
+          td
+            .lbl= @lead.info
+        tr
+          td.caption Метраж:
+          td
+            .lbl= @lead.footage
+        tr
+          td.caption Адрес объекта:
+          td
+            .lbl= @lead.address
+        tr
+          td.caption Статус:
+          td
+            .lbl
+              = @lead.status_name
+        tr
+          td.caption Дата для статуса:
+          td
+            .lbl
+              = @lead.status_date.try('strftime',"%d.%m.%Y")
+        tr
+          td.caption Канал:
+          td
+            .lbl
+              = @lead.channel_name
+        tr
+          td.caption Источник:
+          td
+            .lbl
+              = @lead.source_name
+        tr
+          td.caption Приоритет:
+          td
+            .lbl
+              = @lead.priority_name
+        - if is_admin?
+          tr
+            td.caption Создатель:
+            td
+              .lbl
+                = @lead.user_name
+        tr
+          td.caption Ответственный:
+          td
+            .lbl
+              = @lead.ic_user_name
+    .panel-right
+      .comments_box
+        = render "shared/comments"
+      = render "shared/attach_vue"

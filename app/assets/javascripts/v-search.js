@@ -1,9 +1,3 @@
-// Vue.component('v-select', VueSelect.VueSelect)
-// Vue.component('vue2-storage')
-// Vue.component('vuex', Vuex.Vuex)
-// import ''
-
-
 Vue.component('v-search', {
     data() {
       return {
@@ -56,8 +50,8 @@ Vue.component('v-search', {
 
   methods: {
     clearSearch() {
-        this.searchText = ''
-        delay('sortable_query({})', 700)
+      this.searchText = ''
+      store.commit('setSearchTexts', '')
     },
 
     isUpdateItems (text) {
@@ -74,8 +68,6 @@ Vue.component('v-search', {
     },
 
     inputChange () {
-      // console.log('selected this.searchText', this.searchText)
-      // this.showList = true
       this.cursor = -1
       this.onSelectItem(null, 'inputChange')
       this.callUpdateItems(this.searchText, this.updateItems)
@@ -111,6 +103,7 @@ Vue.component('v-search', {
         // this.setItems(this.items)
       }
       this.$emit('input', item)
+      store.commit('setSearchTexts', item)
       // delay('sortable_query({})', 700)
     },
     // setItems (items) {
@@ -143,13 +136,13 @@ Vue.component('v-search', {
     },
     keyEnter (e) {
       if (e.key == 'Enter'){
-        console.log('e', e, 'this.internalItems', this.internalItems)
+        // console.log('e', e, 'this.internalItems', this.internalItems)
+        searchText = this.searchText.toLowerCase()
         if (this.internalItems == undefined) this.internalItems = []
-        this.internalItems.unshift(this.searchText)
+        if (this.internalItems.indexOf(searchText) == -1 )
+          this.internalItems.unshift(searchText)
         if (this.internalItems.length>8) this.internalItems.length = 8
-
         let s = Vue.$storage.set('search', this.internalItems)
-
       }
 
       if (this.showList && this.internalItems[this.cursor]) {

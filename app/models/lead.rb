@@ -3,6 +3,7 @@ class Lead < ActiveRecord::Base
   belongs_to :user
   belongs_to :status
   belongs_to :channel
+  belongs_to :priority
   belongs_to :ic_user, foreign_key: :ic_user_id, class_name: 'User'
   belongs_to :source, foreign_key: :source_id, class_name: 'LeadSource', optional: true
   belongs_to :city
@@ -70,10 +71,13 @@ class Lead < ActiveRecord::Base
      if info.length>50
         info[0..50]+' ...'
      else
-  info
+      info
      end
   end
 
+  def priority_name
+    self&.priority&.name
+  end
 
   def user_name=(name)
     self.users = User.find_or_create_by_name(name) if name.present?

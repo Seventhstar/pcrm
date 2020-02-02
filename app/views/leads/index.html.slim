@@ -1,22 +1,21 @@
-|search: {{search}}, count: {{count}}
-= render "sortmenu"
-#div_tleads.absences_index
+/ = render "sortmenu"
+#div_tleads.vue_index
 
   .container.absences_index 
     div v-cloak=""
-      .nav_filter
-        .filter_nav
-          / = render_navigation level: 2 
-        
+      .nav_filter        
         .filter_row
           div Группировать по:
-          div Отбор:
+          div 
+            |Отбор: 
+            .white 
+              |{{searchI}}
           div Актуальные:
         .filter_row.filter_items
           div
             v-chosen name="groupBy" placeholder="Поле..." clear=true
           div
-            .filter_item v-for="f in filterItems" :style="'width: calc('+100/filterItems.length+'% - 10px)'"
+            .filter_item v-for="f in filterItems" :style="filterItemStyle()"
               v-chosen :name="f" :placeholder="getPlaceholder(f)" clear=true
             .filter_item
           

@@ -18,8 +18,13 @@ module DatesHelper
 
   def f_time(date_time)
     date_time.try('strftime',"%H:%M")
-  end   
+  end 
+
   def month_year(date)
     "#{t date.try('strftime','%B')} #{date.try('strftime','%Y')}"
+  end
+
+  def year_month(date)
+    "#{date.try('strftime','%Y')} #{date.try('strftime','%m')}"
   end
 end

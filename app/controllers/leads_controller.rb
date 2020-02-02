@@ -64,6 +64,8 @@ class LeadsController < ApplicationController
       sort_1 = "users.name"
       includes << :user     
     end
+
+    puts "#{sort_1} #{sort_direction}, #{sort_2} #{dir_2}, leads.created_at desc"
     
     @leads = @leads
               .includes(includes)
@@ -71,18 +73,27 @@ class LeadsController < ApplicationController
               .only_actual(@only_actual)
               .by_priority(params[:priority_id])
               .by_year(params[:year])
-              .order("#{sort_1} #{sort_direction}, #{sort_2} #{dir_2}, leads.created_at desc")
+              .order("leads.created_at desc")
+              # .order("#{sort_1} #{sort_direction}, #{sort_2} #{dir_2}, leads.created_at desc")
 
     # puts "leads #{@leads.length}"
 
-    columns = %w"status_name status_date fio phone info footage start_date"
+    # columns = %w"status_id status_date fio phone info footage start_date"
+    @columns = %w"status_id status_date fio phone info footage start_date:Дата"
+    fields  = %w"user_id priority_id ic_user_id".concat(@columns)
+
     @json_leads = []
       # map{ |l| columns.hash{ |c| l => l[c]
 
     @leads.each do |l| 
-      h = {id: l.id, month: month_year(l.start_date)}
-      columns.each do |c|
+      h = {id: l.id, month: year_month(l.start_date), month_label: month_year(l.start_date), class: class_for_lead(l)}
+      fields.each do |col|
+        c = col.include?(":") ? col.split(':')[0] : col
         h[c] = l[c]
+        if c.end_with?("_id")
+          n = c[0..-4]
+          h[n] = l.try(n+"_name")
+        end
       end
       @json_leads.push(h)
     end
