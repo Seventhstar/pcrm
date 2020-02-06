@@ -3,6 +3,11 @@ var m_index = {
     this.fGroup()
   },
 
+  mounted() {
+    setTimeout(()=>{this.restoreParams()}, 300)
+    this.readyToChange = true
+  },
+
   // watch: {
   //   search: (val, oldVal) => {
       
@@ -18,6 +23,15 @@ var m_index = {
   },
     
   methods: {
+    restoreParams() {
+      this.filterItems.forEach( f => {
+        if (this.params[f] != undefined) {
+          this[f] = this.params[f]
+          // let p = this[f]
+        }
+      })
+    },
+
     getPlaceholder(name){
       let val = name
       if (this.translated != undefined) val = this.translated[name] + '...'
@@ -35,17 +49,18 @@ var m_index = {
 
     filterItemStyle(){
       let count = this.filterItems.length
-      w = (count >3) ? 'calc('+100/this.filterItems.length+'% - 10px)' : '180px'
+      w = (count >3) ? 'calc('+100/this.filterItems.length+'% - 10px)' : '220px'
       return 'width: ' + w 
     },
 
     getFiltersList() {
-      const filters = []
+      let filters = []
+      console.log('filters', filters)
       if (this.mainFilters != undefined) filters = this.mainFilters
-      if (this.filtersAvailable != undefined) filters.concat(this.filtersAvailable)
-
-        
-
+      if (this.filtersAvailable != undefined) filters = filters.concat(this.filtersAvailable)
+      if (this.filterItems != undefined) filters = filters.concat(this.filterItems)
+      
+      console.log('filters', filters, this.filterItems)
       if (filters == undefined) return {}
       let filter = []
       filters.forEach(f => {
@@ -102,6 +117,7 @@ var m_index = {
       }        
 
       if (startUpdate) this.fGroup(this.groupBy)
+      sortable_prepare({})
     },
 
     clearSearch() {
@@ -111,7 +127,7 @@ var m_index = {
 
     onInput(e){
       console.log('e.name', e.name, e.label, e)
-      if (e !== undefined) {
+      if (e !== undefined ) {
         if (this.readyToChange == undefined || this.readyToChange) {
           if (e.name == 'groupBy') {
             this.fGroup(e.value)

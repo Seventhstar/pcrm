@@ -18,6 +18,8 @@ class LeadsController < ApplicationController
   # GET /leads
   # GET /leads.json
   def index
+    puts "@year #{@year}"
+    puts "@city #{@city}"
     # @years = (2016..Date.today.year).step(1).to_a.reverse
     @priorities = Priority.all
     @sort_column = sort_column
@@ -69,7 +71,7 @@ class LeadsController < ApplicationController
     
     @leads = @leads
               .includes(includes)
-              .by_city(@main_city)
+              .by_city(@city)
               .only_actual(@only_actual)
               .by_priority(params[:priority_id])
               .by_year(params[:year])
@@ -110,7 +112,7 @@ class LeadsController < ApplicationController
       # info: l.info,
       # month: month_year(l.start_date)
 
-    @users = User.actual.by_city(@main_city).order(:name)
+    @users = User.actual.by_city(@city).order(:name)
     store_leads_path
   end
 

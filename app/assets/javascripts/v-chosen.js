@@ -17,7 +17,7 @@ Vue.component('v-chosen', {
     template: `
         <div class="inp_w">
         <v-select 
-          :value="$parent[localName]"
+          :value="$parent[name]"
           :options="options"
           :clearable=clearable 
           :placeholder="placeholder"
@@ -39,13 +39,13 @@ Vue.component('v-chosen', {
       </div>`,
 
     created() {
+      // console.log('name', this.name, this.selected, this.$parent[this.name], this.$parent.city.value )
       this.h_input = this.input == true
 
       if (this.clear != undefined) this.clearable = (!this.clear)
       else 
         this.clearable = false
 
-      console.log('name', this.name)
 
       let model = ''
       if (this.owner !== undefined) { 
@@ -80,6 +80,8 @@ Vue.component('v-chosen', {
           let ind = this.options.filter(x => x.name == this.$parent[this.name])
         }  
       }
+      // console.log('name', this.name, this.selected, this.$parent[this.name], this.$parent.city.value )
+      // console.log('name', this.name, this.selected, this.$parent[this.name] )
     },
 
     methods: {
@@ -96,13 +98,20 @@ Vue.component('v-chosen', {
           if (find.length > 0) {
             val = find[0]
           } else {
-            // console.log('value', value)
             this.$parent[this.name] = []
             return
           }
+        }
+        else {
+          // ifvalue
+          // val = 0
+          // this.$parent[this.name] = []
         } 
+        // if (val == undefined || val.value == undefined) return
+        // console.log(this.name, 'value', value, val.value)
 
         let label = (v_nil(val)) ? undefined : val.label
+
         this.localValue = (v_nil(val)) ? 0 : val.value
         this.$parent[this.name] = val
         this.$root.$emit('onInput', {value: this.localValue, key: this.k, index: this.index, name: this.name, label: label})

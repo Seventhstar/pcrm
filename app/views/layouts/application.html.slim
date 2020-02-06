@@ -26,9 +26,9 @@ html lang="en"
               - elsif controller.action_name == 'index' || controller.controller_name == 'options'
                 .nav_select
                   .nav_city
-                    v-chosen clear="false" name="city" placeholder="Город..." src="cities" storable="true"
+                    v-chosen clear="false" name="city" placeholder="Город..." storable="true"
                   .nav_year  v-if="years.length>0"
-                    v-chosen clear="false" name="year" placeholder="Год..." src="years" 
+                    v-chosen clear="false" name="year" placeholder="Год..."  
                   .navsearch
                     v-search v-model="search"
                 

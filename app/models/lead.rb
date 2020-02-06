@@ -10,6 +10,7 @@ class Lead < ActiveRecord::Base
   
   has_many :attachments, as: :owner
 
+  # scope :by_city,     ->(city){city.class == Hash ? where(city: city) : where(city_id: city)}
   scope :by_city,     ->(city){where(city: city)}
   scope :by_priority, ->(priority) {where(priority_id: priority) if priority.present? && priority&.to_i>0}
   scope :only_actual, ->(actual){where(status_id: Status.where(actual: true).ids) if actual}

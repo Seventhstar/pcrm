@@ -1,48 +1,53 @@
 <script>
   Vue.component('v-select', VueSelect.VueSelect)
-  // Vue.component('vue2-storage', Vue2Storage.Vue2Storage)
-  // import {} from ''
-
-
 
   let nav = new Vue({
     el: '.nav_select',
     data: <%= fill_vue_data(nil, {
       texts: 'search',
       list_values: 'year city',
-      mainFilters: ['search'],
+      mainFilters: ['year', 'city'],
       lists: 'years cities',
       params: @params
     }, 'app') %>,
     
     mounted() {
-      console.log('mounted params', this.params)
-
+      this.mainFilters.forEach( f => {
+        if (this.params[f] != undefined) {
+          this[f] = this.params[f]
+          let p = this[f]
+        }
+      })
     },
 
     created() {
-      console.log('params', this.params)
       this.search = this.params.search
-      // this.mainFilters.forEach( f => {this[f] = this.params[f]})
     },
 
     watch: {
-      year(newValue) {  
-        // sortable_prepare({});
+      year(newValue, oldVal) {  
+        if (newValue == undefined) return
+        if (typeof(oldVal) == 'object' && newValue == oldVal.value) return
+
+        // console.log('newValue', newValue, 'oldVal', oldVal)
+        sortable_prepare({});
         $(".main_data_table").html()
         // delay('document.location.reload(true)', 400)
-        delay('sortable_query({})', 700)
+        // delay('sortable_query({})', 700)
       },
 
-      city(newValue) {
-        sortable_prepare({});
-        $.ajax({
-          type: "POST",
-          url: "/ajax/set_city",
-          data: {city: this.city.value},
-          dataType: "json",
-          encode: true
-        })
+      city(newValue, oldVal) {
+        if (this.city == undefined) return
+        if (typeof(oldVal) == 'object' && newValue == oldVal.value) return
+        // console.log('city newValue', newValue, 'oldVal', oldVal)
+        sortable_prepare({city: newValue.value})
+        // $.ajax({
+        //   type: "POST",
+        //   url: "/ajax/set_city",
+        //   data: {city: this.city.value},
+        //   dataType: "json",
+        //   encode: true
+        // })
         // delay('document.location.reload(true)', 400)
       }
     },

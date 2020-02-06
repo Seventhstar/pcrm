@@ -1,0 +1,24 @@
+  .container.absences_index 
+    div v-cloak=""
+      .nav_filter        
+        .filter_row
+          div Группировать по:
+          div 
+            |Отбор: 
+            .white 
+              |{{searchI}}
+          div Актуальные:
+        .filter_row.filter_items
+          div
+            v-chosen name="groupBy" placeholder="Поле..." clear=true
+          div
+            .filter_item v-for="f in filterItems" :style="filterItemStyle()"
+              v-chosen :name="f" :placeholder="getPlaceholder(f)" clear=true
+            .filter_item
+          
+          = link_to 'Добавить', new_lead_path, class: "btn_a btn-add btn_slim right"
+
+      .container
+        = render 'shared/index'
+
+

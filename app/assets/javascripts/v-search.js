@@ -81,73 +81,39 @@ Vue.component('v-search', {
     },
     focus () {
       this.$emit('focus', this.searchText)
-      // this.showList = true
     },
+
     blur () {
       this.$emit('blur', this.searchText)
       setTimeout( () => this.showList = false, 200)
     },
+
     onClickItem(item) {
       this.onSelectItem(item)
       this.showList = false
       this.$emit('item-clicked', item)
     },
+    
     onSelectItem (item) {
       if (item) {
-        console.log('item', item)
-        // this.internalItems = [item]
         this.searchText = item
-        // this.searchText = this.getLabel(item)
         this.$emit('item-selected', item)
-      } else {
-        // this.setItems(this.items)
-      }
+      } 
       this.$emit('input', item)
       store.commit('setSearchTexts', item)
-      // delay('sortable_query({})', 700)
     },
-    // setItems (items) {
-    //   // this.internalItems = items || []
-    // },
-    // isSelectedValue (value) {
-    //   return 1 == this.internalItems.length && value == this.internalItems[0]
-    // },
-    // keyUp (e) {
-    //   if (this.cursor > -1) {
-    //     this.cursor--
-    //     this.itemView(this.$el.getElementsByClassName('v-autocomplete-list-item')[this.cursor])
-    //   }
-    // },
-    keyDown (e) {
-    //   if (this.cursor < this.internalItems.length) {
-    //     this.cursor++
-    //     this.itemView(this.$el.getElementsByClassName('v-autocomplete-list-item')[this.cursor])
-    //   }
-    // console.log('')
-    // store.commit('increment')
-    store.commit('increment')
 
-    this.showList = false
-    },
-    itemView (item) {
-      if (item && item.scrollIntoView) {
-        item.scrollIntoView(false)
-      }
-    },
     keyEnter (e) {
-      if (e.key == 'Enter'){
-        // console.log('e', e, 'this.internalItems', this.internalItems)
-        searchText = this.searchText.toLowerCase()
-        if (this.internalItems == undefined) this.internalItems = []
-        if (this.internalItems.indexOf(searchText) == -1 )
+      searchText = this.searchText.toLowerCase()
+      if (this.internalItems == undefined) this.internalItems = []
+      if (this.internalItems.indexOf(searchText) == -1 )
           this.internalItems.unshift(searchText)
-        if (this.internalItems.length>8) this.internalItems.length = 8
-        let s = Vue.$storage.set('search', this.internalItems)
-      }
+      if (this.internalItems.length > 8) this.internalItems.length = 8
+      Vue.$storage.set('search', this.internalItems)
 
-      if (this.showList && this.internalItems[this.cursor]) {
+      if (this.showList && this.internalItems[this.cursor]) 
         this.onSelectItem(this.internalItems[this.cursor])
-      }
+      
       this.showList = false
     },
 
@@ -160,28 +126,12 @@ Vue.component('v-search', {
   },
   
   created () {
-    // utils.minLen = this.minLen
-    // utils.wait = this.wait
-    console.log('this.value search', this.value)
-    console.log('this.parent', this.$parent.search )
-    // this.value =
-
-// Vue.use(Vue2Storage, {
-  //   prefix: 'absence_',
     window.Vue.use(window.Vue2Storage)
     let searchTexts = Vue.$storage.get('search')
-    console.log('searchTexts', searchTexts, typeof(searchTexts) )
-
-    // this.items = s
     if (searchTexts.constructor == Array)
       this.internalItems = searchTexts 
     else if (searchTexts.constructor == String) 
       this.internalItems = [searchTexts]
-    // for (var s in searchTexts){
-    //   this.items.push(searchTexts[s])
-
-    // }
-    console.log('created search=', searchTexts, 'this.internalItems', this.internalItems )
     if (this.value !== undefined) this.onSelectItem(this.value)
     else this.searchText = this.$parent.search
 
@@ -189,7 +139,6 @@ Vue.component('v-search', {
 
   watch: {
     items (newValue) {
-      console.log('items', items)
       this.setItems(newValue)
       let item = this.findItem(this.items, this.searchText, this.autoSelectOneItem)
       if (item) {
@@ -197,12 +146,5 @@ Vue.component('v-search', {
         this.showList = false
       }
     },
-    // value (newValue) {
-    //   console.log('value', this.value, newValue)
-    //   if (!this.isSelectedValue(newValue) ) {
-    //     this.onSelectItem(newValue)
-    //     this.searchText = this.getLabel(newValue)
-    //   }
-    // }
   }
 })

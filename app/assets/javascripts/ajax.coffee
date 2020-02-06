@@ -184,6 +184,7 @@
     return 
 
   if (app?)
+    console.log('app.getFiltersList()', app.getFiltersList())
     filtersList = app.getFiltersList()
     if filtersList != undefined
       filtersList.forEach (e) ->
