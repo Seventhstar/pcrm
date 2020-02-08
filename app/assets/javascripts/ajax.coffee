@@ -189,9 +189,10 @@
     if filtersList != undefined
       filtersList.forEach (e) ->
         if e.value != undefined 
+          # if (typeof())
           # url[e.name] = app[e.name].value
           url[e.name] = e.value
-          # console.log('sortable_prepare 1', e.name, e.value, app[e.name].value )
+          console.log('sortable_prepare 1', e.name, e.value, app[e.name].value )
         else if app.readyToChange == undefined || app.readyToChange
           # console.log('sortable_prepare 2', e.name, e.value, e )
           delete url[e.name]

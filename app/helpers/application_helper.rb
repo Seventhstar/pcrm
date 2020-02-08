@@ -257,13 +257,21 @@ module ApplicationHelper
       data[:lists] = !data[:lists].present? ? [] : string_to_array(data[:lists])
       data[:translated] = {} if !data[:translated].present? 
       data[:list_values] = [] if !data[:list_values].present?
+      data[:list_values] = data[:list_values].push('groupBy').compact
+      # puts "data[:list_values] #{data[:list_values]}"
       new_array = []
       string_to_array(data[:groupBys]).each do |fi|
-        # data[:list_values] << fi
-        data[:lists].push(fi.classify.pluralize.downcase)
-        label = t(fi)
-        data[:translated][fi] = label 
-        new_array.push({label: label, value: fi})
+        if fi.include?(':')
+          f = fi.split(':')
+          val = f[0]
+          label = f[1].gsub('_', ' ')
+        else
+          val = fi
+          label = t(fi)
+        end
+        data[:lists].push(val.classify.pluralize.downcase)
+        data[:translated][val] = label 
+        new_array.push({label: label, value: val})
       end      
       data[:groupBys] = new_array
     end
@@ -278,10 +286,7 @@ module ApplicationHelper
         data[:lists].push(fi.classify.pluralize.downcase)
         data[:translated][fi] = t(fi+'_id')
       end
-      # puts "data[:lists] #{data[:lists]}"
-      # puts "yeah! #{data} - filterItems: #{data[:filterItems]}"
-    else
-      # puts "not found #{data}"
+      @filterItems = data[:filterItems]
     end
 
     if data[:required_list].present?

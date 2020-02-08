@@ -14,7 +14,7 @@ module Navigable
     @year = cur_year.class == Hash ? cur_year : {id: cur_year, name: cur_year}
 
     @cities = City.order(:id) if @cities.nil?
-    @city   = params[:city].nil? ? @main_city.id : params[:city]
+    @city   = params[:city].nil? ? @main_city&.id : params[:city]
   end
 
 end

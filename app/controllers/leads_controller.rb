@@ -84,11 +84,17 @@ class LeadsController < ApplicationController
     @columns = %w"status_id status_date fio phone info footage start_date:Дата"
     fields  = %w"user_id priority_id ic_user_id".concat(@columns)
 
-    @json_leads = []
+    @json_data = []
       # map{ |l| columns.hash{ |c| l => l[c]
+    @filterItems = %w'priority user'
 
     @leads.each do |l| 
-      h = {id: l.id, month: year_month(l.start_date), month_label: month_year(l.start_date), class: class_for_lead(l)}
+      h = {id: l.id, 
+          month: year_month(l.start_date), 
+          month_label: month_year(l.start_date), 
+          status_month: month_year(l.status_date),
+          class: class_for_lead(l)
+          }
       fields.each do |col|
         c = col.include?(":") ? col.split(':')[0] : col
         h[c] = l[c]
@@ -97,7 +103,7 @@ class LeadsController < ApplicationController
           h[n] = l.try(n+"_name")
         end
       end
-      @json_leads.push(h)
+      @json_data.push(h)
     end
     # wwekl
       # id: l.id,

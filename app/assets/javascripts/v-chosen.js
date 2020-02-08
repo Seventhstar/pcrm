@@ -75,12 +75,12 @@ Vue.component('v-chosen', {
         if (this.selected !== undefined) {
           // this.onUpdate(this.options[this.selected])
         } else if (this.options.length === 1) {
-          this.onUpdate(this.options[0])
+          // this.onUpdate(this.options[0])
         } else {
           let ind = this.options.filter(x => x.name == this.$parent[this.name])
         }  
       }
-      // console.log('name', this.name, this.selected, this.$parent[this.name], this.$parent.city.value )
+      // console.log('created name', this.name, this.selected, this.$parent[this.name])
       // console.log('name', this.name, this.selected, this.$parent[this.name] )
     },
 
@@ -91,10 +91,12 @@ Vue.component('v-chosen', {
           this.$parent[this.name] = []
           return
         }
+        if (typeof(val) == "object" && value == this.$parent[this.name]) return
 
           // this.$root.$emit('onInput', {value: value, name: this.name, label: label})
         if (typeof(val) != "object"){
           let find = this.options.filter(f => f.value == value)
+          // console.log('v-chosen find', this.name, find)
           if (find.length > 0) {
             val = find[0]
           } else {
@@ -113,6 +115,7 @@ Vue.component('v-chosen', {
         let label = (v_nil(val)) ? undefined : val.label
 
         this.localValue = (v_nil(val)) ? 0 : val.value
+        // console.log('v-chosen find', find, this.localValue)
         this.$parent[this.name] = val
         this.$root.$emit('onInput', {value: this.localValue, key: this.k, index: this.index, name: this.name, label: label})
         if (this.storable) localStorage[this.name] = this.localValue

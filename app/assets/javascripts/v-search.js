@@ -51,7 +51,7 @@ Vue.component('v-search', {
   methods: {
     clearSearch() {
       this.searchText = ''
-      store.commit('setSearchTexts', '')
+      store.commit('setSearchTexts', "")
     },
 
     isUpdateItems (text) {
@@ -72,20 +72,21 @@ Vue.component('v-search', {
       this.onSelectItem(null, 'inputChange')
       this.callUpdateItems(this.searchText, this.updateItems)
       this.$emit('change', this.searchText)
-      store.commit('increment')
+      // store.commit('increment')
       store.commit('setSearchTexts', this.searchText)
     },
 
     updateItems () {
       this.$emit('update-items', this.searchText)
     },
+
     focus () {
       this.$emit('focus', this.searchText)
     },
 
     blur () {
       this.$emit('blur', this.searchText)
-      setTimeout( () => this.showList = false, 200)
+      setTimeout(() => this.showList = false, 200)
     },
 
     onClickItem(item) {

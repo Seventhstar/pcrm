@@ -1,26 +1,31 @@
-div v-for="month, gIdx in groupHeaders"
-  .panel.panel-default v-if="grouped[month].length >0"
-    .panel-heading.table-heading.head.month 
-      |{{ groupLabel(month, gIdx) }} 
-      .right 
-        |{{ grouped[month].length }}
+div v-cloak=""
+  div v-for="month, gIdx in groupHeaders"
+    .panel.panel-default v-if="grouped[month].length >0"
+      .panel-heading.table-heading.head.month 
+        |{{ groupLabel(month, gIdx) }} 
+        .right 
+          |{{ grouped[month].length }}
 
-    div :class="tableClass('grid-head')" v-if="grouped[month].length >0"
-      div :class="columnClass(column[0])" v-for="column in columns"
-        a href="#" @click="sortBy(column[0], month)" {{ column[1] }}
-        .sortArrow
-      .th
+      div :class="tableClass('grid-head')" v-if="grouped[month].length >0"
+        div :class="columnClass(column[0])" v-for="column in columns"
+          a href="#" @click="sortBy(column[0], month)" {{ column[1] }}
+          .sortArrow
+        .th
 
-    transition-group name="flip-list" tag="div" 
-      div :key="item.id" :class="tableClass('grid-row', item.class)" v-for="item in grouped[month]"
-        div :class="tdClass(column)" v-for="column in columns"
-          | {{ formatValue(item[column[0]], column[0]) }}
-        .edit_delete.td_right.td style="" 
-          a.icon.icon_edit :href="editLink(item.id)"  
-          a.icon.icon_show :href="showLink(item.id)" data-modal="true" 
+      transition-group name="flip-list" tag="div" 
+        div :key="item.id" :class="tableClass('grid-row', item.class)" v-for="item in grouped[month]"
+          div :class="tdClass(column)" v-for="column in columns" 
+            span data-toggle="tooltip" data-placement="top" :data-original-title="toolTipValue(item, column)" v-if="hasTooltip(column)"
+              | {{ columnValue(item, column) }}
+            div v-else=""
+              | {{ columnValue(item, column) }}
 
-    div :class="tableClass('grid_total')" v-if="showTotal"
-      div Итого:
-      div
-      .td_right  
-        |{{ fCalcTotal(month) }}
+          .edit_delete.td_right.td style="" 
+            a.icon.icon_edit :href="editLink(item.id)"  
+            a.icon.icon_show :href="showLink(item.id)" data-modal="true" 
+
+      div :class="tableClass('grid_total')" v-if="showTotal"
+        div Итого:
+        div
+        .td_right  
+          |{{ fCalcTotal(month) }}

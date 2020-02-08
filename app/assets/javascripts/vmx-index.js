@@ -1,47 +1,41 @@
 var m_index = {
-  created(){
-    this.fGroup()
+  created() {
+    this.filterItems.forEach( f => this[f] = '')
+    this.checkGroupName(this.groupName)
+    this.groupBy = this.groupName
+    // this.fGroup()
+  },
+
+  updated() {
+    // console.log('updated has fired')
+    $('[data-toggle="tooltip"]').tooltip({'placement': 'top', fade: false})
   },
 
   mounted() {
-    setTimeout(()=>{this.restoreParams()}, 300)
-    this.readyToChange = true
+    setTimeout(() => {this.restoreParams()}, 50)
+    setTimeout(() => {this.readyToChange = true}, 100)
   },
 
-  // watch: {
-  //   search: (val, oldVal) => {
-      
-  //   }
-  // },
-
   computed: {
-      searchI () {
-        // console.log('searchI fired')
-        this.fillFilter('search', store.state.searchText)
-        return store.state.searchText;
-      }
+    searchI () {
+      this.fillFilter('search', store.state.searchText)
+      return store.state.searchText;
+    }
   },
     
   methods: {
     restoreParams() {
-      this.filterItems.forEach( f => {
-        if (this.params[f] != undefined) {
-          this[f] = this.params[f]
-          // let p = this[f]
-        }
-      })
+      this.filterItems.forEach( f => {if (this.params[f] != undefined) {this[f] = this.params[f]}})
+      if (this.groupBy != undefined) this.groupBy = this.params['groupBy']
     },
 
     getPlaceholder(name){
       let val = name
       if (this.translated != undefined) val = this.translated[name] + '...'
-      // console.log('name', name, 'this.translated[name]', this.translated[name])
       return val
     },
 
     groupLabel(month, gIdx) {
-      // if (this.grouped[month][0] )
-      // console.log(this.grouped[month][0].month_label)
       if (this.groupName.length == 0 || this.groupName == 'month')
         return this.grouped[month][0].month_label  
       return month
@@ -49,22 +43,21 @@ var m_index = {
 
     filterItemStyle(){
       let count = this.filterItems.length
-      w = (count >3) ? 'calc('+100/this.filterItems.length+'% - 10px)' : '220px'
+      w = (count > 3) ? 'calc('+100/this.filterItems.length+'% - 10px)' : '230px'
       return 'width: ' + w 
     },
 
     getFiltersList() {
       let filters = []
-      console.log('filters', filters)
+      if (this.groupBy != undefined) filters = ['groupBy']
       if (this.mainFilters != undefined) filters = this.mainFilters
-      if (this.filtersAvailable != undefined) filters = filters.concat(this.filtersAvailable)
       if (this.filterItems != undefined) filters = filters.concat(this.filterItems)
-      
-      console.log('filters', filters, this.filterItems)
+      if (this.filtersAvailable != undefined) filters = filters.concat(this.filtersAvailable)
       if (filters == undefined) return {}
+
       let filter = []
       filters.forEach(f => {
-        if (f == 'search'){
+        if (f == 'search') {
           filter.push({name: f, label: this.search, value: this.search})
         } else if (this[f] == undefined) {
           filter.push({name: f, label: undefined, value: undefined}) 
@@ -77,12 +70,11 @@ var m_index = {
 
     setFilterValue(name, value) {
       if (this[name] != undefined ) {
-        console.log('setFilterValue name', name, 'value', value)
         if (typeof(this[name]) == "string"){
-          if (this[name] != value) this[name] = value // find[0] // fill v-chosen
+          if (this[name] != value) this[name] = value 
           this.fillFilter(name, value) // add filter like select from chosen
         } else {
-          if (this[name].length == 0 || this[name].value != value) this[name] = value // find[0] // fill v-chosen
+          if (this[name].length == 0 || this[name].value != value) this[name] = value 
           this.fillFilter(name, this[name].label) // add filter like select from chosen
         }
         this.$storage.set(name, value)
@@ -97,10 +89,9 @@ var m_index = {
     },
 
     fillFilter(name, value, startUpdate = true) {
-      console.log('fillFilter', name, value)
+      // console.log('fillFilter 2', name, value)
       if (this.filter == undefined) return
       let field = name == 'search' ? this.searchFileds : name
-      // let field = name
       let s = -1;
       
       for (var i = 0; i < this.filter.length; i++) {
@@ -108,15 +99,14 @@ var m_index = {
       }
 
       if (s > -1) {
-        if (value === undefined) {
-            // this.$storage.remove(name)
-            this.filter.splice(s, 1)
-        } else {this.filter[s].value = value}
+        if (value === undefined) this.filter.splice(s, 1)
+        else this.filter[s].value = value
       } else if (value != undefined && value != "") {
-        this.filter.push({field: field, value: value});
+        this.filter.push({field: field, value: value})
       }        
 
-      if (startUpdate) this.fGroup(this.groupBy)
+      if (this.readyToChange != undefined && this.readyToChange == true)
+        if (startUpdate) this.fGroup(this.groupBy)
       sortable_prepare({})
     },
 
@@ -126,18 +116,18 @@ var m_index = {
     },
 
     onInput(e){
-      console.log('e.name', e.name, e.label, e)
+      // console.log('e.name', e.name, e.label, e)
       if (e !== undefined ) {
         if (this.readyToChange == undefined || this.readyToChange) {
           if (e.name == 'groupBy') {
             this.fGroup(e.value)
+            sortable_prepare({}, false, this)
           } else {
             sortable_prepare({}, false, this)
             this.fillFilter(e.name, e.label)
           }
         } else {
           this.fillFilter(e.name, e.label, false)
-
         }
       }
     },
@@ -153,22 +143,65 @@ var m_index = {
       }
     },
 
-    fGroup(groupName = ''){
-      if (groupName == undefined || groupName.length == 0) this.groupName = 'month'
+    checkGroupName(groupName = '') {
+      if ((groupName == undefined || groupName.length == 0) && this.groupName == undefined) 
+        this.groupName = 'month'
       else {
-        if (typeof(groupName) == 'object') this.groupName = groupName.value
+        if (groupName != undefined && typeof(groupName) == 'object') this.groupName = groupName.value
         if (this.groupName.slice(-3) == "_id") this.groupName = this.groupName.slice(0, -3) 
       }
-      // this.grouped.length = 0
+    },
+
+    hasTooltip(field) {
+      if (field == undefined) return false
+      return (this.tooltips.indexOf(field[0]) > -1)
+    },
+
+    getToolTipData(item, column) {
+      let tt = this.tooltips.split(' ')
+      for (var t in tt) {
+        if (tt[t].indexOf(column[0]) > -1) {return tt[t].split(':')[1]}
+      }
+    },
+
+    toolTipValue(item, column) {
+      let _t = this.getToolTipData(item, column)
+      if (toInt(_t) > 0)
+        return item[column[0]].length > _t ? item[column[0]] : ''
+      else
+        return item[_t]
+    },
+
+    isAmountColumn(column) {
+      let ams = this.amounts == undefined ? ['amount'] : ['amount'].concat(this.amounts)
+      return ams.indexOf(column) > -1
+    },
+
+    formatValue(value, column){
+      if (column.indexOf('date') > -1) return format_date(value)
+      return this.isAmountColumn(column) ? toSum(value) : value
+    },
+
+    columnValue(item, column) {
+      if (this.hasTooltip(column)) {
+        let _t = this.getToolTipData(item, column)
+        if (toInt(_t) > 0)
+          return item[column[0]].slice(0, toInt(_t))
+        else
+          return item[column[0]]
+      } 
+      return this.formatValue(item[column[0]], column[0])
+    },
+
+    fGroup(groupName = ''){
+      this.checkGroupName(groupName)
       this.grouped = _.groupBy(this.mainList, this.groupName)
       this.groupHeaders = Object.keys(this.grouped) 
-      console.log('fGroup fired', this.groupName, this.grouped)
-      
 
       for (i = 0; i < this.groupHeaders.length; ++i) { 
         let arr = this.grouped[this.groupHeaders[i]]
         if (arr != undefined)
-          this.grouped[this.groupHeaders[i]] = this.fSort(arr);
+          this.grouped[this.groupHeaders[i]] = this.fSort(arr)
       }
     },
 
@@ -226,8 +259,8 @@ var m_index = {
           }
           return true
         })
-      } else return this.filteredData;
-      return this.filteredData;
+      } else {return this.filteredData}
+      return this.filteredData
     },
 
     tdClass(column){
@@ -236,7 +269,7 @@ var m_index = {
 
     tableClass(addClass, objClass){
       return "index_table table_" + this.controller + 
-              (objClass != undefined ? " " + objClass : '' )+ 
+              (objClass != undefined ? " " + objClass : '' ) + 
               " " + addClass
     },
 

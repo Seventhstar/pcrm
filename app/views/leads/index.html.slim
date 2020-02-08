@@ -12,8 +12,8 @@
               |{{searchI}}
           div Актуальные:
         .filter_row.filter_items
-          div
-            v-chosen name="groupBy" placeholder="Поле..." clear=true
+          .filter_item
+            v-chosen name="groupBy" placeholder="Поле..." clear=false
           div
             .filter_item v-for="f in filterItems" :style="filterItemStyle()"
               v-chosen :name="f" :placeholder="getPlaceholder(f)" clear=true
