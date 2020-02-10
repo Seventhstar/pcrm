@@ -12,14 +12,15 @@
         th День рождения
         th Город
         th.center width="60px"  Активен
-        th.center width="60px"  Админ
+        - if is_admin?
+          th.center width="60px"  Админ
         th.center width="60px"  Уволен
-        - if current_user.admin?
-          th width="30px" 
+        th width="30px" 
     tbody
       - @items.each do |user|
         tr class="#{class_for_user(user)}" 
-          td width="60" = avatar_for(user)
+          td width="60" 
+            = avatar_for(user)
           td
             = link_to user.name, user
             br
@@ -30,10 +31,11 @@
             = user.city_name
           td.state
             span chk="activated" class=("check_img sw_check #{user.activated ? "checked" :""}") item_id="#{user.id}" 
-          td.state
-            span chk="admin" class=("check_img sw_check #{user.admin ? "checked" :""}") item_id="#{user.id}" 
+          - if is_admin?  
+            td.state
+              span chk="admin" class=("check_img sw_check #{user.admin ? "checked" :""}") item_id="#{user.id}" 
           td.state
             span chk="fired" class=("check_img sw_check #{user.fired ? "checked" :""}") item_id="#{user.id}" 
-          - if current_user.admin?
-            = tool_icons(user, {subcount: current_user?(user) ? 1:nil} )
+          / - if is_admin?
+          = tool_icons(user, {subcount: current_user?(user) ? 1 : nil, icons: 'edit'} )
           

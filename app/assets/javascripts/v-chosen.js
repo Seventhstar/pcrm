@@ -91,9 +91,7 @@ Vue.component('v-chosen', {
           this.$parent[this.name] = []
           return
         }
-        if (typeof(val) == "object" && value == this.$parent[this.name]) return
-
-          // this.$root.$emit('onInput', {value: value, name: this.name, label: label})
+        // this.$root.$emit('onInput', {value: value, name: this.name, label: label})
         if (typeof(val) != "object"){
           let find = this.options.filter(f => f.value == value)
           // console.log('v-chosen find', this.name, find)
@@ -115,6 +113,7 @@ Vue.component('v-chosen', {
         let label = (v_nil(val)) ? undefined : val.label
 
         this.localValue = (v_nil(val)) ? 0 : val.value
+        if (typeof(val) == "object" && value == this.$parent[this.name]) return
         // console.log('v-chosen find', find, this.localValue)
         this.$parent[this.name] = val
         this.$root.$emit('onInput', {value: this.localValue, key: this.k, index: this.index, name: this.name, label: label})

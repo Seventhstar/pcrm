@@ -1,8 +1,9 @@
 class OptionsController < ApplicationController
   before_action :logged_in_user
   include OptionsHelper
+  include RolesHelper
 
-  def _sort
+  def create_menu
     case option_model.name
     when "Holiday"
       @items = option_model.order('day desc')
@@ -14,31 +15,35 @@ class OptionsController < ApplicationController
     else
       @items = option_model.order(:name)
     end
-    # @items = option_model.order(sort)
+
     @item = option_model.new
 
+    menu = UserOption::OPTIONS_MENU
     @menu_items = []
-    @menu.each do |m0|
-      m0[1].each do |m1|
-        m2_name = t(m1)[0]
-        @menu_items << {id: m1, name: m2_name}
+    managers_options = UserOption::MANAGER_ALLOW
+
+    @menu = {}
+    menu.each do |menu_group|
+      menu_row = []
+      menu_group[1].each do |menu_item|
+        if is_admin? || managers_options.include?(menu_item)
+          @menu_items << {id: menu_item, name: t(menu_item)[0]} 
+          menu_row << menu_item 
+        end
       end
+      @menu[menu_group[0]] = menu_row if menu_row.length>0
+
     end
-    # puts "menu_items #{@menu_items}"
   end
 
   def index
-    _sort
-    @menu = t('options_menu')
+    create_menu
   end
 
   def create
     @item  = option_model.new(options_params)
     @items = option_model.order(:name)  
     if @item.save
-
-
-         # format.json { render 'options/index', status: :created, location: @item, notice: 'Лид успешно создан.' }
        else
         respond_to do |format|
          format.json { render json: @item.errors, status: :unprocessable_entity }
@@ -47,41 +52,31 @@ class OptionsController < ApplicationController
    end
 
    def edit
-    @menu = t('options_menu')
     @page = params[:options_page]
-    @page ||= "statuses"
-    _sort
-
-
+    @page ||= is_admin? ? "statuses" : "users"
+    create_menu
   end
 
-  # DELETE /absences/1
-  # DELETE /absences/1.json
   def destroy
     @item = option_model.find(params[:id])
-    #p "@item #{@item}"
     @item.destroy
-    # respond_to do |format|
-    #   format.json { head :no_content }
-    # end
   end  
 
   private
-  # Never trust parameters from the scary internet, only allow the white list through.
-  def options_params
-    i = option_model.model_name.singular
-    params.require(i).permit(:name,:actual,:day)
-  end
-
-  def option_model
-    page = params[:options_page]
-    page ||= "statuses"
-    if page == "user_roles"
-      @users = User.order('admin ASC,name')
-      @roles = Role.order(:name)
+    def options_params
+      i = option_model.model_name.singular
+      params.require(i).permit(:name,:actual,:day)
     end
 
-    page.classify.constantize
+    def option_model
+      page = params[:options_page]
+      page ||= is_admin? ? "statuses" : "users"
 
-  end
+      if page == "user_roles"
+        @users = User.order('admin ASC,name')
+        @roles = Role.order(:name)
+      end
+
+      page.classify.constantize
+    end
 end

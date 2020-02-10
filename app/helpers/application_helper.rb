@@ -1,5 +1,6 @@
 module ApplicationHelper
   include CurrencyHelper
+  include RolesHelper
   
   def attr_boolean?(item, attr)
     item.column_for_attribute(attr.to_s).type == :boolean
@@ -11,18 +12,6 @@ module ApplicationHelper
 
   def attr_date_or_bool?(item, attr)
     attr_boolean?(item, attr) || attr_date?(item, attr)
-  end
-
-  def is_admin?
-    current_user.admin?
-  end
-
-  def is_author_of?(obj)
-    current_user.author_of?(obj)
-  end
-
-  def is_manager?
-    current_user.has_role?(:manager)
   end
 
   def contact_kind_src

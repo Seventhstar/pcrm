@@ -1,0 +1,46 @@
+.sep_05
+.option_list
+  - if ['users','user_roles'].include? class_name
+  - elsif has_view(class_name, 'new_item')
+    = render "#{class_name}/new_item"
+  - else
+    = render 'shared/new_item'
+- if has_view(class_name, 'index')
+  = render "#{class_name}/index.html"
+- else
+  .sep_15
+  - attrs = (@items.first.nil? ? @item : @items.first).attributes.except("id", "created_at", "updated_at")
+  - is_inside_edit = inside_edit()
+  .items_box_cont.tbl_a
+    .head
+      = t_items_list
+    table.tleads model="#{@item.class.name}"
+    thead
+      - attrs.each do |attr|
+        th = attr_date_or_bool?(@item, attr[0]) ? "width=60px;" : ''
+        | fld='#{attr[0]}'&gt;
+        - if t(attr[0]).is_a?(Array)
+          = t(attr[0])[1].capitalize
+        - else
+          = t(attr[0])
+    th
+  tbody
+    - @items.each do |item|
+      tr id="item_#{item.id}"
+      - attrs.each do |attr|
+        - a0 = attr[0]
+        - if attr_boolean?(@item, a0)
+          td.state
+            span.check_img.sw_check
+            = item[a0] ? 'checked' : ''
+            | " item_id="#{item.id}" chk="#{a0}"&gt;
+        - elsif attr_date?(@item, a0)
+          td.option_day=item[a0].try('strftime',%d.%m.%Y)
+        - elsif a0.last(3) == '_id'
+          td title="#{item.id}" item_id="#{item.try(a0)}" =item.try(a0[0..-4]).try(:name)
+        - else
+          td title="" 
+          = item.id
+          | '&gt;#{item[a0].to_s}
+- tag = is_inside_edit.include?(item.class.name) ? 'link' : 'span'
+= tool_icons(item, {tag: tag, subcount: parents_count(item)} )

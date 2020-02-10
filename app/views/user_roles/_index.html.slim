@@ -1,0 +1,19 @@
+.items_box_cont.tbl_a
+  .head Список пользователей
+  table.tleads.user-table model="UserRole" 
+    thead.center
+      tr
+        th width="160px"  Пользователь
+        - @roles.each do |r|
+          th width="60px" = r.name
+        th
+    tbody
+      - @users.each do |user|
+        tr class=("#{user.admin? ? 'nonactual' : ''}") 
+          td
+            = link_to user.name, user
+          - if is_admin?  
+            - @roles.each do |r|
+              td.state
+                span class=("check_img role_check #{user.has_role?(r.id) ? "checked" :""}") role_id="#{r.id}" user_id="#{user.id}" 
+          td

@@ -1,6 +1,8 @@
 var m_index = {
   created() {
-    this.filterItems.forEach( f => this[f] = '')
+    if (this.filterItems == undefined) this.filterItems = []
+    if (this.params == undefined) this.params = []
+    this.filterItems.forEach( f => this[f] = undefined)
     this.checkGroupName(this.groupName)
     this.groupBy = this.groupName
     // this.fGroup()

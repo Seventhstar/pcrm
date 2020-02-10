@@ -8,15 +8,10 @@ class AjaxController < ApplicationController
     wrk.costing_id  = wrk_params[:costing_id]
     wrk.work_id     = wrk_params[:work_id]
     wrk.room_id     = wrk_params[:room][:room_id]
-
     wrk.room_id     = wrk_params[:room][:value] if wrk.room_id.nil?
-
-    # puts "wrk_params[:costing_id] #{wrk_params[:costing_id]}"
-
     wrk.price   = wrk_params[:price]
     wrk.qty     = wrk_params[:qty]
     wrk.amount  = wrk_params[:amount]
-
   end
 
   def upd_work
@@ -24,11 +19,8 @@ class AjaxController < ApplicationController
     set_work_params(wrk, wrk_params)
     if wrk.save 
       @wrk = wrk
-      # head :ok
       respond_with @wrk
     else
-      # body wrk.errors.full_messages
-      # head :unprocessable_entity
       respond_to do |format|
         format.json { render json: wrk.errors.full_messages, status: :unprocessable_entity }
       end
@@ -59,24 +51,6 @@ class AjaxController < ApplicationController
   end
 
   def autocomplete
-
-    if params[:model] == 'Option'
-      # menu = get_menu()
-      list = []
-      menu = t('options_menu')
-      menu.each do |m0|
-        m0[1].each do |m1|
-          m2_name = t(m1)[0]
-          if m2_name.downcase.include?(params[:term].downcase)
-            list << {id: m1, label: m2_name, name: 'options'}
-          end
-
-        end
-      end
-      render json: list
-      return
-    end
-
     model = params[:model].classify
     name_field = model == 'Project' ? 'address' : 'name'
 

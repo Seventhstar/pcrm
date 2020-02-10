@@ -1,0 +1,18 @@
+.sidebar
+  .inp_w.vue_options
+    div
+      v-chosen name="menu_item" placeholder="Поиск настройки"
+  
+  = render "options_vue"
+
+  #accordion.menu_sb.menu_sb_a active="#{get_active_option_page}"
+    - @menu.each do |menu_group|
+      h3= t menu_group[0]
+      div
+        ul
+          - menu_group[1].each do |menu_item|
+            = option_li(menu_item, t(menu_item)[0])
+
+.content.option_list
+  = render("simple_option")
+  .sep_3

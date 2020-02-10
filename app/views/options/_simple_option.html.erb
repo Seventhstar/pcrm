@@ -1,5 +1,5 @@
+<% if UserOption::MANAGER_ALLOW.include?(class_name) || is_admin? %>
 <div class="sep_05"></div>
-
 <div class="option_list">
 <% if ['users','user_roles'].include? class_name %>
 <% elsif has_view(class_name, 'new_item') %>
@@ -67,4 +67,5 @@
 </div>
 </div>
 
+<% end %>
 <% end %>
