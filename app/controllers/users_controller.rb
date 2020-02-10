@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   before_action :logged_in_user
   before_action :correct_user,   only: [:edit, :update]
   before_action :admin_user,     only: :destroy
-  respond_to :html, :json
+  respond_to :html, :json, :js
   before_action :main_params, only: [:show]
 
   # GET /users
@@ -38,14 +38,16 @@ class UsersController < ApplicationController
 
     years = [[first_project, first_lead].min, cur_year]
     @years = (years[0]..years[1]).map{|y| {id: y, name: y }}
-    # @year = {id: cur_year, name: cur_year}
+    
+    cur_year = params[:year].nil? ? cur_year : params[:year].try(:to_i)
+    @year = {id: cur_year, name: cur_year}
+
     @leads = @user.leads
 
 
     @user_leads = for_vue(@user.leads
                                 .select("leads.*, date_trunc('year', start_date) AS year")
-                                .order(:status_id, :start_date), 
-                  "status_name")
+                                .order(:status_id, :start_date), "status_name")
 
     @user_projects = for_vue(@user.projects
                                   .select("projects.*, extract(year from date_start) AS year")

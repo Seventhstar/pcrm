@@ -1,0 +1,15 @@
+- items ||= %w'city year search'
+.nav_select
+  - if items.include?('city') 
+    .nav_city
+      v-chosen clear="false" name="city" placeholder="Город..." storable="true"
+
+  - if items.include?('year') 
+    .nav_year  v-if="years.length>0"
+      v-chosen clear="false" name="year" placeholder="Год..."  
+
+  - if items.include?('search') 
+    .navsearch
+      v-search v-model="search"
+
+= render 'main_nav_vue'

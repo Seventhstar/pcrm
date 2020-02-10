@@ -9,6 +9,7 @@
       list_values: 'year city',
       mainFilters: ['year', 'city'],
       lists: 'years cities',
+      fullReload: @fullReload,
       params: @params
     }, 'app') %>,
     
@@ -30,25 +31,26 @@
       year(newValue, oldVal) {  
         if (newValue == undefined) return
         if (typeof(oldVal) == 'object' && newValue == oldVal.value) return
-
-        sortable_prepare({})
-        if (this.readyToChange) delay('sortable_query({})', 700)
+        this.update({})
       },
 
       city(newValue, oldVal) {
         if (this.city == undefined) return
         if (typeof(oldVal) == 'object' && newValue == oldVal.value) return
-        sortable_prepare({city: newValue.value})
-        if (this.readyToChange) delay('sortable_query({})', 700)
-        // $.ajax({
-        //   type: "POST",
-        //   url: "/ajax/set_city",
-        //   data: {city: this.city.value},
-        //   dataType: "json",
-        //   encode: true
-        // })
-        // delay('document.location.reload(true)', 400)
+        this.update({city: newValue.value})
       }
     },
+
+    methods: {
+      update(params){
+        sortable_prepare(params)
+        if (this.readyToChange) 
+          if (this.fullReload)
+            setTimeout(() => {document.location.reload(true), 200})
+          else
+            setTimeout(() => {sortable_query({})}, 700)
+      }
+    }
+
   })
 </script>
