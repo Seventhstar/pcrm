@@ -183,16 +183,16 @@
     url[i] = a
     return 
 
+  console.log('sortable_prepare fired')
   if (app?)
     console.log('app.getFiltersList()', app.getFiltersList())
     filtersList = app.getFiltersList()
     if filtersList != undefined
       filtersList.forEach (e) ->
-        if e.value != undefined 
-          # if (typeof())
-          # url[e.name] = app[e.name].value
+        if e.name == 'actual'
+          url['actual'] = false
+        else if e.value != undefined 
           url[e.name] = e.value
-          console.log('sortable_prepare 1', e.name, e.value, app[e.name].value )
         else if app.readyToChange == undefined || app.readyToChange
           # console.log('sortable_prepare 2', e.name, e.value, e )
           delete url[e.name]

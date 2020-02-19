@@ -18,13 +18,14 @@ class LeadsController < ApplicationController
   # GET /leads
   # GET /leads.json
   def index
-    puts "@year #{@year}"
-    puts "@city #{@city}"
+    # puts "@year #{@year}"
+    # puts "@city #{@city}"
     # @years = (2016..Date.today.year).step(1).to_a.reverse
     @priorities = Priority.all
     @sort_column = sort_column
 
-    @only_actual = params[:only_actual].present? ? params[:only_actual]=='true' : true
+    @only_actual = params[:actual].present? ? params[:actual]=='true' : true
+    # @only_actual = params[:only_actual].present? ? params[:only_actual]=='true' : true
     
     query_date  = @sort_column == "status_date" ? "status_date" : "start_date"
     sort_1      = @sort_column == query_date ? 'month' : @sort_column
@@ -46,18 +47,18 @@ class LeadsController < ApplicationController
 
     # puts "@leads #{@leads.to_h}"
 
-    if params[:search].present?
-      info = params[:search].downcase
-      q = "%#{info}%"
-      phone_q = "%#{info.gsub(/[-()+ .,]/,'')}%"
+    # if params[:search].present?
+    #   info = params[:search].downcase
+    #   q = "%#{info}%"
+    #   phone_q = "%#{info.gsub(/[-()+ .,]/,'')}%"
 
-      @leads = @leads
-        .where(%q{LOWER(info) like ?
-          or LOWER(phone) like ? 
-          or LOWER(fio) like ? 
-          or LOWER(address) like ? 
-          or LOWER(leads.email) like ?}, q, phone_q, q, q, q)
-    end
+    #   @leads = @leads
+    #     .where(%q{LOWER(info) like ?
+    #       or LOWER(phone) like ? 
+    #       or LOWER(fio) like ? 
+    #       or LOWER(address) like ? 
+    #       or LOWER(leads.email) like ?}, q, phone_q, q, q, q)
+    # end
 
     if params[:sort] == 'ic_users.name'
       sort_1 = "users.name"
@@ -72,10 +73,10 @@ class LeadsController < ApplicationController
     @leads = @leads
               .includes(includes)
               .by_city(@city)
-              .only_actual(@only_actual)
               .by_priority(params[:priority_id])
               .by_year(params[:year])
               .order("leads.created_at desc")
+              # .only_actual(@only_actual)
               # .order("#{sort_1} #{sort_direction}, #{sort_2} #{dir_2}, leads.created_at desc")
 
     # puts "leads #{@leads.length}"
@@ -88,13 +89,18 @@ class LeadsController < ApplicationController
       # map{ |l| columns.hash{ |c| l => l[c]
     @filterItems = %w'priority user'
 
+    actual_statuses = Status.where(actual: true).ids
+    # where(status_id: )
+
     @leads.each do |l| 
       h = {id: l.id, 
           month: year_month(l.start_date), 
           month_label: month_year(l.start_date), 
           status_month: month_year(l.status_date),
-          class: class_for_lead(l)
+          class: class_for_lead(l),
+          actual: actual_statuses.include?(l.status_id)
           }
+          
       fields.each do |col|
         c = col.include?(":") ? col.split(':')[0] : col
         h[c] = l[c]

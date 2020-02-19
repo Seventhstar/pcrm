@@ -37,9 +37,8 @@ class ApplicationController < ActionController::Base
 
   def check_policy
     @params = params
-#   puts "main_city", @main_city
-    # puts "years", @years
-#   p "current_user.roles #{current_user.has_roles}" if !current_user.nil?
+    @only_actual = params[:only_actual].present? ? params[:only_actual]=='true' : true
+    # @params[:only_actual] = @only_actual
   end
 
   private

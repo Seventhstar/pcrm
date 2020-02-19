@@ -2,43 +2,70 @@ var m_index = {
   created() {
     if (this.filterItems == undefined) this.filterItems = []
     if (this.params == undefined) this.params = []
-    this.filterItems.forEach( f => this[f] = undefined)
-    this.checkGroupName(this.groupName)
-    this.groupBy = this.groupName
-    // this.fGroup()
+    if (this.onlyActual == undefined) this.onlyActual = true
+    let fl = this.getFiltersList()
+    fl.forEach( fItem => {
+      f = fItem.name
+      if (this.params[f] != undefined) this[f] = this.params[f]
+      else this[f] = undefined
+    })
+    if (this.groupBy == undefined) this.groupBy = this.groupName
+    // this.fillFilter('actual', this.onlyActual)
   },
 
   updated() {
-    // console.log('updated has fired')
     $('[data-toggle="tooltip"]').tooltip({'placement': 'top', fade: false})
   },
 
   mounted() {
     setTimeout(() => {this.restoreParams()}, 50)
     setTimeout(() => {this.readyToChange = true}, 100)
+    setTimeout(() => {this.fillFilter('actual', this.onlyActual)}, 150)
   },
 
   computed: {
-    searchI () {
+    getToggled() {
+      add = this.onlyActual ? ' toggled' : ''
+      return "switcher_vue" + add
+    },
+
+    getActive() {
+      add = this.onlyActual ? ' active' : ''
+      return "handle" + add
+    },
+
+    searchI() {
       this.fillFilter('search', store.state.searchText)
       return store.state.searchText;
     }
   },
     
   methods: {
-    restoreParams() {
-      this.filterItems.forEach( f => {if (this.params[f] != undefined) {this[f] = this.params[f]}})
-      if (this.groupBy != undefined) this.groupBy = this.params['groupBy']
+     restoreParams(){
+      // let fl = this.getFiltersList()
+      // fl.forEach( fItem => {
+      //   f = fItem.name
+      //   if (this.params[f] != undefined) this[f] = this.params[f]
+      //   else this[f] = undefined
+      // })
+      // if (this.groupBy == undefined) this.groupBy = this.groupName
+      // this.fillFilter('actual', this.onlyActual)
+      // this.fGroup()
+    }, 
+
+    switchOnlyActual() {
+      this.onlyActual = !this.onlyActual
+      this.fillFilter('actual', this.onlyActual)
     },
 
     getPlaceholder(name){
       let val = name
-      if (this.translated != undefined) val = this.translated[name] + '...'
+      if (this.translated != undefined) val = this.translated[name]
       return val
     },
 
     groupLabel(month, gIdx) {
-      if (this.groupName.length == 0 || this.groupName == 'month')
+      if (this.groupName != undefined && (this.groupName.length == 0 || this.groupName == 'month'))
         return this.grouped[month][0].month_label  
       return month
     },
@@ -53,8 +80,11 @@ var m_index = {
       let filters = []
       if (this.groupBy != undefined) filters = ['groupBy']
       if (this.mainFilters != undefined) filters = this.mainFilters
+      if (this.onlyActual != undefined) filters = filters.concat(['actual'])
+      // console.log('onlyActual', this.onlyActual)
       if (this.filterItems != undefined) filters = filters.concat(this.filterItems)
       if (this.filtersAvailable != undefined) filters = filters.concat(this.filtersAvailable)
+
       if (filters == undefined) return {}
 
       let filter = []
@@ -100,16 +130,20 @@ var m_index = {
         if (this.filter[i].field === field) {s = i}
       }
 
-      if (s > -1) {
-        if (value === undefined) this.filter.splice(s, 1)
-        else this.filter[s].value = value
+      if (s > -1 ) {
+        if (value === undefined || (name == 'actual' && value == false )) 
+          this.filter.splice(s, 1)
+        else {
+          if (this.filter[s].value == value) return
+          else this.filter[s].value = value
+        }
       } else if (value != undefined && value != "") {
         this.filter.push({field: field, value: value})
       }        
 
       if (this.readyToChange != undefined && this.readyToChange == true)
         if (startUpdate) this.fGroup(this.groupBy)
-      sortable_prepare({})
+      sortable_prepare({}, false, this)
     },
 
     clearSearch() {
@@ -118,7 +152,7 @@ var m_index = {
     },
 
     onInput(e){
-      // console.log('e.name', e.name, e.label, e)
+      console.log('e.name', e.name, e.label, e)
       if (e !== undefined ) {
         if (this.readyToChange == undefined || this.readyToChange) {
           if (e.name == 'groupBy') {
@@ -146,16 +180,19 @@ var m_index = {
     },
 
     checkGroupName(groupName = '') {
-      if ((groupName == undefined || groupName.length == 0) && this.groupName == undefined) 
+      if ((groupName == undefined || groupName.length == 0) && this.groupName == undefined) {
         this.groupName = 'month'
-      else {
-        if (groupName != undefined && typeof(groupName) == 'object') this.groupName = groupName.value
-        if (this.groupName.slice(-3) == "_id") this.groupName = this.groupName.slice(0, -3) 
+      } else {
+        if (groupName != undefined) {
+          if (typeof(groupName) == 'object') this.groupName = groupName.value
+          else this.groupName = groupName
+        }
+        if (this.groupName != undefined && this.groupName.slice(-3) == "_id") this.groupName = this.groupName.slice(0, -3) 
       }
     },
 
     hasTooltip(field) {
-      if (field == undefined) return false
+      if (field == undefined || this.tooltips == undefined) return false
       return (this.tooltips.indexOf(field[0]) > -1)
     },
 
@@ -231,11 +268,11 @@ var m_index = {
         this.filteredData = this.filteredData.filter((item) => {
           for (q in vm.filter) {
             let f = vm.filter[q]
+            // console.log('filter f', f, vm.filter[q], )
             let field = f.field.includes(':') ? f.field.split(':')[1] : f.field
             let v = item[field]
             // if (v == undefined) break 
             // if (typeof(f.field) != 'object' && v == undefined) continue
-            // console.log('filter f', f, vm.filter[q], f.field == 'search')
             if (v == undefined && (f.field != 'search' || f.value == '')) continue
             // console.log('typeof(v)', typeof(v), v, f.value, 'f.field', f.field, f.field == 'search')
             

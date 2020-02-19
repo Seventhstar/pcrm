@@ -87,36 +87,18 @@ Vue.component('v-chosen', {
     methods: {
       onUpdate(value) {
         val = value
-        if (val === undefined) {
-          this.$parent[this.name] = []
-          return
-        }
-        // this.$root.$emit('onInput', {value: value, name: this.name, label: label})
+        if (val === undefined) {this.$parent[this.name] = []; return}
         if (typeof(val) != "object"){
           let find = this.options.filter(f => f.value == value)
-          // console.log('v-chosen find', this.name, find)
-          if (find.length > 0) {
-            val = find[0]
-          } else {
-            this.$parent[this.name] = []
-            return
-          }
+          if (find.length > 0) val = find[0]
+          else { this.$parent[this.name] = []; return }
         }
-        else {
-          // ifvalue
-          // val = 0
-          // this.$parent[this.name] = []
-        } 
-        // if (val == undefined || val.value == undefined) return
-        // console.log(this.name, 'value', value, val.value)
-
         let label = (v_nil(val)) ? undefined : val.label
 
         this.localValue = (v_nil(val)) ? 0 : val.value
-        if (typeof(val) == "object" && value == this.$parent[this.name]) return
-        // console.log('v-chosen find', find, this.localValue)
         this.$parent[this.name] = val
         this.$root.$emit('onInput', {value: this.localValue, key: this.k, index: this.index, name: this.name, label: label})
+        if (typeof(val) == "object" && value == this.$parent[this.name]) return
         if (this.storable) localStorage[this.name] = this.localValue
       },
     } 

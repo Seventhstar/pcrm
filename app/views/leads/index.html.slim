@@ -7,18 +7,22 @@
         .filter_row
           div Группировать по:
           div 
-            |Отбор: 
-            .white 
-              |{{searchI}}
+            .filter_item :style="filterItemStyle()" v-for="f in filterItems"
+              |{{getPlaceholder(f)}}:
           div Актуальные:
+          .white 
+            |{{searchI}}
         .filter_row.filter_items
           .filter_item
             v-chosen name="groupBy" placeholder="Поле..." clear=false
           div
             .filter_item v-for="f in filterItems" :style="filterItemStyle()"
-              v-chosen :name="f" :placeholder="getPlaceholder(f)" clear=true
+              v-chosen :name="f" placeholder="Все..." clear=true
             .filter_item
-          
+          div
+            div :class="getToggled" @click="switchOnlyActual()" 
+                .scale
+                  div :class="getActive" 
           = link_to 'Добавить', new_lead_path, class: "btn_a btn-add btn_slim right"
 
       .container

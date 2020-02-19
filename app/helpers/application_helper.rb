@@ -219,6 +219,8 @@ module ApplicationHelper
   def string_to_array(string)
     if string.class == Array 
       return string
+    elsif string.include?(' ')
+      return string.split(' ').map(&:strip)
     elsif string.include?(',')
       return string.split(',').map(&:strip)
     end
@@ -230,12 +232,17 @@ module ApplicationHelper
       data[:controller] = controller.controller_name if !data[:controller].present? 
     end
 
-
     if data[:columns].present? && [String, Array].include?(data[:columns].class)
       new_array = []
       string_to_array(data[:columns]).each do |col| 
-        c     = col.include?(':') ? col.split(':')[0] : col
-        label = col.include?(':') ? col.split(':')[1] : t(c)
+        if col.class == Array
+          c     = col[0]
+          label = col[1]
+        else
+          c     = col.include?(':') ? col.split(':')[0] : col
+          label = col.include?(':') ? col.split(':')[1] : t(c)
+        end
+
         c = c[0..-4] if c.end_with?("_id") 
         new_array.push([c, label])
       end
@@ -357,6 +364,7 @@ module ApplicationHelper
       data.delete(:list_values)
     end
 
+    puts "data[:groupBy] #{data[:groupBy]}"
     return data.to_json.html_safe.to_s
   end
 
