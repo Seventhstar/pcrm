@@ -5,6 +5,8 @@ class Develop < ActiveRecord::Base
   belongs_to :ic_user, foreign_key: :ic_user_id, class_name: 'User'
   has_many :files, class_name: 'DevelopsFile', foreign_key: :develop_id
   has_many :attachments, as: :owner
+  has_many :tasks, class_name: 'DevTask'
+
   
   scope :open_tasks, -> {where(dev_status_id: 1)}
 

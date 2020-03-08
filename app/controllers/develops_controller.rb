@@ -41,7 +41,7 @@ class DevelopsController < ApplicationController
     @projects     = DevProject.order(:name)
     @dev_statuses = DevStatus.order(:id)
     @priorities   = Priority.order(:name)
-    @users        = User.order(:name)
+    @ic_users        = User.order(:name)
     
   end
 
@@ -71,7 +71,7 @@ class DevelopsController < ApplicationController
     def_params
 
     @files        = @develop.attachments
-    @history 	    = get_history_with_files(@develop)
+    @history      = get_history_with_files(@develop)
     @owner        = @develop
   end
 

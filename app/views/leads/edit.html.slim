@@ -11,7 +11,8 @@
           a href="#tabs-3" История
     
     #tabs-1.ptab
-      .box_wrap.box_wrap_1
+      .sep_15
+      .box_wrap_1
         = render 'form'
         .right
           .comments_box
@@ -19,15 +20,16 @@
           = link_to "Перенести в договор", "/projects/new?lead=#{@lead.id}", class: 'btn btn_a before_30', id: 'to_project', target: :blank
 
     #tabs-2.ptab
+      .sep_15
       .box_wide
-        .box_wrap.box_wrap_1
-          .panel-left.lead_files
-            .sep_3
+        .box_wrap_1
+          .lead_files
             = render "shared/attach_vue"
           .panel-right
     #tabs-3.ptab
+      .sep_15
       .box_wide
-        .box_wrap.box_wrap_1
+        .box_wrap_1
           .historyChange_box
             - if @history.count >0
               = render "shared/history"

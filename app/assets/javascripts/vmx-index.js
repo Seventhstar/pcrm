@@ -3,14 +3,7 @@ var m_index = {
     if (this.filterItems == undefined) this.filterItems = []
     if (this.params == undefined) this.params = []
     if (this.onlyActual == undefined) this.onlyActual = true
-    let fl = this.getFiltersList()
-    fl.forEach( fItem => {
-      f = fItem.name
-      if (this.params[f] != undefined) this[f] = this.params[f]
-      else this[f] = undefined
-    })
-    if (this.groupBy == undefined) this.groupBy = this.groupName
-    // this.fillFilter('actual', this.onlyActual)
+    this.restoreParams()
   },
 
   updated() {
@@ -18,9 +11,7 @@ var m_index = {
   },
 
   mounted() {
-    setTimeout(() => {this.restoreParams()}, 50)
-    setTimeout(() => {this.readyToChange = true}, 100)
-    setTimeout(() => {this.fillFilter('actual', this.onlyActual)}, 150)
+    // setTimeout(() => {this.fillFilter('actual', this.onlyActual)}, 150)
   },
 
   computed: {
@@ -34,6 +25,10 @@ var m_index = {
       return "handle" + add
     },
 
+    getActualText() {
+      return this.onlyActual ? 'Актуальные:' : 'Все:'
+    },
+
     searchI() {
       this.fillFilter('search', store.state.searchText)
       return store.state.searchText;
@@ -42,15 +37,19 @@ var m_index = {
     
   methods: {
      restoreParams(){
-      // let fl = this.getFiltersList()
-      // fl.forEach( fItem => {
-      //   f = fItem.name
-      //   if (this.params[f] != undefined) this[f] = this.params[f]
-      //   else this[f] = undefined
-      // })
-      // if (this.groupBy == undefined) this.groupBy = this.groupName
-      // this.fillFilter('actual', this.onlyActual)
-      // this.fGroup()
+      let fl = this.getFiltersList()
+      fl.forEach( fItem => {
+        f = fItem.name
+        if (this.params[f] != undefined) this[f] = this.params[f]
+        else this[f] = undefined
+      })
+
+      if (this.groupBy == undefined) this.groupBy = this.groupName
+      this.readyToChange = true
+      if (this.mainList.length && this.mainList[0].hasOwnProperty('actual')) 
+        this.fillFilter('actual', this.onlyActual)
+      // setTimeout(() => {
+      // }, 100)
     }, 
 
     switchOnlyActual() {
@@ -65,8 +64,11 @@ var m_index = {
     },
 
     groupLabel(month, gIdx) {
-      if (this.groupName != undefined && (this.groupName.length == 0 || this.groupName == 'month'))
-        return this.grouped[month][0].month_label  
+      if (this.groupName != undefined && (this.groupName.length == 0 || this.groupName == 'month')){
+        let m = this.grouped[month][0]
+        if (m.month_label != undefined) return m.month_label
+        return m.month
+      }
       return month
     },
 
@@ -81,7 +83,6 @@ var m_index = {
       if (this.groupBy != undefined) filters = ['groupBy']
       if (this.mainFilters != undefined) filters = this.mainFilters
       if (this.onlyActual != undefined) filters = filters.concat(['actual'])
-      // console.log('onlyActual', this.onlyActual)
       if (this.filterItems != undefined) filters = filters.concat(this.filterItems)
       if (this.filtersAvailable != undefined) filters = filters.concat(this.filtersAvailable)
 
@@ -121,9 +122,8 @@ var m_index = {
     },
 
     fillFilter(name, value, startUpdate = true) {
-      // console.log('fillFilter 2', name, value)
       if (this.filter == undefined) return
-      let field = name == 'search' ? this.searchFileds : name
+      let field = name 
       let s = -1;
       
       for (var i = 0; i < this.filter.length; i++) {
@@ -141,9 +141,10 @@ var m_index = {
         this.filter.push({field: field, value: value})
       }        
 
-      if (this.readyToChange != undefined && this.readyToChange == true)
+      if (this.readyToChange != undefined && this.readyToChange == true){
         if (startUpdate) this.fGroup(this.groupBy)
-      sortable_prepare({}, false, this)
+        sortable_prepare({}, false, this)
+      }
     },
 
     clearSearch() {
@@ -152,7 +153,6 @@ var m_index = {
     },
 
     onInput(e){
-      console.log('e.name', e.name, e.label, e)
       if (e !== undefined ) {
         if (this.readyToChange == undefined || this.readyToChange) {
           if (e.name == 'groupBy') {
@@ -268,29 +268,20 @@ var m_index = {
         this.filteredData = this.filteredData.filter((item) => {
           for (q in vm.filter) {
             let f = vm.filter[q]
-            // console.log('filter f', f, vm.filter[q], )
             let field = f.field.includes(':') ? f.field.split(':')[1] : f.field
             let v = item[field]
-            // if (v == undefined) break 
-            // if (typeof(f.field) != 'object' && v == undefined) continue
+            // console.log(f, 'typeof(v)', typeof(v), v, f.value, 'f.field', f.field, f.field == 'search')
             if (v == undefined && (f.field != 'search' || f.value == '')) continue
-            // console.log('typeof(v)', typeof(v), v, f.value, 'f.field', f.field, f.field == 'search')
-            
 
             if (f.field == 'search') {
-              // console.log('here f.field', f.field)
               fl = false
               this.searchFileds.forEach(fld => {
-                // console.log('f.value', f.value, 'item[fld]:', item[fld], 'item[fld].toLowerCase().indexOf(f.value)')
                 if (!v_nil(item[fld]) && item[fld].toLowerCase().indexOf(f.value) > -1) fl = true 
               })
               if (!fl) return false
             } else if (typeof(f.value) == 'object') {
-              // console.log('v', v, 'f', f, f.value, f.value.includes(v))
               if (!f.value.includes(v)) return false
             } else if (typeof(v) == 'string') {
-              // return false
-              // console.log('v', v, 'vm.filter[q]', vm.filter[q], f.value)
               if (v == null || v.toLowerCase().indexOf(f.value.toLowerCase()) === -1) return false
             } else {
               if (v == null || v != f.value) return false

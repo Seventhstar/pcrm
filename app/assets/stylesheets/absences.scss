@@ -57,8 +57,9 @@ td.day{font-size: 13px;}
 
 
 .numday {display: block; }
-.numday.date{ background-color: #dcdcdc; padding: 0px 9px; border-radius: 2px;}
+.numday.date{ background-color: #dcdcdc; padding: 0px 9px; border-radius: 2px; }
 .numday.date.curday {background-color: $green; color: white;}
+.birthday {margin-top: 5px;}
 .before li a {color: #888}
 .nday .numday.date{ background-color: #f5f5f5}
 // .abs1{background-color: red;}

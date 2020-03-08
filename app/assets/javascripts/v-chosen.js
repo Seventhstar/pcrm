@@ -4,6 +4,7 @@ Vue.component('v-chosen', {
         model: "",
         idName: "",
         localName: "",
+        emptyText: "Выберите...",
         localValue: 0,
         nameParts: '',
         options: [],
@@ -16,13 +17,12 @@ Vue.component('v-chosen', {
             'owner', 'k', 'index', 'from_array', 'clear', 'input'],
     template: `
         <div class="inp_w">
-        <v-select 
+        <v-select
           :value="$parent[name]"
           :options="options"
           :clearable=clearable 
-          :placeholder="placeholder"
-          :readonly=readonly
-          :disabled=disabled
+          :placeholder="emptyText"
+          :disabled=readonly
           @input="onUpdate($event)">
           <template slot="option" slot-scope="option">
             <span v-if="option.mark" class='info'>{{ option.label }}</span>
@@ -46,6 +46,7 @@ Vue.component('v-chosen', {
       else 
         this.clearable = false
 
+      if (this.placeholder != undefined) this.emptyText = this.placeholder
 
       let model = ''
       if (this.owner !== undefined) { 
@@ -87,11 +88,11 @@ Vue.component('v-chosen', {
     methods: {
       onUpdate(value) {
         val = value
-        if (val === undefined) {this.$parent[this.name] = []; return}
-        if (typeof(val) != "object"){
+        if (val === undefined) {this.$parent[this.name] = undefined; return}
+        if (typeof(val) != "object" && this.options.filter != undefined) {
           let find = this.options.filter(f => f.value == value)
           if (find.length > 0) val = find[0]
-          else { this.$parent[this.name] = []; return }
+          else { this.$parent[this.name] = undefined; return }
         }
         let label = (v_nil(val)) ? undefined : val.label
 

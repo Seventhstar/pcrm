@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200113214657) do
+ActiveRecord::Schema.define(version: 20200305130422) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -202,6 +202,16 @@ ActiveRecord::Schema.define(version: 20200113214657) do
 
   create_table "dev_statuses", id: :serial, force: :cascade do |t|
     t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "dev_tasks", force: :cascade do |t|
+    t.string "name"
+    t.integer "develop_id"
+    t.boolean "done"
+    t.boolean "uploaded"
+    t.boolean "checked"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -400,6 +410,12 @@ ActiveRecord::Schema.define(version: 20200113214657) do
     t.integer "project_g_type_id"
     t.bigint "goods_priority_id", default: 1
     t.bigint "delivery_time_id", default: 1
+    t.integer "order_provider_id"
+    t.integer "order_currency_id"
+    t.integer "order_goods_priority_id"
+    t.integer "order_delivery_time_id"
+    t.string "order_name"
+    t.text "order_description"
     t.index ["delivery_time_id"], name: "index_project_goods_on_delivery_time_id"
     t.index ["fixed"], name: "index_project_goods_on_fixed"
     t.index ["goods_priority_id"], name: "index_project_goods_on_goods_priority_id"

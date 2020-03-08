@@ -6,7 +6,7 @@ module LeadsHelper
 
   def channel_name(ch_id)
     if ch_id.present?
-       channel=Channel.find(ch_id)
+       channel = Channel.find(ch_id)
        channel.name 
     else 
       ""
@@ -22,18 +22,16 @@ module LeadsHelper
   end 
 
   def class_for_lead( lead )
-
     st_date = lead.status_date? ? lead.status_date : DateTime.now
     actual = lead.status.actual if !lead.status.nil?
 
-    if (st_date < Date.today.beginning_of_day )
+    if (!actual)
+      "nonactual"
+    elsif (st_date < Date.today.beginning_of_day )
       "hotlead"
     elsif st_date < (Date.today.beginning_of_day+1.day)
       "goodlead"
-    elsif (!actual)
-      "nonactual"
     end
-
   end
 
   def leads_page_url

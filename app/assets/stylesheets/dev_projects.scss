@@ -2,8 +2,9 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-#develop_description{ height: 200px; }
+#develop_description{ height: 120px; resize: vertical;}
 .tbl_option { border-spacing: 10px 0; border-collapse: separate;}
+.options_grid {display: grid; grid-template-columns: 40px 1fr; }
 
 .dev_priority2, .bg_red { color: #a94442; background-color: #ffefef;}
 .dev_priority2:nth-child(even) td, .bg_red:nth-child(even) td {color: #a94442; background-color: #fae5e5 !important;}
@@ -13,3 +14,35 @@ tr.dev_priority2:hover td, tr.bg_red:hover td { color: #a94442; background-color
 table.tleads tr.dev_priority4 {color: #0089d8;  background-color: #dcf2ff;}
 table.tleads .dev_priority4:nth-child(even) td {color: #0089d8;  background-color: #f2fafe;}
 table.tleads tr.dev_priority4:hover, table.tleads tr.dev_priority4:hover td{ color: #0089d8;  background-color: #cbe8ff;}
+
+.check_container {padding: 1px;}
+.check_container label {font-size: 13px;}
+.h_content {padding-left: 12px;}
+
+.checkbox {position: absolute; z-index: -1; opacity: 0;}
+.checkbox + label {
+  position: relative;
+  padding: 0 0 0 26px;
+  cursor: pointer;
+}
+.checkbox + label:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 2px;
+  border-radius: 4px;
+  width: 10px;
+  border: 1px solid #D6D6D6;
+  height: 10px;
+  box-shadow: inset 3px 6px 3px -5px rgba(100, 100, 100, 0.4);
+}
+.checkbox + label:after {
+  content: '';
+  position: absolute;
+  // top: -2px;
+  // left: 2px;
+  width: 22px;
+  height: 22px;
+}
+.checkbox:checked + label:before {background: asset-url('pict01.png') no-repeat -89px -22px;}

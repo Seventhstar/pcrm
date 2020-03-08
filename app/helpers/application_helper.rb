@@ -15,7 +15,7 @@ module ApplicationHelper
   end
 
   def contact_kind_src
-    [["Телефон",1],["E-mail",2]]
+    [["Телефон",1], ["E-mail",2]]
   end
 
   def parents_count(item)
@@ -32,7 +32,25 @@ module ApplicationHelper
 
     return 0
   end
+
+  def user_options_box(id, label)
+    checkbox("options", label, user_option(id), id) 
+  end
   
+  def checkbox(name, label, value, array_index = nil)
+    id = array_index.nil? ? name : "#{name}_#{array_index}"
+    val = array_index.nil? ? value : array_index
+    options = {type: 'checkbox', value: val, id: id, class: 'checkbox'}
+    options[:checked] = 'checked' if value
+    options[:name] = array_index.nil? ? name : "#{name}[]"
+    box = content_tag :input, '', options
+    label = content_tag :label, label, {for: id}
+    content_tag :div, class: 'check_container' do
+      box + label
+    end
+  end
+
+
   def month_year(date)
     "#{t date.try('strftime','%B')} #{date.try('strftime','%Y')}"
   end
@@ -74,7 +92,7 @@ module ApplicationHelper
     end
   end
 
-  def date_ago( day )
+  def date_ago(day)
     now = Date.today
     days = (now-day.to_date).to_i
     case days
@@ -108,7 +126,7 @@ module ApplicationHelper
     end
   end
 
-  def activeClassIfModel( model )
+  def activeClassIfModel(model)
     if model && model == self.controller_name.classify
       "class=""active_li"""
     else ""
@@ -131,6 +149,10 @@ module ApplicationHelper
     content_tag(:td, class: "caption") do
       "#{label}:"
     end
+  end
+
+  def add_new_button
+    link_to 'Добавить', ['', controller.controller_name, 'new'].join('/'), class: "btn_a btn-add btn_slim right"
   end
 
   def td_text(f, field, params = {})
@@ -166,7 +188,6 @@ module ApplicationHelper
       content_tag(:td) do
         content_tag :div, class: "select_custom select" do
           f.collection_select field, source, :id, :name, {}, attrs
-          # f.grouped_collection_select field, source, :id, :name, {}, attrs
         end
       end
     end
@@ -207,11 +228,9 @@ module ApplicationHelper
         label = default.name
       end
     end
-    # h = val.present? ? {value: val, label: label} : []
     h = {}
     h[:value] = val if val.present? 
     h[:label] = label if label.present? 
-    puts "#{name} - #{h}"
     h = h.to_json.html_safe.to_s if safe
     h
   end
@@ -227,24 +246,64 @@ module ApplicationHelper
     string.split(' ')
   end
 
-  def fill_vue_data(obj, data, where = nil)
+  def add_vue_index_fields(data)
+    data[:groupBy] = 'month'
+    data[:reverse] = true
+    data[:currentIndex] = -1
+    data[:currentMonth] = -1
+    data[:confirmModal] = false
+    data[:groupName] = 'month'
+    data[:groupHeaders] = []
+    data[:menu_items] = [] if data[:menu_items].nil?
+    data[:filterItems] = [] if data[:filterItems].nil?
+    data[:showTotal] = false
+    data[:readyToChange] = false
+    data[:filter] = []
+    data[:grouped] = []
+    data[:filteredData] = []
+    data[:list_values] = []
+    data[:lists] = 'mainList:raw@json_data'
+    data
+  end
+
+
+  def fill_vue_data(obj, data, where = nil, to_include = nil)
     if controller.action_name == "index" 
       data[:controller] = controller.controller_name if !data[:controller].present? 
+    end
+
+    if to_include.present? && to_include.include?('vue_index')
+      data = add_vue_index_fields(data)
+    end
+
+    if data[:menu_items].present?
+      new_array = []
+      string_to_array(data[:menu_items]).each do |mi|
+        m = mi.split(':')
+        new_array.push({label: m[0], link: m[1]} )
+      end
+      data[:menu_items] = new_array
     end
 
     if data[:columns].present? && [String, Array].include?(data[:columns].class)
       new_array = []
       string_to_array(data[:columns]).each do |col| 
         if col.class == Array
-          c     = col[0]
+          name  = col[0]
           label = col[1]
         else
-          c     = col.include?(':') ? col.split(':')[0] : col
-          label = col.include?(':') ? col.split(':')[1] : t(c)
+          if col.include?(':')
+            a = col.split(':')
+            name = a[0]
+            label = a[1].gsub('_', ' ')
+          else
+            name = col
+            label = t name
+          end
         end
 
-        c = c[0..-4] if c.end_with?("_id") 
-        new_array.push([c, label])
+        name = name[0..-4] if name.end_with?("_id") 
+        new_array.push([name, label])
       end
       data[:columns] = new_array
     end
@@ -330,17 +389,11 @@ module ApplicationHelper
             la[1].sub! 'raw', ''
           end
           collection = eval("#{la[1]}")
-          # wefkjw
           l = la[0]
         end
+
         if collection.present? 
-          if raw 
-            data[l] = collection 
-          else
-            # puts "1. data[:lists] #{data[:lists]}, l: #{l}", "collection: #{collection}"
-            data[l] = select_src(collection, "name", false, fields) 
-            # puts "2. l #{l} collection: #{collection}", "data[l] #{data[l]}"
-          end
+            data[l] = raw ? collection : select_src(collection, "name", false, fields) 
         else
           data[l] = []
         end
@@ -353,23 +406,18 @@ module ApplicationHelper
         v = v_value(nil, nil, nil, eval("@#{li}"))        
         v = v_value(obj, li) if !v.present?
         if v.class == Integer
-          v = data[li.pluralize].select {|a| a[:value] == v }
+          v = data[li.pluralize].select {|a| a[:value] == v}
           v = v[0] if v.length
-          # wkfhjek
         end
-        # puts "li #{li} - v #{v}"
         data[li] = v
-        # puts "data #{data}"
       end
       data.delete(:list_values)
     end
 
-    puts "data[:groupBy] #{data[:groupBy]}"
     return data.to_json.html_safe.to_s
   end
 
   def select_src(collection, attr_name = "name", safe = false, fields_str = nil)
-    # puts collection.class
     if fields_str.nil? 
       collection = collection.collect{|u| 
         case u.class.to_s
@@ -380,14 +428,11 @@ module ApplicationHelper
             {label: u.try(attr_name), value: u.id} if u.try(attr_name).present? 
         end
       }.compact
-      # puts "collection2: #{collection}"
     else
       fields = fields_str.split(',')
       collection = collection.collect{|u| 
         c = {label: u.try(attr_name), value: u.id}
-        fields.each {
-          |f| c[f] = u.try(f)
-        }
+        fields.each {|f| c[f] = u.try(f)}
         c
       }
     end
@@ -402,7 +447,6 @@ module ApplicationHelper
   end
 
   def chosen_src(id, collection, obj = nil, options = {})
-
     p_name    = options[:p_name].nil? ? 'name' : options[:p_name]
     order     = options[:order].nil? ? p_name : options[:order]
     nil_value = options[:nil_value].nil? ? 'Выберите...' : options[:nil_value]
@@ -482,7 +526,6 @@ module ApplicationHelper
   end
 
   def sortable(column, title = nil)
-
     title ||= column.titleize
     css_class = column.to_s() == sort_2 ? "current #{dir_2}" : nil
 
@@ -493,26 +536,28 @@ module ApplicationHelper
     b = content_tag :span, title
 
     if not params.nil?
-     params.delete("_")
-   end
+      params.delete("_")
+    end
 
-   link_to params.merge(sort2: column, dir2: direction, page: nil), {class: css_class} do
-     b + a
-   end
+    link_to params.merge(sort2: column, dir2: direction, page: nil), {class: css_class} do
+      b + a
+    end
   end
 
   def only_actual_btn(filter = "only_actual", actual = "Актуальные")
     @only_actual = params[:only_actual].nil? ? true : params[:only_actual] == 'true'
-    # puts "@only_actual #{@only_actual}, #{params[only_actual]}"
 
     var = eval("@#{filter}")
     txt = var == false ? 'Все' : actual
     cls = var ? " on #{filter}" : ''
     active = var ?  'active' : ''
+    
     a = content_tag :a, txt, {class: "link_a left" + cls, off: "Все", on: actual}
+
     b = content_tag :div, { class: 'scale'} do
       content_tag :div, '', {class: "handle "+ active}
     end
+
     cls = var ? ' toggled' : ''
     content_tag :div, {class: 'switcher_a'+ cls} do
       a + b
@@ -526,8 +571,6 @@ module ApplicationHelper
     p_title  = only_actual == "false" ? "Все" : "Актуальные"
     content_tag :span, p_title, {class: css_class}
   end
-
-
 
   def total_info(t_array)
     s = ''

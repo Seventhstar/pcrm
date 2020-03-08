@@ -12,6 +12,8 @@ class ProjectGoodsController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   after_action :update_project_condition, only: [:create, :update]
+  after_action :send_changeset_email, only: [:update, :create]
+
   respond_to :html, :json, :js
 
   def show
@@ -187,4 +189,13 @@ class ProjectGoodsController < ApplicationController
                                   :fixed, :sum_supply, :project_id, :owner_id, 
                                   :goods_priority_id, :delivery_time_id, :group, :file_cache)
     end
+
+    def send_changeset_email
+      if action_name == 'create'
+        ProjectGoodMailer.created_email(@prj_good, @current_user).deliver_now
+      else
+        ProjectGoodMailer.changeset_email(@prj_good, @current_user).deliver_now
+      end
+    end
+
   end

@@ -21,14 +21,13 @@ Vue.component('v-search', {
         <input v-model="searchText"  
               class="search_area txt"
               placeholder="Поиск..."
-              @click="showList = true"
               @blur="blur" 
               @focus="focus" 
               @input="inputChange"
               @keyup.enter="keyEnter" 
               @keydown.tab="keyEnter" 
-              @keydown.up="keyUp" 
-              @keydown.down="keyDown">
+              @keydown.up="keyUp"
+              @keydown.down="keyDown" >
         <button title="Очистить" type="button" class="clear" @click="clearSearch" ><span>× </span></button>
       </div>
     <ul role="listbox" class="dropdown-menu" style="max-height: 400px;" v-show="show">
@@ -39,11 +38,9 @@ Vue.component('v-search', {
 
   computed: {
     hasItems () {
-      // console.log('this.internalItems.length', this.internalItems.length)
-      return !!this.internalItems.length
+      return !this.internalItems.length
     },
     show () {
-      // console.log('this.showList', this.showList, 'this.hasItems', this.hasItems)
       return (this.showList && this.internalItems.length)
     }
   },
@@ -81,12 +78,12 @@ Vue.component('v-search', {
     },
 
     focus () {
-      this.$emit('focus', this.searchText)
+      // this.$emit('focus', this.searchText)
     },
 
     blur () {
-      this.$emit('blur', this.searchText)
-      setTimeout(() => this.showList = false, 200)
+      // this.$emit('blur', this.searchText)
+      // setTimeout(() => this.showList = false, 200)
     },
 
     onClickItem(item) {
@@ -104,8 +101,31 @@ Vue.component('v-search', {
       store.commit('setSearchTexts', item)
     },
 
+    keyUp (e) {
+      if (this.cursor > -1) {
+        this.cursor--
+        // this.itemView(this.$el.getElementsByClassName('v-autocomplete-list-item')[this.cursor])
+      }
+    },
+
+    keyDown() {
+      this.showList = true
+
+      if (this.cursor < this.internalItems.length) {
+        this.cursor++
+        // this.itemView(this.$el.getElementsByClassName('v-autocomplete-list-item')[this.cursor])
+      }
+    },
+
+    itemView (item) {
+      if (item && item.scrollIntoView) {
+        item.scrollIntoView(false)
+      }
+    },
+
     keyEnter (e) {
-      searchText = this.searchText.toLowerCase()
+      if (this.searchText == undefined) searchText = ''
+      else searchText = this.searchText.toLowerCase()
       if (this.internalItems == undefined) this.internalItems = []
       if (this.internalItems.indexOf(searchText) == -1 )
           this.internalItems.unshift(searchText)

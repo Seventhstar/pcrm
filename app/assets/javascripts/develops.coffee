@@ -5,14 +5,6 @@
 # меняем отметки coder и boss непосредственно в index
 $(document).ready ->
   
-  params = width: '99.5%', disable_search: 'true'
-  $('#develop_project_id').chosen(params)
-  $('#develop_priority_id').chosen(params) 
-  $('#develop_ic_user_id').chosen(params) 
-  $('#develop_dev_status_id').chosen(params) 
-  params = width: '200px', disable_search: 'true'
-  $('#develops_project_id').chosen(params)
-
   $('.develops').on 'click', 'span.dev_check', ->
     checked = if $(this).hasClass('checked') then false else true
     dev_id = $(this).attr('developid')
@@ -36,6 +28,7 @@ $(document).ready ->
           th.removeClass 'checked'
         return
     return
+
   $('.container').on 'click','.btn-group .btn',-> 
     $('.btn-group label.active').removeClass 'active'
     $(this).addClass 'active'

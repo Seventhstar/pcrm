@@ -11,32 +11,20 @@ class LeadsController < ApplicationController
 
   respond_to :html, :json
 
-  def index_leads_params
-
-  end
-
-  # GET /leads
-  # GET /leads.json
   def index
-    # puts "@year #{@year}"
-    # puts "@city #{@city}"
-    # @years = (2016..Date.today.year).step(1).to_a.reverse
     @priorities = Priority.all
     @sort_column = sort_column
 
     @only_actual = params[:actual].present? ? params[:actual]=='true' : true
-    # @only_actual = params[:only_actual].present? ? params[:only_actual]=='true' : true
     
     query_date  = @sort_column == "status_date" ? "status_date" : "start_date"
     sort_1      = @sort_column == query_date ? 'month' : @sort_column
     query_str   = "leads.*, date_trunc('month', #{query_date}) AS month"
-    # query_str   = "*"
     
     includes = [:status]
     
     if current_user.has_role?(:manager)
       @leads = Lead.select(query_str)
-      # puts "query_str #{query_str}, @only_actual #{@only_actual}"
     else
       if params[:sort] == 'users.name'
         @leads = current_user.leads.select(query_str)
@@ -45,52 +33,30 @@ class LeadsController < ApplicationController
       end
     end
 
-    # puts "@leads #{@leads.to_h}"
-
-    # if params[:search].present?
-    #   info = params[:search].downcase
-    #   q = "%#{info}%"
-    #   phone_q = "%#{info.gsub(/[-()+ .,]/,'')}%"
-
-    #   @leads = @leads
-    #     .where(%q{LOWER(info) like ?
-    #       or LOWER(phone) like ? 
-    #       or LOWER(fio) like ? 
-    #       or LOWER(address) like ? 
-    #       or LOWER(leads.email) like ?}, q, phone_q, q, q, q)
+    # if params[:sort] == 'ic_users.name'
+    #   sort_1 = "users.name"
+    #   includes << :ic_user
+    # elsif params[:sort] == 'users.name'
+    #   sort_1 = "users.name"
+    #   includes << :user     
     # end
-
-    if params[:sort] == 'ic_users.name'
-      sort_1 = "users.name"
-      includes << :ic_user
-    elsif params[:sort] == 'users.name'
-      sort_1 = "users.name"
-      includes << :user     
-    end
-
-    puts "#{sort_1} #{sort_direction}, #{sort_2} #{dir_2}, leads.created_at desc"
     
     @leads = @leads
               .includes(includes)
               .by_city(@city)
               .by_priority(params[:priority_id])
-              .by_year(params[:year])
+              .by_year(@year[:id])
               .order("leads.created_at desc")
               # .only_actual(@only_actual)
               # .order("#{sort_1} #{sort_direction}, #{sort_2} #{dir_2}, leads.created_at desc")
 
-    # puts "leads #{@leads.length}"
-
-    # columns = %w"status_id status_date fio phone info footage start_date"
     @columns = %w"status_id status_date fio phone info footage start_date:Дата"
     fields  = %w"user_id priority_id ic_user_id".concat(@columns)
 
     @json_data = []
-      # map{ |l| columns.hash{ |c| l => l[c]
     @filterItems = %w'priority user'
 
     actual_statuses = Status.where(actual: true).ids
-    # where(status_id: )
 
     @leads.each do |l| 
       h = {id: l.id, 
@@ -111,18 +77,6 @@ class LeadsController < ApplicationController
       end
       @json_data.push(h)
     end
-    # wwekl
-      # id: l.id,
-      # status_id: l.status_id,
-      # status: l.status_name,
-      # status_date: format_date(l.status_date),
-      # fio: l.fio,
-      # phone: l.phone,
-      # footage: l.footage,
-      # address: l.address,
-      # start_date: format_date(l.start_date),
-      # info: l.info,
-      # month: month_year(l.start_date)
 
     @users = User.actual.by_city(@city).order(:name)
     store_leads_path
@@ -133,7 +87,6 @@ class LeadsController < ApplicationController
     @users = User.order(:name)
   end
 
-
   def update_multiple
     @leads = Lead.find(params[:leads_ids])
 
@@ -141,10 +94,6 @@ class LeadsController < ApplicationController
     redirect_to leads_page_url
   end
 
-
-
-  # GET /leads/1
-  # GET /leads/1.json
   def show
     if !current_user.has_role?(:manager) and @lead.ic_user != current_user
       redirect_to leads_url
@@ -155,9 +104,6 @@ class LeadsController < ApplicationController
     respond_modal_with @lead, location: root_path
   end
 
-
-
-  # GET /leads/new
   def new
     @lead = Lead.new
     @lead.start_date = Date.today.try('strftime',"%d.%m.%Y")
@@ -168,7 +114,6 @@ class LeadsController < ApplicationController
     @lead.city_id = current_user.city_id
   end
 
-  # GET /leads/1/edit
   def edit
     if !current_user.has_role?(:manager) and @lead.ic_user != current_user
       redirect_to leads_url
@@ -177,8 +122,6 @@ class LeadsController < ApplicationController
     @comm_height = 482
   end
 
-  # POST /leads
-  # POST /leads.json
   def create
     @lead = Lead.new(lead_params)
     @channels = Channel.all
@@ -192,8 +135,6 @@ class LeadsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /leads/1
-  # PATCH/PUT /leads/1.json
   def update
     respond_to do |format|
       if @lead.update(lead_params)
@@ -204,11 +145,8 @@ class LeadsController < ApplicationController
         format.html { render :edit }
       end
     end
-
   end
 
-  # DELETE /leads/1
-  # DELETE /leads/1.json
   def destroy
     @lead.destroy
     respond_to do |format|
@@ -218,12 +156,10 @@ class LeadsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_lead
       @lead = Lead.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def lead_params
       params[:lead][:phone] = params[:lead][:phone].gsub(/[-()+ .,]/,'')
       params.require(:lead).permit(:info, :fio, :footage, :phone, :email, :address, :channel_id, :source_id,
@@ -232,7 +168,7 @@ class LeadsController < ApplicationController
     end
 
     def flash_interpolation_options
-        {resource_name: t("Lead")}
+      {resource_name: t("Lead")}
     end
 
     def def_params

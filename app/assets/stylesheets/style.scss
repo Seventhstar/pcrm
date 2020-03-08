@@ -43,7 +43,7 @@ p {margin:0 0 14px 0; padding: 0 0 0 0; }
 .grey {color: #aeaeae; }
 
 .btn, .btn_a, .btn_add,.form-actions .btn-success, a.btn-success, .vue_add, 
-.input-group .btn-warning {display: inline-block; height: 34px; line-height: 34px; padding: 0 16px; text-decoration:none; font-size: 14px; color: #fff; 
+.input-group .btn-warning {display: inline-block; height: 28px; line-height: 28px; padding: 0 16px; text-decoration:none; font-size: 14px; color: #fff; 
   border-radius: 5px; 
   position:relative;
   background: #ff8411;
@@ -127,14 +127,28 @@ label a.btn_c:hover, .vue_add:hover {cursor: pointer; background: asset-url('xbg
 .menu_main {height: 44px; background: #f1f1f1 asset-url('bg1_1.png') no-repeat 0 0; border-radius: 5px; position:relative; margin-bottom: 40px;
 //margin-left: 128px; //ny
 }
+
 .menu_main ul, .submenu ul, .items_box_head ul{margin:0 0 0 0; padding: 0 0 0 0; list-style:none; overflow:hidden;}
 .menu_main ul li, .submenu ul li, .items_box_head ul li{margin:0 0 0 0; padding: 0 0 0 0; background:none; float:left;}
 .menu_main ul li a{display: inline-block; font-size: 15px; color: #000; text-decoration:none; }
 .menu_main ul li a, .panel-group-button ul li span {display: inline-block; 
   line-height: 44px;
-  background: asset-url('bg1_2.png') no-repeat 100% -100px; padding: 0 14px 0 14px; }
-.panel-group-button ul li {width: 409px; cursor: pointer; font-size: 16px;}
-.panel-group-button ul li span {width: 100%; }
+  background: asset-url('bg1_2.png') no-repeat 100% -100px; 
+  padding: 0 14px 0 14px; 
+}
+.panel-group-button ul li {
+  // width: 409px; 
+  cursor: pointer; font-size: 16px;
+}
+
+.modal-goods input[type=search]:disabled {display: none;} 
+.v-select.disabled .open-indicator {margin-top: 1px;}
+
+.menu_main.panel-group-button {height: 40px;}
+.panel-group-button ul {display: grid; grid-template-columns: 1fr 1fr 1fr}
+
+.panel-group-button ul li span {width: 100%; line-height: 40px; padding: 0;}
+.panel-group-button ul li a {padding: 0; line-height: 40px;}
 // .panel-group-button ul li .arrow {
     // width: 30px;
         // top: 2px;
@@ -144,14 +158,25 @@ label a.btn_c:hover, .vue_add:hover {cursor: pointer; background: asset-url('xbg
     // display: inline-block;
     // height: 46px; 
     // background: asset-url("arr1.png") no-repeat;}
-    .panel-group-button ul li span.arrow{content: ' '; width: 16px; height: 39px; 
-background: asset-url('arr1.png') no-repeat 0 0; position:absolute; top: 0; left: 100%;}
+.panel-group-button ul li span.arrow{
+    //content: ' '; width: 16px; height: 39px; 
+// background: asset-url('arr1.png') no-repeat 0 0; position:absolute; top: 0; left: 100%;
+    float: left;
+    content: ' ';
+    width: 16px;
+    height: 40px;
+    background: asset-url("arr1.png") no-repeat 0 0;
+    position: absolute;
+    top: 1px;
+    padding: 0;
+}
+
 
 .panel-group-button ul li.selected {background: #59c600; color: white; }
 .panel-group-button ul li:hover {background: #59c600; color: white; opacity: 0.7; }
 
-.panel-group-button ul li.li-left{border-right: 1px #D6D6D6 solid; border-radius: 5px 0 0 5px; }
-.panel-group-button ul li.li-right{border-left: 1px #D6D6D6 solid; border-radius: 0 5px 5px 0; }
+.panel-group-button ul li.li-left{ border-radius: 5px 0 0 5px; }
+.panel-group-button ul li.li-right{ border-radius: 0 5px 5px 0; }
 
 
 .menu_main ul li:not(.disabled) a:hover, .menu_main ul li.active a,
@@ -370,7 +395,7 @@ input[type='number']::-webkit-inner-spin-button {margin: 0 0 0 5px; }
   display: inline-block; position:relative; border: 1px solid $border-color; 
   font-size: 13px; padding: 5px 12px; color: #000000;  text-decoration:none;
   border-radius: 5px; line-height: 1;}
-.filter_nav ul li a { padding: 9px 14px; font-size: 14px;}
+.filter_nav ul li a { padding: 6px 12px; font-size: 14px;}
 
 
 .menu_c ul li a:hover,
@@ -421,8 +446,12 @@ input[type='number']::-webkit-inner-spin-button {margin: 0 0 0 5px; }
 
 .hl_tr {border-bottom: 1px solid $border-color;}
 .hl_b.bd {font-size: 17px; font-weight: 500; border-bottom: 2px solid $border-color; padding: 0 0 16px 0; margin:0 0 30px 0; height: 16px;}
+.develop-form .hl_b.bd {border: 0; margin-bottom: 12px;}
+
 .hl_b span{float: left; }
 .inp_h {float: left; margin: -5px 0 0 10px;}
+.develop-form .inp_h {margin-left: 5px;}
+
 .inp_h input {width: 1010px;}
 .inp_h input.hide{ border: 1px solid white; -webkit-box-shadow: none;  }
 .inp_h input:focus {border: 1px solid #ff8411;} 

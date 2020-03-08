@@ -8,22 +8,33 @@
 .subnav .v-select .dropdown-menu .active a {color: #333; background: lightgray;}
 .subnav .v-select .dropdown-menu .active a:hover {color: white; background: $main-orange;}
 
-.inp_w .v-select .dropdown-toggle {border: 1px solid $border-color;}
+.v-select .dropdown-toggle {max-height: 34px;}
+.nav_filter .v-select .dropdown-toggle {max-height: 28px;}
 
+
+.inp_w .v-select .dropdown-toggle {border: 1px solid $border-color;}
 .inp_w .v-select .selected-tag {margin: 2px 6px; border: 1px solid $border-color; height: 30px;}
+
+.vue_nav_filter .inp_w .v-select .selected-tag,
 .nav_filter .inp_w .v-select .selected-tag {margin: 2px 6px; height: 22px;}
+.vue_nav_filter .v-select .dropdown-toggle .clear,
 .nav_filter .v-select .dropdown-toggle .clear {height: 20px;
     font-size: 26px;
     font-family: sans-serif;
     font-weight: bold;margin-top: 1px;}
 
 .v-select input[type=search], .v-select input[type=search]:focus {height: 32px;}
-.nav_filter .v-select input[type=search], .nav_filter .v-select input[type=search]:focus {height: 26px;}
 
-.nav_filter {display: block; 
-  // height: 34px;
-  height: 46px; 
-  margin-bottom: 16px;}
+.vue_nav_filter .v-select input[type=search], 
+.nav_filter .v-select input[type=search], 
+.vue_nav_filter .v-select input[type=search]:focus,
+.nav_filter .v-select input[type=search]:focus {height: 26px;}
+
+.vue_nav_filter {display: block; height: 54px; margin-bottom: 16px;}
+.nav_filter {display: block; height: 28px; margin-bottom: 16px;}
+
+.menu_buttons .filter_nav ul li {display: block; margin-top: 22px;}
+
 .filter_nav ul {margin: 0; padding-inline-start: 0;}
 .filter_nav li {float: left; margin-right: 16px;}
 
@@ -63,7 +74,7 @@
   100% {transform: scale(1);}
 }
 
-.v-select .dropdown-toggle{max-height: 34px;}
+
 
 /*.slide-enter-active, .slide-leave-active {
     transition: all 1s cubic-bezier(.65, .05, .36, 1) !important;

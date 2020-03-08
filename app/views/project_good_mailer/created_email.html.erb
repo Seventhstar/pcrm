@@ -1,0 +1,14 @@
+<h3><%= @current_user.name %> Создал(а) заказ:</h3>
+<b>Для проекта: </b> <%= @pg.project_name %>
+<br>
+<b>Дата создания:</b> <%= @pg.created_at.try('strftime',"%d.%m.%Y") %><br>
+<b>Позиция:</b> <%= @pg.name %><br>
+<b>Поставщик:</b> <%= @pg.provider_name %><br>
+<b>Сумма:</b>  <%= @pg.print_amount %><br>
+<b>Дата:</b>  <%= @pg.date_place.try('strftime',"%d.%m.%Y") %><br>
+<b>Примечание:</b> <%= @pg.description %><br>
+
+<br>
+<%= link_to 'Перейти к проекту', [:edit, @pg] %>
+
+

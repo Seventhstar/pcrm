@@ -44,6 +44,8 @@ ru:
   priority_id: Приоритет
   project_id: Проект 
   reason_id: Причина
+  reason: Причина
+  project_name: Адрес проекта/объекта
   new_reason_id: Новая причина
   target_id: Цель
   executor_id: Исполнитель

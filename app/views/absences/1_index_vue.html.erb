@@ -1,0 +1,146 @@
+<script>
+  Vue.component('v-select', VueSelect.VueSelect)
+  let app = new Vue({
+    el: '.absences_index', 
+    mixins: [m_created, m_index, mCheck],
+    data: <%= fill_vue_data(nil, { 
+      sortKey: 'name',
+      controller: 'absences',
+      reverse: true,
+      currentIndex: -1,
+      currentMonth: -1,
+      confirmModal: false,
+      readyToChange: false,
+      groupHeaders: [],
+      filter: [],
+      mainFilters: ['city', 'year'],
+      filtersAvailable: ['search', 'reason', 'user'],
+      grouped: [],
+      opened: [],
+      groupKeys: [],
+      showTotal: false,    
+      filteredData: [],
+      users: [],
+      filteredGoodstypes: [],
+      useSearchVue: true,
+      texts: 'search',
+      searchFileds: ['project_name'],
+      list_values: 'user reason year city',
+      lists: "mainList:raw@json_absences all_users+city_id reasons years cities",
+      params: @params,
+      columns: [['dt_from', 'Дата с'], 
+      ['dt_to', 'Дата по'], 
+      ['user', 'Сотрудник'],
+      ['reason', 'Причина'], 
+      ['project_name', 'Адрес проекта/объекта'],
+      ['time_from', 'С'], ['time_to', 'По'] ]
+      
+    }) %>,
+
+    created() {
+      this.mainFilters.forEach( f => {
+        this.filtersFromParamsOrStoarge(f)
+      })
+      // console.log('store', store)
+      // console.log('this.year', this.year)
+      this.onCityChange(this.city)
+      setTimeout(() => {app.applyFilters()}, 250 )
+    },
+
+    watch: {
+      // city(newValue){
+      //   console.log('watch city')
+      //   this.onCityChange(newValue)
+      // },
+
+      // year(newValue){
+      //   console.log('watch year')
+      //   this.setFilterValue('year', this.year)
+      // },
+
+      search(newValue){
+        localStorage.search = this.search
+        this.$storage.set("search", newValue)
+      },
+
+    },
+
+    methods: {
+      applyFilters() {
+        this.readyToChange = true
+        this.filtersAvailable.forEach(f => {this.filtersFromParamsOrStoarge(f)})
+      },
+
+      filtersFromParamsOrStoarge(filterName) {
+        let value = undefined
+        if (this.params[filterName] != undefined) value = this.params[filterName]
+        // else if (localStorage[filterName]) value = localStorage[filterName]
+        // else if (this.$storage.get(filterName)) value = this.$storage.get(filterName)
+
+        // console.log('filterName', filterName, 'value', value)
+        if (value) {
+          this.setFilterValue(filterName, value)          
+        }
+
+        this.fGroup()
+      },
+
+      toHash(array){
+        var result = {};
+        for (var i = 0; i < array.length; i++) {
+          result[array[i].label] = array[i].value;
+        }
+        return result
+      },
+
+
+      onCityChange(v) {
+        if (typeof(v) != "object") return
+        this.users.length = 0
+
+        let users = this.all_users.filter(f => f.city_id == v.value)
+        users.forEach(u => this.users.push(u))
+        // console.log('onCityChange()', v.value, this.users)
+
+        this.fillFilter(':user', _.pluck(this.users, 'label'))
+      },
+      
+      switchOpenedRow(ind, i) {
+        Vue.set(this.opened[ind], i, !this.opened[ind][i])
+      },
+
+      cutRowClass(index, idx){
+        let cls = 'altcut'
+        if (!this.opened[index][idx]) cls = cls + ' cutted'
+        return cls
+      },
+
+      rowClass(item, index, name = 'head', add = '') {
+        addClass = ''
+        switch(item.p_status) {
+          case 5:
+          addClass = " info"
+          break;
+          case 2:
+          addClass = " nonactual"
+          break;
+        }
+        return "absences_index_" + name + " table_row" + addClass + " " + add
+      },
+
+      // siteUrl(url){
+      //   var prefix = 'http://';
+      //   var pref2  = 'https://';
+      //   if (url.substr(0, prefix.length) !== prefix && url.substr(0, pref2.length) !== pref2) { 
+      //     url = prefix + url;
+      //   }
+      //   return url;
+      // },
+
+      // editGroup(grp){
+      //   return '/absences/'+grp.id+'/edit'
+      // }
+    }
+
+  })
+</script>

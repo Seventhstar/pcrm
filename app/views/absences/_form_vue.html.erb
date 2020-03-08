@@ -16,10 +16,7 @@
               new_shops:Provider.all new_shop_targets:@shop_targets",
       checked: @checked,
       user:   v_value(@absence, "user", nil, current_user),
-      shops:  @absence.shops.map{|s| { id: s.id,
-                  shop: {label: s.shop_name, value: s.shop_id}, 
-                  target: {label: s.target_name, value: s.target_id},
-                  _destroy: false}} 
+      shops:  @ashops
     })%>,
     
     updated(){

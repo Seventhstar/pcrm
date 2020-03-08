@@ -1,0 +1,24 @@
+- if is_admin?
+  h4 Уведомления о событиях в лидах:
+  .h_content
+    = user_options_box(1, 'Лид создан')
+    = user_options_box(2, 'Лид обновлен')
+    = user_options_box(3, 'Назначен ответственный')
+    = user_options_box(4, 'Напоминание о событии')
+
+  h4 Уведомления о событиях в задачах:
+  .h_content
+    = user_options_box(10, 'Задача создана')
+    = user_options_box(11, 'Задача обновлена')
+
+  h4 Уведомления о событиях в календаре:
+  .h_content
+    = user_options_box(20, 'Отсутствие создано')
+    = user_options_box(21, 'Отсутствие обновлено')
+  
+  h4 Уведомления о событиях в проектах: 
+  .h_content
+    = user_options_box(30, 'Подошел срок сдачи')
+    = user_options_box(31, 'Проект не продлен')
+    = user_options_box(35, 'Создан заказ')
+    = user_options_box(36, 'Изменен заказ')

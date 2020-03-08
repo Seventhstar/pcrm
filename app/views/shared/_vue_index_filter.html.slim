@@ -1,0 +1,35 @@
+.menu_buttons
+  .filter_nav 
+    ul 
+      li v-for="menu_item in menu_items"
+        a :href="menu_item.link" 
+          |{{menu_item.label}}
+
+.vue_nav_filter        
+  .filter_row
+    div
+      div v-show="filterItems.length" 
+        |Группировать по: 
+    div 
+      .filter_item :style="filterItemStyle()" v-for="f in filterItems"
+        |{{getPlaceholder(f)}}:
+    div
+      .right 
+        |{{getActualText}}
+    .white 
+      |{{searchI}}
+
+  .filter_row.filter_items
+    .filter_item 
+      div v-show="filterItems.length" 
+        v-chosen name="groupBy" placeholder="Поле..." clear=false
+    div
+      .filter_item v-for="f in filterItems" :style="filterItemStyle()"
+        v-chosen :name="f" placeholder="Все..." clear=true
+      .filter_item
+    div
+      div :class="getToggled" @click="switchOnlyActual()" 
+          .scale
+            div :class="getActive" 
+    = add_new_button
+

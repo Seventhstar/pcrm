@@ -1,7 +1,7 @@
 div v-cloak=""
   div v-for="month, gIdx in groupHeaders"
     .panel.panel-default v-if="grouped[month].length >0"
-      .panel-heading.table-heading.head.month 
+      .panel-heading.table-heading.head.month v-show="groupLabel(month, gIdx) != ''"
         |{{ groupLabel(month, gIdx) }} 
         .right 
           |{{ grouped[month].length }}

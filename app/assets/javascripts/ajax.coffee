@@ -1,10 +1,6 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
 @onBlur = (el)->
     if (el.value == '') 
         el.value = el.defaultValue;
-    
 
 @onFocus = (el)->
     if (el.value == '0' || el.value=='0,0' || el.value=='0.0' )
@@ -42,7 +38,6 @@
         return
       success: (event, xhr, settings) ->
         disable_input(false)
-        # if reload then update_page()
         show_ajax_message(event, 'success')
         if modal then $('.modal').modal('hide')
       error: (evt, xhr, status, error) ->      
@@ -137,7 +132,6 @@
 
   search = $('.search_area').val()
   year = if (nav? && nav.year?) then nav.year.value else $('#year').val()
-  # console.log('nav', nav, 'nav.year', nav.year, year)
 
   $('.search_save a').each (i) ->
     href = new URL(this.href)
@@ -172,9 +166,6 @@
       url[i] = a
     return
 
-          # url.remove(e.name)
-        # else
-
   each if_params, (i, a) -> # add params from .index_filter
     url[i] = a
     return
@@ -183,21 +174,17 @@
     url[i] = a
     return 
 
-  console.log('sortable_prepare fired')
   if (app?)
-    console.log('app.getFiltersList()', app.getFiltersList())
     filtersList = app.getFiltersList()
     if filtersList != undefined
       filtersList.forEach (e) ->
         if e.name == 'actual'
-          url['actual'] = false
+          url['actual'] = app.onlyActual
         else if e.value != undefined 
           url[e.name] = e.value
         else if app.readyToChange == undefined || app.readyToChange
-          # console.log('sortable_prepare 2', e.name, e.value, e )
           delete url[e.name]
         return
- 
 
   each url, (i, a) ->
     if (a == 0 || a == '0' || a == undefined)
@@ -393,6 +380,12 @@ $(document).ready ->
     apply_opt_change($(this))
     return
 
+  $('body').on 'keyup', (e) ->
+    if e.key == "F7"
+      $('.search_area').trigger('click')
+      return
+
+
   $('body').on 'keyup', '.search-field input', (e) ->
     if e.keyCode == 13
       $('.chcreate').trigger('mousedown')
@@ -481,12 +474,6 @@ $ ->
       $('#to_bottom').fadeOut()
     else if dh>1200
       $('#to_bottom').fadeIn()
-
-    v = parseInt $('#page_num').val()
-    if($(window).scrollTop() == dh - $(window).height()) && v > 0
-      $("#page_"+v).html("Загружается...")
-      delay('paginate('+v+')',100)
-    
 
   # при клике на ссылку плавно поднимаемся вверх
   $('#back-top a').click ->

@@ -1,0 +1,58 @@
+= simple_form_for @develop, html: { class: "develop-form"} do |f|
+  .hl.hl_b.bd
+    span Описание задачи:
+    .inp_h
+      = f.input :name, label: false, input_html: {class: 'inp_hide'}
+    = link_to "", @develop, method: :delete, data: { confirm: 'Действительно удалить задачу?' }, class: "icon icon_remove right"
+
+  #tabs
+    ul
+      li 
+        a href="#tabs-1" Данные
+      li
+        a href="#tabs-2" Файлы 
+      - if is_manager? 
+        li
+          a href="#tabs-3" История
+
+    #tabs-1.ptab
+      .sep_15
+      div
+        .grid_label_name
+          .caption Подробное описание:
+          = f.text_area :description, class: :txt, label: false
+
+      .sep_15
+      .box_wide
+        .box_wrap_1
+          .panel-left
+            .grid_label_name
+              .caption Проект:
+              v-chosen name="project" :input="true"
+
+              .caption Статус:
+              v-chosen name="dev_status" :input="true"
+
+              .caption Приоритет:
+              v-chosen name="priority" :input="true"
+
+              .caption Ответственный:
+              v-chosen name="ic_user" :input="true"
+
+              div
+              = submit_cancel develops_url
+
+          .panel-right
+            = render "tasks"
+          
+    #tabs-2.ptab
+      .sep_15
+      - if !@owner.nil?
+        = render "shared/attach_vue"
+    #tabs-3.ptab
+      .sep_15
+      .historyChange_box
+        - if @history.count >0
+          = render "shared/history"
+
+= render "form_vue"

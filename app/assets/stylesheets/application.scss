@@ -16,6 +16,8 @@
   */
 
 [v-cloak] {display: none; }
+[v-cloak]::before { content: "loading…" }
+
 .nav_city{width: 180px; float: left; margin-right: 16px; }
 .nav_year{width: 90px; float: left; margin-right: 16px; }
 .navsearch #search {height: 34px; margin-top: -11px; width: 360px;}

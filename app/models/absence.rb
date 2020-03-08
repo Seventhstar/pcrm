@@ -15,6 +15,8 @@ end
 class Absence < ActiveRecord::Base
   extend ActiveModel::Naming
 
+  scope :by_year,     ->(year){where(dt_from: Date.new(year.to_i,1,1)..Date.new(year.to_i,12,31)) if year.present? && year&.to_i>0}
+
   belongs_to :reason, class_name: "AbsenceReason", foreign_key: :reason_id, optional: true
   belongs_to :new_reason, class_name: "AbsenceReason", foreign_key: :new_reason_id, optional: true
   belongs_to :target, class_name: "AbsenceTarget", foreign_key: :target_id, optional: true

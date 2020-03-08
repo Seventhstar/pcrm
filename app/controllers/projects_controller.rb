@@ -15,7 +15,7 @@ class ProjectsController < ApplicationController
    #@years = (2016..Date.today.year).step(1).to_a.reverse
     #puts "prj years:#{@years}, @year = #{@year}"
     
-    project_executors_ids  = Project.by_city(current_user.city).pluck(:executor_id).uniq
+    project_executors_ids  = Project.by_city(@city).pluck(:executor_id).uniq
     @executors = User.where(id: project_executors_ids).actual
     executor_id = @executors.pluck(:id).index(params[:executor_id].try('to_i')) ? params[:executor_id] : nil
 
@@ -58,18 +58,22 @@ class ProjectsController < ApplicationController
       includes << :executor
     end
 
+    @year = 0 if params[:year].nil?
+    # puts "@year[:id] #{@year}, params[:year] #{params[:year]}" 
+
     @projects = @projects                
                 .includes(includes)
                 .only_actual(@only_actual)
-                .by_city(@main_city)
+                .by_city(@city)
                 .by_executor(executor_id)
-                .by_year(@year[:id])
+                .by_year(params[:year])
                 .by_ids(prjs_ids)
                 .order("#{sort_1} #{sort_direction}, #{sort_2} #{dir_2}, projects.number desc")
 
     store_prj_path
     @sort = sort_1
 
+    # puts "@projects.length: #{@projects.length}"
     # @sum_parts = ProjectStage.sum(:part)
     # wkefk
   end

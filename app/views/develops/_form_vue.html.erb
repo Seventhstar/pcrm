@@ -1,0 +1,30 @@
+<script>
+  Vue.component('v-select', VueSelect.VueSelect)
+
+  let app = new Vue({
+    el: '.develop-form',
+    data: <%= fill_vue_data(@develop, {
+      model: 'develop',
+      noteValid: '',
+      tabs: '',
+      currentTab: '',
+      formValid: false,
+      list_values: "project dev_status priority ic_user",
+      lists: "projects dev_statuses priorities ic_users",
+      tasks: @tasks
+      
+    }) %>,
+
+    methods:{
+
+      keyEnter(){
+        console.log('onEnter')
+      }
+
+    }
+
+  })
+    
+
+
+</script>

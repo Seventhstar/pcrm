@@ -1,16 +1,16 @@
 class AbsencesController < ApplicationController
   include CommonHelper
-  respond_to :html, :json, :js
-  before_action :set_absence, only: [:show, :edit, :update, :destroy]
-  before_action :logged_in_user
-  helper_method :sort_2, :dir_2 
-  
-  helper_method :sort_column, :sort_direction
-  before_action :logged_in_user
-  after_action  :send_changeset_email, only: [:update,:create]
 
-  # GET /absences
-  # GET /absences.json
+  before_action :logged_in_user
+  before_action :set_absence, only: [:show, :edit, :update, :destroy]
+
+  helper_method :sort_2, :dir_2 
+  helper_method :sort_column, :sort_direction
+  
+  after_action  :send_changeset_email, only: [:update, :create]
+
+  respond_to :html, :json, :js
+ 
   def index
     @wdays = %w(пн вт ср чт пт сб вс)
     @user_ids = User.actual.by_city(@main_city).ids
@@ -22,14 +22,6 @@ class AbsencesController < ApplicationController
       params['m'] = nil if  params[:sort]!='calendar'
       @current_month = Date.parse(params['m']) if !params['m'].nil?
       @curr_day = @current_month.beginning_of_month.beginning_of_week
-
-      # puts "params[:sort] #{params[:sort]}"
-      # @absences = Absence.where("dt_from >= ?", @curr_day)
-                           # .left_joins(:user)
-                           # .select('absences.*, user.name as user_name')
-                           # .group_by {|i| [i.user_name]}
-                           # .group_by(1)
-                           # wee
 
       @birthdays = User.actual.by_city(current_user.city_id)
                        .where('date_birth is NOT NULL').pluck(:name, :date_birth)
@@ -44,9 +36,6 @@ class AbsencesController < ApplicationController
 
       abs = is_manager? ? Absence.all : current_user.absences
       @absences = abs.select(query_str).joins(:reason)
-
-      # puts "user_ids #{@user_ids}"
-      # wee
       @absences = @absences.where(user_id: @user_ids)
 
 
@@ -54,7 +43,7 @@ class AbsencesController < ApplicationController
         sort_1 = "users.name"
         @absences = @absences.joins(:user)
       end
-      @absences = @absences.where("dt_from >= ? AND dt_from <= ?", (Date.today-2.week), (Date.today+1.month).end_of_month ) if @only_actual
+      @absences = @absences.where("dt_from >= ?", Date.today-2.week ) if @only_actual
       @absences = @absences.where('extract(year from dt_from) = ?', @params[:year]) if @params[:year].present?
       @absences = @absences.paginate(page: @page, per_page: 50)
       sort_1 = @sort_column == 'dt_from' ? 'month' : @sort_column
@@ -63,10 +52,10 @@ class AbsencesController < ApplicationController
     end
 
 
-        @search = params[:search]
-    @json_absences = Absence.all.map{ |a| { id: a.id,  #.where("dt_from >= ?", (Date.today - 1.week))
+    @search = params[:search]
+    @json_data = Absence.by_year(@year[:id]).map{ |a| { id: a.id,  #.where("dt_from >= ?", (Date.today - 1.week))
                      # address: a.project_name,
-                      actual: a.dt_from > (Date.today-52.week) && a.dt_from < (Date.today + 1.month).end_of_month,
+                      actual: a.dt_from > (Date.today-52.week),
                      dt_from: format_date(a.dt_from),
                        dt_to: format_date(a.dt_to),
                         user: a.user_name,
@@ -77,27 +66,16 @@ class AbsencesController < ApplicationController
                    time_from: f_time(a.dt_from),
                      time_to: f_time(a.dt_to),
                        group: a.dt_from }}
-    # puts "@json_absences #{@json_absences}"
-    cur_year = Date.today.year
-    # @years = (abs.first[:dt_from].year..cur_year).map{|y| {id: y, name: y }}
-    cur_year = params[:year].nil? ? cur_year : params[:year].try(:to_i)
-    # @year = {id: cur_year, name: cur_year}
 
-    @cities = City.order(:id) if @cities.nil?
-    # @city   = params[:city].present? ? params[:city] : 1
-    @city = @main_city 
+    @columns = %w"dt_from:Дата_с dt_to:Дата_по user reason project_name time_from:С time_to:По"
+    fields  = %w"".concat(@columns)                   
 
     @reasons = AbsenceReason.order(:id).map{ |e| {name: e.name.strip, id: e.id } }
     @params = params.permit(params.except(:controller, :action).keys).to_h
-    # @params = prm.map{|p| {id: p[1], name: p[0]}}.to_h
-    # @params = prm.map{|p| if (p[0] != 'controller' && p[0] != 'action' ) {p[0] => p[1]}}.inject(:merge)
-    # wfkw
-    @all_users = User.actual #.by_city(current_user.city)
-    # puts "@absences #{@absences}"
+    
+    @users = User.actual #.by_city(current_user.city)
   end
 
-  # GET /absences/1
-  # GET /absences/1.json
   def show
     @title = 'Просмотр данных об отсутствии'
     @shops  = @absence.shops
@@ -114,17 +92,22 @@ class AbsencesController < ApplicationController
   end
 
   def abs_params(ap = nil)
-    @shop  = AbsenceShop.new
-    @reasons = AbsenceReason.order(:id)
-    @targets = AbsenceTarget.order(:name)
+    @shop     = AbsenceShop.new
+    @reasons  = AbsenceReason.order(:id)
+    @targets  = AbsenceTarget.order(:name)
     @users    = User.actual.by_city(current_user.city)
-
     @projects = Project.only_actual(true).order(:address).map{|p| {label: p.name, 
                   value: p.id, executor_id: p.executor_id, non_actual: false}} + 
                 Project.non_actual.order(:address).map{|p| {label: p.name, 
                   value: p.id, executor_id: p.executor_id, non_actual: true}}
 
     @shop_targets = AbsenceShopTarget.all
+
+    @ashops   = @absence.shops.map{|s| { id: s.id,
+                  shop: {label: s.shop_name, value: s.shop_id}, 
+                  target: {label: s.target_name, value: s.target_id},
+                  _destroy: false}} 
+
 
     if !@absence.nil?
       @shops    = @absence.shops
@@ -243,14 +226,16 @@ class AbsencesController < ApplicationController
     end
 
     def send_changeset_email
-      @version = @absence.versions.last
-      if !@version.nil?
-        if @version.event == "create"
-          AbsenceMailer.created_email(@absence.id,current_user).deliver_now
-        else
-          AbsenceMailer.changeset_email(@absence.id,current_user).deliver_now
-        end
+      # puts "controller.action_name #{controller.action_name}"
+      # @version = @absence.versions.last
+      # if !@version.nil?
+      #   if @version.event == "create"
+      if action_name == 'create'
+        AbsenceMailer.created_email(@absence.id, current_user).deliver_now
+      else
+        AbsenceMailer.changeset_email(@absence.id, current_user).deliver_now
       end
+      # end
     end
 
 end

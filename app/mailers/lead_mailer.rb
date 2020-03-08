@@ -18,22 +18,23 @@ class LeadMailer < ActionMailer::Base
     end
   end
 
-  def send_lead_mail(subj, to = nil, user_exclude = nil, only_admins = false, id = nil)
+  def send_lead_mail(subj, to = nil, user_exclude = nil, only_admins = false, option_id = nil)
 
-    if Rails.env.production? && Rails.application.secrets.host.present?
-      admins = User.admins.ids
-      admins = admins & UserOption.users_ids(id) if !id.nil?
-
-      if !only_admins
-        admins << @lead.user.id if !@lead.user.nil?
-        admins << @lead.ic_user_id if !@lead.ic_user.nil?
-      end
-
-      if to.nil?
-        emails = User.actual.where(id: admins).pluck(:email)
-        emails.delete(user_exclude)
-      else
+    if Rails.env.production? && Rails.application.secrets.host.present?      
+      if to.present?
         emails = to
+      else
+        admins = User.admins.ids
+        subscribers = UserOption.users_ids(option_id) if !option_id.nil?
+        receivers = admins & subscribers
+
+        if !only_admins
+          receivers << @lead.user.id if !@lead.user.nil?
+          receivers << @lead.ic_user_id if !@lead.ic_user.nil?
+        end
+
+        emails = User.actual.where(id: receivers).pluck(:email)
+        emails.delete(user_exclude)
       end
 
       if Rails.env.production? && !emails.empty?
@@ -42,7 +43,6 @@ class LeadMailer < ActionMailer::Base
         end
       end
     end
-
   end
 
   def created_email(lead_id, first_comment)

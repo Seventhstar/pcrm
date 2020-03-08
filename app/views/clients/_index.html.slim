@@ -1,0 +1,8 @@
+.items_box_head
+  .panel-left
+    = render_navigation level: 2
+  - if is_admin?
+    = add_new_button
+.container
+  #div_tclients
+    = render "clients"

@@ -1,0 +1,5 @@
+.subnav.submenu
+  = hidden_field_tag :cur_method, controller.action_name, {controller: controller.controller_name}
+  span.sort-span.active sort="calendar" direction="desc" Календарь
+  = link_to "Список", absences_path, class: 'link'
+  = link_to 'Добавить', new_absence_path, class: "btn_a btn-add btn_slim right space20"
