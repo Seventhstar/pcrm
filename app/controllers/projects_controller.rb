@@ -118,7 +118,7 @@ class ProjectsController < ApplicationController
     @clients    = Client.where(city: @main_city).order(:name)
     @gtypes     = Goodstype.where(id: [@pgt_ids]).order(:priority)
     
-
+    @cities     = City.order(:name)
 
     @tarifs     = Tarif.order(:project_type_id, :from)
     @holidays   = Holiday.pluck(:day).collect{|d| js_date(d)}
@@ -132,8 +132,7 @@ class ProjectsController < ApplicationController
     @date_start = format_date(@project.date_start)
     @date_end   = format_date(@project.date_end)
 
-    @executors  = User.actual.by_city(current_user.city)
-    @visualers  = User.actual.by_city(current_user.city)
+    @users      = User.actual
     @new_gtypes = Goodstype.where.not(id: [@pgt_ids]).order(:name)
     
     @project_types = ProjectType.order(:name)
@@ -143,6 +142,7 @@ class ProjectsController < ApplicationController
                       {label: 'Заказанные', value: 2}, 
                       {label: 'Закрытые', value: 3},
                       {label: 'Без файлов', value: 4} ]
+    # @executors  = User.actual # @visualers  = User.actual
   end
 
   # GET /projects/new

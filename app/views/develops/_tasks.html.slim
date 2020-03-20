@@ -1,16 +1,16 @@
 .panel.panel-default
   .panel-heading.table-heading Подзадачи
   div v-for="(item, index) in tasks" v-show="!item._destroy" 
-    td  {item.shop.label} 
-    input :name="shop_field(index,'shop_id')" :value="item.shop.value" type="hidden" /
-    input :name="shop_field(index,'target_id')" :value="item.target.value" type="hidden" /
-    input :name="shop_field(index,'id')" :value="item.id" type="hidden" v-if="item.id!==undefined" /
-    input :name="shop_field(index,'_destroy')" :value="item._destroy" type="hidden" /
-  #new_item
-    = hidden_field 'develop_task', 'develop_id', value: @develop.id
-    .grid_sub_goods
-      .caption Новая задача:
-      .inp_w
-        / = input :develop_task_name, label: false
-        input type="text" name="develop_task[name]" id="develop_task_name" placeholder="Наименование..." class="txt" @keyup.enter="keyEnter" @keydown.tab="keyEnter"
-        span#btn_a.btn-sm Добавить
+    .label_name
+      .td 
+        |{{item.name}}
+        input :name="taskField(index,'name')" :value="item.name" type="hidden" 
+        input :name="taskField(index,'id')" :value="item.id" type="hidden" v-if="item.id!==undefined" 
+        input :name="taskField(index,'_destroy')" :value="item._destroy" type="hidden" 
+#new_task
+  = hidden_field 'develop_task', 'develop_id', value: @develop.id
+  .grid_sub_goods
+    .label_col Новая задача:
+    .inp_w
+      input type="text" name="develop_task[name]" id="develop_task_name" placeholder="Наименование..." class="txt" @keyup.enter.stop="keyEnter" @keydown.tab.stop="keyEnter" v-model="new_name"
+    span Добавить

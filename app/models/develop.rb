@@ -7,6 +7,7 @@ class Develop < ActiveRecord::Base
   has_many :attachments, as: :owner
   has_many :tasks, class_name: 'DevTask'
 
+  accepts_nested_attributes_for :tasks, allow_destroy: true
   
   scope :open_tasks, -> {where(dev_status_id: 1)}
 
@@ -23,7 +24,6 @@ class Develop < ActiveRecord::Base
     else
       all
     end
-
   end
 
   def send_changeset_email
@@ -43,11 +43,9 @@ class Develop < ActiveRecord::Base
     priority.try(:name)
   end
 
-
   def status_name
     dev_status.try(:name)
   end
-
 
   def ic_user_name
     ic_user.try(:name)

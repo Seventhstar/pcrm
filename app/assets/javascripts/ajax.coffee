@@ -278,7 +278,7 @@
   item_id = th.attr('item_id')
   model = th.attr('model')
   params = $('[name^='+prm+']').serialize()    
-  # console.log()
+
   if th.hasClass('new') || newItem 
     type = 'POST' 
     url  = action
@@ -304,11 +304,10 @@ $(document).ready ->
   apply_mask()
 
   $(document).on 'click', '.close', ->
-      $(this).closest('.alert').removeClass("in").addClass('out');
+    $(this).closest('.alert').removeClass("in").addClass('out');
 
   $(document).off('click', 'span.modal_apply').on 'click', 'span.modal_apply', ->
     modal_apply($(this))
-    # console.log('modal apply')
 
 # поиск 
   $('#search').on 'keyup clear', (e)-> 

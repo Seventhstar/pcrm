@@ -19,6 +19,7 @@ Vue.component('v-search', {
     <div class="v-autocomplete">
       <div class="" >
         <input v-model="searchText"  
+              id="top-search"
               class="search_area txt"
               placeholder="Поиск..."
               @blur="blur" 

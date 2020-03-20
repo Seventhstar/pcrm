@@ -56,9 +56,9 @@
   .panel-right2
     table.tbl_fc.tbl_fc_1
       tr
-        td.goods_order_td colspan="2" 
+        td.goods_order_td colspan="2" grp_id="1"
           label.inp_btn_label.sw_enable grp_id="1"
-            div class="inp_btn checkbox #{@prj_good.order ? 'active':''}"
+            div class="inp_btn checkbox #{@prj_good.order ? 'active':''}" 
               = check_box iname, :order, {checked: @prj_good.order }
             span Товар заказан
       - row_cls = @prj_good.order ? '' : 'disabled'
@@ -68,7 +68,7 @@
           .inp_w.w118.left
             = text_field iname, :date_offer, {class: 'txt datepicker grp1', value: @prj_good.date_offer.try('strftime',"%d.%m.%Y"), disabled: !@prj_good.order}
           div class="label space20 #{row_cls} lbl-goods left" Сумма заказа:
-          = td_sum_field(iname, :sum_supply ,nil, {value: @prj_good.sum_supply, disabled: !@prj_good.order, inp_class: 'grp1 w118'})
+          = td_sum_field(iname, :sum_supply, nil, {value: @prj_good.sum_supply, disabled: !@prj_good.order, inp_class: 'grp1 w118'})
       tr.grp1
         td class="caption grp1 #{row_cls}" Дата поставки:
         td class="#{row_cls}"
@@ -83,7 +83,7 @@
         tr.grp1
           td class="caption grp1 goods_closed #{row_cls}" Выплачен
           td
-            label.inp_btn_label
+            label.inp_btn_label.goods_fixed_td
               div class="inp_btn checkbox #{@prj_good.fixed ? 'active':''} td_v_center" 
                 = check_box iname, :fixed, {value: @prj_good.fixed,  checked: @prj_good.fixed, disabled: !@prj_good.order}, "true", "false"
     .pg_files

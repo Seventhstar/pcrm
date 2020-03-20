@@ -31,8 +31,7 @@ Vue.component('v-chosen', {
               {{ option.label }}
             </template>
         </template>
-        </v-select>
-        
+        </v-select>        
         <input type="hidden" :name="localName" :value="localValue" 
                v-if="model!=undefined && h_input" :id="idName">
         
@@ -81,8 +80,6 @@ Vue.component('v-chosen', {
           let ind = this.options.filter(x => x.name == this.$parent[this.name])
         }  
       }
-      // console.log('created name', this.name, this.selected, this.$parent[this.name])
-      // console.log('name', this.name, this.selected, this.$parent[this.name] )
     },
 
     methods: {

@@ -41,8 +41,8 @@ class DevelopsController < ApplicationController
     @projects     = DevProject.order(:name)
     @dev_statuses = DevStatus.order(:id)
     @priorities   = Priority.order(:name)
-    @ic_users        = User.order(:name)
-    
+    @ic_users     = User.order(:name)
+    @tasks        = @develop.tasks
   end
 
   # GET /develops/1
@@ -126,7 +126,9 @@ class DevelopsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def develop_params
-      params.require(:develop).permit(:name, :coder, :boss, :project_id, :description, :ic_user_id, :priority_id, :dev_status_id)
+      params.require(:develop).permit(:name, :coder, :boss, :project_id, :description, 
+                                      :ic_user_id, :priority_id, :dev_status_id,
+                                      tasks_attributes: [:id, :name, :_destroy])
     end
 
 end

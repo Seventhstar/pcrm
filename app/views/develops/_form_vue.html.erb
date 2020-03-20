@@ -2,24 +2,30 @@
   Vue.component('v-select', VueSelect.VueSelect)
 
   let app = new Vue({
-    el: '.develop-form',
+    el: '.develop-main',
     data: <%= fill_vue_data(@develop, {
       model: 'develop',
       noteValid: '',
       tabs: '',
       currentTab: '',
       formValid: false,
+      new_name: '',
       list_values: "project dev_status priority ic_user",
       lists: "projects dev_statuses priorities ic_users",
       tasks: @tasks
       
     }) %>,
 
-    methods:{
+    methods: {
+      keyEnter(e){        
+        this.tasks.push({name: this.new_name, _destroy: false})
+        this.new_name = ''
+      },
 
-      keyEnter(){
-        console.log('onEnter')
+      taskField(index, field) {
+        return "develop[tasks_attributes]["+index+"]["+field+']'
       }
+
 
     }
 

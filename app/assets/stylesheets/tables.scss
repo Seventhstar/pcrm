@@ -203,7 +203,7 @@ div.edit_delete{ text-align: center; }
 .table_footer {overflow: auto; padding: 8px; font-size: 16px}
 .table_footer span {font-weight: 500;}
 
-.label_col, .grid_label_name .caption { margin-top: 8px; text-align: right; font-weight: 500; font-size: 13px;}
+.label_col, .grid_label_name .caption, #new_task .caption { margin-top: 8px; text-align: right; font-weight: 500; font-size: 13px;}
 .label_description, .label_num{ margin-top: 8px; font-size: 14px;}
 .label_num { text-align: right;}
 

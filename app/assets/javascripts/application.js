@@ -60,7 +60,6 @@ function updateRow(name, json, id, newItem = false, group = ''){
   for (var field in json) {
     replace[field] = json[field] 
   } 
-  // console.log('replace', replace)
 }
 
 function updAttachments(files, owner_id) {
@@ -87,17 +86,14 @@ function updAttachments(files, owner_id) {
 
 function updateOptionRow(name, json, id, newItem = false, group = '') {
   let where = app[name];
-  // console.log('gt', json.goodstype_id, 'group', group)
-  if (group == 'project_id'){
+    if (group == 'project_id'){
     gt = where
     replace = where.filter(i => i.id === id)[0]
   } else {
     gt = where.filter(n => n[0][0] === json.goodstype_id)[0]
     replace = gt[1].filter(i => i.id === id)[0]
   }
-  // console.log('gt', gt)
-  // console.log('replace', replace)
-
+  
   if (newItem) { 
     gt[1].push(json); // в 0 - группа товаров, 1 - товары
     return;
@@ -276,6 +272,25 @@ function enableSwitcher(){
   });
 
 }
+
+$(document).ready(function() {
+  $(document).keydown(function(event){
+    switch (event.key) {
+    case "F7":
+      document.getElementById("top-search").focus()
+      break;
+    case "Insert":
+      document.getElementById("develop_task_name").focus()
+    }    
+  });
+
+  $('.develop-main').keydown(function(event){
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+});
 
 $(function() {
 

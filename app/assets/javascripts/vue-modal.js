@@ -13,8 +13,8 @@
 
       mounted() {
         document.body.addEventListener('keyup', e => {
-          if (e.keyCode === 27) this.onCancel(); 
-          else if (e.keyCode === 13) this.onConfirm();
+          if (e.keyCode === 27) this.onCancel()
+          else if (e.keyCode === 13) this.onConfirm()
         })  
       },
 
@@ -27,6 +27,7 @@
 
       methods: {
         onConfirm() {
+          console.log('13 - 15!')
           this.$root.$emit('modalYes');
           this.$parent.confirmModal = false;
         },

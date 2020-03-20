@@ -19,7 +19,8 @@ table.tleads tr.dev_priority4:hover, table.tleads tr.dev_priority4:hover td{ col
 .check_container label {font-size: 13px;}
 .h_content {padding-left: 12px;}
 
-.checkbox {position: absolute; z-index: -1; opacity: 0;}
+.checkbox {position: absolute; z-index: -1; }
+.check_container .checkbox {opacity: 0;}
 .checkbox + label {
   position: relative;
   padding: 0 0 0 26px;
