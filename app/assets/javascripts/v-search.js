@@ -49,6 +49,8 @@ Vue.component('v-search', {
   methods: {
     clearSearch() {
       this.searchText = ''
+      this.$root.$emit('search', '')
+      // console.log('clearSearch', this.searchText)
       store.commit('setSearchTexts', "")
     },
 
@@ -69,9 +71,9 @@ Vue.component('v-search', {
       this.cursor = -1
       this.onSelectItem(null, 'inputChange')
       this.callUpdateItems(this.searchText, this.updateItems)
-      this.$emit('change', this.searchText)
-      // store.commit('increment')
+      this.$root.$emit('search', this.searchText)
       store.commit('setSearchTexts', this.searchText)
+      console.log('inputChange', this.searchText)
     },
 
     updateItems () {
@@ -96,9 +98,9 @@ Vue.component('v-search', {
     onSelectItem (item) {
       if (item) {
         this.searchText = item
-        this.$emit('item-selected', item)
+        // this.$emit('item-selected', item)
       } 
-      this.$emit('input', item)
+      this.$emit('search', item)
       store.commit('setSearchTexts', item)
     },
 
@@ -118,13 +120,13 @@ Vue.component('v-search', {
       }
     },
 
-    itemView (item) {
+    itemView(item) {
       if (item && item.scrollIntoView) {
         item.scrollIntoView(false)
       }
     },
 
-    keyEnter (e) {
+    keyEnter(e) {
       if (this.searchText == undefined) searchText = ''
       else searchText = this.searchText.toLowerCase()
       if (this.internalItems == undefined) this.internalItems = []
@@ -137,6 +139,7 @@ Vue.component('v-search', {
         this.onSelectItem(this.internalItems[this.cursor])
       
       this.showList = false
+      // console.log('keyEnter(e)', e)
     },
 
     findItem (items, text, autoSelectOneResult) {

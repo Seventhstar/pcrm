@@ -5,13 +5,14 @@
     el: '.vue_app',
     mixins: [vmxGoods],
     data: <%= fill_vue_data(@project, {
+      model: 'upd_modal',
       f_gt: true,
       project_id: @project.id,
       confirmModal: false,
       currentIndex: 0,
       currentGoods: '',
       
-      inputs: ['name', 'date_place', 'gsum', 'description'],
+      inputs:   ['name', 'date_place', 'gsum', 'description'],
       required: ['name', 'date_place', 'gsum'],
 
       selects: ['provider', 'currency'],
@@ -26,22 +27,44 @@
 
       filter: [],
       modalTab: 0,
+      modalHeadTab: 1,
       modalGoodsForm: false,
       modalСurrency: nil,
-      modalProvider: nil,
+      modalProvider: 0,
+      modalOrderProvider: 0,
+
       modalDeliveryTime: nil,
       modalGsum: 0,
       modalFixed: false,
       modalOrdered: false,
       test_1: 120,
-      modalCurrencyId: 0,
+      modalCurrencyId: 1,
+      modalOrderCurrencyId: 0,
       
+
       grandOfferTotal: [],
       grandOrderTotal: [],
       grandClosedTotal: [],
       grouped: [],
       
+      modalFields: %w"name goods_priority_id delivery_time_id \
+                      date_place currency_id description gsum\
+                      sum_supply \
+                      order_description order_currency_id \
+                      delivery_time_id goods_priority_id",
+      modal: {
+        name: "",
+        gsum: 0,
+        description: "",
+        delivery_time: 1,
+        goods_priority: 1,
+        currency: 0,
+        order_currency: 0,
+        provider: 0
+      },
+
       texts: "gtype new_gtype id",
+      
       lists: "gtypes+priority new_gtypes+priority currencies+short goods_priorities \
               goods_states:raw@goods_states goods_files+owner_id\
               delivery_times",
@@ -51,6 +74,8 @@
 
       goods: @goods
      }, 'page4') %>,
+
+      // list_values: "modalProvider",
 
     updated(){
       this.onInput();
@@ -65,19 +90,26 @@
       this.makeFilter()
 
       document.body.addEventListener('keyup', e => {
-          if (e.keyCode === 27) this.onCancel(); 
-          else if (e.keyCode === 13) this.onConfirm();
+          if (e.keyCode === 27) this.onCancel()
+          else if (e.keyCode === 13) this.onConfirm()
         }) 
     },
 
+    // watch: {
+    //   'modal.provider': {
+    //     handler: (val, oldVal) => {
+    //      console.log('val', val, 'oldVal', oldVal) 
+    //     },
+    //     deep: true
+    //   }
+    // },
+
     computed: {
-      currencyClass() {
-        console.log('this.modalCurrencyId(computed)', this.modalCurrency.value)
-        return "txt sum_mask rub_"+ this.modalCurrency.value
-      },
-
-      
-
+      // currencyClass() {
+      //     console.log('this.modalCurrencyId(computed)', this.modalCurrency.value)
+      //     if (typeof(obj) == 'object')
+      //       return "txt sum_mask rub_" + obj.value
+      // }, 
     },
 
     methods: {
@@ -87,18 +119,33 @@
         return cls
       },
 
-      modalTabClick(index){
+      modalHeadTabClass(index) {
+        cls = "ui-state-default ui-corner-top float-right"
+        if (this.modalHeadTab == index) cls = cls + " ui-tabs-active ui-state-active"
+        return cls
+      },
+
+      modalTabClick(index) {
         this.modalTab = index
       },
 
-      currencyClass1() {
-        console.log('this.modalCurrencyId(methods)', this.modalCurrency.value)
-        return "txt sum_mask rub_"+ this.modalCurrency.value
+      modalHeadTabClick(index) {
+        this.modalHeadTab = index
       },
 
-      tstClass(){
-        console.log('tstClass');
-        return "currency_" + this.modalCurrency.value;
+      // currencyClass1() {
+      //   // console.log('this.modalCurrencyId(methods)', this.modalCurrency.value)
+      //   return "txt sum_mask rub_"+ this.modalCurrency.value
+      // },
+
+      currencyClass(currency){
+        console.log('currencyClass', currency)
+        let c = 1
+        if (typeof(currency) == 'object') {
+        console.log('currencyClass .value', currency.value)
+          c = currency.value
+        }
+        return "currency_" + c 
       },
 
       makeFilter() {
@@ -136,30 +183,27 @@
           })
 
           grouped = _.groupBy(filtered, 'goods_priority_id')
-          Vue.set(this.grouped, i, grouped);
+          Vue.set(this.grouped, i, grouped)
         }
-
       },
 
-
-
-      getProviderIndex(i, id){
+      getProviderIndex(i, id) {
         let ind = this.providers.filter(w => w.gt.id === toInt(i))
         return this.providers.indexOf(ind[0])
       },
 
       gtypeName(gt_id){
         gt = this.gtypes.filter(w => w.value === parseInt(gt_id))
-        let name = gt.length>0 ? gt[0].label : 'Ошибка'
+        let name = gt.length > 0 ? gt[0].label : 'Ошибка'
         return name
       },
 
       addControlAndField(){
         let h = {providers: null, gsum: 0}
-        this.inputs.forEach( c => h[c] = '' );
-        h.date_place = format_date();
-        this.fields.push(h);
-        this.controls.push({opened: false, openedAlt: false, valid: false});
+        this.inputs.forEach( c => h[c] = '' )
+        h.date_place = format_date()
+        this.fields.push(h)
+        this.controls.push({opened: false, openedAlt: false, valid: false})
       },
 
       addGoodsType(){
@@ -171,16 +215,12 @@
             dataType: "json",
             encode: true
           }).done(function(data) {
-            NProgress.done();
+            NProgress.done()
             let new_gt = app.new_gtype.value
-            // console.log("data", data)
 
             new_priority = app.new_gtype.priority
             new_index = 0
-            app.gtypes.forEach( p => {
-              if (p.priority < new_priority)  new_index = app.gtypes.indexOf(p);
-              // console.log('new_priority', new_priority, 'p.priority', p.priority, 'new_index', new_index)
-            } )
+            app.gtypes.forEach( p => {if (p.priority < new_priority)  new_index = app.gtypes.indexOf(p) })
             
             if (new_index>0) new_index ++
 
@@ -188,7 +228,6 @@
 
             app.goods.splice(new_index, 0, [[app.new_gtype.value, app.new_gtype.label, new_priority], new Array()])
             app.gtypes.splice(new_index, 0, app.new_gtype)
-            
 
             app.new_gtypes.splice(app.new_gtypes.indexOf(app.new_gtype), 1)          
             app.new_gtype = null 
@@ -200,51 +239,47 @@
 
 
       deleteGoods(index, goods){
-        this.currentGoods = goods;
-        this.currentTitle = goods.name;
-        this.currentIndex = index;
-        this.confirmModal = true;
+        this.currentGoods = goods      
+        this.currentTitle = goods.name
+        this.currentIndex = index
+        this.confirmModal = true
       },
 
-      modalYes(){
-        if (this.currentGoods === '' || !this.confirmModal ) return;
-        let index = this.goods[this.currentIndex][1].indexOf(this.currentGoods);
-        if (index < 0) return;
-        this.goods[this.currentIndex][1].splice(index, 1);
-        delete_item('/project_goods/'+this.currentGoods.id);
+      modalYes() {
+        if (this.currentGoods === '' || !this.confirmModal ) return
+        let index = this.goods[this.currentIndex][1].indexOf(this.currentGoods)
+        if (index < 0) return
+        this.goods[this.currentIndex][1].splice(index, 1)
+        delete_item('/project_goods/'+this.currentGoods.id)
         this.makeFilter()
       },
 
 
       onChange(key, index) {
-        let valid = true;
-        if (key === undefined) return;
+        let valid = true
+        if (key === undefined) return
 
-        this.required.forEach( c => {if (v_nil(this.fields[index][c])) valid = false} );
-        this.selects.forEach( c => {if (v_nil(app[c+'_'+key])) valid = false} );
-        this.controls[index].valid = valid;  
-        // console.log("onChange");
+        this.required.forEach( c => {if (v_nil(this.fields[index][c])) valid = false} )
+        this.selects.forEach( c => {if (v_nil(app[c+'_'+key])) valid = false} )
+        this.controls[index].valid = valid
       },
 
       onInput(e) {
-        console.log("onInput", e)
-        if (e === undefined) return;
-        if (e.name == 'modalCurrency') {
-          console.log('modalCurrency e.value', e.value)
-          Vue.set(this, 'modalCurrencyId', e.value )
-        }
+        // console.log("onInput", e)
+        if (e === undefined) return
+        if (e.name == 'modal.currency') {Vue.set(this, 'modalCurrencyId', e.value)}
+        if (e.name == 'modal.order_currency') {Vue.set(this, 'modalOrderCurrencyId', e.value)}
 
         if (e.name === 'goods_priority' || e.name === 'goods_state') {
-          this.makeFilter();
-          return;
+          this.makeFilter()
+          return
         }
 
-        if (e.index === undefined) return;
-        this.onChange(e.key, e.index);
+        if (e.index === undefined) return
+        this.onChange(e.key, e.index)
       },
 
       addRow(){
-        // console.log('#newGoods_'+this.currentIndex)
         setTimeout(()=>{$('#newGoods_'+this.currentIndex).click();},200);
         setTimeout(()=>{$('#upd_modal_name').focus();}, 400);
       },
@@ -253,11 +288,11 @@
         this.currentIndex = index
         this.controls[index].opened = !this.controls[index].opened
         if (id === undefined) id = this.goods[index][0][0]
-        setTimeout(()=>{$('#goods_'+id+"_name").focus(); apply_mask();}, 300);
+        setTimeout( () => { $('#goods_'+id+"_name").focus(); apply_mask();}, 300);
       },
 
       altClass(index){
-        let cls = "altcut";
+        let cls = "altcut"
         if (!this.controls[index].openedAlt) cls = cls + ' cutted'
         return cls
       },
@@ -268,10 +303,10 @@
 
       openedOrHaveData(index, items, alt = false){
         let closed = this.closedTable(index)
-        if (items === undefined) return !closed;
+        if (items === undefined) return !closed
         let openAlt = alt ? this.altCount(this.grouped[index][2]) : true
 
-        return (this.closedTable(index) || length>0) && openAlt; 
+        return (this.closedTable(index) || length > 0) && openAlt
       },
 
       filteredOrHaveData(index){
@@ -286,12 +321,12 @@
       },
 
       openedAlt(index){
-        return this.controls[index].openedAlt;
+        return this.controls[index].openedAlt
       },  
 
       altCount(g){
-        if (g === undefined ) return 0;
-        return g.length;
+        if (g === undefined ) return 0
+        return g.length
       },
 
       calculateTotal(){
@@ -322,7 +357,6 @@
 
         for (var gi in this.grouped[gt][1]){
             g = this.grouped[gt][1][gi]
-            // console.log('gi', gi, g)
             c = g.currency_id
             this.offerAmount[gt][c] = this.offerAmount[gt][c] + parseInt(g.gsum)
             this.orderAmount[gt][c] = this.orderAmount[gt][c] + toInt(g.sum_supply)
@@ -339,50 +373,92 @@
         // return "/project_goods/" + g.id + "/edit"
       },
 
+      itemFromList(object, name) {
+         _name = name.slice(-3) == '_id' ? name.slice(0, -3) : name
+        listName = _name.slice(-1) == 'y' ? _name.slice(0, -1) + "ies" : _name + "s"
+        return ItemByID(object[name], this[listName])
+      },
+
       openModalGoods(index, goods) {
+        this.currentIndex = index
         this.modalTitle = 'Редактирование: ' + goods.name
         this.modalGoodsForm = true
-        this.currentGoods = goods;
+        this.currentGoods = goods
+        // if (this.currentGoods.order_name == undefined) this.currentGoods.order_name = goods.name
+        // this.modalProvider      = {value: goods.provider_id, label: goods.provider_name}
+        this.modal.provider      = goods.provider_id
+        // if (this.currentGoods.order_provider_id == undefined) this.currentGoods.order_provider_id = goods.provider_id
+        // this.modalOrderProvider = goods.order_provider_id
 
-        this.modalProvider = {value: goods.provider_id, label: goods.provider_name}
-        // this.modalProvider = ItemByID(goods.provider_id, this.providers)
+        // this.modalGoodsPriority = ItemByID(goods.goods_priority_id, this.goods_priorities) 
+        // if (v_nil(this.currentGoods.order_goods_priority_id, true)) this.currentGoods.order_goods_priority_id = goods.goods_priority_id
+        // this.modalOrderGoodsPriority = ItemByID(goods.order_goods_priority_id, this.goods_priorities) 
+        
+        // this.modal.currency      = ItemByID(goods.currency_id, this.currencies)
+        // this.modalOrderCurrency = ItemByID(goods.order_currency_id, this.currencies)
 
-        this.modalGoodsPriority = ItemByID(goods.goods_priority_id, this.goods_priorities) 
-        this.modalCurrency      = ItemByID(goods.currency_id, this.currencies)
-        // this.modalCurrencyId    = this.currencies.indexOf(ItemByID(goods.currency_id, this.currencies))
-        this.modalDecription    = goods.description
-        this.modalDatePlace     = format_date(goods.date_place)
-        this.modalDeliveryTime  = ItemByID(goods.delivery_time_id, this.delivery_times)
+        // console.log('f', f, 'this.modal[f]', this.modal[f], goods[f])
 
-        this.modalGsum = goods.gsum;
+        this.modalFields.forEach( f => {
+          if (f.includes('date')) this.modal[f] = format_date(goods[f])
+          else if (f.includes('_id')) {
+            console.log('f', f, 'goods[f]', goods[f], 'this.modal[f.slice(0, -3)]', this.modal[f.slice(0, -3)])
+            this.modal[f.slice(0, -3)] = goods[f]
+          }
+          else this.modal[f] = goods[f]
+        })
 
-        this.currentIndex = index;
-        // console.log('this.modalСurrency', this.modalСurrency)
+        // this.modalDecription    = goods.description
+        // this.modalOrderDecription = goods.order_description
+        
+        // this.modalDatePlace     = format_date(goods.date_place)
+        // this.modalDateOffer     = format_date(goods.date_offer)
+
+
+        // this.modal.delivery_time  = ItemByID(goods.delivery_time_id, this.delivery_times)
+        // this.modalDeliveryTime  = ItemByID(goods.delivery_time_id, this.delivery_times)
+        // this.modalOrderDeliveryTime  = ItemByID(goods.order_delivery_time_id, this.delivery_times)
+
+        // this.modalGsum = goods.gsum
+        // this.modalSumSupply = goods.sum_supply
+
+        // if (goods.order && goods.sum_supply == undefined) this.modalSumSupply = goods.gsum
+
         this.modalTab = 1
         if (goods.modalFixed) this.modalTab = 3
         else if (goods.order) this.modalTab = 2
 
-
-        setTimeout(() => apply_mask(), 100);
+        setTimeout(() => apply_mask(), 100)
       },
 
       onCancel() {
-        console.log('onCancel')
+        // console.log('onCancel')
         this.modalGoodsForm = false
         setTimeout("$('#ui-datepicker-div').hide()", 200)
         
       },
 
       onConfirm() {
-        console.log('onConfirm')
+        // console.log('onConfirm')
         this.modalGoodsForm = false
       },
 
 
       goodsCreateLink(index){
+        this.modalTitle = 'Новая позиция' 
+        this.modalGoodsForm = true
+        this.modalTab = 1
+        this.modal.name = ""
+        this.modal.provider = 0
+        this.modal.goods_priority = 1
+        this.modal.delivery_time = 1
         // console.log('this.goods[index]', this.goods[index])
-        return "/project_goods/new?goodstype_id="+index+'&project_id='+this.project_id
+        // return "/project_goods/new?goodstype_id="+index+'&project_id='+this.project_id
       },
+
+      goodsCreateHref(index){
+        return "/project_goods/new?goodstype_id="+index+'&project_id='+this.project_id
+      }
     }
   })
 

@@ -21,7 +21,10 @@
 .nested-fields .text {width: 100%;}
  
 .ui-tabs .ui-tabs-nav .ui-tabs-anchor {float: left; padding: 8px 14px; text-decoration: none;}
-#tabs>.ui-tabs-nav>.ui-state-active>.ui-tabs-anchor{padding: 11px 14px;}
+#tabs>.ui-tabs-nav>.ui-state-active>.ui-tabs-anchor, 
+#tabs-head>.ui-tabs-nav>.ui-state-active>.ui-tabs-anchor{padding: 11px 14px;}
+#tabs-head a {cursor: pointer;} 
+#tabs-head .hl_a {width: 650px; text-align: right; }
 
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {color: #212121;}
 

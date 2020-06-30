@@ -21,6 +21,7 @@ class ProjectGoodsController < ApplicationController
 
   def index
     # params[:year] = Date.today.year if params[:year].nil? 
+    prj_ids = []
     params.delete_if{|k,v| v=='' || v=='0' }
 
     @only_actual = params[:only_actual].present? ? params[:only_actual]=='true' : true
@@ -33,13 +34,10 @@ class ProjectGoodsController < ApplicationController
       e_ids = Project.by_executor(params[:executor_id]) 
       force_executor = true
     end
-    # puts "e_ids #{e_ids}"
 
     if @only_actual 
       act_ids = ProjectCondition.where(closed: false).pluck(:project_id)
-      # puts "act_ids #{act_ids}"
     end
-    # puts "only_actual #{@only_actual}"
 
     @groupKey = sort_column
     @sort_column = sort_column
@@ -54,7 +52,6 @@ class ProjectGoodsController < ApplicationController
       force_year = true
     end
 
-
     if !current_user.has_role?(:manager)
       prj_ids = [] if prj_ids.nil?
       u_ids = Project.where(executor_id: current_user.id).pluck(:id) 
@@ -62,9 +59,12 @@ class ProjectGoodsController < ApplicationController
       prj_ids = u_ids if prj_ids.empty?
       force_year = true
     end
-    # puts "prj_ids #{prj_ids} #{u_ids}"
+
+    _prj_ids = Project.by_city(@city).pluck(:id) 
+    prj_ids = prj_ids.length > 0 ? _prj_ids&prj_ids : _prj_ids
 
     @goods = ProjectGood.left_joins([:provider, :project, :currency])
+            .joins('LEFT JOIN providers as order_providers ON project_goods.order_provider_id = order_providers.id ')
             .only_actual(act_ids, @only_actual)
             .by_executor(e_ids, force_executor)
             .by_project_ids(prj_ids, force_year)
@@ -72,9 +72,9 @@ class ProjectGoodsController < ApplicationController
             .good_state(params[:good_state])
             .select("project_goods.*, 
                       providers.name as provider_name, 
+                      order_providers.name as order_provider_name,
                       currencies.short as currency_short,
                       projects.address as address")
-    puts "goods #{@goods.length}, prj_ids #{prj_ids}"
 
     @goods_files = Attachment.secret(is_manager?).where(owner_type: 'ProjectGood', owner_id: @goods.ids)
 
@@ -100,7 +100,6 @@ class ProjectGoodsController < ApplicationController
     @owner = @prj_good
 
     @file_cache = generate_cache_id
-    # puts "@file_cache #{@file_cache}"
     respond_modal_with @prj_good, location: root_path
   end
 
@@ -125,12 +124,11 @@ class ProjectGoodsController < ApplicationController
   end
 
   def update
-      @cur_id = pg_params[:owner_id]
-      
+      @cur_id = pg_params[:owner_id]   
       @group  = pg_params[:group]
       pg_params.delete :group
       @prj_good.update(pg_params)  
-      puts "@prj_good.attachments #{@prj_good.attachments}"
+      # puts "@prj_good.attachments #{@prj_good.attachments}"
       respond_with @prj_good
   end
 
@@ -147,7 +145,6 @@ class ProjectGoodsController < ApplicationController
 
 
   private
-
     def update_project_condition
       project = @prj_good.project
       count = project.goods.count 
@@ -175,7 +172,6 @@ class ProjectGoodsController < ApplicationController
       %w[asc desc].include?(params[:direction]) ? params[:direction] : defaul_dir
     end
 
-
     def set_project_good
       @prj_good = ProjectGood.find(params[:id])
     end
@@ -183,10 +179,11 @@ class ProjectGoodsController < ApplicationController
     def pg_params
       first_param = params.permit!.to_h.first[0] 
       req = first_param == 'upd_modal' ? :upd_modal : :gt
-      # @group = params[:group]
       params.require(req).permit( :goodstype_id, :provider_id, :date_supply, :date_place, 
                                   :date_offer, :currency_id, :gsum, :order, :name, :description, 
                                   :fixed, :sum_supply, :project_id, :owner_id, 
+                                  :order_name, :order_provider_id, :order_goods_priority_id,
+                                  :order_delivery_time_id, :order_currency_id, :order_description,
                                   :goods_priority_id, :delivery_time_id, :group, :file_cache)
     end
 

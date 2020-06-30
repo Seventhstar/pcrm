@@ -4,23 +4,34 @@ class OptionsController < ApplicationController
   include RolesHelper
 
   def create_menu
+
+    attrs_except = []
     case option_model.name
     when "Holiday"
       @items = option_model.order('day desc')
     when "User"
-      @only_actual = params[:only_actual].present? ? params[:only_actual]=='true' : true
+      @only_actual = params[:only_actual].present? ? params[:only_actual] == 'true' : true
+
       @items = option_model.only_actual(@only_actual)
                            .search(params[:search])
                            .order(:name)
+    when "ProjectStage"
+      @items = option_model.joins(:project_type).order([:project_type_id, :stage_order]).to_a.group_by(&:project_type_name)
+      attrs_except = "project_type_id"
     else
       @items = option_model.order(:name)
     end
 
+    @items = {'' => @items} if !@items.is_a?(Hash)
+
     @item = option_model.new
+    @attributes = (@items.first.nil? ? @item : @items.first[1][0]).attributes.except("id", "created_at", "updated_at")
+    @attributes.delete(attrs_except) 
+
 
     menu = UserOption::OPTIONS_MENU
-    @menu_items = []
-    managers_options = UserOption::MANAGER_ALLOW
+    @menu_items       = []
+    managers_options  = UserOption::MANAGER_ALLOW
 
     @menu = {}
     menu.each do |menu_group|
@@ -31,7 +42,7 @@ class OptionsController < ApplicationController
           menu_row << menu_item 
         end
       end
-      @menu[menu_group[0]] = menu_row if menu_row.length>0
+      @menu[menu_group[0]] = menu_row if menu_row.length > 0
 
     end
   end
@@ -65,7 +76,7 @@ class OptionsController < ApplicationController
   private
     def options_params
       i = option_model.model_name.singular
-      params.require(i).permit(:name,:actual,:day)
+      params.require(i).permit(:name, :actual, :day, :project_type_id)
     end
 
     def option_model

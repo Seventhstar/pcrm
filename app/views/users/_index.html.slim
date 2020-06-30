@@ -17,7 +17,7 @@
         th.center width="60px"  Уволен
         th width="30px" 
     tbody
-      - @items.each do |user|
+      - @items.first[1].each do |user|
         tr class="#{class_for_user(user)}" 
           td width="60" 
             = avatar_for(user)

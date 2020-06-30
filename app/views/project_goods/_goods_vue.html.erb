@@ -41,21 +41,15 @@
       opened: @opened
      }, 'pgoods') %>,
 
-    updated(){
-      this.onInput();
-    },
-
-    beforeCreate(){
-
+    updated() {
+      this.onInput()
     },
 
     created(){
       this.makeGroup('project_id')
     },
 
-
     methods: {
-
       cutClass(index, alt = false){
         let cls = alt ? 'altcut' : 'cut'
         if (!this.controls[index].opened) cls = cls + ' cutted'
@@ -130,7 +124,7 @@
 
       nonGroupKey(g) {
         if (this.groupKey == 'project_id')
-          return g.provider_name
+          return this.providersName(g) 
         return g.address
       },
 

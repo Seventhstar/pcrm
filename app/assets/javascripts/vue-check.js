@@ -103,14 +103,15 @@ Vue.component('m-number', {
       classes: "txt ",
       name_id: ""}
   },
-  props: ['name', 'label', 'type', 'add_class', 'disabled', 'readonly', 'float', 'footage'],
+  props: ['name', 'label', 'type', 'add_class', 'disabled', 
+          'readonly', 'float', 'footage', 'input_name'],
   template: `
     <div class="inp_w prj_not_simple">
       <label v-if="label" :readonly="readonly">{{label}}</label>
       <input 
         value="0.0" 
         type="text"  
-        :class="classes"  
+        :class='classes + add_class'
         :value="_parent[name]"
         :id="name_id" 
         :name="_name"
@@ -130,8 +131,12 @@ Vue.component('m-number', {
 
       modelName = this._parent.model 
       // if (modelName == undefined) modelName = this.$parent.$parent.model
-      this.name_id = modelName + "_" + this.name;
-      this._name = modelName + "[" + this.name+"]";
+      if (this.input_name != undefined) {
+        this._name = this.input_name
+      } else {
+        this._name = modelName + "[" + this.name+"]"
+      }
+      this.name_id = modelName + "_" + this.name
       
       let type = this.type == undefined ? '' : this.type
       // console.log('this.footage', this.footage)
@@ -145,6 +150,9 @@ Vue.component('m-number', {
       } else {
         this.classes = "txt sum_mask"
       }
+
+      if (this.readonly || this.disabled)
+        this.classes = this.classes + " disabled"
 
       if (this.add_class !== undefined)
         this.classes = this.classes + " " + this.add_class

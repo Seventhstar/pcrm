@@ -205,10 +205,12 @@ class ProjectsController < ApplicationController
     # @goods_sum = ProjectGood.where(project_id: @project.id)
     @goods = ProjectGood.where(project_id: @project.id)
             .left_joins(:provider)
+            .joins('LEFT JOIN providers as order_providers ON project_goods.order_provider_id = order_providers.id ')
             .left_joins(:goodstype)
             .left_joins(:currency)
             .select("project_goods.*, 
                       providers.name as provider_name, 
+                      order_providers.name as order_provider_name, 
                       currencies.short as currency_short,
                       goodstypes.name as goodstype_name,
                       goodstypes.priority as goodstype_priority")

@@ -28,8 +28,8 @@
     <transition-group name="item" v-show="gtRowsOpened(index, idx)">
     <template v-for="(g, ind) in grouped[item][idx]" >
       <div :class="rowClass(g)" :id="'item_'+item" :key="item">    
-          <div>{{g.name}}</div>
-          <div>{{nonGroupKey(g)}}</div>
+          <div v-html="goodsName(g)"></div>
+          <div v-html="nonGroupKey(g)"></div>
           <div :title="toolTip(g)">{{format_date(g.date_place)}}</div>
           <div>{{g.description}}</div>
           <div v-html="allAmount(g)" class="td_right"></div>

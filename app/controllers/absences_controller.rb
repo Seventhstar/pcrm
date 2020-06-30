@@ -103,13 +103,12 @@ class AbsencesController < ApplicationController
 
     @shop_targets = AbsenceShopTarget.all
 
-    @ashops   = @absence.shops.map{|s| { id: s.id,
-                  shop: {label: s.shop_name, value: s.shop_id}, 
-                  target: {label: s.target_name, value: s.target_id},
-                  _destroy: false}} 
-
-
     if !@absence.nil?
+      @ashops   = @absence.shops.map{|s| { id: s.id,
+                    shop: {label: s.shop_name, value: s.shop_id}, 
+                    target: {label: s.target_name, value: s.target_id},
+                    _destroy: false}} 
+
       @shops    = @absence.shops
       @dt_from  = @absence.dt_from.try('strftime',"%d.%m.%Y")
       @t_from   = @absence.dt_from.try('strftime',"%H:%M")

@@ -3,8 +3,8 @@
   <div class="panel panel-default good_group">
     <div class="panel-heading table-heading head month"> 
       {{gtypeName(item[0][0])}}
-      <a class="sub btn_add right" data-modal="true" v-show="closedTable(index)" 
-        :href="goodsCreateLink(item[0][0])" :id="'newGoods_'+index">Добавить позицию</a>
+      <span class="sub btn_add right" data-modal="true" v-show="closedTable(index)" 
+        @click="goodsCreateLink(item[0][0])" :id="'newGoods_'+index">Добавить позицию</a>
     </div>
   
     <div class="grid_table_goods grid_table_head" v-show="openedOrHaveData(index, grouped[index][1])">
@@ -21,8 +21,8 @@
     <transition-group name="item">
     <template v-for="(g, ind) in grouped[index][1]">
       <div :class="rowClass(g)" :id="'item_'+g.id" :key="g.id">
-          <div :title="ind+1">{{g.name}}</div>
-          <div>{{g.provider_name}}</div>
+          <div :title="ind+1" v-html="goodsName(g)"></div>
+          <div v-html="providersName(g)"></div>
           <div :title="toolTip(g)">{{format_date(g.date_place)}}</div>
           <div>{{g.description}}</div>
           <div v-html="allAmount(g)"></div>
@@ -53,7 +53,7 @@
     <template v-for="(g, ind) in grouped[index][2]">
       <div :class="rowClass(g)" :id="'item_'+g.id" :key="g.id">
           <div :title="ind+1">{{g.name}}</div>
-          <div>{{g.provider_name}}</div>
+          <div v-html="providersName(g)"></div>
           <div :title="toolTip(g)">{{format_date(g.date_place)}}</div>
           <div>{{g.description}}</div>
           <div v-html="allAmount(g)" ></div>

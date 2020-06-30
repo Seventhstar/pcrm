@@ -276,7 +276,7 @@ var m_index = {
             if (f.field == 'search') {
               fl = false
               this.searchFileds.forEach(fld => {
-                if (!v_nil(item[fld]) && item[fld].toLowerCase().indexOf(f.value) > -1) fl = true 
+                if (!v_nil(item[fld]) && item[fld].toLowerCase().indexOf(f.value.toLowerCase()) > -1) fl = true 
               })
               if (!fl) return false
             } else if (typeof(f.value) == 'object') {

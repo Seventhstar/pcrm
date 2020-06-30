@@ -1,9 +1,13 @@
 class ProjectGood < ActiveRecord::Base
   include CurrencyHelper
   belongs_to :provider
+  belongs_to :order_provider, class_name: 'Provider', optional: true
   belongs_to :project
   belongs_to :goodstype
+  
   belongs_to :currency
+  belongs_to :order_currency, class_name: 'Currency', optional: true
+
   belongs_to :delivery_time
   belongs_to :goods_priority
   attr_accessor :group_id, :group
@@ -57,6 +61,10 @@ class ProjectGood < ActiveRecord::Base
     provider.try(:name)
   end
 
+  def order_provider_name
+    order_provider.try(:name)
+  end
+
   def project_name
     project.try(:name)
   end
@@ -82,6 +90,10 @@ class ProjectGood < ActiveRecord::Base
 
   def currency_short
     currency.try(:short)
+  end
+
+  def order_currency_short
+    order_currency.try(:short)
   end
 
   def currency_name

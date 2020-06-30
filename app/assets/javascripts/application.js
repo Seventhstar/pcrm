@@ -133,7 +133,6 @@ function checkTime(i){
 function ItemByID(id, list){
   found = list.filter(f => f.value == toInt(id))
   if (found.length > 0) return found[0]
-    // return {label: found[0].label, value: id}
   return {}
 }
 
@@ -155,7 +154,7 @@ function diff_hours(dt2, dt1) {
   diff = Math.abs(Math.ceil(diff)/10);
   if (diff > 6) diff = diff - 1;
   // console.log('diff', diff);
-  return diff;
+  return diff
 }
 
 function diff_days(dt2, dt1) {
@@ -173,15 +172,15 @@ function diff_days(dt2, dt1) {
     days = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   }
 
-  return days; 
+  return days
 }
 
 var delay = ( function() {
-  var timer = 0;
+  var timer = 0
   return function(callback, ms){
-    clearTimeout (timer);
-    timer = setTimeout(callback, ms);
-  };
+    clearTimeout (timer)
+    timer = setTimeout(callback, ms)
+  }
 })();
 
 var message_template = function(msg, type) {
@@ -189,39 +188,37 @@ var message_template = function(msg, type) {
 };
 
 var add_ajax_message = function(msg, type) {
-  if (!type) {type = "success"};
-  $(".js-notes").append( message_template(msg,type));    
-  showNotifications();
+  if (!type) {type = "success"}
+  $(".js-notes").append( message_template(msg,type))  
+  showNotifications()
 };
 
 var show_ajax_message = function(msg, type) {
-  if (!type) {type = "success"};
-  $(".js-notes").html( message_template(msg,type));    
+  if (!type) {type = "success"}
+  $(".js-notes").html( message_template(msg,type))   
   showNotifications();
 };
 
 var v_nil = function(v, zeroIsNil = false){ 
   if (typeof(v) == "object") 
-    return v === null || v === undefined || v.value === undefined || v.value === 0;
-
+    return v === null || v === undefined || v.value === undefined || v.value === 0
   if (zeroIsNil && v === 0) return true
-  
-  return v === null || v === undefined || v === '';
+  return v === null || v === undefined || v === ''
 }
 
 var e_nil = function(id) {
-  return e_val(id) === "";
+  return e_val(id) === ""
 }
 
 var e_val = function(id) {
-  let v = document.getElementById(id);
-  if (v === null) return "";
-  return v.value;
+  let v = document.getElementById(id)
+  if (v === null) return ""
+  return v.value
 }
 
 var format_date = function(date) {
-  if (v_nil(date)) date = new Date().toJSON().slice(0,10).replace(/-/g,'-');
-  if (date.includes('-')) return date.slice(0,10).split('-').reverse().join('.');
+  if (v_nil(date)) date = new Date().toJSON().slice(0,10).replace(/-/g,'-')
+  if (date.includes('-')) return date.slice(0,10).split('-').reverse().join('.')
   return date;
 }
 

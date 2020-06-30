@@ -43,7 +43,7 @@ p {margin:0 0 14px 0; padding: 0 0 0 0; }
 .grey {color: #aeaeae; }
 
 .btn, .btn_a, .btn_add,.form-actions .btn-success, a.btn-success, .vue_add, 
-.input-group .btn-warning {display: inline-block; height: 28px; line-height: 28px; padding: 0 16px; text-decoration:none; font-size: 14px; color: #fff; 
+.input-group .btn-warning {display: inline-block; height: 28px; line-height: 30px; padding: 0 16px; text-decoration:none; font-size: 14px; color: #fff; 
   border-radius: 5px; 
   position:relative;
   background: #ff8411;
@@ -142,7 +142,10 @@ label a.btn_c:hover, .vue_add:hover {cursor: pointer; background: asset-url('xbg
 }
 
 .modal-goods input[type=search]:disabled {display: none;} 
-.v-select.disabled .open-indicator {margin-top: 1px;}
+.v-select.disabled .open-indicator {
+  // margin-top: 1px;
+  background-color: transparent !important;
+}
 
 .menu_main.panel-group-button {height: 40px;}
 .panel-group-button ul {display: grid; grid-template-columns: 1fr 1fr 1fr}
@@ -418,6 +421,7 @@ input[type='number']::-webkit-inner-spin-button {margin: 0 0 0 5px; }
 
 .left,.panel-left, .panel-left3 {float: left;}
 .right, .panel-right, .panel-right2{float: right;}
+.float-right { float: right !important; }
  
 .history_box {}
 .history_box .items_box_head{}

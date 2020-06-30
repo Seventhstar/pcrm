@@ -160,16 +160,16 @@ module ProjectsHelper
 
   def all_sum(g)
     gsum = g.gsum.nil? ? '' : g.gsum.to_sum
-    gsum = ["<span class='striked'>",gsum,'</span>'].join if gsum.length && g.order && g.sum_supply != g.gsum
+    gsum = ["<span class='striked'>", gsum, '</span>'].join if gsum.length && g.order && g.sum_supply != g.gsum
     a = gsum 
-    a = [gsum,'<br>',g.sum_supply.to_sum].join if !g.sum_supply.nil? && g.sum_supply != g.gsum
+    a = [gsum, '<br>', g.sum_supply.to_sum].join if !g.sum_supply.nil? && g.sum_supply != g.gsum
     a.html_safe
   end
 
   def all_sum_info(g)
     gsum = g.gsum.nil? ? '' : g.gsum.to_sum
     a = 'Предложено: ' + gsum 
-    a = [a,'&#013; Заказано: ',g.sum_supply.to_sum].join if !g.sum_supply.nil?
+    a = [a, '&#013; Заказано: ', g.sum_supply.to_sum].join if !g.sum_supply.nil?
     a.html_safe
   end
 

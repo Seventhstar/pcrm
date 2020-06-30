@@ -30,14 +30,46 @@ var vmxGoods = {
       return ' ' + toSum(amount) + ' ' + currency_short
     },
 
+    currencyShortName(id){
+      if (this.currencies == undefined || id < 1) return ""
+      if (this.currencies[id-1] == undefined) return ""
+      return this.currencies[id-1].short
+    },
+
     allAmount(g){
       let cur_name = ' ' + g.currency_short
       offer = g.gsum > 0 ? g.gsum : ''
       hasOrder = g.order && g.sum_supply != g.gsum
-      order = hasOrder ? this.toCurrencyAmount(g.sum_supply, g.currency_short) : ''
+      orderCurrency = ""
+      order = hasOrder ? this.toCurrencyAmount(g.sum_supply, this.currencyShortName(g.order_currency_id)) : ''
       offer = hasOrder ? "<span class='striked'> " + this.toCurrencyAmount(offer, g.currency_short) 
                        + '</span></br>' : this.toCurrencyAmount(offer, g.currency_short)
-      return offer + ' '+ order 
+      return offer + ' ' + order 
+    },
+
+    oldNewText(g, name, order_name){
+      oldName = g[name]
+      newName = g[order_name]
+      hasOrderName = g.order && oldName != newName && newName != undefined
+      order = hasOrderName ? newName : ''
+      offer = hasOrderName ? "<span class='striked gray'> " + oldName 
+                              + '</span></br>' : oldName
+
+      return offer + ' ' + order
+    },
+
+    goodsName(g) {
+      // hasOrderName = g.order && g.name != g.order_name && g.order_name != undefined
+      // order = hasOrderName ? g.order_name : ''
+      // offer = hasOrderName ? "<span class='striked gray'> " + g.name 
+      //                         + '</span></br>' : g.name
+
+      // return offer + ' ' + order
+      return this.oldNewText(g, "name", "order_name")
+    },
+
+    providersName(g) {
+      return this.oldNewText(g, "provider_name", "order_provider_name")
     },
 
     hasFile(g_id){

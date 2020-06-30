@@ -43,7 +43,7 @@ span.title {margin-top: 3px}
 
 .providers_groups_index {display: grid; grid-template-columns: 180px 1fr 1fr 60px; }
 
-.table_absences {display: grid; grid-template-columns: 90px 90px 190px 150px 1fr 45px 45px 60px}
+.table_absences {display: grid; grid-template-columns: 90px 90px 190px 150px 1fr 45px 52px 60px}
 
 .user_leads {display: grid; grid-template-columns: 178px 150px 1fr 90px 90px}
 .user_projects {display: grid; grid-template-columns: 178px 150px 1fr 90px 90px 90px}
@@ -204,6 +204,8 @@ div.edit_delete{ text-align: center; }
 .table_footer span {font-weight: 500;}
 
 .label_col, .grid_label_name .caption, #new_task .caption { margin-top: 8px; text-align: right; font-weight: 500; font-size: 13px;}
+.label_col.label_2_rows { margin-top: 2px; line-height: 1.2em; text-align: left;}
+
 .label_description, .label_num{ margin-top: 8px; font-size: 14px;}
 .label_num { text-align: right;}
 
@@ -283,7 +285,7 @@ td.app_cancel {}
     background-color: #fafafa;
 }
 
-.li-head {
+.li-head, tr.gr-head {
   padding: 8px 12px 4px 12px;
   font-weight: 500;
   background-color: $light-gray;

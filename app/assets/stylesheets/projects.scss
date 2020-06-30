@@ -110,7 +110,7 @@ span.calc_proc{ padding: 8px 6px;  margin-left: 6px;  display: inline-block;  bo
 input[type='number'] {text-align: right;}
 input::-webkit-inner-spin-button { padding-right:0}
 
-.striked {text-decoration: line-through gray; margin-top: 2px;}
+.striked {text-decoration: line-through; color: lightslategray; margin-top: 2px;}
 
 .btn_add:not(.disabled):not([disabled]):hover, 
 .btn_a:not(.disabled):not([disabled]):not(.btn_reset):hover

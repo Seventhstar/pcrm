@@ -4,25 +4,32 @@
   let nav = new Vue({
     el: '.nav_select',
     data: <%= fill_vue_data(nil, {
-      texts: 'search',
+      search: "",
       readyToChange: false,
       list_values: 'year city',
       mainFilters: ['year', 'city'],
       lists: 'years cities',
       fullReload: @fullReload,
+      searchReload: @searchReload,
       params: @params
     }, 'app') %>,
     
     mounted() {
+      this.$options.search = this.search
+      console.log('this.search', this.search)
       this.mainFilters.forEach( f => {
         if (this.params[f] != undefined) {
           this[f] = this.params[f]
           let p = this[f]
         }
       })
+      console.log('this.search', this.search)
+      this.$root.$on('search', this.onSearchChange)
+      // console.lo
     },
 
     created() {
+      this.$options.search = this.params.search
       this.search = this.params.search
       setTimeout(() => {this.readyToChange = true}, 100)
     },
@@ -38,11 +45,38 @@
         if (this.city == undefined) return
         if (typeof(oldVal) == 'object' && newValue == oldVal.value) return
         this.update({city: newValue.value})
-      }
+      },
+
+      // search: {
+      //   handler: function(newValue, oldVal) {
+      //     // console.log('wat1ch search this.fullReload', this.fullReload, newValue, oldVal)
+      //     if (this.readyToChange && this.searchReload) {
+      //       sortable_prepare({})
+      //       setTimeout(() => {sortable_query({})}, 700)
+      //     }
+      //     console.log('search', this.search)
+      //   },
+      //   deep: true
+      // }
     },
 
     methods: {
+      onSearchChange(e){
+        console.log('onSearchChange(e)', e, this.search)
+        // if (this.search == undefined) {
+          // this.search
+        this.search = e
+        if (this.readyToChange && this.searchReload) {
+          // console.log('this.readyToChange', this.readyToChange, 'this.searchReload', this.searchReload)
+          sortable_prepare({})
+          delay(() => {sortable_query({})}, 700)
+        }
+        // console.log('search', this.search)
+        // }
+      },
+
       update(params){
+        // console.log('update(params)', params)
         if (this.readyToChange) { 
           sortable_prepare(params)
           if (this.fullReload)

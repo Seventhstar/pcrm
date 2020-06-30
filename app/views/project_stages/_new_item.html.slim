@@ -1,0 +1,11 @@
+= form_for(@item, html: {class: 'simple_options_form'}) do |f|
+  .itemAdd_form
+    table
+      tbody
+        tr
+          td.caption Новый этап:
+          td= f.text_field :name, class: "txt"
+          td
+            .inp_w
+              = chosen_src "project_stage[project_type_id]", ProjectType.all
+              span#btn-send.sub.btn_a Добавить

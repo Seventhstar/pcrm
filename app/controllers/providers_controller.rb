@@ -12,44 +12,26 @@ class ProvidersController < ApplicationController
   def index
     clean_params
 
+    city = params[:city].present? ? City.find(params[:city]) : @main_city
+
     @styles = Style.all
     @budgets = Budget.order(:name)
     @goodstypes = Goodstype.order(:priority, :name)
     @p_statuses = PStatus.order(:name)
 
-    # @param_style = params[:style]
-    # @param_budget = params[:budget]
-    # @param_goodstype = params[:goodstype]
-    # @param_p_status = params[:p_status]
     p_status_id = params[:p_status].nil? ? 5 : params[:p_status]
     @p_status = PStatus.find(p_status_id) if p_status_id != 'all'
-    # puts "@p_status #{@p_status}"
-    # puts "params[:p_status] #{params[:p_status]}"
-    # @param_p_status = 5 if @param_p_status.nil?
-
     @param_search = params[:search]
-    # @only_actual = !params[:only_actual] || params[:only_actual] == "true"
-
-    # all_ids = Provider.order(:name).ids
-    # sp = all_ids
-    # sp,bp,gtp,ps,s_ids = all_ids,all_ids,all_ids,all_ids,all_ids
-
     @goodstype = Goodstype.find(params[:goodstype]) if params[:goodstype].present?
 
-    # if params[:goodstype] && params[:goodstype]!="" && params[:goodstype]!='0'
-    #     gtp = Goodstype.find(params[:goodstype]).providers.ids
-
-    # # puts "@param_goodstype.present? #{@param_goodstype.present?} = #{@param_goodstype}"
-    #   @goodstypes = [Goodstype.find(params[:goodstype])] if @param_goodstype.present?
-    # # puts "@goodstypes #{@goodstypes.count}"
-    # end
-
     @provider_goodstypes = ProviderGoodstype.all
-    @providers = Provider.by_city(@main_city)
+    @providers = Provider.by_city(city)
                          .by_search(params[:search])
                          .order(:name) # find(ids, order: :name)
 
-    @json_providers = @providers.by_city(@main_city).order(:id).map{|p| {
+    # puts "@main_city #{@main_city}, params[:city] #{params[:city]}"
+
+    @json_providers = @providers.by_city(city).order(:id).map{|p| {
       id: p.id,
       name: p.name,
       phone: p.phone.split(',').join('<br/>').html_safe,

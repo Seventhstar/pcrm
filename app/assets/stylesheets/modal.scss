@@ -23,8 +23,7 @@ button.close { -webkit-appearance: none; padding: 0; cursor: pointer; background
 }
 
 .modal-goods .txt[readonly="readonly"], .label_col[readonly="readonly"] {color: gray;}
-
-.modal-edit .gsum .txt {width: 87px;}
+.modal-goods .txt[readonly="readonly"] {color: gray; cursor: not-allowed; background-color: #f8f8f8 !important;}
 
 .modal-dialog.img-dialog { border: 1px solid #ccc; padding: 4px; max-width: 1300px; overflow: overlay; max-height: 880px;}
 .modal-pdf .modal-dialog.img-dialog {width: 1250px; height: 800px;}

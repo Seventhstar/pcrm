@@ -16,21 +16,21 @@
     created() {
       this.fillStages()
       this.stage = this.project_stage
-      console.log('this.city', this.city, )
+      // console.log('this.city', this.city, )
       let users = this.users.filter(u => u.city_id == this.city)
     },
 
     watch: {
       project_type(newValue){
-        if (footages.project_type_id > 0 && this.project_type != undefined) 
-          if (!this.projectTypeOutChange) footages.setProjectType(this.project_type)
+        // if (footages.project_type_id > 0 && this.project_type != undefined) 
+        //   if (!this.projectTypeOutChange) footages.setProjectType(this.project_type)
         
-        this.projectTypeOutChange = false
-        this.fillStages(newValue)
+        // this.projectTypeOutChange = false
+        // this.fillStages(newValue)
       },
 
       city() {
-        if (footages.city_id > 0 && this.city != undefined) footages.setCity(this.city)
+        // if (footages.city_id > 0 && this.city != undefined) footages.setCity(this.city)
       }
     },
 

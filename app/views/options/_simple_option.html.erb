@@ -15,7 +15,7 @@
 
 <div class="sep_15"></div>
 
-<% attrs = (@items.first.nil? ? @item : @items.first).attributes.except("id", "created_at", "updated_at") %>
+<% attrs = @attributes %>
 
 <% is_inside_edit = inside_edit() %>
 
@@ -30,13 +30,18 @@
       <% else %>
         <%= t(attr[0]) %>
       <% end %>
-        
     </th>
   <% end %>
   <th></th>
   </thead>
   <tbody>
-    <% @items.each do |item| %>
+    <% @items.each do |group, items| %>
+      <% if group!='' %>
+        <tr class="gr-head"><td colspan="<%= attrs.length+1 %>"> <%= group %></td></tr>
+      <% end %>
+
+      <% items.each do |item| %>
+      
       <tr id="item_<%= item.id %>">
         <% attrs.each do |attr| %>
           <% a0 = attr[0] %>
@@ -59,12 +64,15 @@
         
         <% tag = is_inside_edit.include?(item.class.name) ? 'link' : 'span' %>
         <%= tool_icons(item, {tag: tag, subcount: parents_count(item)} )%>
-        
       </tr>
+
     <% end %>
+    <% end %>
+
   </tbody>
 </table>
 </div>
+<div class="sep_3"></div>
 </div>
 
 <% end %>

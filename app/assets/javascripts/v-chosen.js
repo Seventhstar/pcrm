@@ -13,7 +13,7 @@ Vue.component('v-chosen', {
       }
     }, 
     props: ['name', 'placeholder', 'label', 'src', 'selected', 
-            'readonly', 'disabled', 'storable',
+            'readonly', 'disabled', 'storable', 'input_name',
             'owner', 'k', 'index', 'from_array', 'clear', 'input'],
     template: `
         <div class="inp_w">
@@ -33,10 +33,12 @@ Vue.component('v-chosen', {
         </template>
         </v-select>        
         <input type="hidden" :name="localName" :value="localValue" 
-               v-if="model!=undefined && h_input" :id="idName">
+               v-if="(model!=undefined && h_input) || input_name" :id="idName">
         
       </div>`,
 
+          // :value="$parent[name]"
+          
     created() {
       // console.log('name', this.name, this.selected, this.$parent[this.name], this.$parent.city.value )
       this.h_input = this.input == true
@@ -54,7 +56,10 @@ Vue.component('v-chosen', {
         model = this.$parent.model
       }
 
-      if (model === undefined) {
+      if (this.input_name != undefined) {
+        // console.log('this.input_name', this.input_name, 'this.name', this.name)
+        this.localName = this.input_name
+      } else if (model === undefined) {
         this.idName = this.name + "_id"
         this.localName = this.name + "_id"
       } else {
@@ -80,6 +85,39 @@ Vue.component('v-chosen', {
           let ind = this.options.filter(x => x.name == this.$parent[this.name])
         }  
       }
+
+      // console.log('this.name', this.name, this.localName)
+      // if (name.includes('.'))
+        // this.$root.$watch(this.name, function (newValue, oldValue) {
+        // // Этот коллбэк будет вызван, когда изменится `vm.a`
+        //   this.onInput(newValue)
+        //   console.log('name', this.localName, 'newValue', newValue)
+      // })
+    },
+
+    mounted() {
+      if (this.name.includes('.')){
+        
+        console.log('mounted this.name', this.name) 
+        this.$root.$watch(this.name, (e) => {
+          console.log('mounted watch name', this.name, 'e', e)
+          this.onUpdate(e)
+        })
+      }
+      // this.$root.$watch(this.name, function handle(newValue, oldValue) {
+        // // Этот коллбэк будет вызван, когда изменится `vm.a`
+        // this.onUpdate(newValue)
+        // console.log('mounted watch', this.localName, 'newValue', newValue)
+      // })
+    },
+
+    watch: {
+      // name: {
+      //    handler: (val, oldVal) => {
+      //     console.log('val2', val, 'oldVal2', oldVal) 
+      //    },
+      //    deep: true
+      // }
     },
 
     methods: {
@@ -91,10 +129,12 @@ Vue.component('v-chosen', {
           if (find.length > 0) val = find[0]
           else { this.$parent[this.name] = undefined; return }
         }
+        console.log('localName', this.localName, 'value', value, 'find', find)
         let label = (v_nil(val)) ? undefined : val.label
 
         this.localValue = (v_nil(val)) ? 0 : val.value
         this.$parent[this.name] = val
+        this.$emit('input', val)
         this.$root.$emit('onInput', {value: this.localValue, key: this.k, index: this.index, name: this.name, label: label})
         if (typeof(val) == "object" && value == this.$parent[this.name]) return
         if (this.storable) localStorage[this.name] = this.localValue

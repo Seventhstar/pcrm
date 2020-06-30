@@ -1,21 +1,14 @@
-.timepicker {
-    background: asset-url('ico-clock.png') 90% 8px no-repeat;
-    float: left;
-    width: 80px !important;
-    cursor: pointer;
-}
+.timepicker {background: asset-url('ico-clock.png') 90% 8px no-repeat;
+    float: left; width: 80px !important; cursor: pointer; }
 
 span.key {font-weight: bold;}
 span.number {color: blue; font-weight: bold;}
-span.inner-pre {
-    padding-left: 100px;
-    display: block;
-}
+span.inner-pre {padding-left: 100px; display: block;}
 
 .time_separator{ padding: 7px; float: left; display: inline-block; width: 14px; text-align: center; color: #737373; }
 
 .datepicker { background: asset-url('ico-date.png') 95% 8px no-repeat; cursor: pointer;}
-#pgoods .datepicker{    background-position-x: 93%;}
+#pgoods .datepicker { background-position-x: 93%;}
 
 .editable input[type="text"].datepicker { background: asset-url('ico-date.png') 95% 5px no-repeat; cursor: pointer; }
 
@@ -23,9 +16,12 @@ span.inner-pre {
 .projects .inp_w .datepicker{ background: asset-url('ico-date.png') 96% 8px no-repeat; }
 .edit_project .inp_w .datepicker{ background: asset-url('ico-date.png') 96% 8px no-repeat; }
 
-.inp_w .sum_mask { background: asset-url('rub.png') 98% 9px no-repeat; padding-right: 22px; }
-.currency_2 .inp_w .sum_mask { background: asset-url('usd.png') 97% 9px no-repeat; padding-right: 22px; }
-.currency_3 .inp_w .sum_mask { background: asset-url('eur.png') 97% 10px no-repeat; padding-right: 22px; }
+.modal-edit .gsum .txt { width: 85px !important; padding: 2px 24px 0px 10px;  }
+.sum_mask { background: asset-url('rub.png') 98% 9px no-repeat; padding-right: 22px; }
+.modal-edit .sum_mask {background: asset-url('rub.png') 99px 8px no-repeat; padding-right: 22px;}
+
+.sum_mask.currency_2 { background: asset-url('usd.png') 99px 8px no-repeat; }
+.sum_mask.currency_3 { background: asset-url('eur.png') 99px 9px no-repeat; }
 
 .multiply { background: asset-url('multiply.png') 98% 28px no-repeat; }
 .plus { background: asset-url('plus.png') 98% 28px no-repeat; }

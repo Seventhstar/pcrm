@@ -33,7 +33,6 @@ class Project < ActiveRecord::Base
   accepts_nested_attributes_for :special_infos
   accepts_nested_attributes_for :project_g_types
   
-
   scope :by_executor, ->(executor){where(executor_id: executor) if executor.present? && executor&.to_i>0}
   scope :only_actual, ->(actual){where.not(pstatus_id: 3) if actual}
   scope :non_actual, -> {where(pstatus_id: 3)}
@@ -49,21 +48,14 @@ class Project < ActiveRecord::Base
     sum_parts = self.project_type.project_stages.sum(:part)
     current_stages = self.project_type.project_stages.where('id <= ? ', current_stage)
     current_parts = current_stages.sum(:part)
-
     list = self.project_type.project_stages.order(:stage_order).map{ |s| {
       name:  s.name,
-      width: (1308 / sum_parts).to_i * s.part,
+      width: (1308 / sum_parts).to_i * s.part.to_i,
       color: (s.id <= current_stage ? s.color : 'lightgray'),
       id: s.id
       }
     }
-    # puts "list.last[:width] #{list.last[:width]}"
-    # list.last[:width] = (1312 + list.last[:width] - list.pluck(:width).sum) if list.length > 0 && list.last[:id] == ProjectStage.last.id
     list.last[:width] = (1308 + list.last[:width] - list.pluck(:width).sum) if list.length > 0 
-    # puts "w #{list.last[:id] == ProjectStage.last.id} = #{list.last[:id]} = #{ProjectStage.last.id}"
-    # puts "list.last[:width] #{list.last[:width]}"
-    # wekjkj
-
     list
   end
 
@@ -126,7 +118,6 @@ class Project < ActiveRecord::Base
   def status_wname
     pstatus_id.nil? ? 'Без статуса' : pstatus.try(:name)
   end
-
 
   def days_duration
     if elongations.size > 0

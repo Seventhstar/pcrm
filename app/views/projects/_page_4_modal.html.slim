@@ -2,79 +2,97 @@
 / .modal_container.modal.goodsmodal.modal_1.container.in.modal-overflow  
 .modal-dlg @keyup.enter="onConfirm" @keyup.esc="$emit('modalCancel')" tabindex="0" v-if='modalGoodsForm'
   .modal-edit.modal-goods
-    .hl.hl_a.bd 
-      |{{modalTitle}}
-    .box_wrap_1
-      .panel-group-button.menu_main.menu_h
+    #tabs-head
+      ul.ui-tabs-nav.ui-helper-reset.ui-helper-clearfix.ui-widget-header.ui-corner-all
+        li.hl.hl_a.bd 
+          |{{modalTitle}}
+        - if is_manager? 
+          li :class="modalHeadTabClass(3)" @click="modalHeadTabClick(3)"
+            a.ui-tabs-anchor История
+        li :class="modalHeadTabClass(2)" @click="modalHeadTabClick(2)"
+          a.ui-tabs-anchor  Файлы 
+        li :class="modalHeadTabClass(1)" @click="modalHeadTabClick(1)"
+          a.ui-tabs-anchor Данные
+ 
+    #tabs-1.ptab.box_wrap_1.vue_app v-show="modalHeadTab==1"
+      .panel-group-button.menu_main.menu_h 
         ul.nav
           li :class="modalTabClass(1, 'li-left')" @click="modalTabClick(1)"
             span Предложено
           li :class="modalTabClass(2)" @click="modalTabClick(2)"
-            span.arrow
+            span.arrow v-show="modalTab == 1"
             span Заказано 
+            input type="hidden" name="upd_modal[order]" :value="modalTab>1" 
           li :class="modalTabClass(3,'li-right')" @click="modalTabClick(3)"
-            span.arrow
-            span Закрыто
+            span.arrow v-show="modalTab == 2"
+            span Закрыто (Выплачен)
+            input type="hidden" name="upd_modal[fixed]" :value="modalTab==3" 
 
       .panel-left2 :readonly="true"
         .grid_middle_label_name
           .label_col :readonly="modalTab!=1" Товар:
-          input.txt type="text" v-model="currentGoods.name" :readonly="modalTab!=1"
+          input.txt type="text" v-model="modal.name" :readonly="modalTab!=1" name="upd_modal[name]"
           
           .label_col :readonly="modalTab!=1" Поставщик:
-          v-chosen name="modalProvider" src="providers" from_array="list" :index="currentIndex" placeholder="Выберите поставщика..." :readonly="modalTab!=1" 
+          vm-chosen v-model="modal.provider" name="provider" src="providers" from_array="list" :index="currentIndex" placeholder="Выберите поставщика..." :readonly="modalTab!=1" 
 
           .label_col :readonly="modalTab!=1" Вариант предложения:
-          v-chosen name="modalGoodsPriority" src="goods_priorities" placeholder="Выберите вариант..." :readonly="modalTab!=1" 
+          vm-chosen v-model="modal.goods_priority" name="modal.goods_priority" src="goods_priorities" placeholder="Выберите вариант..." :readonly="modalTab!=1" 
 
           .label_col :readonly="modalTab!=1" Дата предложения:
           .grid_sub_goods
-            input class="txt datepicker" type="text" name="upd_modal[date_place]" id="upd_modal_date_place" v-model="modalDatePlace" :readonly="modalTab!=1"
-            .label_col :readonly="modalTab!=1" Срок поставки:
-            v-chosen name="modalDeliveryTime" src="delivery_times" placeholder="Выберите срок..." :readonly="modalTab!=1" 
+            input class="txt datepicker" type="text" name="upd_modal[date_place]" id="upd_modal_date_place" v-model="modal.date_place" :readonly="modalTab!=1"
+            .label_col.label_2_rows :readonly="modalTab!=1" Срок поставки:
+            vm-chosen v-modal="modal.delivery_time" name="modal.delivery_time" src="delivery_times" placeholder="Выберите срок..." :readonly="modalTab!=1" 
 
           .label_col :readonly="modalTab!=1" Сумма предложения:
           .grid_sub_goods.gsum 
-            div#curr :class="tstClass()"
-              m-number name="modalGsum" :class="modalCurrency" :readonly="modalTab!=1" 
+            / div#curr class="txt sum_mask" :class="currencyClass(modal.currency)"
+            m-number name="gsum" :readonly="modalTab!=1" input_name="upd_modal[gsum]" :add_class="modal.currency.value"
             .label_col :readonly="modalTab!=1" Валюта: 
             
-            input type="hidden" id="modalCurrencyId" v-model="modalCurrencyId" 
-            / |{{modalCurrency.value}} - {{modalCurrencyId}}
-
-            v-chosen name="modalCurrency" src="currencies" placeholder="Валюта..."  :readonly="modalTab!=1" 
-            / :selected='modalCurrencyId'
+            vm-chosen v-model="modal.currency" name="modal.currency" src="currencies" placeholder="Валюта..."  :readonly="modalTab!=1" 
 
           .label_col :readonly="modalTab!=1" Примечание:
-          textarea class="txt autoresize" style="resize: vertical; min-height:71px;" placeholder="Дополнительная информация (пояснение) для заказчика по КП" name="modal_description" v-model="modalDecription" :readonly="modalTab!=1" 
+          textarea class="txt autoresize" style="resize: vertical; min-height:71px;" placeholder="Дополнительная информация (пояснение) для заказчика по КП" v-model="modal.description" :readonly="modalTab!=1" name="upd_modal[description]"
 
         .sep_3
         .grid_middle_label_name
           div
           .actions
-            span.sub.btn_a.right @click="onConfirm" Сохранить
+            span.sub.btn_a.right.modal_apply @click="onConfirm" id="btn-modal" :item_id="currentGoods.id" model="ProjectGood" action="/project_goods/" prm="upd_modal" Сохранить
             span.btn.sub.btn_a.btn_reset.right @click="onCancel" Отмена
 
 
       .panel-right 
-        .grid_middle_label_name :v-show="modalTab>1"
+        .grid_middle_label_name v-show="modalTab>1"
           .label_col :readonly="modalTab!=2" Товар:
-          input.txt type="text" v-model="currentGoods.name" :readonly="modalTab!=1"
+          input.txt type="text" v-model="currentGoods.order_name" :readonly="modalTab!=2" name="upd_modal[order_name]"
           
           .label_col :readonly="modalTab!=2" Поставщик:
-          v-chosen name="modalProvider" src="providers" from_array="list" :index="currentIndex" placeholder="Выберите поставщика..." :readonly="modalTab!=1" 
+          v-chosen name="modalOrderProvider" src="providers" from_array="list" :index="currentIndex" placeholder="Выберите поставщика..." input_name="upd_modal[order_provider_id]" :readonly="modalTab!=2" 
 
-          .label_col :readonly="modalTab!=1" Вариант предложения:
-          v-chosen name="modalGoodsPriority" src="goods_priorities" placeholder="Выберите вариант..." :readonly="modalTab!=1" 
+          .label_col :readonly="modalTab!=2" Вариант предложения:
+          v-chosen name="modalOrderGoodsPriority" src="goods_priorities" placeholder="Выберите вариант..." input_name="upd_modal[order_goods_priority_id]" :readonly="modalTab!=2" 
 
-          .label_col :readonly="modalTab!=1" Дата предложения:
+          .label_col :readonly="modalTab!=2" Дата заказа:
           .grid_sub_goods
-            input class="txt datepicker" type="text" name="upd_modal[date_place]" id="upd_modal_date_place" v-model="modalDatePlace" :readonly="modalTab!=1"
-            .label_col :readonly="modalTab!=1" Срок поставки:
-            v-chosen name="modalDeliveryTime" src="delivery_times" placeholder="Выберите срок..." :readonly="modalTab!=1" 
+            input class="txt datepicker" type="text" name="upd_modal[date_offer]" id="upd_modal_date_offer" v-model="modal.date_offer" :readonly="modalTab!=2"
+            .label_col :readonly="modalTab!=2" Срок поставки:
+            v-chosen name="modalOrderDeliveryTime" src="delivery_times" placeholder="Выберите срок..." :readonly="modalTab!=2" input_name="upd_modal[order_delivery_time_id]"
 
-          .label_col :readonly="modalTab!=1" Сумма предложения:
+          .label_col :readonly="modalTab!=2" Сумма заказа:
           .grid_sub_goods.gsum 
-            div#curr :class="tstClass()"
-              m-number name="modalGsum" :class="modalCurrency" :readonly="modalTab!=1" 
-            .label_col :readonly="modalTab!=1" Валюта:               
+            div#curr class="txt sum_mask" :class="currencyClass(modal.order_currency)"
+              m-number name="modalSumSupply" :readonly="modalTab!=2" input_name="upd_modal[sum_supply]"
+            .label_col :readonly="modalTab!=2" Валюта:               
+            / input type="hidden" id="modalOrderCurrencyId" v-model="modalOrderCurrencyId" 
+            vm-chosen v-model="modal.order_currency" name="modal.order_currency" src="currencies" placeholder="Валюта..."  :readonly="modalTab!=2" 
+            
+
+          .label_col :readonly="modalTab!=2" Примечание:
+          textarea class="txt autoresize" style="resize: vertical; min-height:71px;" placeholder="Дополнительная информация (пояснение) к заказу"  v-model="modal.order_description" :readonly="modalTab!=2" name="upd_modal[order_description]"
+
+    #tabs-2.ptab.box_wrap_1 v-show="modalHeadTab==2"
+      / = render "shared/attach_modal"      
+    #tabs-3.ptab.box_wrap_1 v-show="modalHeadTab==3"
