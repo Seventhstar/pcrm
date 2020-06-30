@@ -12,7 +12,7 @@ gem 'rails', '5.1.5'
 gem 'pg'
 
 # Use Puma as the app server
-gem 'puma', '~> 3.7'
+gem 'puma', '~> 3.12'
 
 group :development, :test do
 #  gem 'coffee-script-source', '1.8.0'
