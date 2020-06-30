@@ -14,6 +14,7 @@
 /db/data1.yml
 /db/data*.yml
 
+*/Thumbs.db
 
 # Ignore all logfiles and tempfiles.
 /log/*
