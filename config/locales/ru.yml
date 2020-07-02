@@ -6,6 +6,10 @@ ru:
     page_gap: '...'
   Currency: Валюта
   currency_id: Валюта
+  order_description: Примечание к заказу
+  order_currency_id: Валюта заказа
+  order_provider_id: Поставщик в заказе
+  order_name: Наименование в заказе
 
   ic_user: Ответственный
   owner_id: Ответственный
@@ -128,6 +132,7 @@ ru:
   City: Город
   Budget: Бюджет
   Goodstype: Вид товара
+  goodstype_id: Вид товара
   Priority: Приоритет
   actual: Актуальный
   Actual: Актуальный
@@ -137,6 +142,7 @@ ru:
   Absence: Отсутствие
   Develop: Задача
   Provider: Поставщик
+  provider_id: Поставщик
   ProjectGood: Заказ в проекте
   ProjectStatus: Статус
   Pstatus: Статус

@@ -1,4 +1,3 @@
-
 FactoryBot.define do
   sequence :email do |n|
     "user#{n}@test.info"
@@ -11,7 +10,6 @@ FactoryBot.define do
     password {'123456'}
     password_confirmation {'123456'}
     activated {true}
-
       
     factory :user_manager do 
       after(:create) do |user|

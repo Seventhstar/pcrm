@@ -1,8 +1,8 @@
 module ControllerMacros
   def sign_in_user
     before do
-      @user = create(:user)
-      # sign_in @user
+      @city = create(:city)
+      @user = create(:user, city: @city)
       log_in @user
     end
   end

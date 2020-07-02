@@ -86,38 +86,17 @@ Vue.component('v-chosen', {
         }  
       }
 
-      // console.log('this.name', this.name, this.localName)
-      // if (name.includes('.'))
-        // this.$root.$watch(this.name, function (newValue, oldValue) {
-        // // Этот коллбэк будет вызван, когда изменится `vm.a`
-        //   this.onInput(newValue)
-        //   console.log('name', this.localName, 'newValue', newValue)
-      // })
+      // console.log('this.name', this.name, 'this.localName', this.localName, 'this.value', this.value)
     },
 
     mounted() {
       if (this.name.includes('.')){
-        
-        console.log('mounted this.name', this.name) 
+        // console.log('mounted this.name', this.name) 
         this.$root.$watch(this.name, (e) => {
-          console.log('mounted watch name', this.name, 'e', e)
+          // console.log('mounted watch name', this.name, 'e', e)
           this.onUpdate(e)
         })
       }
-      // this.$root.$watch(this.name, function handle(newValue, oldValue) {
-        // // Этот коллбэк будет вызван, когда изменится `vm.a`
-        // this.onUpdate(newValue)
-        // console.log('mounted watch', this.localName, 'newValue', newValue)
-      // })
-    },
-
-    watch: {
-      // name: {
-      //    handler: (val, oldVal) => {
-      //     console.log('val2', val, 'oldVal2', oldVal) 
-      //    },
-      //    deep: true
-      // }
     },
 
     methods: {
@@ -129,10 +108,11 @@ Vue.component('v-chosen', {
           if (find.length > 0) val = find[0]
           else { this.$parent[this.name] = undefined; return }
         }
-        console.log('localName', this.localName, 'value', value, 'find', find)
+        // console.log('localName', this.localName, 'value', value, 'find', find.length, this.options)
         let label = (v_nil(val)) ? undefined : val.label
 
-        this.localValue = (v_nil(val)) ? 0 : val.value
+        if (v_nil(val)) val = null
+        this.localValue = (v_nil(val)) ? null : val.value
         this.$parent[this.name] = val
         this.$emit('input', val)
         this.$root.$emit('onInput', {value: this.localValue, key: this.k, index: this.index, name: this.name, label: label})

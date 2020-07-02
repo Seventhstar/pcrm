@@ -137,6 +137,8 @@ class ProjectsController < ApplicationController
     
     @project_types = ProjectType.order(:name)
     @goods_priorities = GoodsPriority.order(:id)
+    
+    @visualers  = User.actual.by_city(current_user.city)
 
     @goods_states = [ {label: 'Предложенные', value: 1}, 
                       {label: 'Заказанные', value: 2}, 

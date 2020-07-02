@@ -1,0 +1,28 @@
+.panel.panel-default
+  .panel-heading.calendar-head.table-heading.head.month
+    span.cal-next cur-period="#{@current_month - 1.month}" 
+      span.arrow-left
+    span.cal-month
+      = month_year(@current_month)
+    span.cal-next cur-period="#{@current_month + 1.month}" 
+      span.arrow-right
+
+  table.tcalendar
+    thead
+      tr
+        - @wdays.each do |day|
+          th class="day #{['сб','вс'].include?(day) ? 'red':''}" = day
+          
+    - while @curr_day <= @current_month.end_of_month
+      tr
+        - 7.times do |day|
+          td class="#{day_class(@curr_day, @current_month)}" 
+            .inday
+              span class="#{date_class(@curr_day)}" = @curr_day.strftime('%d')
+              - abs = day_abs(@curr_day)
+              - abs.each do |a|
+                = span_tooltip( "#{a.reason_name}<br> #{a.user_name}",                        \
+                  abs_description(a), abs_class(a), a, is_manager? || a.user == current_user) 
+              = date_birth_li(@birthdays, @curr_day)
+
+          - @curr_day = @curr_day + 1

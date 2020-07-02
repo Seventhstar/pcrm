@@ -16,13 +16,10 @@ class AbsencesController < ApplicationController
     @user_ids = User.actual.by_city(@main_city).ids
     @page = 0
 
-
+    params['m'] = nil if params[:sort] != 'calendar'
     if params[:sort] == 'calendar'
-      @current_month = Date.today.beginning_of_month 
-      params['m'] = nil if  params[:sort]!='calendar'
-      @current_month = Date.parse(params['m']) if !params['m'].nil?
+      @current_month = params['m'].nil? ? Date.today.beginning_of_month : Date.parse(params['m']) 
       @curr_day = @current_month.beginning_of_month.beginning_of_week
-
       @birthdays = User.actual.by_city(current_user.city_id)
                        .where('date_birth is NOT NULL').pluck(:name, :date_birth)
                        .map{|a, b| [b.try('strftime', '%d.%m'), a] }.to_h
@@ -51,11 +48,12 @@ class AbsencesController < ApplicationController
       @absences = @absences.order(order)
     end
 
+    puts "@current_month #{@current_month}, params['sort'] #{params['sort']}"
 
     @search = params[:search]
     @json_data = Absence.by_year(@year[:id]).map{ |a| { id: a.id,  #.where("dt_from >= ?", (Date.today - 1.week))
                      # address: a.project_name,
-                      actual: a.dt_from > (Date.today-52.week),
+                      actual: a.dt_from > (Date.today - 52.week),
                      dt_from: format_date(a.dt_from),
                        dt_to: format_date(a.dt_to),
                         user: a.user_name,

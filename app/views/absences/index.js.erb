@@ -1,3 +1,7 @@
-app.mainList = <%= for_vue(@json_data) %>
-app.users = <%= for_vue(@users) %>
-app.fGroup()
+<% if params['sort'] == 'calendar' %> 
+  $("#div_tabsences").html("<%= j render("calendar") %>")
+<% else %> 
+  app.mainList = <%= for_vue(@json_data) %>
+  app.users = <%= for_vue(@users) %>
+  app.fGroup()
+<% end %>
