@@ -6,6 +6,7 @@ class OptionsController < ApplicationController
   def create_menu
 
     attrs_except = []
+    # puts "option_model.name #{option_model.name}"
     case option_model.name
     when "Holiday"
       @items = option_model.order('day desc')
@@ -18,6 +19,9 @@ class OptionsController < ApplicationController
     when "ProjectStage"
       @items = option_model.joins(:project_type).order([:project_type_id, :stage_order]).to_a.group_by(&:project_type_name)
       attrs_except = "project_type_id"
+    when "UserRole"
+      @items = option_model.joins(:user)
+      # @roles = Role.order(:name)
     else
       @items = option_model.order(:name)
     end

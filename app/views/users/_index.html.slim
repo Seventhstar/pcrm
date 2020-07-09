@@ -2,6 +2,16 @@
   = link_to 'Добавить пользователя', new_user_path, class: "btn_a btn-add right space20", data: {modal: true}
   = only_actual_btn
 .sep_15
+
+.items_box_cont.tbl_a.users_index
+  .head Список пользователей
+  div v-cloak=""
+      = render 'shared/vue_index_filter'
+      .container
+        = render 'shared/vue_simple_index'
+
+.sep_15
+
 .items_box_cont.tbl_a
   .head Список пользователей
   table.tleads.user-table model="User" 

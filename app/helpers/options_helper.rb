@@ -1,10 +1,8 @@
 module OptionsHelper
-
-
-
   def has_view(classname, name)
-    return lookup_context.find_all("#{classname}/_#{name}.html.erb").any? || 
-            lookup_context.find_all("#{classname}/_#{name}.html.slim").any?
+    template = "#{classname}/_#{name}.html"
+    return lookup_context.find_all("#{template}.erb").any? || 
+           lookup_context.find_all("#{template}.slim").any? 
   end
 
   def inside_edit

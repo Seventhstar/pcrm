@@ -11,6 +11,9 @@
 
 <% if has_view(class_name, 'index') %>
   <%= render "#{class_name}/index.html" %>
+  <% if has_view(class_name, 'index_vue') %>
+    <%= render "#{class_name}/index_vue.html" %>
+  <% end %>
 <% else %>
 
 <div class="sep_15"></div>

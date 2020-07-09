@@ -29,6 +29,9 @@
 
     created(){
       this.makeFilter()
+      if (this.shops == undefined){
+        this.shops = []
+      }
     },
 
     watch: {
@@ -41,8 +44,10 @@
     methods: {
       makeFilter(){
         let n = this.projects.filter(p => p.executor_id == this.user.value)
-        this.filteredProjects.length = 0
-        for (var prj in n) this.filteredProjects.push(n[prj])        
+        setTimeout(() => {
+          this.filteredProjects.length = 0
+          for (var prj in n) this.filteredProjects.push(n[prj])        
+        }, 200)
       },
 
       shop_field(index, field) {
@@ -73,15 +78,20 @@
       },
 
       onInput(e){
-        let f_shop = true;
-        let formValid = true;
-        let reason = v_nil(this.reason) ? 0 : this.reason.value  
+        let f_shop = true
+        let formValid = true
+        let reason = v_nil(this.reason) ? null : this.reason.value  
 
-        switch(reason){
+        // console.log('reason', reason)
+        switch(reason) {
           case 0:
-            formValid = false; 
-            this.noteValid = 'Не указана причина';
-            break;
+            formValid = false
+            this.noteValid = 'Не указана причина'
+            break
+          case 1:
+          case 4:
+            formValid = true
+            break
           case 2:
             noteValid = ''
             if (v_nil(this.project)){
@@ -93,14 +103,17 @@
               formValid = false;
             } 
             this.noteValid = noteValid.slice(0, -2)
-            break;
+            break
           case 3:
             if (v_nil(this.project) || this.shops.filter(sh => !sh._destroy).length === 0){formValid = false;} break;
           case 6:
             if ($('#absence_comment').val().length < 3) {
               this.noteValid = 'Не указан комментарий личной причины';
-              formValid = false;
+              formValid = false
             }        
+            break
+          default:
+            formValid = false
         }
 
         if (v_nil(this.user)) formValid = false;

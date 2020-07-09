@@ -101,24 +101,28 @@ class AbsencesController < ApplicationController
 
     @shop_targets = AbsenceShopTarget.all
 
-    if !@absence.nil?
+    # console
+    # puts "@absence #{@absence.is_new?}"
+    if !@absence.nil? && !@absence.new_record?
       @ashops   = @absence.shops.map{|s| { id: s.id,
                     shop: {label: s.shop_name, value: s.shop_id}, 
                     target: {label: s.target_name, value: s.target_id},
                     _destroy: false}} 
 
-      @shops    = @absence.shops
       @dt_from  = @absence.dt_from.try('strftime',"%d.%m.%Y")
       @t_from   = @absence.dt_from.try('strftime',"%H:%M")
       @dt_to    = @absence.dt_to.try('strftime',"%d.%m.%Y")
       @t_to     = @absence.dt_to.try('strftime',"%H:%M")
       @checked  = @absence.dt_from.beginning_of_day != @absence.dt_to.beginning_of_day
+      @shops    = @absence.shops
+    else
+      @shops    = {}
     end
   end
   # GET /absences/new
   def new
-    abs_params
     @absence = Absence.new
+    abs_params
     @dt_from = DateTime.now.try('strftime',"%d.%m.%Y")
     @dt_to = @dt_from
     @t_from = "10:00"

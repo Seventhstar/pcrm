@@ -14,8 +14,23 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     # puts "@only_actual #{@only_actual}"
-    @users = User.order(:name)
     @items = @users
+    @json_data = []
+    @users = User.order(:name).each do |user|
+      h = {id: user.id, editable: true}
+      
+      fields.each do |col|
+        c = col.include?(":") ? col.split(':')[0] : col.downcase
+        # h['has_picture'] = book.img_url.present?
+        h[c] = book[c]
+        if c.end_with?("_id")
+          n = c[0..-4]
+          h[n] = book.try(n).try("name")
+        end
+      end
+      @json_data.push(h)
+    end
+
   end
 
   # GET /users/1
