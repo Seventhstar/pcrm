@@ -48,13 +48,14 @@ class Project < ActiveRecord::Base
     sum_parts = self.project_type.project_stages.sum(:part)
     current_stages = self.project_type.project_stages.where('id <= ? ', current_stage)
     current_parts = current_stages.sum(:part)
-    list = self.project_type.project_stages.order(:stage_order).map{ |s| {
-      name:  s.name,
-      width: (1308 / sum_parts).to_i * s.part.to_i,
-      color: (s.id <= current_stage ? s.color : 'lightgray'),
-      id: s.id
-      }
+
+    list = self.project_type.project_stages.order(:stage_order)
+               .map{ |s| {  name:  s.name,
+                            width: (1308 * s.part.to_i / sum_parts ).to_i,
+                            color: (s.id <= current_stage ? s.color : 'lightgray'),
+                            id: s.id }
     }
+
     list.last[:width] = (1308 + list.last[:width] - list.pluck(:width).sum) if list.length > 0 
     list
   end
