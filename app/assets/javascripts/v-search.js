@@ -153,13 +153,14 @@ Vue.component('v-search', {
   created () {
     window.Vue.use(window.Vue2Storage)
     let searchTexts = Vue.$storage.get('search')
-    if (searchTexts.constructor == Array)
-      this.internalItems = searchTexts 
-    else if (searchTexts.constructor == String) 
-      this.internalItems = [searchTexts]
-    if (this.value !== undefined) this.onSelectItem(this.value)
-    else this.searchText = this.$parent.search
-
+    if (searchTexts != undefined ) {
+      if (searchTexts.constructor == Array)
+        this.internalItems = searchTexts 
+      else if (searchTexts.constructor == String) 
+        this.internalItems = [searchTexts]
+      if (this.value !== undefined) this.onSelectItem(this.value)
+      else this.searchText = this.$parent.search
+    }
   },
 
   watch: {

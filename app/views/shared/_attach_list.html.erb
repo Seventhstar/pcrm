@@ -6,26 +6,26 @@
   <% btn_title = is_pg_class ? 'Добавить счет или КП' : 'Добавить файл' %>
 
   <% if controller.action_name != 'show' %>
-  <div class="add_progress"> 
-  <label for="attach_list" class="attach_list"> 
-    <a class="btn_add">
-      <span class="pict"><span class="icon icon_file"></span></span>
-      <%= btn_title %>
-    </a>
-  </label>
+    <div class="add_progress"> 
+    <label for="attach_list" class="attach_list"> 
+      <a class="btn_add">
+        <span class="pict"><span class="icon icon_file"></span></span>
+        <%= btn_title %>
+      </a>
+    </label>
 
-  <div class="file_progress">
-    <div class="progress">
-      <div  class="progress-bar progress-bar-info progress-bar-striped" 
-            role="progressbar" 
-            aria-valuemin="0" 
-            aria-valuenow="20" 
-            aria-valuemax="100">
-        <span class="sr-only"> </span>
+    <div class="file_progress">
+      <div class="progress">
+        <div  class="progress-bar progress-bar-info progress-bar-striped" 
+              role="progressbar" 
+              aria-valuemin="0" 
+              aria-valuenow="20" 
+              aria-valuemax="100">
+          <span class="sr-only"> </span>
+        </div>
       </div>
     </div>
-  </div>
-  </div>
+    </div>
   <% end %>
 
   <input id = "attach_list<%= is_pg_class ? '_pg' : '' %>" 
