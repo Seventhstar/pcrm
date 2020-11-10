@@ -8,35 +8,44 @@
             .inp_w
               label Вид работы
               v-chosen name="project_type" placeholder="Вид работы..." :input="true"
-            .inp_w 
+            .inp_w
             - if is_manager?
-              transition name="slide-fade" mode="out-in" 
-                .inp_w 
-                  m-number name="footage" label="Метраж"  v-if="mDependsFromFootage"
+              transition name="slide-fade" mode="out-in"
+                .inp_w
+                  m-number name="footage" label="Метраж" v-if="mDependsFromFootage"
               template v-if="mDependsFromFootage || mPriceIsTotal"
                 .inp_w :title="tarifTooltips.sum"
                   m-number name="sum_total" label="Сумма"
-                .inp_w 
-                  m-number name="designer_sum" label="Cтоимость дизайна" add_class="sum_cost" 
-                  = hidden_field 'project', :designer_price, "v-model"=>"designer_price"
-              .inp_w 
+                .inp_w
+                  m-number name="designer_sum" label="Cтоимость дизайна" add_class="sum_cost"
+                  = hidden_field 'project', :designer_price, "v-model" => "designer_price"
+              .inp_w
                 m-number name="sum_rest" label="Остаток" add_class="sum_rest" readonly="readonly" v-if="mDependsFromFootage || mPriceIsTotal"
+            - else
+              template v-if="mDependsFromFootage || mPriceIsTotal"
+                div
+                div
+                .inp_w
+                  m-number name="footage" label="Метраж" v-if="mDependsFromFootage"  readonly="readonly"
+                .inp_w
+                  m-number name="designer_sum" label="Cтоимость дизайна" add_class="sum_cost"  readonly="readonly"
+                  = hidden_field 'project', :designer_price, "v-model" => "designer_price"
 
       - footage_2_nil = @project.footage_2.try('to_i') == 0
       - if is_manager?
         .sums v-if="mPriceForFootage" key="sum"
-          .sep_3 
+          .sep_3
           .gray_field
             = render 'footage_sum', real: false, footage_2_nil: footage_2_nil, title: 'Заявленная площадь и стоимость'
         transition name="slide-fade"
           section v-show="show_fact"
             .sep_3
             .gray_field
-              = render 'footage_sum', real: true, footage_2_nil: footage_2_nil, title: 'Фактическая площадь и стоимость' 
+              = render 'footage_sum', real: true, footage_2_nil: footage_2_nil, title: 'Фактическая площадь и стоимость'
         .sep_3
         section v-if="!mDependsFromFootage && !mPriceIsTotal"
           = render 'executor'
-                      
+
       table.fullwidth.tbl_fc.fw_form.vue_cmp
         thead
           tr
@@ -47,75 +56,66 @@
             th width="20%" 
         tbody
         - if !is_manager?
-          tr
-            td.gr_caption colspan="5" Заявленная площадь
-          tr 
-            td
-              .inp_w
-                label Метраж
-                .lbl.footage_mask =@project.footage
-            td
-              .inp_w
-                - if @project.footage_2.to_i>0
-                  label + Метраж 2
-                  .lbl.footage_mask =@project.footage_2
-            td    
-            td
-              .inp_w
-                - if is_manager?
-                  label Общая стоимость план
-                  .lbl.sum_mask.sum_total =@project.sum_total.to_sum  
-                  
-          - if @project.footage_real.to_i>0
+          template v-if="!mDependsFromFootage && !mPriceIsTotal"
             tr
-              td.gr_caption colspan="5" Фактическая площадь
-            tr 
+              td.gr_caption colspan="5" Заявленная площадь
+            tr
               td
                 .inp_w
                   label Метраж
-                  .lbl.footage_mask =@project.footage_real
+                  .lbl.footage_mask = @project.footage
               td
-                .inp_w                  
-                  - if @project.footage_2_real.to_i>0
+                .inp_w
+                  - if @project.footage_2.to_i> 0
                     label + Метраж 2
-                    .lbl.footage_mask =@project.footage_2_real
+                    .lbl.footage_mask = @project.footage_2
               td
               td
                 .inp_w
                   - if is_manager?
-                    label Общая стоимость факт
-                    .lbl.sum_total.sum_mask =@project.sum_total_real.to_sum
-          tr
-            - if is_manager?
-              td.gr_caption colspan="5" Стоимость для исполнителей
-            - else
+                    label Общая стоимость план
+                    .lbl.sum_mask.sum_total = @project.sum_total.to_sum
+
+            - if @project.footage_real.to_i> 0
+              tr
+                td.gr_caption colspan="5" Фактическая площадь
+              tr
+                td
+                  .inp_w
+                    label Метраж
+                    .lbl.footage_mask = @project.footage_real
+                td
+                  .inp_w
+                    - if @project.footage_2_real.to_i> 0
+                      label + Метраж 2
+                      .lbl.footage_mask = @project.footage_2_real
+                td
+                td
+                  .inp_w
+            tr
               td.gr_caption colspan="5" Стоимость
 
-          tr 
-            td
-              .inp_w
-                - if is_manager?
-                  label Цена для дизайнера за м2
-                - else 
-                  label Цена за м2
-
-                .lbl.sum_mask =@project.designer_price.try(:to_sum)
-            - if @project.footage_2.to_i>0
+            tr
               td
                 .inp_w
                   - if is_manager?
-                    label Цена 2 для дизайнера за м2
-                  - else 
-                    label Цена 2 за м2
-                  
-                  .lbl.sum_mask =@project.designer_price_2.try(:to_sum)    
-            - if is_manager?
-              td    
-            td
-              .inp_w
-                - if is_manager?
-                  label Стоимость дизайнера
-                - else 
+                    label Цена для дизайнера за м2
+                  - else
+                    label Цена за м2
+
+                  .lbl.sum_mask = @project.designer_price.try(:to_sum)
+              - if @project.footage_2.to_i> 0
+                td
+                  .inp_w
+                    - if is_manager?
+                      label Цена 2 для дизайнера за м2
+                    - else
+                      label Цена 2 за м2
+                    .lbl.sum_mask = @project.designer_price_2.try(:to_sum)
+              - if is_manager?
+                td
+              td
+                .inp_w
                   label Стоимость
-                .lbl.sum_cost.sum_mask =@project.designer_sum_calc.try(:to_sum)
+                  .lbl.sum_cost.sum_mask = @project.designer_sum_calc.try(:to_sum)
   = render 'page_2_vue'

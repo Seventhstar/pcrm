@@ -25,12 +25,13 @@ class Lead < ActiveRecord::Base
       obj_ch = YAML.load(version['object_changes'])
 
       if version.event == "create"
-        LeadMailer.created_email(id, first_comment).deliver_now
+        LeadMailer.created_email(id, first_comment).deliver_later
       elsif obj_ch['ic_user_id'].class == [].class
-        LeadMailer.new_owner_email(id).deliver_now
-        LeadMailer.you_owner_email(id).deliver_now
+        TelegramWorker.perform_async id
+        LeadMailer.new_owner_email(id).deliver_later
+        LeadMailer.you_owner_email(id).deliver_later
       else
-        LeadMailer.changeset_email(id).deliver_now
+        LeadMailer.changeset_email(id).deliver_later
       end
     end
   end

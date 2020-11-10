@@ -100,7 +100,7 @@ class ProjectPdf < Prawn::Document
       number = g.goods_priority_id == 1 ? ind : ''
 
       a << [number, g.name, g.print_amount, date_supp, 
-            g.provider_full_info.html_safe, g.description]
+            g.provider_full_info&.html_safe, g.description]
     end
     a
   end

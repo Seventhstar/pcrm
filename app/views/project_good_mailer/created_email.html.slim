@@ -1,0 +1,29 @@
+h3
+  = @current_user.name
+  | Создал(а) заказ:
+b Для проекта:
+= @pg.project_name
+br/
+b Дата создания:
+= @pg.created_at.try('strftime',"%d.%m.%Y")
+br/
+b Позиция:
+= @pg.name
+br/
+b Поставщик:
+= @pg.provider_name
+br/
+b Сумма:
+= @pg.print_amount
+br/
+b Дата:
+= @pg.date_place.try('strftime',"%d.%m.%Y")
+br/
+b Примечание:
+= @pg.description
+br/
+br/
+
+= link_to 'Перейти к заказу', edit_project_good_url(@pg)
+
+

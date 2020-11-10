@@ -69,30 +69,31 @@ class LeadMailer < ActionMailer::Base
     @version = @lead.versions.last
     send_lead_mail("[CRM] Вы назначены ответственным", @lead.ic_user.try(:email))
 
-    chat_id = @lead.ic_user.try(:telegram)
-    if !chat_id.nil? && chat_id.length >0
-      token = Rails.application.secrets['telegram'][:bot]
-      token = Rails.application.secrets['telegram']['bot'] if token.nil?
-      bot = Telegram::Bot::Client.new(token)
+    SendToTelegramJob.perform_later @lead
+    # chat_id = @lead.ic_user.try(:telegram)
+    # if !chat_id.nil? && chat_id.length >0
+    #   token = Rails.application.secrets['telegram'][:bot]
+    #   token = Rails.application.secrets['telegram']['bot'] if token.nil?
+    #   bot = Telegram::Bot::Client.new(token)
 
-      if Rails.env.development?
-        keyboard = {inline_keyboard: [[{text: "Перейти", url: 'ya.ru'}]]}
-      else
-        keyboard = {inline_keyboard: [[{text: "Перейти", url: edit_polymorphic_url(@lead)}]]}
-      end
-      markup = JSON.parse(keyboard.to_json)
+    #   if Rails.env.development?
+    #     keyboard = {inline_keyboard: [[{text: "Перейти", url: 'ya.ru'}]]}
+    #   else
+    #     keyboard = {inline_keyboard: [[{text: "Перейти", url: edit_polymorphic_url(@lead)}]]}
+    #   end
+    #   markup = JSON.parse(keyboard.to_json)
 
-      lnk = ['[#', @lead.id, ']'].join
-      text = ["Вы назначены ответственным",
-              "Лид: #{lnk} #{@lead.try(:address)}",
-              "ФИО: #{@lead.fio}",
-              @lead.try(:phone).present? ? "Телефон: #{@lead.phone}" : nil,
-              @lead.try(:email).present? ? "E-mail: #{@lead.email}": nil ,
-              "Информация:",
-              "#{raw(@lead.info)}"].compact.join("\n")
+    #   lnk = ['[#', @lead.id, ']'].join
+    #   text = ["Вы назначены ответственным",
+    #           "Лид: #{lnk} #{@lead.try(:address)}",
+    #           "ФИО: #{@lead.fio}",
+    #           @lead.try(:phone).present? ? "Телефон: #{@lead.phone}" : nil,
+    #           @lead.try(:email).present? ? "E-mail: #{@lead.email}": nil ,
+    #           "Информация:",
+    #           "#{raw(@lead.info)}"].compact.join("\n")
               
-      # bot.send_message chat_id: chat_id, text: text, reply_markup: markup
-    end
+    #   # bot.send_message chat_id: chat_id, text: text, reply_markup: markup
+    # end
   end
 
 end

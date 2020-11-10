@@ -1,39 +1,38 @@
 source 'https://rubygems.org'
+
+ruby '2.6.6'
+
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails', '~> 5.1.5'
+gem 'rails', '~> 5.2', '>= 5.2.3'
+#gem 'rails', '~> 6.0.3', '>= 6.0.3.2'
+#gem 'rails', '5.1.7'
 
 gem 'pg'
-
-# Use Puma as the app server
-gem 'puma', '~> 3.7'
+gem 'puma', '~> 4.1'
 
 group :development, :test do
-#  gem 'coffee-script-source', '1.8.0'
-  gem 'rspec-rails'
-  gem 'rails-controller-testing'
+  gem 'coffee-script-source', '1.12.2'
   gem "better_errors"
+  gem 'rspec-rails'
   gem "capybara"
 end
-          
+      
 group :production do
-
-# Use Unicorn as the app server
-#  gem 'unicorn'
-  gem 'rails_12factor', '0.0.2'
+  gem 'rails_12factor'
 end
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
+gem 'sass-rails', '>= 5'
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
 # Use CoffeeScript for .coffee assets and views
-# gem 'coffee-rails', '~> 4.1.0'
-gem 'coffee-rails', '~> 4.2'
+# gem 'coffee-rails', github: 'rails/coffee-rails'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
@@ -45,7 +44,8 @@ gem 'jquery-rails'
 # gem 'turbolinks'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.0'
+gem 'jbuilder', '~> 2.7'
+
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
@@ -82,13 +82,16 @@ gem 'simple_form'
 gem 'simple-navigation', '4.0.3'
 gem 'bootstrap-datepicker-rails'
 gem 'jquery-ui-rails'
-gem 'yaml_db'
-gem 'font-kit-rails'
+# gem 'yaml_db', git: 'https://github.com/Seventhstar/yaml_db2.git'
+# gem 'font-kit-rails'
 gem 'will_paginate'
 gem 'bootstrap_tokenfield_rails'
-gem 'paper_trail','8.1.2'
+
+#gem 'paper_trail','8.1.2'
+#gem 'paper_trail'
+
 gem 'jquery.fileupload-rails'
-gem 'nokogiri', '1.10.2'
+gem 'nokogiri'
 gem 'responders'
 gem 'carrierwave'
 gem 'mini_magick'
@@ -108,5 +111,6 @@ gem 'plyr-rails'
 gem 'vuejs-rails'
 gem 'cocoon'
 gem 'json'
-gem 'pdfjs_viewer-rails', git: 'https://github.com/Seventhstar/pdfjs_viewer-rails2.git'
+# gem 'pdfjs_viewer-rails', git: 'https://github.com/Seventhstar/pdfjs_viewer-rails2.git'
 gem 'database_validations'
+gem 'sidekiq'

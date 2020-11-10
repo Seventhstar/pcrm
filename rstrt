@@ -1,2 +1,4 @@
-kill -QUIT `cat /var/run/unicorn/hosting_polinov/crmpp.polinov.pid`
-bundle exec unicorn_rails -Dc /etc/unicorn/crmpp.polinov.rb
+kill -QUIT `cat /var/run/unicorn/hosting_polinov/test.polinov.pid`
+kill -QUIT `cat tmp/pids/sidekiq.pid`
+bundle exec unicorn_rails -Dc /etc/unicorn/test.polinov.rb
+bundle exec sidekiq -d -e production -C config/sidekiq.yml

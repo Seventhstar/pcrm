@@ -7,7 +7,6 @@ class LeadsController < ApplicationController
   before_action :logged_in_user
   before_action :set_lead, only: [:show, :edit, :update, :destroy]
   before_action :def_params, only: [:show, :edit, :new, :update]
-  before_action :logged_in_user
 
   respond_to :html, :json
 

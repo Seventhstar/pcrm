@@ -85,7 +85,7 @@ class ProjectGood < ActiveRecord::Base
   end
 
   def provider_full_info
-    self.provider.full_info
+    self.provider&.full_info
   end
 
   def currency_short
