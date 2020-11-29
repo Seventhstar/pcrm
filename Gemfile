@@ -9,12 +9,12 @@ end
 
 gem 'rails', '~> 5.2', '>= 5.2.3'
 #gem 'rails', '~> 6.0.3', '>= 6.0.3.2'
-#gem 'rails', '5.1.7'
 
 gem 'pg'
 gem 'puma', '~> 4.1'
 
 group :development, :test do
+  gem 'bootsnap'
   gem 'coffee-script-source', '1.12.2'
   gem "better_errors"
   gem 'rspec-rails'
@@ -32,7 +32,7 @@ gem 'sass-rails', '>= 5'
 gem 'uglifier', '>= 1.3.0'
 
 # Use CoffeeScript for .coffee assets and views
-# gem 'coffee-rails', github: 'rails/coffee-rails'
+gem 'coffee-rails', github: 'rails/coffee-rails'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
@@ -56,7 +56,7 @@ gem 'bcrypt', git: 'https://github.com/codahale/bcrypt-ruby.git', require: 'bcry
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-group :development, :test do
+group :development do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
 
@@ -82,13 +82,13 @@ gem 'simple_form'
 gem 'simple-navigation', '4.0.3'
 gem 'bootstrap-datepicker-rails'
 gem 'jquery-ui-rails'
-# gem 'yaml_db', git: 'https://github.com/Seventhstar/yaml_db2.git'
+gem 'yaml_db', git: 'https://github.com/Seventhstar/yaml_db2.git'
 # gem 'font-kit-rails'
 gem 'will_paginate'
 gem 'bootstrap_tokenfield_rails'
 
 #gem 'paper_trail','8.1.2'
-#gem 'paper_trail'
+gem 'paper_trail'
 
 gem 'jquery.fileupload-rails'
 gem 'nokogiri'
@@ -111,6 +111,9 @@ gem 'plyr-rails'
 gem 'vuejs-rails'
 gem 'cocoon'
 gem 'json'
-# gem 'pdfjs_viewer-rails', git: 'https://github.com/Seventhstar/pdfjs_viewer-rails2.git'
+#gem 'pdfjs_viewer-rails', git: 'https://github.com/Seventhstar/pdfjs_viewer-rails2.git'
+gem 'pdfjs_viewer-rails'
 gem 'database_validations'
 gem 'sidekiq'
+
+gem "aws-sdk-s3", require: false

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200305130422) do
+ActiveRecord::Schema.define(version: 2020_11_28_204549) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,6 +56,27 @@ ActiveRecord::Schema.define(version: 20200305130422) do
     t.boolean "approved", default: false
   end
 
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
   create_table "attachments", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.integer "owner_id"
@@ -96,7 +117,7 @@ ActiveRecord::Schema.define(version: 20200305130422) do
     t.index ["city_id"], name: "index_clients_on_city_id"
   end
 
-  create_table "comment_unreads", id: :serial, force: :cascade do |t|
+  create_table "comment_unreads", force: :cascade do |t|
     t.integer "comment_id"
     t.integer "user_id"
     t.datetime "created_at", null: false
@@ -149,7 +170,6 @@ ActiveRecord::Schema.define(version: 20200305130422) do
     t.bigint "costing_id"
     t.bigint "work_id"
     t.bigint "room_id"
-    t.integer "step"
     t.integer "qty"
     t.float "price"
     t.integer "amount"
@@ -382,7 +402,7 @@ ActiveRecord::Schema.define(version: 20200305130422) do
     t.index ["project_id"], name: "index_project_elongations_on_project_id"
   end
 
-  create_table "project_g_types", id: :serial, force: :cascade do |t|
+  create_table "project_g_types", force: :cascade do |t|
     t.integer "g_type_id"
     t.integer "project_id"
     t.datetime "created_at", null: false
@@ -391,7 +411,7 @@ ActiveRecord::Schema.define(version: 20200305130422) do
     t.index ["project_id"], name: "index_project_g_types_on_project_id"
   end
 
-  create_table "project_goods", id: :serial, force: :cascade do |t|
+  create_table "project_goods", force: :cascade do |t|
     t.string "name"
     t.integer "provider_id"
     t.date "date_supply"
@@ -555,7 +575,7 @@ ActiveRecord::Schema.define(version: 20200305130422) do
     t.bigint "city_id", default: 1
     t.bigint "providers_group_id"
     t.boolean "is_group"
-    t.integer "group_id"
+    t.bigint "group_id"
     t.index ["city_id"], name: "index_providers_on_city_id"
     t.index ["providers_group_id"], name: "index_providers_on_providers_group_id"
   end
@@ -582,7 +602,7 @@ ActiveRecord::Schema.define(version: 20200305130422) do
     t.index ["paid"], name: "index_receipts_on_paid"
   end
 
-  create_table "roles", id: :serial, force: :cascade do |t|
+  create_table "roles", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -664,7 +684,7 @@ ActiveRecord::Schema.define(version: 20200305130422) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "user_roles", id: :serial, force: :cascade do |t|
+  create_table "user_roles", force: :cascade do |t|
     t.integer "user_id"
     t.integer "role_id"
     t.datetime "created_at", null: false
@@ -721,7 +741,7 @@ ActiveRecord::Schema.define(version: 20200305130422) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
-  create_table "wiki_cats", id: :serial, force: :cascade do |t|
+  create_table "wiki_cats", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -772,7 +792,7 @@ ActiveRecord::Schema.define(version: 20200305130422) do
     t.index ["work_type_id"], name: "index_works_on_work_type_id"
   end
 
-  add_foreign_key "clients", "cities"
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "costing_rooms", "costings"
   add_foreign_key "costing_rooms", "rooms"
   add_foreign_key "costing_works", "costings"
@@ -781,24 +801,16 @@ ActiveRecord::Schema.define(version: 20200305130422) do
   add_foreign_key "costings", "costings_types"
   add_foreign_key "costings", "projects"
   add_foreign_key "costings", "users"
-  add_foreign_key "leads", "cities"
   add_foreign_key "leads", "priorities"
-  add_foreign_key "project_goods", "delivery_times"
-  add_foreign_key "project_goods", "goods_priorities"
   add_foreign_key "project_goods", "goodstypes"
   add_foreign_key "project_goods", "projects"
   add_foreign_key "project_stages", "project_types"
-  add_foreign_key "projects", "cities"
   add_foreign_key "projects", "leads"
-  add_foreign_key "provider_managers", "positions"
-  add_foreign_key "providers", "cities"
   add_foreign_key "providers", "providers_groups"
   add_foreign_key "room_works", "rooms"
   add_foreign_key "room_works", "works"
   add_foreign_key "tarifs", "cities"
   add_foreign_key "tarifs", "project_types"
   add_foreign_key "tarifs", "tarif_calc_types"
-  add_foreign_key "users", "cities"
   add_foreign_key "works", "uoms"
-  add_foreign_key "works", "work_types"
 end
