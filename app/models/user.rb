@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
   has_many :options, class_name: 'UserOption'
   has_many :develops, -> { open_tasks }, foreign_key: :ic_user_id
 
+  has_many_attached :files
+
   belongs_to :city
 
   scope :actual,  -> {where(activated: true).order(:name)}

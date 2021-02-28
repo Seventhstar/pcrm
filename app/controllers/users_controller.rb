@@ -126,7 +126,7 @@ class UsersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def user_params
       params.require(:user).permit(:name,:date_birth, :email, :password, :telegram,
-                                   :password_confirmation, :avatar, :city_id)
+                                   :password_confirmation, :avatar, :city_id, files: [])
     end
     
     # Before filters

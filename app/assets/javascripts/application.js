@@ -21,6 +21,8 @@
 //= require chosen.jquery
 //= require jquery.timepicker
 //= require jquery.inputmask.bundle
+//= require activestorage
+//= require direct_uploads
 //= require tinymce-jquery
 //= require nprogress
 //= require bootstrap-tokenfield
@@ -32,6 +34,7 @@
 //= require vuex
 //= require v-store
 //= require_tree .
+//= require_self
 
 function toInt(d){
   if (isNaN(d)) return 0;

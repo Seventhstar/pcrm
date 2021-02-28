@@ -29,7 +29,22 @@ class OptionsController < ApplicationController
     @items = {'' => @items} if !@items.is_a?(Hash)
 
     @item = option_model.new
-    @attributes = (@items.first.nil? ? @item : @items.first[1][0]).attributes.except("id", "created_at", "updated_at")
+    
+
+    #@attributes = (@items.first.nil? ? @item : @items.first[1][0]).attributes.except("id", "created_at", "updated_at")
+    @attributes = []
+    option_model.columns.each_with_object({}) do |c, attrs|
+      #unless reject_col?(c)
+        name = c.name.to_sym
+        puts "name #{name} - #{name.to_s =='id'}"
+        @attributes << [name.to_s] if !["id", "created_at", "updated_at"].include?(name.to_s)
+      #end
+    end
+
+
+
+
+
     @attributes.delete(attrs_except) 
 
 

@@ -1,0 +1,27 @@
+DROP TABLE IF EXISTS users;
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY, 
+  name VARCHAR(32),
+  birthday date,
+  KEY index_of_name(name)
+);
+
+
+INSERT INTO users VALUES (NULL, 'Jonh', '1980-10-02'),
+			 (NULL, 'Margo', '1982-11-01'),
+			 (NULL, 'Nik', '1984-03-03'),
+			 (NULL, 'Mike', '1990-01-02'),
+			 (NULL, 'Megan', '1991-12-31'),
+			 (NULL, 'Helen', '1980-08-04'),
+			 (NULL, 'Layla', '1995-5-30'),
+			 (NULL, 'Olga', '1988-8-06'),
+			 (NULL, 'Elena', '1986-7-07'),
+			 (NULL, 'Pol', '1976-3-08'),
+			 (NULL, 'Rob', '1979-1-09'),
+			 (NULL, 'Bob', '1980-2-11');
+             
+-- задача 1             
+SELECT FLOOR(SUM(DATEDIFF(now(), birthday)/365.25)/count(*)) AS average_age FROM shop.users;          
+
+-- задача 2
+SELECT COUNT(*), dayofweek(DATE(CONCAT(year(now()), SUBSTR(birthday, 5, 6)))) as week_day FROM shop.users group by week_day;    

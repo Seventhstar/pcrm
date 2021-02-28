@@ -318,12 +318,12 @@ module CommonHelper
                                   description: ch[:desc]}) if ch[:desc].present?
     end
 
-    created = PaperTrail::Version.where_object_changes(owner_id: obj_id, owner_type: obj.class.name)
+    created = PaperTrail::Version.where_object(owner_id: obj_id, owner_type: obj.class.name)
     created.each_with_index do |file, index|
       file_changes(history, file, index, 'object_changes', 'add', 'Добавлен', '1')
     end  
 
-    created = PaperTrail::Version.where_object_changes(project_id: obj.id)
+    created = PaperTrail::Version.where_object(project_id: obj.id)
     created.each_with_index do |data, index|
       changes = YAML.load(data['object_changes'])
       next if !changes['project_id'].include? obj.id

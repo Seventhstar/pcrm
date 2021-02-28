@@ -20,6 +20,7 @@ class Lead < ActiveRecord::Base
   has_paper_trail
 
   def send_changeset_email
+    if Rails.env.production?
     if updated_at > (Time.now-5)
       @version = versions.last
       obj_ch = YAML.load(version['object_changes'])
@@ -33,6 +34,7 @@ class Lead < ActiveRecord::Base
       else
         LeadMailer.changeset_email(id).deliver_later
       end
+    end
     end
   end
 
