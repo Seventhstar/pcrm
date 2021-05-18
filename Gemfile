@@ -11,7 +11,7 @@ gem 'rails', '~> 5.2', '>= 5.2.3'
 #gem 'rails', '~> 6.0.3', '>= 6.0.3.2'
 
 gem 'pg'
-gem 'puma', '~> 4.1'
+gem 'puma', '~> 4.3'
 
 group :development, :test do
   gem 'bootsnap'
